@@ -10,119 +10,112 @@
         }
         body { font-family: 'Montserrat', sans-serif; margin: 0; background: var(--bg-gray); display: flex; height: 100vh; }
         
-        /* Sidebar */
-        .sidebar { width: 250px; background: var(--oxford-blue); color: white; padding: 20px 0; }
+        .sidebar { width: 250px; background: var(--oxford-blue); color: white; padding: 20px 0; flex-shrink: 0; }
         .sidebar-header { text-align: center; padding-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.1); }
         .menu-item { padding: 15px 25px; cursor: pointer; opacity: 0.8; }
         .menu-item.active { background: rgba(255,255,255,0.1); border-left: 4px solid var(--gold); opacity: 1; }
 
-        /* Main Content */
         .main { flex: 1; overflow-y: auto; }
         .header { background: white; padding: 20px 40px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-        .container { padding: 30px; max-width: 1200px; margin: auto; }
+        .container { padding: 30px; max-width: 1300px; margin: auto; }
 
-        /* Level Selector */
-        .level-box { background: white; padding: 15px; border-radius: 8px; margin-bottom: 25px; display: flex; align-items: center; gap: 15px; }
-        select { padding: 8px; border-radius: 5px; border: 1px solid #ddd; font-size: 1rem; }
+        .level-box { background: white; padding: 15px; border-radius: 8px; margin-bottom: 25px; display: flex; align-items: center; gap: 15px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        select { padding: 8px; border-radius: 5px; border: 1px solid #ddd; font-size: 1rem; outline: none; }
 
-        /* Skills Grid */
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-        .card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
-        .card h3 { margin-top: 0; color: var(--oxford-blue); border-bottom: 1px solid #eee; padding-bottom: 10px; }
+        /* Grid System */
+        .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 25px; }
+        .card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); border-top: 5px solid var(--oxford-blue); }
+        .card h3 { margin-top: 0; color: var(--oxford-blue); border-bottom: 1px solid #eee; padding-bottom: 10px; font-size: 1.1rem; }
         
-        .upload-zone { margin-top: 15px; }
-        .drop-area { 
-            border: 2px dashed var(--oxford-blue); 
-            padding: 20px; 
-            text-align: center; 
-            border-radius: 8px; 
-            background: #f9fbfe; 
-            margin-top: 10px;
-            cursor: pointer;
-        }
+        .upload-section { margin-top: 15px; padding: 10px; border-radius: 5px; background: #fdfdfd; border: 1px solid #f0f0f0; }
+        .upload-section h4 { margin: 0 0 10px 0; font-size: 0.85rem; color: #555; text-transform: uppercase; letter-spacing: 0.5px; }
         
-        .btn-save { 
-            background: var(--gold); 
-            color: var(--oxford-blue); 
-            width: 100%; 
-            padding: 15px; 
-            border: none; 
-            border-radius: 8px; 
-            font-weight: bold; 
-            margin-top: 30px; 
-            cursor: pointer;
-        }
+        .drop-area { border: 2px dashed #ccc; padding: 15px; text-align: center; border-radius: 6px; background: #fafafa; margin-top: 8px; cursor: pointer; font-size: 0.8rem; color: #666; transition: 0.3s; }
+        .drop-area:hover { border-color: var(--gold); background: #fef9ef; }
+
+        .jury-section { background: #fff9eb; border: 1px solid #ffeeba; } /* Color especial para Jury */
+
+        .btn-save { background: var(--gold); color: var(--oxford-blue); width: 100%; padding: 18px; border: none; border-radius: 8px; font-weight: 700; font-size: 1.1rem; margin-top: 40px; cursor: pointer; transition: 0.3s; text-transform: uppercase; }
+        .btn-save:hover { background: #b08d4a; transform: translateY(-2px); }
     </style>
 </head>
 <body>
     <div class="sidebar">
-        <div class="sidebar-header">
-            <strong>Gaby1429</strong><br><small>Espace Administrateur</small>
-        </div>
+        <div class="sidebar-header"><strong>Gaby1429</strong><br><small>Espace Administrateur</small></div>
         <div class="menu-item active">Contenu: DELF</div>
         <div class="menu-item">Base de Données</div>
     </div>
 
     <div class="main">
-        <div class="header">
-            <h2>Configuration Générale du Niveau</h2>
-        </div>
+        <div class="header"><h2>Configuration du Niveau & Matériel d'Évaluation</h2></div>
 
         <div class="container">
-            <!-- Selector de Nivel -->
             <div class="level-box">
                 <label><strong>Niveau à configurer:</strong></label>
-                <select>
-                    <option>A1</option>
-                    <option>A2</option>
-                    <option selected>B1</option>
-                    <option>B2</option>
-                    <option>C1</option>
-                </select>
+                <select><option>A1</option><option>A2</option><option selected>B1</option><option>B2</option><option>C1</option></select>
             </div>
 
-            <!-- Cuadrícula de 4 Habilidades -->
             <div class="grid">
-                <!-- Oral -->
+                <!-- 1. Oral -->
                 <div class="card">
                     <h3>1. Compréhension de l'Oral</h3>
-                    <div class="upload-zone">
-                        <label>Livret PDF (Pág 9-40):</label>
-                        <input type="file" style="width:100%; margin-top:5px;">
+                    <div class="upload-section">
+                        <h4>Leçons & Audios</h4>
+                        <input type="file" style="width:100%;">
+                        <div class="drop-area">Glisser Audios (Pistes 01-33)</div>
                     </div>
-                    <div class="drop-area">Cargar Audios (Pistes 01-33)</div>
+                    <div class="upload-section">
+                        <h4>Corrigés & Transcriptions (Págs. 176-180)</h4>
+                        <input type="file" style="width:100%;">
+                    </div>
                 </div>
 
-                <!-- Écrits -->
+                <!-- 2. Écrits -->
                 <div class="card">
                     <h3>2. Compréhension des Écrits</h3>
-                    <div class="upload-zone">
-                        <label>Livret PDF (Pág 41-78):</label>
-                        <input type="file" style="width:100%; margin-top:5px;">
+                    <div class="upload-section">
+                        <h4>Leçons</h4>
+                        <input type="file" style="width:100%;">
+                    </div>
+                    <div class="upload-section">
+                        <h4>Corrigés (Págs. 181-183)</h4>
+                        <input type="file" style="width:100%;">
                     </div>
                 </div>
 
-                <!-- Production Écrite -->
+                <!-- 3. Production Écrite -->
                 <div class="card">
                     <h3>3. Production Écrite</h3>
-                    <div class="upload-zone">
-                        <label>Livret PDF (Pág 79-104):</label>
-                        <input type="file" style="width:100%; margin-top:5px;">
+                    <div class="upload-section">
+                        <h4>Guide & Sujets</h4>
+                        <input type="file" style="width:100%;">
+                    </div>
+                    <div class="upload-section jury-section">
+                        <h4>Matériel Jury (Grilles d'évaluation)</h4>
+                        <input type="file" style="width:100%;">
+                    </div>
+                    <div class="upload-section">
+                        <h4>Corrigés / Exemples (Págs. 184-185)</h4>
+                        <input type="file" style="width:100%;">
                     </div>
                 </div>
 
-                <!-- Production Orale -->
+                <!-- 4. Production Orale -->
                 <div class="card">
                     <h3>4. Production Orale</h3>
-                    <div class="upload-zone">
-                        <label>Livret PDF (Pág 105-138):</label>
-                        <input type="file" style="width:100%; margin-top:5px;">
+                    <div class="upload-section">
+                        <h4>Guide & Audios d'appui</h4>
+                        <input type="file" style="width:100%;">
+                        <div class="drop-area">Glisser Audios de préparation</div>
                     </div>
-                    <div class="drop-area">Audios adicionales de apoyo</div>
+                    <div class="upload-section jury-section">
+                        <h4>Matériel Jury (Grilles & Critères)</h4>
+                        <input type="file" style="width:100%;">
+                    </div>
                 </div>
             </div>
 
-            <button class="btn-save">ENREGISTRER TOUT LE NIVEAU</button>
+            <button class="btn-save">Enregistrer tout le niveau et matériel jury</button>
         </div>
     </div>
 </body>
