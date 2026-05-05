@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administration | Objectif Réussite DELF</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --oxford-blue: #002147;
+            --gold: #C5A059;
+            --light-gray: #f4f7f9;
+            --white: #ffffff;
+            --border: #e0e6ed;
+        }
+        body {
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--light-gray);
+            display: flex;
+            height: 100vh;
+            color: #333;
+        }
+
+        /* Sidebar (Menú Izquierdo) */
+        .sidebar {
+            width: 250px;
+            background-color: var(--oxford-blue);
+            color: var(--white);
+            display: flex;
+            flex-direction: column;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+        }
+        .sidebar-header {
+            padding: 20px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .sidebar-header h2 {
+            margin: 0;
+            font-size: 1.2rem;
+            color: var(--gold);
+        }
+        .sidebar-header p {
+            margin: 5px 0 0 0;
+            font-size: 0.8rem;
+            opacity: 0.7;
+        }
+        .menu {
+            list-style: none;
+            padding: 0;
+            margin: 20px 0;
+        }
+        .menu li {
+            padding: 15px 20px;
+            cursor: pointer;
+            transition: background 0.3s;
+            border-left: 4px solid transparent;
+        }
+        .menu li:hover, .menu li.active {
+            background-color: rgba(255,255,255,0.1);
+            border-left: 4px solid var(--gold);
+        }
+        .menu li a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 500;
+            display: block;
+        }
+
+        /* Main Workspace (Área de Trabajo) */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+        .top-navbar {
+            background-color: var(--white);
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        .top-navbar h1 {
+            margin: 0;
+            font-size: 1.5rem;
+            color: var(--oxford-blue);
+        }
+        .btn-exit {
+            background-color: #dc3545;
+            color: white;
+            padding: 8px 15px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        /* Editor Area */
+        .editor-container {
+            padding: 40px;
+            max-width: 1000px;
+            margin: 0 auto;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .level-selector {
+            margin-bottom: 30px;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+        .level-selector select {
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            font-family: inherit;
+            font-size: 1rem;
+            outline: none;
+        }
+
+        /* Tabs de Habilidades */
+        .skills-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 10px;
+        }
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 10px 20px;
+            font-family: inherit;
+            font-weight: 600;
+            font-size: 1rem;
+            color: #666;
+            cursor: pointer;
+            border-radius: 8px 8px 0 0;
+            transition: all 0.3s;
+        }
+        .tab-btn.active {
+            color: var(--oxford-blue);
+            background-color: var(--white);
+            box-shadow: 0 -3px 10px rgba(0,0,0,0.05);
+        }
+
+        /* Formularios de Carga */
+        .skill-content {
+            display: none;
+            background: var(--white);
+            padding: 30px;
+            border-radius: 0 8px 8px 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        .skill-content.active {
+            display: block;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--oxford-blue);
+        }
+        .form-group input[type="file"], .form-group input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-family: inherit;
+        }
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-family: inherit;
+            resize: vertical;
+            min-height: 120px;
+        }
+        .btn-save {
+            background-color: var(--gold);
+            color: var(--oxford-blue);
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.3s;
+            width: 100%;
+        }
+        .btn-save:hover {
+            background-color: #b08d4a;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Menú Lateral -->
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <h2>Gaby1429</h2>
+            <p>Espace Administrateur</p>
+        </div>
+        <ul class="menu">
+            <li class="active"><a href="#">Gestor de Contenidos</a></li>
+            <li><a href="#">Base de Datos Alumnos</a></li>
+            <li><a href="#">Ajustes Sophia (IA)</a></li>
+        </ul>
+    </div>
+
+    <!-- Área de Trabajo Central -->
+    <div class="main-content">
+        <div class="top-navbar">
+            <h1>Créateur de Cours Interactif</h1>
+            <a href="index.html" class="btn-exit">Quitter l'éditeur</a>
+        </div>
+
+        <div class="editor-container">
+            
+            <div class="level-selector">
+                <label for="level"><strong>Niveau à éditer :</strong></label>
+                <select id="level">
+                    <option value="A1">A1 - Découverte</option>
+                    <option value="A2">A2 - Survie</option>
+                    <option value="B1">B1 - Seuil</option>
+                    <option value="B2">B2 - Indépendant</option>
+                    <option value="C1">C1 - Autonome</option>
+                </select>
+            </div>
+
+            <!-- Botones de las 4 Habilidades -->
+            <div class="skills-tabs">
+                <button class="tab-btn active" onclick="openSkill(event, 'CO')">Compréhension de l'oral</button>
+                <button class="tab-btn" onclick="openSkill(event, 'CE')">Compréhension des écrits</button>
+                <button class="tab-btn" onclick="openSkill(event, 'PE')">Production écrite</button>
+                <button class="tab-btn" onclick="openSkill(event, 'PO')">Production orale</button>
+            </div>
+
+            <!-- Contenido: Comprensión Oral -->
+            <div id="CO" class="skill-content active">
+                <div class="form-group">
+                    <label>Fichier Audio (MP3) - Ex: ABC DELF Piste 1</label>
+                    <input type="file" accept="audio/*">
+                </div>
+                <div class="form-group">
+                    <label>Document de Questions (PDF)</label>
+                    <input type="file" accept=".pdf">
+                </div>
+                <div class="form-group">
+                    <label>Transcription (Pour l'analyse de Sophia)</label>
+                    <textarea placeholder="Collez ici la transcription de l'audio pour que l'IA puisse corriger l'élève..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Corrigé (Clé de réponses)</label>
+                    <textarea placeholder="Ex: 1-A, 2-C, 3-Vrai, 4-Faux..."></textarea>
+                </div>
+                <button class="btn-save">Enregistrer la section</button>
+            </div>
+
+            <!-- Contenido: Comprensión Escrita -->
+            <div id="CE" class="skill-content">
+                <div class="form-group">
+                    <label>Document de Lecture et Questions (PDF)</label>
+                    <input type="file" accept=".pdf">
+                </div>
+                <div class="form-group">
+                    <label>Corrigé (Clé de réponses)</label>
+                    <textarea placeholder="Ex: 1-B, 2-Vrai (justification...), 3-A..."></textarea>
+                </div>
+                <button class="btn-save">Enregistrer la section</button>
+            </div>
+
+            <!-- Contenido: Producción Escrita -->
+            <div id="PE" class="skill-content">
+                <div class="form-group">
+                    <label>Consigne / Sujet (PDF ou Texte)</label>
+                    <input type="file" accept=".pdf">
+                </div>
+                <div class="form-group">
+                    <label>Prompt Sophia (Critères d'évaluation DELF)</label>
+                    <textarea placeholder="Instructions pour l'IA : 'Agis comme un examinateur DELF. Évalue la grammaire, le lexique et la cohérence de la réponse de l'élève sur 25 points...'"></textarea>
+                </div>
+                <button class="btn-save">Enregistrer la section</button>
+            </div>
+
+            <!-- Contenido: Producción Oral -->
+            <div id="PO" class="skill-content">
+                <div class="form-group">
+                    <label>Sujets de Monologue / Jeu de rôle (PDF)</label>
+                    <input type="file" accept=".pdf">
+                </div>
+                <div class="form-group">
+                    <label>Prompt Sophia (Simulateur d'examinateur)</label>
+                    <textarea placeholder="Instructions pour l'IA : 'L'élève va t'envoyer un fichier vocal. Analyse sa prononciation, son aisance et sa capacité à argumenter. Réponds-lui en français avec des pistes d'amélioration...'"></textarea>
+                </div>
+                <button class="btn-save">Enregistrer la section</button>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Script para cambiar entre pestañas de habilidades -->
+    <script>
+        function openSkill(evt, skillName) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("skill-content");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+                tabcontent[i].classList.remove("active");
+            }
+            tablinks = document.getElementsByClassName("tab-btn");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(skillName).style.display = "block";
+            document.getElementById(skillName).classList.add("active");
+            evt.currentTarget.className += " active";
+        }
+    </script>
+</body>
+</html>
