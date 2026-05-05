@@ -1,1 +1,175 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Objectif Réussite DELF | Accueil</title>
+    <!-- Fuente Montserrat -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --oxford-blue: #002147;
+            --gold: #C5A059;
+            --light-gray: #f4f7f9;
+        }
+        body {
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--light-gray);
+            color: #333;
+        }
+        
+        /* Barra Superior / Zona de Login de Alumnos */
+        .topbar {
+            background-color: white;
+            padding: 15px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        .topbar .brand {
+            font-weight: 700;
+            color: var(--oxford-blue);
+            font-size: 1.2rem;
+            letter-spacing: 1px;
+        }
+        .user-login a {
+            text-decoration: none;
+            color: white;
+            background-color: var(--oxford-blue);
+            padding: 10px 25px;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+        .user-login a:hover {
+            background-color: #003366;
+        }
 
+        /* Contenedor del Banner */
+        .hero {
+            width: 100%;
+            max-width: 1000px;
+            margin: 40px auto 20px auto;
+            text-align: center;
+            padding: 0 20px;
+            box-sizing: border-box;
+        }
+        .hero img {
+            width: 100%;
+            height: auto;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        /* Selector de 5 Niveles */
+        .levels-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            padding: 40px 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+            flex-wrap: wrap;
+        }
+        .level-card {
+            background-color: var(--oxford-blue);
+            color: white;
+            width: 160px;
+            height: 200px;
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-decoration: none;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .level-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 25px rgba(0,0,0,0.2);
+        }
+        .level-card h2 {
+            font-size: 2.8rem;
+            margin: 0;
+            font-weight: 700;
+        }
+        .level-card p {
+            margin-top: 10px;
+            font-weight: 300;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        /* Nivel C1 en Dorado */
+        .level-card.c1 {
+            background-color: var(--gold);
+            color: var(--oxford-blue);
+        }
+
+        /* Pie de página y Botón Oculto Admin */
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: #666;
+            font-size: 0.9rem;
+            font-style: italic;
+        }
+        .hidden-admin {
+            text-decoration: none;
+            color: inherit;
+            cursor: default;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Barra de navegación con botón de Login -->
+    <header class="topbar">
+        <div class="brand">OBJECTIF RÉUSSITE</div>
+        <div class="user-login">
+            <a href="login.html">Connexion Étudiant</a>
+        </div>
+    </header>
+
+    <!-- Banner Principal -->
+    <section class="hero">
+        <img src="assets/Banner.png" alt="Objectif Réussite DELF Banner">
+    </section>
+
+    <!-- Tarjetas de Niveles -->
+    <section class="levels-container">
+        <!-- Estos enlaces apuntarán a las carpetas que creaste -->
+        <a href="levels/A1/index.html" class="level-card">
+            <h2>A1</h2>
+            <p>Découverte</p>
+        </a>
+        <a href="levels/A2/index.html" class="level-card">
+            <h2>A2</h2>
+            <p>Survie</p>
+        </a>
+        <a href="levels/B1/index.html" class="level-card">
+            <h2>B1</h2>
+            <p>Seuil</p>
+        </a>
+        <a href="levels/B2/index.html" class="level-card">
+            <h2>B2</h2>
+            <p>Indépendant</p>
+        </a>
+        <a href="levels/C1/index.html" class="level-card c1">
+            <h2>C1</h2>
+            <p>Autonome</p>
+        </a>
+    </section>
+
+    <!-- Eslogan con tu acceso secreto "Gaby1429" en el punto final -->
+    <footer>
+        <p>De la intención a la certificación<a href="admin_design.html" class="hidden-admin" title="Gaby1429">.</a></p>
+    </footer>
+
+</body>
+</html>
