@@ -23,7 +23,7 @@
             color: #333;
         }
 
-        /* Sidebar (Menú Izquierdo) */
+        /* Sidebar */
         .sidebar {
             width: 250px;
             background-color: var(--oxford-blue);
@@ -37,39 +37,14 @@
             text-align: center;
             border-bottom: 1px solid rgba(255,255,255,0.1);
         }
-        .sidebar-header h2 {
-            margin: 0;
-            font-size: 1.2rem;
-            color: var(--gold);
-        }
-        .sidebar-header p {
-            margin: 5px 0 0 0;
-            font-size: 0.8rem;
-            opacity: 0.7;
-        }
-        .menu {
-            list-style: none;
-            padding: 0;
-            margin: 20px 0;
-        }
-        .menu li {
-            padding: 15px 20px;
-            cursor: pointer;
-            transition: background 0.3s;
-            border-left: 4px solid transparent;
-        }
-        .menu li:hover, .menu li.active {
-            background-color: rgba(255,255,255,0.1);
-            border-left: 4px solid var(--gold);
-        }
-        .menu li a {
-            color: var(--white);
-            text-decoration: none;
-            font-weight: 500;
-            display: block;
-        }
+        .sidebar-header h2 { margin: 0; font-size: 1.2rem; color: var(--gold); }
+        .sidebar-header p { margin: 5px 0 0 0; font-size: 0.8rem; opacity: 0.7; }
+        .menu { list-style: none; padding: 0; margin: 20px 0; }
+        .menu li { padding: 15px 20px; cursor: pointer; transition: background 0.3s; border-left: 4px solid transparent; }
+        .menu li:hover, .menu li.active { background-color: rgba(255,255,255,0.1); border-left: 4px solid var(--gold); }
+        .menu li a { color: var(--white); text-decoration: none; font-weight: 500; display: block; }
 
-        /* Main Workspace (Área de Trabajo) */
+        /* Main Workspace */
         .main-content {
             flex: 1;
             display: flex;
@@ -84,248 +59,159 @@
             align-items: center;
             box-shadow: 0 2px 5px rgba(0,0,0,0.05);
         }
-        .top-navbar h1 {
-            margin: 0;
-            font-size: 1.5rem;
-            color: var(--oxford-blue);
-        }
-        .btn-exit {
-            background-color: #dc3545;
-            color: white;
-            padding: 8px 15px;
-            text-decoration: none;
-            border-radius: 5px;
-            font-weight: 600;
-            font-size: 0.9rem;
-        }
+        .top-navbar h1 { margin: 0; font-size: 1.5rem; color: var(--oxford-blue); }
 
         /* Editor Area */
-        .editor-container {
-            padding: 40px;
-            max-width: 1000px;
-            margin: 0 auto;
-            width: 100%;
-            box-sizing: border-box;
-        }
-        .level-selector {
-            margin-bottom: 30px;
-            display: flex;
-            gap: 15px;
-            align-items: center;
-        }
-        .level-selector select {
-            padding: 10px;
-            border-radius: 8px;
-            border: 1px solid var(--border);
-            font-family: inherit;
-            font-size: 1rem;
-            outline: none;
-        }
-
-        /* Tabs de Habilidades */
-        .skills-tabs {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-            border-bottom: 2px solid var(--border);
-            padding-bottom: 10px;
-        }
-        .tab-btn {
-            background: none;
-            border: none;
-            padding: 10px 20px;
-            font-family: inherit;
-            font-weight: 600;
-            font-size: 1rem;
-            color: #666;
-            cursor: pointer;
-            border-radius: 8px 8px 0 0;
-            transition: all 0.3s;
-        }
-        .tab-btn.active {
-            color: var(--oxford-blue);
-            background-color: var(--white);
-            box-shadow: 0 -3px 10px rgba(0,0,0,0.05);
-        }
-
-        /* Formularios de Carga */
-        .skill-content {
-            display: none;
+        .editor-container { padding: 40px; max-width: 1000px; margin: 0 auto; width: 100%; box-sizing: border-box; }
+        
+        .section-box {
             background: var(--white);
             padding: 30px;
-            border-radius: 0 8px 8px 8px;
+            border-radius: 8px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
         }
-        .skill-content.active {
-            display: block;
-        }
-        .form-group {
-            margin-bottom: 20px;
-        }
-        .form-group label {
-            display: block;
-            font-weight: 600;
-            margin-bottom: 8px;
+        .section-box h3 {
             color: var(--oxford-blue);
+            margin-top: 0;
+            border-bottom: 2px solid var(--light-gray);
+            padding-bottom: 10px;
         }
-        .form-group input[type="file"], .form-group input[type="text"] {
+
+        /* Form Elements */
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; font-weight: 600; margin-bottom: 8px; color: var(--oxford-blue); }
+        input[type="file"].standard-file {
+            width: 100%; padding: 10px; border: 1px solid var(--border); border-radius: 8px;
+        }
+
+        /* Drag & Drop Zone */
+        .drop-zone {
             width: 100%;
-            padding: 12px;
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            box-sizing: border-box;
-            font-family: inherit;
-        }
-        .form-group textarea {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            box-sizing: border-box;
-            font-family: inherit;
-            resize: vertical;
-            min-height: 120px;
-        }
-        .btn-save {
-            background-color: var(--gold);
-            color: var(--oxford-blue);
-            padding: 12px 25px;
-            border: none;
-            border-radius: 8px;
-            font-weight: 700;
-            font-size: 1rem;
+            height: 150px;
+            border: 2px dashed var(--oxford-blue);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            background-color: #f9fbfe;
             cursor: pointer;
             transition: background 0.3s;
-            width: 100%;
+            position: relative;
         }
-        .btn-save:hover {
-            background-color: #b08d4a;
+        .drop-zone:hover, .drop-zone.dragover { background-color: #eef3fa; }
+        .drop-zone p { margin: 0; font-weight: 500; color: var(--oxford-blue); }
+        .drop-zone span { font-size: 0.8rem; color: #666; margin-top: 5px; }
+        .drop-zone input[type="file"] {
+            position: absolute; width: 100%; height: 100%; opacity: 0; cursor: pointer;
         }
+
+        /* Track Assigner List */
+        .track-list { margin-top: 20px; }
+        .track-item {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 10px 15px; background: var(--light-gray);
+            border-radius: 6px; margin-bottom: 10px; border: 1px solid var(--border);
+        }
+        .track-name { font-weight: 500; font-size: 0.9rem; }
+        .track-assign select {
+            padding: 6px; border-radius: 4px; border: 1px solid var(--border); font-family: inherit;
+        }
+
+        .btn-save {
+            background-color: var(--gold); color: var(--oxford-blue);
+            padding: 12px 25px; border: none; border-radius: 8px;
+            font-weight: 700; font-size: 1rem; cursor: pointer;
+            transition: background 0.3s; width: 100%; margin-top: 10px;
+        }
+        .btn-save:hover { background-color: #b08d4a; }
     </style>
 </head>
 <body>
 
-    <!-- Menú Lateral -->
     <div class="sidebar">
         <div class="sidebar-header">
             <h2>Gaby1429</h2>
             <p>Espace Administrateur</p>
         </div>
         <ul class="menu">
-            <li class="active"><a href="#">Gestor de Contenidos</a></li>
-            <li><a href="#">Base de Datos Alumnos</a></li>
-            <li><a href="#">Ajustes Sophia (IA)</a></li>
+            <li class="active"><a href="#">Contenu: B1</a></li>
+            <li><a href="#">Base de Données</a></li>
         </ul>
     </div>
 
-    <!-- Área de Trabajo Central -->
     <div class="main-content">
         <div class="top-navbar">
-            <h1>Créateur de Cours Interactif</h1>
-            <a href="index.html" class="btn-exit">Quitter l'éditeur</a>
+            <h1>Configuration : Compréhension de l'Oral (B1)</h1>
         </div>
 
         <div class="editor-container">
             
-            <div class="level-selector">
-                <label for="level"><strong>Niveau à éditer :</strong></label>
-                <select id="level">
-                    <option value="A1">A1 - Découverte</option>
-                    <option value="A2">A2 - Survie</option>
-                    <option value="B1">B1 - Seuil</option>
-                    <option value="B2">B2 - Indépendant</option>
-                    <option value="C1">C1 - Autonome</option>
-                </select>
+            <div class="section-box">
+                <h3>1. Chargez le livret (PDF)</h3>
+                <div class="form-group">
+                    <label>Fichier PDF (Ex: Pages 9 à 40)</label>
+                    <input type="file" accept=".pdf" class="standard-file">
+                </div>
             </div>
 
-            <!-- Botones de las 4 Habilidades -->
-            <div class="skills-tabs">
-                <button class="tab-btn active" onclick="openSkill(event, 'CO')">Compréhension de l'oral</button>
-                <button class="tab-btn" onclick="openSkill(event, 'CE')">Compréhension des écrits</button>
-                <button class="tab-btn" onclick="openSkill(event, 'PE')">Production écrite</button>
-                <button class="tab-btn" onclick="openSkill(event, 'PO')">Production orale</button>
+            <div class="section-box">
+                <h3>2. Chargez les pistes audio</h3>
+                <div class="drop-zone" id="dropZone">
+                    <p>Faites glisser les fichiers MP3 ici</p>
+                    <span>ou cliquez pour parcourir (DELFB1PISTE01.mp3, etc.)</span>
+                    <input type="file" id="audioFiles" accept="audio/mp3" multiple>
+                </div>
+
+                <div class="track-list" id="trackList">
+                    </div>
             </div>
 
-            <!-- Contenido: Comprensión Oral -->
-            <div id="CO" class="skill-content active">
-                <div class="form-group">
-                    <label>Fichier Audio (MP3) - Ex: ABC DELF Piste 1</label>
-                    <input type="file" accept="audio/*">
-                </div>
-                <div class="form-group">
-                    <label>Document de Questions (PDF)</label>
-                    <input type="file" accept=".pdf">
-                </div>
-                <div class="form-group">
-                    <label>Transcription (Pour l'analyse de Sophia)</label>
-                    <textarea placeholder="Collez ici la transcription de l'audio pour que l'IA puisse corriger l'élève..."></textarea>
-                </div>
-                <div class="form-group">
-                    <label>Corrigé (Clé de réponses)</label>
-                    <textarea placeholder="Ex: 1-A, 2-C, 3-Vrai, 4-Faux..."></textarea>
-                </div>
-                <button class="btn-save">Enregistrer la section</button>
-            </div>
-
-            <!-- Contenido: Comprensión Escrita -->
-            <div id="CE" class="skill-content">
-                <div class="form-group">
-                    <label>Document de Lecture et Questions (PDF)</label>
-                    <input type="file" accept=".pdf">
-                </div>
-                <div class="form-group">
-                    <label>Corrigé (Clé de réponses)</label>
-                    <textarea placeholder="Ex: 1-B, 2-Vrai (justification...), 3-A..."></textarea>
-                </div>
-                <button class="btn-save">Enregistrer la section</button>
-            </div>
-
-            <!-- Contenido: Producción Escrita -->
-            <div id="PE" class="skill-content">
-                <div class="form-group">
-                    <label>Consigne / Sujet (PDF ou Texte)</label>
-                    <input type="file" accept=".pdf">
-                </div>
-                <div class="form-group">
-                    <label>Prompt Sophia (Critères d'évaluation DELF)</label>
-                    <textarea placeholder="Instructions pour l'IA : 'Agis comme un examinateur DELF. Évalue la grammaire, le lexique et la cohérence de la réponse de l'élève sur 25 points...'"></textarea>
-                </div>
-                <button class="btn-save">Enregistrer la section</button>
-            </div>
-
-            <!-- Contenido: Producción Oral -->
-            <div id="PO" class="skill-content">
-                <div class="form-group">
-                    <label>Sujets de Monologue / Jeu de rôle (PDF)</label>
-                    <input type="file" accept=".pdf">
-                </div>
-                <div class="form-group">
-                    <label>Prompt Sophia (Simulateur d'examinateur)</label>
-                    <textarea placeholder="Instructions pour l'IA : 'L'élève va t'envoyer un fichier vocal. Analyse sa prononciation, son aisance et sa capacité à argumenter. Réponds-lui en français avec des pistes d'amélioration...'"></textarea>
-                </div>
-                <button class="btn-save">Enregistrer la section</button>
-            </div>
-
+            <button class="btn-save">Enregistrer la section Oral</button>
         </div>
     </div>
 
-    <!-- Script para cambiar entre pestañas de habilidades -->
     <script>
-        function openSkill(evt, skillName) {
-            var i, tabcontent, tablinks;
-            tabcontent = document.getElementsByClassName("skill-content");
-            for (i = 0; i < tabcontent.length; i++) {
-                tabcontent[i].style.display = "none";
-                tabcontent[i].classList.remove("active");
+        const audioInput = document.getElementById('audioFiles');
+        const trackList = document.getElementById('trackList');
+        const dropZone = document.getElementById('dropZone');
+
+        // Visual feedback for drag and drop
+        audioInput.addEventListener('dragenter', () => dropZone.classList.add('dragover'));
+        audioInput.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
+        audioInput.addEventListener('drop', () => dropZone.classList.remove('dragover'));
+
+        // Handle file selection
+        audioInput.addEventListener('change', function() {
+            trackList.innerHTML = ''; // Clear previous list
+            const files = Array.from(this.files);
+            
+            if (files.length > 0) {
+                // Sort files alphabetically
+                files.sort((a, b) => a.name.localeCompare(b.name));
+
+                files.forEach(file => {
+                    const item = document.createElement('div');
+                    item.className = 'track-item';
+                    
+                    item.innerHTML = `
+                        <div class="track-name">🎵 ${file.name}</div>
+                        <div class="track-assign">
+                            <select>
+                                <option value="">-- Assigner à un exercice --</option>
+                                <option value="prep1">Préparation - Ex 1</option>
+                                <option value="prep2">Préparation - Ex 2</option>
+                                <option value="ent1">Entraînement - Ex 1</option>
+                                <option value="ent2">Entraînement - Ex 2</option>
+                                <option value="exam1">Examen Blanc - Ex 1</option>
+                            </select>
+                        </div>
+                    `;
+                    trackList.appendChild(item);
+                });
             }
-            tablinks = document.getElementsByClassName("tab-btn");
-            for (i = 0; i < tablinks.length; i++) {
-                tablinks[i].className = tablinks[i].className.replace(" active", "");
-            }
-            document.getElementById(skillName).style.display = "block";
-            document.getElementById(skillName).classList.add("active");
-            evt.currentTarget.className += " active";
-        }
+        });
     </script>
 </body>
 </html>
