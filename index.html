@@ -4,8 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Objectif Réussite DELF | Accueil</title>
-    <!-- Fuente Montserrat -->
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,500;0,700;1,600&display=swap" rel="stylesheet">
     <style>
         :root {
             --oxford-blue: #002147;
@@ -19,11 +18,34 @@
             background-color: var(--light-gray);
             color: #333;
         }
-        
-        /* Barra Superior / Zona de Login de Alumnos */
+
+        /* Acceso Admin Oculto */
+        .admin-zone {
+            position: absolute;
+            top: 0;
+            left: 0;
+            padding: 15px 20px;
+            background-color: rgba(0, 33, 71, 0.95);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 1000;
+            border-bottom-right-radius: 10px;
+        }
+        .admin-zone:hover {
+            opacity: 1;
+        }
+        .admin-zone a {
+            color: white;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+        }
+
+        /* Barra Superior */
         .topbar {
             background-color: white;
-            padding: 15px 50px;
+            padding: 20px 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -32,29 +54,31 @@
         .topbar .brand {
             font-weight: 700;
             color: var(--oxford-blue);
-            font-size: 1.2rem;
+            font-size: clamp(1.2rem, 2.5vw, 1.8rem);
             letter-spacing: 1px;
         }
         .user-login a {
             text-decoration: none;
             color: white;
             background-color: var(--oxford-blue);
-            padding: 10px 25px;
+            padding: 12px 25px;
             border-radius: 8px;
             font-weight: 600;
+            font-size: clamp(0.9rem, 1.5vw, 1.1rem);
             transition: background-color 0.3s;
+            white-space: nowrap;
         }
         .user-login a:hover {
             background-color: #003366;
         }
 
-        /* Contenedor del Banner */
+        /* Banner */
         .hero {
             width: 100%;
-            max-width: 1000px;
+            max-width: 1200px;
             margin: 40px auto 20px auto;
             text-align: center;
-            padding: 0 20px;
+            padding: 0 5%;
             box-sizing: border-box;
         }
         .hero img {
@@ -62,23 +86,39 @@
             height: auto;
             border-radius: 15px;
             box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            display: block;
         }
 
-        /* Selector de 5 Niveles */
+        /* Eslogan */
+        .slogan-section {
+            text-align: center;
+            margin: 20px auto 50px auto;
+            padding: 0 5%;
+        }
+        .slogan-section h1 {
+            font-size: clamp(1.8rem, 4vw, 3rem);
+            color: var(--oxford-blue);
+            font-style: italic;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        /* Contenedor de Niveles */
         .levels-container {
             display: flex;
             justify-content: center;
-            gap: 20px;
-            padding: 40px 20px;
-            max-width: 1000px;
+            gap: 25px;
+            padding: 0 5% 80px 5%;
+            max-width: 1200px;
             margin: 0 auto;
             flex-wrap: wrap;
         }
         .level-card {
             background-color: var(--oxford-blue);
             color: white;
-            width: 160px;
-            height: 200px;
+            flex: 1 1 180px;
+            max-width: 220px;
+            height: 240px;
             border-radius: 15px;
             display: flex;
             flex-direction: column;
@@ -90,60 +130,80 @@
         }
         .level-card:hover {
             transform: translateY(-10px);
-            box-shadow: 0 15px 25px rgba(0,0,0,0.2);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
         }
         .level-card h2 {
-            font-size: 2.8rem;
+            font-size: clamp(3rem, 5vw, 4rem);
             margin: 0;
             font-weight: 700;
         }
         .level-card p {
-            margin-top: 10px;
+            margin-top: 15px;
             font-weight: 300;
-            font-size: 0.9rem;
+            font-size: 1.1rem;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 2px;
         }
         
-        /* Nivel C1 en Dorado */
+        /* Estilo Nivel C1 */
         .level-card.c1 {
             background-color: var(--gold);
             color: var(--oxford-blue);
         }
 
-        /* Pie de página y Botón Oculto Admin */
-        footer {
-            text-align: center;
-            padding: 40px 20px;
-            color: #666;
-            font-size: 0.9rem;
-            font-style: italic;
-        }
-        .hidden-admin {
-            text-decoration: none;
-            color: inherit;
-            cursor: default;
+        /* Responsividad para móviles */
+        @media (max-width: 768px) {
+            .topbar {
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+            }
+            .levels-container {
+                gap: 15px;
+            }
+            .level-card {
+                flex: 1 1 100%;
+                max-width: 100%;
+                height: 160px;
+                flex-direction: row;
+                gap: 20px;
+            }
+            .level-card h2 {
+                font-size: 3rem;
+            }
+            .level-card p {
+                margin-top: 0;
+            }
         }
     </style>
 </head>
 <body>
 
-    <!-- Barra de navegación con botón de Login -->
+    <!-- Zona Oculta Admin (Pasa el ratón por la esquina superior izquierda) -->
+    <div class="admin-zone">
+        <a href="admin_design.html">⚙️ Espace Gaby1429</a>
+    </div>
+
+    <!-- Barra Superior -->
     <header class="topbar">
-        <div class="brand">OBJECTIF RÉUSSITE</div>
+        <div class="brand">OBJECTIF RÉUSSITE DELF</div>
         <div class="user-login">
             <a href="login.html">Connexion Étudiant</a>
         </div>
     </header>
 
-    <!-- Banner Principal -->
+    <!-- Banner -->
     <section class="hero">
-        <img src="assets/Banner.png" alt="Objectif Réussite DELF Banner">
+        <img src="assets/Banner.png" alt="Banner Objectif Réussite">
     </section>
 
-    <!-- Tarjetas de Niveles -->
+    <!-- Eslogan -->
+    <section class="slogan-section">
+        <h1>De la intención a la certificación</h1>
+    </section>
+
+    <!-- Niveles -->
     <section class="levels-container">
-        <!-- Estos enlaces apuntarán a las carpetas que creaste -->
         <a href="levels/A1/index.html" class="level-card">
             <h2>A1</h2>
             <p>Découverte</p>
@@ -165,11 +225,6 @@
             <p>Autonome</p>
         </a>
     </section>
-
-    <!-- Eslogan con tu acceso secreto "Gaby1429" en el punto final -->
-    <footer>
-        <p>De la intención a la certificación<a href="admin_design.html" class="hidden-admin" title="Gaby1429">.</a></p>
-    </footer>
 
 </body>
 </html>
