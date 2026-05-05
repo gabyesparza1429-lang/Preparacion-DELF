@@ -1,114 +1,129 @@
-<!-- Admin Panel: Objectif Réussite DELF -->
-<div class="admin-panel">
-    <!-- 1. Selector de Nivel -->
-    <div class="level-selector-container">
-        <label for="level-select">Niveau DELF:</label>
-        <select id="level-select" class="main-select">
-            <option value="A1">A1</option>
-            <option value="A2">A2</option>
-            <option value="B1" selected>B1</option>
-            <option value="B2">B2</option>
-            <option value="C1">C1</option>
-        </select>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        :root {
+            --oxford-blue: #002147;
+            --gold: #C5A059;
+            --bg-gray: #f4f7f9;
+        }
+        body { font-family: 'Montserrat', sans-serif; margin: 0; background: var(--bg-gray); display: flex; height: 100vh; }
+        
+        /* Sidebar */
+        .sidebar { width: 250px; background: var(--oxford-blue); color: white; padding: 20px 0; }
+        .sidebar-header { text-align: center; padding-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .menu-item { padding: 15px 25px; cursor: pointer; opacity: 0.8; }
+        .menu-item.active { background: rgba(255,255,255,0.1); border-left: 4px solid var(--gold); opacity: 1; }
+
+        /* Main Content */
+        .main { flex: 1; overflow-y: auto; }
+        .header { background: white; padding: 20px 40px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .container { padding: 30px; max-width: 1200px; margin: auto; }
+
+        /* Level Selector */
+        .level-box { background: white; padding: 15px; border-radius: 8px; margin-bottom: 25px; display: flex; align-items: center; gap: 15px; }
+        select { padding: 8px; border-radius: 5px; border: 1px solid #ddd; font-size: 1rem; }
+
+        /* Skills Grid */
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        .card h3 { margin-top: 0; color: var(--oxford-blue); border-bottom: 1px solid #eee; padding-bottom: 10px; }
+        
+        .upload-zone { margin-top: 15px; }
+        .drop-area { 
+            border: 2px dashed var(--oxford-blue); 
+            padding: 20px; 
+            text-align: center; 
+            border-radius: 8px; 
+            background: #f9fbfe; 
+            margin-top: 10px;
+            cursor: pointer;
+        }
+        
+        .btn-save { 
+            background: var(--gold); 
+            color: var(--oxford-blue); 
+            width: 100%; 
+            padding: 15px; 
+            border: none; 
+            border-radius: 8px; 
+            font-weight: bold; 
+            margin-top: 30px; 
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <strong>Gaby1429</strong><br><small>Espace Administrateur</small>
+        </div>
+        <div class="menu-item active">Contenu: DELF</div>
+        <div class="menu-item">Base de Données</div>
     </div>
 
-    <!-- 2. Cuadrícula de las 4 Habilidades -->
-    <div class="skills-grid">
-        <!-- Comprenshion de l'Oral -->
-        <div class="skill-card">
-            <h3>1. Compréhension de l'Oral</h3>
-            <div class="upload-group">
-                <label>PDF (Págs. 9-40):</label>
-                <input type="file" accept=".pdf">
+    <div class="main">
+        <div class="header">
+            <h2>Configuration Générale du Niveau</h2>
+        </div>
+
+        <div class="container">
+            <!-- Selector de Nivel -->
+            <div class="level-box">
+                <label><strong>Niveau à configurer:</strong></label>
+                <select>
+                    <option>A1</option>
+                    <option>A2</option>
+                    <option selected>B1</option>
+                    <option>B2</option>
+                    <option>C1</option>
+                </select>
             </div>
-            <div class="upload-group">
-                <label>Audios (Pistas 01-33):</label>
-                <div class="drop-zone-mini">
-                    <input type="file" multiple accept="audio/mp3">
-                    <p>Arrastrar MP3 aquí</p>
+
+            <!-- Cuadrícula de 4 Habilidades -->
+            <div class="grid">
+                <!-- Oral -->
+                <div class="card">
+                    <h3>1. Compréhension de l'Oral</h3>
+                    <div class="upload-zone">
+                        <label>Livret PDF (Pág 9-40):</label>
+                        <input type="file" style="width:100%; margin-top:5px;">
+                    </div>
+                    <div class="drop-area">Cargar Audios (Pistes 01-33)</div>
+                </div>
+
+                <!-- Écrits -->
+                <div class="card">
+                    <h3>2. Compréhension des Écrits</h3>
+                    <div class="upload-zone">
+                        <label>Livret PDF (Pág 41-78):</label>
+                        <input type="file" style="width:100%; margin-top:5px;">
+                    </div>
+                </div>
+
+                <!-- Production Écrite -->
+                <div class="card">
+                    <h3>3. Production Écrite</h3>
+                    <div class="upload-zone">
+                        <label>Livret PDF (Pág 79-104):</label>
+                        <input type="file" style="width:100%; margin-top:5px;">
+                    </div>
+                </div>
+
+                <!-- Production Orale -->
+                <div class="card">
+                    <h3>4. Production Orale</h3>
+                    <div class="upload-zone">
+                        <label>Livret PDF (Pág 105-138):</label>
+                        <input type="file" style="width:100%; margin-top:5px;">
+                    </div>
+                    <div class="drop-area">Audios adicionales de apoyo</div>
                 </div>
             </div>
-        </div>
 
-        <!-- Comprenshion des Écrits -->
-        <div class="skill-card">
-            <h3>2. Compréhension des Écrits</h3>
-            <div class="upload-group">
-                <label>PDF (Págs. 41-78):</label>
-                <input type="file" accept=".pdf">
-            </div>
-        </div>
-
-        <!-- Production Écrite -->
-        <div class="skill-card">
-            <h3>3. Production Écrite</h3>
-            <div class="upload-group">
-                <label>PDF (Págs. 79-104):</label>
-                <input type="file" accept=".pdf">
-            </div>
-        </div>
-
-        <!-- Production Orale -->
-        <div class="skill-card">
-            <h3>4. Production Orale</h3>
-            <div class="upload-group">
-                <label>PDF (Págs. 105-138):</label>
-                <input type="file" accept=".pdf">
-            </div>
-            <div class="upload-group">
-                <label>Audios adicionales:</label>
-                <div class="drop-zone-mini">
-                    <input type="file" multiple accept="audio/mp3">
-                    <p>Arrastrar MP3 aquí</p>
-                </div>
-            </div>
+            <button class="btn-save">ENREGISTRER TOUT LE NIVEAU</button>
         </div>
     </div>
-
-    <button class="save-all-btn">Enregistrer tout le niveau</button>
-</div>
-
-<style>
-    .admin-panel { padding: 20px; font-family: sans-serif; background: #f4f7f9; }
-    .level-selector-container { margin-bottom: 20px; background: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-    .main-select { padding: 8px; width: 150px; font-size: 1rem; }
-    
-    .skills-grid { 
-        display: grid; 
-        grid-template-columns: repeat(2, 1fr); 
-        gap: 20px; 
-        margin-bottom: 20px; 
-    }
-    
-    .skill-card { 
-        background: #fff; 
-        padding: 20px; 
-        border-radius: 8px; 
-        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        border-top: 4px solid #C5A059;
-    }
-    
-    .upload-group { margin-top: 15px; }
-    .upload-group label { display: block; font-weight: bold; margin-bottom: 5px; font-size: 0.9rem; }
-    
-    .drop-zone-mini {
-        border: 2px dashed #002147;
-        padding: 10px;
-        text-align: center;
-        background: #fafafa;
-        position: relative;
-    }
-    .drop-zone-mini input { position: absolute; width: 100%; height: 100%; top: 0; left: 0; opacity: 0; cursor: pointer; }
-    
-    .save-all-btn {
-        width: 100%;
-        padding: 15px;
-        background: #C5A059;
-        color: #002147;
-        border: none;
-        font-weight: bold;
-        font-size: 1.1rem;
-        cursor: pointer;
-        border-radius: 8px;
-    }
-</style>
+</body>
+</html>
