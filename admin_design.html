@@ -241,5 +241,48 @@
             }
         });
     </script>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
+        import { getFirestore, doc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCgog8tKspHy01ZHE8Dthl9O4W6lw1a_Ec",
+            authDomain: "objectif-reussite-delf.firebaseapp.com",
+            projectId: "objectif-reussite-delf",
+            storageBucket: "objectif-reussite-delf.firebasestorage.app",
+            messagingSenderId: "942279633770",
+            appId: "1:942279633770:web:9d7b5fe54d0139019c1313"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        document.getElementById('btnGuardar').addEventListener('click', async () => {
+            const nivel = document.getElementById('level_selector').value;
+            
+            // Esta es la estructura que Sophia entiende perfectamente
+            const secciones = [
+                { id: `ORAL_${Date.now()}`, habilidad: 'Compréhension de l\'Oral', titulo: document.getElementById('titre_oral').value, url: document.getElementById('url_oral').value, paginas: "9-40" },
+                { id: `ECRIT_${Date.now()}`, habilidad: 'Compréhension des Écrits', titulo: document.getElementById('titre_ecrit').value, url: document.getElementById('url_ecrit').value, paginas: "41-78" },
+                { id: `PROD_E_${Date.now()}`, habilidad: 'Production Écrite', titulo: document.getElementById('titre_prod_e').value, url: document.getElementById('url_prod_e').value, paginas: "79-104" },
+                { id: `PROD_O_${Date.now()}`, habilidad: 'Production Orale', titulo: document.getElementById('titre_prod_o').value, url: document.getElementById('url_prod_o').value, paginas: "105-138" }
+            ];
+
+            try {
+                for (const item of secciones) {
+                    if (item.titulo && item.url) {
+                        const docRef = doc(db, `Material_${nivel}`, item.id);
+                        await setDoc(docRef, { ...item, lastUpdate: serverTimestamp() });
+                    }
+                }
+                alert(`¡Material de ${nivel} sincronizado con éxito!`);
+            } catch (e) {
+                console.error("Error:", e);
+                alert("Error al guardar. Revisa las reglas de Firebase.");
+            }
+        });
+    </script>
+</body>
+</html>
 </body>
 </html>
