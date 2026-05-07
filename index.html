@@ -10,7 +10,6 @@
             --oxford-blue: #002147;
             --gold: #C5A059;
             --light-gray: #f4f7f9;
-            --white: #ffffff;
         }
         body {
             font-family: 'Montserrat', sans-serif;
@@ -27,89 +26,83 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
 
         /* Banner */
         .hero {
             width: 100%;
-            max-height: 350px;
+            max-height: 300px;
             overflow: hidden;
-            display: flex;
-            justify-content: center;
         }
         .hero img {
             width: 100%;
-            height: auto;
             object-fit: cover;
         }
 
-        /* Sección de Eslogan */
+        /* Eslogan */
         .slogan-section {
             text-align: center;
-            padding: 50px 20px;
+            padding: 40px 20px;
             background: white;
         }
         .slogan-section h1 {
             color: var(--oxford-blue);
-            font-size: 2.2rem;
+            font-size: 2rem;
             margin: 0;
-            font-weight: 700;
         }
 
-        /* Cuadro de Acceso (Seguridad) */
-        .login-container {
-            max-width: 400px;
-            margin: -60px auto 60px;
-            background: white;
+        /* Contenedor de Niveles */
+        .levels-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
             padding: 40px;
-            border-radius: 15px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
-            position: relative;
-            z-index: 10;
-            text-align: center;
-        }
-        .login-container h2 {
-            color: var(--oxford-blue);
-            margin-top: 0;
-            font-size: 1.5rem;
-        }
-        .login-container p {
-            font-size: 0.9rem;
-            color: #666;
-            margin-bottom: 25px;
-        }
-        
-        input {
-            width: 100%;
-            padding: 12px 15px;
-            margin-bottom: 15px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            box-sizing: border-box;
-            font-family: 'Montserrat', sans-serif;
-            font-size: 1rem;
+            max-width: 1100px;
+            margin: 0 auto;
         }
 
-        .btn-access {
-            background: var(--gold);
-            color: white;
-            border: none;
-            padding: 14px;
-            border-radius: 8px;
+        /* Tarjeta de Nivel (Tus cuadros favoritos) */
+        .level-card {
+            background: white;
+            padding: 35px 20px;
+            border-radius: 12px;
+            text-align: center;
             cursor: pointer;
-            font-weight: 700;
-            width: 100%;
-            font-size: 1rem;
-            transition: background 0.3s ease;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            border-top: 6px solid var(--gold);
+            text-decoration: none;
+            color: inherit;
         }
-        .btn-access:hover {
-            background: var(--oxford-blue);
+
+        .level-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 20px rgba(0,0,0,0.1);
+            background-color: #fffdf9;
+        }
+
+        .level-card h2 {
+            font-size: 2.5rem;
+            margin: 0;
+            color: var(--oxford-blue);
+        }
+
+        .level-card p {
+            margin: 10px 0 0;
+            font-weight: 500;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Estilo especial para C1 */
+        .level-card.c1 {
+            border-top-color: var(--oxford-blue);
         }
 
         footer {
             text-align: center;
-            padding: 20px;
+            padding: 30px;
             color: #999;
             font-size: 0.8rem;
         }
@@ -118,27 +111,40 @@
 <body>
 
     <header class="topbar">
-        <div class="brand" style="font-weight: 700; letter-spacing: 1px;">OBJECTIF RÉUSSITE DELF</div>
+        <div class="brand" style="font-weight: 700;">OBJECTIF RÉUSSITE DELF</div>
         <div style="font-size: 0.8rem; opacity: 0.8;">ESPACE ÉTUDIANT</div>
     </header>
 
     <section class="hero">
-        <img src="assets/Banner.png" alt="Objectif Réussite">
+        <img src="assets/Banner.png" alt="Banner">
     </section>
 
     <section class="slogan-section">
         <h1>De la intención a la certificación</h1>
     </section>
 
-    <div class="login-container">
-        <h2>Bienvenue</h2>
-        <p>Entrez vos identifiants pour accéder à votre niveau.</p>
-        
-        <input type="text" id="student_name" placeholder="Nom d'étudiant">
-        <input type="password" id="student_password" placeholder="Mot de passe">
-        
-        <button class="btn-access" onclick="verificarAcceso()">ACCÉDER AU COURS</button>
-    </div>
+    <section class="levels-container">
+        <div class="level-card" onclick="solicitarAcceso('A1')">
+            <h2>A1</h2>
+            <p>Découverte</p>
+        </div>
+        <div class="level-card" onclick="solicitarAcceso('A2')">
+            <h2>A2</h2>
+            <p>Survie</p>
+        </div>
+        <div class="level-card" onclick="solicitarAcceso('B1')">
+            <h2>B1</h2>
+            <p>Seuil</p>
+        </div>
+        <div class="level-card" onclick="solicitarAcceso('B2')">
+            <h2>B2</h2>
+            <p>Indépendant</p>
+        </div>
+        <div class="level-card c1" onclick="solicitarAcceso('C1')">
+            <h2>C1</h2>
+            <p>Autonome</p>
+        </div>
+    </section>
 
     <footer>
         &copy; 2025 Objectif Réussite DELF - Prof. Elena Gabriela Esparza
@@ -160,14 +166,13 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        window.verificarAcceso = async () => {
-            const nombre = document.getElementById('student_name').value;
-            const clave = document.getElementById('student_password').value;
+        // Función que salta al hacer clic en un cuadro
+        window.solicitarAcceso = async (nivelSeleccionado) => {
+            const nombre = prompt("Nom de l'étudiant :");
+            if (!nombre) return;
 
-            if (!nombre || !clave) {
-                alert("S'il vous plaît, remplissez tous los campos.");
-                return;
-            }
+            const clave = prompt("Mot de passe (PIN) :");
+            if (!clave) return;
 
             try {
                 const docRef = doc(db, "Usuarios", nombre);
@@ -176,24 +181,26 @@
                 if (docSnap.exists()) {
                     const datos = docSnap.data();
                     
-                    // Comprobación de contraseña
+                    // Comprobar contraseña y nivel asignado
                     if (datos.password === clave) {
-                        // Guardamos datos de sesión
-                        sessionStorage.setItem('userLevel', datos.nivel);
-                        sessionStorage.setItem('userName', nombre);
-                        
-                        // Redirigimos a la carpeta del nivel correspondiente
-                        // Ejemplo: levels/B1/index.html
-                        window.location.href = `levels/${datos.nivel}/index.html`;
+                        if (datos.nivel === nivelSeleccionado) {
+                            // Éxito: Guardamos sesión y entramos
+                            sessionStorage.setItem('userLevel', datos.nivel);
+                            sessionStorage.setItem('userName', nombre);
+                            window.location.href = `levels/${nivelSeleccionado}/index.html`;
+                        } else {
+                            // Contraseña bien, pero nivel mal
+                            alert(`Accès refusé. Vous êtes inscrit au niveau ${datos.nivel}.`);
+                        }
                     } else {
                         alert("Mot de passe incorrect.");
                     }
                 } else {
-                    alert("Étudiant non trouvé. Vérifiez avec la Prof. Gaby.");
+                    alert("Étudiant non trouvé.");
                 }
             } catch (error) {
-                console.error("Error:", error);
-                alert("Erreur de conexión.");
+                console.error(error);
+                alert("Erreur de connexion.");
             }
         };
     </script>
