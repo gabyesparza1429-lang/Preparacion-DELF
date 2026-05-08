@@ -3,51 +3,85 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin | Objectif Réussite</title>
+    <title>Admin | Objectif Réussite DELF</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root { --oxford-blue: #002147; --gold: #C5A059; }
         body { font-family: 'Montserrat', sans-serif; background: #f4f7f9; margin: 0; padding: 20px; }
-        .admin-container { max-width: 500px; margin: 40px auto; background: white; padding: 30px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
-        h2 { color: var(--oxford-blue); text-align: center; }
-        label { display: block; margin-top: 15px; font-weight: bold; color: var(--oxford-blue); }
-        input, select { width: 100%; padding: 12px; margin-top: 5px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; }
-        .btn-save { background: var(--oxford-blue); color: white; border: none; width: 100%; padding: 15px; margin-top: 25px; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 1rem; }
+        
+        .admin-container { max-width: 800px; margin: 20px auto; background: white; padding: 30px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+        h2 { color: var(--oxford-blue); text-align: center; margin-bottom: 30px; }
+        
+        /* Formulario */
+        .form-group { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
+        label { display: block; font-weight: bold; color: var(--oxford-blue); margin-bottom: 5px; }
+        input, select { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; font-family: inherit; }
+        .btn-save { background: var(--oxford-blue); color: white; border: none; width: 100%; padding: 15px; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 1rem; transition: 0.3s; }
         .btn-save:hover { background: var(--gold); }
-        .back-link { display: block; text-align: center; margin-top: 20px; color: #666; text-decoration: none; font-size: 0.9rem; }
+
+        /* Tabla de Alumnos */
+        .table-container { margin-top: 40px; overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th { background: var(--oxford-blue); color: white; padding: 12px; text-align: left; }
+        td { padding: 12px; border-bottom: 1px solid #eee; }
+        .btn-delete { background: #ff4d4d; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer; font-size: 0.8rem; }
+        
+        .back-link { display: block; text-align: center; margin-top: 30px; color: #666; text-decoration: none; }
     </style>
 </head>
 <body>
 
     <div class="admin-container">
-        <h2>Panel de Administración</h2>
-        <p style="text-align: center; font-size: 0.9rem; color: #666;">Registrar nuevo alumno</p>
+        <h2>Gestion des Étudiants</h2>
         
         <form id="adminForm">
-            <label>Nom de l'étudiant :</label>
-            <input type="text" id="nombreAlumno" placeholder="Ej: Sergio A H" required>
-
-            <label>Mot de passe (PIN) :</label>
-            <input type="text" id="passAlumno" placeholder="Ej: 1234" required>
-
-            <label>Niveau :</label>
-            <select id="nivelAlumno">
-                <option value="A1">A1 - Découverte</option>
-                <option value="A2">A2 - Survie</option>
-                <option value="B1">B1 - Seuil</option>
-                <option value="B2">B2 - Indépendant</option>
-                <option value="C1">C1 - Autonome</option>
-            </select>
-
+            <div class="form-group">
+                <div>
+                    <label>Nom de l'étudiant :</label>
+                    <input type="text" id="nombreAlumno" placeholder="Sergio A H" required>
+                </div>
+                <div>
+                    <label>Mot de passe (PIN) :</label>
+                    <input type="text" id="passAlumno" placeholder="Ej: 1234" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <div style="grid-column: span 2;">
+                    <label>Niveau :</label>
+                    <select id="nivelAlumno">
+                        <option value="A1">A1 - Découverte</option>
+                        <option value="A2">A2 - Survie</option>
+                        <option value="B1">B1 - Seuil</option>
+                        <option value="B2">B2 - Indépendant</option>
+                        <option value="C1">C1 - Autonome</option>
+                    </select>
+                </div>
+            </div>
             <button type="submit" class="btn-save">ENREGISTRER L'ÉTUDIANT</button>
         </form>
 
-        <a href="index.html" class="back-link">← Volver al inicio</a>
+        <div class="table-container">
+            <h3>Liste des étudiants enregistrés</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nom</th>
+                        <th>Niveau</th>
+                        <th>PIN</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="listaAlumnos">
+                    </tbody>
+            </table>
+        </div>
+
+        <a href="index.html" class="back-link">← Retour au Portail</a>
     </div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
-        import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js";
+        import { getFirestore, doc, setDoc, collection, onSnapshot, deleteDoc } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyCgog8tKspHy01ZHE8Dthl9O4W6lw1a_Ec",
@@ -61,27 +95,47 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
+        // Guardar Alumno
         document.getElementById('adminForm').onsubmit = async (e) => {
             e.preventDefault();
-            
             const nombre = document.getElementById('nombreAlumno').value;
             const clave = document.getElementById('passAlumno').value;
             const nivel = document.getElementById('nivelAlumno').value;
 
             try {
-                // Guardamos en Firebase con el nombre y la contraseña que tú elijas
                 await setDoc(doc(db, "Usuarios", nombre), {
                     usuario: nombre,
                     password: clave,
-                    nivel: nivel,
-                    fecha_registro: new Date().toISOString().split('T')[0]
+                    nivel: nivel
                 });
-
-                alert(`¡Éxito! ${nombre} ha sido registrado en el nivel ${nivel} con la clave ${clave}.`);
+                alert("Étudiant enregistré avec succès !");
                 document.getElementById('adminForm').reset();
             } catch (error) {
-                console.error(error);
-                alert("Error al guardar en la base de datos.");
+                alert("Erreur lors de l'enregistrement.");
+            }
+        };
+
+        // Leer y mostrar la lista en tiempo real
+        onSnapshot(collection(db, "Usuarios"), (querySnapshot) => {
+            const tbody = document.getElementById('listaAlumnos');
+            tbody.innerHTML = "";
+            querySnapshot.forEach((doc) => {
+                const data = doc.data();
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${data.usuario}</td>
+                    <td><b>${data.nivel}</b></td>
+                    <td><code>${data.password}</code></td>
+                    <td><button class="btn-delete" onclick="eliminarAlumno('${data.usuario}')">Supprimer</button></td>
+                `;
+                tbody.appendChild(tr);
+            });
+        });
+
+        // Función para borrar
+        window.eliminarAlumno = async (id) => {
+            if(confirm(`Voulez-vous supprimer l'accès de ${id}?`)) {
+                await deleteDoc(doc(db, "Usuarios", id));
             }
         };
     </script>
