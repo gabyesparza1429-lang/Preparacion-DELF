@@ -20,16 +20,48 @@
             color: var(--oxford-blue);
         }
 
-        /* Header con Estilo */
+        /* Header Profesional con Logo Centrado */
         .header {
             background: var(--oxford-blue);
             color: white;
-            padding: 50px 5% 100px 5%;
+            padding: 20px 5% 100px 5%; /* Reducimos padding superior para el logo */
             text-align: center;
             border-bottom: 5px solid var(--gold);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
-        .header h1 { margin: 0; font-size: 2.2rem; letter-spacing: 1px; }
-        .header p { margin: 10px 0 0; opacity: 0.8; text-transform: uppercase; letter-spacing: 2px; }
+        
+        /* Contenedor del Logo */
+        .brand-logo {
+            width: 120px; /* Tamaño del logo */
+            margin-bottom: 20px;
+            margin-top: 10px;
+        }
+
+        .logout-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid var(--gold);
+            padding: 8px 15px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .logout-btn:hover {
+            background: var(--gold);
+            color: var(--oxford-blue);
+        }
+
+        .header h1 { margin: 5px 0 0 0; font-size: 2rem; letter-spacing: 1px; }
+        .header p { margin: 5px 0 0 0; opacity: 0.8; text-transform: uppercase; letter-spacing: 2px; font-size: 0.9rem; }
 
         .container {
             max-width: 1100px;
@@ -37,14 +69,13 @@
             padding: 0 20px;
         }
 
-        /* Dashboard: Contador y Progreso */
+        /* Dashboard */
         .dashboard-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 25px;
             margin-bottom: 30px;
         }
-
         .card-dash {
             background: var(--white);
             padding: 30px;
@@ -53,17 +84,15 @@
             text-align: center;
             border-bottom: 4px solid transparent;
         }
-
         .countdown-val {
             font-size: 3rem;
             font-weight: 800;
             color: var(--gold);
-            line-height: 1;
             margin: 10px 0;
         }
         .dash-label { font-size: 0.75rem; font-weight: 700; color: #999; text-transform: uppercase; }
 
-        /* Barra de Progreso */
+        /* Progreso */
         .progress-bar-bg {
             width: 100%;
             background: #edf2f7;
@@ -75,11 +104,11 @@
         .progress-bar-fill {
             background: var(--green);
             height: 100%;
-            width: 0%; /* Se anima con JS */
+            width: 0%;
             transition: width 1.5s ease-in-out;
         }
 
-        /* Sophia Feedback Section */
+        /* Sophia Box */
         .sophia-box {
             background: var(--white);
             padding: 30px;
@@ -95,7 +124,7 @@
         .sophia-text h4 { margin: 0; color: var(--gold); font-size: 0.9rem; text-transform: uppercase; }
         .sophia-text p { margin: 5px 0 0; font-style: italic; color: #555; line-height: 1.5; }
 
-        /* Competencias DELF */
+        /* Skills */
         .skills-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
@@ -111,6 +140,7 @@
         }
         .skill-item:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(0,0,0,0.1); }
         .skill-icon { font-size: 2.5rem; display: block; margin-bottom: 15px; }
+        
         .btn-access {
             display: block;
             margin-top: 20px;
@@ -121,7 +151,6 @@
             text-decoration: none;
             font-weight: 700;
             font-size: 0.8rem;
-            transition: 0.3s;
         }
         .btn-access:hover { background: var(--gold); }
 
@@ -131,12 +160,15 @@
 <body>
 
     <div class="header">
+        <button class="logout-btn" onclick="logout()">Déconnexion ✕</button>
+        
+        <img src="../../assets/Logo.png" alt="Objectif Réussite Logo" class="brand-logo">
+        
         <p id="levelDisplay">NIVEAU ...</p>
         <h1 id="studentWelcome">Bonjour !</h1>
     </div>
 
     <div class="container">
-        
         <div class="dashboard-grid">
             <div class="card-dash" style="border-bottom-color: var(--gold);">
                 <span class="dash-label">Jours avant l'examen</span>
@@ -157,7 +189,7 @@
             <div class="sophia-avatar">✨</div>
             <div class="sophia-text">
                 <h4>Sophia - Ton assistante IA</h4>
-                <p id="feedbackMsg">"Bonjour ! Je prépare tes feedbacks personnalisés. Travaille tes compétences ci-dessous pour avancer."</p>
+                <p id="feedbackMsg">"Bonjour ! Travaille tes compétences ci-dessous. Je suis là para t'aider à réussir ton examen !"</p>
             </div>
         </div>
 
@@ -187,11 +219,10 @@
                 <a href="#" id="l_PO" target="_blank" class="btn-access">PRÉPARER</a>
             </div>
         </div>
-
     </div>
 
     <div class="footer">
-        &copy; 2025 Objectif Réussite DELF - Espace Étudiant Professionnel
+        &copy; 2025 Objectif Réussite DELF - Prof. Gaby Esparza
     </div>
 
     <script type="module">
@@ -210,13 +241,21 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        const userName = sessionStorage.getItem('userName') || "Étudiant";
-        const userLevel = sessionStorage.getItem('userLevel') || "B1";
+        const userName = sessionStorage.getItem('userName');
+        const userLevel = sessionStorage.getItem('userLevel');
+
+        // SEGURIDAD: Si no hay sesión, mandarlo al inicio
+        if(!userName) { window.location.href = "../../index.html"; }
 
         document.getElementById('studentWelcome').innerText = `Bonjour, ${userName} !`;
         document.getElementById('levelDisplay').innerText = `NIVEAU ${userLevel}`;
 
-        // Función para calcular días restantes
+        // Función de Salida
+        window.logout = () => {
+            sessionStorage.clear();
+            window.location.href = "../../index.html";
+        };
+
         function calculateDays(targetDate) {
             if(!targetDate) return "--";
             const today = new Date();
@@ -227,7 +266,6 @@
         }
 
         async function initDashboard() {
-            // 1. Obtener datos del alumno (Fecha Examen)
             const userSnap = await getDoc(doc(db, "Usuarios", userName));
             if(userSnap.exists()){
                 const userData = userSnap.data();
@@ -235,14 +273,12 @@
                 document.getElementById('dateExam').innerText = `Examen prévu : ${fecha}`;
                 document.getElementById('daysLeft').innerText = calculateDays(fecha);
                 
-                // Simulación de progreso (Luego lo haremos real)
                 setTimeout(() => {
                     document.getElementById('pBar').style.width = "45%";
                     document.getElementById('pPercent').innerText = "45%";
                 }, 500);
             }
 
-            // 2. Obtener Materiales del nivel
             const skills = ['ORAL', 'ECRIT', 'PE', 'PO'];
             for (const s of skills) {
                 const matSnap = await getDoc(doc(db, `Material_${userLevel}`, s));
