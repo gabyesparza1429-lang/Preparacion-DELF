@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard | Objectif Réussite DELF</title>
+    <title>Admin Expert | Objectif Réussite</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
@@ -12,168 +12,121 @@
             --gold: #C5A059;
             --bg-gray: #f4f7f9;
             --white: #ffffff;
+            --income: #2a9d8f;
+            --tax: #e76f51;
         }
         body { font-family: 'Montserrat', sans-serif; margin: 0; display: flex; height: 100vh; background: var(--bg-gray); overflow: hidden; }
         
         /* Sidebar */
-        .sidebar { width: 280px; background: var(--oxford-blue); color: white; display: flex; flex-direction: column; flex-shrink: 0; }
+        .sidebar { width: 260px; background: var(--oxford-blue); color: white; display: flex; flex-direction: column; flex-shrink: 0; }
         .sidebar-header { padding: 40px 20px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.1); }
-        .sidebar-header img { width: 100px; margin-bottom: 15px; }
-        
         .menu-item { padding: 18px 25px; cursor: pointer; transition: 0.3s; opacity: 0.7; border-left: 4px solid transparent; display: flex; align-items: center; gap: 15px; }
         .menu-item:hover { opacity: 1; background: rgba(255,255,255,0.05); }
         .menu-item.active { opacity: 1; background: rgba(255,255,255,0.1); border-left: 4px solid var(--gold); font-weight: 600; }
 
-        /* Contenedor Principal */
+        /* Main Area */
         .main-container { flex: 1; overflow-y: auto; display: flex; flex-direction: column; }
         .top-bar { background: var(--white); padding: 20px 40px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); display: flex; justify-content: space-between; align-items: center; }
         .content-page { padding: 30px; display: none; }
         .content-page.active { display: block; }
 
-        /* Tarjetas y Diseño */
+        /* Cards & Metrics */
         .card { background: var(--white); padding: 25px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 25px; }
-        .grid-charts { display: grid; grid-template-columns: 1.8fr 1fr; gap: 20px; margin-bottom: 25px; }
-        .grid-form { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
-        .full-width { grid-column: span 2; }
+        .metric-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 25px; }
+        .metric-card { padding: 20px; border-radius: 12px; color: white; text-align: center; }
         
+        .grid-form { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
         label { display: block; margin-bottom: 5px; font-weight: 700; color: var(--oxford-blue); font-size: 0.85rem; }
         input, select { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; font-family: inherit; }
         
-        .btn-save { background: var(--oxford-blue); color: white; border: none; padding: 15px; border-radius: 8px; cursor: pointer; font-weight: 700; width: 100%; transition: 0.3s; margin-top: 10px; }
+        .btn-save { background: var(--oxford-blue); color: white; border: none; padding: 15px; border-radius: 8px; cursor: pointer; font-weight: 700; width: 100%; transition: 0.3s; margin-top: 15px; }
         .btn-save:hover { background: var(--gold); }
 
-        /* Tablas */
         table { width: 100%; border-collapse: collapse; margin-top: 15px; }
         th { text-align: left; background: #f8f9fa; padding: 15px; border-bottom: 2px solid #dee2e6; color: var(--oxford-blue); font-size: 0.8rem; }
         td { padding: 15px; border-bottom: 1px solid #eee; font-size: 0.9rem; }
-        .btn-delete { background: #ff4d4d; color: white; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; }
     </style>
 </head>
 <body>
 
     <div class="sidebar">
         <div class="sidebar-header">
-            <img src="assets/Logo.png" alt="Logo">
-            <div style="font-weight: 700;">GABY ESPARZA</div>
-            <small style="color: var(--gold);">ADMINISTRATEUR</small>
+            <div style="font-weight: 700; font-size: 1.2rem;">GABY ESPARZA</div>
+            <small style="color: var(--gold);">RESICO CONTABILIDAD</small>
         </div>
-        <div class="menu-item active" onclick="showPage('alumnos', this)"><span>👨‍🎓</span> Inscription Alumnos</div>
-        <div class="menu-item" onclick="showPage('materiales', this)"><span>📁</span> Materiales (Habilidades)</div>
-        <div class="menu-item" onclick="showPage('contabilidad', this)"><span>💰</span> Comptabilité</div>
+        <div class="menu-item active" onclick="showPage('contabilidad', this)"><span>💰</span> Comptabilité</div>
+        <div class="menu-item" onclick="showPage('alumnos', this)"><span>👨‍🎓</span> Inscription Alumnos</div>
+        <div class="menu-item" onclick="showPage('materiales', this)"><span>📁</span> Ressources Drive</div>
         <div class="menu-item" onclick="window.location.href='index.html'" style="margin-top:auto;"><span>⬅</span> Voir Portal</div>
     </div>
 
     <div class="main-container">
         <div class="top-bar">
-            <h2 id="page-title" style="margin:0; color:var(--oxford-blue);">Inscription Étudiants</h2>
+            <h2 id="page-title" style="margin:0; color:var(--oxford-blue);">Comptabilité & Taxes</h2>
             <div id="currentDate" style="color:#999"></div>
         </div>
 
-        <div id="alumnos" class="content-page active">
-            <div class="grid-charts">
+        <div id="contabilidad" class="content-page active">
+            
+            <div class="metric-grid">
+                <div class="metric-card" style="background: var(--income);">
+                    <small>INGRESOS TOTALES</small>
+                    <h2 id="m_ingresos">$ 0.00</h2>
+                </div>
+                <div class="metric-card" style="background: var(--tax);">
+                    <small>IVA A PAGAR (16%)</small>
+                    <h2 id="m_iva">$ 0.00</h2>
+                </div>
+                <div class="metric-card" style="background: var(--oxford-blue);">
+                    <small>ISR RETENCIÓN (1.25%)</small>
+                    <h2 id="m_isr">$ 0.00</h2>
+                </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 20px;">
                 <div class="card">
-                    <h3>📈 Tendencia de Inscripciones</h3>
-                    <div style="height: 200px;"><canvas id="chartTendencia"></canvas></div>
+                    <h3>📈 Tendencia de Ventas Mensuales</h3>
+                    <div style="height: 250px;"><canvas id="chartVentas"></canvas></div>
                 </div>
                 <div class="card">
-                    <h3>📊 Distribución por Nivel</h3>
-                    <div style="height: 200px;"><canvas id="chartNiveles"></canvas></div>
+                    <h3>📝 Registrar Pago / Venta</h3>
+                    <form id="formPago">
+                        <label>Alumno / Concepto:</label>
+                        <input type="text" id="pago_nom" required>
+                        <label>Monto Bruto ($):</label>
+                        <input type="number" id="pago_monto" required>
+                        <label>Mes de Registro:</label>
+                        <input type="month" id="pago_mes" required>
+                        <button type="submit" class="btn-save">REGISTRAR EN LIBRO</button>
+                    </form>
                 </div>
             </div>
 
             <div class="card">
-                <h3>📝 Registrar Nuevo Alumno</h3>
-                <form id="formAlumno" class="grid-form">
-                    <div>
-                        <label>Nom complet :</label>
-                        <input type="text" id="nom" placeholder="Ej: Sergio A H" required>
-                    </div>
-                    <div>
-                        <label>Téléphone :</label>
-                        <input type="tel" id="tel" placeholder="442..." required>
-                    </div>
-                    <div>
-                        <label>E-mail :</label>
-                        <input type="email" id="mail" placeholder="correo@ejemplo.com" required>
-                    </div>
-                    <div>
-                        <label>Niveau :</label>
-                        <select id="nivel">
-                            <option>A1</option><option>A2</option><option>B1</option><option>B2</option><option>C1</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label>PIN (Mot de passe) :</label>
-                        <input type="text" id="pin" placeholder="PIN secreto" required>
-                    </div>
-                    <div>
-                        <label>Fecha de Alta :</label>
-                        <input type="date" id="fechaAlta" required>
-                    </div>
-                    <div class="full-width">
-                        <label>Fecha prevista de Certificación :</label>
-                        <input type="text" id="fechaCert" placeholder="Ej: Juin 2026">
-                    </div>
-                    <button type="submit" class="btn-save">ENREGISTRER L'ÉTUDIANT</button>
-                </form>
-            </div>
-
-            <div class="card">
-                <h3>👥 Liste des Étudiants</h3>
+                <h3>📖 Libro de Ingresos (Historial)</h3>
                 <table>
                     <thead>
                         <tr>
-                            <th>Nom</th><th>Niveau</th><th>PIN</th><th>Contact</th><th>Certif.</th><th>Action</th>
+                            <th>Concepto</th><th>Mes</th><th>Bruto</th><th>IVA (16%)</th><th>ISR (1.25%)</th><th>Neto</th>
                         </tr>
                     </thead>
-                    <tbody id="listaAlumnos"></tbody>
+                    <tbody id="listaPagos"></tbody>
                 </table>
             </div>
         </div>
 
-        <div id="materiales" class="content-page">
-            <div class="card">
-                <label>Seleccionar Nivel para cargar materiales:</label>
-                <select id="subirNivel" style="font-weight:bold; border:2px solid var(--gold);">
-                    <option>A1</option><option>A2</option><option>B1</option><option>B2</option><option>C1</option>
-                </select>
-            </div>
-            <div class="grid-form">
-                <div class="card">
-                    <h3>🎧 Compréhension Orale</h3>
-                    <label>Título:</label><input type="text" id="t_oral">
-                    <label>Liga Drive:</label><input type="text" id="u_oral">
-                </div>
-                <div class="card">
-                    <h3>📖 Compréhension Écrite</h3>
-                    <label>Título:</label><input type="text" id="t_ecrit">
-                    <label>Liga Drive:</label><input type="text" id="u_ecrit">
-                </div>
-                <div class="card">
-                    <h3>✍️ Production Écrite</h3>
-                    <label>Título:</label><input type="text" id="t_pe">
-                    <label>Liga Drive:</label><input type="text" id="u_pe">
-                </div>
-                <div class="card">
-                    <h3>🗣️ Production Orale</h3>
-                    <label>Título:</label><input type="text" id="t_po">
-                    <label>Liga Drive:</label><input type="text" id="u_po">
-                </div>
-            </div>
-            <button class="btn-save" onclick="guardarMateriales()">SINCRONIZAR MATERIAL AL NIVEL</button>
+        <div id="alumnos" class="content-page">
+            <div class="card"><h3>👨‍🎓 Gestión de Alumnos</h3><p>Accede aquí para registrar nuevos estudiantes...</p></div>
         </div>
 
-        <div id="contabilidad" class="content-page">
-            <div class="card">
-                <h3>💰 Résumé Financier</h3>
-                <h1 id="totalDinero" style="color: green;">$ 0.00 MXN</h1>
-            </div>
+        <div id="materiales" class="content-page">
+            <div class="card"><h3>📁 Recursos Drive</h3><p>Organización de materiales por nivel...</p></div>
         </div>
     </div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
-        import { getFirestore, doc, setDoc, collection, onSnapshot, deleteDoc } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js";
+        import { getFirestore, doc, setDoc, collection, onSnapshot, query, orderBy } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyCgog8tKspHy01ZHE8Dthl9O4W6lw1a_Ec",
@@ -187,8 +140,7 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        document.getElementById('currentDate').innerText = new Date().toLocaleDateString('fr-FR');
-
+        // Navegación
         window.showPage = (pageId, el) => {
             document.querySelectorAll('.content-page').forEach(p => p.classList.remove('active'));
             document.querySelectorAll('.menu-item').forEach(m => m.classList.remove('active'));
@@ -197,64 +149,71 @@
             document.getElementById('page-title').innerText = el.innerText.substring(2);
         };
 
-        // Lógica Gráficas
-        let chartT, chartN;
-        function updateCharts(alumnos) {
-            const nivs = {A1:0, A2:0, B1:0, B2:0, C1:0};
-            const meses = {};
-            alumnos.forEach(a => {
-                nivs[a.nivel]++;
-                const m = a.fecha_alta ? a.fecha_alta.substring(0,7) : '2026-05';
-                meses[m] = (meses[m] || 0) + 1;
+        // Lógica Contable
+        let chartV;
+        function updateContabilidad(pagos) {
+            let totalBruto = 0;
+            const mesesMap = {};
+
+            const tbody = document.getElementById('listaPagos');
+            tbody.innerHTML = "";
+
+            pagos.forEach(p => {
+                const monto = parseFloat(p.monto);
+                const iva = monto * 0.16;
+                const isr = monto * 0.0125;
+                const neto = monto - isr; // Bruto menos retenciones
+                
+                totalBruto += monto;
+                mesesMap[p.mes] = (mesesMap[p.mes] || 0) + monto;
+
+                tbody.innerHTML += `<tr>
+                    <td>${p.concepto}</td>
+                    <td>${p.mes}</td>
+                    <td>$${monto.toFixed(2)}</td>
+                    <td style="color:red">$${iva.toFixed(2)}</td>
+                    <td style="color:orange">$${isr.toFixed(2)}</td>
+                    <td style="font-weight:bold; color:green">$${neto.toFixed(2)}</td>
+                </tr>`;
             });
-            if(chartT) chartT.destroy(); if(chartN) chartN.destroy();
-            chartT = new Chart(document.getElementById('chartTendencia'), { type:'line', data:{ labels:Object.keys(meses).sort(), datasets:[{label:'Inscriptions', data:Object.values(meses), borderColor:'#C5A059', tension:0.4}] }, options:{maintainAspectRatio:false} });
-            chartN = new Chart(document.getElementById('chartNiveles'), { type:'doughnut', data:{ labels:Object.keys(nivs), datasets:[{data:Object.values(nivs), backgroundColor:['#002147','#C5A059','#1d3557','#e9c46a','#2a9d8f']}] }, options:{maintainAspectRatio:false} });
+
+            document.getElementById('m_ingresos').innerText = `$ ${totalBruto.toFixed(2)}`;
+            document.getElementById('m_iva').innerText = `$ ${(totalBruto * 0.16).toFixed(2)}`;
+            document.getElementById('m_isr').innerText = `$ ${(totalBruto * 0.0125).toFixed(2)}`;
+
+            // Gráfica
+            if(chartV) chartV.destroy();
+            chartV = new Chart(document.getElementById('chartVentas'), {
+                type: 'bar',
+                data: {
+                    labels: Object.keys(mesesMap).sort(),
+                    datasets: [{ label: 'Ingresos Brutos', data: Object.values(mesesMap), backgroundColor: '#C5A059' }]
+                },
+                options: { maintainAspectRatio: false }
+            });
         }
 
-        // Firebase Sync Alumnos
-        onSnapshot(collection(db, "Usuarios"), (snap) => {
-            const list = [];
-            const tbody = document.getElementById('listaAlumnos');
-            tbody.innerHTML = "";
-            snap.forEach(doc => {
-                const d = doc.data();
-                list.push(d);
-                tbody.innerHTML += `<tr><td><b>${d.usuario}</b></td><td>${d.nivel}</td><td><code>${d.password}</code></td><td>${d.telefono}<br><small>${d.email}</small></td><td>${d.fecha_certificacion}</td><td><button class=\"btn-delete\" onclick=\"eliminar('${d.usuario}')\">🗑</button></td></tr>`;
-            });
-            updateCharts(list);
+        // Firebase Sync Pagos
+        onSnapshot(query(collection(db, "Contabilidad"), orderBy("mes", "desc")), (snap) => {
+            const lista = [];
+            snap.forEach(doc => lista.push(doc.data()));
+            updateContabilidad(lista);
         });
 
-        document.getElementById('formAlumno').onsubmit = async (e) => {
+        // Registrar Pago
+        document.getElementById('formPago').onsubmit = async (e) => {
             e.preventDefault();
-            const nom = document.getElementById('nom').value;
-            await setDoc(doc(db, "Usuarios", nom), {
-                usuario: nom, telefono: document.getElementById('tel').value, email: document.getElementById('mail').value,
-                nivel: document.getElementById('nivel').value, password: document.getElementById('pin').value,
-                fecha_alta: document.getElementById('fechaAlta').value, fecha_certificacion: document.getElementById('fechaCert').value
+            const id = Date.now().toString();
+            await setDoc(doc(db, "Contabilidad", id), {
+                concepto: document.getElementById('pago_nom').value,
+                monto: document.getElementById('pago_monto').value,
+                mes: document.getElementById('pago_mes').value
             });
-            alert("Élève enregistré !");
-            document.getElementById('formAlumno').reset();
+            alert("Venta registrada con éxito");
+            document.getElementById('formPago').reset();
         };
 
-        window.eliminar = async (id) => { if(confirm(`Eliminar a ${id}?`)) await deleteDoc(doc(db, "Usuarios", id)); };
-
-        // Guardar Materiales por Habilidad
-        window.guardarMateriales = async () => {
-            const nivel = document.getElementById('subirNivel').value;
-            const habs = [
-                {id:'ORAL', t:'t_oral', u:'u_oral'}, {id:'ECRIT', t:'t_ecrit', u:'u_ecrit'},
-                {id:'PE', t:'t_pe', u:'u_pe'}, {id:'PO', t:'t_po', u:'u_po'}
-            ];
-            for (const h of habs) {
-                const titulo = document.getElementById(h.t).value;
-                const url = document.getElementById(h.u).value;
-                if(titulo && url) {
-                    await setDoc(doc(db, `Material_${nivel}`, h.id), { titulo, url, tipo: h.id });
-                }
-            }
-            alert("Materiales actualizados para " + nivel);
-        };
+        document.getElementById('currentDate').innerText = new Date().toLocaleDateString('fr-FR');
     </script>
 </body>
 </html>
