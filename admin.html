@@ -3,17 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Expert | Objectif Réussite</title>
+    <title>Admin Expert | Proyecto Réussite DELF</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         :root {
             --oxford-blue: #002147;
             --gold: #C5A059;
             --bg-gray: #f4f7f9;
             --white: #ffffff;
-            --income: #2a9d8f;
-            --tax: #e76f51;
         }
         body { font-family: 'Montserrat', sans-serif; margin: 0; display: flex; height: 100vh; background: var(--bg-gray); overflow: hidden; }
         
@@ -21,7 +18,6 @@
         .sidebar { width: 260px; background: var(--oxford-blue); color: white; display: flex; flex-direction: column; flex-shrink: 0; }
         .sidebar-header { padding: 40px 20px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.1); }
         .menu-item { padding: 18px 25px; cursor: pointer; transition: 0.3s; opacity: 0.7; border-left: 4px solid transparent; display: flex; align-items: center; gap: 15px; }
-        .menu-item:hover { opacity: 1; background: rgba(255,255,255,0.05); }
         .menu-item.active { opacity: 1; background: rgba(255,255,255,0.1); border-left: 4px solid var(--gold); font-weight: 600; }
 
         /* Main Area */
@@ -30,106 +26,92 @@
         .content-page { padding: 30px; display: none; }
         .content-page.active { display: block; }
 
-        /* Cards & Metrics */
+        /* Cards & Form */
         .card { background: var(--white); padding: 25px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 25px; }
-        .grid-form { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
-        label { display: block; margin-bottom: 5px; font-weight: 700; color: var(--oxford-blue); font-size: 0.75rem; text-transform: uppercase; }
-        input, select, textarea { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; font-family: inherit; margin-bottom: 10px; }
+        .grid-skills { display: grid; grid-template-columns: repeat(auto-fit, minmax(450px, 1fr)); gap: 20px; }
         
-        .btn-save { background: var(--oxford-blue); color: white; border: none; padding: 15px; border-radius: 8px; cursor: pointer; font-weight: 700; width: 100%; transition: 0.3s; margin-top: 15px; }
-        .btn-save:hover { background: var(--gold); }
+        label { display: block; margin-bottom: 5px; font-weight: 700; color: var(--oxford-blue); font-size: 0.75rem; text-transform: uppercase; margin-top: 10px; }
+        input, select, textarea { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; font-family: inherit; }
+        textarea { resize: vertical; min-height: 80px; font-size: 0.85rem; }
+        
+        .btn-save { background: var(--oxford-blue); color: white; border: none; padding: 20px; border-radius: 8px; cursor: pointer; font-weight: 700; width: 100%; transition: 0.3s; margin-top: 30px; font-size: 1rem; border: 2px solid var(--gold); }
+        .btn-save:hover { background: var(--gold); color: var(--oxford-blue); }
 
-        .metric-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 25px; }
-        .metric-card { padding: 20px; border-radius: 12px; color: white; text-align: center; }
-
-        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
-        th { text-align: left; background: #f8f9fa; padding: 15px; border-bottom: 2px solid #dee2e6; color: var(--oxford-blue); font-size: 0.8rem; }
-        td { padding: 15px; border-bottom: 1px solid #eee; font-size: 0.9rem; }
+        .skill-badge { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 0.7rem; font-weight: 700; margin-bottom: 10px; }
     </style>
 </head>
 <body>
 
     <div class="sidebar">
         <div class="sidebar-header">
-            <div style="font-weight: 700; font-size: 1.2rem;">GABY ESPARZA</div>
-            <small style="color: var(--gold);">ADMINISTRATEUR</small>
+            <div style="font-weight: 700; font-size: 1.2rem; color: var(--gold);">GABY ESPARZA</div>
+            <small>PROYECTO RÉUSSITE DELF</small>
         </div>
-        <div class="menu-item active" onclick="showPage('materiales', this)"><span>📁</span> Ressources Drive</div>
-        <div class="menu-item" onclick="showPage('alumnos', this)"><span>👨‍🎓</span> Inscription Alumnos</div>
+        <div class="menu-item active" onclick="showPage('materiales', this)"><span>📁</span> Contenu des Niveaux</div>
+        <div class="menu-item" onclick="showPage('alumnos', this)"><span>👨‍🎓</span> Étudiants</div>
         <div class="menu-item" onclick="showPage('contabilidad', this)"><span>💰</span> Comptabilité</div>
-        <div class="menu-item" onclick="window.location.href='index.html'" style="margin-top:auto;"><span>⬅</span> Voir Portal</div>
     </div>
 
     <div class="main-container">
         <div class="top-bar">
-            <h2 id="page-title" style="margin:0; color:var(--oxford-blue);">Gestion du Matériel</h2>
-            <div id="currentDate" style="color:#999"></div>
+            <h2 id="page-title" style="margin:0; color:var(--oxford-blue);">Éditeur de Contenu</h2>
+            <select id="subirNivel" style="width: auto; font-weight: 700; border: 2px solid var(--gold);">
+                <option>A1</option><option>A2</option><option>B1</option><option>B2</option><option>C1</option>
+            </select>
         </div>
 
         <div id="materiales" class="content-page active">
-            <div class="card">
-                <label>Niveau à travailler :</label>
-                <select id="subirNivel" style="font-weight:bold; border:2px solid var(--gold); width: 200px;">
-                    <option>A1</option><option>A2</option><option>B1</option><option>B2</option><option>C1</option>
-                </select>
-            </div>
-            
-            <div class="grid-form">
+            <div class="grid-skills">
+                
                 <div class="card">
-                    <h3>🎧 Compréhension Orale</h3>
+                    <span class="skill-badge" style="background: #e1f5fe; color: #0288d1;">COMPRÉHENSION ORALE</span>
                     <label>Titre de l'exercice :</label><input type="text" id="t_oral">
-                    <label>Lien PDF Questions :</label><input type="text" id="u_oral_q">
-                    <label>Lien PDF Transcription :</label><input type="text" id="u_oral_t">
-                    <label>Lien PDF Corrigés :</label><input type="text" id="u_oral_c">
+                    <label>Lien Audio (Drive/URL) :</label><input type="text" id="u_oral_audio">
+                    <label>Texte de la Transcription (Pour Sophia) :</label>
+                    <textarea id="txt_oral" placeholder="Copie et colle ici la transcription de l'audio..."></textarea>
+                    <div style="display: flex; gap: 10px;">
+                        <div style="flex:1"><label>PDF Questions:</label><input type="text" id="u_oral_q"></div>
+                        <div style="flex:1"><label>PDF Corrigés:</label><input type="text" id="u_oral_c"></div>
+                    </div>
                 </div>
+
                 <div class="card">
-                    <h3>📖 Compréhension Écrite</h3>
+                    <span class="skill-badge" style="background: #f1f8e9; color: #388e3c;">COMPRÉHENSION ÉCRITE</span>
                     <label>Titre de l'exercice :</label><input type="text" id="t_ecrit">
-                    <label>Lien PDF Texte/Questions :</label><input type="text" id="u_ecrit_q">
+                    <label>Texte de l'examen (Pour le vocabulaire) :</label>
+                    <textarea id="txt_ecrit" placeholder="Copie et colle ici le texte de lecture..."></textarea>
+                    <label>Lien PDF Questions :</label><input type="text" id="u_ecrit_q">
                     <label>Lien PDF Corrigés :</label><input type="text" id="u_ecrit_c">
                 </div>
+
                 <div class="card">
-                    <h3>✍️ Production Écrite</h3>
+                    <span class="skill-badge" style="background: #fff3e0; color: #f57c00;">PRODUCTION ÉCRITE</span>
                     <label>Titre du sujet :</label><input type="text" id="t_pe">
-                    <label>Lien Consigne/Ressources :</label><input type="text" id="u_pe_q">
-                    <label>Lien Grille de correction :</label><input type="text" id="u_pe_c">
+                    <label>Canevas / Squelette suggéré :</label>
+                    <textarea id="txt_pe_esqueleto" placeholder="Structure suggérée: Salutation, Intro, Argument 1..."></textarea>
+                    <label>Lien PDF Sujet :</label><input type="text" id="u_pe_q">
                 </div>
+
                 <div class="card">
-                    <h3>🗣️ Production Orale</h3>
+                    <span class="skill-badge" style="background: #fce4ec; color: #c2185b;">PRODUCTION ORALE</span>
                     <label>Titre du sujet :</label><input type="text" id="t_po">
-                    <label>Lien Consigne/Préparation :</label><input type="text" id="u_po_q">
-                    <label>Lien Exemples/Corrigés :</label><input type="text" id="u_po_c">
+                    <label>Focus Phonétique (Mots difficiles) :</label>
+                    <textarea id="txt_po_fonetica" placeholder="Ex: La liaison, les sons [u] vs [ou]..."></textarea>
+                    <label>Lien PDF Consignes :</label><input type="text" id="u_po_q">
                 </div>
-            </div>
-            <button class="btn-save" onclick="guardarMateriales()">METTRE À JOUR LE NIVEAU</button>
-        </div>
 
-        <div id="alumnos" class="content-page">
-            <div class="card">
-                <h3>👨‍🎓 Inscrire un Élève</h3>
-                <form id="formAlumno" class="grid-form">
-                    <input type="text" id="nom" placeholder="Nom complet" required>
-                    <input type="text" id="pin" placeholder="PIN" required>
-                    <select id="nivel"><option>A1</option><option>A2</option><option>B1</option><option>B2</option><option>C1</option></select>
-                    <input type="number" id="progreso" placeholder="Progrès %" value="0">
-                    <textarea id="msgSophia" style="grid-column: span 2;" placeholder="Message de Sophia..."></textarea>
-                    <button type="submit" class="btn-save" style="grid-column: span 2;">ENREGISTRER</button>
-                </form>
             </div>
-        </div>
 
-        <div id="contabilidad" class="content-page">
-            <div class="metric-grid">
-                <div class="metric-card" style="background: var(--income);"><small>BRUT</small><h2 id="m_ingresos">$ 0.00</h2></div>
-                <div class="metric-card" style="background: var(--tax);"><small>IVA (16%)</small><h2 id="m_iva">$ 0.00</h2></div>
-                <div class="metric-card" style="background: var(--oxford-blue);"><small>ISR (1.25%)</small><h2 id="m_isr">$ 0.00</h2></div>
-            </div>
+            <button class="btn-save" onclick="guardarTodo()">SYNCHRONISER LE NIVEAU COMPLET</button>
         </div>
+        
+        <div id="alumnos" class="content-page"><h3>Gestion des Étudiants</h3></div>
+        <div id="contabilidad" class="content-page"><h3>Comptabilité</h3></div>
     </div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
-        import { getFirestore, doc, setDoc, collection, onSnapshot, deleteDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js";
+        import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyCgog8tKspHy01ZHE8Dthl9O4W6lw1a_Ec",
@@ -150,40 +132,36 @@
             el.classList.add('active');
         };
 
-        window.guardarMateriales = async () => {
-            const nivel = document.getElementById('subirNivel').value;
-            const habs = [
-                {id:'ORAL', t:'t_oral', q:'u_oral_q', tr:'u_oral_t', c:'u_oral_c'},
-                {id:'ECRIT', t:'t_ecrit', q:'u_ecrit_q', c:'u_ecrit_c'},
-                {id:'PE', t:'t_pe', q:'u_pe_q', c:'u_pe_c'},
-                {id:'PO', t:'t_po', q:'u_po_q', c:'u_po_c'}
-            ];
-
-            for (const h of habs) {
-                const titulo = document.getElementById(h.t).value;
-                if(titulo) {
-                    const datos = { 
-                        titulo, 
-                        url_q: document.getElementById(h.q).value,
-                        url_c: document.getElementById(h.c).value
-                    };
-                    if(h.tr) datos.url_t = document.getElementById(h.tr).value;
-                    
-                    await setDoc(doc(db, `Material_${nivel}`, h.id), datos);
+        window.guardarTodo = async () => {
+            const niv = document.getElementById('subirNivel').value;
+            const data = {
+                oral: {
+                    titulo: document.getElementById('t_oral').value,
+                    audio: document.getElementById('u_oral_audio').value,
+                    transcripcion: document.getElementById('txt_oral').value,
+                    pdf_q: document.getElementById('u_oral_q').value,
+                    pdf_c: document.getElementById('u_oral_c').value
+                },
+                ecrit: {
+                    titulo: document.getElementById('t_ecrit').value,
+                    texto: document.getElementById('txt_ecrit').value,
+                    pdf_q: document.getElementById('u_ecrit_q').value,
+                    pdf_c: document.getElementById('u_ecrit_c').value
+                },
+                pe: {
+                    titulo: document.getElementById('t_pe').value,
+                    esqueleto: document.getElementById('txt_pe_esqueleto').value,
+                    pdf_q: document.getElementById('u_pe_q').value
+                },
+                po: {
+                    titulo: document.getElementById('t_po').value,
+                    fonetica: document.getElementById('txt_po_fonetica').value,
+                    pdf_q: document.getElementById('u_po_q').value
                 }
-            }
-            alert("Ressources synchronisées pour " + nivel);
-        };
+            };
 
-        // Lógica de Alumnos (Simplificada para el ejemplo)
-        document.getElementById('formAlumno').onsubmit = async (e) => {
-            e.preventDefault();
-            const nom = document.getElementById('nom').value;
-            await setDoc(doc(db, "Usuarios", nom), {
-                usuario: nom, password: document.getElementById('pin').value, nivel: document.getElementById('nivel').value,
-                progreso: document.getElementById('progreso').value, mensaje_sophia: document.getElementById('msgSophia').value
-            }, { merge: true });
-            alert("Élève enregistré !");
+            await setDoc(doc(db, "Niveles", niv), data);
+            alert("Niveau " + niv + " mis à jour avec succès ! Sophia est prête.");
         };
     </script>
 </body>
