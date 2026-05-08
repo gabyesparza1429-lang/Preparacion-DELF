@@ -1,126 +1,164 @@
-<div id="alumnos" class="content-page active">
-    
-    <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 20px; margin-bottom: 30px;">
-        <div class="card">
-            <h3>📈 Tendencia de Inscripciones</h3>
-            <canvas id="graficaInscripciones" height="100"></canvas>
-        </div>
-        <div class="card">
-            <h3>📊 Alumnos por Nivel</h3>
-            <canvas id="graficaNiveles"></canvas>
-        </div>
-    </div>
-
-    <div class="card">
-        <h3>Registrar Nuevo Alumno</h3>
-        <form id="formAlumno" class="grid-form">
-            <div>
-                <label>Nom de l'étudiant :</label>
-                <input type="text" id="nom" placeholder="Ej: Sergio A H" required>
-            </div>
-            <div>
-                <label>Téléphone :</label>
-                <input type="tel" id="tel" placeholder="442..." required>
-            </div>
-            <div>
-                <label>E-mail :</label>
-                <input type="email" id="mail" placeholder="correo@ejemplo.com" required>
-            </div>
-            <div>
-                <label>Niveau :</label>
-                <select id="nivel">
-                    <option>A1</option><option>A2</option><option>B1</option><option>B2</option><option>C1</option>
-                </select>
-            </div>
-            <div>
-                <label>Mot de passe (PIN) :</label>
-                <input type="text" id="pin" placeholder="PIN de acceso" required>
-            </div>
-            <div>
-                <label>Fecha de Alta :</label>
-                <input type="date" id="fechaAlta" required>
-            </div>
-            <div class="full-width">
-                <label>Fecha prevista de Certificación :</label>
-                <input type="text" id="fechaCert" placeholder="Ej: Junio 2026">
-            </div>
-            <button type="submit" class="btn-save" style="grid-column: span 2;">ENREGISTRER L'ÉTUDIANT</button>
-        </form>
-    </div>
-
-    <div class="card">
-        <h3>Base de Datos de Alumnos</h3>
-        <table>
-            <thead>
-                <tr>
-                    <th>Nom</th><th>Niveau</th><th>PIN</th><th>Tel/Mail</th><th>Certif.</th><th>Action</th>
-                </tr>
-            </thead>
-            <tbody id="listaAlumnos"></tbody>
-        </table>
-    </div>
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-<script type="module">
-    // ... (Tu configuración de Firebase de antes)
-
-    // Función para dibujar las gráficas
-    function actualizarGraficas(alumnos) {
-        const nivelesContador = { 'A1': 0, 'A2': 0, 'B1': 0, 'B2': 0, 'C1': 0 };
-        const mesesContador = {};
-
-        alumnos.forEach(a => {
-            // Contar niveles
-            if (nivelesContador[a.nivel] !== undefined) nivelesContador[a.nivel]++;
-            
-            // Contar por mes (Tendencia)
-            const mes = a.fecha_alta ? a.fecha_alta.substring(0, 7) : 'Sin fecha';
-            mesesContador[mes] = (mesesContador[mes] || 0) + 1;
-        });
-
-        // Gráfica de Línea (Tendencia)
-        new Chart(document.getElementById('graficaInscripciones'), {
-            type: 'line',
-            data: {
-                labels: Object.keys(mesesContador).sort(),
-                datasets: [{
-                    label: 'Nuevos Alumnos',
-                    data: Object.values(mesesContador),
-                    borderColor: '#C5A059',
-                    backgroundColor: 'rgba(197, 160, 89, 0.2)',
-                    fill: true,
-                    tension: 0.4
-                }]
-            }
-        });
-
-        // Gráfica de Donita (Niveles)
-        new Chart(document.getElementById('graficaNiveles'), {
-            type: 'doughnut',
-            data: {
-                labels: Object.keys(nivelesContador),
-                datasets: [{
-                    data: Object.values(nivelesContador),
-                    backgroundColor: ['#002147', '#C5A059', '#1d3557', '#e9c46a', '#2a9d8f']
-                }]
-            }
-        });
-    }
-
-    // Al cargar los datos de Firebase, llamamos a la función
-    onSnapshot(collection(db, "Usuarios"), (snap) => {
-        const alumnos = [];
-        const tbody = document.getElementById('listaAlumnos');
-        tbody.innerHTML = "";
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | Objectif Réussite DELF</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --oxford-blue: #002147;
+            --gold: #C5A059;
+            --bg-gray: #f4f7f9;
+            --white: #ffffff;
+        }
+        body { font-family: 'Montserrat', sans-serif; margin: 0; display: flex; height: 100vh; background: var(--bg-gray); overflow: hidden; }
         
-        snap.forEach((doc) => {
-            const d = doc.data();
-            alumnos.push(d);
-            // ... (Código para llenar la tabla que ya teníamos)
-        });
+        /* Sidebar */
+        .sidebar { width: 280px; background: var(--oxford-blue); color: white; display: flex; flex-direction: column; flex-shrink: 0; }
+        .sidebar-header { padding: 40px 20px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .sidebar-header img { width: 100px; margin-bottom: 15px; }
+        .menu-item { padding: 18px 25px; cursor: pointer; transition: 0.3s; opacity: 0.7; border-left: 4px solid transparent; display: flex; align-items: center; gap: 15px; }
+        .menu-item:hover { opacity: 1; background: rgba(255,255,255,0.05); }
+        .menu-item.active { opacity: 1; background: rgba(255,255,255,0.1); border-left: 4px solid var(--gold); font-weight: 600; }
 
-        actualizarGraficas(alumnos);
-    });
-</script>
+        /* Main Area */
+        .main-container { flex: 1; overflow-y: auto; display: flex; flex-direction: column; }
+        .top-bar { background: var(--white); padding: 20px 40px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); display: flex; justify-content: space-between; align-items: center; }
+        .content-page { padding: 30px; display: none; }
+        .content-page.active { display: block; }
+
+        /* Cards & Visuals */
+        .card { background: var(--white); padding: 25px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 25px; }
+        .grid-charts { display: grid; grid-template-columns: 1.8fr 1fr; gap: 20px; margin-bottom: 25px; }
+        .grid-form { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
+        .full-width { grid-column: span 2; }
+        
+        label { display: block; margin-bottom: 5px; font-weight: 700; color: var(--oxford-blue); font-size: 0.85rem; }
+        input, select { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; font-family: inherit; }
+        
+        .btn-save { background: var(--oxford-blue); color: white; border: none; padding: 15px; border-radius: 8px; cursor: pointer; font-weight: 700; width: 100%; transition: 0.3s; margin-top: 20px; }
+        .btn-save:hover { background: var(--gold); }
+
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        th { text-align: left; background: #f8f9fa; padding: 15px; border-bottom: 2px solid #dee2e6; color: var(--oxford-blue); font-size: 0.8rem; }
+        td { padding: 15px; border-bottom: 1px solid #eee; font-size: 0.9rem; }
+        .btn-delete { background: #ff4d4d; color: white; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <img src="assets/Logo.png" alt="Logo">
+            <div style="font-weight: 700;">GABY ESPARZA</div>
+            <small style="color: var(--gold);">ADMINISTRATEUR</small>
+        </div>
+        <div class="menu-item active" onclick="showPage('alumnos', this)"><span>👨‍🎓</span> Inscription Alumnos</div>
+        <div class="menu-item" onclick="showPage('materiales', this)"><span>📁</span> Materiales (Drive)</div>
+        <div class="menu-item" onclick="showPage('contabilidad', this)"><span>💰</span> Comptabilité</div>
+        <div class="menu-item" onclick="window.location.href='index.html'" style="margin-top:auto;"><span>⬅</span> Voir Portal</div>
+    </div>
+
+    <div class="main-container">
+        <div class="top-bar">
+            <h2 id="page-title" style="margin:0; color:var(--oxford-blue);">Inscription Étudiants</h2>
+            <div id="currentDate" style="color:#999"></div>
+        </div>
+
+        <div id="alumnos" class="content-page active">
+            <div class="grid-charts">
+                <div class="card">
+                    <h3>📈 Tendencia de Inscripciones</h3>
+                    <div style="height: 200px;"><canvas id="chartTendencia"></canvas></div>
+                </div>
+                <div class="card">
+                    <h3>📊 Alumnos por Nivel</h3>
+                    <div style="height: 200px;"><canvas id="chartNiveles"></canvas></div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>📝 Registrar Nuevo Alumno</h3>
+                <form id="formAlumno" class="grid-form">
+                    <div>
+                        <label>Nom complet :</label>
+                        <input type="text" id="nom" required>
+                    </div>
+                    <div>
+                        <label>Téléphone :</label>
+                        <input type="tel" id="tel" required>
+                    </div>
+                    <div>
+                        <label>E-mail :</label>
+                        <input type="email" id="mail" required>
+                    </div>
+                    <div>
+                        <label>Niveau :</label>
+                        <select id="nivel">
+                            <option>A1</option><option>A2</option><option>B1</option><option>B2</option><option>C1</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label>PIN (Mot de passe) :</label>
+                        <input type="text" id="pin" required>
+                    </div>
+                    <div>
+                        <label>Fecha de Alta :</label>
+                        <input type="date" id="fechaAlta" required>
+                    </div>
+                    <div class="full-width">
+                        <label>Fecha de Certificación :</label>
+                        <input type="text" id="fechaCert" placeholder="Ej: Junio 2026">
+                    </div>
+                    <button type="submit" class="btn-save">ENREGISTRER L'ÉTUDIANT</button>
+                </form>
+            </div>
+
+            <div class="card">
+                <h3>👥 Base de Datos</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nom</th><th>Niveau</th><th>PIN</th><th>Contact</th><th>Certif.</th><th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="listaAlumnos"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="materiales" class="content-page">
+            <div class="card">
+                <h3>📂 Gestion des Recursos (Ligas de Drive)</h3>
+                <p>Aquí organizarás los materiales por Oral, Écrit, PE y PO de cada nivel.</p>
+            </div>
+        </div>
+
+        <div id="contabilidad" class="content-page">
+            <div class="card">
+                <h3>💰 Comptabilité</h3>
+                <p>Resumen financiero de tus inscripciones.</p>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
+        import { getFirestore, doc, setDoc, collection, onSnapshot, deleteDoc } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCgog8tKspHy01ZHE8Dthl9O4W6lw1a_Ec",
+            authDomain: "objectif-reussite-delf.firebaseapp.com",
+            projectId: "objectif-reussite-delf",
+            storageBucket: "objectif-reussite-delf.firebasestorage.app",
+            messagingSenderId: "942279633770",
+            appId: "1:942279633770:web:9d7b5fe54d0139019c1313"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // Navegación
+        window.showPage = (pageId, el
