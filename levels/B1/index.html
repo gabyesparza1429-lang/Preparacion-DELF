@@ -13,139 +13,57 @@
             --white: #ffffff;
             --green: #2a9d8f;
         }
-        body { 
-            font-family: 'Montserrat', sans-serif; 
-            margin: 0; background-color: var(--bg-gray); 
-            color: var(--oxford-blue);
-        }
+        body { font-family: 'Montserrat', sans-serif; margin: 0; background-color: var(--bg-gray); color: var(--oxford-blue); }
 
-        /* Header con Layout Profesional */
+        /* Header con Marca */
         .header {
             background: var(--oxford-blue);
             color: white;
-            padding: 20px 40px 120px 40px; /* Más espacio abajo para que no se encime */
+            padding: 20px 40px 120px 40px;
             border-bottom: 5px solid var(--gold);
             position: relative;
         }
+        .top-nav { display: flex; justify-content: space-between; align-items: center; width: 100%; margin-bottom: 20px; }
+        .brand-logo { width: 220px; height: auto; }
+        .logout-btn { background: rgba(255, 255, 255, 0.1); color: white; border: 1px solid var(--gold); padding: 8px 18px; border-radius: 20px; cursor: pointer; font-weight: 600; transition: 0.3s; text-decoration: none; font-size: 0.8rem; }
+        .logout-btn:hover { background: var(--gold); color: var(--oxford-blue); }
 
-        /* Barra Superior: Logo e Izquierda / Botón Derecha */
-        .top-nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            width: 100%;
-            margin-bottom: 20px;
-        }
+        .welcome-section { text-align: center; }
+        .welcome-section h1 { margin: 10px 0 0 0; font-size: 2.5rem; }
 
-        .brand-logo {
-            width: 220px; /* Logo más grande como pediste */
-            height: auto;
-        }
+        .container { max-width: 1100px; margin: -80px auto 50px auto; padding: 0 20px; position: relative; z-index: 10; }
 
-        .logout-btn {
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-            border: 1px solid var(--gold);
-            padding: 8px 18px;
-            border-radius: 20px;
-            text-decoration: none;
-            font-size: 0.8rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-        .logout-btn:hover {
-            background: var(--gold);
-            color: var(--oxford-blue);
-        }
-
-        /* Saludo Centrado */
-        .welcome-section {
-            text-align: center;
-            margin-top: 10px;
-        }
-        .welcome-section p { 
-            margin: 0; 
-            opacity: 0.8; 
-            text-transform: uppercase; 
-            letter-spacing: 3px; 
-            font-size: 0.9rem; 
-        }
-        .welcome-section h1 { 
-            margin: 10px 0 0 0; 
-            font-size: 2.5rem; 
-            font-weight: 700; 
-        }
-
-        /* Contenedor de Contenido */
-        .container {
-            max-width: 1100px;
-            margin: -80px auto 50px auto; /* Ajustado para que flote bien */
-            padding: 0 20px;
-            position: relative;
-            z-index: 10;
-        }
-
-        /* Dashboard Cards */
-        .dashboard-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 25px;
-            margin-bottom: 30px;
-        }
-        .card-dash {
-            background: var(--white);
-            padding: 30px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            text-align: center;
-            border-bottom: 4px solid transparent;
-        }
+        /* Dashboard */
+        .dashboard-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; margin-bottom: 30px; }
+        .card-dash { background: var(--white); padding: 30px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); text-align: center; }
         .countdown-val { font-size: 3rem; font-weight: 800; color: var(--gold); margin: 10px 0; }
-        .dash-label { font-size: 0.75rem; font-weight: 700; color: #999; text-transform: uppercase; }
-
-        .progress-bar-bg {
-            width: 100%; background: #edf2f7; border-radius: 15px; height: 15px; margin: 20px 0 10px 0; overflow: hidden;
-        }
-        .progress-bar-fill { background: var(--green); height: 100%; width: 45%; transition: width 1.5s ease-in-out; }
+        
+        .progress-bar-bg { width: 100%; background: #edf2f7; border-radius: 15px; height: 15px; margin: 20px 0 10px 0; overflow: hidden; }
+        .progress-bar-fill { background: var(--green); height: 100%; width: 0%; transition: width 1.5s ease; }
 
         /* Sophia Box */
         .sophia-box {
-            background: var(--white);
-            padding: 30px;
-            border-radius: 20px;
-            margin-bottom: 30px;
-            border-left: 8px solid var(--gold);
-            display: flex;
-            align-items: center;
-            gap: 25px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            background: var(--white); padding: 30px; border-radius: 20px; margin-bottom: 30px; border-left: 8px solid var(--gold);
+            display: flex; align-items: center; gap: 25px; box-shadow: 0 10px 25px rgba(0,0,0,0.05);
         }
-        .sophia-avatar { font-size: 3rem; }
-        .sophia-text h4 { margin: 0; color: var(--gold); font-size: 0.9rem; text-transform: uppercase; }
-        .sophia-text p { margin: 5px 0 0; font-style: italic; color: #555; line-height: 1.5; }
 
-        /* Skills Grid */
-        .skills-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-            gap: 20px;
+        /* Skills Grid mejorada para múltiples botones */
+        .skills-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
+        .skill-item { background: var(--white); padding: 25px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.03); display: flex; flex-direction: column; }
+        .skill-icon { font-size: 2rem; margin-bottom: 10px; display: block; text-align: center; }
+        .skill-title { font-weight: 700; text-align: center; margin-bottom: 15px; display: block; }
+        
+        .btn-group { display: flex; flex-direction: column; gap: 8px; }
+        .btn-link {
+            padding: 10px; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.75rem;
+            text-align: center; transition: 0.3s; border: 1px solid var(--oxford-blue);
         }
-        .skill-item {
-            background: var(--white); padding: 25px; border-radius: 15px; text-align: center; box-shadow: 0 5px 15px rgba(0,0,0,0.03); transition: 0.3s;
-        }
-        .skill-item:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(0,0,0,0.1); }
-        .btn-access {
-            display: block; margin-top: 20px; background: var(--oxford-blue); color: white; padding: 12px; border-radius: 8px; text-decoration: none; font-weight: 700; font-size: 0.8rem;
-        }
-        .btn-access:hover { background: var(--gold); }
+        .btn-q { background: var(--oxford-blue); color: white; }
+        .btn-t { background: white; color: var(--oxford-blue); }
+        .btn-c { background: var(--gold); color: white; border-color: var(--gold); }
+        .btn-link:hover { opacity: 0.8; transform: scale(1.02); }
 
         .footer { text-align: center; padding: 50px; color: #999; font-size: 0.8rem; }
-
-        @media (max-width: 768px) {
-            .top-nav { flex-direction: column; gap: 15px; }
-            .dashboard-grid { grid-template-columns: 1fr; }
-        }
     </style>
 </head>
 <body>
@@ -153,72 +71,44 @@
     <header class="header">
         <div class="top-nav">
             <img src="../../assets/Logo.png" alt="Logo" class="brand-logo">
-            
             <button class="logout-btn" onclick="logout()">Déconnexion ✕</button>
         </div>
-
         <div class="welcome-section">
-            <p id="levelDisplay">NIVEAU ...</p>
+            <p id="levelDisplay" style="letter-spacing: 3px; opacity: 0.8;">NIVEAU ...</p>
             <h1 id="studentWelcome">Bonjour !</h1>
         </div>
     </header>
 
     <div class="container">
         <div class="dashboard-grid">
-            <div class="card-dash" style="border-bottom-color: var(--gold);">
-                <span class="dash-label">Jours avant l'examen</span>
+            <div class="card-dash">
+                <span style="font-size: 0.75rem; font-weight: 700; color: #999;">JOURS AVANT L'EXAMEN</span>
                 <div id="daysLeft" class="countdown-val">--</div>
-                <span id="dateExam" style="color: #666; font-size: 0.9rem;">...</span>
             </div>
-
-            <div class="card-dash" style="border-bottom-color: var(--green);">
-                <span class="dash-label">Ton progrès global</span>
-                <div class="progress-bar-bg">
-                    <div class="progress-bar-fill" id="pBar"></div>
-                </div>
-                <span id="pPercent" style="font-weight: 700; color: var(--green); font-size: 1.2rem;">45%</span>
+            <div class="card-dash">
+                <span style="font-size: 0.75rem; font-weight: 700; color: #999;">TON PROGRÈS</span>
+                <div class="progress-bar-bg"><div class="progress-bar-fill" id="pBar"></div></div>
+                <span id="pPercent" style="font-weight: 700; color: var(--green);">0%</span>
             </div>
         </div>
 
         <div class="sophia-box">
-            <div class="sophia-avatar">✨</div>
-            <div class="sophia-text">
-                <h4>Sophia - Ton assistante IA</h4>
-                <p id="feedbackMsg">"Bonjour ! Travaille tes compétences ci-dessous. Je suis là para t'aider à réussir ton examen !"</p>
+            <div style="font-size: 3rem;">✨</div>
+            <div>
+                <h4 style="margin: 0; color: var(--gold); text-transform: uppercase; font-size: 0.8rem;">Sophia - Ton assistante IA</h4>
+                <p id="feedbackMsg" style="font-style: italic; color: #555; margin-top: 5px;">"Bonjour ! Travaille tes compétences ci-dessous."</p>
             </div>
         </div>
 
         <div class="skills-container">
-            <div class="skill-item">
-                <span style="font-size: 2.5rem; display: block; margin-bottom: 15px;">🎧</span>
-                <strong>Compréhension Orale</strong>
-                <p id="t_ORAL" style="font-size:0.8rem; color:#888; margin:10px 0;">...</p>
-                <a href="#" id="l_ORAL" target="_blank" class="btn-access">ÉCOUTER</a>
-            </div>
-            <div class="skill-item">
-                <span style="font-size: 2.5rem; display: block; margin-bottom: 15px;">📖</span>
-                <strong>Compréhension Écrite</strong>
-                <p id="t_ECRIT" style="font-size:0.8rem; color:#888; margin:10px 0;">...</p>
-                <a href="#" id="l_ECRIT" target="_blank" class="btn-access">LIRE</a>
-            </div>
-            <div class="skill-item">
-                <span style="font-size: 2.5rem; display: block; margin-bottom: 15px;">✍️</span>
-                <strong>Production Écrite</strong>
-                <p id="t_PE" style="font-size:0.8rem; color:#888; margin:10px 0;">...</p>
-                <a href="#" id="l_PE" target="_blank" class="btn-access">TRAVAILLER</a>
-            </div>
-            <div class="skill-item">
-                <span style="font-size: 2.5rem; display: block; margin-bottom: 15px;">🗣️</span>
-                <strong>Production Orale</strong>
-                <p id="t_PO" style="font-size:0.8rem; color:#888; margin:10px 0;">...</p>
-                <a href="#" id="l_PO" target="_blank" class="btn-access">PRÉPARER</a>
-            </div>
+            <div id="skill-ORAL" class="skill-item"></div>
+            <div id="skill-ECRIT" class="skill-item"></div>
+            <div id="skill-PE" class="skill-item"></div>
+            <div id="skill-PO" class="skill-item"></div>
         </div>
     </div>
 
-    <footer class="footer">
-        &copy; 2025 Objectif Réussite DELF - Prof. Gaby Esparza
-    </footer>
+    <footer class="footer">&copy; 2026 Objectif Réussite DELF - Gaby Esparza</footer>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
@@ -244,40 +134,53 @@
         document.getElementById('studentWelcome').innerText = `Bonjour, ${userName} !`;
         document.getElementById('levelDisplay').innerText = `NIVEAU ${userLevel}`;
 
-        window.logout = () => {
-            sessionStorage.clear();
-            window.location.href = "../../index.html";
-        };
+        window.logout = () => { sessionStorage.clear(); window.location.href = "../../index.html"; };
 
-        function calculateDays(targetDate) {
-            if(!targetDate) return "--";
-            const today = new Date();
-            const exam = new Date(targetDate);
-            const diff = exam - today;
-            const days = Math.ceil(diff / (1000 * 60 * 60 * 24));
-            return days > 0 ? days : 0;
-        }
-
-        async function initDashboard() {
+        async function init() {
             const userSnap = await getDoc(doc(db, "Usuarios", userName));
             if(userSnap.exists()){
-                const userData = userSnap.data();
-                const fecha = userData.fecha_certificacion;
-                document.getElementById('dateExam').innerText = `Examen prévu : ${fecha}`;
-                document.getElementById('daysLeft').innerText = calculateDays(fecha);
+                const d = userSnap.data();
+                document.getElementById('feedbackMsg').innerText = d.mensaje_sophia || "Bon courage !";
+                const prog = d.progreso || 0;
+                document.getElementById('pBar').style.width = prog + "%";
+                document.getElementById('pPercent').innerText = prog + "%";
+                
+                // Cálculo de días (si tienes la fecha)
+                if(d.fecha_certificacion) {
+                    const diff = new Date(d.fecha_certificacion) - new Date();
+                    document.getElementById('daysLeft').innerText = Math.max(0, Math.ceil(diff / (1000 * 60 * 60 * 24)));
+                }
             }
 
-            const skills = ['ORAL', 'ECRIT', 'PE', 'PO'];
-            for (const s of skills) {
-                const matSnap = await getDoc(doc(db, `Material_${userLevel}`, s));
+            const habilidades = [
+                {id:'ORAL', icon:'🎧', label:'Compréhension Orale'},
+                {id:'ECRIT', icon:'📖', label:'Compréhension Écrite'},
+                {id:'PE', icon:'✍️', label:'Production Écrite'},
+                {id:'PO', icon:'🗣️', label:'Production Orale'}
+            ];
+
+            for (const h of habilidades) {
+                const matSnap = await getDoc(doc(db, `Material_${userLevel}`, h.id));
+                const container = document.getElementById(`skill-${h.id}`);
+                
                 if(matSnap.exists()){
                     const m = matSnap.data();
-                    document.getElementById(`t_${s}`).innerText = m.titulo;
-                    document.getElementById(`l_${s}`).href = m.url;
+                    container.innerHTML = `
+                        <span class="skill-icon">${h.icon}</span>
+                        <strong class="skill-title">${h.label}</strong>
+                        <p style="font-size:0.8rem; color:#888; text-align:center;">${m.titulo}</p>
+                        <div class="btn-group">
+                            ${m.url_q ? `<a href="${m.url_q}" target="_blank" class="btn-link btn-q">QUESTIONS</a>` : ''}
+                            ${m.url_t ? `<a href="${m.url_t}" target="_blank" class="btn-link btn-t">TRANSCRIPTION</a>` : ''}
+                            ${m.url_c ? `<a href="${m.url_c}" target="_blank" class="btn-link btn-c">CORRIGÉS</a>` : ''}
+                        </div>
+                    `;
+                } else {
+                    container.innerHTML = `<span class="skill-icon">${h.icon}</span><strong>${h.label}</strong><p>Bientôt disponible</p>`;
                 }
             }
         }
-        initDashboard();
+        init();
     </script>
 </body>
 </html>
