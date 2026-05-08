@@ -13,8 +13,7 @@
         }
         body {
             font-family: 'Montserrat', sans-serif;
-            margin: 0;
-            padding: 0;
+            margin: 0; padding: 0;
             background-color: var(--light-gray);
             color: #333;
         }
@@ -22,18 +21,15 @@
         /* --- ACCESO ADMIN OCULTO (Esquina superior izquierda) --- */
         .admin-zone {
             position: absolute;
-            top: 0;
-            left: 0;
+            top: 0; left: 0;
             padding: 15px 20px;
             background-color: rgba(0, 33, 71, 0.95);
-            opacity: 0; /* Oculto por defecto */
+            opacity: 0; 
             transition: opacity 0.3s ease;
             z-index: 1000;
             border-bottom-right-radius: 10px;
         }
-        .admin-zone:hover {
-            opacity: 1; /* Aparece al pasar el ratón */
-        }
+        .admin-zone:hover { opacity: 1; }
         .admin-zone a {
             color: white;
             text-decoration: none;
@@ -115,7 +111,12 @@
         }
         .level-card h2 { font-size: 3.5rem; margin: 0; font-weight: 700; }
         .level-card p { margin-top: 15px; font-weight: 300; letter-spacing: 2px; }
-        .level-card.c1 { background-color: var(--gold); color: var(--oxford-blue); }
+
+        /* Color especial para C1 */
+        .level-card.c1 {
+            background-color: var(--gold);
+            color: var(--oxford-blue);
+        }
 
         /* --- VENTANA MODAL PERSONALIZADA --- */
         .modal-overlay {
@@ -231,6 +232,8 @@
 
         window.solicitarAcceso = (nivel) => {
             nivelSeleccionado = nivel;
+            document.getElementById('inputNombre').value = "";
+            document.getElementById('inputPass').value = "";
             document.getElementById('modalTitle').innerText = `Accès Niveau ${nivel}`;
             document.getElementById('modalAcceso').style.display = 'flex';
         };
@@ -248,24 +251,29 @@
                 return;
             }
 
-            const docRef = doc(db, "Usuarios", nombre);
-            const docSnap = await getDoc(docRef);
+            try {
+                const docRef = doc(db, "Usuarios", nombre);
+                const docSnap = await getDoc(docRef);
 
-            if (docSnap.exists()) {
-                const datos = docSnap.data();
-                if (datos.password === clave) {
-                    if (datos.nivel === nivelSeleccionado) {
-                        sessionStorage.setItem('userLevel', datos.nivel);
-                        sessionStorage.setItem('userName', nombre);
-                        window.location.href = `levels/${nivelSeleccionado}/index.html`;
+                if (docSnap.exists()) {
+                    const datos = docSnap.data();
+                    if (datos.password === clave) {
+                        if (datos.nivel === nivelSeleccionado) {
+                            sessionStorage.setItem('userLevel', datos.nivel);
+                            sessionStorage.setItem('userName', nombre);
+                            window.location.href = `levels/${nivelSeleccionado}/index.html`;
+                        } else {
+                            alert(`Accès refusé. Vous êtes inscrit au niveau ${datos.nivel}.`);
+                        }
                     } else {
-                        alert(`Accès refusé. Vous êtes inscrit au niveau ${datos.nivel}.`);
+                        alert("Mot de passe incorrect.");
                     }
                 } else {
-                    alert("Mot de passe incorrect.");
+                    alert("Étudiant non trouvé.");
                 }
-            } else {
-                alert("Étudiant non trouvé.");
+            } catch (error) {
+                console.error(error);
+                alert("Erreur de connexion.");
             }
         };
     </script>
