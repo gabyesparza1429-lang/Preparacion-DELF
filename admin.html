@@ -2,116 +2,71 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Expert | Proyecto Réussite DELF</title>
+    <title>Admin Pro | Proyecto Réussite DELF</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --oxford-blue: #002147;
-            --gold: #C5A059;
-            --bg-gray: #f4f7f9;
-            --white: #ffffff;
-        }
-        body { font-family: 'Montserrat', sans-serif; margin: 0; display: flex; height: 100vh; background: var(--bg-gray); overflow: hidden; }
+        :root { --oxford: #002147; --gold: #C5A059; --white: #ffffff; }
+        body { font-family: 'Montserrat', sans-serif; margin: 0; background: #f4f7f9; display: flex; height: 100vh; }
+        .sidebar { width: 250px; background: var(--oxford); color: white; padding: 20px; }
+        .main { flex: 1; padding: 40px; overflow-y: auto; }
+        .card { background: var(--white); padding: 25px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 20px; }
         
-        /* Sidebar */
-        .sidebar { width: 260px; background: var(--oxford-blue); color: white; display: flex; flex-direction: column; flex-shrink: 0; }
-        .sidebar-header { padding: 40px 20px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.1); }
-        .menu-item { padding: 18px 25px; cursor: pointer; transition: 0.3s; opacity: 0.7; border-left: 4px solid transparent; display: flex; align-items: center; gap: 15px; }
-        .menu-item.active { opacity: 1; background: rgba(255,255,255,0.1); border-left: 4px solid var(--gold); font-weight: 600; }
-
-        /* Main Area */
-        .main-container { flex: 1; overflow-y: auto; display: flex; flex-direction: column; }
-        .top-bar { background: var(--white); padding: 20px 40px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); display: flex; justify-content: space-between; align-items: center; }
-        .content-page { padding: 30px; display: none; }
-        .content-page.active { display: block; }
-
-        /* Cards & Form */
-        .card { background: var(--white); padding: 25px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 25px; }
-        .grid-skills { display: grid; grid-template-columns: repeat(auto-fit, minmax(450px, 1fr)); gap: 20px; }
+        /* Botón de Carga Inteligente */
+        .ai-zone { background: #fff9e6; border: 2px dashed var(--gold); padding: 20px; border-radius: 10px; margin-bottom: 20px; }
+        textarea { width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #ddd; font-family: monospace; font-size: 0.8rem; }
         
-        label { display: block; margin-bottom: 5px; font-weight: 700; color: var(--oxford-blue); font-size: 0.75rem; text-transform: uppercase; margin-top: 10px; }
-        input, select, textarea { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; font-family: inherit; }
-        textarea { resize: vertical; min-height: 80px; font-size: 0.85rem; }
-        
-        .btn-save { background: var(--oxford-blue); color: white; border: none; padding: 20px; border-radius: 8px; cursor: pointer; font-weight: 700; width: 100%; transition: 0.3s; margin-top: 30px; font-size: 1rem; border: 2px solid var(--gold); }
-        .btn-save:hover { background: var(--gold); color: var(--oxford-blue); }
+        .btn { background: var(--oxford); color: white; border: none; padding: 12px 25px; border-radius: 8px; cursor: pointer; font-weight: 700; transition: 0.3s; }
+        .btn-ai { background: var(--gold); color: var(--oxford); margin-top: 10px; width: 100%; }
+        .btn:hover { opacity: 0.9; }
 
-        .skill-badge { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 0.7rem; font-weight: 700; margin-bottom: 10px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th { text-align: left; padding: 12px; border-bottom: 2px solid var(--gold); color: var(--oxford); }
+        td { padding: 12px; border-bottom: 1px solid #eee; }
     </style>
 </head>
 <body>
 
     <div class="sidebar">
-        <div class="sidebar-header">
-            <div style="font-weight: 700; font-size: 1.2rem; color: var(--gold);">GABY ESPARZA</div>
-            <small>PROYECTO RÉUSSITE DELF</small>
-        </div>
-        <div class="menu-item active" onclick="showPage('materiales', this)"><span>📁</span> Contenu des Niveaux</div>
-        <div class="menu-item" onclick="showPage('alumnos', this)"><span>👨‍🎓</span> Étudiants</div>
-        <div class="menu-item" onclick="showPage('contabilidad', this)"><span>💰</span> Comptabilité</div>
+        <h2>GABY ADMIN</h2>
+        <p style="color: var(--gold);">Proyecto Réussite</p>
+        <hr opacity="0.2">
+        <nav>
+            <div style="padding: 10px 0; cursor: pointer;">📁 Contenido</div>
+            <div style="padding: 10px 0; cursor: pointer;">👨‍🎓 Alumnos</div>
+        </nav>
     </div>
 
-    <div class="main-container">
-        <div class="top-bar">
-            <h2 id="page-title" style="margin:0; color:var(--oxford-blue);">Éditeur de Contenu</h2>
-            <select id="subirNivel" style="width: auto; font-weight: 700; border: 2px solid var(--gold);">
-                <option>A1</option><option>A2</option><option>B1</option><option>B2</option><option>C1</option>
+    <div class="main">
+        <h1>Carga de Contenido Inteligente</h1>
+        
+        <div class="card">
+            <label>Nivel:</label>
+            <select id="nivelSel" style="padding: 10px; border-radius: 5px;">
+                <option>A1</option><option>A2</option><option>B1</option><option>B2</option>
             </select>
         </div>
 
-        <div id="materiales" class="content-page active">
-            <div class="grid-skills">
-                
-                <div class="card">
-                    <span class="skill-badge" style="background: #e1f5fe; color: #0288d1;">COMPRÉHENSION ORALE</span>
-                    <label>Titre de l'exercice :</label><input type="text" id="t_oral">
-                    <label>Lien Audio (Drive/URL) :</label><input type="text" id="u_oral_audio">
-                    <label>Texte de la Transcription (Pour Sophia) :</label>
-                    <textarea id="txt_oral" placeholder="Copie et colle ici la transcription de l'audio..."></textarea>
-                    <div style="display: flex; gap: 10px;">
-                        <div style="flex:1"><label>PDF Questions:</label><input type="text" id="u_oral_q"></div>
-                        <div style="flex:1"><label>PDF Corrigés:</label><input type="text" id="u_oral_c"></div>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <span class="skill-badge" style="background: #f1f8e9; color: #388e3c;">COMPRÉHENSION ÉCRITE</span>
-                    <label>Titre de l'exercice :</label><input type="text" id="t_ecrit">
-                    <label>Texte de l'examen (Pour le vocabulaire) :</label>
-                    <textarea id="txt_ecrit" placeholder="Copie et colle ici le texte de lecture..."></textarea>
-                    <label>Lien PDF Questions :</label><input type="text" id="u_ecrit_q">
-                    <label>Lien PDF Corrigés :</label><input type="text" id="u_ecrit_c">
-                </div>
-
-                <div class="card">
-                    <span class="skill-badge" style="background: #fff3e0; color: #f57c00;">PRODUCTION ÉCRITE</span>
-                    <label>Titre du sujet :</label><input type="text" id="t_pe">
-                    <label>Canevas / Squelette suggéré :</label>
-                    <textarea id="txt_pe_esqueleto" placeholder="Structure suggérée: Salutation, Intro, Argument 1..."></textarea>
-                    <label>Lien PDF Sujet :</label><input type="text" id="u_pe_q">
-                </div>
-
-                <div class="card">
-                    <span class="skill-badge" style="background: #fce4ec; color: #c2185b;">PRODUCTION ORALE</span>
-                    <label>Titre du sujet :</label><input type="text" id="t_po">
-                    <label>Focus Phonétique (Mots difficiles) :</label>
-                    <textarea id="txt_po_fonetica" placeholder="Ex: La liaison, les sons [u] vs [ou]..."></textarea>
-                    <label>Lien PDF Consignes :</label><input type="text" id="u_po_q">
-                </div>
-
-            </div>
-
-            <button class="btn-save" onclick="guardarTodo()">SYNCHRONISER LE NIVEAU COMPLET</button>
+        <div class="ai-zone">
+            <h3>✨ Sophia - Carga Masiva</h3>
+            <p>Pega aquí el código que Sophia te dio para este nivel:</p>
+            <textarea id="ai_data" rows="5" placeholder='[{"titulo": "Ejercicio 1", ...}]'></textarea>
+            <button class="btn btn-ai" onclick="importarTodo()">PROCESAR NIVEL COMPLETO</button>
         </div>
-        
-        <div id="alumnos" class="content-page"><h3>Gestion des Étudiants</h3></div>
-        <div id="contabilidad" class="content-page"><h3>Comptabilité</h3></div>
+
+        <div class="card">
+            <h3>📚 Actividades en este Nivel</h3>
+            <table>
+                <thead>
+                    <tr><th>Título</th><th>Tipo</th><th>Acciones</th></tr>
+                </thead>
+                <tbody id="tablaEjercicios"></tbody>
+            </table>
+        </div>
     </div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
-        import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js";
+        import { getFirestore, doc, setDoc, collection, onSnapshot, deleteDoc } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyCgog8tKspHy01ZHE8Dthl9O4W6lw1a_Ec",
@@ -125,43 +80,50 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        window.showPage = (pageId, el) => {
-            document.querySelectorAll('.content-page').forEach(p => p.classList.remove('active'));
-            document.querySelectorAll('.menu-item').forEach(m => m.classList.remove('active'));
-            document.getElementById(pageId).classList.add('active');
-            el.classList.add('active');
+        // FUNCIÓN MÁGICA DE IMPORTACIÓN
+        window.importarTodo = async () => {
+            const nivel = document.getElementById('nivelSel').value;
+            const dataRaw = document.getElementById('ai_data').value;
+            
+            try {
+                const ejercicios = JSON.parse(dataRaw);
+                for (const ej of ejercicios) {
+                    // Guardamos cada ejercicio como un documento independiente
+                    // Ej: Niveles/B1/Ejercicios/1_Echanges_Formels
+                    const idLimpio = ej.titulo.replace(/\s+/g, '_').toLowerCase();
+                    await setDoc(doc(db, "Niveles", nivel, "Ejercicios", idLimpio), ej);
+                }
+                alert("¡Felicidades Gaby! Sophia ha cargado " + ejercicios.length + " ejercicios de golpe.");
+                document.getElementById('ai_data').value = "";
+            } catch (e) {
+                alert("Error: El código que pegaste no es válido. Pídeselo a Sophia de nuevo.");
+                console.error(e);
+            }
         };
 
-        window.guardarTodo = async () => {
-            const niv = document.getElementById('subirNivel').value;
-            const data = {
-                oral: {
-                    titulo: document.getElementById('t_oral').value,
-                    audio: document.getElementById('u_oral_audio').value,
-                    transcripcion: document.getElementById('txt_oral').value,
-                    pdf_q: document.getElementById('u_oral_q').value,
-                    pdf_c: document.getElementById('u_oral_c').value
-                },
-                ecrit: {
-                    titulo: document.getElementById('t_ecrit').value,
-                    texto: document.getElementById('txt_ecrit').value,
-                    pdf_q: document.getElementById('u_ecrit_q').value,
-                    pdf_c: document.getElementById('u_ecrit_c').value
-                },
-                pe: {
-                    titulo: document.getElementById('t_pe').value,
-                    esqueleto: document.getElementById('txt_pe_esqueleto').value,
-                    pdf_q: document.getElementById('u_pe_q').value
-                },
-                po: {
-                    titulo: document.getElementById('t_po').value,
-                    fonetica: document.getElementById('txt_po_fonetica').value,
-                    pdf_q: document.getElementById('u_po_q').value
-                }
-            };
+        // Escuchar cambios para mostrar la tabla
+        document.getElementById('nivelSel').onchange = () => cargarTabla();
+        
+        function cargarTabla() {
+            const nivel = document.getElementById('nivelSel').value;
+            onSnapshot(collection(db, "Niveles", nivel, "Ejercicios"), (snap) => {
+                const body = document.getElementById('tablaEjercicios');
+                body.innerHTML = "";
+                snap.forEach(doc => {
+                    const d = doc.data();
+                    body.innerHTML += `<tr>
+                        <td>${d.titulo}</td>
+                        <td>${d.tipo || 'DELF'}</td>
+                        <td><button onclick="eliminar('${doc.id}')" style="color:red; border:none; background:none; cursor:pointer;">Eliminar</button></td>
+                    </tr>`;
+                });
+            });
+        }
+        cargarTabla();
 
-            await setDoc(doc(db, "Niveles", niv), data);
-            alert("Niveau " + niv + " mis à jour avec succès ! Sophia est prête.");
+        window.eliminar = async (id) => {
+            const nivel = document.getElementById('nivelSel').value;
+            if(confirm("¿Borrar este ejercicio?")) await deleteDoc(doc(db, "Niveles", nivel, "Ejercicios", id));
         };
     </script>
 </body>
