@@ -2,30 +2,201 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Niveau B1 | Objectif Réussite</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mon Espace | Objectif Réussite</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-        body { font-family: 'Montserrat', sans-serif; background: #f4f7f9; padding: 40px; color: #333; }
-        .container { max-width: 800px; margin: auto; }
-        h1 { color: #002147; text-align: center; border-bottom: 3px solid #C5A059; padding-bottom: 10px; }
-        .card { background: white; padding: 25px; margin-bottom: 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border-left: 5px solid #002147; }
-        .card h3 { margin-top: 0; color: #002147; }
-        .btn { background: #C5A059; color: white; padding: 12px 25px; text-decoration: none; border-radius: 6px; display: inline-block; font-weight: bold; transition: 0.3s; }
-        .btn:hover { background: #002147; }
-        .tag { background: #e0e0e0; padding: 4px 10px; border-radius: 4px; font-size: 0.8rem; text-transform: uppercase; }
+        :root {
+            --oxford-blue: #002147;
+            --gold: #C5A059;
+            --bg-gray: #f4f7f9;
+            --white: #ffffff;
+            --green: #2a9d8f;
+        }
+        body { 
+            font-family: 'Montserrat', sans-serif; 
+            margin: 0; background-color: var(--bg-gray); 
+            color: var(--oxford-blue);
+        }
+
+        /* Header con Estilo */
+        .header {
+            background: var(--oxford-blue);
+            color: white;
+            padding: 50px 5% 100px 5%;
+            text-align: center;
+            border-bottom: 5px solid var(--gold);
+        }
+        .header h1 { margin: 0; font-size: 2.2rem; letter-spacing: 1px; }
+        .header p { margin: 10px 0 0; opacity: 0.8; text-transform: uppercase; letter-spacing: 2px; }
+
+        .container {
+            max-width: 1100px;
+            margin: -70px auto 50px auto;
+            padding: 0 20px;
+        }
+
+        /* Dashboard: Contador y Progreso */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .card-dash {
+            background: var(--white);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            text-align: center;
+            border-bottom: 4px solid transparent;
+        }
+
+        .countdown-val {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--gold);
+            line-height: 1;
+            margin: 10px 0;
+        }
+        .dash-label { font-size: 0.75rem; font-weight: 700; color: #999; text-transform: uppercase; }
+
+        /* Barra de Progreso */
+        .progress-bar-bg {
+            width: 100%;
+            background: #edf2f7;
+            border-radius: 15px;
+            height: 15px;
+            margin: 20px 0 10px 0;
+            overflow: hidden;
+        }
+        .progress-bar-fill {
+            background: var(--green);
+            height: 100%;
+            width: 0%; /* Se anima con JS */
+            transition: width 1.5s ease-in-out;
+        }
+
+        /* Sophia Feedback Section */
+        .sophia-box {
+            background: var(--white);
+            padding: 30px;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            border-left: 8px solid var(--gold);
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+        }
+        .sophia-avatar { font-size: 3rem; }
+        .sophia-text h4 { margin: 0; color: var(--gold); font-size: 0.9rem; text-transform: uppercase; }
+        .sophia-text p { margin: 5px 0 0; font-style: italic; color: #555; line-height: 1.5; }
+
+        /* Competencias DELF */
+        .skills-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+            gap: 20px;
+        }
+        .skill-item {
+            background: var(--white);
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.03);
+            transition: 0.3s;
+        }
+        .skill-item:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(0,0,0,0.1); }
+        .skill-icon { font-size: 2.5rem; display: block; margin-bottom: 15px; }
+        .btn-access {
+            display: block;
+            margin-top: 20px;
+            background: var(--oxford-blue);
+            color: white;
+            padding: 12px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.8rem;
+            transition: 0.3s;
+        }
+        .btn-access:hover { background: var(--gold); }
+
+        .footer { text-align: center; padding: 50px; color: #ccc; font-size: 0.8rem; }
     </style>
 </head>
 <body>
+
+    <div class="header">
+        <p id="levelDisplay">NIVEAU ...</p>
+        <h1 id="studentWelcome">Bonjour !</h1>
+    </div>
+
     <div class="container">
-        <h1>Matériel de Préparation B1</h1>
-        <div id="lista-materiales">
-            <p>Chargement du matériel en cours...</p>
+        
+        <div class="dashboard-grid">
+            <div class="card-dash" style="border-bottom-color: var(--gold);">
+                <span class="dash-label">Jours avant l'examen</span>
+                <div id="daysLeft" class="countdown-val">--</div>
+                <span id="dateExam" style="color: #666; font-size: 0.9rem;">...</span>
+            </div>
+
+            <div class="card-dash" style="border-bottom-color: var(--green);">
+                <span class="dash-label">Ton progrès global</span>
+                <div class="progress-bar-bg">
+                    <div class="progress-bar-fill" id="pBar"></div>
+                </div>
+                <span id="pPercent" style="font-weight: 700; color: var(--green); font-size: 1.2rem;">0%</span>
+            </div>
         </div>
+
+        <div class="sophia-box">
+            <div class="sophia-avatar">✨</div>
+            <div class="sophia-text">
+                <h4>Sophia - Ton assistante IA</h4>
+                <p id="feedbackMsg">"Bonjour ! Je prépare tes feedbacks personnalisés. Travaille tes compétences ci-dessous pour avancer."</p>
+            </div>
+        </div>
+
+        <div class="skills-container">
+            <div class="skill-item">
+                <span class="skill-icon">🎧</span>
+                <strong>Compréhension Orale</strong>
+                <p id="t_ORAL" style="font-size:0.8rem; color:#888; margin:10px 0;">...</p>
+                <a href="#" id="l_ORAL" target="_blank" class="btn-access">ÉCOUTER</a>
+            </div>
+            <div class="skill-item">
+                <span class="skill-icon">📖</span>
+                <strong>Compréhension Écrite</strong>
+                <p id="t_ECRIT" style="font-size:0.8rem; color:#888; margin:10px 0;">...</p>
+                <a href="#" id="l_ECRIT" target="_blank" class="btn-access">LIRE</a>
+            </div>
+            <div class="skill-item">
+                <span class="skill-icon">✍️</span>
+                <strong>Production Écrite</strong>
+                <p id="t_PE" style="font-size:0.8rem; color:#888; margin:10px 0;">...</p>
+                <a href="#" id="l_PE" target="_blank" class="btn-access">TRAVAILLER</a>
+            </div>
+            <div class="skill-item">
+                <span class="skill-icon">🗣️</span>
+                <strong>Production Orale</strong>
+                <p id="t_PO" style="font-size:0.8rem; color:#888; margin:10px 0;">...</p>
+                <a href="#" id="l_PO" target="_blank" class="btn-access">PRÉPARER</a>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="footer">
+        &copy; 2025 Objectif Réussite DELF - Espace Étudiant Professionnel
     </div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
-        import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js";
+        import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyCgog8tKspHy01ZHE8Dthl9O4W6lw1a_Ec",
@@ -39,28 +210,51 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        async function cargarMaterial() {
-            const querySnapshot = await getDocs(collection(db, "Material_B1"));
-            const contenedor = document.getElementById("lista-materiales");
-            contenedor.innerHTML = "";
+        const userName = sessionStorage.getItem('userName') || "Étudiant";
+        const userLevel = sessionStorage.getItem('userLevel') || "B1";
 
-            if (querySnapshot.empty) {
-                contenedor.innerHTML = "<p>Aucun matériel disponible pour le moment.</p>";
-                return;
+        document.getElementById('studentWelcome').innerText = `Bonjour, ${userName} !`;
+        document.getElementById('levelDisplay').innerText = `NIVEAU ${userLevel}`;
+
+        // Función para calcular días restantes
+        function calculateDays(targetDate) {
+            if(!targetDate) return "--";
+            const today = new Date();
+            const exam = new Date(targetDate);
+            const diff = exam - today;
+            const days = Math.ceil(diff / (1000 * 60 * 60 * 24));
+            return days > 0 ? days : 0;
+        }
+
+        async function initDashboard() {
+            // 1. Obtener datos del alumno (Fecha Examen)
+            const userSnap = await getDoc(doc(db, "Usuarios", userName));
+            if(userSnap.exists()){
+                const userData = userSnap.data();
+                const fecha = userData.fecha_certificacion;
+                document.getElementById('dateExam').innerText = `Examen prévu : ${fecha}`;
+                document.getElementById('daysLeft').innerText = calculateDays(fecha);
+                
+                // Simulación de progreso (Luego lo haremos real)
+                setTimeout(() => {
+                    document.getElementById('pBar').style.width = "45%";
+                    document.getElementById('pPercent').innerText = "45%";
+                }, 500);
             }
 
-            querySnapshot.forEach((doc) => {
-                const data = doc.data();
-                contenedor.innerHTML += `
-                    <div class="card">
-                        <span class="tag">${data.tipo}</span>
-                        <h3>${data.titulo}</h3>
-                        <a href="${data.url}" class="btn" target="_blank">Ouvrir le fichier</a>
-                    </div>
-                `;
-            });
+            // 2. Obtener Materiales del nivel
+            const skills = ['ORAL', 'ECRIT', 'PE', 'PO'];
+            for (const s of skills) {
+                const matSnap = await getDoc(doc(db, `Material_${userLevel}`, s));
+                if(matSnap.exists()){
+                    const m = matSnap.data();
+                    document.getElementById(`t_${s}`).innerText = m.titulo;
+                    document.getElementById(`l_${s}`).href = m.url;
+                }
+            }
         }
-        cargarMaterial();
+
+        initDashboard();
     </script>
 </body>
 </html>
