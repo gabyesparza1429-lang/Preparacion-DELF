@@ -2,22 +2,31 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Admin Pro | Proyecto Réussite DELF</title>
+    <title>Admin Pro | NeuroRéussit</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         :root { --oxford: #002147; --gold: #C5A059; --white: #ffffff; }
         body { font-family: 'Montserrat', sans-serif; margin: 0; background: #f4f7f9; display: flex; height: 100vh; }
         .sidebar { width: 250px; background: var(--oxford); color: white; padding: 20px; }
-        .main { flex: 1; padding: 40px; overflow-y: auto; }
+        .main { flex: 1; padding: 40px; overflow-y: auto; position: relative; }
         .card { background: var(--white); padding: 25px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 20px; }
         
+        /* Botones de navegación rápida */
+        .top-nav { 
+            display: flex; 
+            justify-content: flex-end; 
+            gap: 15px; 
+            margin-bottom: 30px; 
+        }
+
         /* Botón de Carga Inteligente */
         .ai-zone { background: #fff9e6; border: 2px dashed var(--gold); padding: 20px; border-radius: 10px; margin-bottom: 20px; }
         textarea { width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #ddd; font-family: monospace; font-size: 0.8rem; }
         
         .btn { background: var(--oxford); color: white; border: none; padding: 12px 25px; border-radius: 8px; cursor: pointer; font-weight: 700; transition: 0.3s; }
         .btn-ai { background: var(--gold); color: var(--oxford); margin-top: 10px; width: 100%; }
-        .btn:hover { opacity: 0.9; }
+        .btn-view { background: #4CAF50; color: white; }
+        .btn:hover { opacity: 0.9; transform: translateY(-2px); }
 
         table { width: 100%; border-collapse: collapse; margin-top: 20px; }
         th { text-align: left; padding: 12px; border-bottom: 2px solid var(--gold); color: var(--oxford); }
@@ -28,8 +37,8 @@
 
     <div class="sidebar">
         <h2>GABY ADMIN</h2>
-        <p style="color: var(--gold);">Proyecto Réussite</p>
-        <hr opacity="0.2">
+        <p style="color: var(--gold);">NeuroRéussit</p>
+        <hr style="opacity: 0.2;">
         <nav>
             <div style="padding: 10px 0; cursor: pointer;">📁 Contenido</div>
             <div style="padding: 10px 0; cursor: pointer;">👨‍🎓 Alumnos</div>
@@ -37,12 +46,18 @@
     </div>
 
     <div class="main">
+        
+        <div class="top-nav">
+            <button class="btn" onclick="location.reload()">⚙️ Refrescar Admin</button>
+            <button class="btn btn-view" onclick="window.open('/alumno', '_blank')">🎓 Ver como Alumno</button>
+        </div>
+
         <h1>Carga de Contenido Inteligente</h1>
         
         <div class="card">
             <label>Nivel:</label>
             <select id="nivelSel" style="padding: 10px; border-radius: 5px;">
-                <option>A1</option><option>A2</option><option>B1</option><option>B2</option>
+                <option>A1</option><option>A2</option><option value="B1" selected>B1</option><option>B2</option>
             </select>
         </div>
 
@@ -80,7 +95,6 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        // FUNCIÓN MÁGICA DE IMPORTACIÓN
         window.importarTodo = async () => {
             const nivel = document.getElementById('nivelSel').value;
             const dataRaw = document.getElementById('ai_data').value;
@@ -88,20 +102,17 @@
             try {
                 const ejercicios = JSON.parse(dataRaw);
                 for (const ej of ejercicios) {
-                    // Guardamos cada ejercicio como un documento independiente
-                    // Ej: Niveles/B1/Ejercicios/1_Echanges_Formels
                     const idLimpio = ej.titulo.replace(/\s+/g, '_').toLowerCase();
                     await setDoc(doc(db, "Niveles", nivel, "Ejercicios", idLimpio), ej);
                 }
-                alert("¡Felicidades Gaby! Sophia ha cargado " + ejercicios.length + " ejercicios de golpe.");
+                alert("¡Listo! He cargado " + ejercicios.length + " ejercicios.");
                 document.getElementById('ai_data').value = "";
             } catch (e) {
-                alert("Error: El código que pegaste no es válido. Pídeselo a Sophia de nuevo.");
+                alert("Error en el formato del código.");
                 console.error(e);
             }
         };
 
-        // Escuchar cambios para mostrar la tabla
         document.getElementById('nivelSel').onchange = () => cargarTabla();
         
         function cargarTabla() {
