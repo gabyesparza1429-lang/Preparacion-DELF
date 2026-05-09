@@ -19,7 +19,6 @@
             margin-bottom: 30px; 
         }
 
-        /* Botón de Carga Inteligente */
         .ai-zone { background: #fff9e6; border: 2px dashed var(--gold); padding: 20px; border-radius: 10px; margin-bottom: 20px; }
         textarea { width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #ddd; font-family: monospace; font-size: 0.8rem; }
         
@@ -49,7 +48,7 @@
         
         <div class="top-nav">
             <button class="btn" onclick="location.reload()">⚙️ Refrescar Admin</button>
-            <button class="btn btn-view" onclick="window.open('/alumno', '_blank')">🎓 Ver como Alumno</button>
+            <button class="btn btn-view" onclick="const nivel = document.getElementById('nivelSel').value; window.open('/alumno.html?nivel=' + nivel, '_blank')">🎓 Ver como Alumno</button>
         </div>
 
         <h1>Carga de Contenido Inteligente</h1>
@@ -57,7 +56,10 @@
         <div class="card">
             <label>Nivel:</label>
             <select id="nivelSel" style="padding: 10px; border-radius: 5px;">
-                <option>A1</option><option>A2</option><option value="B1" selected>B1</option><option>B2</option>
+                <option value="A1">A1</option>
+                <option value="A2">A2</option>
+                <option value="B1" selected>B1</option>
+                <option value="B2">B2</option>
             </select>
         </div>
 
