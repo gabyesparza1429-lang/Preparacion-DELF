@@ -2,6 +2,6 @@
   "name": "neuroreussit",
   "version": "1.0.0",
   "scripts": {
-    "build": "echo 'Construcción completa'"
+    "build": "echo 'Listo'"
   }
 }
