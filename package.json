@@ -2,6 +2,7 @@
   "name": "neuroreussit",
   "version": "1.0.0",
   "scripts": {
-    "build": "echo 'Listo'"
+    "build": "echo 'Listo'",
+    "start": "npx serve . -l 8080"
   }
 }
