@@ -1,72 +1,125 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Admin Pro | NeuroRéussit</title>
+    <title>Panel Maestro | NeuroRéussit & NeuroClarity</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        :root { --oxford: #002147; --gold: #C5A059; --white: #ffffff; }
-        body { font-family: 'Montserrat', sans-serif; margin: 0; background: #f4f7f9; display: flex; height: 100vh; }
-        .sidebar { width: 250px; background: var(--oxford); color: white; padding: 20px; }
-        .main { flex: 1; padding: 40px; overflow-y: auto; }
-        .card { background: var(--white); padding: 25px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 20px; }
-        .top-nav { display: flex; justify-content: flex-end; gap: 15px; margin-bottom: 30px; }
-        .ai-zone { background: #fff9e6; border: 2px dashed var(--gold); padding: 20px; border-radius: 10px; margin-bottom: 20px; }
-        textarea { width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #ddd; font-family: monospace; box-sizing: border-box; }
-        .btn { background: var(--oxford); color: white; border: none; padding: 12px 25px; border-radius: 8px; cursor: pointer; font-weight: 700; transition: 0.3s; text-decoration: none; }
-        .btn-ai { background: var(--gold); color: var(--oxford); margin-top: 10px; width: 100%; }
-        .btn-view { background: #4CAF50; color: white; }
-        .btn:hover { opacity: 0.9; transform: translateY(-2px); }
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        :root { --oxford: #002147; --gold: #C5A059; --white: #ffffff; --bg: #f4f7f9; }
+        body { font-family: 'Montserrat', sans-serif; margin: 0; background: var(--bg); display: flex; height: 100vh; overflow: hidden; }
+        
+        /* Sidebar Navigation */
+        .sidebar { width: 260px; background: var(--oxford); color: white; display: flex; flex-direction: column; padding: 20px; box-shadow: 4px 0 10px rgba(0,0,0,0.1); }
+        .sidebar h2 { font-size: 1.2rem; border-bottom: 2px solid var(--gold); padding-bottom: 10px; margin-bottom: 30px; }
+        .nav-btn { background: transparent; border: none; color: white; padding: 15px; text-align: left; cursor: pointer; font-size: 0.9rem; border-radius: 8px; margin-bottom: 5px; transition: 0.3s; }
+        .nav-btn:hover, .nav-btn.active { background: rgba(197, 160, 89, 0.2); color: var(--gold); }
+        .nav-btn i { margin-right: 10px; width: 20px; }
+
+        /* Main Content Area */
+        .main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+        .top-bar { background: white; padding: 15px 40px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #ddd; }
+        .view-alumno { background: #4CAF50; color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: 700; text-decoration: none; }
+        
+        .content-section { flex: 1; padding: 40px; overflow-y: auto; display: none; }
+        .content-section.active { display: block; }
+
+        /* UI Components */
+        .card { background: white; padding: 25px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 25px; }
+        .brain-zone { background: #fff9e6; border: 2px dashed var(--gold); padding: 20px; border-radius: 12px; margin-bottom: 20px; }
+        textarea { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #ddd; font-family: monospace; font-size: 0.85rem; box-sizing: border-box; }
+        .btn { background: var(--oxford); color: white; border: none; padding: 12px 25px; border-radius: 8px; cursor: pointer; font-weight: 700; transition: 0.3s; }
+        .btn-gold { background: var(--gold); color: var(--oxford); width: 100%; margin-top: 10px; }
+        
+        /* Tablas */
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
         th { text-align: left; padding: 12px; border-bottom: 2px solid var(--gold); color: var(--oxford); }
-        td { padding: 12px; border-bottom: 1px solid #eee; }
+        td { padding: 12px; border-bottom: 1px solid #eee; font-size: 0.9rem; }
+        .resico-total { font-size: 1.5rem; color: var(--oxford); font-weight: 700; }
     </style>
 </head>
 <body>
+
     <div class="sidebar">
-        <h2>GABY ADMIN</h2>
-        <p style="color: var(--gold);">NeuroRéussit</p>
-        <hr style="opacity: 0.2;">
-        <nav>
-            <div style="padding: 10px 0; cursor: pointer;" onclick="location.href='admin.html'">📁 Contenido</div>
-            <div style="padding: 10px 0; cursor: pointer;">👨‍🎓 Alumnos</div>
-        </nav>
+        <h2>NeuroDashboard</h2>
+        <button class="nav-btn active" onclick="showTab('delf', this)"><i class="fas fa-graduation-cap"></i> Proyecto Réussite DELF</button>
+        <button class="nav-btn" onclick="showTab('clarity', this)"><i class="fas fa-brain"></i> NeuroClarity</button>
+        <button class="nav-btn" onclick="showTab('resico', this)"><i class="fas fa-calculator"></i> Finanzas RESICO</button>
+        <div style="margin-top: auto; font-size: 0.7rem; opacity: 0.5;">v2.0 | IA Master Control</div>
     </div>
 
     <div class="main">
-        <div class="top-nav">
-            <button class="btn" onclick="location.reload()">⚙️ Refrescar</button>
-            <button class="btn btn-view" onclick="const nivel = document.getElementById('nivelSel').value; window.location.href = 'alumno.html?nivel=' + nivel + '&mode=preview'">🎓 Ver como Alumno</button>
+        <div class="top-bar">
+            <h1 id="tab-title" style="font-size: 1.2rem; margin: 0;">Proyecto Réussite DELF</h1>
+            <a id="btn-preview" href="alumno.html?mode=preview&project=delf" class="view-alumno"><i class="fas fa-eye"></i> Ver como Alumno</a>
         </div>
 
-        <div class="card">
-            <label>Nivel:</label>
-            <select id="nivelSel" style="padding: 10px; border-radius: 5px;">
-                <option value="A1">A1</option>
-                <option value="A2">A2</option>
-                <option value="B1" selected>B1</option>
-                <option value="B2">B2</option>
-            </select>
+        <div id="tab-delf" class="content-section active">
+            <div class="brain-zone">
+                <h3>🧠 Programar a Sophia</h3>
+                <p>Instrucción maestra para evaluación y corrección DELF:</p>
+                <textarea id="prompt_sophia" rows="4" placeholder="Ej: Eres evaluadora oficial. Usa las rúbricas B1..."></textarea>
+                <button class="btn btn-gold" onclick="savePrompt('sophia')">Actualizar Cerebro de Sophia</button>
+            </div>
+
+            <div class="card">
+                <h3>📁 Carga Inteligente de Ejercicios</h3>
+                <label>Seleccionar Nivel:</label>
+                <select id="nivelDelf" style="padding: 8px; margin-bottom: 15px;">
+                    <option value="A1">A1</option><option value="A2">A2</option>
+                    <option value="B1" selected>B1</option><option value="B2">B2</option>
+                </select>
+                <textarea id="json_delf" rows="6" placeholder="Pega aquí el JSON de Sophia..."></textarea>
+                <button class="btn btn-gold" onclick="importarDelf()">Procesar y Cargar Material</button>
+            </div>
         </div>
 
-        <div class="ai-zone">
-            <h3>✨ Sophia - Carga Masiva</h3>
-            <textarea id="ai_data" rows="5" placeholder='Pega el JSON aquí...'></textarea>
-            <button class="btn btn-ai" onclick="importarTodo()">PROCESAR NIVEL COMPLETO</button>
+        <div id="tab-clarity" class="content-section">
+            <div class="brain-zone">
+                <h3>🧠 Programar Consultora Neuro</h3>
+                <p>Reglas de accesibilidad y adaptación curricular:</p>
+                <textarea id="prompt_neuro" rows="4" placeholder="Ej: Tu prioridad es la lectura fácil y perfiles TDAH..."></textarea>
+                <button class="btn btn-gold" onclick="savePrompt('neuro')">Actualizar Cerebro NeuroClarity</button>
+            </div>
+
+            <div class="card">
+                <h3>👤 Perfiles de Alumnos (Accesibilidad)</h3>
+                <input type="text" id="alumno_nombre" placeholder="Nombre (Ej: Sergio)" style="padding:10px; width:200px">
+                <input type="text" id="alumno_reto" placeholder="Necesidad (Ej: Dislexia)" style="padding:10px; width:200px">
+                <button class="btn" onclick="saveAlumno()">Guardar Perfil</button>
+            </div>
         </div>
 
-        <div class="card">
-            <tbody id="tablaEjercicios"></tbody>
-            <table>
-                <thead><tr><th>Título</th><th>Tipo</th><th>Acciones</th></tr></thead>
-                <tbody id="tablaEjercicios"></tbody>
-            </table>
+        <div id="tab-resico" class="content-section">
+            <div class="card">
+                <h3>📊 Halcón Financiero RESICO</h3>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                    <div style="background: #eef2f5; padding: 20px; border-radius: 10px;">
+                        <p>Ingresos Totales (Mes)</p>
+                        <div class="resico-total" id="ingreso_total">$0.00</div>
+                    </div>
+                    <div style="background: #fff0f0; padding: 20px; border-radius: 10px;">
+                        <p>ISR Estimado (SAT)</p>
+                        <div class="resico-total" id="isr_estimado" style="color: #d32f2f;">$0.00</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>📝 Registro de Ingresos</h3>
+                <input type="number" id="monto" placeholder="Monto $" style="padding:10px;">
+                <select id="origen" style="padding:10px;">
+                    <option value="Réussite">Proyecto Réussite</option>
+                    <option value="Clarity">NeuroClarity</option>
+                </select>
+                <button class="btn" onclick="addIngreso()">Registrar Pago</button>
+            </div>
         </div>
     </div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
-        import { getFirestore, doc, setDoc, collection, onSnapshot, deleteDoc } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js";
+        import { getFirestore, doc, setDoc, collection, onSnapshot, addDoc } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyCgog8tKspHy01ZHE8Dthl9O4W6lw1a_Ec",
@@ -80,39 +133,54 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        window.importarTodo = async () => {
-            const nivel = document.getElementById('nivelSel').value;
-            const dataRaw = document.getElementById('ai_data').value;
+        // NAVEGACIÓN ENTRE TABS
+        window.showTab = (tab, btn) => {
+            document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById('tab-' + tab).classList.add('active');
+            btn.classList.add('active');
+            document.getElementById('tab-title').innerText = btn.innerText;
+            document.getElementById('btn-preview').href = `alumno.html?mode=preview&project=${tab}`;
+        };
+
+        // PROGRAMACIÓN DE CEREBROS
+        window.savePrompt = async (tipo) => {
+            const val = document.getElementById('prompt_' + tipo).value;
+            await setDoc(doc(db, "Config", "AI_Prompts"), { [tipo]: val }, { merge: true });
+            alert("Cerebro de " + tipo + " actualizado correctamente.");
+        };
+
+        // CARGA INTELIGENTE DELF
+        window.importarDelf = async () => {
+            const nivel = document.getElementById('nivelDelf').value;
+            const dataRaw = document.getElementById('json_delf').value;
             try {
                 const ejercicios = JSON.parse(dataRaw);
                 for (const ej of ejercicios) {
-                    const idLimpio = ej.titulo.replace(/\s+/g, '_').toLowerCase();
-                    await setDoc(doc(db, "Niveles", nivel, "Ejercicios", idLimpio), ej);
+                    const id = ej.titulo.replace(/\s+/g, '_').toLowerCase();
+                    await setDoc(doc(db, "Niveles", nivel, "Ejercicios", id), ej);
                 }
-                alert("Cargado correctamente.");
-                document.getElementById('ai_data').value = "";
-            } catch (e) { alert("Error de formato."); }
+                alert("Material de Sophia cargado con éxito.");
+                document.getElementById('json_delf').value = "";
+            } catch (e) { alert("Error en el formato JSON."); }
         };
 
-        function cargarTabla() {
-            const nivel = document.getElementById('nivelSel').value;
-            onSnapshot(collection(db, "Niveles", nivel, "Ejercicios"), (snap) => {
-                const body = document.getElementById('tablaEjercicios');
-                body.innerHTML = "";
-                snap.forEach(doc => {
-                    const d = doc.data();
-                    body.innerHTML += `<tr><td>${d.titulo}</td><td>${d.tipo || 'DELF'}</td>
-                    <td><button onclick="eliminar('${doc.id}')" style="color:red; border:none; background:none; cursor:pointer;">Eliminar</button></td></tr>`;
-                });
-            });
-        }
-        document.getElementById('nivelSel').onchange = cargarTabla;
-        cargarTabla();
-
-        window.eliminar = async (id) => {
-            const nivel = document.getElementById('nivelSel').value;
-            if(confirm("¿Borrar?")) await deleteDoc(doc(db, "Niveles", nivel, "Ejercicios", id));
+        // FINANZAS RESICO
+        window.addIngreso = async () => {
+            const monto = parseFloat(document.getElementById('monto').value);
+            const origen = document.getElementById('origen').value;
+            if(!monto) return;
+            await addDoc(collection(db, "Finanzas"), { monto, origen, fecha: new Date() });
+            alert("Ingreso registrado.");
         };
+
+        onSnapshot(collection(db, "Finanzas"), (snap) => {
+            let total = 0;
+            snap.forEach(d => total += d.data().monto);
+            document.getElementById('ingreso_total').innerText = `$${total.toFixed(2)}`;
+            // Cálculo ISR RESICO (Aprox 1.1% para este rango)
+            document.getElementById('isr_estimado').innerText = `$${(total * 0.011).toFixed(2)}`;
+        });
     </script>
 </body>
 </html>
