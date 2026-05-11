@@ -2,100 +2,82 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Master Admin | Gaby Esparza</title>
+    <title>Panel Maestro | Proyectos Gaby Esparza</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root { --oxford: #002147; --gold: #C5A059; --bg: #f4f7f9; }
         body { font-family: 'Montserrat', sans-serif; margin: 0; display: flex; height: 100vh; background: var(--bg); }
         
-        /* Sidebar */
         .sidebar { width: 280px; background: var(--oxford); color: white; padding: 20px; display: flex; flex-direction: column; }
-        .sidebar h2 { font-size: 1rem; border-bottom: 2px solid var(--gold); padding-bottom: 10px; margin-bottom: 20px; }
-        .nav-btn { background: transparent; border: none; color: white; padding: 15px; text-align: left; cursor: pointer; border-radius: 8px; margin-bottom: 8px; transition: 0.3s; }
+        .sidebar h2 { font-size: 1rem; border-bottom: 2px solid var(--gold); padding-bottom: 10px; margin-bottom: 25px; }
+        .nav-btn { background: transparent; border: none; color: white; padding: 15px; text-align: left; cursor: pointer; border-radius: 8px; margin-bottom: 10px; transition: 0.3s; font-size: 0.9rem; }
         .nav-btn.active, .nav-btn:hover { background: rgba(197, 160, 89, 0.2); color: var(--gold); }
-        .nav-btn i { margin-right: 10px; }
+        .nav-btn i { margin-right: 12px; }
 
-        /* Main Content */
         .main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
         .top-bar { background: white; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #ddd; }
-        .btn-alumno { background: #28a745; color: white; padding: 10px 20px; border-radius: 5px; text-decoration: none; font-weight: bold; }
         
         .content { flex: 1; padding: 30px; overflow-y: auto; display: none; }
         .content.active { display: block; }
 
-        /* Estilos de Tarjetas */
         .card { background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); margin-bottom: 20px; }
         .brain-zone { background: #fffdf5; border: 2px dashed var(--gold); padding: 20px; border-radius: 10px; margin-bottom: 20px; }
-        textarea { width: 100%; border: 1px solid #ccc; border-radius: 5px; padding: 10px; font-family: monospace; resize: vertical; }
-        .btn-save { background: var(--gold); color: var(--oxford); border: none; padding: 12px; width: 100%; border-radius: 5px; font-weight: bold; cursor: pointer; margin-top: 10px; }
+        textarea { width: 100%; border: 1px solid #ccc; border-radius: 5px; padding: 10px; font-family: monospace; font-size: 0.85rem; }
         
-        /* Estilos Gestor de Archivos */
-        .file-item { background: #eee; padding: 10px; border-radius: 5px; margin-top: 10px; display: flex; justify-content: space-between; font-size: 0.8rem; }
+        .btn-gold { background: var(--gold); color: var(--oxford); border: none; padding: 12px; width: 100%; border-radius: 5px; font-weight: bold; cursor: pointer; margin-top: 10px; }
+        .file-link-box { background: #f8f9fa; padding: 10px; border-radius: 5px; margin-top: 10px; border: 1px solid #ddd; font-size: 0.8rem; display: flex; align-items: center; justify-content: space-between; }
     </style>
 </head>
 <body>
 
 <div class="sidebar">
-    <h2>PANEL MULTI-PROYECTO</h2>
-    <button class="nav-btn active" onclick="switchTab('delf', this)"><i class="fas fa-graduation-cap"></i> Réussite DELF</button>
-    <button class="nav-btn" onclick="switchTab('clarity', this)"><i class="fas fa-brain"></i> NeuroClarity</button>
-    <button class="nav-btn" onclick="switchTab('resico', this)"><i class="fas fa-calculator"></i> Contabilidad RESICO</button>
+    <h2>CENTRO DE MANDO</h2>
+    <button class="nav-btn active" onclick="tab('delf', this)"><i class="fas fa-graduation-cap"></i> Proyecto Réussite DELF</button>
+    <button class="nav-btn" onclick="tab('clarity', this)"><i class="fas fa-brain"></i> NeuroClarity</button>
+    <button class="nav-btn" onclick="tab('resico', this)"><i class="fas fa-calculator"></i> Finanzas RESICO</button>
 </div>
 
 <div class="main">
     <div class="top-bar">
-        <h1 id="tab-title">Proyecto Réussite DELF</h1>
-        <a href="alumno.html?preview=true" class="btn-alumno"><i class="fas fa-external-link-alt"></i> VISTA ALUMNO</a>
+        <h1 id="title">Proyecto Réussite DELF</h1>
+        <div style="font-size: 0.8rem; color: #666;">Elena Gabriela Esparza</div>
     </div>
 
     <div id="tab-delf" class="content active">
         <div class="brain-zone">
-            <h3>🧠 Programar Cerebro: Sophia</h3>
-            <textarea id="prompt_sophia" rows="10" placeholder="Pega aquí el prompt maestro de Sophia..."></textarea>
-            <button class="btn-save" onclick="savePrompt('sophia')">ACTUALIZAR SOPHIA</button>
+            <h3>🧠 Programación de Sophia</h3>
+            <p>Pega aquí el Prompt Maestro (el que incluye los enlaces a tus documentos).</p>
+            <textarea id="p_sophia" rows="10"></textarea>
+            <button class="btn-gold" onclick="save('sophia')">ACTUALIZAR CEREBRO DE SOPHIA</button>
         </div>
 
         <div class="card">
-            <h3>📤 Gestor de Archivos (Carga de Référentiels, Libros y Audios)</h3>
-            <p>Sube aquí tus archivos para obtener el enlace que Sophia necesita leer.</p>
-            <input type="file" id="file_uploader">
-            <button class="btn-save" style="background: var(--oxford); color: white;" onclick="uploadFile()">SUBIR A FIREBASE</button>
-            <div id="file_list"></div>
-        </div>
-
-        <div class="card">
-            <h3>📚 Carga Masiva Inteligente</h3>
-            <p>Selecciona el libro PDF completo para que Sophia lo procese.</p>
-            <button class="btn-save" style="background: #007bff; color: white;">PROCESAR LIBRO COMPLETO</button>
+            <h3>📤 Gestor de Archivos (Para obtener enlaces)</h3>
+            <p>Sube tus Référentiels (PDF/DOC) y Audios aquí. Copia el enlace que se genere.</p>
+            <input type="file" id="f_input">
+            <button class="btn-gold" style="background:var(--oxford); color:white;" onclick="up()">SUBIR A FIREBASE</button>
+            <div id="f_list"></div>
         </div>
     </div>
 
     <div id="tab-clarity" class="content">
         <div class="brain-zone">
-            <h3>🧠 Programar Cerebro: Consultora Neuro</h3>
-            <textarea id="prompt_neuro" rows="10" placeholder="Prompt para accesibilidad y proyectos de neurodivergencia..."></textarea>
-            <button class="btn-save" onclick="savePrompt('neuro')">ACTUALIZAR CONSULTORA</button>
-        </div>
-        <div class="card">
-            <h3>👤 Perfiles de Alumnos (Ej: Sergio)</h3>
-            <p>Aquí gestionaremos las adaptaciones específicas.</p>
+            <h3>🧠 Programación: Consultora Neuro</h3>
+            <textarea id="p_neuro" rows="10"></textarea>
+            <button class="btn-gold" onclick="save('neuro')">ACTUALIZAR CONSULTORA</button>
         </div>
     </div>
 
     <div id="tab-resico" class="content">
-        <div class="card" style="display: flex; justify-content: space-around; text-align: center;">
-            <div><h4>Ingresos</h4><p id="total_ingresos" style="font-size: 1.5rem; color: green;">$0.00</p></div>
-            <div><h4>ISR (1.1%)</h4><p id="total_isr" style="font-size: 1.5rem; color: red;">$0.00</p></div>
+        <div class="card" style="display:flex; justify-content:space-around; text-align:center;">
+            <div><h4>Ingresos</h4><p id="t_ing" style="color:green; font-size:1.5rem; font-weight:bold;">$0.00</p></div>
+            <div><h4>ISR (1.1%)</h4><p id="t_isr" style="color:red; font-size:1.5rem; font-weight:bold;">$0.00</p></div>
         </div>
         <div class="card">
-            <h3>💰 Registro de Ventas</h3>
-            <input type="number" id="pago_monto" placeholder="Monto $">
-            <select id="pago_proyecto">
-                <option value="Delf">Réussite DELF</option>
-                <option value="Clarity">NeuroClarity</option>
-            </select>
-            <button class="btn-save" onclick="registrarIngreso()">REGISTRAR EN RESICO</button>
+            <h3>Registrar Venta</h3>
+            <input type="number" id="m_res" placeholder="Monto $" style="padding:10px; width:150px;">
+            <button class="btn-gold" onclick="reg()">GUARDAR EN CONTABILIDAD</button>
         </div>
     </div>
 </div>
@@ -118,50 +100,45 @@
     const db = getFirestore(app);
     const storage = getStorage(app);
 
-    // Cambio de Pestañas
-    window.switchTab = (id, btn) => {
+    window.tab = (id, b) => {
         document.querySelectorAll('.content').forEach(c => c.classList.remove('active'));
-        document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-        document.getElementById('tab-' + id).classList.add('active');
-        btn.classList.add('active');
-        document.getElementById('tab-title').innerText = btn.innerText;
+        document.querySelectorAll('.nav-btn').forEach(nb => nb.classList.remove('active'));
+        document.getElementById('tab-'+id).classList.add('active');
+        b.classList.add('active');
+        document.getElementById('title').innerText = b.innerText;
     };
 
-    // Subir Archivo y obtener URL
-    window.uploadFile = async () => {
-        const file = document.getElementById('file_uploader').files[0];
+    window.up = async () => {
+        const file = document.getElementById('f_input').files[0];
         if(!file) return alert("Selecciona un archivo");
-        const storageRef = ref(storage, 'config/' + file.name);
-        await uploadBytes(storageRef, file);
-        const url = await getDownloadURL(storageRef);
-        document.getElementById('file_list').innerHTML += `
-            <div class="file-item">
+        const sRef = ref(storage, 'config/' + file.name);
+        await uploadBytes(sRef, file);
+        const url = await getDownloadURL(sRef);
+        document.getElementById('f_list').innerHTML += `
+            <div class="file-link-box">
                 <span>${file.name}</span>
-                <input type="text" value="${url}" readonly style="width: 200px;">
+                <input type="text" value="${url}" readonly style="width:60%;">
+                <button onclick="navigator.clipboard.writeText('${url}'); alert('Copiado');">Copiar</button>
             </div>`;
-        alert("Archivo subido. Copia la URL para el prompt de Sophia.");
     };
 
-    // Guardar Prompts
-    window.savePrompt = async (tipo) => {
-        const val = document.getElementById('prompt_' + tipo).value;
-        await setDoc(doc(db, "Config", "Prompts"), { [tipo]: val }, { merge: true });
-        alert("IA " + tipo + " actualizada.");
+    window.save = async (t) => {
+        const v = document.getElementById('p_'+t).value;
+        await setDoc(doc(db, "Config", "Prompts"), { [t]: v }, { merge: true });
+        alert("Configuración guardada.");
     };
 
-    // Registro Contable
-    window.registrarIngreso = async () => {
-        const monto = parseFloat(document.getElementById('pago_monto').value);
-        const proyecto = document.getElementById('pago_proyecto').value;
-        await addDoc(collection(db, "Finanzas"), { monto, proyecto, fecha: new Date() });
-        alert("Ingreso registrado.");
+    window.reg = async () => {
+        const m = parseFloat(document.getElementById('m_res').value);
+        if(!m) return;
+        await addDoc(collection(db, "Finanzas"), { monto: m, fecha: new Date() });
+        document.getElementById('m_res').value = "";
     };
 
-    onSnapshot(collection(db, "Finanzas"), (snap) => {
-        let total = 0;
-        snap.forEach(d => total += d.data().monto);
-        document.getElementById('total_ingresos').innerText = "$" + total.toFixed(2);
-        document.getElementById('total_isr').innerText = "$" + (total * 0.011).toFixed(2);
+    onSnapshot(collection(db, "Finanzas"), (s) => {
+        let t = 0; s.forEach(d => t += d.data().monto);
+        document.getElementById('t_ing').innerText = "$" + t.toFixed(2);
+        document.getElementById('t_isr').innerText = "$" + (t * 0.011).toFixed(2);
     });
 </script>
 </body>
