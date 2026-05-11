@@ -8,31 +8,21 @@
         :root { --oxford: #002147; --gold: #C5A059; --white: #ffffff; }
         body { font-family: 'Montserrat', sans-serif; margin: 0; background: #f4f7f9; display: flex; height: 100vh; }
         .sidebar { width: 250px; background: var(--oxford); color: white; padding: 20px; }
-        .main { flex: 1; padding: 40px; overflow-y: auto; position: relative; }
+        .main { flex: 1; padding: 40px; overflow-y: auto; }
         .card { background: var(--white); padding: 25px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 20px; }
-        
-        .top-nav { 
-            display: flex; 
-            justify-content: flex-end; 
-            gap: 15px; 
-            margin-bottom: 30px; 
-        }
-
+        .top-nav { display: flex; justify-content: flex-end; gap: 15px; margin-bottom: 30px; }
         .ai-zone { background: #fff9e6; border: 2px dashed var(--gold); padding: 20px; border-radius: 10px; margin-bottom: 20px; }
-        textarea { width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #ddd; font-family: monospace; font-size: 0.8rem; box-sizing: border-box; }
-        
-        .btn { background: var(--oxford); color: white; border: none; padding: 12px 25px; border-radius: 8px; cursor: pointer; font-weight: 700; transition: 0.3s; text-decoration: none; display: inline-block; }
+        textarea { width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #ddd; font-family: monospace; box-sizing: border-box; }
+        .btn { background: var(--oxford); color: white; border: none; padding: 12px 25px; border-radius: 8px; cursor: pointer; font-weight: 700; transition: 0.3s; text-decoration: none; }
         .btn-ai { background: var(--gold); color: var(--oxford); margin-top: 10px; width: 100%; }
         .btn-view { background: #4CAF50; color: white; }
         .btn:hover { opacity: 0.9; transform: translateY(-2px); }
-
         table { width: 100%; border-collapse: collapse; margin-top: 20px; }
         th { text-align: left; padding: 12px; border-bottom: 2px solid var(--gold); color: var(--oxford); }
         td { padding: 12px; border-bottom: 1px solid #eee; }
     </style>
 </head>
 <body>
-
     <div class="sidebar">
         <h2>GABY ADMIN</h2>
         <p style="color: var(--gold);">NeuroRéussit</p>
@@ -44,17 +34,14 @@
     </div>
 
     <div class="main">
-        
         <div class="top-nav">
             <button class="btn" onclick="location.reload()">⚙️ Refrescar</button>
-            <button class="btn btn-view" onclick="const nivel = document.getElementById('nivelSel').value; window.location.href = 'alumno.html?nivel=' + nivel">🎓 Ver como Alumno</button>
+            <button class="btn btn-view" onclick="const nivel = document.getElementById('nivelSel').value; window.location.href = 'alumno.html?nivel=' + nivel + '&mode=preview'">🎓 Ver como Alumno</button>
         </div>
 
-        <h1>Carga de Contenido Inteligente</h1>
-        
         <div class="card">
-            <label>Seleccionar Nivel a Editar:</label>
-            <select id="nivelSel" style="padding: 10px; border-radius: 5px; width: 200px;">
+            <label>Nivel:</label>
+            <select id="nivelSel" style="padding: 10px; border-radius: 5px;">
                 <option value="A1">A1</option>
                 <option value="A2">A2</option>
                 <option value="B1" selected>B1</option>
@@ -64,17 +51,14 @@
 
         <div class="ai-zone">
             <h3>✨ Sophia - Carga Masiva</h3>
-            <p>Pega el código JSON generado para este nivel:</p>
-            <textarea id="ai_data" rows="5" placeholder='[{"titulo": "Ejercicio 1", "tipo": "Lectura"}]'></textarea>
+            <textarea id="ai_data" rows="5" placeholder='Pega el JSON aquí...'></textarea>
             <button class="btn btn-ai" onclick="importarTodo()">PROCESAR NIVEL COMPLETO</button>
         </div>
 
         <div class="card">
-            <h3>📚 Actividades en este Nivel</h3>
+            <tbody id="tablaEjercicios"></tbody>
             <table>
-                <thead>
-                    <tr><th>Título</th><th>Tipo</th><th>Acciones</th></tr>
-                </thead>
+                <thead><tr><th>Título</th><th>Tipo</th><th>Acciones</th></tr></thead>
                 <tbody id="tablaEjercicios"></tbody>
             </table>
         </div>
@@ -84,41 +68,32 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
         import { getFirestore, doc, setDoc, collection, onSnapshot, deleteDoc } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js";
 
-        // Configuración actualizada con tu appId real de los logs
         const firebaseConfig = {
             apiKey: "AIzaSyCgog8tKspHy01ZHE8Dthl9O4W6lw1a_Ec",
             authDomain: "objectif-reussite-delf.firebaseapp.com",
             projectId: "objectif-reussite-delf",
             storageBucket: "objectif-reussite-delf.firebasestorage.app",
             messagingSenderId: "942279633770",
-            appId: "1:942279633770:web:687ba6d819747eb29c1313" 
+            appId: "1:942279633770:web:687ba6d819747eb29c1313"
         };
 
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        // Función para importar datos
         window.importarTodo = async () => {
             const nivel = document.getElementById('nivelSel').value;
             const dataRaw = document.getElementById('ai_data').value;
-            
-            if(!dataRaw) return alert("Pega los datos primero.");
-
             try {
                 const ejercicios = JSON.parse(dataRaw);
                 for (const ej of ejercicios) {
                     const idLimpio = ej.titulo.replace(/\s+/g, '_').toLowerCase();
                     await setDoc(doc(db, "Niveles", nivel, "Ejercicios", idLimpio), ej);
                 }
-                alert("Éxito: " + ejercicios.length + " ejercicios cargados en " + nivel);
+                alert("Cargado correctamente.");
                 document.getElementById('ai_data').value = "";
-            } catch (e) {
-                alert("Error: El formato del texto no es correcto.");
-                console.error(e);
-            }
+            } catch (e) { alert("Error de formato."); }
         };
 
-        // Función para cargar la tabla
         function cargarTabla() {
             const nivel = document.getElementById('nivelSel').value;
             onSnapshot(collection(db, "Niveles", nivel, "Ejercicios"), (snap) => {
@@ -126,29 +101,17 @@
                 body.innerHTML = "";
                 snap.forEach(doc => {
                     const d = doc.data();
-                    const row = document.createElement('tr');
-                    row.innerHTML = `
-                        <td>${d.titulo}</td>
-                        <td>${d.tipo || 'DELF'}</td>
-                        <td><button onclick="eliminar('${doc.id}')" style="color:red; border:none; background:none; cursor:pointer; font-weight:bold;">Eliminar</button></td>
-                    `;
-                    body.appendChild(row);
+                    body.innerHTML += `<tr><td>${d.titulo}</td><td>${d.tipo || 'DELF'}</td>
+                    <td><button onclick="eliminar('${doc.id}')" style="color:red; border:none; background:none; cursor:pointer;">Eliminar</button></td></tr>`;
                 });
             });
         }
-
-        // Escuchar cambios de nivel
-        document.getElementById('nivelSel').addEventListener('change', cargarTabla);
-        
-        // Carga inicial
+        document.getElementById('nivelSel').onchange = cargarTabla;
         cargarTabla();
 
-        // Función global para eliminar
         window.eliminar = async (id) => {
             const nivel = document.getElementById('nivelSel').value;
-            if(confirm("¿Estás segura de eliminar este ejercicio?")) {
-                await deleteDoc(doc(db, "Niveles", nivel, "Ejercicios", id));
-            }
+            if(confirm("¿Borrar?")) await deleteDoc(doc(db, "Niveles", nivel, "Ejercicios", id));
         };
     </script>
 </body>
