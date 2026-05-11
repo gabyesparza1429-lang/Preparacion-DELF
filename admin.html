@@ -2,41 +2,26 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Master Admin | Réussite DELF & NeuroClarity</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root { --oxford: #002147; --gold: #C5A059; --bg: #f4f7f9; --green: #28a745; }
         body { font-family: 'Montserrat', sans-serif; margin: 0; display: flex; height: 100vh; background: var(--bg); }
-        
-        /* Navegación Lateral */
         .sidebar { width: 280px; background: var(--oxford); color: white; padding: 20px; display: flex; flex-direction: column; }
         .sidebar h2 { font-size: 1rem; border-bottom: 2px solid var(--gold); padding-bottom: 15px; margin-bottom: 25px; }
         .nav-btn { background: transparent; border: none; color: white; padding: 15px; text-align: left; cursor: pointer; border-radius: 8px; margin-bottom: 8px; transition: 0.3s; }
         .nav-btn.active, .nav-btn:hover { background: rgba(197, 160, 89, 0.2); color: var(--gold); }
-        .nav-btn i { margin-right: 12px; width: 20px; }
-
-        /* Área Principal */
         .main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
         .top-bar { background: white; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #ddd; }
-        
         .content-section { flex: 1; padding: 30px; overflow-y: auto; display: none; }
         .content-section.active { display: block; }
-
-        /* Componentes de Organización */
         .card { background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); margin-bottom: 20px; }
-        .level-selector-zone { background: var(--oxford); color: white; padding: 20px; border-radius: 12px; margin-bottom: 20px; display: flex; align-items: center; gap: 20px; }
+        .level-zone { background: var(--oxford); color: white; padding: 20px; border-radius: 12px; margin-bottom: 20px; display: flex; align-items: center; gap: 20px; }
         .brain-zone { background: #fffdf5; border: 2px dashed var(--gold); padding: 20px; border-radius: 10px; margin-bottom: 20px; }
-        
-        select, input[type="file"] { padding: 10px; border-radius: 5px; border: 1px solid #ddd; }
         textarea { width: 100%; border: 1px solid #ccc; border-radius: 8px; padding: 12px; font-family: monospace; font-size: 0.85rem; box-sizing: border-box; }
-        
-        .btn-action { background: var(--gold); color: var(--oxford); border: none; padding: 12px 25px; border-radius: 6px; font-weight: 700; cursor: pointer; transition: 0.3s; }
-        .btn-action:hover { opacity: 0.9; }
-        
-        .file-status { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 15px; }
-        .status-pill { padding: 8px; border-radius: 5px; font-size: 0.75rem; text-align: center; background: #eee; border: 1px solid #ddd; }
+        .btn-action { background: var(--gold); color: var(--oxford); border: none; padding: 12px 25px; border-radius: 6px; font-weight: 700; cursor: pointer; transition: 0.3s; width: 100%; }
+        .status-pill { padding: 8px; border-radius: 5px; font-size: 0.75rem; background: #eee; border: 1px solid #ddd; flex: 1; text-align: center; }
         .status-pill.ready { background: #e8f5e9; color: #2e7d32; border-color: #a5d6a7; }
     </style>
 </head>
@@ -46,7 +31,7 @@
         <h2>CENTRO DE CONTROL</h2>
         <button class="nav-btn active" onclick="switchTab('delf', this)"><i class="fas fa-certificate"></i> Réussite DELF</button>
         <button class="nav-btn" onclick="switchTab('clarity', this)"><i class="fas fa-brain"></i> NeuroClarity</button>
-        <button class="nav-btn" onclick="switchTab('resico', this)"><i class="fas fa-file-invoice-dollar"></i> Finanzas RESICO</button>
+        <button class="nav-btn" onclick="switchTab('resico', this)"><i class="fas fa-calculator"></i> Finanzas RESICO</button>
     </div>
 
     <div class="main">
@@ -56,67 +41,131 @@
         </div>
 
         <div id="tab-delf" class="content-section active">
-            
-            <div class="level-selector-zone">
-                <label><strong>NIVEL A TRABAJAR:</strong></label>
-                <select id="nivel_master" onchange="checkLevelStatus()">
+            <div class="level-zone">
+                <label><strong>NIVEL:</strong></label>
+                <select id="nivel_master" onchange="checkLevelStatus()" style="padding: 10px; border-radius: 5px;">
                     <option value="A1">Nivel A1</option>
                     <option value="A2">Nivel A2</option>
-                    <option value="B1">Nivel B1</option>
+                    <option value="B1" selected>Nivel B1</option>
                     <option value="B2">Nivel B2</option>
                     <option value="C1">Nivel C1</option>
                 </select>
-                <div class="file-status">
-                    <div id="stat_ref" class="status-pill">Référentiel</div>
-                    <div id="stat_book" class="status-pill">Libro (PDF)</div>
-                    <div id="stat_audio" class="status-pill">Audios (MP3)</div>
-                </div>
+                <div id="stat_ref" class="status-pill">Référentiel</div>
+                <div id="stat_book" class="status-pill">Libro</div>
+                <div id="stat_audio" class="status-pill">Audios</div>
             </div>
 
             <div class="card">
-                <h3>📤 Cargar Material del Nivel Seleccionado</h3>
-                <p style="font-size: 0.8rem; color: #666;">Sube los archivos uno por uno. Sophia los guardará en la carpeta correcta.</p>
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-                    <div>
-                        <label style="display:block; font-size:0.7rem; font-weight:bold;">TIPO DE ARCHIVO:</label>
-                        <select id="file_type" style="width: 100%;">
-                            <option value="referentiel">Référentiel (.doc / .pdf)</option>
-                            <option value="libro">Libro de Ejercicios (PDF)</option>
-                            <option value="audios">Pack de Audios (ZIP/MP3)</option>
-                            <option value="manual">Manual de Evaluador</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label style="display:block; font-size:0.7rem; font-weight:bold;">SELECCIONAR:</label>
-                        <input type="file" id="main_file_input" style="width: 100%;">
-                    </div>
+                <h3>📤 Carga de Material por Nivel</h3>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                    <select id="file_type" style="padding: 10px;">
+                        <option value="referentiel">Référentiel (.doc/.pdf)</option>
+                        <option value="libro">Libro Ejercicios (PDF)</option>
+                        <option value="audios">Audios (MP3/ZIP)</option>
+                    </select>
+                    <input type="file" id="main_file_input">
                 </div>
-                <button class="btn-action" style="margin-top:20px; width:100%; background: var(--oxford); color:white;" onclick="uploadToLevel()">SUBIR Y VINCULAR AL NIVEL</button>
+                <button class="btn-action" style="background:var(--oxford); color:white; margin-top:15px;" onclick="uploadToLevel()">VINCULAR AL NIVEL</button>
                 <div id="upload_log" style="margin-top:10px; font-size:0.8rem; color: var(--green);"></div>
             </div>
 
             <div class="brain-zone">
                 <h3>🧠 Cerebro Sophia: Instrucciones de Evaluación</h3>
-                <textarea id="prompt_sophia" rows="6" placeholder="Pega aquí el prompt maestro de Sophia..."></textarea>
-                <button class="btn-action" onclick="savePrompt('sophia')">ACTUALIZAR REGLAS DE SOPHIA</button>
+                <textarea id="prompt_sophia" rows="8" placeholder="Pega aquí el Prompt Maestro..."></textarea>
+                <button class="btn-action" onclick="savePrompt('sophia')">ACTUALIZAR REGLAS</button>
             </div>
 
-            <div class="card" style="border-left: 5px solid #007bff;">
-                <h3>⚙️ Procesamiento de Habilidades</h3>
-                <p>Al dar clic, Sophia leerá el libro del nivel y creará los ejercicios de CO, CE, PE y PO.</p>
-                <button class="btn-action" style="background: #007bff; color: white; width: 100%;" onclick="runCargaMasiva()">SOPHIA: GENERAR EJERCICIOS (4 HABILIDADES)</button>
+            <div class="card">
+                <h3>⚙️ Procesar Nivel</h3>
+                <button class="btn-action" style="background:#007bff; color:white;" onclick="runCargaMasiva()">SOPHIA: GENERAR EJERCICIOS (4 HABILIDADES)</button>
             </div>
         </div>
 
         <div id="tab-clarity" class="content-section">
-            <div class="brain-zone">
-                <h3>🧠 Cerebro Consultora Neuro</h3>
-                <textarea id="prompt_neuro" rows="6"></textarea>
-                <button class="btn-action" onclick="savePrompt('neuro')">ACTUALIZAR NEUROCLARITY</button>
-            </div>
+            <div class="brain-zone"><h3>🧠 Cerebro NeuroClarity</h3><textarea id="prompt_neuro" rows="8"></textarea><button class="btn-action" onclick="savePrompt('neuro')">ACTUALIZAR</button></div>
         </div>
 
         <div id="tab-resico" class="content-section">
-            <div style="display:flex; gap:20px;">
-                <div class="card" style="flex:1; text-align:center;"><h4>Ingresos</h4><p id="res_ing" style="font-size:1.5rem; color:var(--green); font-weight:bold;">$0.00</p></div>
-                <div class="card" style="flex:
+            <div class="card" style="display:flex; justify-content:space-around;">
+                <div><h4>Ingresos</h4><p id="res_ing" style="font-size:1.5rem; color:var(--green); font-weight:bold;">$0.00</p></div>
+                <div><h4>ISR (1.1%)</h4><p id="res_isr" style="font-size:1.5rem; color:#d32f2f; font-weight:bold;">$0.00</p></div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
+        import { getFirestore, doc, setDoc, collection, addDoc, onSnapshot, getDoc } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js";
+        import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-storage.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCgog8tKspHy01ZHE8Dthl9O4W6lw1a_Ec",
+            authDomain: "objectif-reussite-delf.firebaseapp.com",
+            projectId: "objectif-reussite-delf",
+            storageBucket: "objectif-reussite-delf.firebasestorage.app",
+            messagingSenderId: "942279633770",
+            appId: "1:942279633770:web:687ba6d819747eb29c1313"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const storage = getStorage(app);
+
+        window.switchTab = (id, btn) => {
+            document.querySelectorAll('.content-section').forEach(c => c.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById('tab-' + id).classList.add('active');
+            btn.classList.add('active');
+            document.getElementById('tab-title').innerText = btn.innerText;
+        };
+
+        window.uploadToLevel = async () => {
+            const nivel = document.getElementById('nivel_master').value;
+            const tipo = document.getElementById('file_type').value;
+            const file = document.getElementById('main_file_input').files[0];
+            if(!file) return alert("Selecciona un archivo");
+            
+            const log = document.getElementById('upload_log');
+            log.innerText = "⏳ Cargando en " + nivel + "...";
+            
+            const sRef = ref(storage, `niveles/${nivel}/${tipo}/${file.name}`);
+            await uploadBytes(sRef, file);
+            const url = await getDownloadURL(sRef);
+            
+            await setDoc(doc(db, "Materiales", nivel), { [tipo]: url }, { merge: true });
+            log.innerText = "✅ Vinculado con éxito.";
+            checkLevelStatus();
+        };
+
+        window.checkLevelStatus = async () => {
+            const nivel = document.getElementById('nivel_master').value;
+            const snap = await getDoc(doc(db, "Materiales", nivel));
+            const ids = { referentiel: 'stat_ref', libro: 'stat_book', audios: 'stat_audio' };
+            Object.values(ids).forEach(i => document.getElementById(i).classList.remove('ready'));
+            if(snap.exists()){
+                const d = snap.data();
+                for(let k in ids) if(d[k]) document.getElementById(ids[k]).classList.add('ready');
+            }
+        };
+
+        window.savePrompt = async (t) => {
+            const v = document.getElementById('prompt_'+t).value;
+            await setDoc(doc(db, "Config", "Prompts"), { [t]: v }, { merge: true });
+            alert("Cerebro actualizado.");
+        };
+
+        window.runCargaMasiva = () => {
+            const n = document.getElementById('nivel_master').value;
+            alert("Sophia está procesando el libro de " + n + " para generar CO, CE, PE y PO.");
+        };
+
+        onSnapshot(collection(db, "Finanzas"), (s) => {
+            let t = 0; s.forEach(d => t += d.data().monto);
+            document.getElementById('res_ing').innerText = "$" + t.toFixed(2);
+            document.getElementById('res_isr').innerText = "$" + (t * 0.011).toFixed(2);
+        });
+
+        checkLevelStatus();
+    </script>
+</body>
+</html>
