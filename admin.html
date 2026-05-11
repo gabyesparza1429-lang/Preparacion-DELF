@@ -11,7 +11,6 @@
         .main { flex: 1; padding: 40px; overflow-y: auto; position: relative; }
         .card { background: var(--white); padding: 25px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 20px; }
         
-        /* Botones de navegación rápida */
         .top-nav { 
             display: flex; 
             justify-content: flex-end; 
@@ -20,9 +19,9 @@
         }
 
         .ai-zone { background: #fff9e6; border: 2px dashed var(--gold); padding: 20px; border-radius: 10px; margin-bottom: 20px; }
-        textarea { width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #ddd; font-family: monospace; font-size: 0.8rem; }
+        textarea { width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #ddd; font-family: monospace; font-size: 0.8rem; box-sizing: border-box; }
         
-        .btn { background: var(--oxford); color: white; border: none; padding: 12px 25px; border-radius: 8px; cursor: pointer; font-weight: 700; transition: 0.3s; }
+        .btn { background: var(--oxford); color: white; border: none; padding: 12px 25px; border-radius: 8px; cursor: pointer; font-weight: 700; transition: 0.3s; text-decoration: none; display: inline-block; }
         .btn-ai { background: var(--gold); color: var(--oxford); margin-top: 10px; width: 100%; }
         .btn-view { background: #4CAF50; color: white; }
         .btn:hover { opacity: 0.9; transform: translateY(-2px); }
@@ -39,7 +38,7 @@
         <p style="color: var(--gold);">NeuroRéussit</p>
         <hr style="opacity: 0.2;">
         <nav>
-            <div style="padding: 10px 0; cursor: pointer;">📁 Contenido</div>
+            <div style="padding: 10px 0; cursor: pointer;" onclick="location.href='admin.html'">📁 Contenido</div>
             <div style="padding: 10px 0; cursor: pointer;">👨‍🎓 Alumnos</div>
         </nav>
     </div>
@@ -47,15 +46,15 @@
     <div class="main">
         
         <div class="top-nav">
-            <button class="btn" onclick="location.reload()">⚙️ Refrescar Admin</button>
-            <button class="btn btn-view" onclick="const nivel = document.getElementById('nivelSel').value; window.open('/alumno.html?nivel=' + nivel, '_blank')">🎓 Ver como Alumno</button>
+            <button class="btn" onclick="location.reload()">⚙️ Refrescar</button>
+            <button class="btn btn-view" onclick="const nivel = document.getElementById('nivelSel').value; window.location.href = 'alumno.html?nivel=' + nivel">🎓 Ver como Alumno</button>
         </div>
 
         <h1>Carga de Contenido Inteligente</h1>
         
         <div class="card">
-            <label>Nivel:</label>
-            <select id="nivelSel" style="padding: 10px; border-radius: 5px;">
+            <label>Seleccionar Nivel a Editar:</label>
+            <select id="nivelSel" style="padding: 10px; border-radius: 5px; width: 200px;">
                 <option value="A1">A1</option>
                 <option value="A2">A2</option>
                 <option value="B1" selected>B1</option>
@@ -65,8 +64,8 @@
 
         <div class="ai-zone">
             <h3>✨ Sophia - Carga Masiva</h3>
-            <p>Pega aquí el código que Sophia te dio para este nivel:</p>
-            <textarea id="ai_data" rows="5" placeholder='[{"titulo": "Ejercicio 1", ...}]'></textarea>
+            <p>Pega el código JSON generado para este nivel:</p>
+            <textarea id="ai_data" rows="5" placeholder='[{"titulo": "Ejercicio 1", "tipo": "Lectura"}]'></textarea>
             <button class="btn btn-ai" onclick="importarTodo()">PROCESAR NIVEL COMPLETO</button>
         </div>
 
@@ -85,38 +84,41 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
         import { getFirestore, doc, setDoc, collection, onSnapshot, deleteDoc } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js";
 
+        // Configuración actualizada con tu appId real de los logs
         const firebaseConfig = {
             apiKey: "AIzaSyCgog8tKspHy01ZHE8Dthl9O4W6lw1a_Ec",
             authDomain: "objectif-reussite-delf.firebaseapp.com",
             projectId: "objectif-reussite-delf",
             storageBucket: "objectif-reussite-delf.firebasestorage.app",
             messagingSenderId: "942279633770",
-            appId: "1:942279633770:web:9d7b5fe54d0139019c1313"
+            appId: "1:942279633770:web:687ba6d819747eb29c1313" 
         };
 
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
+        // Función para importar datos
         window.importarTodo = async () => {
             const nivel = document.getElementById('nivelSel').value;
             const dataRaw = document.getElementById('ai_data').value;
             
+            if(!dataRaw) return alert("Pega los datos primero.");
+
             try {
                 const ejercicios = JSON.parse(dataRaw);
                 for (const ej of ejercicios) {
                     const idLimpio = ej.titulo.replace(/\s+/g, '_').toLowerCase();
                     await setDoc(doc(db, "Niveles", nivel, "Ejercicios", idLimpio), ej);
                 }
-                alert("¡Listo! He cargado " + ejercicios.length + " ejercicios.");
+                alert("Éxito: " + ejercicios.length + " ejercicios cargados en " + nivel);
                 document.getElementById('ai_data').value = "";
             } catch (e) {
-                alert("Error en el formato del código.");
+                alert("Error: El formato del texto no es correcto.");
                 console.error(e);
             }
         };
 
-        document.getElementById('nivelSel').onchange = () => cargarTabla();
-        
+        // Función para cargar la tabla
         function cargarTabla() {
             const nivel = document.getElementById('nivelSel').value;
             onSnapshot(collection(db, "Niveles", nivel, "Ejercicios"), (snap) => {
@@ -124,20 +126,30 @@
                 body.innerHTML = "";
                 snap.forEach(doc => {
                     const d = doc.data();
-                    body.innerHTML += `<tr>
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
                         <td>${d.titulo}</td>
                         <td>${d.tipo || 'DELF'}</td>
-                        <td><button onclick="eliminar('${doc.id}')" style="color:red; border:none; background:none; cursor:pointer;">Eliminar</button></td>
-                    </tr>`;
+                        <td><button onclick="eliminar('${doc.id}')" style="color:red; border:none; background:none; cursor:pointer; font-weight:bold;">Eliminar</button></td>
+                    `;
+                    body.appendChild(row);
                 });
             });
         }
+
+        // Escuchar cambios de nivel
+        document.getElementById('nivelSel').addEventListener('change', cargarTabla);
+        
+        // Carga inicial
         cargarTabla();
 
+        // Función global para eliminar
         window.eliminar = async (id) => {
             const nivel = document.getElementById('nivelSel').value;
-            if(confirm("¿Borrar este ejercicio?")) await deleteDoc(doc(db, "Niveles", nivel, "Ejercicios", id));
+            if(confirm("¿Estás segura de eliminar este ejercicio?")) {
+                await deleteDoc(doc(db, "Niveles", nivel, "Ejercicios", id));
+            }
         };
     </script>
 </body>
-</html> 
+</html>
