@@ -2,138 +2,204 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Master Admin | Gaby Esparza</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel Maestro | Gaby Esparza</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        :root { --oxford: #002147; --gold: #C5A059; --bg: #f4f7f9; --green: #28a745; }
+        :root { --oxford: #002147; --gold: #C5A059; --bg: #f4f7f9; --green: #28a745; --red: #d32f2f; }
         body { font-family: 'Montserrat', sans-serif; margin: 0; display: flex; height: 100vh; background: var(--bg); }
-        .sidebar { width: 280px; background: var(--oxford); color: white; padding: 20px; display: flex; flex-direction: column; }
-        .nav-btn { background: transparent; border: none; color: white; padding: 15px; text-align: left; cursor: pointer; border-radius: 8px; margin-bottom: 10px; transition: 0.3s; }
-        .nav-btn.active { background: rgba(197, 160, 89, 0.2); color: var(--gold); }
+        
+        /* Barra Lateral */
+        .sidebar { width: 260px; background: var(--oxford); color: white; padding: 20px; display: flex; flex-direction: column; }
+        .sidebar h2 { font-size: 0.9rem; border-bottom: 1px solid var(--gold); padding-bottom: 15px; margin-bottom: 20px; text-align: center; }
+        .nav-btn { background: transparent; border: none; color: white; padding: 15px; text-align: left; cursor: pointer; border-radius: 8px; margin-bottom: 5px; transition: 0.3s; font-size: 0.85rem; }
+        .nav-btn.active, .nav-btn:hover { background: rgba(197, 160, 89, 0.2); color: var(--gold); }
+        .nav-btn i { margin-right: 10px; }
+
+        /* Contenedor Principal */
         .main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
         .top-bar { background: white; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #ddd; }
-        .btn-nav { background: var(--green); color: white; padding: 10px 20px; border-radius: 5px; text-decoration: none; font-weight: bold; }
+        .btn-view { background: var(--oxford); color: white; padding: 10px 18px; border-radius: 5px; text-decoration: none; font-weight: bold; font-size: 0.8rem; }
+
         .content { flex: 1; padding: 30px; overflow-y: auto; display: none; }
         .content.active { display: block; }
-        .card { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); margin-bottom: 20px; }
-        .status-pill { padding: 8px; border-radius: 5px; font-size: 0.75rem; background: #eee; text-align: center; flex: 1; }
-        .status-pill.ready { background: #e8f5e9; color: #2e7d32; border: 1px solid #a5d6a7; }
-        .btn-gold { background: var(--gold); color: var(--oxford); border: none; padding: 12px; width: 100%; border-radius: 5px; font-weight: bold; cursor: pointer; margin-top: 10px; }
-        /* Consola de Resultados */
-        #console_log { background: #1e1e1e; color: #00ff00; padding: 15px; border-radius: 8px; font-family: 'Courier New', monospace; font-size: 0.8rem; margin-top: 10px; min-height: 100px; }
+
+        /* Tarjetas y UI */
+        .card { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); margin-bottom: 20px; }
+        .level-header { background: var(--oxford); color: white; padding: 20px; border-radius: 12px; margin-bottom: 20px; display: flex; align-items: center; justify-content: space-between; }
+        
+        /* Botones de Estado (Indicadores) */
+        .status-group { display: flex; gap: 10px; }
+        .status-pill { padding: 8px 15px; border-radius: 20px; font-size: 0.7rem; font-weight: bold; background: #555; color: #ccc; border: 1px solid #444; transition: 0.5s; }
+        .status-pill.active { background: var(--green); color: white; border-color: #1e7e34; box-shadow: 0 0 10px rgba(40, 167, 69, 0.4); }
+
+        /* Reloj de Procesamiento */
+        .timer-display { font-family: 'Courier New', monospace; font-size: 1.5rem; color: var(--gold); font-weight: bold; text-align: center; margin: 10px 0; display: none; }
+        
+        .btn-gold { background: var(--gold); color: var(--oxford); border: none; padding: 12px; width: 100%; border-radius: 6px; font-weight: bold; cursor: pointer; margin-top: 10px; }
+        .console { background: #1a1a1a; color: #00ff00; padding: 15px; border-radius: 8px; font-family: 'Courier New', monospace; font-size: 0.75rem; margin-top: 15px; max-height: 150px; overflow-y: auto; border: 1px solid #333; }
     </style>
 </head>
 <body>
 
-<div class="sidebar">
-    <h2>CENTRO DE MANDO</h2>
-    <button class="nav-btn active" onclick="tab('delf', this)"><i class="fas fa-certificate"></i> Réussite DELF</button>
-    <button class="nav-btn" onclick="tab('clarity', this)"><i class="fas fa-brain"></i> NeuroClarity</button>
-    <button class="nav-btn" onclick="tab('resico', this)"><i class="fas fa-calculator"></i> Finanzas RESICO</button>
-</div>
+    <nav class="sidebar">
+        <h2>CENTRO DE MANDO</h2>
+        <button class="nav-btn active" onclick="tab('delf', this)"><i class="fas fa-certificate"></i> Réussite DELF</button>
+        <button class="nav-btn" onclick="tab('clarity', this)"><i class="fas fa-brain"></i> NeuroClarity</button>
+        <button class="nav-btn" onclick="tab('resico', this)"><i class="fas fa-calculator"></i> RESICO</button>
+        <div style="margin-top: auto; text-align: center; font-size: 0.7rem; opacity: 0.5;">v.2.0 - 2026</div>
+    </nav>
 
-<div class="main">
-    <div class="top-bar">
-        <h1 id="title">Réussite DELF</h1>
-        <a href="alumno.html" class="btn-nav"><i class="fas fa-eye"></i> IR A VISTA ALUMNO</a>
-    </div>
+    <div class="main">
+        <div class="top-bar">
+            <h1 id="tab-title" style="margin:0; font-size: 1.1rem;">Réussite DELF</h1>
+            <a href="alumno.html" class="btn-view"><i class="fas fa-external-link-alt"></i> VISTA ALUMNO</a>
+        </div>
 
-    <div id="tab-delf" class="content active">
-        <div class="card" style="background: var(--oxford); color: white;">
-            <label>Nivel:</label>
-            <select id="nivel_master" onchange="checkLevelStatus()" style="padding: 5px;">
-                <option value="A1">A1</option><option value="A2">A2</option><option value="B1" selected>B1</option><option value="B2">B2</option>
-            </select>
-            <div style="display:flex; gap:10px; margin-top:10px;">
-                <div id="stat_ref" class="status-pill">Référentiel</div>
-                <div id="stat_book" class="status-pill">Libro</div>
-                <div id="stat_audio" class="status-pill">Audios</div>
+        <div id="tab-delf" class="content active">
+            
+            <div class="level-header">
+                <div>
+                    <label style="font-size: 0.7rem; display: block; margin-bottom: 5px;">NIVEL ACTIVO:</label>
+                    <select id="nivel_master" onchange="checkStatus()" style="padding: 8px; border-radius: 5px; font-weight: bold;">
+                        <option value="A1">Nivel A1</option>
+                        <option value="A2">Nivel A2</option>
+                        <option value="B1" selected>Nivel B1</option>
+                        <option value="B2">Nivel B2</option>
+                        <option value="C1">Nivel C1</option>
+                    </select>
+                </div>
+                <div class="status-group">
+                    <div id="pill_ref" class="status-pill">RÉFÉRENTIEL</div>
+                    <div id="pill_book" class="status-pill">LIBRO</div>
+                    <div id="pill_audio" class="status-pill">AUDIOS</div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>📤 Carga de Material</h3>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
+                    <select id="file_type" style="padding: 10px;">
+                        <option value="referentiel">Référentiel (.doc/.pdf)</option>
+                        <option value="libro">Libro Ejercicios (PDF)</option>
+                        <option value="audios">Audios MP3 (Múltiples)</option>
+                    </select>
+                    <input type="file" id="file_input" multiple>
+                </div>
+                <button class="btn-gold" style="background: var(--oxford); color: white;" onclick="uploadFiles()">SUBIR Y VINCULAR AL NIVEL</button>
+            </div>
+
+            <div class="card" style="border-top: 4px solid var(--gold);">
+                <h3>⚙️ Carga Masiva Sophia</h3>
+                <p style="font-size: 0.8rem; color: #666;">Sophia extraerá ejercicios de CO, CE, PE y PO del libro seleccionado.</p>
+                
+                <div id="timer" class="timer-display">00:00</div>
+                
+                <button class="btn-gold" onclick="startMassiveUpload()">SOPHIA: INICIAR PROCESAMIENTO</button>
+                <div id="console_out" class="console">> Esperando archivos...</div>
             </div>
         </div>
 
-        <div class="card">
-            <h3>📤 Cargar Material</h3>
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-                <select id="file_type"><option value="referentiel">Référentiel</option><option value="libro">Libro PDF</option><option value="audios">Audios</option></select>
-                <input type="file" id="f_input">
-            </div>
-            <button class="btn-gold" onclick="up()">VINCULAR AL NIVEL</button>
-        </div>
-
-        <div class="card">
-            <h3>⚙️ Generar Ejercicios</h3>
-            <button class="btn-gold" style="background:#007bff; color:white;" onclick="runCarga()">SOPHIA: PROCESAR HABILIDADES</button>
-            <div id="console_log">Consola: Esperando acción...</div>
-        </div>
+        <div id="tab-clarity" class="content"><div class="card"><h3>NeuroClarity</h3><p>Módulo en desarrollo...</p></div></div>
+        <div id="tab-resico" class="content"><div class="card"><h3>Contabilidad RESICO</h3><p>Módulo en desarrollo...</p></div></div>
     </div>
 
-    <div id="tab-clarity" class="content"><p>Próximamente: Configuración de NeuroClarity...</p></div>
-    <div id="tab-resico" class="content"><p>Próximamente: Reportes de RESICO...</p></div>
-</div>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
+        import { getFirestore, doc, setDoc, getDoc, onSnapshot, collection } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js";
+        import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-storage.js";
 
-<script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
-    import { getFirestore, doc, setDoc, getDoc, collection, onSnapshot } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js";
-    import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-storage.js";
+        const firebaseConfig = {
+            apiKey: "AIzaSyCgog8tKspHy01ZHE8Dthl9O4W6lw1a_Ec",
+            authDomain: "objectif-reussite-delf.firebaseapp.com",
+            projectId: "objectif-reussite-delf",
+            storageBucket: "objectif-reussite-delf.firebasestorage.app",
+            messagingSenderId: "942279633770",
+            appId: "1:942279633770:web:687ba6d819747eb29c1313"
+        };
 
-    const firebaseConfig = {
-        apiKey: "AIzaSyCgog8tKspHy01ZHE8Dthl9O4W6lw1a_Ec",
-        authDomain: "objectif-reussite-delf.firebaseapp.com",
-        projectId: "objectif-reussite-delf",
-        storageBucket: "objectif-reussite-delf.firebasestorage.app",
-        messagingSenderId: "942279633770",
-        appId: "1:942279633770:web:687ba6d819747eb29c1313"
-    };
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const storage = getStorage(app);
 
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
-    const storage = getStorage(app);
+        // NAVEGACIÓN
+        window.tab = (id, b) => {
+            document.querySelectorAll('.content').forEach(c => c.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(nb => nb.classList.remove('active'));
+            document.getElementById('tab-' + id).classList.add('active');
+            b.classList.add('active');
+            document.getElementById('tab-title').innerText = b.innerText;
+        };
 
-    window.tab = (id, b) => {
-        document.querySelectorAll('.content').forEach(c => c.classList.remove('active'));
-        document.querySelectorAll('.nav-btn').forEach(nb => nb.classList.remove('active'));
-        document.getElementById('tab-'+id).classList.add('active');
-        b.classList.add('active');
-        document.getElementById('title').innerText = b.innerText;
-    };
+        // SUBIDA DE ARCHIVOS
+        window.uploadFiles = async () => {
+            const nivel = document.getElementById('nivel_master').value;
+            const tipo = document.getElementById('file_type').value;
+            const files = document.getElementById('file_input').files;
+            if(files.length === 0) return alert("Selecciona archivos.");
 
-    window.up = async () => {
-        const n = document.getElementById('nivel_master').value;
-        const t = document.getElementById('file_type').value;
-        const f = document.getElementById('f_input').files[0];
-        if(!f) return alert("Selecciona archivo");
-        const sRef = ref(storage, `niveles/${n}/${t}/${f.name}`);
-        await uploadBytes(sRef, f);
-        const url = await getDownloadURL(sRef);
-        await setDoc(doc(db, "Materiales", n), { [t]: url }, { merge: true });
-        alert("Archivo vinculado.");
-        checkLevelStatus();
-    };
+            const out = document.getElementById('console_out');
+            out.innerHTML = `> Iniciando subida para ${nivel}...<br>`;
 
-    window.checkLevelStatus = async () => {
-        const n = document.getElementById('nivel_master').value;
-        const snap = await getDoc(doc(db, "Materiales", n));
-        const ids = { referentiel: 'stat_ref', libro: 'stat_book', audios: 'stat_audio' };
-        Object.values(ids).forEach(i => document.getElementById(i).classList.remove('ready'));
-        if(snap.exists()){
-            const d = snap.data();
-            for(let k in ids) if(d[k]) document.getElementById(ids[k]).classList.add('ready');
-        }
-    };
+            for (let f of files) {
+                const sRef = ref(storage, `niveles/${nivel}/${tipo}/${f.name}`);
+                await uploadBytes(sRef, f);
+                out.innerHTML += `> OK: ${f.name} guardado.<br>`;
+            }
 
-    window.runCarga = () => {
-        const consoleLog = document.getElementById('console_log');
-        const n = document.getElementById('nivel_master').value;
-        consoleLog.innerHTML = `> Iniciando procesamiento de Nivel ${n}...<br>`;
-        
-        // Simulación de respuesta de Sophia tras procesar
-        setTimeout(() => {
-            consoleLog.innerHTML += `> Analizando PDF... OK<br>> Vinculando Audios... OK<br>> Generando rúbricas de PO... OK<br>> <b>ÉXITO: Se generaron 15 ejercicios para ${n}.</b>`;
-        }, 2000);
-    };
+            // Marcamos como existente en Firestore para que las "pills" cambien de color
+            await setDoc(doc(db, "Materiales", nivel), { [tipo]: true }, { merge: true });
+            out.innerHTML += `> Proceso finalizado. El nivel ${nivel} está actualizado.<br>`;
+        };
 
-    checkLevelStatus();
-</script>
+        // INDICADORES DE COLOR (REAL-TIME)
+        window.checkStatus = () => {
+            const nivel = document.getElementById('nivel_master').value;
+            onSnapshot(doc(db, "Materiales", nivel), (snap) => {
+                const p = { referentiel: 'pill_ref', libro: 'pill_book', audios: 'pill_audio' };
+                Object.values(p).forEach(id => document.getElementById(id).classList.remove('active'));
+                
+                if (snap.exists()) {
+                    const data = snap.data();
+                    if(data.referentiel) document.getElementById('pill_ref').classList.add('active');
+                    if(data.libro) document.getElementById('pill_book').classList.add('active');
+                    if(data.audios) document.getElementById('pill_audio').classList.add('active');
+                }
+            });
+        };
+
+        // CARGA MASIVA CON RELOJ
+        let timerInterval;
+        window.startMassiveUpload = () => {
+            const out = document.getElementById('console_out');
+            const timerDiv = document.getElementById('timer');
+            const nivel = document.getElementById('nivel_master').value;
+            
+            timerDiv.style.display = 'block';
+            out.innerHTML = `> Sophia está procesando el material de ${nivel}...<br>`;
+            
+            let seconds = 0;
+            timerInterval = setInterval(() => {
+                seconds++;
+                let min = Math.floor(seconds / 60);
+                let sec = seconds % 60;
+                timerDiv.innerText = `${min.toString().padStart(2, '0')}:${sec.toString().padStart(2, '0')}`;
+            }, 1000);
+
+            // Simulación de procesamiento de las 4 habilidades
+            setTimeout(() => {
+                clearInterval(timerInterval);
+                out.innerHTML += `> [CO] Transcripciones vinculadas.<br>`;
+                out.innerHTML += `> [CE] Glosario dinámico generado.<br>`;
+                out.innerHTML += `> [PE] Rúbricas CECRL configuradas.<br>`;
+                out.innerHTML += `> [PO] Interacción Sophia activada.<br>`;
+                out.innerHTML += `> <b>ÉXITO: Nivel ${nivel} listo para alumnos.</b><br>`;
+                timerDiv.style.color = "var(--green)";
+            }, 5000); // 5 segundos de simulación
+        };
+
+        checkStatus();
+    </script>
 </body>
 </html>
