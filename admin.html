@@ -2,15 +2,13 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Master Admin | Gaby Esparza</title>
+    <title>Admin Maestro | Gaby Esparza</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root { --oxford: #002147; --gold: #C5A059; --bg: #f4f7f9; --green: #28a745; }
         body { font-family: 'Montserrat', sans-serif; margin: 0; display: flex; height: 100vh; background: var(--bg); }
         .sidebar { width: 260px; background: var(--oxford); color: white; padding: 20px; display: flex; flex-direction: column; }
-        .sidebar h2 { font-size: 0.9rem; border-bottom: 1px solid var(--gold); padding-bottom: 15px; margin-bottom: 25px; text-align: center; }
         .nav-btn { background: transparent; border: none; color: white; padding: 15px; text-align: left; cursor: pointer; border-radius: 8px; margin-bottom: 5px; font-size: 0.85rem; }
         .nav-btn.active { background: rgba(197, 160, 89, 0.2); color: var(--gold); }
         .main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
@@ -20,148 +18,111 @@
         .status-pill { padding: 8px 15px; border-radius: 20px; font-size: 0.7rem; font-weight: bold; background: #555; color: #ccc; }
         .status-pill.active { background: var(--green); color: white; }
         .btn-gold { background: var(--gold); color: var(--oxford); border: none; padding: 12px; width: 100%; border-radius: 6px; font-weight: bold; cursor: pointer; margin-top: 10px; }
+        .brain-zone { background: #fffdf5; border: 2px dashed var(--gold); padding: 20px; border-radius: 10px; margin-bottom: 20px; }
         textarea { width: 100%; border: 1px solid #ccc; border-radius: 8px; padding: 12px; font-family: monospace; font-size: 0.85rem; }
-        .console { background: #1a1a1a; color: #00ff00; padding: 15px; border-radius: 8px; font-family: 'Courier New', monospace; font-size: 0.75rem; margin-top: 15px; max-height: 200px; overflow-y: auto; }
     </style>
 </head>
 <body>
 
-    <nav class="sidebar">
-        <h2>CENTRO DE MANDO</h2>
-        <button class="nav-btn active" onclick="tab('delf', this)"><i class="fas fa-certificate"></i> Proyecto Réussite DELF</button>
-        <button class="nav-btn" onclick="tab('clarity', this)"><i class="fas fa-brain"></i> NeuroClarity</button>
-        <button class="nav-btn" onclick="tab('resico', this)"><i class="fas fa-calculator"></i> RESICO</button>
-    </nav>
+<nav class="sidebar">
+    <h2>CENTRO DE MANDO</h2>
+    <button class="nav-btn active" onclick="tab('delf', this)"><i class="fas fa-certificate"></i> Réussite DELF</button>
+    <button class="nav-btn" onclick="tab('clarity', this)"><i class="fas fa-brain"></i> NeuroClarity</button>
+    <button class="nav-btn" onclick="tab('resico', this)"><i class="fas fa-calculator"></i> RESICO</button>
+</nav>
 
-    <div class="main">
-        <div class="top-bar">
-            <h1 id="tab-title" style="margin:0; font-size: 1.1rem;">Réussite DELF</h1>
-            <a href="alumno.html?access=admin" class="btn-view"><i class="fas fa-external-link-alt"></i> VISTA ALUMNO (PREVIEW)</a>
-        </div>
-
-        <div id="tab-delf" class="content active" style="padding:30px;">
-            <div class="card" style="background: var(--oxford); color: white; display: flex; justify-content: space-between; align-items: center;">
-                <select id="nivel_master" onchange="checkStatus()" style="padding: 10px; border-radius: 5px;">
-                    <option value="A1">Nivel A1</option>
-                    <option value="A2">Nivel A2</option>
-                    <option value="B1" selected>Nivel B1</option>
-                    <option value="B2">Nivel B2</option>
-                    <option value="C1">Nivel C1</option>
-                </select>
-                <div style="display:flex; gap:10px;">
-                    <div id="pill_ref" class="status-pill">RÉFÉRENTIEL</div>
-                    <div id="pill_book" class="status-pill">LIBRO</div>
-                    <div id="pill_audio" class="status-pill">AUDIOS</div>
-                    <div id="pill_desc" class="status-pill" style="background: var(--gold);">DESCRIPTEUR</div>
-                </div>
-            </div>
-
-            <div class="card">
-                <h3>📤 Carga de Material</h3>
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
-                    <select id="file_type">
-                        <option value="referentiel">Référentiel</option>
-                        <option value="libro">Libro PDF</option>
-                        <option value="audios">Audios MP3</option>
-                        <option value="descripteur">Descripteur CECRL (Global)</option>
-                    </select>
-                    <input type="file" id="file_input" multiple>
-                </div>
-                <button class="btn-gold" style="background: var(--oxford); color: white;" onclick="uploadFiles()">VINCULAR AL NIVEL</button>
-            </div>
-
-            <div class="card">
-                <h3>⚙️ Procesamiento e Informes</h3>
-                <button class="btn-gold" style="background: #007bff; color: white;" onclick="startMassiveUpload()">SOPHIA: INICIAR PROCESAMIENTO</button>
-                <button class="btn-gold" style="margin-top:20px; background:#444; color:white;" onclick="generarReporte()">GENERAR REPORTE DE ENLACES</button>
-                <div id="reporte_out" style="display:none; background:#e3f2fd; padding:15px; margin-top:15px; border-radius:8px; font-size:0.8rem; border:1px solid #90caf9;"></div>
-                <div id="console_out" class="console">> Esperando archivos...</div>
-            </div>
-        </div>
+<div class="main">
+    <div class="top-bar">
+        <h1>Réussite DELF</h1>
+        <a href="alumno.html?access=admin" class="btn-view">VISTA ALUMNO</a>
     </div>
 
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
-        import { getFirestore, doc, setDoc, onSnapshot, getDoc } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js";
-        import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-storage.js";
+    <div id="tab-delf" class="content" style="padding: 30px; display: block;">
+        <div class="card" style="background: var(--oxford); color: white; display: flex; justify-content: space-between; align-items: center;">
+            <select id="nivel_master" onchange="checkStatus()" style="padding: 10px;">
+                <option value="A1">A1</option><option value="A2">A2</option><option value="B1" selected>B1</option><option value="B2">B2</option><option value="C1">C1</option>
+            </select>
+            <div style="display:flex; gap:10px;">
+                <div id="pill_ref" class="status-pill">RÉFÉRENTIEL</div>
+                <div id="pill_book" class="status-pill">LIBRO</div>
+                <div id="pill_audio" class="status-pill">AUDIOS</div>
+            </div>
+        </div>
 
-        const firebaseConfig = {
-            apiKey: "AIzaSyCgog8tKspHy01ZHE8Dthl9O4W6lw1a_Ec",
-            authDomain: "objectif-reussite-delf.firebaseapp.com",
-            projectId: "objectif-reussite-delf",
-            storageBucket: "objectif-reussite-delf.firebasestorage.app",
-            messagingSenderId: "942279633770",
-            appId: "1:942279633770:web:687ba6d819747eb29c1313"
-        };
+        <div class="brain-zone">
+            <h3>🧠 Cerebro Sophia: Instrucciones de Evaluación</h3>
+            <p style="font-size: 0.7rem;">Pega aquí el prompt que te di con todas las ligas.</p>
+            <textarea id="prompt_sophia" rows="12" placeholder="Pega el prompt maestro aquí..."></textarea>
+            <button class="btn-gold" onclick="savePrompt('sophia')">ACTUALIZAR REGLAS DE SOPHIA</button>
+        </div>
 
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
-        const storage = getStorage(app);
+        <div class="card">
+            <h3>📤 Carga de Material Nuevo</h3>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                <select id="file_type"><option value="referentiel">Référentiel</option><option value="libro">Libro PDF</option><option value="audios">Audios MP3</option></select>
+                <input type="file" id="file_input" multiple>
+            </div>
+            <button class="btn-gold" style="background: var(--oxford); color: white;" onclick="uploadFiles()">SUBIR Y VINCULAR</button>
+            <button class="btn-gold" style="background: #444; color: white;" onclick="generarReporte()">GENERAR REPORTE DE ENLACES</button>
+            <div id="reporte_out" style="display:none; background:#e3f2fd; padding:15px; margin-top:15px; border-radius:8px; font-size:0.7rem;"></div>
+        </div>
+    </div>
+</div>
 
-        window.tab = (id, b) => {
-            document.querySelectorAll('.content').forEach(c => c.style.display = 'none');
-            document.querySelectorAll('.nav-btn').forEach(nb => nb.classList.remove('active'));
-            document.getElementById('tab-' + id).style.display = 'block';
-            b.classList.add('active');
-        };
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
+    import { getFirestore, doc, setDoc, onSnapshot, getDoc } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js";
+    import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-storage.js";
 
-        window.uploadFiles = async () => {
-            const nivel = document.getElementById('nivel_master').value;
-            const tipo = document.getElementById('file_type').value;
-            const files = document.getElementById('file_input').files;
-            const out = document.getElementById('console_out');
-            if(files.length === 0) return alert("Selecciona archivos.");
-            
-            for (let f of files) {
-                out.innerHTML += `> Subiendo ${f.name}...<br>`;
-                const path = (tipo === 'descripteur') ? `global/${f.name}` : `niveles/${nivel}/${tipo}/${f.name}`;
-                const sRef = ref(storage, path);
-                await uploadBytes(sRef, f);
-                const url = await getDownloadURL(sRef);
-                
-                if(tipo === 'descripteur') {
-                    await setDoc(doc(db, "Config", "Global"), { descripteur: url }, { merge: true });
-                } else {
-                    await setDoc(doc(db, "Materiales", nivel), { [tipo]: url }, { merge: true });
-                }
-                out.innerHTML += `> OK: ${f.name} vinculado.<br>`;
+    const firebaseConfig = {
+        apiKey: "AIzaSyCgog8tKspHy01ZHE8Dthl9O4W6lw1a_Ec",
+        authDomain: "objectif-reussite-delf.firebaseapp.com",
+        projectId: "objectif-reussite-delf",
+        storageBucket: "objectif-reussite-delf.firebasestorage.app",
+        messagingSenderId: "942279633770",
+        appId: "1:942279633770:web:687ba6d819747eb29c1313"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const storage = getStorage(app);
+
+    window.savePrompt = async (t) => {
+        const v = document.getElementById('prompt_'+t).value;
+        await setDoc(doc(db, "Config", "Prompts"), { [t]: v }, { merge: true });
+        alert("¡Sophia ha sido programada con éxito!");
+    };
+
+    window.checkStatus = () => {
+        const n = document.getElementById('nivel_master').value;
+        onSnapshot(doc(db, "Materiales", n), (snap) => {
+            const p = { referentiel: 'pill_ref', libro: 'pill_book', audios: 'pill_audio' };
+            Object.values(p).forEach(id => document.getElementById(id).classList.remove('active'));
+            if (snap.exists()) {
+                const d = snap.data();
+                if(d.referentiel) document.getElementById('pill_ref').classList.add('active');
+                if(d.libro) document.getElementById('pill_book').classList.add('active');
+                if(d.audios) document.getElementById('pill_audio').classList.add('active');
             }
-            checkStatus();
-        };
+        });
+    };
 
-        window.checkStatus = () => {
-            const nivel = document.getElementById('nivel_master').value;
-            onSnapshot(doc(db, "Materiales", nivel), (snap) => {
-                const p = { referentiel: 'pill_ref', libro: 'pill_book', audios: 'pill_audio' };
-                Object.values(p).forEach(id => document.getElementById(id).classList.remove('active'));
-                if (snap.exists()) {
-                    const d = snap.data();
-                    if(d.referentiel) document.getElementById('pill_ref').classList.add('active');
-                    if(d.libro) document.getElementById('pill_book').classList.add('active');
-                    if(d.audios) document.getElementById('pill_audio').classList.add('active');
-                }
-            });
-            onSnapshot(doc(db, "Config", "Global"), (snap) => {
-                if(snap.exists() && snap.data().descripteur) document.getElementById('pill_desc').classList.add('active');
-            });
-        };
-
-        window.generarReporte = async () => {
-            const niveles = ['A1', 'A2', 'B1', 'B2', 'C1'];
-            const repBox = document.getElementById('reporte_out');
-            repBox.style.display = 'block';
-            let html = "<strong>LISTA DE ENLACES:</strong><br><br>";
-            for(let n of niveles) {
-                const s = await getDoc(doc(db, "Materiales", n));
-                if(s.exists()){
-                    html += `📍 NIVEL ${n}:<br>- Ref: ${s.data().referentiel || 'N/A'}<br>- Libro: ${s.data().libro || 'N/A'}<br>- Audios: ${s.data().audios || 'N/A'}<br><br>`;
-                }
+    window.generarReporte = async () => {
+        const niveles = ['A1', 'A2', 'B1', 'B2', 'C1'];
+        const repBox = document.getElementById('reporte_out');
+        repBox.style.display = 'block';
+        let html = "<strong>LISTA DE ENLACES:</strong><br><br>";
+        for(let n of niveles) {
+            const s = await getDoc(doc(db, "Materiales", n));
+            if(s.exists()){
+                const d = s.data();
+                html += `📍 NIVEL ${n}:<br>- Ref: ${d.referentiel || 'N/A'}<br>- Libro: ${d.libro || 'N/A'}<br>- Audios: ${d.audios || 'N/A'}<br><br>`;
             }
-            repBox.innerHTML = html;
-        };
+        }
+        repBox.innerHTML = html;
+    };
 
-        window.startMassiveUpload = () => { alert("Sophia procesando habilidades..."); };
-        checkStatus();
-    </script>
+    checkStatus();
+</script>
 </body>
 </html>
