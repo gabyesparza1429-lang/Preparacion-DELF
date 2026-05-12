@@ -2,127 +2,144 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Admin Maestro | Gaby Esparza</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Master Admin | Gaby Esparza</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        :root { --oxford: #002147; --gold: #C5A059; --bg: #f4f7f9; --green: #28a745; }
+        :root { --oxford: #002147; --gold: #C5A059; --bg: #f4f7f9; --green: #28a745; --red: #d32f2f; }
         body { font-family: 'Montserrat', sans-serif; margin: 0; display: flex; height: 100vh; background: var(--bg); }
+        
+        /* Sidebar */
         .sidebar { width: 260px; background: var(--oxford); color: white; padding: 20px; display: flex; flex-direction: column; }
-        .nav-btn { background: transparent; border: none; color: white; padding: 15px; text-align: left; cursor: pointer; border-radius: 8px; margin-bottom: 5px; font-size: 0.85rem; }
-        .nav-btn.active { background: rgba(197, 160, 89, 0.2); color: var(--gold); }
+        .sidebar h2 { font-size: 0.9rem; border-bottom: 1px solid var(--gold); padding-bottom: 15px; margin-bottom: 25px; text-align: center; }
+        .nav-btn { background: transparent; border: none; color: white; padding: 15px; text-align: left; cursor: pointer; border-radius: 8px; margin-bottom: 5px; font-size: 0.85rem; transition: 0.3s; }
+        .nav-btn.active, .nav-btn:hover { background: rgba(197, 160, 89, 0.2); color: var(--gold); }
+        .nav-btn i { margin-right: 10px; width: 20px; text-align: center; }
+
+        /* Main Content */
         .main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
         .top-bar { background: white; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #ddd; }
         .btn-view { background: var(--green); color: white; padding: 10px 18px; border-radius: 5px; text-decoration: none; font-weight: bold; font-size: 0.8rem; }
+
+        .content { flex: 1; padding: 30px; overflow-y: auto; display: none; }
+        .content.active { display: block; }
+
+        /* Componentes de UI */
         .card { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); margin-bottom: 20px; }
-        .status-pill { padding: 8px 15px; border-radius: 20px; font-size: 0.7rem; font-weight: bold; background: #555; color: #ccc; }
-        .status-pill.active { background: var(--green); color: white; }
-        .btn-gold { background: var(--gold); color: var(--oxford); border: none; padding: 12px; width: 100%; border-radius: 6px; font-weight: bold; cursor: pointer; margin-top: 10px; }
+        .level-header { background: var(--oxford); color: white; padding: 20px; border-radius: 12px; margin-bottom: 20px; display: flex; align-items: center; justify-content: space-between; }
+        
+        /* Indicadores */
+        .status-pill { padding: 8px 15px; border-radius: 20px; font-size: 0.7rem; font-weight: bold; background: #555; color: #ccc; border: 1px solid #444; transition: 0.5s; }
+        .status-pill.active { background: var(--green); color: white; border-color: #1e7e34; box-shadow: 0 0 10px rgba(40, 167, 69, 0.4); }
+
+        .btn-gold { background: var(--gold); color: var(--oxford); border: none; padding: 12px; width: 100%; border-radius: 6px; font-weight: bold; cursor: pointer; margin-top: 10px; transition: 0.3s; }
+        .btn-gold:hover { transform: translateY(-2px); }
+        
         .brain-zone { background: #fffdf5; border: 2px dashed var(--gold); padding: 20px; border-radius: 10px; margin-bottom: 20px; }
         textarea { width: 100%; border: 1px solid #ccc; border-radius: 8px; padding: 12px; font-family: monospace; font-size: 0.85rem; }
+        
+        .console { background: #1a1a1a; color: #00ff00; padding: 15px; border-radius: 8px; font-family: 'Courier New', monospace; font-size: 0.75rem; margin-top: 15px; max-height: 200px; overflow-y: auto; }
+        .timer-display { font-family: 'Courier New', monospace; font-size: 1.5rem; color: var(--gold); text-align: center; margin: 10px 0; display: none; }
+        
+        input, select { padding: 10px; border-radius: 5px; border: 1px solid #ccc; font-family: 'Montserrat'; }
     </style>
 </head>
 <body>
 
-<nav class="sidebar">
-    <h2>CENTRO DE MANDO</h2>
-    <button class="nav-btn active" onclick="tab('delf', this)"><i class="fas fa-certificate"></i> Réussite DELF</button>
-    <button class="nav-btn" onclick="tab('clarity', this)"><i class="fas fa-brain"></i> NeuroClarity</button>
-    <button class="nav-btn" onclick="tab('resico', this)"><i class="fas fa-calculator"></i> RESICO</button>
-</nav>
+    <nav class="sidebar">
+        <h2>CENTRO DE MANDO</h2>
+        <button class="nav-btn active" onclick="tab('delf', this)"><i class="fas fa-certificate"></i> Réussite DELF</button>
+        <button class="nav-btn" onclick="tab('usuarios', this)"><i class="fas fa-users"></i> Gestión de Alumnos</button>
+        <button class="nav-btn" onclick="tab('clarity', this)"><i class="fas fa-brain"></i> NeuroClarity</button>
+        <button class="nav-btn" onclick="tab('resico', this)"><i class="fas fa-calculator"></i> RESICO</button>
+    </nav>
 
-<div class="main">
-    <div class="top-bar">
-        <h1>Réussite DELF</h1>
-        <a href="alumno.html?access=admin" class="btn-view">VISTA ALUMNO</a>
-    </div>
+    <div class="main">
+        <div class="top-bar">
+            <h1 id="tab-title" style="margin:0; font-size: 1.1rem;">Réussite DELF</h1>
+            <a href="alumno.html?access=admin" class="btn-view"><i class="fas fa-external-link-alt"></i> VISTA ALUMNO (PREVIEW)</a>
+        </div>
 
-    <div id="tab-delf" class="content" style="padding: 30px; display: block;">
-        <div class="card" style="background: var(--oxford); color: white; display: flex; justify-content: space-between; align-items: center;">
-            <select id="nivel_master" onchange="checkStatus()" style="padding: 10px;">
-                <option value="A1">A1</option><option value="A2">A2</option><option value="B1" selected>B1</option><option value="B2">B2</option><option value="C1">C1</option>
-            </select>
-            <div style="display:flex; gap:10px;">
-                <div id="pill_ref" class="status-pill">RÉFÉRENTIEL</div>
-                <div id="pill_book" class="status-pill">LIBRO</div>
-                <div id="pill_audio" class="status-pill">AUDIOS</div>
+        <div id="tab-delf" class="content active">
+            <div class="level-header">
+                <select id="nivel_master" onchange="checkStatus()">
+                    <option value="A1">Nivel A1</option><option value="A2">Nivel A2</option>
+                    <option value="B1" selected>Nivel B1</option><option value="B2">Nivel B2</option>
+                    <option value="C1">Nivel C1</option>
+                </select>
+                <div class="status-group" style="display:flex; gap:10px;">
+                    <div id="pill_ref" class="status-pill">RÉFÉRENTIEL</div>
+                    <div id="pill_book" class="status-pill">LIBRO</div>
+                    <div id="pill_audio" class="status-pill">AUDIOS</div>
+                    <div id="pill_desc" class="status-pill" style="background: var(--gold); color:white;">DESCRIPTEUR</div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>📤 Carga de Material</h3>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                    <select id="file_type">
+                        <option value="referentiel">Référentiel</option>
+                        <option value="libro">Libro PDF</option>
+                        <option value="audios">Audios MP3</option>
+                        <option value="descripteur">Descripteur CECRL (Global)</option>
+                    </select>
+                    <input type="file" id="file_input" multiple>
+                </div>
+                <button class="btn-gold" style="background: var(--oxford); color: white;" onclick="uploadFiles()">VINCULAR AL NIVEL</button>
+            </div>
+
+            <div class="brain-zone">
+                <h3>🧠 Cerebro Sophia: Instrucciones de Evaluación</h3>
+                <textarea id="prompt_sophia" rows="8" placeholder="Pega aquí el prompt maestro..."></textarea>
+                <button class="btn-gold" onclick="savePrompt('sophia')">ACTUALIZAR REGLAS DE SOPHIA</button>
+            </div>
+
+            <div class="card">
+                <h3>⚙️ Procesamiento Masivo</h3>
+                <div id="timer" class="timer-display">00:00</div>
+                <button class="btn-gold" style="background: #007bff; color: white;" onclick="startMassiveUpload()">SOPHIA: INICIAR PROCESAMIENTO</button>
+                <button class="btn-gold" style="margin-top:15px; background:#444; color:white;" onclick="generarReporte()">GENERAR REPORTE DE ENLACES</button>
+                <div id="reporte_out" style="display:none; background:#e3f2fd; padding:15px; margin-top:15px; border-radius:8px; font-size:0.75rem; border:1px solid #90caf9; word-break:break-all;"></div>
+                <div id="console_out" class="console">> Esperando archivos...</div>
             </div>
         </div>
 
-        <div class="brain-zone">
-            <h3>🧠 Cerebro Sophia: Instrucciones de Evaluación</h3>
-            <p style="font-size: 0.7rem;">Pega aquí el prompt que te di con todas las ligas.</p>
-            <textarea id="prompt_sophia" rows="12" placeholder="Pega el prompt maestro aquí..."></textarea>
-            <button class="btn-gold" onclick="savePrompt('sophia')">ACTUALIZAR REGLAS DE SOPHIA</button>
-        </div>
-
-        <div class="card">
-            <h3>📤 Carga de Material Nuevo</h3>
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-                <select id="file_type"><option value="referentiel">Référentiel</option><option value="libro">Libro PDF</option><option value="audios">Audios MP3</option></select>
-                <input type="file" id="file_input" multiple>
+        <div id="tab-usuarios" class="content">
+            <div class="card">
+                <h3>👤 Registrar Nuevo Alumno</h3>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                    <input type="text" id="user_name" placeholder="Nombre (Ej. Sergio)">
+                    <select id="user_level">
+                        <option value="A1">Nivel A1</option><option value="A2">Nivel A2</option>
+                        <option value="B1">Nivel B1</option><option value="B2">Nivel B2</option>
+                        <option value="C1">Nivel C1</option>
+                    </select>
+                    <input type="date" id="user_cert_date">
+                    <input type="text" id="user_id" placeholder="ID de acceso (Ej. sergio2026)">
+                </div>
+                <button class="btn-gold" onclick="registrarAlumno()">DAR DE ALTA ALUMNO</button>
             </div>
-            <button class="btn-gold" style="background: var(--oxford); color: white;" onclick="uploadFiles()">SUBIR Y VINCULAR</button>
-            <button class="btn-gold" style="background: #444; color: white;" onclick="generarReporte()">GENERAR REPORTE DE ENLACES</button>
-            <div id="reporte_out" style="display:none; background:#e3f2fd; padding:15px; margin-top:15px; border-radius:8px; font-size:0.7rem;"></div>
+            <div class="card">
+                <h3>📋 Alumnos Activos</h3>
+                <div id="lista_alumnos"></div>
+            </div>
         </div>
+
+        <div id="tab-clarity" class="content"><h3>NeuroClarity</h3><p>Próximamente...</p></div>
+        <div id="tab-resico" class="content"><h3>RESICO</h3><p>Próximamente...</p></div>
     </div>
-</div>
 
-<script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
-    import { getFirestore, doc, setDoc, onSnapshot, getDoc } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js";
-    import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-storage.js";
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
+        import { getFirestore, doc, setDoc, onSnapshot, getDoc, collection } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js";
+        import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-storage.js";
 
-    const firebaseConfig = {
-        apiKey: "AIzaSyCgog8tKspHy01ZHE8Dthl9O4W6lw1a_Ec",
-        authDomain: "objectif-reussite-delf.firebaseapp.com",
-        projectId: "objectif-reussite-delf",
-        storageBucket: "objectif-reussite-delf.firebasestorage.app",
-        messagingSenderId: "942279633770",
-        appId: "1:942279633770:web:687ba6d819747eb29c1313"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
-    const storage = getStorage(app);
-
-    window.savePrompt = async (t) => {
-        const v = document.getElementById('prompt_'+t).value;
-        await setDoc(doc(db, "Config", "Prompts"), { [t]: v }, { merge: true });
-        alert("¡Sophia ha sido programada con éxito!");
-    };
-
-    window.checkStatus = () => {
-        const n = document.getElementById('nivel_master').value;
-        onSnapshot(doc(db, "Materiales", n), (snap) => {
-            const p = { referentiel: 'pill_ref', libro: 'pill_book', audios: 'pill_audio' };
-            Object.values(p).forEach(id => document.getElementById(id).classList.remove('active'));
-            if (snap.exists()) {
-                const d = snap.data();
-                if(d.referentiel) document.getElementById('pill_ref').classList.add('active');
-                if(d.libro) document.getElementById('pill_book').classList.add('active');
-                if(d.audios) document.getElementById('pill_audio').classList.add('active');
-            }
-        });
-    };
-
-    window.generarReporte = async () => {
-        const niveles = ['A1', 'A2', 'B1', 'B2', 'C1'];
-        const repBox = document.getElementById('reporte_out');
-        repBox.style.display = 'block';
-        let html = "<strong>LISTA DE ENLACES:</strong><br><br>";
-        for(let n of niveles) {
-            const s = await getDoc(doc(db, "Materiales", n));
-            if(s.exists()){
-                const d = s.data();
-                html += `📍 NIVEL ${n}:<br>- Ref: ${d.referentiel || 'N/A'}<br>- Libro: ${d.libro || 'N/A'}<br>- Audios: ${d.audios || 'N/A'}<br><br>`;
-            }
-        }
-        repBox.innerHTML = html;
-    };
-
-    checkStatus();
-</script>
-</body>
-</html>
+        const firebaseConfig = {
+            apiKey: "AIzaSyCgog8tKspHy01ZHE8Dthl9O4W6lw1a_Ec",
+            authDomain: "objectif-reussite-delf.firebaseapp.com",
+            projectId: "objectif-reussite-delf",
+            storageBucket: "objectif-reussite-delf.firebasestorage.app",
+            messagingSenderId: "942279633770",
+            app
