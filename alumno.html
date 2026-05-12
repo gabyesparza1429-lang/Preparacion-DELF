@@ -1,111 +1,46 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Vista Alumno | NeuroRéussit</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <title>Vista Alumno | Réussite DELF</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        :root { --oxford: #002147; --gold: #C5A059; --white: #ffffff; }
-        body { font-family: 'Montserrat', sans-serif; margin: 0; background: #f4f7f9; }
-        
-        /* Barra de Moodle (Solo para Admin) */
-        #admin-bar { 
-            display: none; 
-            background: var(--gold); 
-            color: var(--oxford); 
-            padding: 10px 20px; 
-            text-align: center; 
-            font-weight: bold;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-        .btn-back { background: var(--oxford); color: white; border: none; padding: 5px 15px; border-radius: 5px; cursor: pointer; margin-left: 15px; }
-
-        .container { padding: 40px; max-width: 900px; margin: auto; }
-        .card-ejercicio { background: white; padding: 20px; border-radius: 10px; margin-bottom: 15px; border-left: 5px solid var(--gold); }
-        
-        /* Modal de Login (Alumno real) */
-        #login-screen { 
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-            background: var(--oxford); color: white; display: flex; 
-            flex-direction: column; align-items: center; justify-content: center; z-index: 1000;
-        }
+        :root { --oxford: #002147; --gold: #C5A059; --bg: #f4f7f9; }
+        body { font-family: 'Montserrat', sans-serif; margin: 0; background: var(--bg); }
+        .top-nav { background: white; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #ddd; }
+        .btn-back { background: var(--oxford); color: white; padding: 8px 15px; border-radius: 5px; text-decoration: none; font-size: 0.8rem; }
+        .container { padding: 40px; text-align: center; }
+        .locked { display: none; } /* Oculto por defecto */
+        .unlocked { display: block; }
     </style>
 </head>
 <body>
 
-    <div id="admin-bar">
-        <span>VISTA PREVIA: MODO ADMINISTRADOR</span>
-        <button class="btn-back" onclick="window.location.href='admin.html'">Volver al Panel Admin</button>
+    <nav class="top-nav">
+        <div style="font-weight: bold; color: var(--oxford);">MODO ESTUDIANTE</div>
+        <a href="admin.html" class="btn-back"><i class="fas fa-lock"></i> REGRESAR A ADMIN</a>
+    </nav>
+
+    <div id="content_area" class="container">
+        <h2 id="status_msg">Cargando material...</h2>
+        <div id="exercise_container" style="margin-top:20px; background:white; padding:30px; border-radius:15px; min-height:300px; box-shadow:0 5px 15px rgba(0,0,0,0.05);">
+            <p>Selecciona una habilidad en el menú para comenzar.</p>
+        </div>
     </div>
 
-    <div id="login-screen">
-        <h1>NeuroRéussit</h1>
-        <p>Por favor, ingresa tu clave de alumno:</p>
-        <input type="password" id="student-pass" style="padding: 10px; border-radius: 5px;">
-        <br>
-        <button class="btn-back" style="margin:0; background:var(--gold); color:var(--oxford)" onclick="checkLogin()">Entrar</button>
-    </div>
-
-    <div class="container" id="contenido-alumno" style="display:none;">
-        <h1 id="titulo-nivel">Nivel: ...</h1>
-        <div id="lista-ejercicios"></div>
-    </div>
-
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
-        import { getFirestore, collection, onSnapshot } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js";
-
-        const firebaseConfig = {
-            apiKey: "AIzaSyCgog8tKspHy01ZHE8Dthl9O4W6lw1a_Ec",
-            authDomain: "objectif-reussite-delf.firebaseapp.com",
-            projectId: "objectif-reussite-delf",
-            storageBucket: "objectif-reussite-delf.firebasestorage.app",
-            messagingSenderId: "942279633770",
-            appId: "1:942279633770:web:687ba6d819747eb29c1313"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
-
-        // LOGICA DE MODO PREVIEW (MOODLE)
+    <script>
+        // Lógica de acceso sin contraseña para el Admin
         const urlParams = new URLSearchParams(window.location.search);
-        const nivel = urlParams.get('nivel') || 'B1';
-        const isPreview = urlParams.get('mode') === 'preview';
+        const access = urlParams.get('access');
 
-        if (isPreview) {
-            document.getElementById('admin-bar').style.display = 'block';
-            document.getElementById('login-screen').style.display = 'none';
-            document.getElementById('contenido-alumno').style.display = 'block';
-            cargarEjercicios(nivel);
+        if (access === 'admin') {
+            document.getElementById('status_msg').innerText = "Acceso de Administrador: Visualizando contenido.";
+            console.log("Modo Preview Activo");
+        } else {
+            // Aquí iría la lógica de login normal para alumnos reales en el futuro
+            document.getElementById('status_msg').innerText = "Por favor, inicia sesión para ver tus cursos.";
         }
-
-        function cargarEjercicios(nivelID) {
-            document.getElementById('titulo-nivel').innerText = "Nivel: " + nivelID;
-            onSnapshot(collection(db, "Niveles", nivelID, "Ejercicios"), (snap) => {
-                const lista = document.getElementById('lista-ejercicios');
-                lista.innerHTML = "";
-                snap.forEach(doc => {
-                    const d = doc.data();
-                    lista.innerHTML += `
-                        <div class="card-ejercicio">
-                            <h3>${d.titulo}</h3>
-                            <p>Tipo: ${d.tipo || 'DELF'}</p>
-                            <button class="btn-back" style="background:var(--gold); color:var(--oxford)">Comenzar Actividad</button>
-                        </div>`;
-                });
-            });
-        }
-
-        window.checkLogin = () => {
-            const pass = document.getElementById('student-pass').value;
-            if(pass === "1234") { // Aquí pones la clave real del alumno
-                document.getElementById('login-screen').style.display = 'none';
-                document.getElementById('contenido-alumno').style.display = 'block';
-                cargarEjercicios(nivel);
-            } else {
-                alert("Clave incorrecta");
-            }
-        };
     </script>
 </body>
 </html>
