@@ -1,46 +1,368 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Vista Alumno | Réussite DELF</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Espace Étudiant | Réussite DELF</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        :root { --oxford: #002147; --gold: #C5A059; --bg: #f4f7f9; }
-        body { font-family: 'Montserrat', sans-serif; margin: 0; background: var(--bg); }
-        .top-nav { background: white; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #ddd; }
-        .btn-back { background: var(--oxford); color: white; padding: 8px 15px; border-radius: 5px; text-decoration: none; font-size: 0.8rem; }
-        .container { padding: 40px; text-align: center; }
-        .locked { display: none; } /* Oculto por defecto */
-        .unlocked { display: block; }
+        :root {
+            --oxford: #002147;
+            --gold: #C5A059;
+            --cream: #F8F9FA;
+            --white: #FFFFFF;
+            --error: #D32F2F;
+            --success: #28A745;
+            --text: #333333;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--cream);
+            color: var(--text);
+            margin: 0;
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* SIDEBAR SKILLS */
+        .sidebar {
+            width: 280px;
+            background: var(--oxford);
+            color: var(--white);
+            display: flex;
+            flex-direction: column;
+            padding: 30px 20px;
+            box-shadow: 4px 0 15px rgba(0,0,0,0.1);
+        }
+
+        .sidebar h2 {
+            font-size: 1.1rem;
+            color: var(--gold);
+            border-bottom: 1px solid var(--gold);
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+            text-align: center;
+            letter-spacing: 1px;
+        }
+
+        .skill-btn {
+            background: transparent;
+            border: 1px solid rgba(197, 160, 89, 0.2);
+            color: var(--white);
+            padding: 15px;
+            margin-bottom: 12px;
+            border-radius: 10px;
+            cursor: pointer;
+            text-align: left;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            font-size: 0.9rem;
+        }
+
+        .skill-btn i { margin-right: 15px; width: 20px; text-align: center; }
+        .skill-btn:hover, .skill-btn.active {
+            background: var(--gold);
+            color: var(--oxford);
+            font-weight: 700;
+            border-color: var(--gold);
+        }
+
+        /* MAIN CONTENT */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            background: var(--white);
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #E0E0E0;
+        }
+
+        .student-welcome {
+            font-size: 1rem;
+            color: var(--oxford);
+        }
+
+        .student-name {
+            font-weight: 700;
+            color: var(--gold);
+            text-transform: capitalize;
+        }
+
+        .admin-btn {
+            background: var(--oxford);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 0.75rem;
+            font-weight: 700;
+            display: none;
+        }
+
+        /* INTERACTIVE WORKSPACE */
+        .workspace {
+            flex: 1;
+            padding: 40px;
+            overflow-y: auto;
+            display: flex;
+            justify-content: center;
+        }
+
+        .interaction-card {
+            background: var(--white);
+            width: 100%;
+            max-width: 850px;
+            padding: 45px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.03);
+            height: fit-content;
+        }
+
+        #text-display {
+            font-size: 1.5rem;
+            line-height: 2.2;
+            margin-bottom: 40px;
+            color: #2c3e50;
+            min-height: 150px;
+        }
+
+        .word {
+            cursor: pointer;
+            padding: 2px 5px;
+            border-radius: 5px;
+            transition: 0.2s;
+            display: inline-block;
+        }
+
+        .word:hover { background: rgba(197, 160, 89, 0.15); }
+        .word.wrong { color: var(--error); border-bottom: 3px solid var(--error); font-weight: 700; }
+        .word.correct { color: var(--success); }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+
+        .btn-action {
+            padding: 14px 28px;
+            border-radius: 50px;
+            border: none;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.9rem;
+        }
+
+        .btn-sophia { background: var(--oxford); color: var(--white); }
+        .btn-mic { background: var(--gold); color: var(--oxford); }
+        .btn-action:active { transform: scale(0.95); }
+
+        /* INFO PANEL */
+        #info-panel {
+            position: fixed;
+            right: -420px;
+            top: 0;
+            width: 380px;
+            height: 100vh;
+            background: var(--white);
+            box-shadow: -10px 0 30px rgba(0,0,0,0.05);
+            padding: 50px 30px;
+            transition: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 100;
+        }
+
+        #info-panel.open { right: 0; }
+        .close-panel { cursor: pointer; float: right; font-size: 1.8rem; color: #999; }
+        .help-content { margin-top: 40px; line-height: 1.8; }
     </style>
 </head>
 <body>
 
-    <nav class="top-nav">
-        <div style="font-weight: bold; color: var(--oxford);">MODO ESTUDIANTE</div>
-        <a href="admin.html" class="btn-back"><i class="fas fa-lock"></i> REGRESAR A ADMIN</a>
-    </nav>
+    <aside class="sidebar">
+        <h2>RÉUSSITE DELF</h2>
+        <button class="skill-btn" onclick="loadSkill('PO')"><i class="fas fa-microphone"></i> Production Orale</button>
+        <button class="skill-btn" onclick="loadSkill('CE')"><i class="fas fa-book-open"></i> Compréhension Écrite</button>
+        <button class="skill-btn" onclick="loadSkill('CO')"><i class="fas fa-headset"></i> Compréhension Orale</button>
+        <button class="skill-btn" onclick="loadSkill('PE')"><i class="fas fa-pen-nib"></i> Production Écrite</button>
+        <button class="skill-btn active" onclick="loadSkill('LECTURE')"><i class="fas fa-language"></i> Phonétique & Lecture</button>
+    </aside>
 
-    <div id="content_area" class="container">
-        <h2 id="status_msg">Cargando material...</h2>
-        <div id="exercise_container" style="margin-top:20px; background:white; padding:30px; border-radius:15px; min-height:300px; box-shadow:0 5px 15px rgba(0,0,0,0.05);">
-            <p>Selecciona una habilidad en el menú para comenzar.</p>
-        </div>
+    <main class="main-content">
+        <header class="header">
+            <div class="student-welcome">
+                Bienvenue, <span id="display-student-name" class="student-name">Chargement...</span>
+            </div>
+            <a href="admin.html" id="admin-back-link" class="admin-btn"><i class="fas fa-user-shield"></i> PANEL ADMIN</a>
+        </header>
+
+        <section class="workspace">
+            <div class="interaction-card">
+                <h2 id="skill-title" style="color: var(--oxford); margin-top:0;">Phonétique : Écoutez et Répétez</h2>
+                <p style="color: #888; font-size: 0.85rem; margin-bottom: 30px;">Cliquez sur Sophia para escuchar la pronunciación correcta, luego usa el micrófono para practicar.</p>
+                
+                <div id="text-display">
+                    <span class="word" onclick="showHelp('Bonjour')">Bonjour</span>, 
+                    <span class="word" onclick="showHelp('je')">je</span> 
+                    <span class="word" onclick="showHelp('m\'appelle')">m'appelle</span> 
+                    <span id="target-name" class="word" onclick="showHelp('nom')">Sergio</span>.
+                </div>
+
+                <div class="controls">
+                    <button class="btn-action btn-sophia" onclick="sophiaSpeak()"><i class="fas fa-volume-up"></i> SOPHIA LIT</button>
+                    <button class="btn-action btn-mic" onclick="startVoiceCheck()"><i class="fas fa-microphone"></i> RÉPÉTER</button>
+                </div>
+
+                <div id="feedback-msg" style="margin-top: 35px; text-align: center; font-weight: 600;"></div>
+            </div>
+        </section>
+    </main>
+
+    <div id="info-panel">
+        <span class="close-panel" onclick="togglePanel(false)">&times;</span>
+        <h3 id="help-title" style="color: var(--oxford); border-bottom: 2px solid var(--gold); padding-bottom: 10px;">Analyse de Sophia</h3>
+        <div id="help-body" class="help-content">
+            </div>
     </div>
 
-    <script>
-        // Lógica de acceso sin contraseña para el Admin
-        const urlParams = new URLSearchParams(window.location.search);
-        const access = urlParams.get('access');
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
+        import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js";
 
-        if (access === 'admin') {
-            document.getElementById('status_msg').innerText = "Acceso de Administrador: Visualizando contenido.";
-            console.log("Modo Preview Activo");
-        } else {
-            // Aquí iría la lógica de login normal para alumnos reales en el futuro
-            document.getElementById('status_msg').innerText = "Por favor, inicia sesión para ver tus cursos.";
+        const firebaseConfig = {
+            apiKey: "AIzaSyCgog8tKspHy01ZHE8Dthl9O4W6lw1a_Ec",
+            authDomain: "objectif-reussite-delf.firebaseapp.com",
+            projectId: "objectif-reussite-delf",
+            storageBucket: "objectif-reussite-delf.firebasestorage.app",
+            messagingSenderId: "942279633770",
+            appId: "1:942279633770:web:687ba6d819747eb29c1313"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // --- PERSONALIZACIÓN POR NOMBRE ---
+        async function loadStudentProfile() {
+            const params = new URLSearchParams(window.location.search);
+            const studentId = params.get('id') || 'default'; // Puedes pasar ?id=sergio
+            const isAdmin = params.get('access') === 'admin';
+
+            if(isAdmin) document.getElementById('admin-back-link').style.display = 'block';
+
+            try {
+                const docRef = doc(db, "Usuarios", studentId);
+                const docSnap = await getDoc(docRef);
+
+                if (docSnap.exists()) {
+                    const name = docSnap.data().nombre;
+                    document.getElementById('display-student-name').innerText = name;
+                    // Actualizar el texto de práctica con su nombre real
+                    if(document.getElementById('target-name')) {
+                        document.getElementById('target-name').innerText = name;
+                    }
+                } else {
+                    document.getElementById('display-student-name').innerText = "Étudiant";
+                }
+            } catch (e) {
+                document.getElementById('display-student-name').innerText = "Étudiant";
+            }
         }
+
+        // --- SOPHIA HABLA (TTS) ---
+        window.sophiaSpeak = () => {
+            const text = document.getElementById('text-display').innerText;
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'fr-FR';
+            utterance.rate = 0.85; 
+            window.speechSynthesis.speak(utterance);
+        };
+
+        // --- VALIDACIÓN DE VOZ (STT) ---
+        window.startVoiceCheck = () => {
+            const feedback = document.getElementById('feedback-msg');
+            feedback.innerHTML = "<span style='color: var(--gold)'>Sophia te escucha... <i class='fas fa-circle-notch fa-spin'></i></span>";
+
+            const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+            recognition.lang = 'fr-FR';
+            recognition.start();
+
+            recognition.onresult = (event) => {
+                const transcript = event.results[0][0].transcript.toLowerCase();
+                const original = document.getElementById('text-display').innerText.toLowerCase();
+                
+                compareResult(original, transcript);
+            };
+
+            recognition.onerror = () => {
+                feedback.innerHTML = "<span style='color: var(--error)'>No pude procesar tu voz. ¿Podrías repetir?</span>";
+            };
+        };
+
+        function compareResult(original, student) {
+            const origArr = original.replace(/[.,]/g, "").split(" ");
+            const studArr = student.split(" ");
+            const display = document.getElementById('text-display');
+            const feedback = document.getElementById('feedback-msg');
+            
+            let finalHtml = "";
+            let errors = 0;
+
+            origArr.forEach(word => {
+                if (studArr.includes(word)) {
+                    finalHtml += `<span class="word correct">${word} </span>`;
+                } else {
+                    finalHtml += `<span class="word wrong">${word} </span>`;
+                    errors++;
+                }
+            });
+
+            display.innerHTML = finalHtml;
+            feedback.innerHTML = errors === 0 
+                ? "<span style='color: var(--success)'>Parfait ! Excellente prononciation.</span>"
+                : `<span style='color: var(--error)'>Sophia a détecté ${errors} erreurs. Réessaie les mots en rouge.</span>`;
+        }
+
+        // --- PANEL DE AYUDA (GRAMMAR/GLOSSARY) ---
+        window.showHelp = (word) => {
+            const panel = document.getElementById('info-panel');
+            const body = document.getElementById('help-body');
+            document.getElementById('help-title').innerText = `Sophia Analyse : "${word}"`;
+            
+            panel.classList.add('open');
+            
+            // Simulación de búsqueda en el Référentiel
+            const data = {
+                'm\'appelle': '<strong>Grammaire :</strong> Verbe pronominal "S\'appeler" au présent.<br><strong>Usage :</strong> Se utiliza para presentarse.',
+                'café': '<strong>Vocabulaire :</strong> Nom masculin.<br><strong>Traduction :</strong> Café / Bebida caliente.',
+                'voudrais': '<strong>Grammaire :</strong> Verbe "Vouloir" au Conditionnel Présent.<br><strong>Usage :</strong> Politesse (cortesía).'
+            };
+
+            body.innerHTML = data[word.toLowerCase()] || "Sophia está analizando esta estructura en tu manual de nivel...";
+        };
+
+        window.togglePanel = (state) => {
+            const panel = document.getElementById('info-panel');
+            if(state) panel.classList.add('open');
+            else panel.classList.remove('open');
+        };
+
+        loadStudentProfile();
     </script>
 </body>
 </html>
