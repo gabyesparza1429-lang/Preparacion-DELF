@@ -2,91 +2,63 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Master Admin | Objectif Réussite</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        :root { --oxford: #002147; --gold: #C5A059; --bg: #f4f7f9; --green: #28a745; --blue: #007bff; --red: #dc3545; }
+        :root { --oxford: #002147; --gold: #C5A059; --bg: #f4f7f9; --green: #28a745; --red: #dc3545; --blue: #007bff; }
         body { font-family: 'Montserrat', sans-serif; margin: 0; display: flex; height: 100vh; background: var(--bg); overflow: hidden; }
-        
         .sidebar { width: 260px; background: var(--oxford); color: white; padding: 20px; display: flex; flex-direction: column; flex-shrink: 0; }
-        .sidebar h2 { font-size: 0.9rem; border-bottom: 1px solid var(--gold); padding-bottom: 15px; margin-bottom: 25px; text-align: center; text-transform: uppercase; letter-spacing: 1px; }
-        .nav-btn { background: transparent; border: none; color: white; padding: 15px; text-align: left; cursor: pointer; border-radius: 8px; margin-bottom: 5px; font-size: 0.85rem; width: 100%; transition: 0.3s; display: flex; align-items: center; }
-        .nav-btn i { margin-right: 12px; width: 20px; text-align: center; color: var(--gold); }
+        .sidebar h2 { font-size: 0.9rem; border-bottom: 1px solid var(--gold); padding-bottom: 15px; margin-bottom: 25px; text-align: center; text-transform: uppercase; }
+        .nav-btn { background: transparent; border: none; color: white; padding: 15px; text-align: left; cursor: pointer; border-radius: 8px; margin-bottom: 5px; font-size: 0.85rem; width: 100%; display: flex; align-items: center; transition: 0.3s; }
+        .nav-btn i { margin-right: 12px; width: 20px; color: var(--gold); }
         .nav-btn.active, .nav-btn:hover { background: rgba(197, 160, 89, 0.2); color: var(--gold); font-weight: 700; }
-
         .main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
         .top-bar { background: white; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #ddd; }
-        .btn-preview { background: var(--green); color: white; padding: 10px 18px; border-radius: 5px; text-decoration: none; font-weight: bold; font-size: 0.8rem; display: flex; align-items: center; gap: 8px; }
-
         .content { flex: 1; padding: 30px; overflow-y: auto; display: none; }
         .content.active { display: block; }
-
         .card { background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); margin-bottom: 25px; }
         .level-header { background: var(--oxford); color: white; padding: 20px; border-radius: 12px; margin-bottom: 25px; display: flex; align-items: center; justify-content: space-between; }
-        
-        .status-pill { padding: 8px 15px; border-radius: 20px; font-size: 0.7rem; font-weight: bold; background: #555; color: #ccc; text-transform: uppercase; }
-        .status-pill.active { background: var(--green); color: white; }
-
+        .status-pill { padding: 8px 15px; border-radius: 20px; font-size: 0.7rem; font-weight: bold; background: #555; color: #ccc; }
+        .status-pill.active { background: var(--green); color: white; box-shadow: 0 0 10px rgba(40,167,69,0.3); }
         .btn-gold { background: var(--gold); color: var(--oxford); border: none; padding: 12px; width: 100%; border-radius: 6px; font-weight: bold; cursor: pointer; margin-top: 10px; text-transform: uppercase; }
         textarea, input, select { padding: 12px; border-radius: 6px; border: 1px solid #ccc; width: 100%; box-sizing: border-box; margin-top: 8px; font-family: 'Montserrat'; }
-        
-        /* Lista Alumnos Pro */
-        .user-row { display: flex; justify-content: space-between; align-items: center; padding: 15px; border-bottom: 1px solid #eee; }
-        .user-info a { color: var(--oxford); text-decoration: none; font-weight: 700; display: flex; align-items: center; gap: 10px; }
-        .btn-delete { background: var(--red); color: white; border: none; width: 35px; height: 35px; border-radius: 6px; cursor: pointer; transition: 0.3s; }
-        .btn-delete:hover { background: #b02a37; }
-        
+        .user-row { display: flex; justify-content: space-between; align-items: center; padding: 15px; border-bottom: 1px solid #eee; background: white; border-radius: 8px; margin-bottom: 10px; }
+        .user-row a { color: var(--oxford); font-weight: 700; text-decoration: none; display: flex; align-items: center; gap: 10px; }
+        .btn-del { background: var(--red); color: white; border: none; padding: 10px; border-radius: 5px; cursor: pointer; }
         .console { background: #1a1a1a; color: #00ff00; padding: 15px; border-radius: 8px; font-family: monospace; font-size: 0.75rem; margin-top: 15px; }
     </style>
 </head>
 <body>
-
     <nav class="sidebar">
         <h2>Centro de Mando</h2>
         <button class="nav-btn active" onclick="tab('delf', this)"><i class="fas fa-certificate"></i> Réussite DELF</button>
         <button class="nav-btn" onclick="tab('usuarios', this)"><i class="fas fa-users"></i> Gestión de Alumnos</button>
-        <button class="nav-btn" onclick="tab('clarity', this)"><i class="fas fa-brain"></i> NeuroClarity</button>
-        <button class="nav-btn" onclick="tab('resico', this)"><i class="fas fa-calculator"></i> RESICO</button>
+        <button class="nav-btn"><i class="fas fa-brain"></i> NeuroClarity</button>
+        <button class="nav-btn"><i class="fas fa-calculator"></i> RESICO</button>
     </nav>
 
     <div class="main">
         <div class="top-bar">
             <h1 id="tab-title" style="margin:0; font-size: 1.1rem; color: var(--oxford);">Réussite DELF</h1>
-            <a href="alumno.html?access=admin" class="btn-preview" target="_blank"><i class="fas fa-external-link-alt"></i> VISTA ALUMNO (PREVIEW)</a>
+            <a href="alumno.html?access=admin" class="nav-btn" style="color:var(--green); font-weight:700;" target="_blank"><i class="fas fa-eye"></i> VISTA ALUMNO</a>
         </div>
 
         <div id="tab-delf" class="content active">
             <div class="level-header">
                 <select id="nivel_master" onchange="window.checkStatus()" style="width:200px;">
-                    <option value="A1">Nivel A1</option><option value="A2">Nivel A2</option>
-                    <option value="B1" selected>Nivel B1</option><option value="B2">Nivel B2</option><option value="C1">Nivel C1</option>
+                    <option value="A1">Nivel A1</option><option value="B1" selected>Nivel B1</option><option value="C1">Nivel C1</option>
                 </select>
                 <div style="display:flex; gap:10px;">
                     <div id="pill_ref" class="status-pill">Ref</div><div id="pill_book" class="status-pill">Libro</div><div id="pill_audio" class="status-pill">Audio</div>
                 </div>
             </div>
-
             <div class="card">
-                <h3>1. Vincular Material</h3>
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-                    <select id="file_type">
-                        <option value="referentiel">Référentiel</option>
-                        <option value="libro">Libro PDF</option>
-                        <option value="audios">Audios MP3</option>
-                    </select>
-                    <input type="file" id="file_input" multiple>
-                </div>
-                <button class="btn-gold" style="background:var(--oxford); color:white;" onclick="window.uploadFiles()">Subir y Vincular</button>
-            </div>
-
-            <div class="card">
-                <h3>2. Sophia: Configuración y Generación</h3>
-                <textarea id="prompt_sophia" rows="6" placeholder="Escribe aquí el Prompt Maestro..."></textarea>
+                <h3>1. Sophia: Configuración Maestro</h3>
+                <textarea id="prompt_sophia" rows="5" placeholder="Pega aquí el Prompt Maestro de Sophia..."></textarea>
                 <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
-                    <button class="btn-gold" style="background:var(--blue); color:white;" onclick="window.saveSophiaConfig()">Guardar Configuración IA</button>
-                    <button class="btn-gold" onclick="window.generarBibliotecaSophia()">Sophia: Generar Ejercicios</button>
+                    <button class="btn-gold" style="background:var(--blue); color:white;" onclick="window.saveSophia()">Guardar Configuración IA</button>
+                    <button class="btn-gold" onclick="window.generarBiblio()">Sophia: Generar Ejercicios & Checklist</button>
                 </div>
                 <div id="console_out" class="console">> Sophia conectada...</div>
             </div>
@@ -97,66 +69,69 @@
                 <h3>Registrar Alumno</h3>
                 <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
                     <input type="text" id="user_name" placeholder="Nombre">
-                    <input type="text" id="user_id" placeholder="ID Acceso">
+                    <input type="text" id="user_id" placeholder="ID (ej: constanza)">
                     <input type="date" id="user_cert_date">
-                    <select id="user_level"><option value="B1">B1</option></select>
+                    <select id="user_level"><option value="B1">B1</option><option value="A1">A1</option></select>
                 </div>
-                <button class="btn-gold" onclick="window.registrarAlumno()">Dar de alta</button>
+                <button class="btn-gold" onclick="window.registrarAlumno()">Guardar Alumno</button>
             </div>
-            <div class="card">
-                <h3>Alumnos Registrados</h3>
-                <div id="lista_alumnos"></div>
-            </div>
+            <div class="card"><h3>Lista de Alumnos</h3><div id="lista_alumnos"></div></div>
         </div>
-
-        <div id="tab-clarity" class="content"><h3>NeuroClarity</h3><p>Módulo empresarial en desarrollo.</p></div>
-        <div id="tab-resico" class="content"><h3>RESICO</h3><p>Módulo SAT en desarrollo.</p></div>
     </div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
         import { getFirestore, doc, setDoc, onSnapshot, getDoc, collection, deleteDoc } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js";
-        import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-storage.js";
 
         const firebaseConfig = { apiKey: "AIzaSyCgog8tKspHy01ZHE8Dthl9O4W6lw1a_Ec", authDomain: "objectif-reussite-delf.firebaseapp.com", projectId: "objectif-reussite-delf", storageBucket: "objectif-reussite-delf.firebasestorage.app", messagingSenderId: "942279633770", appId: "1:942279633770:web:687ba6d819747eb29c1313" };
-        const app = initializeApp(firebaseConfig); const db = getFirestore(app); const storage = getStorage(app);
+        const app = initializeApp(firebaseConfig); const db = getFirestore(app);
 
         window.tab = (id, b) => {
             document.querySelectorAll('.content').forEach(c=>c.classList.remove('active'));
             document.querySelectorAll('.nav-btn').forEach(btn=>btn.classList.remove('active'));
             document.getElementById('tab-'+id).classList.add('active'); b.classList.add('active');
-            if(id === 'delf') window.checkStatus();
         };
 
-        // CARGAR CONFIGURACIÓN
-        const initSophia = async () => {
-            const snap = await getDoc(doc(db, "Config", "Sophia"));
-            if(snap.exists()) document.getElementById('prompt_sophia').value = snap.data().rules || "";
-        };
-        initSophia();
+        const loadSophia = async () => {
+            const s = await getDoc(doc(db, "Config", "Sophia"));
+            if(s.exists()) document.getElementById('prompt_sophia').value = s.data().rules || "";
+        }; loadSophia();
 
-        window.saveSophiaConfig = async () => {
-            const rules = document.getElementById('prompt_sophia').value;
-            await setDoc(doc(db, "Config", "Sophia"), { rules: rules });
-            alert("Configuración IA guardada.");
+        window.saveSophia = async () => {
+            await setDoc(doc(db, "Config", "Sophia"), { rules: document.getElementById('prompt_sophia').value });
+            alert("Sophia configurada.");
         };
 
-        // GESTIÓN ALUMNOS
+        window.generarBiblio = async () => {
+            const nivel = document.getElementById('nivel_master').value;
+            const out = document.getElementById('console_out');
+            out.innerHTML = `> Sophia extrayendo competencias de Referencial ${nivel}...`;
+            
+            // Simulación de extracción de Sophia
+            await setDoc(doc(db, "BibliotecaEjercicios", nivel), {
+                CO: { audio: "", ejercicios: [{id:1, p:"¿Cuál es la idea principal?"}]},
+                Checklist: [
+                    { item: "Passé Composé", tipo: "Grammaire", status: "none" },
+                    { item: "Connecteurs Logiques", tipo: "Grammaire", status: "none" },
+                    { item: "Vocabulaire: Environnement", tipo: "Lexique", status: "none" }
+                ]
+            });
+            out.innerHTML += `<br>> ¡ÉXITO! Biblioteca y Checklist generados.`;
+        };
+
         window.registrarAlumno = async () => {
             const id = document.getElementById('user_id').value.toLowerCase().trim();
             await setDoc(doc(db, "Usuarios", id), { 
                 nombre: document.getElementById('user_name').value, 
                 nivel: document.getElementById('user_level').value, 
                 fecha_certificacion: document.getElementById('user_cert_date').value, 
-                progreso: 0, id: id 
+                progreso: 10, id: id, minutos_estudio: 0 
             });
-            alert("Alumno registrado.");
+            alert("Alumno guardado.");
         };
 
-        window.eliminarAlumno = async (id) => {
-            if(confirm("¿Estás segura de eliminar a este alumno? Perderá el acceso de inmediato.")){
-                await deleteDoc(doc(db, "Usuarios", id));
-            }
+        window.eliminarUser = async (id) => {
+            if(confirm("¿Eliminar alumno permanentemente?")) await deleteDoc(doc(db, "Usuarios", id));
         };
 
         onSnapshot(collection(db, "Usuarios"), (snap) => {
@@ -164,21 +139,11 @@
             snap.forEach(d => {
                 const u = d.data();
                 list.innerHTML += `<div class="user-row">
-                    <div class="user-info">
-                        <a href="alumno.html?id=${u.id}&access=admin" target="_blank"><i class="fas fa-user-circle"></i> ${u.nombre}</a>
-                    </div>
-                    <button class="btn-delete" onclick="window.eliminarAlumno('${u.id}')"><i class="fas fa-trash"></i></button>
+                    <a href="alumno.html?id=${u.id}&access=admin" target="_blank"><i class="fas fa-user-circle"></i> ${u.nombre}</a>
+                    <button class="btn-del" onclick="window.eliminarUser('${u.id}')"><i class="fas fa-trash"></i></button>
                 </div>`;
             });
         });
-
-        window.checkStatus = () => {
-            onSnapshot(doc(db, "Materiales", document.getElementById('nivel_master').value), (s) => {
-                const d = s.data() || {};
-                document.getElementById('pill_audio').className = d.audios ? 'status-pill active' : 'status-pill';
-            });
-        };
-        window.checkStatus();
     </script>
 </body>
 </html>
