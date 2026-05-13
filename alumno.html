@@ -2,74 +2,156 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Mon Espace DELF | Réussite</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Espace Étudiant | Réussite DELF</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        :root { --oxford: #002147; --gold: #C5A059; --cream: #F8F9FA; --white: #FFFFFF; --green: #28A745; }
-        body { font-family: 'Montserrat', sans-serif; margin: 0; display: flex; height: 100vh; background: var(--cream); overflow: hidden; }
-        .sidebar { width: 280px; background: var(--oxford); color: white; padding: 30px 20px; flex-shrink: 0; }
-        .skill-btn { width: 100%; padding: 15px; margin-bottom: 10px; border-radius: 10px; border: 1px solid var(--gold); background: transparent; color: white; cursor: pointer; text-align: left; }
-        .skill-btn.active, .skill-btn:hover { background: var(--gold); color: var(--oxford); font-weight: bold; }
-        .header { background: white; padding: 20px 40px; border-bottom: 1px solid #ddd; display: flex; justify-content: space-between; align-items: center; width: 100%; }
-        .workspace { flex: 1; padding: 40px; display: flex; justify-content: center; overflow-y: auto; }
-        .card { background: white; padding: 40px; border-radius: 20px; width: 100%; max-width: 800px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
-        #admin-selector { display: none; background: #fffbe6; padding: 10px; border-radius: 5px; font-family: 'Montserrat'; font-weight: bold; }
+        :root { --oxford: #002147; --gold: #C5A059; --cream: #F8F9FA; --white: #FFFFFF; --green: #28A745; --error: #D32F2F; }
+        body { font-family: 'Montserrat', sans-serif; background-color: var(--cream); margin: 0; display: flex; height: 100vh; overflow: hidden; }
+        
+        .sidebar { width: 280px; background: var(--oxford); color: white; padding: 30px 20px; flex-shrink: 0; box-shadow: 4px 0 15px rgba(0,0,0,0.1); }
+        .sidebar h2 { color: var(--gold); font-size: 1.1rem; border-bottom: 1px solid var(--gold); padding-bottom: 20px; text-align: center; letter-spacing: 1px; }
+        .skill-btn { width: 100%; padding: 15px; margin-bottom: 12px; border-radius: 10px; border: 1px solid rgba(197, 160, 89, 0.3); background: transparent; color: white; cursor: pointer; text-align: left; display: flex; align-items: center; transition: 0.3s; font-size: 0.9rem; }
+        .skill-btn i { margin-right: 15px; width: 20px; text-align: center; }
+        .skill-btn.active, .skill-btn:hover { background: var(--gold); color: var(--oxford); font-weight: bold; border-color: var(--gold); }
+
+        .header { background: white; padding: 20px 40px; border-bottom: 1px solid #E0E0E0; display: flex; justify-content: space-between; align-items: center; width: 100%; box-sizing: border-box; }
+        .st-name { font-weight: 700; color: var(--gold); }
+        .workspace { flex: 1; padding: 40px; display: flex; justify-content: center; overflow-y: auto; background: var(--cream); }
+        
+        /* DISEÑO DE LA TARJETA DE EJERCICIO */
+        .exercise-card { background: white; padding: 45px; border-radius: 20px; width: 100%; max-width: 850px; box-shadow: 0 10px 40px rgba(0,0,0,0.03); height: fit-content; }
+        .exercise-card h3 { color: var(--oxford); margin-top: 0; border-bottom: 2px solid var(--gold); display: inline-block; padding-bottom: 5px; margin-bottom: 25px; }
+        
+        /* COMPONENTES INTERACTIVOS */
+        .audio-player { width: 100%; margin: 20px 0; border-radius: 10px; }
+        .consigne { background: #f0f4f8; padding: 15px; border-radius: 8px; border-left: 5px solid var(--oxford); font-style: italic; margin-bottom: 20px; }
+        .text-content { font-size: 1.2rem; line-height: 2; color: #444; margin-bottom: 30px; }
+        .question-item { margin-bottom: 20px; padding: 15px; border: 1px solid #eee; border-radius: 8px; }
+        
+        #admin-selector { display: none; background: #fffbe6; padding: 8px; border-radius: 5px; font-weight: bold; border: 1px solid var(--gold); font-family: 'Montserrat'; }
     </style>
 </head>
 <body>
     <aside class="sidebar">
-        <h2 style="color:var(--gold); text-align:center;">RÉUSSITE</h2>
-        <button class="skill-btn" onclick="window.loadSkill('CO')"><i class="fas fa-headset"></i> CO</button>
-        <button class="skill-btn" onclick="window.loadSkill('CE')"><i class="fas fa-book-open"></i> CE</button>
-        <button class="skill-btn" onclick="window.loadSkill('PE')"><i class="fas fa-pen-nib"></i> PE</button>
-        <button class="skill-btn" onclick="window.loadSkill('PO')"><i class="fas fa-microphone"></i> PO</button>
-        <button class="skill-btn" onclick="window.loadSkill('PH')"><i class="fas fa-language"></i> Phonétique</button>
+        <h2>RÉUSSITE DELF</h2>
+        <button class="skill-btn" onclick="window.loadSkill('CO')"><i class="fas fa-headset"></i> Compréhension Orale</button>
+        <button class="skill-btn" onclick="window.loadSkill('CE')"><i class="fas fa-book-open"></i> Compréhension Écrite</button>
+        <button class="skill-btn" onclick="window.loadSkill('PE')"><i class="fas fa-pen-nib"></i> Production Écrite</button>
+        <button class="skill-btn" onclick="window.loadSkill('PO')"><i class="fas fa-microphone"></i> Production Orale</button>
+        <button class="skill-btn active" onclick="window.loadSkill('PH')"><i class="fas fa-language"></i> Phonétique & Lecture</button>
     </aside>
 
     <main style="flex:1; display:flex; flex-direction:column;">
         <header class="header">
-            <div>Bonjour, <span id="st-name" style="font-weight:bold; color:var(--oxford);">Étudiant</span></div>
+            <div style="font-size: 1rem;">Bonjour, <span id="st-name" class="st-name">Étudiant</span> | <span id="st-level" style="color: var(--oxford);">Niveau B1</span></div>
             <select id="admin-selector" onchange="window.changeLevelAdmin(this.value)">
-                <option value="A1">Probar A1</option><option value="A2">Probar A2</option>
-                <option value="B1">Probar B1</option><option value="B2">Probar B2</option><option value="C1">Probar C1</option>
+                <option value="A1">Tester A1</option><option value="A2">Tester A2</option>
+                <option value="B1" selected>Tester B1</option><option value="B2">Tester B2</option><option value="C1">Tester C1</option>
             </select>
         </header>
+        
         <section class="workspace">
-            <div class="card" id="content">Selecciona una habilidad para comenzar.</div>
+            <div class="exercise-card" id="content-display">
+                <div style="text-align:center; color:#999;">
+                    <i class="fas fa-layer-group fa-3x" style="margin-bottom:20px;"></i>
+                    <p>Bienvenue. Sélectionnez una compétence para que Sophia cargue su entrenamiento.</p>
+                </div>
+            </div>
         </section>
     </main>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
         import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js";
-        const firebaseConfig = { apiKey: "AIzaSyCgog8tKspHy01ZHE8Dthl9O4W6lw1a_Ec", authDomain: "objectif-reussite-delf.firebaseapp.com", projectId: "objectif-reussite-delf", storageBucket: "objectif-reussite-delf.firebasestorage.app", messagingSenderId: "942279633770", appId: "1:942279633770:web:687ba6d819747eb29c1313" };
-        const app = initializeApp(firebaseConfig); const db = getFirestore(app);
 
-        let currentLevel = "";
+        const firebaseConfig = { 
+            apiKey: "AIzaSyCgog8tKspHy01ZHE8Dthl9O4W6lw1a_Ec", 
+            authDomain: "objectif-reussite-delf.firebaseapp.com", 
+            projectId: "objectif-reussite-delf", 
+            storageBucket: "objectif-reussite-delf.firebasestorage.app", 
+            messagingSenderId: "942279633770", 
+            appId: "1:942279633770:web:687ba6d819747eb29c1313" 
+        };
+        
+        const app = initializeApp(firebaseConfig); 
+        const db = getFirestore(app);
+
+        let currentLevel = "B1";
         const params = new URLSearchParams(window.location.search);
 
         async function init() {
+            // Modo Administrador
             if(params.get('access') === 'admin') {
                 document.getElementById('admin-selector').style.display = 'block';
-                currentLevel = "B1";
-                document.getElementById('st-name').innerText = "Modo Admin";
+                document.getElementById('st-name').innerText = "Gaby (Admin)";
             } else {
-                const snap = await getDoc(doc(db, "Usuarios", params.get('id')));
+                // Modo Alumno Real
+                const stId = params.get('id');
+                const snap = await getDoc(doc(db, "Usuarios", stId || "default"));
                 if(snap.exists()) {
                     currentLevel = snap.data().nivel;
                     document.getElementById('st-name').innerText = snap.data().nombre;
+                    document.getElementById('st-level').innerText = "Niveau " + currentLevel;
                 }
             }
         }
 
-        window.changeLevelAdmin = (l) => { currentLevel = l; alert("Nivel de prueba: " + l); };
+        window.changeLevelAdmin = (l) => {
+            currentLevel = l;
+            document.getElementById('content-display').innerHTML = `<div style="text-align:center; color:var(--gold);">Nivel ${l} cargado para pruebas.</div>`;
+        };
 
+        // --- MOTOR DE GENERACIÓN DE EJERCICIOS ---
         window.loadSkill = async (skill) => {
+            const area = document.getElementById('content-display');
+            area.innerHTML = `<div style="text-align:center;"><i class="fas fa-circle-notch fa-spin fa-2x"></i><br>Sophia está construyendo el ejercicio...</div>`;
+            
             const snap = await getDoc(doc(db, "BibliotecaEjercicios", currentLevel));
-            const area = document.getElementById('content');
-            if(!snap.exists()) { area.innerHTML = "Sophia no ha generado este nivel."; return; }
-            area.innerHTML = `<h3>${skill} - ${currentLevel}</h3><pre>${JSON.stringify(snap.data()[skill] || 'Sin contenido', null, 2)}</pre>`;
+            if(!snap.exists()) { 
+                area.innerHTML = `<div style="color:var(--error);">Sophia no ha generado la biblioteca para el Nivel ${currentLevel} aún. Por favor, genérala desde el Panel Admin.</div>`; 
+                return; 
+            }
+            
+            const data = snap.data()[skill];
+            if(!data) {
+                area.innerHTML = "Ejercicio no disponible en esta categoría.";
+                return;
+            }
+
+            // --- RENDERIZADO SEGÚN HABILIDAD ---
+            if(skill === 'CO') {
+                area.innerHTML = `
+                    <h3>${data.titulo || 'Compréhension Orale'}</h3>
+                    <div class="consigne"><i class="fas fa-info-circle"></i> ${data.consigna}</div>
+                    <audio controls class="audio-player"><source src="${data.audio}" type="audio/mpeg"></audio>
+                    <div class="question-item">Sophia está preparando las preguntas basadas en el manual...</div>
+                `;
+            } 
+            else if(skill === 'CE') {
+                area.innerHTML = `
+                    <h3>${data.titulo || 'Compréhension Écrite'}</h3>
+                    <div class="text-content">${data.texto}</div>
+                    <div id="questions-area">
+                        ${data.preguntas ? data.preguntas.map((p, i) => `<div class="question-item"><strong>${i+1}.</strong> ${p}</div>`).join('') : ''}
+                    </div>
+                `;
+            }
+            else if(skill === 'PH') {
+                area.innerHTML = `
+                    <h3>Phonétique & Lecture</h3>
+                    <div class="text-content" style="text-align:center; font-size:1.8rem; font-weight:300;">
+                        ${data.frase || 'Bonjour, prêt para la lección.'}
+                    </div>
+                    <div style="display:flex; justify-content:center; gap:15px; margin-top:20px;">
+                        <button onclick="window.speechSynthesis.speak(new SpeechSynthesisUtterance('${data.frase}'))" style="padding:10px 20px; border-radius:50px; background:var(--oxford); color:white; border:none; cursor:pointer;"><i class="fas fa-volume-up"></i> Sophia lee</button>
+                    </div>
+                `;
+            }
+            else {
+                area.innerHTML = `<h3>${skill}</h3><p class="consigne">${data.consigna || data.escenario || 'Sophia está lista para evaluarte.'}</p>`;
+            }
         };
 
         init();
