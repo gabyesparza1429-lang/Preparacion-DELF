@@ -2,150 +2,88 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Objectif Réussite | Espace Étudiant</title>
+    <title>Mon Espace DELF | Réussite</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root { --oxford: #002147; --gold: #C5A059; --cream: #F8F9FA; --white: #FFFFFF; --green: #28A745; }
         body { font-family: 'Montserrat', sans-serif; margin: 0; display: flex; height: 100vh; background: var(--cream); overflow: hidden; }
-        
-        /* SIDEBAR */
         .sidebar { width: 280px; background: var(--oxford); color: white; padding: 30px 20px; flex-shrink: 0; display: flex; flex-direction: column; }
         .logo-area { text-align: center; margin-bottom: 40px; border-bottom: 1px solid var(--gold); padding-bottom: 20px; }
-        .logo-area i { font-size: 2.5rem; color: var(--gold); }
-        .logo-area div { font-weight: 700; letter-spacing: 1px; margin-top: 10px; font-size: 0.9rem; }
-        
-        .skill-btn { width: 100%; padding: 15px; margin-bottom: 10px; border-radius: 10px; border: 1px solid rgba(197, 160, 89, 0.3); background: transparent; color: white; cursor: pointer; text-align: left; transition: 0.3s; display: flex; align-items: center; }
-        .skill-btn:hover { background: var(--gold); color: var(--oxford); font-weight: 700; border-color: var(--gold); }
-        .skill-btn i { margin-right: 15px; width: 20px; text-align: center; }
-
-        /* HEADER DASHBOARD */
+        .skill-btn { width: 100%; padding: 15px; margin-bottom: 10px; border-radius: 10px; border: 1px solid rgba(197, 160, 89, 0.3); background: transparent; color: white; cursor: pointer; text-align: left; }
+        .skill-btn:hover { background: var(--gold); color: var(--oxford); font-weight: 700; }
         .header { background: white; padding: 15px 40px; border-bottom: 1px solid #ddd; display: flex; justify-content: space-between; align-items: center; width: 100%; box-sizing: border-box; }
-        .exam-info { text-align: center; background: #fffdf0; border: 1px solid var(--gold); padding: 5px 15px; border-radius: 8px; }
-        .exam-info small { font-size: 0.6rem; text-transform: uppercase; color: #888; }
-        .exam-info div { font-weight: 700; color: var(--oxford); font-size: 0.85rem; }
-        
-        .progress-box { width: 200px; }
-        .progress-bar { height: 8px; background: #eee; border-radius: 10px; overflow: hidden; margin-top: 5px; }
+        .progress-bar { height: 8px; background: #eee; border-radius: 10px; width: 200px; overflow: hidden; margin-top: 5px; }
         .progress-fill { height: 100%; background: var(--green); width: 0%; transition: 1s; }
-
-        /* WORKSPACE */
-        .main-layout { flex: 1; display: flex; flex-direction: column; }
         .workspace { flex: 1; padding: 40px; overflow-y: auto; display: grid; grid-template-columns: 2fr 1fr; gap: 30px; }
         .card { background: white; padding: 35px; border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.03); }
-        
-        /* SOPHIA RECOMMENDATIONS */
         .sophia-tips { background: var(--oxford); color: white; padding: 25px; border-radius: 20px; height: fit-content; }
-        .sophia-tips h4 { color: var(--gold); margin-top: 0; display: flex; align-items: center; gap: 10px; }
-        .tip-item { font-size: 0.85rem; margin-bottom: 15px; line-height: 1.5; border-left: 3px solid var(--gold); padding-left: 10px; }
-
-        #admin-selector { display: none; background: #fffbe6; border: 1px solid var(--gold); padding: 5px; border-radius: 5px; font-weight: bold; }
     </style>
 </head>
 <body>
     <aside class="sidebar">
-        <div class="logo-area">
-            <i class="fas fa-graduation-cap"></i>
-            <div>RÉUSSITE DELF</div>
-        </div>
+        <div class="logo-area"><i class="fas fa-graduation-cap" style="font-size:2.5rem; color:var(--gold);"></i><div>RÉUSSITE DELF</div></div>
         <button class="skill-btn" onclick="window.loadSkill('CO')"><i class="fas fa-headset"></i> Audio (CO)</button>
         <button class="skill-btn" onclick="window.loadSkill('CE')"><i class="fas fa-book-open"></i> Lecture (CE)</button>
-        <button class="skill-btn" onclick="window.loadSkill('PE')"><i class="fas fa-pen-nib"></i> Écrit (PE)</button>
-        <button class="skill-btn" onclick="window.loadSkill('PO')"><i class="fas fa-microphone"></i> Oral (PO)</button>
         <button class="skill-btn" onclick="window.loadSkill('PH')"><i class="fas fa-language"></i> Phonétique</button>
     </aside>
 
-    <div class="main-layout">
+    <main style="flex:1; display:flex; flex-direction:column;">
         <header class="header">
             <div>
                 <strong>Bonjour, <span id="st-name" style="color:var(--gold);">...</span></strong>
-                <div class="progress-box">
-                    <div style="font-size: 0.65rem; font-weight: 700;">PROGRÈS DU NIVEAU</div>
-                    <div class="progress-bar"><div id="st-progress" class="progress-fill"></div></div>
-                </div>
+                <div class="progress-bar"><div id="st-progress" class="progress-fill"></div></div>
             </div>
-
             <div style="display:flex; gap:20px; align-items:center;">
-                <select id="admin-selector" onchange="window.changeLevelAdmin(this.value)">
-                    <option value="A1">Tester A1</option><option value="A2">Tester A2</option>
-                    <option value="B1">Tester B1</option><option value="B2">Tester B2</option>
-                </select>
-                <div class="exam-info">
-                    <small>CERTIFICATION</small>
-                    <div id="st-date">-- / -- / --</div>
-                </div>
-                <div id="countdown-box" style="text-align:center;">
-                    <div id="st-days" style="font-size: 1.5rem; font-weight: 700; color: var(--green); line-height: 1;">0</div>
-                    <small style="font-size: 0.6rem; font-weight: 700;">JOURS RESTANTS</small>
-                </div>
+                <div style="text-align:center;"><small>NIVEAU</small><div id="st-level" style="font-weight:700;">--</div></div>
+                <div style="text-align:center;"><small>EXAMEN</small><div id="st-date" style="font-weight:700;">--/--/--</div></div>
+                <div style="text-align:center;"><div id="st-days" style="font-size:1.5rem; font-weight:700; color:var(--green);">0</div><small>JOURS</small></div>
             </div>
         </header>
-
         <section class="workspace">
-            <div class="card" id="main-content">
-                <h3 id="skill-title">Bienvenue</h3>
-                <div id="exercise-area">Sélectionnez una competencia para comenzar tu entrenamiento.</div>
-            </div>
-
+            <div class="card" id="main-content">Sélectionnez una competencia.</div>
             <aside class="sophia-tips">
-                <h4><i class="fas fa-robot"></i> Sophia Tips</h4>
-                <div id="tips-area">
-                    <div class="tip-item">Recuerda que para el DELF B1, la coherencia de tus frases es vital.</div>
-                    <div class="tip-item">Usa conectores lógicos como "cependant" o "de plus".</div>
-                </div>
+                <h4 style="color:var(--gold);"><i class="fas fa-robot"></i> Sophia Tips</h4>
+                <div id="tips-area" style="font-size:0.8rem; border-left:2px solid var(--gold); padding-left:10px;">Sophia está analizando tu progreso para darte recomendaciones personalizadas.</div>
             </aside>
         </section>
-    </div>
+    </main>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
-        import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js";
+        import { getFirestore, doc, getDoc, updateDoc, increment } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js";
         const firebaseConfig = { apiKey: "AIzaSyCgog8tKspHy01ZHE8Dthl9O4W6lw1a_Ec", authDomain: "objectif-reussite-delf.firebaseapp.com", projectId: "objectif-reussite-delf", storageBucket: "objectif-reussite-delf.firebasestorage.app", messagingSenderId: "942279633770", appId: "1:942279633770:web:687ba6d819747eb29c1313" };
         const app = initializeApp(firebaseConfig); const db = getFirestore(app);
 
+        let studentId = new URLSearchParams(window.location.search).get('id');
         let currentLevel = "B1";
-        const params = new URLSearchParams(window.location.search);
 
         async function init() {
-            if(params.get('access') === 'admin') {
-                document.getElementById('admin-selector').style.display = 'block';
-                document.getElementById('st-name').innerText = "Gaby (Admin)";
-            } else {
-                const snap = await getDoc(doc(db, "Usuarios", params.get('id') || "default"));
-                if(snap.exists()) {
+            if(studentId) {
+                const snap = await getDoc(doc(db, "Usuarios", studentId.toLowerCase().trim()));
+                if(snap.exists()){
                     const d = snap.data();
                     currentLevel = d.nivel;
                     document.getElementById('st-name').innerText = d.nombre;
+                    document.getElementById('st-level').innerText = d.nivel;
                     document.getElementById('st-date').innerText = d.fecha_certificacion;
                     document.getElementById('st-progress').style.width = (d.progreso || 0) + "%";
-                    
-                    // Calcular días
                     const diff = Math.ceil((new Date(d.fecha_certificacion) - new Date()) / (1000 * 60 * 60 * 24));
                     document.getElementById('st-days').innerText = diff > 0 ? diff : 0;
+                    
+                    // CONTADOR REAL DE TIEMPO
+                    setInterval(async () => { await updateDoc(doc(db, "Usuarios", studentId.toLowerCase()), { minutos_estudio: increment(1) }); }, 60000);
                 }
             }
         }
 
-        window.changeLevelAdmin = (l) => { currentLevel = l; alert("Viendo material de: " + l); };
-
         window.loadSkill = async (skill) => {
-            const area = document.getElementById('exercise-area');
-            const title = document.getElementById('skill-title');
+            const area = document.getElementById('main-content');
             const snap = await getDoc(doc(db, "BibliotecaEjercicios", currentLevel));
-            
-            if(!snap.exists()) { area.innerHTML = "Sophia no ha generado este nivel aún."; return; }
+            if(!snap.exists()) { area.innerHTML = "Sophia aún no ha procesado este nivel."; return; }
             const data = snap.data()[skill];
-            title.innerText = skill;
-
-            if(skill === 'CO') {
-                area.innerHTML = `<audio controls style="width:100%"><source src="${data.audio}"></audio>
-                <div style="margin-top:20px;">${data.ejercicios.map(ex => `<div style="margin-bottom:15px;"><strong>Ex ${ex.id}:</strong> ${ex.p}</div>`).join('')}</div>`;
-            } else if(skill === 'PH') {
-                area.innerHTML = `<p style="font-size:1.5rem; text-align:center; color:var(--oxford);">${data.frase}</p>
-                <div style="text-align:center;"><button onclick="window.speechSynthesis.speak(new SpeechSynthesisUtterance('${data.frase}'))" style="background:var(--oxford); color:white; padding:10px 20px; border-radius:50px; cursor:pointer;">ÉCOUTER SOPHIA</button></div>`;
-            } else {
-                area.innerHTML = `<div style="background:#f9f9f9; padding:20px; border-radius:10px;">${data.texto || 'Contenido en preparación...'}</div>`;
-            }
+            if(skill === 'CO') area.innerHTML = `<h3>Compréhension Orale</h3><audio controls style="width:100%"><source src="${data.audio}"></audio><div style="margin-top:20px;">${data.ejercicios.map(ex => `<div style="margin-bottom:10px;"><strong>Ex ${ex.id}:</strong> ${ex.p}</div>`).join('')}</div>`;
+            else area.innerHTML = `<h3>${skill}</h3><p>${data.texto || 'Contenido...'}</p>`;
         };
 
         init();
