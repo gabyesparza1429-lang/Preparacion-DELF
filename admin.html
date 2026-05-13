@@ -10,42 +10,35 @@
         :root { --oxford: #002147; --gold: #C5A059; --bg: #f4f7f9; --green: #28a745; --blue: #007bff; --red: #dc3545; }
         body { font-family: 'Montserrat', sans-serif; margin: 0; display: flex; height: 100vh; background: var(--bg); overflow: hidden; }
         
-        /* Sidebar */
         .sidebar { width: 260px; background: var(--oxford); color: white; padding: 20px; display: flex; flex-direction: column; flex-shrink: 0; }
         .sidebar h2 { font-size: 0.9rem; border-bottom: 1px solid var(--gold); padding-bottom: 15px; margin-bottom: 25px; text-align: center; text-transform: uppercase; letter-spacing: 1px; }
         .nav-btn { background: transparent; border: none; color: white; padding: 15px; text-align: left; cursor: pointer; border-radius: 8px; margin-bottom: 5px; font-size: 0.85rem; width: 100%; transition: 0.3s; display: flex; align-items: center; }
         .nav-btn i { margin-right: 12px; width: 20px; text-align: center; color: var(--gold); }
         .nav-btn.active, .nav-btn:hover { background: rgba(197, 160, 89, 0.2); color: var(--gold); font-weight: 700; }
 
-        /* Main Content */
         .main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
         .top-bar { background: white; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #ddd; }
-        .btn-preview { background: var(--green); color: white; padding: 10px 18px; border-radius: 5px; text-decoration: none; font-weight: bold; font-size: 0.8rem; display: flex; align-items: center; gap: 8px; transition: 0.3s; }
-        .btn-preview:hover { background: #218838; transform: translateY(-2px); }
+        .btn-preview { background: var(--green); color: white; padding: 10px 18px; border-radius: 5px; text-decoration: none; font-weight: bold; font-size: 0.8rem; display: flex; align-items: center; gap: 8px; }
 
         .content { flex: 1; padding: 30px; overflow-y: auto; display: none; }
         .content.active { display: block; }
 
-        /* Cards & UI Elements */
         .card { background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); margin-bottom: 25px; }
         .level-header { background: var(--oxford); color: white; padding: 20px; border-radius: 12px; margin-bottom: 25px; display: flex; align-items: center; justify-content: space-between; }
         
-        .status-pill { padding: 8px 15px; border-radius: 20px; font-size: 0.7rem; font-weight: bold; background: #555; color: #ccc; border: 1px solid #444; text-transform: uppercase; }
-        .status-pill.active { background: var(--green); color: white; border-color: #1e7e34; box-shadow: 0 0 10px rgba(40, 167, 69, 0.3); }
+        .status-pill { padding: 8px 15px; border-radius: 20px; font-size: 0.7rem; font-weight: bold; background: #555; color: #ccc; text-transform: uppercase; }
+        .status-pill.active { background: var(--green); color: white; }
 
-        .btn-gold { background: var(--gold); color: var(--oxford); border: none; padding: 12px; width: 100%; border-radius: 6px; font-weight: bold; cursor: pointer; margin-top: 10px; text-transform: uppercase; transition: 0.3s; }
-        .btn-gold:hover { filter: brightness(1.1); }
+        .btn-gold { background: var(--gold); color: var(--oxford); border: none; padding: 12px; width: 100%; border-radius: 6px; font-weight: bold; cursor: pointer; margin-top: 10px; text-transform: uppercase; }
+        textarea, input, select { padding: 12px; border-radius: 6px; border: 1px solid #ccc; width: 100%; box-sizing: border-box; margin-top: 8px; font-family: 'Montserrat'; }
         
-        textarea, input, select { padding: 12px; border-radius: 6px; border: 1px solid #ccc; width: 100%; box-sizing: border-box; margin-top: 8px; font-family: 'Montserrat'; font-size: 0.9rem; }
-        label { font-size: 0.75rem; font-weight: 700; color: var(--oxford); text-transform: uppercase; }
-
-        /* User List */
-        .user-row { display: flex; justify-content: space-between; align-items: center; padding: 15px; border-bottom: 1px solid #eee; transition: 0.2s; }
-        .user-row:hover { background: #f9f9f9; }
+        /* Lista Alumnos Pro */
+        .user-row { display: flex; justify-content: space-between; align-items: center; padding: 15px; border-bottom: 1px solid #eee; }
         .user-info a { color: var(--oxford); text-decoration: none; font-weight: 700; display: flex; align-items: center; gap: 10px; }
-        .user-info a:hover { color: var(--blue); }
-
-        .console { background: #1a1a1a; color: #00ff00; padding: 15px; border-radius: 8px; font-family: monospace; font-size: 0.75rem; margin-top: 15px; border-left: 4px solid var(--gold); }
+        .btn-delete { background: var(--red); color: white; border: none; width: 35px; height: 35px; border-radius: 6px; cursor: pointer; transition: 0.3s; }
+        .btn-delete:hover { background: #b02a37; }
+        
+        .console { background: #1a1a1a; color: #00ff00; padding: 15px; border-radius: 8px; font-family: monospace; font-size: 0.75rem; margin-top: 15px; }
     </style>
 </head>
 <body>
@@ -61,232 +54,130 @@
     <div class="main">
         <div class="top-bar">
             <h1 id="tab-title" style="margin:0; font-size: 1.1rem; color: var(--oxford);">Réussite DELF</h1>
-            <a href="alumno.html?access=admin" class="btn-preview" target="_blank">
-                <i class="fas fa-external-link-alt"></i> VISTA ALUMNO (PREVIEW)
-            </a>
+            <a href="alumno.html?access=admin" class="btn-preview" target="_blank"><i class="fas fa-external-link-alt"></i> VISTA ALUMNO (PREVIEW)</a>
         </div>
 
         <div id="tab-delf" class="content active">
             <div class="level-header">
-                <div style="width: 220px;">
-                    <select id="nivel_master" onchange="window.checkStatus()">
-                        <option value="A1">Nivel A1</option><option value="A2">Nivel A2</option>
-                        <option value="B1" selected>Nivel B1</option><option value="B2">Nivel B2</option>
-                        <option value="C1">Nivel C1</option>
-                    </select>
-                </div>
-                <div style="display:flex; gap:12px;">
-                    <div id="pill_ref" class="status-pill">Referencial</div>
-                    <div id="pill_book" class="status-pill">Libro</div>
-                    <div id="pill_audio" class="status-pill">Audios</div>
+                <select id="nivel_master" onchange="window.checkStatus()" style="width:200px;">
+                    <option value="A1">Nivel A1</option><option value="A2">Nivel A2</option>
+                    <option value="B1" selected>Nivel B1</option><option value="B2">Nivel B2</option><option value="C1">Nivel C1</option>
+                </select>
+                <div style="display:flex; gap:10px;">
+                    <div id="pill_ref" class="status-pill">Ref</div><div id="pill_book" class="status-pill">Libro</div><div id="pill_audio" class="status-pill">Audio</div>
                 </div>
             </div>
 
             <div class="card">
-                <h3><i class="fas fa-upload" style="color: var(--gold);"></i> 1. Vincular Material</h3>
+                <h3>1. Vincular Material</h3>
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-                    <div>
-                        <label>Tipo de Contenido</label>
-                        <select id="file_type">
-                            <option value="referentiel">Referencial (PDF/DOC)</option>
-                            <option value="libro">Libro del Nivel (PDF)</option>
-                            <option value="audios">Archivos de Audio (MP3)</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label>Seleccionar Archivo(s)</label>
-                        <input type="file" id="file_input" multiple>
-                    </div>
+                    <select id="file_type">
+                        <option value="referentiel">Référentiel</option>
+                        <option value="libro">Libro PDF</option>
+                        <option value="audios">Audios MP3</option>
+                    </select>
+                    <input type="file" id="file_input" multiple>
                 </div>
-                <button class="btn-gold" style="background: var(--oxford); color: white;" onclick="window.uploadFiles()">Subir y Vincular</button>
+                <button class="btn-gold" style="background:var(--oxford); color:white;" onclick="window.uploadFiles()">Subir y Vincular</button>
             </div>
 
             <div class="card">
-                <h3><i class="fas fa-robot" style="color: var(--gold);"></i> 2. Cerebro Sophia: Instrucciones de IA</h3>
-                <label>Prompt Maestro y Reglas Pedagógicas (Editable)</label>
-                <textarea id="prompt_sophia" rows="8" placeholder="Escribe aquí las instrucciones de Sophia para este nivel..."></textarea>
-                <div style="display: flex; gap: 10px; margin-top: 10px;">
-                    <button class="btn-gold" style="background: var(--blue); color: white;" onclick="window.saveSophiaConfig()">Guardar Configuración IA</button>
-                    <button class="btn-gold" style="background: var(--gold); color: var(--oxford);" onclick="window.generarBibliotecaSophia()">Generar Biblioteca de Ejercicios</button>
+                <h3>2. Sophia: Configuración y Generación</h3>
+                <textarea id="prompt_sophia" rows="6" placeholder="Escribe aquí el Prompt Maestro..."></textarea>
+                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
+                    <button class="btn-gold" style="background:var(--blue); color:white;" onclick="window.saveSophiaConfig()">Guardar Configuración IA</button>
+                    <button class="btn-gold" onclick="window.generarBibliotecaSophia()">Sophia: Generar Ejercicios</button>
                 </div>
-                <div id="console_out" class="console">> Sophia conectada. Esperando procesamiento...</div>
+                <div id="console_out" class="console">> Sophia conectada...</div>
             </div>
         </div>
 
         <div id="tab-usuarios" class="content">
             <div class="card">
-                <h3><i class="fas fa-user-plus"></i> Registrar Alumno</h3>
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
-                    <div><label>Nombre Alumno</label><input type="text" id="user_name" placeholder="Ej. Constanza"></div>
-                    <div><label>ID de Acceso Único</label><input type="text" id="user_id" placeholder="Ej. constanza2026"></div>
-                    <div><label>Fecha de Examen</label><input type="date" id="user_cert_date"></div>
-                    <div>
-                        <label>Nivel Asignado</label>
-                        <select id="user_level">
-                            <option value="A1">A1</option><option value="A2">A2</option>
-                            <option value="B1" selected>B1</option><option value="B2">B2</option><option value="C1">C1</option>
-                        </select>
-                    </div>
+                <h3>Registrar Alumno</h3>
+                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
+                    <input type="text" id="user_name" placeholder="Nombre">
+                    <input type="text" id="user_id" placeholder="ID Acceso">
+                    <input type="date" id="user_cert_date">
+                    <select id="user_level"><option value="B1">B1</option></select>
                 </div>
-                <button class="btn-gold" onclick="window.registrarAlumno()">Dar de Alta Alumno</button>
+                <button class="btn-gold" onclick="window.registrarAlumno()">Dar de alta</button>
             </div>
-
             <div class="card">
-                <h3>Alumnos Registrados (Clic para entrar al portal)</h3>
+                <h3>Alumnos Registrados</h3>
                 <div id="lista_alumnos"></div>
             </div>
         </div>
 
-        <div id="tab-clarity" class="content">
-            <div class="card"><h3>NeuroClarity</h3><p>Módulo de gestión empresarial y pedagógica en desarrollo.</p></div>
-        </div>
-        <div id="tab-resico" class="content">
-            <div class="card"><h3>RESICO</h3><p>Módulo de facturación y control fiscal SAT en desarrollo.</p></div>
-        </div>
+        <div id="tab-clarity" class="content"><h3>NeuroClarity</h3><p>Módulo empresarial en desarrollo.</p></div>
+        <div id="tab-resico" class="content"><h3>RESICO</h3><p>Módulo SAT en desarrollo.</p></div>
     </div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
-        import { getFirestore, doc, setDoc, onSnapshot, getDoc, collection } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js";
+        import { getFirestore, doc, setDoc, onSnapshot, getDoc, collection, deleteDoc } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js";
         import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-storage.js";
 
-        const firebaseConfig = { 
-            apiKey: "AIzaSyCgog8tKspHy01ZHE8Dthl9O4W6lw1a_Ec", 
-            authDomain: "objectif-reussite-delf.firebaseapp.com", 
-            projectId: "objectif-reussite-delf", 
-            storageBucket: "objectif-reussite-delf.firebasestorage.app", 
-            messagingSenderId: "942279633770", 
-            appId: "1:942279633770:web:687ba6d819747eb29c1313" 
-        };
+        const firebaseConfig = { apiKey: "AIzaSyCgog8tKspHy01ZHE8Dthl9O4W6lw1a_Ec", authDomain: "objectif-reussite-delf.firebaseapp.com", projectId: "objectif-reussite-delf", storageBucket: "objectif-reussite-delf.firebasestorage.app", messagingSenderId: "942279633770", appId: "1:942279633770:web:687ba6d819747eb29c1313" };
+        const app = initializeApp(firebaseConfig); const db = getFirestore(app); const storage = getStorage(app);
 
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
-        const storage = getStorage(app);
-
-        // NAVEGACIÓN
-        window.tab = (id, btn) => {
-            document.querySelectorAll('.content').forEach(c => c.classList.remove('active'));
-            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-            document.getElementById('tab-' + id).classList.add('active');
-            btn.classList.add('active');
-            document.getElementById('tab-title').innerText = btn.innerText;
+        window.tab = (id, b) => {
+            document.querySelectorAll('.content').forEach(c=>c.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(btn=>btn.classList.remove('active'));
+            document.getElementById('tab-'+id).classList.add('active'); b.classList.add('active');
             if(id === 'delf') window.checkStatus();
         };
 
-        // CARGAR CONFIGURACIÓN DE SOPHIA
-        const loadSophiaPrompt = async () => {
+        // CARGAR CONFIGURACIÓN
+        const initSophia = async () => {
             const snap = await getDoc(doc(db, "Config", "Sophia"));
-            if(snap.exists()) document.getElementById('prompt_sophia').value = snap.data().prompt || "";
+            if(snap.exists()) document.getElementById('prompt_sophia').value = snap.data().rules || "";
         };
-        loadSophiaPrompt();
+        initSophia();
 
         window.saveSophiaConfig = async () => {
-            const p = document.getElementById('prompt_sophia').value;
-            await setDoc(doc(db, "Config", "Sophia"), { prompt: p });
-            alert("Instrucciones de Sophia guardadas en Firebase.");
+            const rules = document.getElementById('prompt_sophia').value;
+            await setDoc(doc(db, "Config", "Sophia"), { rules: rules });
+            alert("Configuración IA guardada.");
         };
 
-        // SUBIDA DE MATERIALES
-        window.uploadFiles = async () => {
-            const nivel = document.getElementById('nivel_master').value;
-            const tipo = document.getElementById('file_type').value;
-            const files = document.getElementById('file_input').files;
-            const out = document.getElementById('console_out');
+        // GESTIÓN ALUMNOS
+        window.registrarAlumno = async () => {
+            const id = document.getElementById('user_id').value.toLowerCase().trim();
+            await setDoc(doc(db, "Usuarios", id), { 
+                nombre: document.getElementById('user_name').value, 
+                nivel: document.getElementById('user_level').value, 
+                fecha_certificacion: document.getElementById('user_cert_date').value, 
+                progreso: 0, id: id 
+            });
+            alert("Alumno registrado.");
+        };
 
-            if(files.length === 0) return alert("Selecciona archivos primero.");
-            
-            for (let f of files) {
-                out.innerHTML = `> Subiendo ${f.name}...`;
-                const sRef = ref(storage, `niveles/${nivel}/${tipo}/${f.name}`);
-                await uploadBytes(sRef, f);
-                const url = await getDownloadURL(sRef);
-                await setDoc(doc(db, "Materiales", nivel), { [tipo]: url }, { merge: true });
-                out.innerHTML = `> ${f.name} vinculado con éxito.`;
+        window.eliminarAlumno = async (id) => {
+            if(confirm("¿Estás segura de eliminar a este alumno? Perderá el acceso de inmediato.")){
+                await deleteDoc(doc(db, "Usuarios", id));
             }
         };
 
-        // INDICADORES DE STATUS (FOCOS)
-        window.checkStatus = () => {
-            const nivel = document.getElementById('nivel_master').value;
-            onSnapshot(doc(db, "Materiales", nivel), (s) => {
-                const d = s.data() || {};
-                document.getElementById('pill_ref').className = d.referentiel ? 'status-pill active' : 'status-pill';
-                document.getElementById('pill_book').className = d.libro ? 'status-pill active' : 'status-pill';
-                document.getElementById('pill_audio').className = d.audios ? 'status-pill active' : 'status-pill';
-            });
-        };
-
-        // GENERAR BIBLIOTECA (SOPHIA ACTIVA)
-        window.generarBibliotecaSophia = async () => {
-    const nivel = document.getElementById('nivel_master').value;
-    const out = document.getElementById('console_out');
-    
-    out.innerHTML = `> Sophia accediendo a la Examinadora Jefe DELF...`;
-
-    // 1. Jalamos el Prompt Maestro que ya tienes en Config/Sophia
-    const configSnap = await getDoc(doc(db, "Config", "Sophia"));
-    if (!configSnap.exists()) return alert("No hay reglas de Sophia guardadas. Primero guarda el prompt.");
-    
-    const promptMaestro = configSnap.data().rules; // Aquí está tu ROLE: SOPHIA
-
-    // 2. Simulamos la respuesta de la IA basada en tu prompt (Para producción hoy)
-    // En el futuro, aquí conectarás la API de Gemini para que lea los PDFs de tus links
-    out.innerHTML += `<br>> Procesando materiales de ${nivel} según CECRL...`;
-
-    await setDoc(doc(db, "BibliotecaEjercicios", nivel), {
-        CO: { 
-            titulo: "Comprensión Auditiva - " + nivel,
-            audio: "https://firebasestorage.googleapis.com/v0/b/...", // Aquí Sophia debería jalar el audio del nivel
-            ejercicios: [
-                { id: 1, p: "Basado en el libro del nivel " + nivel + ", ¿cuál es el objetivo de la comunicación?" },
-                { id: 2, p: "Escucha la sección de 'Compréhension' y selecciona la respuesta correcta." }
-            ],
-            transcripcion: "Esta se desbloqueará si el alumno obtiene menos del 80%."
-        },
-        CE: { 
-            titulo: "Comprensión Escrita - " + nivel,
-            texto: "Sophia está extrayendo el texto del PDF oficial...",
-            ejercicios: [
-                { id: 1, p: "Pregunta de validación según el Descripteur CECRL." }
-            ]
-        }
-    });
-
-    out.innerHTML += `<br>> ¡ÉXITO! Material de ${nivel} generado bajo las reglas de Sophia.`;
-};
-        // GESTIÓN DE ALUMNOS
-        window.registrarAlumno = async () => {
-            const id = document.getElementById('user_id').value.toLowerCase().trim();
-            const nombre = document.getElementById('user_name').value;
-            const nivel = document.getElementById('user_level').value;
-            const fecha = document.getElementById('user_cert_date').value;
-
-            if(!id || !nombre) return alert("Faltan datos obligatorios.");
-
-            await setDoc(doc(db, "Usuarios", id), {
-                nombre, nivel, fecha_certificacion: fecha, progreso: 0, id: id, minutos_estudio: 0
-            });
-            alert(`Alumno ${nombre} registrado con ID: ${id}`);
-        };
-
         onSnapshot(collection(db, "Usuarios"), (snap) => {
-            const list = document.getElementById('lista_alumnos');
-            list.innerHTML = "";
+            const list = document.getElementById('lista_alumnos'); list.innerHTML = "";
             snap.forEach(d => {
                 const u = d.data();
-                list.innerHTML += `
-                    <div class="user-row">
-                        <div class="user-info">
-                            <a href="alumno.html?id=${u.id}&access=admin" target="_blank">
-                                <i class="fas fa-user-circle" style="color:var(--gold);"></i> 
-                                ${u.nombre} (Nivel ${u.nivel})
-                            </a>
-                        </div>
-                        <div style="font-size:0.75rem; color:#888;">ID: ${u.id} | Examen: ${u.fecha_certificacion}</div>
-                    </div>`;
+                list.innerHTML += `<div class="user-row">
+                    <div class="user-info">
+                        <a href="alumno.html?id=${u.id}&access=admin" target="_blank"><i class="fas fa-user-circle"></i> ${u.nombre}</a>
+                    </div>
+                    <button class="btn-delete" onclick="window.eliminarAlumno('${u.id}')"><i class="fas fa-trash"></i></button>
+                </div>`;
             });
         });
 
+        window.checkStatus = () => {
+            onSnapshot(doc(db, "Materiales", document.getElementById('nivel_master').value), (s) => {
+                const d = s.data() || {};
+                document.getElementById('pill_audio').className = d.audios ? 'status-pill active' : 'status-pill';
+            });
+        };
         window.checkStatus();
     </script>
 </body>
