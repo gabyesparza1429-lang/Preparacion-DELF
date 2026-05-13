@@ -18,15 +18,12 @@
         .content { flex: 1; padding: 30px; overflow-y: auto; display: none; }
         .content.active { display: block; }
         .card { background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); margin-bottom: 25px; }
-        .level-header { background: var(--oxford); color: white; padding: 20px; border-radius: 12px; margin-bottom: 25px; display: flex; align-items: center; justify-content: space-between; }
-        .status-pill { padding: 8px 15px; border-radius: 20px; font-size: 0.7rem; font-weight: bold; background: #555; color: #ccc; }
-        .status-pill.active { background: var(--green); color: white; box-shadow: 0 0 10px rgba(40,167,69,0.3); }
         .btn-gold { background: var(--gold); color: var(--oxford); border: none; padding: 12px; width: 100%; border-radius: 6px; font-weight: bold; cursor: pointer; margin-top: 10px; text-transform: uppercase; }
         textarea, input, select { padding: 12px; border-radius: 6px; border: 1px solid #ccc; width: 100%; box-sizing: border-box; margin-top: 8px; font-family: 'Montserrat'; }
         .user-row { display: flex; justify-content: space-between; align-items: center; padding: 15px; border-bottom: 1px solid #eee; background: white; border-radius: 8px; margin-bottom: 10px; }
         .user-row a { color: var(--oxford); font-weight: 700; text-decoration: none; display: flex; align-items: center; gap: 10px; }
         .btn-del { background: var(--red); color: white; border: none; padding: 10px; border-radius: 5px; cursor: pointer; }
-        .console { background: #1a1a1a; color: #00ff00; padding: 15px; border-radius: 8px; font-family: monospace; font-size: 0.75rem; margin-top: 15px; min-height: 50px; }
+        .console { background: #1a1a1a; color: #00ff00; padding: 15px; border-radius: 8px; font-family: monospace; font-size: 0.75rem; margin-top: 15px; min-height: 60px; }
     </style>
 </head>
 <body>
@@ -46,41 +43,39 @@
 
         <div id="tab-delf" class="content active">
             <div class="level-header">
-                <select id="nivel_master" onchange="window.checkStatus()" style="width:200px;">
+                <select id="nivel_master" style="width:200px;">
                     <option value="A1">Nivel A1</option><option value="A2">Nivel A2</option>
                     <option value="B1" selected>Nivel B1</option><option value="B2">Nivel B2</option><option value="C1">Nivel C1</option>
                 </select>
-                <div style="display:flex; gap:10px;">
-                    <div id="pill_ref" class="status-pill">Ref</div><div id="pill_book" class="status-pill">Libro</div><div id="pill_audio" class="status-pill">Audio</div>
-                </div>
+                <div style="color:var(--gold); font-size:0.7rem;">SOPHIA PRO 2.5 FLASH</div>
             </div>
             <div class="card">
-                <h3>1. Sophia: Cerebro IA</h3>
-                <textarea id="prompt_sophia" rows="5" placeholder="Pega el ROLE: SOPHIA aquí..."></textarea>
+                <h3>Sophia Maestro</h3>
+                <textarea id="prompt_sophia" rows="8" placeholder="El prompt se cargará automáticamente..."></textarea>
                 <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
                     <button class="btn-gold" style="background:var(--blue); color:white;" onclick="window.saveSophia()">Guardar Configuración IA</button>
-                    <button class="btn-gold" onclick="window.generarBiblio()">Sophia: Procesar Nivel con IA</button>
+                    <button class="btn-gold" onclick="window.generarBiblio()">Sophia: Procesar con 2.5 Flash</button>
                 </div>
-                <div id="console_out" class="console">> Sophia conectada...</div>
+                <div id="console_out" class="console">> Sistema en espera...</div>
             </div>
         </div>
 
         <div id="tab-usuarios" class="content">
             <div class="card">
-                <h3>Registrar Alumno</h3>
+                <h3>Nuevo Alumno</h3>
                 <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
                     <input type="text" id="user_name" placeholder="Nombre">
-                    <input type="text" id="user_id" placeholder="ID (ej: constanza)">
+                    <input type="text" id="user_id" placeholder="ID acceso">
                     <input type="date" id="user_cert_date">
-                    <select id="user_level"><option value="B1">B1</option><option value="A1">A1</option><option value="C1">C1</option></select>
+                    <select id="user_level"><option value="B1">B1</option></select>
                 </div>
-                <button class="btn-gold" onclick="window.registrarAlumno()">Guardar Alumno</button>
+                <button class="btn-gold" onclick="window.registrarAlumno()">Guardar</button>
             </div>
-            <div class="card"><h3>Lista de Alumnos</h3><div id="lista_alumnos"></div></div>
+            <div id="lista_alumnos"></div>
         </div>
 
-        <div id="tab-clarity" class="content"><div class="card"><h3>NeuroClarity</h3><p>Módulo de análisis pedagógico.</p></div></div>
-        <div id="tab-resico" class="content"><div class="card"><h3>RESICO</h3><p>Control fiscal SAT.</p></div></div>
+        <div id="tab-clarity" class="content"><div class="card"><h3>NeuroClarity</h3><p>Análisis pedagógico.</p></div></div>
+        <div id="tab-resico" class="content"><div class="card"><h3>RESICO</h3><p>Contabilidad SAT.</p></div></div>
     </div>
 
     <script type="module">
@@ -99,53 +94,48 @@
             document.getElementById('tab-title').innerText = b.innerText;
         };
 
+        // CARGA EL PROMPT DESDE FIREBASE AUTOMÁTICAMENTE
+        const loadSophia = async () => {
+            const s = await getDoc(doc(db, "Config", "Sophia"));
+            if(s.exists()) document.getElementById('prompt_sophia').value = s.data().rules || "";
+        }; loadSophia();
+
         window.saveSophia = async () => {
             await setDoc(doc(db, "Config", "Sophia"), { rules: document.getElementById('prompt_sophia').value });
-            alert("Sophia actualizada.");
+            alert("Guardado en Firebase.");
         };
 
-window.generarBiblio = async () => {
+        window.generarBiblio = async () => {
             const nivel = document.getElementById('nivel_master').value;
             const out = document.getElementById('console_out');
             const prompt = document.getElementById('prompt_sophia').value;
             
-            if (!prompt.trim()) {
-                out.innerHTML = `> ERROR: El cuadro de configuración está vacío.`;
-                return alert("Por favor, guarda la Configuración de IA primero.");
-            }
-
-            out.innerHTML = `> Sophia contactando con Google AI (gemini-pro) para nivel ${nivel}...`;
+            out.innerHTML = `> Sophia llamando a Gemini 2.5 Flash para ${nivel}...`;
             
             try {
-                // MOTOR CORREGIDO: Cambiamos a gemini-pro que es 100% compatible
-                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${API_KEY}`, {
+                // LLAMADA A 2.5 FLASH (v1 Estable)
+                const response = await fetch(`https://generativelanguage.googleapis.com/v1/models/gemini-2.5-flash:generateContent?key=${API_KEY}`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
-                        contents: [{ parts: [{ text: `${prompt}\n\nIMPORTANTE: Genera un objeto JSON estricto para el nivel ${nivel}. Debe contener 2 ejercicios de Comprensión Oral (CO) y un checklist con 4 temas de gramática y 4 de vocabulario según el CECRL para este nivel. NO uses formato markdown, SOLO devuelve el JSON puro con esta estructura exacta:\n{"ejercicios_co": [{"id": 1, "p": "Pregunta de ejemplo"}], "checklist": [{"item": "Tema", "tipo": "Grammaire o Lexique", "status": "none"}]}` }] }]
+                        contents: [{ parts: [{ text: `${prompt}\n\nGenera un JSON estricto para nivel ${nivel} con 2 ejercicios de CO y un checklist de 8 puntos. Responde SOLO el JSON puro.` }] }],
+                        generationConfig: { responseMimeType: "application/json" }
                     })
                 });
-
-                if (!response.ok) {
-                    const errorDetails = await response.json();
-                    throw new Error(errorDetails.error.message || "Error en el servidor de Google AI");
-                }
-
                 const resData = await response.json();
-                let aiText = resData.candidates[0].content.parts[0].text.replace(/```json|```/g, "").trim();
+                const aiText = resData.candidates[0].content.parts[0].text;
                 const finalData = JSON.parse(aiText);
 
                 await setDoc(doc(db, "BibliotecaEjercicios", nivel), {
                     CO: { audio: "", ejercicios: finalData.ejercicios_co || [] },
                     Checklist: finalData.checklist || []
                 });
-                
-                out.innerHTML = `> ¡ÉXITO! Nivel ${nivel} procesado y guardado. Revisa la Vista de Alumno.`;
+                out.innerHTML = `> ¡EXITO! Nivel ${nivel} listo con 2.5 Flash.`;
             } catch (e) {
-                out.innerHTML = `> ERROR DETALLADO: ${e.message}`;
+                out.innerHTML = `> ERROR: ${e.message}`;
             }
         };
-        
+
         window.registrarAlumno = async () => {
             const id = document.getElementById('user_id').value.toLowerCase().trim();
             await setDoc(doc(db, "Usuarios", id), { 
