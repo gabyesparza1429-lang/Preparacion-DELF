@@ -113,21 +113,16 @@ window.generarBiblio = async () => {
                 out.innerHTML = `> ERROR: El cuadro de configuración está vacío.`;
                 return alert("Por favor, guarda la Configuración de IA primero.");
             }
-            
-            out.innerHTML = `> Sophia contactando con Google AI para nivel ${nivel}...`;
+
+            out.innerHTML = `> Sophia contactando con Google AI (gemini-pro) para nivel ${nivel}...`;
             
             try {
-                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`, {
+                // MOTOR CORREGIDO: Cambiamos a gemini-pro que es 100% compatible
+                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${API_KEY}`, {
                     method: 'POST',
-                    headers: { 
-                        'Content-Type': 'application/json' // Esto era lo que faltaba para que Google no bloquee la llamada
-                    },
+                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
-                        contents: [{ 
-                            parts: [{ 
-                                text: `${prompt}\n\nIMPORTANTE: Genera un objeto JSON estricto para el nivel ${nivel}. Debe contener 2 ejercicios de Comprensión Oral (CO) y un checklist con 4 temas de gramática y 4 de vocabulario según el CECRL para este nivel. NO uses formato markdown, SOLO devuelve el JSON con esta estructura exacta:\n{"ejercicios_co": [{"id": 1, "p": "Pregunta de ejemplo"}], "checklist": [{"item": "Tema (ej. Passé composé)", "tipo": "Grammaire o Lexique", "status": "none"}]}` 
-                            }] 
-                        }]
+                        contents: [{ parts: [{ text: `${prompt}\n\nIMPORTANTE: Genera un objeto JSON estricto para el nivel ${nivel}. Debe contener 2 ejercicios de Comprensión Oral (CO) y un checklist con 4 temas de gramática y 4 de vocabulario según el CECRL para este nivel. NO uses formato markdown, SOLO devuelve el JSON puro con esta estructura exacta:\n{"ejercicios_co": [{"id": 1, "p": "Pregunta de ejemplo"}], "checklist": [{"item": "Tema", "tipo": "Grammaire o Lexique", "status": "none"}]}` }] }]
                     })
                 });
 
@@ -137,28 +132,20 @@ window.generarBiblio = async () => {
                 }
 
                 const resData = await response.json();
-                
-                // Limpiamos el texto por si la IA le pone comillas de más
-                let aiText = resData.candidates[0].content.parts[0].text;
-                aiText = aiText.replace(/```json/g, "").replace(/```/g, "").trim();
-                
+                let aiText = resData.candidates[0].content.parts[0].text.replace(/```json|```/g, "").trim();
                 const finalData = JSON.parse(aiText);
 
-                // Guardamos en Firebase la respuesta real de la IA
                 await setDoc(doc(db, "BibliotecaEjercicios", nivel), {
                     CO: { audio: "", ejercicios: finalData.ejercicios_co || [] },
                     Checklist: finalData.checklist || []
                 });
                 
                 out.innerHTML = `> ¡ÉXITO! Nivel ${nivel} procesado y guardado. Revisa la Vista de Alumno.`;
-                
             } catch (e) {
-                // Ahora si falla, te dirá el motivo exacto en la pantalla negra
                 out.innerHTML = `> ERROR DETALLADO: ${e.message}`;
-                console.error(e);
             }
         };
-
+        
         window.registrarAlumno = async () => {
             const id = document.getElementById('user_id').value.toLowerCase().trim();
             await setDoc(doc(db, "Usuarios", id), { 
