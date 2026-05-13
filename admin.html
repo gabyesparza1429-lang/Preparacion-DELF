@@ -8,58 +8,57 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root { --oxford: #002147; --gold: #C5A059; --bg: #f4f7f9; --green: #28a745; --red: #d32f2f; }
-        body { font-family: 'Montserrat', sans-serif; margin: 0; display: flex; height: 100vh; background: var(--bg); }
+        body { font-family: 'Montserrat', sans-serif; margin: 0; display: flex; height: 100vh; background: var(--bg); overflow: hidden; }
         
-        .sidebar { width: 260px; background: var(--oxford); color: white; padding: 20px; display: flex; flex-direction: column; }
+        /* Sidebar */
+        .sidebar { width: 260px; background: var(--oxford); color: white; padding: 20px; display: flex; flex-direction: column; flex-shrink: 0; }
         .sidebar h2 { font-size: 0.9rem; border-bottom: 1px solid var(--gold); padding-bottom: 15px; margin-bottom: 25px; text-align: center; }
-        
         .nav-btn { background: transparent; border: none; color: white; padding: 15px; text-align: left; cursor: pointer; border-radius: 8px; margin-bottom: 5px; font-size: 0.85rem; transition: 0.3s; width: 100%; }
         .nav-btn.active, .nav-btn:hover { background: rgba(197, 160, 89, 0.2); color: var(--gold); }
         .nav-btn i { margin-right: 10px; width: 20px; text-align: center; }
 
+        /* Contenido */
         .main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
         .top-bar { background: white; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #ddd; }
         .btn-view { background: var(--green); color: white; padding: 10px 18px; border-radius: 5px; text-decoration: none; font-weight: bold; font-size: 0.8rem; }
 
         .content { flex: 1; padding: 30px; overflow-y: auto; display: none; }
-        .content.active { display: block; }
+        .content.active { display: block; } /* Esta clase controla la visibilidad */
 
         .card { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); margin-bottom: 20px; }
         .level-header { background: var(--oxford); color: white; padding: 20px; border-radius: 12px; margin-bottom: 20px; display: flex; align-items: center; justify-content: space-between; }
         
         .status-pill { padding: 8px 15px; border-radius: 20px; font-size: 0.7rem; font-weight: bold; background: #555; color: #ccc; border: 1px solid #444; }
-        .status-pill.active { background: var(--green); color: white; border-color: #1e7e34; box-shadow: 0 0 10px rgba(40, 167, 69, 0.4); }
+        .status-pill.active { background: var(--green); color: white; }
 
         .btn-gold { background: var(--gold); color: var(--oxford); border: none; padding: 12px; width: 100%; border-radius: 6px; font-weight: bold; cursor: pointer; margin-top: 10px; }
-        .brain-zone { background: #fffdf5; border: 2px dashed var(--gold); padding: 20px; border-radius: 10px; margin-bottom: 20px; }
         textarea { width: 100%; border: 1px solid #ccc; border-radius: 8px; padding: 12px; font-family: monospace; font-size: 0.85rem; box-sizing: border-box; }
-        
         .console { background: #1a1a1a; color: #00ff00; padding: 15px; border-radius: 8px; font-family: 'Courier New', monospace; font-size: 0.75rem; margin-top: 15px; max-height: 200px; overflow-y: auto; }
-        .timer-display { font-family: 'Courier New', monospace; font-size: 1.5rem; color: var(--gold); text-align: center; margin: 10px 0; display: none; }
         
-        input, select { padding: 10px; border-radius: 5px; border: 1px solid #ccc; width: 100%; box-sizing: border-box; }
+        input, select { padding: 10px; border-radius: 5px; border: 1px solid #ccc; width: 100%; box-sizing: border-box; margin-top: 5px; }
+        label { font-size: 0.7rem; font-weight: bold; color: #666; }
     </style>
 </head>
 <body>
 
     <nav class="sidebar">
         <h2>CENTRO DE MANDO</h2>
-        <button id="btn-delf" class="nav-btn active" onclick="tab('delf', this)"><i class="fas fa-certificate"></i> Réussite DELF</button>
-        <button id="btn-usuarios" class="nav-btn" onclick="tab('usuarios', this)"><i class="fas fa-users"></i> Gestión de Alumnos</button>
-        <button id="btn-clarity" class="nav-btn" onclick="tab('clarity', this)"><i class="fas fa-brain"></i> NeuroClarity</button>
-        <button id="btn-resico" class="nav-btn" onclick="tab('resico', this)"><i class="fas fa-calculator"></i> RESICO</button>
+        <button class="nav-btn active" onclick="tab('delf', this)"><i class="fas fa-certificate"></i> Réussite DELF</button>
+        <button class="nav-btn" onclick="tab('usuarios', this)"><i class="fas fa-users"></i> Gestión de Alumnos</button>
+        <button class="nav-btn" onclick="tab('clarity', this)"><i class="fas fa-brain"></i> NeuroClarity</button>
+        <button class="nav-btn" onclick="tab('resico', this)"><i class="fas fa-calculator"></i> RESICO</button>
     </nav>
 
     <div class="main">
         <div class="top-bar">
             <h1 id="tab-title" style="margin:0; font-size: 1.1rem;">Réussite DELF</h1>
-            <a href="alumno.html?access=admin" class="btn-view"><i class="fas fa-external-link-alt"></i> VISTA ALUMNO (PREVIEW)</a>
+            <a href="alumno.html?access=admin" class="btn-view" target="_blank"><i class="fas fa-external-link-alt"></i> VISTA ALUMNO (PREVIEW)</a>
         </div>
 
         <div id="tab-delf" class="content active">
             <div class="level-header">
                 <div style="width: 200px;">
-                    <select id="nivel_master" onchange="checkStatus()">
+                    <select id="nivel_master" onchange="window.checkStatus()">
                         <option value="A1">Nivel A1</option>
                         <option value="A2">Nivel A2</option>
                         <option value="B1" selected>Nivel B1</option>
@@ -78,28 +77,28 @@
             <div class="card">
                 <h3>📤 Carga de Material</h3>
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
-                    <select id="file_type">
-                        <option value="referentiel">Référentiel</option>
-                        <option value="libro">Libro PDF</option>
-                        <option value="audios">Audios MP3</option>
-                        <option value="descripteur">Descripteur CECRL (Global)</option>
-                    </select>
-                    <input type="file" id="file_input" multiple>
+                    <div>
+                        <label>TIPO DE ARCHIVO</label>
+                        <select id="file_type">
+                            <option value="referentiel">Référentiel</option>
+                            <option value="libro">Libro PDF</option>
+                            <option value="audios">Audios MP3</option>
+                            <option value="descripteur">Descripteur CECRL (Global)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label>SELECCIONAR ARCHIVOS</label>
+                        <input type="file" id="file_input" multiple>
+                    </div>
                 </div>
-                <button class="btn-gold" style="background: var(--oxford); color: white;" onclick="uploadFiles()">VINCULAR AL NIVEL</button>
-            </div>
-
-            <div class="brain-zone">
-                <h3>🧠 Cerebro Sophia: Instrucciones</h3>
-                <textarea id="prompt_sophia" rows="8" placeholder="Pega aquí el prompt maestro..."></textarea>
-                <button class="btn-gold" onclick="savePrompt('sophia')">ACTUALIZAR REGLAS DE SOPHIA</button>
+                <button class="btn-gold" style="background: var(--oxford); color: white;" onclick="window.uploadFiles()">VINCULAR AL NIVEL</button>
             </div>
 
             <div class="card">
                 <h3>⚙️ Procesamiento e Informes</h3>
-                <div id="timer" class="timer-display">00:00</div>
-                <button class="btn-gold" style="background: #007bff; color: white;" onclick="startMassiveUpload()">SOPHIA: INICIAR PROCESAMIENTO</button>
-                <button class="btn-gold" style="margin-top:15px; background:#444; color:white;" onclick="generarReporte()">GENERAR REPORTE DE ENLACES</button>
+                <div id="timer" style="display:none; font-family:monospace; font-size:1.5rem; color:var(--gold); text-align:center; margin-bottom:10px;">00:00</div>
+                <button class="btn-gold" style="background: #007bff; color: white;" onclick="window.startMassiveUpload()">SOPHIA: INICIAR PROCESAMIENTO</button>
+                <button class="btn-gold" style="margin-top:15px; background:#444; color:white;" onclick="window.generarReporte()">GENERAR REPORTE DE ENLACES</button>
                 <div id="reporte_out" style="display:none; background:#e3f2fd; padding:15px; margin-top:15px; border-radius:8px; font-size:0.75rem; border:1px solid #90caf9; word-break:break-all;"></div>
                 <div id="console_out" class="console">> Esperando archivos...</div>
             </div>
@@ -109,26 +108,42 @@
             <div class="card">
                 <h3>👤 Registrar Nuevo Alumno</h3>
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
-                    <input type="text" id="user_name" placeholder="Nombre (Ej. Sergio)">
-                    <select id="user_level">
-                        <option value="A1">Nivel A1</option><option value="A2">Nivel A2</option>
-                        <option value="B1">Nivel B1</option><option value="B2">Nivel B2</option>
-                        <option value="C1">Nivel C1</option>
-                    </select>
-                    <input type="date" id="user_cert_date">
-                    <input type="text" id="user_id" placeholder="ID de acceso (Ej. sergio2026)">
+                    <div><label>NOMBRE</label><input type="text" id="user_name" placeholder="Ej. Sergio"></div>
+                    <div><label>NIVEL</label><select id="user_level"><option value="A1">A1</option><option value="A2">A2</option><option value="B1">B1</option><option value="B2">B2</option><option value="C1">C1</option></select></div>
+                    <div><label>FECHA EXAMEN</label><input type="date" id="user_cert_date"></div>
+                    <div><label>ID ACCESO</label><input type="text" id="user_id" placeholder="Ej. sergio2026"></div>
                 </div>
-                <button class="btn-gold" onclick="registrarAlumno()">DAR DE ALTA ALUMNO</button>
+                <button class="btn-gold" onclick="window.registrarAlumno()">DAR DE ALTA ALUMNO</button>
             </div>
             <div class="card">
                 <h3>📋 Alumnos Activos</h3>
-                <div id="lista_alumnos"></div>
+                <div id="lista_alumnos" style="margin-top:10px;">Cargando lista...</div>
             </div>
         </div>
 
         <div id="tab-clarity" class="content"><div class="card"><h3>NeuroClarity</h3><p>Módulo próximamente...</p></div></div>
-        <div id="tab-resico" class="content"><div class="card"><h3>RESICO</h3><p>Próximamente...</p></div></div>
+        <div id="tab-resico" class="content"><div class="card"><h3>RESICO</h3><p>Módulo próximamente...</p></div></div>
     </div>
+
+    <script>
+        function tab(id, btn) {
+            // 1. Ocultar todos los contenidos
+            const contents = document.getElementsByClassName('content');
+            for (let c of contents) {
+                c.classList.remove('active');
+            }
+            // 2. Quitar clase active de todos los botones
+            const btns = document.getElementsByClassName('nav-btn');
+            for (let b of btns) {
+                b.classList.remove('active');
+            }
+            // 3. Mostrar el seleccionado
+            document.getElementById('tab-' + id).classList.add('active');
+            btn.classList.add('active');
+            // 4. Actualizar título
+            document.getElementById('tab-title').innerText = btn.innerText;
+        }
+    </script>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
@@ -148,16 +163,7 @@
         const db = getFirestore(app);
         const storage = getStorage(app);
 
-        // HACER FUNCIONES GLOBALES PARA EL HTML
-        window.tab = (id, b) => {
-            console.log("Cambiando a tab:", id);
-            document.querySelectorAll('.content').forEach(c => c.classList.remove('active'));
-            document.querySelectorAll('.nav-btn').forEach(nb => nb.classList.remove('active'));
-            document.getElementById('tab-' + id).classList.add('active');
-            b.classList.add('active');
-            document.getElementById('tab-title').innerText = b.innerText;
-        };
-
+        // VINCULAMOS FUNCIONES AL OBJETO WINDOW PARA QUE SEAN GLOBALES
         window.uploadFiles = async () => {
             const nivel = document.getElementById('nivel_master').value;
             const tipo = document.getElementById('file_type').value;
@@ -199,6 +205,19 @@
             });
         };
 
+        window.registrarAlumno = async () => {
+            const id = document.getElementById('user_id').value;
+            const nombre = document.getElementById('user_name').value;
+            const nivel = document.getElementById('user_level').value;
+            const fecha = document.getElementById('user_cert_date').value;
+            if(!id || !nombre) return alert("Faltan datos");
+
+            await setDoc(doc(db, "Usuarios", id), {
+                nombre, nivel, fecha_certificacion: fecha, progreso: 0, id
+            });
+            alert("¡Alumno registrado con éxito!");
+        };
+
         window.generarReporte = async () => {
             const niveles = ['A1', 'A2', 'B1', 'B2', 'C1'];
             const repBox = document.getElementById('reporte_out');
@@ -214,35 +233,32 @@
             repBox.innerHTML = html;
         };
 
-        window.registrarAlumno = async () => {
-            const id = document.getElementById('user_id').value;
-            const nombre = document.getElementById('user_name').value;
-            const nivel = document.getElementById('user_level').value;
-            const fecha = document.getElementById('user_cert_date').value;
-            if(!id || !nombre) return alert("Faltan datos");
-
-            await setDoc(doc(db, "Usuarios", id), {
-                nombre, nivel, fecha_certificacion: fecha, progreso: 0, id
-            });
-            alert("Alumno registrado.");
-        };
-
-        window.savePrompt = async (t) => {
-            const v = document.getElementById('prompt_'+t).value;
-            await setDoc(doc(db, "Config", "Prompts"), { [t]: v }, { merge: true });
-            alert("Prompt guardado.");
-        };
-
-        let timerInt;
         window.startMassiveUpload = () => {
-            document.getElementById('timer').style.display = 'block';
+            const t = document.getElementById('timer');
+            t.style.display = 'block';
             let sec = 0;
-            timerInt = setInterval(() => {
+            const timerInt = setInterval(() => {
                 sec++;
                 let m = Math.floor(sec/60); let s = sec%60;
-                document.getElementById('timer').innerText = `${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
+                t.innerText = `${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
             }, 1000);
-            setTimeout(() => { clearInterval(timerInt); alert("Sophia ha terminado."); }, 5000);
+            setTimeout(() => { clearInterval(timerInt); alert("Procesamiento completado."); }, 5000);
         };
 
-        // Escuchar lista
+        // Escuchar lista de alumnos
+        onSnapshot(collection(db, "Usuarios"), (snap) => {
+            const list = document.getElementById('lista_alumnos');
+            list.innerHTML = "";
+            snap.forEach(d => {
+                const u = d.data();
+                list.innerHTML += `<div style="padding:10px; border-bottom:1px solid #eee; font-size:0.8rem; background:#fff; margin-bottom:5px; border-radius:5px;">
+                    <strong>${u.nombre}</strong> (Nivel ${u.nivel}) - ID: <code>${u.id}</code><br>
+                    <small>Examen: ${u.fecha_certificacion} | Link: alumno.html?id=${u.id}</small>
+                </div>`;
+            });
+        });
+
+        window.checkStatus();
+    </script>
+</body>
+</html>
