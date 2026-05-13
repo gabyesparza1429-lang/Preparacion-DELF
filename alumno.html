@@ -1,147 +1,188 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Espace Étudiant | Réussite DELF</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <title>Master Admin | Réussite DELF</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        :root { --oxford: #002147; --gold: #C5A059; --cream: #F8F9FA; --white: #FFFFFF; --green: #28A745; --error: #D32F2F; }
-        body { font-family: 'Montserrat', sans-serif; background-color: var(--cream); margin: 0; display: flex; height: 100vh; overflow: hidden; }
+        :root { --oxford: #002147; --gold: #C5A059; --bg: #f4f7f9; --green: #28a745; }
+        body { font-family: 'Montserrat', sans-serif; margin: 0; display: flex; height: 100vh; background: var(--bg); overflow: hidden; }
         
-        .sidebar { width: 280px; background: var(--oxford); color: white; padding: 30px 20px; flex-shrink: 0; box-shadow: 4px 0 15px rgba(0,0,0,0.1); }
-        .sidebar h2 { color: var(--gold); font-size: 1.1rem; border-bottom: 1px solid var(--gold); padding-bottom: 20px; text-align: center; letter-spacing: 1px; }
-        .skill-btn { width: 100%; padding: 15px; margin-bottom: 12px; border-radius: 10px; border: 1px solid rgba(197, 160, 89, 0.3); background: transparent; color: white; cursor: pointer; text-align: left; display: flex; align-items: center; transition: 0.3s; font-size: 0.9rem; }
-        .skill-btn i { margin-right: 15px; width: 20px; text-align: center; }
-        .skill-btn.active, .skill-btn:hover { background: var(--gold); color: var(--oxford); font-weight: bold; border-color: var(--gold); }
+        /* Sidebar Navigation */
+        .sidebar { width: 260px; background: var(--oxford); color: white; padding: 20px; display: flex; flex-direction: column; flex-shrink: 0; }
+        .sidebar h2 { font-size: 0.9rem; border-bottom: 1px solid var(--gold); padding-bottom: 15px; margin-bottom: 25px; text-align: center; }
+        .nav-btn { background: transparent; border: none; color: white; padding: 15px; text-align: left; cursor: pointer; border-radius: 8px; margin-bottom: 5px; font-size: 0.85rem; width: 100%; transition: 0.3s; }
+        .nav-btn.active, .nav-btn:hover { background: rgba(197, 160, 89, 0.2); color: var(--gold); }
+        .nav-btn i { margin-right: 10px; width: 20px; text-align: center; }
 
-        .header { background: white; padding: 20px 40px; border-bottom: 1px solid #E0E0E0; display: flex; justify-content: space-between; align-items: center; width: 100%; box-sizing: border-box; }
-        .workspace { flex: 1; padding: 40px; display: flex; justify-content: center; overflow-y: auto; background: var(--cream); }
+        /* Main Content Area */
+        .main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+        .top-bar { background: white; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #ddd; }
+        .btn-preview { background: var(--green); color: white; padding: 10px 18px; border-radius: 5px; text-decoration: none; font-weight: bold; font-size: 0.8rem; }
+
+        .content { flex: 1; padding: 30px; overflow-y: auto; display: none; }
+        .content.active { display: block; }
+
+        /* Dashboard Components */
+        .card { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); margin-bottom: 20px; }
+        .level-header { background: var(--oxford); color: white; padding: 20px; border-radius: 12px; margin-bottom: 20px; display: flex; align-items: center; justify-content: space-between; }
         
-        .exercise-card { background: white; padding: 45px; border-radius: 20px; width: 100%; max-width: 850px; box-shadow: 0 10px 40px rgba(0,0,0,0.03); height: fit-content; }
-        .exercise-card h3 { color: var(--oxford); margin-top: 0; border-bottom: 2px solid var(--gold); display: inline-block; padding-bottom: 5px; margin-bottom: 25px; }
-        
-        .audio-player { width: 100%; margin: 20px 0; border-radius: 10px; }
-        .consigne { background: #f0f4f8; padding: 15px; border-radius: 8px; border-left: 5px solid var(--oxford); font-style: italic; margin-bottom: 20px; font-size: 0.9rem; }
-        .text-content { font-size: 1.1rem; line-height: 2; color: #444; margin-bottom: 30px; }
-        .question-item { margin-bottom: 20px; padding: 15px; border: 1px solid #eee; border-radius: 8px; background: #fff; }
-        
-        #admin-selector { display: none; background: #fffbe6; padding: 8px; border-radius: 5px; font-weight: bold; border: 1px solid var(--gold); font-family: 'Montserrat'; }
+        .status-pill { padding: 8px 15px; border-radius: 20px; font-size: 0.7rem; font-weight: bold; background: #555; color: #ccc; }
+        .status-pill.active { background: var(--green); color: white; box-shadow: 0 0 10px rgba(40, 167, 69, 0.3); }
+
+        .btn-gold { background: var(--gold); color: var(--oxford); border: none; padding: 12px; width: 100%; border-radius: 6px; font-weight: bold; cursor: pointer; margin-top: 10px; }
+        textarea { width: 100%; border: 1px solid #ccc; border-radius: 8px; padding: 12px; font-family: monospace; font-size: 0.85rem; box-sizing: border-box; }
+        .console { background: #1a1a1a; color: #00ff00; padding: 15px; border-radius: 8px; font-family: monospace; font-size: 0.75rem; margin-top: 15px; }
+        input, select { padding: 10px; border-radius: 5px; border: 1px solid #ccc; width: 100%; box-sizing: border-box; margin-top: 5px; }
     </style>
 </head>
 <body>
-    <aside class="sidebar">
-        <h2>RÉUSSITE DELF</h2>
-        <button class="skill-btn" onclick="window.loadSkill('CO')"><i class="fas fa-headset"></i> Compréhension Orale</button>
-        <button class="skill-btn" onclick="window.loadSkill('CE')"><i class="fas fa-book-open"></i> Compréhension Écrite</button>
-        <button class="skill-btn" onclick="window.loadSkill('PE')"><i class="fas fa-pen-nib"></i> Production Écrite</button>
-        <button class="skill-btn" onclick="window.loadSkill('PO')"><i class="fas fa-microphone"></i> Production Orale</button>
-        <button class="skill-btn" onclick="window.loadSkill('PH')"><i class="fas fa-language"></i> Phonétique & Lecture</button>
-    </aside>
 
-    <main style="flex:1; display:flex; flex-direction:column;">
-        <header class="header">
-            <div style="font-size: 1rem;">Bonjour, <span id="st-name" style="font-weight:700; color:var(--gold);">Étudiant</span> | <span id="st-level" style="color: var(--oxford); font-weight:700;">Niveau...</span></div>
-            <select id="admin-selector" onchange="window.changeLevelAdmin(this.value)">
-                <option value="A1">Tester A1</option><option value="A2">Tester A2</option>
-                <option value="B1" selected>Tester B1</option><option value="B2">Tester B2</option><option value="C1">Tester C1</option>
-            </select>
-        </header>
-        
-        <section class="workspace">
-            <div class="exercise-card" id="content-display">
-                <div style="text-align:center; color:#999;">
-                    <i class="fas fa-magic fa-3x" style="margin-bottom:20px; color:var(--gold);"></i>
-                    <p>Bienvenue. Sophia attend vos instructions.<br>Sélectionnez una competencia para iniciar.</p>
+    <nav class="sidebar">
+        <h2>CENTRO DE MANDO</h2>
+        <button class="nav-btn active" onclick="tab('delf', this)"><i class="fas fa-certificate"></i> Réussite DELF</button>
+        <button class="nav-btn" onclick="tab('usuarios', this)"><i class="fas fa-users"></i> Gestión de Alumnos</button>
+        <button class="nav-btn" onclick="tab('clarity', this)"><i class="fas fa-brain"></i> NeuroClarity</button>
+        <button class="nav-btn" onclick="tab('resico', this)"><i class="fas fa-calculator"></i> RESICO</button>
+    </nav>
+
+    <div class="main">
+        <div class="top-bar">
+            <h1 id="tab-title" style="margin:0; font-size: 1.1rem;">Réussite DELF</h1>
+            <a href="alumno.html?access=admin" class="btn-preview" target="_blank"><i class="fas fa-external-link-alt"></i> VISTA ALUMNO (PREVIEW)</a>
+        </div>
+
+        <div id="tab-delf" class="content active">
+            <div class="level-header">
+                <div style="width: 200px;">
+                    <select id="nivel_master" onchange="window.checkStatus()">
+                        <option value="A1">Nivel A1</option><option value="A2">Nivel A2</option>
+                        <option value="B1" selected>Nivel B1</option><option value="B2">Nivel B2</option>
+                        <option value="C1">Nivel C1</option>
+                    </select>
+                </div>
+                <div style="display:flex; gap:10px;">
+                    <div id="pill_ref" class="status-pill">RÉFÉRENTIEL</div>
+                    <div id="pill_book" class="status-pill">LIBRO</div>
+                    <div id="pill_audio" class="status-pill">AUDIOS</div>
                 </div>
             </div>
-        </section>
-    </main>
+
+            <div class="card">
+                <h3>📤 1. Vincular Material</h3>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                    <div><label>TIPO</label><select id="file_type"><option value="referentiel">Référentiel</option><option value="libro">Libro PDF</option><option value="audios">Audios MP3</option></select></div>
+                    <div><label>ARCHIVO</label><input type="file" id="file_input" multiple></div>
+                </div>
+                <button class="btn-gold" style="background:var(--oxford); color:white;" onclick="window.uploadFiles()">SUBIR Y VINCULAR</button>
+            </div>
+
+            <div class="card">
+                <h3>🧠 2. Sophia: Generar Biblioteca Secuencial</h3>
+                <textarea id="prompt_sophia" rows="5" placeholder="Pega aquí el texto del libro para generar los ejercicios..."></textarea>
+                <button class="btn-gold" style="background:#007bff; color:white;" onclick="window.generarBibliotecaSophia()">SOPHIA: PROCESAR EN ORDEN</button>
+                <div id="console_out" class="console">> Esperando instrucciones...</div>
+            </div>
+
+            <div class="card">
+                <h3>📋 Reporte de Enlaces</h3>
+                <button class="btn-gold" style="background:#444; color:white;" onclick="window.generarReporte()">GENERAR REPORTE</button>
+                <div id="reporte_out" style="display:none; padding:15px; font-size:0.7rem; word-break:break-all;"></div>
+            </div>
+        </div>
+
+        <div id="tab-usuarios" class="content">
+            <div class="card">
+                <h3>👤 Registro de Alumnos</h3>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                    <input type="text" id="user_name" placeholder="Nombre">
+                    <select id="user_level"><option value="A1">A1</option><option value="B1" selected>B1</option></select>
+                    <input type="date" id="user_cert_date">
+                    <input type="text" id="user_id" placeholder="ID (ej: sergio2026)">
+                </div>
+                <button class="btn-gold" onclick="window.registrarAlumno()">REGISTRAR</button>
+            </div>
+            <div class="card"><h3>Lista Activa</h3><div id="lista_alumnos"></div></div>
+        </div>
+    </div>
+
+    <script>function tab(id, btn) { document.querySelectorAll('.content').forEach(c => c.classList.remove('active')); document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active')); document.getElementById('tab-'+id).classList.add('active'); btn.classList.add('active'); }</script>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
-        import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js";
+        import { getFirestore, doc, setDoc, onSnapshot, getDoc, collection } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js";
+        import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-storage.js";
 
-        const firebaseConfig = { 
-            apiKey: "AIzaSyCgog8tKspHy01ZHE8Dthl9O4W6lw1a_Ec", 
-            authDomain: "objectif-reussite-delf.firebaseapp.com", 
-            projectId: "objectif-reussite-delf", 
-            storageBucket: "objectif-reussite-delf.firebasestorage.app", 
-            messagingSenderId: "942279633770", 
-            appId: "1:942279633770:web:687ba6d819747eb29c1313" 
-        };
-        
-        const app = initializeApp(firebaseConfig); 
-        const db = getFirestore(app);
+        const firebaseConfig = { apiKey: "AIzaSyCgog8tKspHy01ZHE8Dthl9O4W6lw1a_Ec", authDomain: "objectif-reussite-delf.firebaseapp.com", projectId: "objectif-reussite-delf", storageBucket: "objectif-reussite-delf.firebasestorage.app", messagingSenderId: "942279633770", appId: "1:942279633770:web:687ba6d819747eb29c1313" };
+        const app = initializeApp(firebaseConfig); const db = getFirestore(app); const storage = getStorage(app);
 
-        let currentLevel = "B1";
-        const params = new URLSearchParams(window.location.search);
-
-        async function init() {
-            if(params.get('access') === 'admin') {
-                document.getElementById('admin-selector').style.display = 'block';
-                document.getElementById('st-name').innerText = "Gaby (Admin)";
-            } else {
-                const stId = params.get('id');
-                const snap = await getDoc(doc(db, "Usuarios", stId || "default"));
-                if(snap.exists()) {
-                    currentLevel = snap.data().nivel;
-                    document.getElementById('st-name').innerText = snap.data().nombre;
-                    document.getElementById('st-level').innerText = "Niveau " + currentLevel;
-                }
-            }
-        }
-
-        window.changeLevelAdmin = (l) => {
-            currentLevel = l;
-            document.getElementById('content-display').innerHTML = `<div style="text-align:center; color:var(--gold);"><i class="fas fa-sync fa-spin"></i> Cargando Nivel ${l}...</div>`;
-            window.loadSkill('CE'); // Carga CE por defecto al cambiar nivel
-        };
-
-        window.loadSkill = async (skill) => {
-            const area = document.getElementById('content-display');
-            area.innerHTML = `<div style="text-align:center;"><i class="fas fa-circle-notch fa-spin fa-2x"></i><br>Sophia consulta la biblioteca de ${currentLevel}...</div>`;
+        window.generarBibliotecaSophia = async () => {
+            const nivel = document.getElementById('nivel_master').value;
+            const texto = document.getElementById('prompt_sophia').value;
+            const out = document.getElementById('console_out');
             
-            const snap = await getDoc(doc(db, "BibliotecaEjercicios", currentLevel));
-            if(!snap.exists()) { 
-                area.innerHTML = `<div style="text-align:center; color:var(--error); padding:20px;">
-                    <i class="fas fa-exclamation-triangle fa-2x"></i><br><br>
-                    Sophia no ha generado la biblioteca para el <strong>Nivel ${currentLevel}</strong>.<br>
-                    Por favor, ve al Panel Admin y presiona "GENERAR BIBLIOTECA".</div>`; 
-                return; 
-            }
+            out.innerHTML = `> Sophia analizando contenido secuencial para ${nivel}...`;
+            const snap = await getDoc(doc(db, "Materiales", nivel));
             
-            const data = snap.data()[skill];
-            if(!data) { area.innerHTML = "Sophia no encontró ejercicios para esta habilidad."; return; }
-
-            // DIBUJAR EJERCICIOS HUMANOS (NO JSON)
-            if(skill === 'CO') {
-                area.innerHTML = `
-                    <h3>Compréhension Orale</h3>
-                    <div class="consigne"><i class="fas fa-headphones"></i> ${data.consigna}</div>
-                    <audio controls class="audio-player"><source src="${data.audio}" type="audio/mpeg"></audio>
-                    <div class="question-item" style="border: 2px dashed var(--gold); text-align:center;">
-                        <i class="fas fa-brain"></i> Sophia está analizando el audio para generar preguntas reales...
-                    </div>
-                `;
-            } 
-            else if(skill === 'CE') {
-                area.innerHTML = `
-                    <h3>Compréhension Écrite</h3>
-                    <div class="consigne">Lisez le texte et répondez aux questions.</div>
-                    <div class="text-content">${data.texto || 'Cargando texto...'}</div>
-                    <div id="questions-area">
-                        ${data.preguntas ? data.preguntas.map((p, i) => `<div class="question-item"><strong>${i+1}.</strong> ${p}</div>`).join('') : ''}
-                    </div>
-                `;
-            }
-            else {
-                area.innerHTML = `<h3>${skill}</h3><div class="consigne">${data.consigna || 'Sophia está lista.'}</div><p>Contenido en desarrollo...</p>`;
-            }
+            await setDoc(doc(db, "BibliotecaEjercicios", nivel), {
+                CO: { titulo: "Comprensión Auditiva", audio: snap.data()?.audios || "", ejercicios: [
+                    { id: 1, p: "¿Qué actividad propone la mujer?" },
+                    { id: 2, p: "¿En qué horario se realizará?" }
+                ]},
+                CE: { titulo: "Comprensión Escrita", texto: texto || "Texto base del nivel.", ejercicios: [
+                    { id: 1, p: "Resuma el primer párrafo." },
+                    { id: 2, p: "¿Cuál es la intención del autor?" }
+                ]},
+                PH: { frase: "C'est une excellente journée pour apprendre." }
+            });
+            out.innerHTML += `<br>> ¡ÉXITO! Ejercicios guardados en orden.`;
         };
 
-        init();
+        window.uploadFiles = async () => {
+            const nivel = document.getElementById('nivel_master').value;
+            const tipo = document.getElementById('file_type').value;
+            const files = document.getElementById('file_input').files;
+            for (let f of files) {
+                const sRef = ref(storage, `niveles/${nivel}/${tipo}/${f.name}`);
+                await uploadBytes(sRef, f);
+                const url = await getDownloadURL(sRef);
+                await setDoc(doc(db, "Materiales", nivel), { [tipo]: url }, { merge: true });
+            }
+            alert("Vinculado correctamente.");
+        };
+
+        window.checkStatus = () => {
+            onSnapshot(doc(db, "Materiales", document.getElementById('nivel_master').value), (s) => {
+                const d = s.data() || {};
+                document.getElementById('pill_ref').className = d.referentiel ? 'status-pill active' : 'status-pill';
+                document.getElementById('pill_book').className = d.libro ? 'status-pill active' : 'status-pill';
+                document.getElementById('pill_audio').className = d.audios ? 'status-pill active' : 'status-pill';
+            });
+        };
+
+        window.registrarAlumno = async () => {
+            const id = document.getElementById('user_id').value;
+            await setDoc(doc(db, "Usuarios", id), { nombre: document.getElementById('user_name').value, nivel: document.getElementById('user_level').value, fecha_certificacion: document.getElementById('user_cert_date').value, progreso: 15, id });
+            alert("Alumno registrado.");
+        };
+
+        onSnapshot(collection(db, "Usuarios"), (snap) => {
+            const list = document.getElementById('lista_alumnos'); list.innerHTML = "";
+            snap.forEach(d => { list.innerHTML += `<div><strong>${d.data().nombre}</strong> (${d.data().nivel}) - ID: ${d.data().id}</div>`; });
+        });
+
+        window.generarReporte = async () => {
+            let txt = "";
+            for(let l of ['A1','A2','B1','B2','C1']) {
+                const s = await getDoc(doc(db, "Materiales", l));
+                if(s.exists()) txt += `Nivel ${l}: ${JSON.stringify(s.data())}<br>`;
+            }
+            document.getElementById('reporte_out').style.display = 'block';
+            document.getElementById('reporte_out').innerHTML = txt;
+        };
+
+        window.checkStatus();
     </script>
 </body>
 </html>
