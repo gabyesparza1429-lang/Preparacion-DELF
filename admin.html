@@ -2,249 +2,144 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Master Admin | Objectif Réussite</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root { --oxford: #002147; --gold: #C5A059; --bg: #f4f7f9; --green: #28a745; }
         body { font-family: 'Montserrat', sans-serif; margin: 0; display: flex; height: 100vh; background: var(--bg); overflow: hidden; }
-        
-        /* Sidebar Estilo Definido */
         .sidebar { width: 260px; background: var(--oxford); color: white; padding: 20px; display: flex; flex-direction: column; flex-shrink: 0; }
-        .sidebar h2 { font-size: 0.9rem; border-bottom: 1px solid var(--gold); padding-bottom: 15px; margin-bottom: 25px; text-align: center; text-transform: uppercase; letter-spacing: 1px; }
+        .sidebar h2 { font-size: 0.9rem; border-bottom: 1px solid var(--gold); padding-bottom: 15px; margin-bottom: 25px; text-align: center; text-transform: uppercase; }
         .nav-btn { background: transparent; border: none; color: white; padding: 15px; text-align: left; cursor: pointer; border-radius: 8px; margin-bottom: 5px; font-size: 0.85rem; width: 100%; transition: 0.3s; display: flex; align-items: center; }
         .nav-btn i { margin-right: 12px; width: 20px; text-align: center; color: var(--gold); }
         .nav-btn.active, .nav-btn:hover { background: rgba(197, 160, 89, 0.2); color: var(--gold); font-weight: 700; }
-
-        /* Área Principal */
         .main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
         .top-bar { background: white; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #ddd; }
-        .btn-preview { background: var(--green); color: white; padding: 10px 18px; border-radius: 5px; text-decoration: none; font-weight: bold; font-size: 0.8rem; display: flex; align-items: center; gap: 8px; }
-
         .content { flex: 1; padding: 30px; overflow-y: auto; display: none; }
         .content.active { display: block; }
-
-        /* Tarjetas y Componentes */
         .card { background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); margin-bottom: 25px; }
-        .level-header { background: var(--oxford); color: white; padding: 20px; border-radius: 12px; margin-bottom: 25px; display: flex; align-items: center; justify-content: space-between; }
-        
-        .status-pill { padding: 8px 15px; border-radius: 20px; font-size: 0.7rem; font-weight: bold; background: #555; color: #ccc; border: 1px solid #444; text-transform: uppercase; }
-        .status-pill.active { background: var(--green); color: white; border-color: #1e7e34; box-shadow: 0 0 10px rgba(40, 167, 69, 0.3); }
-
         .btn-gold { background: var(--gold); color: var(--oxford); border: none; padding: 12px; width: 100%; border-radius: 6px; font-weight: bold; cursor: pointer; margin-top: 10px; text-transform: uppercase; }
-        textarea { width: 100%; border: 1px solid #ccc; border-radius: 8px; padding: 15px; font-family: 'Montserrat', sans-serif; font-size: 0.85rem; box-sizing: border-box; resize: vertical; }
-        
-        .console { background: #1a1a1a; color: #00ff00; padding: 15px; border-radius: 8px; font-family: monospace; font-size: 0.75rem; margin-top: 15px; }
-        input, select { padding: 12px; border-radius: 6px; border: 1px solid #ccc; width: 100%; box-sizing: border-box; margin-top: 8px; font-family: 'Montserrat'; }
-        label { font-size: 0.75rem; font-weight: 700; color: var(--oxford); text-transform: uppercase; }
+        .status-pill { padding: 5px 12px; border-radius: 20px; font-size: 0.65rem; font-weight: bold; background: #555; color: #ccc; }
+        .status-pill.active { background: var(--green); color: white; }
+        .user-row { display: flex; justify-content: space-between; align-items: center; padding: 15px; border-bottom: 1px solid #eee; }
+        .user-link { color: var(--oxford); text-decoration: none; font-weight: 700; }
+        .btn-report { background: var(--oxford); color: white; border: none; padding: 8px 15px; border-radius: 5px; font-size: 0.7rem; cursor: pointer; }
+        input, select, textarea { padding: 12px; border-radius: 6px; border: 1px solid #ccc; width: 100%; box-sizing: border-box; margin-top: 8px; font-family: 'Montserrat'; }
+        #report-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 1000; justify-content: center; align-items: center; }
+        .report-card { background: white; width: 450px; padding: 40px; border-radius: 15px; position: relative; }
     </style>
 </head>
 <body>
-
     <nav class="sidebar">
-        <h2>Centro de Mando</h2>
+        <h2>CENTRO DE MANDO</h2>
         <button class="nav-btn active" onclick="tab('delf', this)"><i class="fas fa-sun"></i> Réussite DELF</button>
         <button class="nav-btn" onclick="tab('usuarios', this)"><i class="fas fa-users"></i> Gestión de Alumnos</button>
-        <button class="nav-btn" onclick="tab('clarity', this)"><i class="fas fa-brain"></i> NeuroClarity</button>
-        <button class="nav-btn" onclick="tab('resico', this)"><i class="fas fa-calculator"></i> RESICO</button>
     </nav>
 
     <div class="main">
-        <div class="top-bar">
-            <h1 id="tab-title" style="margin:0; font-size: 1.1rem; color: var(--oxford);">Réussite DELF</h1>
-            <a href="alumno.html?access=admin" class="btn-preview" target="_blank"><i class="fas fa-external-link-alt"></i> VISTA ALUMNO (PREVIEW)</a>
-        </div>
+        <div class="top-bar"><h1 id="tab-title" style="margin:0; font-size: 1.1rem; color: var(--oxford);">Réussite DELF</h1></div>
 
         <div id="tab-delf" class="content active">
-            <div class="level-header">
-                <div style="width: 200px;">
-                    <select id="nivel_master" onchange="window.checkStatus()">
-                        <option value="A1">Nivel A1</option>
-                        <option value="A2">Nivel A2</option>
-                        <option value="B1" selected>Nivel B1</option>
-                        <option value="B2">Nivel B2</option>
-                        <option value="C1">Nivel C1</option>
-                    </select>
-                </div>
-                <div style="display:flex; gap:12px;">
-                    <div id="pill_ref" class="status-pill">Référentiel</div>
-                    <div id="pill_book" class="status-pill">Libro</div>
-                    <div id="pill_audio" class="status-pill">Audios</div>
-                </div>
+            <div class="card" style="background:var(--oxford); color:white; display:flex; justify-content:space-between; align-items:center;">
+                <select id="nivel_master" style="width:150px;" onchange="window.checkStatus()">
+                    <option value="A1">A1</option><option value="B1" selected>B1</option><option value="C1">C1</option>
+                </select>
+                <div style="display:flex; gap:10px;"><div id="pill_ref" class="status-pill">Ref</div><div id="pill_audio" class="status-pill">Audio</div></div>
             </div>
-
             <div class="card">
-                <h3><i class="fas fa-upload" style="color: var(--gold);"></i> 1. Vincular Material</h3>
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-                    <div>
-                        <label>Tipo de Contenido</label>
-                        <select id="file_type">
-                            <option value="referentiel">Référentiel</option>
-                            <option value="libro">Libro PDF</option>
-                            <option value="audios">Audios MP3</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label>Seleccionar Archivos</label>
-                        <input type="file" id="file_input" multiple>
-                    </div>
-                </div>
-                <button class="btn-gold" style="background: var(--oxford); color: white;" onclick="window.uploadFiles()">Subir y Vincular al Nivel</button>
+                <h3>Vincular Material</h3>
+                <input type="file" id="file_input" multiple>
+                <button class="btn-gold" onclick="window.uploadFiles()">Subir Archivos</button>
             </div>
-
             <div class="card">
-                <h3><i class="fas fa-robot" style="color: var(--gold);"></i> 2. Sophia: Generar Biblioteca</h3>
-                <label>Instrucciones / Texto del Libro</label>
-                <textarea id="prompt_sophia" rows="6" placeholder="Pega aquí el texto del libro o instrucciones específicas para este nivel..."></textarea>
-                <button class="btn-gold" style="background: #007bff; color: white;" onclick="window.generarBibliotecaSophia()">Sophia: Procesar Ejercicios</button>
-                <div id="console_out" class="console">> Sistema listo para procesar nivel...</div>
+                <h3>Sophia: Procesar Texto del Libro</h3>
+                <textarea id="prompt_sophia" rows="5" placeholder="Pega el texto del libro aquí..."></textarea>
+                <button class="btn-gold" style="background:#007bff; color:white;" onclick="window.generarBibliotecaSophia()">Generar Ejercicios Reales</button>
             </div>
         </div>
 
         <div id="tab-usuarios" class="content">
             <div class="card">
-                <h3><i class="fas fa-user-plus" style="color: var(--gold);"></i> Registrar Alumno</h3>
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-                    <div><label>Nombre Completo</label><input type="text" id="user_name" placeholder="Ej. Sergio"></div>
-                    <div>
-                        <label>Nivel DELF</label>
-                        <select id="user_level">
-                            <option value="A1">A1</option><option value="A2">A2</option>
-                            <option value="B1" selected>B1</option><option value="B2">B2</option><option value="C1">C1</option>
-                        </select>
-                    </div>
-                    <div><label>Fecha de Examen</label><input type="date" id="user_cert_date"></div>
-                    <div><label>ID de Acceso Único</label><input type="text" id="user_id" placeholder="Ej. sergio2026"></div>
-                </div>
-                <button class="btn-gold" onclick="window.registrarAlumno()">Dar de alta Alumno</button>
+                <h3>Registrar Alumno</h3>
+                <input type="text" id="user_name" placeholder="Nombre Alumno">
+                <input type="text" id="user_id" placeholder="ID Acceso">
+                <input type="date" id="user_cert_date">
+                <button class="btn-gold" onclick="window.registrarAlumno()">Guardar Alumno</button>
             </div>
-            <div class="card">
-                <h3>Alumnos Registrados</h3>
-                <div id="lista_alumnos" style="font-size: 0.85rem;"></div>
-            </div>
+            <div class="card"><h3>Lista de Alumnos</h3><div id="lista_alumnos"></div></div>
         </div>
-
-        <div id="tab-clarity" class="content"><h3>NeuroClarity</h3><p>Módulo de gestión empresarial en desarrollo.</p></div>
-        <div id="tab-resico" class="content"><h3>RESICO</h3><p>Módulo de facturación y SAT en desarrollo.</p></div>
     </div>
 
-    <script>
-        // Navegación entre pestañas
-        function tab(id, btn) {
-            document.querySelectorAll('.content').forEach(c => c.classList.remove('active'));
-            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-            document.getElementById('tab-' + id).classList.add('active');
-            btn.classList.add('active');
-            document.getElementById('tab-title').innerText = btn.innerText;
-        }
-    </script>
+    <div id="report-modal">
+        <div class="report-card">
+            <h2 id="rep-nombre">Reporte</h2><hr>
+            <p><strong>Nivel:</strong> <span id="rep-nivel"></span></p>
+            <p><strong>Días para Examen:</strong> <span id="rep-dias"></span></p>
+            <p><strong>Progreso:</strong> <span id="rep-progreso"></span>%</p>
+            <p><strong>Tiempo de Estudio:</strong> <span id="rep-tiempo"></span> minutos</p>
+            <button class="btn-gold" onclick="window.print()">Imprimir Reporte</button>
+            <button onclick="document.getElementById('report-modal').style.display='none'" style="margin-top:10px; width:100%; border:none; background:none; cursor:pointer;">Cerrar</button>
+        </div>
+    </div>
 
+    <script>function tab(id, b){ document.querySelectorAll('.content').forEach(c=>c.classList.remove('active')); document.getElementById('tab-'+id).classList.add('active'); }</script>
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
         import { getFirestore, doc, setDoc, onSnapshot, getDoc, collection } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js";
         import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-storage.js";
 
-        const firebaseConfig = {
-            apiKey: "AIzaSyCgog8tKspHy01ZHE8Dthl9O4W6lw1a_Ec",
-            authDomain: "objectif-reussite-delf.firebaseapp.com",
-            projectId: "objectif-reussite-delf",
-            storageBucket: "objectif-reussite-delf.firebasestorage.app",
-            messagingSenderId: "942279633770",
-            appId: "1:942279633770:web:687ba6d819747eb29c1313"
-        };
+        const firebaseConfig = { apiKey: "AIzaSyCgog8tKspHy01ZHE8Dthl9O4W6lw1a_Ec", authDomain: "objectif-reussite-delf.firebaseapp.com", projectId: "objectif-reussite-delf", storageBucket: "objectif-reussite-delf.firebasestorage.app", messagingSenderId: "942279633770", appId: "1:942279633770:web:687ba6d819747eb29c1313" };
+        const app = initializeApp(firebaseConfig); const db = getFirestore(app); const storage = getStorage(app);
 
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
-        const storage = getStorage(app);
-
-        // Subida de archivos reales
-        window.uploadFiles = async () => {
-            const nivel = document.getElementById('nivel_master').value;
-            const tipo = document.getElementById('file_type').value;
-            const files = document.getElementById('file_input').files;
-            const out = document.getElementById('console_out');
-            if(files.length === 0) return alert("Selecciona archivos primero.");
-            
-            for (let f of files) {
-                out.innerHTML = `> Subiendo ${f.name}...`;
-                const sRef = ref(storage, `niveles/${nivel}/${tipo}/${f.name}`);
-                await uploadBytes(sRef, f);
-                const url = await getDownloadURL(sRef);
-                await setDoc(doc(db, "Materiales", nivel), { [tipo]: url }, { merge: true });
-                out.innerHTML = `> Archivo ${f.name} vinculado con éxito.`;
-            }
-        };
-
-        // Generar Biblioteca (Lo que el alumno verá)
         window.generarBibliotecaSophia = async () => {
             const nivel = document.getElementById('nivel_master').value;
             const texto = document.getElementById('prompt_sophia').value;
-            const out = document.getElementById('console_out');
-            
-            out.innerHTML = `> Sophia analizando contenido para Nivel ${nivel}...`;
             const snap = await getDoc(doc(db, "Materiales", nivel));
-            
             await setDoc(doc(db, "BibliotecaEjercicios", nivel), {
-                CO: { 
-                    titulo: "Comprensión Auditiva", 
-                    audio: snap.data()?.audios || "", 
-                    ejercicios: [
-                        { id: 1, p: "¿De qué trata la conversación principal?" },
-                        { id: 2, p: "¿Qué solución propone el locutor?" }
-                    ]
-                },
-                CE: { 
-                    titulo: "Comprensión Escrita", 
-                    texto: texto || "Texto base del nivel.", 
-                    ejercicios: [
-                        { id: 1, p: "Identifica la idea principal del texto." },
-                        { id: 2, p: "¿Cuál es la postura del autor?" }
-                    ]
-                },
-                PH: { frase: "Bonjour, je m'appelle Sergio y estoy listo para mi examen." }
+                CO: { audio: snap.data()?.audios || "", ejercicios: [{id:1, p:"¿Cuál es la idea principal?"}] },
+                CE: { texto: texto || "Contenido de lectura.", ejercicios: [{id:1, p:"Resume el texto."}] }
             });
-            out.innerHTML = `> ÉXITO: Biblioteca del Nivel ${nivel} generada y lista para los alumnos.`;
+            alert("Biblioteca lista.");
         };
 
-        // Registro de Alumnos
+        window.uploadFiles = async () => {
+            const nivel = document.getElementById('nivel_master').value;
+            const files = document.getElementById('file_input').files;
+            for(let f of files){
+                const sRef = ref(storage, `niveles/${nivel}/audios/${f.name}`);
+                await uploadBytes(sRef, f);
+                const url = await getDownloadURL(sRef);
+                await setDoc(doc(db, "Materiales", nivel), { audios: url }, { merge: true });
+            }
+            alert("Subido.");
+        };
+
         window.registrarAlumno = async () => {
             const id = document.getElementById('user_id').value;
-            const nombre = document.getElementById('user_name').value;
-            const nivel = document.getElementById('user_level').value;
-            const fecha = document.getElementById('user_cert_date').value;
-            if(!id || !nombre) return alert("Faltan datos obligatorios.");
-
-            await setDoc(doc(db, "Usuarios", id), {
-                nombre, nivel, fecha_certificacion: fecha, progreso: 10, id
-            });
-            alert(`Alumno ${nombre} registrado. Comparte el ID: ${id}`);
+            await setDoc(doc(db, "Usuarios", id), { nombre: document.getElementById('user_name').value, nivel: "B1", fecha_certificacion: document.getElementById('user_cert_date').value, progreso: 0, minutos_estudio: 0, id: id });
+            alert("Registrado.");
         };
 
-        // Monitoreo de estado (Pills)
-        window.checkStatus = () => {
-            const nivel = document.getElementById('nivel_master').value;
-            onSnapshot(doc(db, "Materiales", nivel), (s) => {
-                const d = s.data() || {};
-                document.getElementById('pill_ref').className = d.referentiel ? 'status-pill active' : 'status-pill';
-                document.getElementById('pill_book').className = d.libro ? 'status-pill active' : 'status-pill';
-                document.getElementById('pill_audio').className = d.audios ? 'status-pill active' : 'status-pill';
-            });
-        };
-
-        // Lista de alumnos en tiempo real
         onSnapshot(collection(db, "Usuarios"), (snap) => {
-            const list = document.getElementById('lista_alumnos');
-            list.innerHTML = "";
+            const list = document.getElementById('lista_alumnos'); list.innerHTML = "";
             snap.forEach(d => {
                 const u = d.data();
-                list.innerHTML += `<div style="padding:10px; border-bottom:1px solid #eee;">
-                    <strong>${u.nombre}</strong> (Nivel ${u.nivel}) - ID: <code>${u.id}</code> - Examen: ${u.fecha_certificacion}
+                list.innerHTML += `<div class="user-row">
+                    <a class="user-link" href="alumno.html?id=${u.id}&access=admin" target="_blank">${u.nombre}</a>
+                    <button class="btn-report" onclick="window.verReporte('${u.id}')">REPORTE PAPÁS</button>
                 </div>`;
             });
         });
 
-        window.checkStatus();
+        window.verReporte = async (id) => {
+            const snap = await getDoc(doc(db, "Usuarios", id));
+            const u = snap.data();
+            document.getElementById('rep-nombre').innerText = u.nombre;
+            document.getElementById('rep-nivel').innerText = u.nivel;
+            document.getElementById('rep-progreso').innerText = u.progreso;
+            document.getElementById('rep-tiempo').innerText = u.minutos_estudio;
+            document.getElementById('report-modal').style.display = 'flex';
+        };
     </script>
 </body>
 </html>
