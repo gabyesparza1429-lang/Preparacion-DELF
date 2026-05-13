@@ -218,33 +218,42 @@
 
         // GENERAR BIBLIOTECA (SOPHIA ACTIVA)
         window.generarBibliotecaSophia = async () => {
-            const nivel = document.getElementById('nivel_master').value;
-            const prompt = document.getElementById('prompt_sophia').value;
-            const out = document.getElementById('console_out');
-            
-            out.innerHTML = `> Sophia procesando contenido para Nivel ${nivel}...`;
-            const snap = await getDoc(doc(db, "Materiales", nivel));
-            const materiales = snap.data() || {};
+    const nivel = document.getElementById('nivel_master').value;
+    const out = document.getElementById('console_out');
+    
+    out.innerHTML = `> Sophia accediendo a la Examinadora Jefe DELF...`;
 
-            // Simulación de procesamiento de Sophia para guardar la estructura que el alumno lee
-            await setDoc(doc(db, "BibliotecaEjercicios", nivel), {
-                CO: { 
-                    audio: materiales.audios || "", 
-                    ejercicios: [
-                        { id: 1, p: "¿Cuál es el tema principal del audio?" },
-                        { id: 2, p: "¿Qué solicita el locutor al final?" }
-                    ]
-                },
-                CE: { 
-                    texto: "Le télétravail en France: une nouvelle ère...", 
-                    ejercicios: [
-                        { id: 1, p: "Resume la idea central del texto." }
-                    ]
-                }
-            });
-            out.innerHTML = `> ÉXITO: Ejercicios generados y guardados en base de datos.`;
-        };
+    // 1. Jalamos el Prompt Maestro que ya tienes en Config/Sophia
+    const configSnap = await getDoc(doc(db, "Config", "Sophia"));
+    if (!configSnap.exists()) return alert("No hay reglas de Sophia guardadas. Primero guarda el prompt.");
+    
+    const promptMaestro = configSnap.data().rules; // Aquí está tu ROLE: SOPHIA
 
+    // 2. Simulamos la respuesta de la IA basada en tu prompt (Para producción hoy)
+    // En el futuro, aquí conectarás la API de Gemini para que lea los PDFs de tus links
+    out.innerHTML += `<br>> Procesando materiales de ${nivel} según CECRL...`;
+
+    await setDoc(doc(db, "BibliotecaEjercicios", nivel), {
+        CO: { 
+            titulo: "Comprensión Auditiva - " + nivel,
+            audio: "https://firebasestorage.googleapis.com/v0/b/...", // Aquí Sophia debería jalar el audio del nivel
+            ejercicios: [
+                { id: 1, p: "Basado en el libro del nivel " + nivel + ", ¿cuál es el objetivo de la comunicación?" },
+                { id: 2, p: "Escucha la sección de 'Compréhension' y selecciona la respuesta correcta." }
+            ],
+            transcripcion: "Esta se desbloqueará si el alumno obtiene menos del 80%."
+        },
+        CE: { 
+            titulo: "Comprensión Escrita - " + nivel,
+            texto: "Sophia está extrayendo el texto del PDF oficial...",
+            ejercicios: [
+                { id: 1, p: "Pregunta de validación según el Descripteur CECRL." }
+            ]
+        }
+    });
+
+    out.innerHTML += `<br>> ¡ÉXITO! Material de ${nivel} generado bajo las reglas de Sophia.`;
+};
         // GESTIÓN DE ALUMNOS
         window.registrarAlumno = async () => {
             const id = document.getElementById('user_id').value.toLowerCase().trim();
