@@ -7,36 +7,40 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        :root { --oxford: #002147; --gold: #C5A059; --cream: #F8F9FA; --white: #FFFFFF; --green: #28A745; }
+        :root { --oxford: #002147; --gold: #C5A059; --cream: #F8F9FA; --white: #FFFFFF; --green: #28A745; --error: #D32F2F; }
         body { font-family: 'Montserrat', sans-serif; background-color: var(--cream); margin: 0; display: flex; height: 100vh; overflow: hidden; }
         
         /* SIDEBAR */
-        .sidebar { width: 280px; background: var(--oxford); color: white; padding: 30px 20px; display: flex; flex-direction: column; }
+        .sidebar { width: 280px; background: var(--oxford); color: white; padding: 30px 20px; display: flex; flex-direction: column; flex-shrink: 0; }
         .sidebar h2 { color: var(--gold); font-size: 1.1rem; border-bottom: 1px solid var(--gold); padding-bottom: 20px; text-align: center; }
-        .skill-btn { background: transparent; border: 1px solid rgba(197, 160, 89, 0.2); color: white; padding: 15px; margin-bottom: 10px; border-radius: 10px; cursor: pointer; text-align: left; display: flex; align-items: center; transition: 0.3s; }
+        .skill-btn { background: transparent; border: 1px solid rgba(197, 160, 89, 0.2); color: white; padding: 15px; margin-bottom: 10px; border-radius: 10px; cursor: pointer; text-align: left; display: flex; align-items: center; transition: 0.3s; width: 100%; }
         .skill-btn.active, .skill-btn:hover { background: var(--gold); color: var(--oxford); font-weight: 700; }
+        .skill-btn i { margin-right: 15px; width: 20px; text-align: center; }
 
         /* DASHBOARD HEADER */
         .header-dashboard { background: var(--white); padding: 20px 40px; border-bottom: 1px solid #ddd; display: grid; grid-template-columns: 1fr 2fr 1fr; align-items: center; gap: 30px; }
-        
         .student-info h3 { margin: 0; color: var(--oxford); font-size: 1.2rem; }
         .student-info span { color: var(--gold); font-weight: 700; font-size: 0.9rem; }
 
-        /* BARRA DE PROGRESO */
-        .progress-container { background: #eee; border-radius: 20px; height: 15px; position: relative; overflow: hidden; }
-        .progress-bar { background: var(--green); height: 100%; width: 0%; transition: 1s ease-in-out; }
-        .progress-text { font-size: 0.75rem; font-weight: 700; color: var(--oxford); display: block; margin-bottom: 5px; }
+        .progress-container { background: #eee; border-radius: 20px; height: 15px; overflow: hidden; }
+        .progress-bar { background: var(--green); height: 100%; width: 0%; transition: 1s; }
+        .progress-text { font-size: 0.75rem; font-weight: 700; color: var(--oxford); margin-bottom: 5px; display: block; }
 
-        /* FECHA DE CERTIFICACIÓN */
         .cert-date { background: #fffdf0; border: 1px solid var(--gold); padding: 10px; border-radius: 10px; text-align: center; }
         .cert-date small { font-size: 0.6rem; text-transform: uppercase; color: #888; display: block; }
-        .cert-date strong { color: var(--oxford); font-size: 0.9rem; }
 
         /* WORKSPACE */
         .workspace { flex: 1; padding: 40px; overflow-y: auto; display: flex; flex-direction: column; align-items: center; }
         .interaction-card { background: white; width: 100%; max-width: 900px; padding: 40px; border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.03); }
 
-        .btn-admin { position: absolute; bottom: 20px; right: 20px; background: var(--oxford); color: white; padding: 10px; border-radius: 5px; text-decoration: none; font-size: 0.7rem; font-weight: bold; }
+        /* Estilos de ejercicio */
+        .word { cursor: pointer; padding: 2px 4px; border-radius: 4px; transition: 0.2s; }
+        .word:hover { background: rgba(197, 160, 89, 0.2); }
+        .word.wrong { color: var(--error); border-bottom: 2px solid var(--error); font-weight: bold; }
+        
+        .btn-action { padding: 12px 25px; border-radius: 5px; border: none; font-weight: bold; cursor: pointer; margin: 10px; }
+        .btn-audio { background: var(--oxford); color: white; }
+        .btn-mic { background: var(--gold); color: var(--oxford); }
     </style>
 </head>
 <body>
@@ -53,32 +57,29 @@
     <main style="flex:1; display:flex; flex-direction:column;">
         <header class="header-dashboard">
             <div class="student-info">
-                <h3>Bonjour, <span id="st-name">Chargement...</span></h3>
-                <span id="st-level">Niveau B1</span>
+                <h3>Bonjour, <span id="st-name">Étudiant</span></h3>
+                <span id="st-level">...</span>
             </div>
 
             <div class="progress-section">
                 <span class="progress-text">AVANCE DE NIVEL: <span id="prog-val">0%</span></span>
-                <div class="progress-container">
-                    <div id="prog-bar" class="progress-bar"></div>
-                </div>
+                <div class="progress-container"><div id="prog-bar" class="progress-bar"></div></div>
             </div>
 
             <div class="cert-date">
                 <small>Examen de Certification</small>
-                <strong id="st-cert-date">-- / -- / ----</strong>
+                <strong id="st-cert-date">--/--/--</strong>
                 <div id="days-left" style="font-size: 0.7rem; color: var(--green); font-weight: bold; margin-top: 5px;"></div>
             </div>
         </header>
 
         <section class="workspace">
             <div class="interaction-card">
-                <h2 id="skill-title">Bienvenue dans ton parcours</h2>
-                <div id="content-area">Selecciona una habilidad para comenzar tu entrenamiento.</div>
+                <h2 id="skill-title">Cargando material...</h2>
+                <div id="content-area">Selecciona una habilidad para comenzar.</div>
+                <div id="feedback-msg" style="margin-top:20px; text-align:center;"></div>
             </div>
         </section>
-
-        <a href="admin.html" id="admin-back" class="btn-admin" style="display:none;">REGRESAR A PANEL ADMIN</a>
     </main>
 
     <script type="module">
@@ -97,37 +98,109 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
+        let currentStudentLevel = "";
+
         async function loadProfile() {
             const params = new URLSearchParams(window.location.search);
-            const stId = params.get('id') || 'sergio'; // Sergio por defecto para pruebas
-            if(params.get('access') === 'admin') document.getElementById('admin-back').style.display = 'block';
+            const stId = params.get('id') || 'sergio'; // ID por defecto si no hay uno en la URL
 
-            // Escuchar cambios en tiempo real del perfil del alumno
             onSnapshot(doc(db, "Usuarios", stId), (snap) => {
                 if (snap.exists()) {
                     const data = snap.data();
+                    currentStudentLevel = data.nivel;
                     document.getElementById('st-name').innerText = data.nombre;
                     document.getElementById('st-level').innerText = "Niveau " + data.nivel;
                     document.getElementById('st-cert-date').innerText = data.fecha_certificacion;
                     
-                    // Calcular días restantes
-                    const hoy = new Date();
-                    const fechaCert = new Date(data.fecha_certificacion);
-                    const diff = Math.ceil((fechaCert - hoy) / (1000 * 60 * 60 * 24));
-                    document.getElementById('days-left').innerText = `¡Faltan ${diff} días!`;
+                    // Barra de progreso
+                    const p = data.progreso || 0;
+                    document.getElementById('prog-val').innerText = p + "%";
+                    document.getElementById('prog-bar').style.width = p + "%";
 
-                    // Actualizar barra de progreso
-                    const progreso = data.progreso || 0;
-                    document.getElementById('prog-val').innerText = progreso + "%";
-                    document.getElementById('prog-bar').style.width = progreso + "%";
+                    // Días restantes
+                    if(data.fecha_certificacion) {
+                        const diff = Math.ceil((new Date(data.fecha_certificacion) - new Date()) / (1000 * 60 * 60 * 24));
+                        document.getElementById('days-left').innerText = diff > 0 ? `¡Faltan ${diff} días!` : "Día del examen";
+                    }
+                    
+                    // Cargar ejercicio inicial
+                    window.loadEx('LECTURE');
+                } else {
+                    alert("ID de alumna no encontrado.");
                 }
             });
         }
 
         window.loadEx = async (skill) => {
-            // Aquí Sophia jala el contenido según el nivel del alumno cargado arriba
-            document.getElementById('skill-title').innerText = "Entraînement : " + skill;
-            document.getElementById('content-area').innerHTML = "<i class='fas fa-spinner fa-spin'></i> Sophia prepara el material...";
+            const area = document.getElementById('content-area');
+            const title = document.getElementById('skill-title');
+            title.innerText = "Sophia está preparando tu material...";
+            area.innerHTML = "<i class='fas fa-spinner fa-spin'></i> Consultando base de datos...";
+
+            // Buscamos los archivos reales del nivel de la alumna
+            const snapMaterial = await getDoc(doc(db, "Materiales", currentStudentLevel));
+            
+            if (!snapMaterial.exists()) {
+                area.innerHTML = "Aún no se ha cargado material para el nivel " + currentStudentLevel;
+                return;
+            }
+
+            const material = snapMaterial.data();
+
+            if (skill === 'CO') {
+                title.innerText = "Comprensión Oral - " + currentStudentLevel;
+                area.innerHTML = `
+                    <p>Escucha el audio y completa los ejercicios interactivos:</p>
+                    <audio controls style="width:100%; margin:20px 0;">
+                        <source src="${material.audios}" type="audio/mpeg">
+                    </audio>
+                    <div style="background:#f4f7f9; padding:20px; border-radius:10px;">
+                        <p><strong>Activité 1:</strong> Sophia está extrayendo las preguntas del libro...</p>
+                    </div>
+                `;
+            } 
+            else if (skill === 'LECTURE') {
+                title.innerText = "Phonétique : Écoute et Répète";
+                area.innerHTML = `
+                    <div id="lecture-text" style="font-size:1.8rem; line-height:2; margin-bottom:30px;">
+                        Bonjour, je m'appelle <span class="word">${document.getElementById('st-name').innerText}</span> y estoy lista para mi examen.
+                    </div>
+                    <div style="text-align:center;">
+                        <button class="btn-action btn-audio" onclick="window.sophiaSpeak()"><i class="fas fa-volume-up"></i> SOPHIA LEE</button>
+                        <button class="btn-action btn-mic" onclick="window.startVoiceCheck()"><i class="fas fa-microphone"></i> REPETIR</button>
+                    </div>
+                `;
+            }
+            else {
+                title.innerText = "Entraînement : " + skill;
+                area.innerHTML = `Explorando el libro: <a href="${material.libro}" target="_blank">Abrir material de apoyo</a>`;
+            }
+        };
+
+        // --- FUNCIONES DE VOZ ---
+        window.sophiaSpeak = () => {
+            const text = document.getElementById('lecture-text').innerText;
+            const ut = new SpeechSynthesisUtterance(text);
+            ut.lang = 'fr-FR';
+            window.speechSynthesis.speak(ut);
+        };
+
+        window.startVoiceCheck = () => {
+            const feedback = document.getElementById('feedback-msg');
+            feedback.innerHTML = "Sophia te escucha...";
+            const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+            recognition.lang = 'fr-FR';
+            recognition.start();
+
+            recognition.onresult = (event) => {
+                const transcript = event.results[0][0].transcript.toLowerCase();
+                const original = document.getElementById('lecture-text').innerText.toLowerCase();
+                if(transcript.includes(original.split(",")[0])) { // Simple check
+                    feedback.innerHTML = "<span style='color:green;'>¡Excelente! Sophia está orgullosa de tu pronunciación.</span>";
+                } else {
+                    feedback.innerHTML = "<span style='color:red;'>Casi lo logras. Intenta marcar más las palabras en rojo.</span>";
+                }
+            };
         };
 
         loadProfile();
