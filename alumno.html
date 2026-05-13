@@ -2,36 +2,42 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Mon DELF | Élève</title>
+    <title>Mon Espace DELF | Réussite</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        :root { --oxford: #002147; --gold: #C5A059; --bg: #f4f7f9; }
-        body { font-family: 'Montserrat', sans-serif; margin: 0; display: flex; height: 100vh; background: var(--bg); }
-        .sidebar { width: 260px; background: var(--oxford); color: white; padding: 20px; }
-        .header { background: white; padding: 20px 40px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #ddd; flex: 1; }
-        .skill-btn { width: 100%; padding: 15px; margin-bottom: 10px; border-radius: 8px; border: 1px solid #C5A059; background: transparent; color: white; cursor: pointer; text-align: left; }
-        .skill-btn:hover { background: var(--gold); color: var(--oxford); }
-        /* SELECTOR OCULTO PARA ADMIN */
-        #admin-selector { display: none; background: #fffbe6; border: 1px solid var(--gold); padding: 5px; border-radius: 5px; font-weight: bold; }
+        :root { --oxford: #002147; --gold: #C5A059; --cream: #F8F9FA; --white: #FFFFFF; --green: #28A745; }
+        body { font-family: 'Montserrat', sans-serif; margin: 0; display: flex; height: 100vh; background: var(--cream); overflow: hidden; }
+        .sidebar { width: 280px; background: var(--oxford); color: white; padding: 30px 20px; flex-shrink: 0; }
+        .skill-btn { width: 100%; padding: 15px; margin-bottom: 10px; border-radius: 10px; border: 1px solid var(--gold); background: transparent; color: white; cursor: pointer; text-align: left; }
+        .skill-btn.active, .skill-btn:hover { background: var(--gold); color: var(--oxford); font-weight: bold; }
+        .header { background: white; padding: 20px 40px; border-bottom: 1px solid #ddd; display: flex; justify-content: space-between; align-items: center; width: 100%; }
+        .workspace { flex: 1; padding: 40px; display: flex; justify-content: center; overflow-y: auto; }
+        .card { background: white; padding: 40px; border-radius: 20px; width: 100%; max-width: 800px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+        #admin-selector { display: none; background: #fffbe6; padding: 10px; border-radius: 5px; font-family: 'Montserrat'; font-weight: bold; }
     </style>
 </head>
 <body>
-    <nav class="sidebar">
-        <h2>RÉUSSITE</h2>
-        <button class="skill-btn" onclick="window.loadSkill('CO')">Comprensión Oral</button>
-        <button class="skill-btn" onclick="window.loadSkill('CE')">Comprensión Escrita</button>
+    <aside class="sidebar">
+        <h2 style="color:var(--gold); text-align:center;">RÉUSSITE</h2>
+        <button class="skill-btn" onclick="window.loadSkill('CO')"><i class="fas fa-headset"></i> CO</button>
+        <button class="skill-btn" onclick="window.loadSkill('CE')"><i class="fas fa-book-open"></i> CE</button>
+        <button class="skill-btn" onclick="window.loadSkill('PE')"><i class="fas fa-pen-nib"></i> PE</button>
+        <button class="skill-btn" onclick="window.loadSkill('PO')"><i class="fas fa-microphone"></i> PO</button>
+        <button class="skill-btn" onclick="window.loadSkill('PH')"><i class="fas fa-language"></i> Phonétique</button>
     </aside>
 
     <main style="flex:1; display:flex; flex-direction:column;">
-        <div class="header">
-            <div>Bonjour, <span id="st-name" style="font-weight:bold;">...</span></div>
+        <header class="header">
+            <div>Bonjour, <span id="st-name" style="font-weight:bold; color:var(--oxford);">Étudiant</span></div>
             <select id="admin-selector" onchange="window.changeLevelAdmin(this.value)">
                 <option value="A1">Probar A1</option><option value="A2">Probar A2</option>
                 <option value="B1">Probar B1</option><option value="B2">Probar B2</option><option value="C1">Probar C1</option>
             </select>
-        </div>
-        <div id="content" style="padding:40px;">Selecciona una habilidad.</div>
+        </header>
+        <section class="workspace">
+            <div class="card" id="content">Selecciona una habilidad para comenzar.</div>
+        </section>
     </main>
 
     <script type="module">
@@ -43,35 +49,30 @@
         let currentLevel = "";
         const params = new URLSearchParams(window.location.search);
 
-        // LÓGICA DE LA LLAVE MAESTRA
-        if(params.get('access') === 'admin') {
-            document.getElementById('admin-selector').style.display = 'block';
-            currentLevel = "B1"; // Nivel inicial de prueba
-            document.getElementById('st-name').innerText = "Modo Admin";
-        } else {
-            // Carga normal del alumno
-            const stId = params.get('id');
-            const snap = await getDoc(doc(db, "Usuarios", stId));
-            if(snap.exists()) {
-                currentLevel = snap.data().nivel;
-                document.getElementById('st-name').innerText = snap.data().nombre;
+        async function init() {
+            if(params.get('access') === 'admin') {
+                document.getElementById('admin-selector').style.display = 'block';
+                currentLevel = "B1";
+                document.getElementById('st-name').innerText = "Modo Admin";
+            } else {
+                const snap = await getDoc(doc(db, "Usuarios", params.get('id')));
+                if(snap.exists()) {
+                    currentLevel = snap.data().nivel;
+                    document.getElementById('st-name').innerText = snap.data().nombre;
+                }
             }
         }
 
-        window.changeLevelAdmin = (level) => {
-            currentLevel = level;
-            alert("Cambiado a vista de nivel: " + level);
-            document.getElementById('content').innerHTML = "Nivel " + level + " cargado. Selecciona una habilidad.";
-        };
+        window.changeLevelAdmin = (l) => { currentLevel = l; alert("Nivel de prueba: " + l); };
 
         window.loadSkill = async (skill) => {
             const snap = await getDoc(doc(db, "BibliotecaEjercicios", currentLevel));
             const area = document.getElementById('content');
-            if(!snap.exists()) { area.innerHTML = "Sophia no ha generado este nivel aún."; return; }
-            
-            const data = snap.data()[skill];
-            area.innerHTML = `<h3>${skill} - ${currentLevel}</h3><p>${JSON.stringify(data)}</p>`;
+            if(!snap.exists()) { area.innerHTML = "Sophia no ha generado este nivel."; return; }
+            area.innerHTML = `<h3>${skill} - ${currentLevel}</h3><pre>${JSON.stringify(snap.data()[skill] || 'Sin contenido', null, 2)}</pre>`;
         };
+
+        init();
     </script>
 </body>
 </html>
