@@ -6,76 +6,55 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        :root { --oxford: #002147; --gold: #C5A059; --cream: #F8F9FA; --green: #28A745; --red: #dc3545; }
+        :root { --oxford: #002147; --gold: #C5A059; --cream: #F8F9FA; --green: #28A745; }
         body { font-family: 'Montserrat', sans-serif; margin: 0; display: flex; height: 100vh; background: var(--cream); overflow: hidden; }
         .sidebar { width: 280px; background: var(--oxford); color: white; padding: 30px 20px; flex-shrink: 0; }
-        .logo-area { text-align: center; margin-bottom: 40px; border-bottom: 1px solid var(--gold); padding-bottom: 20px; }
         .skill-btn { width: 100%; padding: 15px; margin-bottom: 10px; border-radius: 10px; border: 1px solid rgba(197, 160, 89, 0.3); background: transparent; color: white; cursor: pointer; text-align: left; display: flex; align-items: center; gap: 12px; }
-        .skill-btn:hover, .skill-btn.active { background: var(--gold); color: var(--oxford); font-weight: 700; }
-        .header { background: white; padding: 15px 40px; border-bottom: 1px solid #ddd; display: flex; justify-content: space-between; align-items: center; width: 100%; box-sizing: border-box; }
-        .progress-bar { height: 8px; background: #eee; border-radius: 10px; width: 200px; overflow: hidden; margin-top: 5px; }
-        .progress-fill { height: 100%; background: var(--green); width: 0%; transition: 1s; }
+        .skill-btn.active { background: var(--gold); color: var(--oxford); font-weight: 700; }
         .workspace { flex: 1; padding: 40px; overflow-y: auto; display: grid; grid-template-columns: 2fr 1fr; gap: 30px; }
         .card { background: white; padding: 35px; border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.03); }
-        .sophia-tips { background: var(--oxford); color: white; padding: 25px; border-radius: 20px; height: fit-content; }
+        .unit-box { border-left: 4px solid var(--gold); padding: 15px; margin-bottom: 20px; background: #fff; border-radius: 0 10px 10px 0; }
         .check-item { display: flex; justify-content: space-between; padding: 10px; border-bottom: 1px solid #eee; }
     </style>
 </head>
 <body>
     <aside class="sidebar">
-        <div class="logo-area"><i class="fas fa-graduation-cap" style="font-size:2.5rem; color:var(--gold);"></i><div>RÉUSSITE DELF</div></div>
-        <button class="skill-btn" onclick="window.loadSkill('CO', this)"><i class="fas fa-headset"></i> Ecouter (CO)</button>
-        <button class="skill-btn" onclick="window.loadSkill('CE', this)"><i class="fas fa-book-open"></i> Lire (CE)</button>
-        <button class="skill-btn" onclick="window.loadSkill('PE', this)"><i class="fas fa-pen-nib"></i> Ecrire (PE)</button>
-        <button class="skill-btn" onclick="window.loadSkill('PO', this)"><i class="fas fa-microphone"></i> Parler (PO)</button>
-        <button class="skill-btn" onclick="window.loadSkill('CARNET', this)"><i class="fas fa-list-check"></i> Mon Carnet</button>
+        <h2 style="color:var(--gold); font-size:1rem; text-align:center;">RÉUSSITE DELF</h2>
+        <button class="skill-btn active" onclick="loadSkill('PARCOURS', this)"><i class="fas fa-route"></i> Mon Parcours</button>
+        <button class="skill-btn" onclick="loadSkill('CARNET', this)"><i class="fas fa-list-check"></i> Mon Carnet</button>
     </aside>
 
     <main style="flex:1; display:flex; flex-direction:column;">
-        <header class="header">
-            <div>
-                <strong>Bonjour, <span id="st-name" style="color:var(--gold);">...</span></strong>
-                <div class="progress-bar"><div id="st-progress" class="progress-fill"></div></div>
-            </div>
-            <div style="display:flex; gap:20px; align-items:center;">
-                <div style="text-align:center;"><small>NIVEAU</small><div id="st-level" style="font-weight:700;">--</div></div>
-                <div style="text-align:center;"><small>EXAMEN</small><div id="st-date" style="font-weight:700;">--/--/--</div></div>
-                <div style="text-align:center;"><div id="st-days" style="font-size:1.5rem; font-weight:700; color:var(--green);">0</div><small>JOURS</small></div>
-            </div>
+        <header style="background:white; padding:20px 40px; border-bottom:1px solid #ddd; display:flex; justify-content:space-between;">
+            <div><strong id="st-name">Chargement...</strong><div id="st-level" style="color:var(--gold); font-weight:700;">--</div></div>
         </header>
         <section class="workspace">
-            <div class="card" id="main-content">Sélectionnez una compétence pour commencer.</div>
-            <aside class="sophia-tips">
-                <h4 style="color:var(--gold);"><i class="fas fa-robot"></i> Sophia Tips</h4>
-                <div id="tips-area" style="font-size:0.8rem;">Sophia analiza tu avance real.</div>
-            </aside>
+            <div id="main-content" class="card">Selecciona una opción del menú.</div>
+            <div class="card" style="background:var(--oxford); color:white;">
+                <h4 style="color:var(--gold);">Sophia Tips</h4>
+                <p style="font-size:0.8rem;">Sophia ha diseñado este itinerario basado en el CECRL oficial.</p>
+            </div>
         </section>
     </main>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
-        import { getFirestore, doc, getDoc, updateDoc, increment } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js";
+        import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js";
+
         const firebaseConfig = { apiKey: "AIzaSyCgog8tKspHy01ZHE8Dthl9O4W6lw1a_Ec", authDomain: "objectif-reussite-delf.firebaseapp.com", projectId: "objectif-reussite-delf", storageBucket: "objectif-reussite-delf.firebasestorage.app", messagingSenderId: "942279633770", appId: "1:942279633770:web:687ba6d819747eb29c1313" };
         const app = initializeApp(firebaseConfig); const db = getFirestore(app);
 
-        let studentId = new URLSearchParams(window.location.search).get('id');
-        let currentLevel = "B1";
+        const studentId = new URLSearchParams(window.location.search).get('id');
+        let currentLevel = "";
 
         async function init() {
-            if(studentId) {
-                const snap = await getDoc(doc(db, "Usuarios", studentId.toLowerCase().trim()));
-                if(snap.exists()){
-                    const d = snap.data(); currentLevel = d.nivel;
-                    document.getElementById('st-name').innerText = d.nombre;
-                    document.getElementById('st-level').innerText = d.nivel;
-                    document.getElementById('st-date').innerText = d.fecha_certificacion;
-                    document.getElementById('st-progress').style.width = d.progreso + "%";
-                    const diff = Math.ceil((new Date(d.fecha_certificacion) - new Date()) / (1000 * 60 * 60 * 24));
-                    document.getElementById('st-days').innerText = diff > 0 ? diff : 0;
-                    
-                    // Cronómetro real de minutos de estudio
-                    setInterval(async () => { await updateDoc(doc(db, "Usuarios", studentId.toLowerCase()), { minutos_estudio: increment(1) }); }, 60000);
-                }
+            if(!studentId) return;
+            const snap = await getDoc(doc(db, "Usuarios", studentId.toLowerCase().trim()));
+            if(snap.exists()){
+                const d = snap.data();
+                currentLevel = d.nivel; // Aquí obtiene "B1"
+                document.getElementById('st-name').innerText = d.nombre;
+                document.getElementById('st-level').innerText = "Niveau " + d.nivel;
             }
         }
 
@@ -83,18 +62,33 @@
             document.querySelectorAll('.skill-btn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
             const area = document.getElementById('main-content');
+            
+            // Buscamos lo que Sophia guardó para el nivel del alumno
             const snap = await getDoc(doc(db, "BibliotecaEjercicios", currentLevel));
             
-            if(skill === 'CARNET') {
-                area.innerHTML = `<h3>Mon Carnet de Bord (CECRL)</h3><p>Validado por Sophia en tiempo real.</p>`;
-                if(snap.exists() && snap.data().Checklist) {
-                    snap.data().Checklist.forEach(i => {
-                        let icon = i.status === 'check' ? '<i class="fas fa-check" style="color:var(--green)"></i>' : (i.status === 'x' ? '<i class="fas fa-times" style="color:var(--red)"></i>' : '<i class="far fa-circle"></i>');
-                        area.innerHTML += `<div class="check-item"><span>${i.item}</span> ${icon}</div>`;
-                    });
-                }
-            } else {
-                area.innerHTML = `<h3>${skill}</h3><p>Contenido oficial para el nivel ${currentLevel}...</p>`;
+            if(!snap.exists()) {
+                area.innerHTML = "Sophia todavía no ha generado material para el nivel " + currentLevel;
+                return;
+            }
+
+            const data = snap.data();
+
+            if(skill === 'PARCOURS') {
+                area.innerHTML = `<h3>Itinéraire de Certification ${currentLevel}</h3>`;
+                data.itinerario.forEach(u => {
+                    area.innerHTML += `
+                        <div class="unit-box">
+                            <strong>Unité ${u.unite || u.unidad}:</strong> ${u.tema || 'Préparation'}
+                            <ul style="font-size:0.85rem;">
+                                ${u.ejercicios ? u.ejercicios.map(e => `<li>${e}</li>`).join('') : '<li>Contenu en cours...</li>'}
+                            </ul>
+                        </div>`;
+                });
+            } else if(skill === 'CARNET') {
+                area.innerHTML = `<h3>Mon Carnet de Bord</h3>`;
+                data.Checklist.forEach(i => {
+                    area.innerHTML += `<div class="check-item"><span>${i.item}</span> ⚪</div>`;
+                });
             }
         };
         init();
