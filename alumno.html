@@ -11,10 +11,12 @@
         .sidebar { width: 280px; background: var(--oxford); color: white; padding: 30px 20px; flex-shrink: 0; }
         .skill-btn { width: 100%; padding: 15px; margin-bottom: 10px; border-radius: 10px; border: 1px solid rgba(197, 160, 89, 0.3); background: transparent; color: white; cursor: pointer; text-align: left; display: flex; align-items: center; gap: 12px; }
         .skill-btn.active { background: var(--gold); color: var(--oxford); font-weight: 700; }
+        .header { background: white; padding: 20px 40px; border-bottom: 1px solid #ddd; display: flex; justify-content: space-between; align-items: center; }
         .workspace { flex: 1; padding: 40px; overflow-y: auto; display: grid; grid-template-columns: 2fr 1fr; gap: 30px; }
         .card { background: white; padding: 35px; border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.03); }
-        .unit-box { border-left: 4px solid var(--gold); padding: 15px; margin-bottom: 20px; background: #fff; border-radius: 0 10px 10px 0; }
-        .check-item { display: flex; justify-content: space-between; padding: 10px; border-bottom: 1px solid #eee; }
+        .progress-bar { height: 8px; background: #eee; border-radius: 10px; width: 200px; overflow: hidden; margin-top: 5px; }
+        .progress-fill { height: 100%; background: var(--green); width: 0%; transition: 1s; }
+        .unit-box { border-left: 4px solid var(--gold); padding: 15px; margin-bottom: 25px; background: #fff; border-radius: 0 10px 10px 0; }
     </style>
 </head>
 <body>
@@ -24,15 +26,23 @@
         <button class="skill-btn" onclick="loadSkill('CARNET', this)"><i class="fas fa-list-check"></i> Mon Carnet</button>
     </aside>
 
-    <main style="flex:1; display:flex; flex-direction:column;">
-        <header style="background:white; padding:20px 40px; border-bottom:1px solid #ddd; display:flex; justify-content:space-between;">
-            <div><strong id="st-name">Chargement...</strong><div id="st-level" style="color:var(--gold); font-weight:700;">--</div></div>
+    <main style="flex:1; display:flex; flex-direction:column; overflow:hidden;">
+        <header class="header">
+            <div>
+                <strong>Bonjour, <span id="st-name" style="color:var(--gold);">...</span></strong>
+                <div class="progress-bar"><div id="st-progress" class="progress-fill"></div></div>
+            </div>
+            <div style="display:flex; gap:30px; align-items:center;">
+                <div style="text-align:center;"><small>NIVEAU</small><div id="st-level" style="font-weight:700;">--</div></div>
+                <div style="text-align:center;"><div id="st-days" style="font-size:1.5rem; font-weight:700; color:var(--green);">0</div><small>JOURS RESTANTS</small></div>
+            </div>
         </header>
+
         <section class="workspace">
-            <div id="main-content" class="card">Selecciona una opción del menú.</div>
+            <div id="main-content" class="card">Chargement...</div>
             <div class="card" style="background:var(--oxford); color:white;">
                 <h4 style="color:var(--gold);">Sophia Tips</h4>
-                <p style="font-size:0.8rem;">Sophia ha diseñado este itinerario basado en el CECRL oficial.</p>
+                <p id="tips-area" style="font-size:0.85rem;">Bienvenue dans votre préparation personnalisée.</p>
             </div>
         </section>
     </main>
@@ -52,9 +62,16 @@
             const snap = await getDoc(doc(db, "Usuarios", studentId.toLowerCase().trim()));
             if(snap.exists()){
                 const d = snap.data();
-                currentLevel = d.nivel; // Aquí obtiene "B1"
+                currentLevel = d.nivel;
                 document.getElementById('st-name').innerText = d.nombre;
-                document.getElementById('st-level').innerText = "Niveau " + d.nivel;
+                document.getElementById('st-level').innerText = d.nivel;
+                document.getElementById('st-progress').style.width = d.progreso + "%";
+                
+                if(d.fecha_certificacion) {
+                    const diff = Math.ceil((new Date(d.fecha_certificacion) - new Date()) / (1000 * 60 * 60 * 24));
+                    document.getElementById('st-days').innerText = diff > 0 ? diff : 0;
+                }
+                loadSkill('PARCOURS', document.querySelector('.skill-btn.active'));
             }
         }
 
@@ -63,31 +80,22 @@
             btn.classList.add('active');
             const area = document.getElementById('main-content');
             
-            // Buscamos lo que Sophia guardó para el nivel del alumno
             const snap = await getDoc(doc(db, "BibliotecaEjercicios", currentLevel));
-            
             if(!snap.exists()) {
-                area.innerHTML = "Sophia todavía no ha generado material para el nivel " + currentLevel;
+                area.innerHTML = "Material en preparación para el nivel " + currentLevel;
                 return;
             }
 
             const data = snap.data();
-
             if(skill === 'PARCOURS') {
-                area.innerHTML = `<h3>Itinéraire de Certification ${currentLevel}</h3>`;
-                data.itinerario.forEach(u => {
-                    area.innerHTML += `
-                        <div class="unit-box">
-                            <strong>Unité ${u.unite || u.unidad}:</strong> ${u.tema || 'Préparation'}
-                            <ul style="font-size:0.85rem;">
-                                ${u.ejercicios ? u.ejercicios.map(e => `<li>${e}</li>`).join('') : '<li>Contenu en cours...</li>'}
-                            </ul>
-                        </div>`;
+                area.innerHTML = `<h3>Votre Itinéraire ${currentLevel}</h3>`;
+                (data.itinerario || []).forEach(u => {
+                    area.innerHTML += `<div class="unit-box"><strong>Unité ${u.unite || u.unidad}:</strong> ${u.tema}<ul>${u.ejercicios.map(e=>`<li>${e}</li>`).join('')}</ul></div>`;
                 });
             } else if(skill === 'CARNET') {
-                area.innerHTML = `<h3>Mon Carnet de Bord</h3>`;
-                data.Checklist.forEach(i => {
-                    area.innerHTML += `<div class="check-item"><span>${i.item}</span> ⚪</div>`;
+                area.innerHTML = `<h3>Carnet de Bord</h3>`;
+                (data.Checklist || []).forEach(i => {
+                    area.innerHTML += `<div style="padding:10px; border-bottom:1px solid #eee;">${i.item || i.tema}</div>`;
                 });
             }
         };
