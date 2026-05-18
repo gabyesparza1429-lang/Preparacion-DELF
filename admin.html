@@ -38,7 +38,13 @@
     <div class="main">
         <div class="top-bar">
             <h1 id="tab-title" style="margin:0; font-size: 1.1rem; color: var(--oxford);">Réussite DELF</h1>
-            <a href="alumno.html?access=admin" class="nav-btn" style="color:var(--green); font-weight:700;" target="_blank"><i class="fas fa-eye"></i> VISTA ALUMNO</a>
+            <div style="display: flex; gap: 10px; align-items: center;">
+                <select id="preview_level" style="width: 100px; margin-top: 0; padding: 5px;">
+                    <option value="A1">A1</option><option value="A2">A2</option>
+                    <option value="B1">B1</option><option value="B2">B2</option><option value="C1">C1</option>
+                </select>
+                <button class="nav-btn" style="color:var(--green); font-weight:700; width: auto;" onclick="window.previewAlumno()"><i class="fas fa-eye"></i> VISTA PREVIA</button>
+            </div>
         </div>
 
         <div id="tab-delf" class="content active">
@@ -112,6 +118,11 @@ Experte en certification DELF/CECRL.
 
 ## MISSION
 Générer un itinéraire de 10 unités pour le niveau demandé.
+Cada unidad debe incluir ejercicios para las 4 habilidades clave:
+- CO (Compréhension Orale)
+- CE (Compréhension Écrite)
+- PE (Production Écrite)
+- PO (Production Orale)
 
 ## FORMAT DE RÉPONSE (JSON STRICT)
 {
@@ -119,12 +130,17 @@ Générer un itinéraire de 10 unités pour le niveau demandé.
     {
       "unite": 1,
       "tema": "Título de la unidad",
-      "ejercicios": ["Ejercicio 1", "Ejercicio 2", "Ejercicio 3"]
+      "skills": {
+        "CO": ["Ejercicio 1", "Ejercicio 2"],
+        "CE": ["Ejercicio 1", "Ejercicio 2"],
+        "PE": ["Ejercicio 1", "Ejercicio 2"],
+        "PO": ["Ejercicio 1", "Ejercicio 2"]
+      }
     }
   ],
   "Checklist": [
     {
-      "tema": "Competencia a evaluar",
+      "competence": "Comprensión de lectura",
       "items": ["Criterio 1", "Criterio 2"]
     }
   ]
@@ -133,7 +149,7 @@ Générer un itinéraire de 10 unités pour le niveau demandé.
 INSTRUCTIONS:
 - Responde únicamente con un objeto JSON.
 - No escribas explicaciones ni bloques de código markdown.
-- El campo 'ejercicios' DEBE ser una lista de strings.`;
+- Cada unidad DEBE tener el objeto 'skills' con las 4 habilidades.`;
 
         const loadSophia = async () => {
             // Cargar prompt de Firebase
@@ -228,11 +244,16 @@ INSTRUCTIONS:
             if(confirm("¿Eliminar?")) await deleteDoc(doc(db, "Usuarios", id));
         };
 
+        window.previewAlumno = () => {
+            const lvl = document.getElementById('preview_level').value;
+            window.open(`alumno.html?id=admin_preview&level=${lvl}`, '_blank');
+        };
+
         onSnapshot(collection(db, "Usuarios"), (snap) => {
             const list = document.getElementById('lista_alumnos'); list.innerHTML = "";
             snap.forEach(d => {
                 const u = d.data();
-                list.innerHTML += `<div class="user-row"><a href="alumno.html?id=${u.id}" target="_blank"><i class="fas fa-user-circle"></i> ${u.nombre}</a><button class="btn-del" onclick="window.eliminarUser('${u.id}')"><i class="fas fa-trash"></i></button></div>`;
+                list.innerHTML += `<div class="user-row"><a href="alumno.html?id=${u.id}" target="_blank"><i class="fas fa-user-circle"></i> ${u.nombre} (${u.nivel})</a><button class="btn-del" onclick="window.eliminarUser('${u.id}')"><i class="fas fa-trash"></i></button></div>`;
             });
         });
     </script>

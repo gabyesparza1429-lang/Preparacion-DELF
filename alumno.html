@@ -21,8 +21,12 @@
 </head>
 <body>
     <aside class="sidebar">
-        <h2 style="color:var(--gold); font-size:1rem; text-align:center;">RÉUSSITE DELF</h2>
+        <h2 style="color:var(--gold); font-size:1rem; text-align:center; margin-bottom: 30px;">RÉUSSITE DELF</h2>
         <button class="skill-btn active" onclick="loadSkill('PARCOURS', this)"><i class="fas fa-route"></i> Mon Parcours</button>
+        <button class="skill-btn" onclick="loadSkill('CO', this)"><i class="fas fa-headphones"></i> Comprensión Oral</button>
+        <button class="skill-btn" onclick="loadSkill('CE', this)"><i class="fas fa-book-open"></i> Comprensión Escrita</button>
+        <button class="skill-btn" onclick="loadSkill('PE', this)"><i class="fas fa-pen-nib"></i> Expresión Escrita</button>
+        <button class="skill-btn" onclick="loadSkill('PO', this)"><i class="fas fa-comments"></i> Expresión Oral</button>
         <button class="skill-btn" onclick="loadSkill('CARNET', this)"><i class="fas fa-list-check"></i> Mon Carnet</button>
     </aside>
 
@@ -54,11 +58,20 @@
         const firebaseConfig = { apiKey: "AIzaSyCgog8tKspHy01ZHE8Dthl9O4W6lw1a_Ec", authDomain: "objectif-reussite-delf.firebaseapp.com", projectId: "objectif-reussite-delf", storageBucket: "objectif-reussite-delf.firebasestorage.app", messagingSenderId: "942279633770", appId: "1:942279633770:web:687ba6d819747eb29c1313" };
         const app = initializeApp(firebaseConfig); const db = getFirestore(app);
 
-        const studentId = new URLSearchParams(window.location.search).get('id');
-        let currentLevel = "";
+        const params = new URLSearchParams(window.location.search);
+        const studentId = params.get('id');
+        let currentLevel = params.get('level') || "";
 
         async function init() {
             if(!studentId) return;
+
+            if(studentId === 'admin_preview') {
+                document.getElementById('st-name').innerText = "Vista Previa";
+                document.getElementById('st-level').innerText = currentLevel;
+                loadSkill('PARCOURS', document.querySelector('.skill-btn.active'));
+                return;
+            }
+
             const snap = await getDoc(doc(db, "Usuarios", studentId.toLowerCase().trim()));
             if(snap.exists()){
                 const d = snap.data();
@@ -82,23 +95,46 @@
             
             const snap = await getDoc(doc(db, "BibliotecaEjercicios", currentLevel));
             if(!snap.exists()) {
-                area.innerHTML = "Material en preparación para el nivel " + currentLevel;
+                area.innerHTML = `<h3>Oups!</h3><p>Material en preparación para el nivel <strong>${currentLevel}</strong>. Vuelve pronto.</p>`;
                 return;
             }
 
             const data = snap.data();
+
             if(skill === 'PARCOURS') {
-                area.innerHTML = `<h3>Votre Itinéraire ${currentLevel}</h3>`;
+                area.innerHTML = `<h3>Mon Parcours ${currentLevel}</h3><p style="font-size:0.9rem; color:#666;">Haz clic en las habilidades de la izquierda para ver tus ejercicios detallados.</p>`;
                 (data.itinerario || []).forEach(u => {
-                    const ejercicios = u.ejercicios || u.objectifs || [];
                     area.innerHTML += `
                         <div class="unit-box">
                             <strong>Unité ${u.unite || u.unidad}:</strong> ${u.tema || u.titulo}
-                            <ul>
-                                ${Array.isArray(ejercicios) ? ejercicios.map(e => `<li>${e}</li>`).join('') : `<li>${ejercicios}</li>`}
-                            </ul>
+                            <div style="display:flex; gap:10px; margin-top:10px; font-size:0.75rem;">
+                                <span style="background:#eee; padding:2px 8px; border-radius:4px;">CO</span>
+                                <span style="background:#eee; padding:2px 8px; border-radius:4px;">CE</span>
+                                <span style="background:#eee; padding:2px 8px; border-radius:4px;">PE</span>
+                                <span style="background:#eee; padding:2px 8px; border-radius:4px;">PO</span>
+                            </div>
                         </div>`;
                 });
+            } else if(['CO', 'CE', 'PE', 'PO'].includes(skill)) {
+                const names = { CO: 'Compréhension Orale', CE: 'Compréhension Écrite', PE: 'Production Écrite', PO: 'Production Orale' };
+                area.innerHTML = `<h3>${names[skill]}</h3>`;
+
+                (data.itinerario || []).forEach(u => {
+                    const skillData = u.skills ? u.skills[skill] : null;
+                    if(skillData) {
+                        area.innerHTML += `
+                            <div class="unit-box">
+                                <strong>Unité ${u.unite || u.unidad}:</strong> ${u.tema || u.titulo}
+                                <ul>
+                                    ${skillData.map(e => `<li>${e}</li>`).join('')}
+                                </ul>
+                            </div>`;
+                    }
+                });
+
+                if(area.children.length === 1) {
+                    area.innerHTML += `<p>No hay ejercicios específicos de ${skill} generados aún para este nivel.</p>`;
+                }
             } else if(skill === 'CARNET') {
                 area.innerHTML = `<h3>Carnet de Bord</h3>`;
                 (data.Checklist || []).forEach(i => {
