@@ -1,2 +1,3 @@
 // Archivo de configuración privada
-export const API_KEY = "AIzaSyDodHJWu6a5LEhXM3lyIC7Wm5wvK5NdZNM";
+// REEMPLAZA ESTA LLAVE: La anterior fue bloqueada por seguridad.
+export const API_KEY = "PONER_AQUI_TU_NUEVA_LLAVE";

@@ -1,6 +1,6 @@
 # Instrucciones para Reactivar el Motor de Sophia (Gemini API)
 
-Actualmente, el sistema no puede generar ejercicios porque la API Key de Google ha sido bloqueada (por seguridad) o el servicio no está activo en tu cuenta de Google Cloud.
+Actualmente, el sistema no puede generar ejercicios porque la API Key anterior ha sido **bloqueada por seguridad** (ha sido detectada como filtrada) y el servicio no está activo en tu cuenta de Google Cloud.
 
 Sigue estos pasos para solucionar el problema:
 
