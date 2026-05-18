@@ -133,17 +133,30 @@
                 filterUnits('all', skill);
             } else if(skill === 'CARNET') {
                 area.innerHTML = `<h3>Carnet de Bord</h3>`;
-                const checklist = data.Checklist || data.checklist_cecrl || [];
-                checklist.forEach(i => {
-                    const items = i.items || i.descripteurs_b1 || i.descripteurs_a1 || i.descripteurs_a2 || i.descripteurs_b2 || i.descripteurs_c1 || [];
-                    area.innerHTML += `
-                        <div style="padding:15px; border-bottom:1px solid #eee;">
-                            <strong>${i.tema || i.competence}</strong>
-                            <ul style="margin:5px 0 0 0; padding-left:20px; font-size:0.85rem; color:#666;">
-                                ${Array.isArray(items) ? items.map(it => `<li>${it}</li>`).join('') : `<li>${items}</li>`}
-                            </ul>
-                        </div>`;
-                });
+                let checklist = data.Checklist || data.checklist_cecrl || data.checklist || [];
+
+                // Si la checklist no es un array, intentar normalizarla aquí también como fallback
+                if (!Array.isArray(checklist) && typeof checklist === 'object' && checklist !== null) {
+                    checklist = Object.keys(checklist).map(key => ({
+                        competence: key.replace(/_/g, ' ').toUpperCase(),
+                        items: checklist[key]
+                    }));
+                }
+
+                if (checklist.length === 0) {
+                    area.innerHTML += `<p style="color:#888;">No hay objetivos registrados para este nivel.</p>`;
+                } else {
+                    checklist.forEach(i => {
+                        const items = i.items || i.descripteurs_b1 || i.descripteurs_a1 || i.descripteurs_a2 || i.descripteurs_b2 || i.descripteurs_c1 || [];
+                        area.innerHTML += `
+                            <div style="padding:15px; border-bottom:1px solid #eee;">
+                                <strong>${i.tema || i.competence || "Objetivo"}</strong>
+                                <ul style="margin:5px 0 0 0; padding-left:20px; font-size:0.85rem; color:#666;">
+                                    ${Array.isArray(items) ? items.map(it => `<li>${it}</li>`).join('') : `<li>${items}</li>`}
+                                </ul>
+                            </div>`;
+                    });
+                }
             }
         };
 
