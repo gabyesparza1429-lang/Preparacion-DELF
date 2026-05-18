@@ -34,6 +34,7 @@
         <header class="header">
             <div>
                 <strong>Bonjour, <span id="st-name" style="color:var(--gold);">...</span></strong>
+                <div style="font-size: 0.7rem; color: #888;">CLASE: <span id="st-class">--</span></div>
                 <div class="progress-bar"><div id="st-progress" class="progress-fill"></div></div>
             </div>
             <div style="display:flex; gap:30px; align-items:center;">
@@ -77,8 +78,9 @@
                 const d = snap.data();
                 currentLevel = d.nivel;
                 document.getElementById('st-name').innerText = d.nombre;
+                document.getElementById('st-class').innerText = d.clase || "General";
                 document.getElementById('st-level').innerText = d.nivel;
-                document.getElementById('st-progress').style.width = d.progreso + "%";
+                document.getElementById('st-progress').style.width = (d.progreso || 0) + "%";
                 
                 if(d.fecha_certificacion) {
                     const diff = Math.ceil((new Date(d.fecha_certificacion) - new Date()) / (1000 * 60 * 60 * 24));
@@ -117,24 +119,17 @@
                 });
             } else if(['CO', 'CE', 'PE', 'PO'].includes(skill)) {
                 const names = { CO: 'Compréhension Orale', CE: 'Compréhension Écrite', PE: 'Production Écrite', PO: 'Production Orale' };
-                area.innerHTML = `<h3>${names[skill]}</h3>`;
+                area.innerHTML = `
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <h3>${names[skill]}</h3>
+                        <select id="unit-filter" style="padding:5px; border-radius:5px; border:1px solid var(--gold);" onchange="filterUnits(this.value, '${skill}')">
+                            <option value="all">Toutes les Unités</option>
+                            ${(data.itinerario || []).map(u => `<option value="${u.unite || u.unidad}">Unité ${u.unite || u.unidad}</option>`).join('')}
+                        </select>
+                    </div>
+                    <div id="units-container"></div>`;
 
-                (data.itinerario || []).forEach(u => {
-                    const skillData = u.skills ? u.skills[skill] : null;
-                    if(skillData) {
-                        area.innerHTML += `
-                            <div class="unit-box">
-                                <strong>Unité ${u.unite || u.unidad}:</strong> ${u.tema || u.titulo}
-                                <ul>
-                                    ${skillData.map(e => `<li>${e}</li>`).join('')}
-                                </ul>
-                            </div>`;
-                    }
-                });
-
-                if(area.children.length === 1) {
-                    area.innerHTML += `<p>No hay ejercicios específicos de ${skill} generados aún para este nivel.</p>`;
-                }
+                filterUnits('all', skill);
             } else if(skill === 'CARNET') {
                 area.innerHTML = `<h3>Carnet de Bord</h3>`;
                 (data.Checklist || []).forEach(i => {
@@ -149,6 +144,34 @@
                 });
             }
         };
+
+        window.filterUnits = async (val, skill) => {
+            const container = document.getElementById('units-container');
+            container.innerHTML = "";
+            const snap = await getDoc(doc(db, "BibliotecaEjercicios", currentLevel));
+            const data = snap.data();
+
+            (data.itinerario || []).forEach(u => {
+                const uNum = (u.unite || u.unidad).toString();
+                if(val !== 'all' && uNum !== val) return;
+
+                const skillData = u.skills ? u.skills[skill] : null;
+                if(skillData) {
+                    container.innerHTML += `
+                        <div class="unit-box">
+                            <strong>Unité ${uNum}:</strong> ${u.tema || u.titulo}
+                            <ul>
+                                ${skillData.map(e => `<li>${e}</li>`).join('')}
+                            </ul>
+                        </div>`;
+                }
+            });
+
+            if(container.children.length === 0) {
+                container.innerHTML = `<p>Aucun exercice de ${skill} disponible pour cette sélection.</p>`;
+            }
+        };
+
         init();
     </script>
 </body>
