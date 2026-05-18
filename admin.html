@@ -206,17 +206,35 @@ Chaque unité doit proposer des exercices concrets pour les 4 compétences :
                 if (resData.error) throw new Error(resData.error.message);
 
                 let aiText = resData.candidates[0].content.parts[0].text;
-                aiText = aiText.replace(/```json/g, "").replace(/```/g, "").trim();
                 
-                const finalData = JSON.parse(aiText);
+                // Limpieza profunda de la respuesta para extraer solo el JSON
+                const jsonMatch = aiText.match(/\{[\s\S]*\}/);
+                if (!jsonMatch) throw new Error("No se detectó un formato JSON válido en la respuesta de Sophia.");
 
-                // Soporte para múltiples variantes de nombres de llaves
-                const itinerario = finalData.itinerario || finalData.itinerario_completo || [];
-                const checklist = finalData.Checklist || finalData.checklist_cecrl || [];
+                const finalData = JSON.parse(jsonMatch[0]);
+
+                // NORMALIZACIÓN: Asegurar que el itinerario sea un array válido
+                let itinerario = finalData.itinerario || finalData.itinerario_completo || [];
+                if (!Array.isArray(itinerario)) itinerario = [];
+
+                // NORMALIZACIÓN: Convertir Checklist a Array si viene como Objeto (Map)
+                let checklistRaw = finalData.Checklist || finalData.checklist_cecrl || finalData.checklist || [];
+                let checklist = [];
+
+                if (Array.isArray(checklistRaw)) {
+                    checklist = checklistRaw;
+                } else if (typeof checklistRaw === 'object' && checklistRaw !== null) {
+                    // Si viene como { "Comp 1": [...], "Comp 2": [...] }
+                    checklist = Object.keys(checklistRaw).map(key => ({
+                        competence: key.replace(/_/g, ' ').toUpperCase(),
+                        items: checklistRaw[key]
+                    }));
+                }
 
                 await setDoc(doc(db, "BibliotecaEjercicios", nivel), {
                     itinerario: itinerario,
-                    Checklist: checklist
+                    Checklist: checklist,
+                    ultima_actualizacion: new Date().toISOString()
                 });
 
                 out.innerHTML = `> ¡ÉXITO! Material guardado en BibliotecaEjercicios/${nivel}.`;
