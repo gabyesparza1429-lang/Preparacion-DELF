@@ -1,2 +1,4 @@
-// Archivo de configuración privada
-export const API_KEY = "AIzaSyDodHJWu6a5LEhXM3lyIC7Wm5wvK5NdZNM";
+// Archivo de configuración
+// NOTA: No pongas llaves secretas aquí.
+// Las llaves de la IA se gestionan ahora desde el Panel de Administrador para mayor seguridad.
+export const API_KEY = "";

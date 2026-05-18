@@ -43,17 +43,27 @@
 
         <div id="tab-delf" class="content active">
             <div class="card">
-                <h3>Sophia Maestro: Certificación Total (2.5 Flash)</h3>
-                <select id="nivel_master" style="width:200px; margin-bottom: 10px;">
-                    <option value="A1">Nivel A1</option><option value="A2">Nivel A2</option>
-                    <option value="B1" selected>Nivel B1</option><option value="B2">Nivel B2</option><option value="C1">Nivel C1</option>
-                </select>
-                <textarea id="prompt_sophia" rows="8" placeholder="Cargando configuración..."></textarea>
-                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
-                    <button class="btn-gold" style="background:var(--blue); color:white;" onclick="window.saveSophia()">Guardar Configuración IA</button>
-                    <button class="btn-gold" onclick="window.generarBiblio()">Sophia: Procesar con 2.5 Flash</button>
+                <h3>Sophia Maestro: Certificación Total</h3>
+
+                <div style="background: #fff3cd; color: #856404; padding: 10px; border-radius: 8px; margin-bottom: 15px; font-size: 0.8rem; border: 1px solid #ffeeba;">
+                    <i class="fas fa-exclamation-triangle"></i> <strong>Seguridad:</strong> Para evitar que Google bloquee tu llave, pégala aquí abajo. Solo se guardará en tu navegador actual.
                 </div>
-                <div id="console_out" class="console">> Sophia: Motor 2.5 Flash listo para certificar.</div>
+
+                <div style="display: flex; gap: 10px; margin-bottom: 15px;">
+                    <input type="password" id="gemini_key_input" placeholder="Pega tu Gemini API Key aquí..." style="flex: 1; margin-top: 0;">
+                    <select id="nivel_master" style="width:150px; margin-top: 0;">
+                        <option value="A1">Nivel A1</option><option value="A2">Nivel A2</option>
+                        <option value="B1" selected>Nivel B1</option><option value="B2">Nivel B2</option><option value="C1">Nivel C1</option>
+                    </select>
+                </div>
+
+                <textarea id="prompt_sophia" rows="8" placeholder="Cargando configuración..."></textarea>
+
+                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
+                    <button class="btn-gold" style="background:var(--blue); color:white;" onclick="window.saveSophia()">Guardar Configuración</button>
+                    <button class="btn-gold" onclick="window.generarBiblio()">Sophia: Procesar</button>
+                </div>
+                <div id="console_out" class="console">> Sophia: Lista para certificar.</div>
             </div>
         </div>
 
@@ -76,9 +86,6 @@
     </div>
 
     <script type="module">
-        // Importamos la llave protegida
-        import { API_KEY } from './config.js';
-
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
         import { getFirestore, doc, setDoc, onSnapshot, getDoc, collection, deleteDoc } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js";
 
@@ -108,14 +115,14 @@ Générer un itinéraire de 10 unités pour le niveau demandé.
 
 ## FORMAT DE RÉPONSE (JSON STRICT)
 {
-  "itinerario_completo": [
+  "itinerario": [
     {
       "unite": 1,
       "tema": "Título de la unidad",
       "ejercicios": ["Ejercicio 1", "Ejercicio 2", "Ejercicio 3"]
     }
   ],
-  "checklist_cecrl": [
+  "Checklist": [
     {
       "tema": "Competencia a evaluar",
       "items": ["Criterio 1", "Criterio 2"]
@@ -129,31 +136,40 @@ INSTRUCTIONS:
 - El campo 'ejercicios' DEBE ser una lista de strings.`;
 
         const loadSophia = async () => {
+            // Cargar prompt de Firebase
             const s = await getDoc(doc(db, "Config", "Sophia"));
             if(s.exists() && s.data().rules) {
                 document.getElementById('prompt_sophia').value = s.data().rules;
             } else {
                 document.getElementById('prompt_sophia').value = DEFAULT_PROMPT;
             }
+
+            // Cargar API Key de LocalStorage
+            const savedKey = localStorage.getItem('sophia_gemini_key');
+            if(savedKey) document.getElementById('gemini_key_input').value = savedKey;
         }; loadSophia();
 
         window.saveSophia = async () => {
+            const key = document.getElementById('gemini_key_input').value;
+            if(key) localStorage.setItem('sophia_gemini_key', key);
+
             await setDoc(doc(db, "Config", "Sophia"), { rules: document.getElementById('prompt_sophia').value });
-            alert("Sincronizado con Firebase.");
+            alert("Configuración y Llave guardadas localmente.");
         };
 
         window.generarBiblio = async () => {
+            const key = document.getElementById('gemini_key_input').value;
             const nivel = document.getElementById('nivel_master').value;
             const out = document.getElementById('console_out');
             const prompt = document.getElementById('prompt_sophia').value;
 
-            if (!prompt.trim()) return alert("Por favor, guarda el prompt primero.");
+            if (!key) return alert("Por favor, introduce tu API Key de Gemini.");
+            if (!prompt.trim()) return alert("Por favor, escribe las reglas del prompt.");
 
             out.innerHTML = `> Sophia: Iniciando motor Gemini Flash para ${nivel}...`;
 
             try {
-                // Usamos gemini-2.0-flash ya que el usuario solicitó una versión avanzada y 2.5 aún no es el identificador estándar en la API v1beta.
-                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${API_KEY}`, {
+                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${key}`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
@@ -185,8 +201,8 @@ INSTRUCTIONS:
                 const finalData = JSON.parse(aiText);
 
                 await setDoc(doc(db, "BibliotecaEjercicios", nivel), {
-                    itinerario: finalData.itinerario_completo || [],
-                    Checklist: finalData.checklist_cecrl || []
+                    itinerario: finalData.itinerario || [],
+                    Checklist: finalData.Checklist || []
                 });
 
                 out.innerHTML = `> ¡ÉXITO! Sophia ha generado la preparación total para ${nivel}.`;
