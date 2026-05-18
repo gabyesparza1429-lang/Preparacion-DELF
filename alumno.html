@@ -97,15 +97,16 @@
             
             const snap = await getDoc(doc(db, "BibliotecaEjercicios", currentLevel));
             if(!snap.exists()) {
-                area.innerHTML = `<h3>Oups!</h3><p>Material en preparación para el nivel <strong>${currentLevel}</strong>. Vuelve pronto.</p>`;
+                area.innerHTML = `<h3>¡Lo sentimos!</h3><p>Aún no hay material generado para el nivel <strong>${currentLevel}</strong>.</p>`;
                 return;
             }
 
             const data = snap.data();
+            const itinerario = data.itinerario || data.itinerario_completo || [];
 
             if(skill === 'PARCOURS') {
-                area.innerHTML = `<h3>Mon Parcours ${currentLevel}</h3><p style="font-size:0.9rem; color:#666;">Haz clic en las habilidades de la izquierda para ver tus ejercicios detallados.</p>`;
-                (data.itinerario || []).forEach(u => {
+                area.innerHTML = `<h3>Mi Ruta de Aprendizaje ${currentLevel}</h3><p style="font-size:0.9rem; color:#666;">Selecciona una habilidad en el menú izquierdo para ver tus ejercicios.</p>`;
+                itinerario.forEach(u => {
                     area.innerHTML += `
                         <div class="unit-box">
                             <strong>Unité ${u.unite || u.unidad}:</strong> ${u.tema || u.titulo}
@@ -118,13 +119,13 @@
                         </div>`;
                 });
             } else if(['CO', 'CE', 'PE', 'PO'].includes(skill)) {
-                const names = { CO: 'Compréhension Orale', CE: 'Compréhension Écrite', PE: 'Production Écrite', PO: 'Production Orale' };
+                const names = { CO: 'Comprensión Oral', CE: 'Comprensión Escrita', PE: 'Expresión Escrita', PO: 'Expresión Oral' };
                 area.innerHTML = `
-                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
                         <h3>${names[skill]}</h3>
-                        <select id="unit-filter" style="padding:5px; border-radius:5px; border:1px solid var(--gold);" onchange="filterUnits(this.value, '${skill}')">
-                            <option value="all">Toutes les Unités</option>
-                            ${(data.itinerario || []).map(u => `<option value="${u.unite || u.unidad}">Unité ${u.unite || u.unidad}</option>`).join('')}
+                        <select id="unit-filter" style="padding:8px; border-radius:8px; border:1px solid var(--gold); font-family:Montserrat;" onchange="filterUnits(this.value, '${skill}')">
+                            <option value="all">Todas las Clases / Unidades</option>
+                            ${itinerario.map(u => `<option value="${u.unite || u.unidad}">Clase ${u.unite || u.unidad}</option>`).join('')}
                         </select>
                     </div>
                     <div id="units-container"></div>`;
@@ -132,8 +133,9 @@
                 filterUnits('all', skill);
             } else if(skill === 'CARNET') {
                 area.innerHTML = `<h3>Carnet de Bord</h3>`;
-                (data.Checklist || []).forEach(i => {
-                    const items = i.items || i.descripteurs_b1 || [];
+                const checklist = data.Checklist || data.checklist_cecrl || [];
+                checklist.forEach(i => {
+                    const items = i.items || i.descripteurs_b1 || i.descripteurs_a1 || i.descripteurs_a2 || i.descripteurs_b2 || i.descripteurs_c1 || [];
                     area.innerHTML += `
                         <div style="padding:15px; border-bottom:1px solid #eee;">
                             <strong>${i.tema || i.competence}</strong>
@@ -150,25 +152,28 @@
             container.innerHTML = "";
             const snap = await getDoc(doc(db, "BibliotecaEjercicios", currentLevel));
             const data = snap.data();
+            const itinerario = data.itinerario || data.itinerario_completo || [];
 
-            (data.itinerario || []).forEach(u => {
+            itinerario.forEach(u => {
                 const uNum = (u.unite || u.unidad).toString();
                 if(val !== 'all' && uNum !== val) return;
 
-                const skillData = u.skills ? u.skills[skill] : null;
-                if(skillData) {
+                // Fallback para estructura de habilidades (soporta objeto skills o llaves directas)
+                const skillData = (u.skills ? u.skills[skill] : u[skill]) || [];
+
+                if(skillData && skillData.length > 0) {
                     container.innerHTML += `
                         <div class="unit-box">
                             <strong>Unité ${uNum}:</strong> ${u.tema || u.titulo}
                             <ul>
-                                ${skillData.map(e => `<li>${e}</li>`).join('')}
+                                ${Array.isArray(skillData) ? skillData.map(e => `<li>${e}</li>`).join('') : `<li>${skillData}</li>`}
                             </ul>
                         </div>`;
                 }
             });
 
             if(container.children.length === 0) {
-                container.innerHTML = `<p>Aucun exercice de ${skill} disponible pour cette sélection.</p>`;
+                container.innerHTML = `<p style="color:#888;">No hay ejercicios de ${skill} disponibles para esta selección.</p>`;
             }
         };
 

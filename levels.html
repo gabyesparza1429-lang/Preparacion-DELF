@@ -7,8 +7,7 @@
     <style>
         :root { --oxford: #002147; --gold: #C5A059; --white: #ffffff; }
         body { font-family: 'Montserrat', sans-serif; margin: 0; background: #f4f7f9; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; color: var(--oxford); position: relative; }
-        .admin-link { position: absolute; top: 20px; left: 20px; text-decoration: none; color: transparent; cursor: default; user-select: none; }
-        .admin-link:active { color: var(--oxford); } /* Se vuelve visible brevemente al click */
+        .admin-access { position: absolute; top: 0; left: 0; width: 60px; height: 60px; background: transparent; cursor: default; z-index: 100; }
         .header { text-align: center; margin-bottom: 50px; }
         .container { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; padding: 20px; }
         .level-card { background: var(--white); width: 150px; padding: 30px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); text-align: center; text-decoration: none; color: inherit; transition: 0.3s; border: 2px solid transparent; }
@@ -17,7 +16,7 @@
     </style>
 </head>
 <body>
-    <a href="admin.html" class="admin-link">.</a>
+    <div class="admin-access" onclick="window.location.href='admin.html'"></div>
 
     <div class="header">
         <h1>Choisissez votre niveau</h1>
