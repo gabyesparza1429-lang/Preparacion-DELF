@@ -90,12 +90,26 @@
             if(skill === 'PARCOURS') {
                 area.innerHTML = `<h3>Votre Itinéraire ${currentLevel}</h3>`;
                 (data.itinerario || []).forEach(u => {
-                    area.innerHTML += `<div class="unit-box"><strong>Unité ${u.unite || u.unidad}:</strong> ${u.tema}<ul>${u.ejercicios.map(e=>`<li>${e}</li>`).join('')}</ul></div>`;
+                    const ejercicios = u.ejercicios || u.objectifs || [];
+                    area.innerHTML += `
+                        <div class="unit-box">
+                            <strong>Unité ${u.unite || u.unidad}:</strong> ${u.tema || u.titulo}
+                            <ul>
+                                ${Array.isArray(ejercicios) ? ejercicios.map(e => `<li>${e}</li>`).join('') : `<li>${ejercicios}</li>`}
+                            </ul>
+                        </div>`;
                 });
             } else if(skill === 'CARNET') {
                 area.innerHTML = `<h3>Carnet de Bord</h3>`;
                 (data.Checklist || []).forEach(i => {
-                    area.innerHTML += `<div style="padding:10px; border-bottom:1px solid #eee;">${i.item || i.tema}</div>`;
+                    const items = i.items || i.descripteurs_b1 || [];
+                    area.innerHTML += `
+                        <div style="padding:15px; border-bottom:1px solid #eee;">
+                            <strong>${i.tema || i.competence}</strong>
+                            <ul style="margin:5px 0 0 0; padding-left:20px; font-size:0.85rem; color:#666;">
+                                ${Array.isArray(items) ? items.map(it => `<li>${it}</li>`).join('') : `<li>${items}</li>`}
+                            </ul>
+                        </div>`;
                 });
             }
         };
