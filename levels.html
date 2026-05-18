@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Niveaux | Objectif Réussite</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root { --oxford: #002147; --gold: #C5A059; --white: #ffffff; }
+        body { font-family: 'Montserrat', sans-serif; margin: 0; background: #f4f7f9; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; color: var(--oxford); position: relative; }
+        .admin-link { position: absolute; top: 20px; left: 20px; text-decoration: none; color: transparent; cursor: default; user-select: none; }
+        .admin-link:active { color: var(--oxford); } /* Se vuelve visible brevemente al click */
+        .header { text-align: center; margin-bottom: 50px; }
+        .container { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; padding: 20px; }
+        .level-card { background: var(--white); width: 150px; padding: 30px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); text-align: center; text-decoration: none; color: inherit; transition: 0.3s; border: 2px solid transparent; }
+        .level-card:hover { transform: translateY(-5px); border-color: var(--gold); }
+        .level-card h2 { margin: 0; font-size: 2.5rem; color: var(--gold); }
+    </style>
+</head>
+<body>
+    <a href="admin.html" class="admin-link">.</a>
+
+    <div class="header">
+        <h1>Choisissez votre niveau</h1>
+        <p>Selecciona tu nivel de certificación DELF</p>
+    </div>
+
+    <div class="container">
+        <a href="login.html?level=A1" class="level-card"><h2>A1</h2><p>Découverte</p></a>
+        <a href="login.html?level=A2" class="level-card"><h2>A2</h2><p>Survie</p></a>
+        <a href="login.html?level=B1" class="level-card"><h2>B1</h2><p>Seuil</p></a>
+        <a href="login.html?level=B2" class="level-card"><h2>B2</h2><p>Avancé</p></a>
+        <a href="login.html?level=C1" class="level-card"><h2>C1</h2><p>Autonome</p></a>
+    </div>
+</body>
+</html>
