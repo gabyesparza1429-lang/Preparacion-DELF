@@ -90,7 +90,7 @@
 
         /* HEADER / BANNER AUTORIZADO CON TU IMAGEN */
         .project-banner {
-            background: url('assets/banner.png') no-repeat center center;
+            background: url('assets/Banner.png') no-repeat center center;
             background-size: cover;
             color: white;
             padding: 20px 40px;
@@ -397,7 +397,7 @@
             
             <div class="content-area">
                 
-                <img src="assets/logo.png" class="watermark-logo" alt="Watermark Logo">
+                <img src="assets/Logo.png" class="watermark-logo" alt="Watermark Logo">
 
                 <div class="workspace-content-wrapper">
                     
@@ -466,12 +466,16 @@
         const studentId = urlParams.get('id') || 'default_student';
 
         async function init() {
+            // Permitir que el nivel sea controlado por URL (especialmente para vista previa)
+            const urlLevel = urlParams.get('level');
+            if (urlLevel) currentLevel = urlLevel;
+
             try {
                 // 1. Cargar metadatos del estudiante
                 const userSnap = await getDoc(doc(db, "Usuarios", studentId));
                 if (userSnap.exists()) {
                     const userData = userSnap.data();
-                    currentLevel = userData.nivel || "B1";
+                    currentLevel = urlLevel || userData.nivel || "B1";
                     
                     document.getElementById('student-welcome').innerText = `Bonjour, ${userData.nombre || 'Étudiant'}`;
                     document.getElementById('level-indicator').innerText = `NIVEAU ${currentLevel}`;
