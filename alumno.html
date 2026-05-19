@@ -100,7 +100,7 @@
             border-bottom: 4px solid var(--gold);
             box-shadow: 0 4px 10px rgba(0,0,0,0.05);
             position: relative;
-            height: 90px;
+            height: 150px;
             box-sizing: border-box;
         }
 
@@ -108,7 +108,7 @@
             content: '';
             position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0, 33, 71, 0.75); 
+            background: none;
             z-index: 1;
         }
 
@@ -447,9 +447,12 @@
         import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
         const firebaseConfig = {
+            apiKey: "AIzaSyCgog8tKspHy01ZHE8Dthl9O4W6lw1a_Ec",
             authDomain: "objectif-reussite-delf.firebaseapp.com",
             projectId: "objectif-reussite-delf",
-            storageBucket: "objectif-reussite-delf.appspot.com",
+            storageBucket: "objectif-reussite-delf.firebasestorage.app",
+            messagingSenderId: "942279633770",
+            appId: "1:942279633770:web:687ba6d819747eb29c1313"
         };
 
         const app = initializeApp(firebaseConfig);
@@ -475,7 +478,8 @@
                 const userSnap = await getDoc(doc(db, "Usuarios", studentId));
                 if (userSnap.exists()) {
                     const userData = userSnap.data();
-                    currentLevel = urlLevel || userData.nivel || "B1";
+                    // Priorizar el nivel de la URL si existe (para modo vista previa)
+                    if (!urlLevel) currentLevel = userData.nivel || "B1";
                     
                     document.getElementById('student-welcome').innerText = `Bonjour, ${userData.nombre || 'Étudiant'}`;
                     document.getElementById('level-indicator').innerText = `NIVEAU ${currentLevel}`;
