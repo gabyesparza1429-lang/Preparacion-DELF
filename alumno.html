@@ -6,235 +6,426 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        :root { --oxford: #002147; --gold: #C5A059; --cream: #F8F9FA; --green: #28A745; }
-        body { font-family: 'Montserrat', sans-serif; margin: 0; display: flex; height: 100vh; background: var(--cream); overflow: hidden; }
-        .sidebar { width: 280px; background: var(--oxford); color: white; padding: 30px 20px; flex-shrink: 0; }
-        .skill-btn { width: 100%; padding: 15px; margin-bottom: 10px; border-radius: 10px; border: 1px solid rgba(197, 160, 89, 0.3); background: transparent; color: white; cursor: pointer; text-align: left; display: flex; align-items: center; gap: 12px; }
-        .skill-btn.active { background: var(--gold); color: var(--oxford); font-weight: 700; }
-        .header { background: white; padding: 20px 40px; border-bottom: 1px solid #ddd; display: flex; justify-content: space-between; align-items: center; }
-        .workspace { flex: 1; padding: 40px; overflow-y: auto; display: grid; grid-template-columns: 2fr 1fr; gap: 30px; }
-        .card { background: white; padding: 35px; border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.03); }
-        .progress-bar { height: 8px; background: #eee; border-radius: 10px; width: 200px; overflow: hidden; margin-top: 5px; }
-        .progress-fill { height: 100%; background: var(--green); width: 0%; transition: 1s; }
-        .unit-box { border-left: 4px solid var(--gold); padding: 15px; margin-bottom: 25px; background: #fff; border-radius: 0 10px 10px 0; }
+        :root { 
+            --oxford: #002147; 
+            --gold: #C5A059; 
+            --cream: #F8F9FA; 
+            --green: #28A745; 
+            --dark-blue: #001530;
+        }
+        
+        body { 
+            font-family: 'Montserrat', sans-serif; 
+            margin: 0; 
+            display: flex; 
+            height: 100vh; 
+            background: var(--cream); 
+            overflow: hidden; 
+        }
+        
+        /* Sidebar Styles */
+        .sidebar { 
+            width: 280px; 
+            background: var(--oxford); 
+            color: white; 
+            padding: 30px 20px; 
+            flex-shrink: 0; 
+            display: flex;
+            flex-direction: column;
+            box-shadow: 4px 0 10px rgba(0,0,0,0.1);
+            z-index: 10;
+        }
+
+        .sidebar h2 {
+            font-size: 1.1rem;
+            color: white;
+            text-align: center;
+            margin-top: 0;
+            margin-bottom: 30px;
+            letter-spacing: 1px;
+            border-bottom: 2px solid var(--gold);
+            padding-bottom: 15px;
+        }
+        
+        .skill-btn { 
+            width: 100%; 
+            padding: 15px; 
+            margin-bottom: 12px; 
+            border-radius: 10px; 
+            border: 1px solid rgba(197, 160, 89, 0.3); 
+            background: transparent; 
+            color: white; 
+            cursor: pointer; 
+            text-align: left; 
+            display: flex; 
+            align-items: center; 
+            gap: 12px; 
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+        
+        .skill-btn:hover {
+            background: rgba(255,255,255,0.05);
+            border-color: var(--gold);
+        }
+
+        .skill-btn.active { 
+            background: var(--gold); 
+            color: var(--oxford);
+            font-weight: 700;
+            border-color: var(--gold);
+            box-shadow: 0 4px 15px rgba(197, 160, 89, 0.4);
+        }
+
+        /* Main Layout */
+        .main-container {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            position: relative;
+        }
+
+        /* BRANDING BANNER CON IMAGEN */
+        .project-banner {
+            background: url('assets/banner.png') no-repeat center center;
+            background-size: cover;
+            color: white;
+            padding: 25px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 4px solid var(--gold);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            position: relative;
+        }
+
+        /* Capa de contraste para asegurar legibilidad sobre tu banner */
+        .project-banner::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 33, 71, 0.65); 
+            z-index: 1;
+        }
+
+        .banner-title, .student-info {
+            position: relative;
+            z-index: 2;
+        }
+
+        .banner-title {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .banner-title i {
+            color: var(--gold);
+            font-size: 1.8rem;
+        }
+
+        .banner-title h1 {
+            margin: 0;
+            font-size: 1.4rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .level-badge {
+            background: var(--gold);
+            color: var(--oxford);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+
+        /* Content Wrapper */
+        .content-wrapper {
+            flex-grow: 1;
+            padding: 40px;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        /* MARCA DE AGUA (LOGO ASSETS) */
+        .watermark-logo {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-12deg);
+            width: 380px;
+            height: auto;
+            opacity: 0.04; 
+            pointer-events: none; 
+            user-select: none;
+            z-index: 1;
+        }
+
+        /* Content Container over watermark */
+        #units-container {
+            position: relative;
+            z-index: 2;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        /* Filter Selector Style */
+        .filter-section {
+            margin-bottom: 25px;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+            max-width: 1000px;
+            margin: 0 auto 30px auto;
+        }
+
+        .filter-section select {
+            padding: 10px 20px;
+            border-radius: 8px;
+            border: 1px solid rgba(0,33,71,0.2);
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.9rem;
+            background: white;
+            color: var(--oxford);
+            outline: none;
+            cursor: pointer;
+        }
+
+        /* Dynamic Exercise Boxes */
+        .unit-box {
+            background: transparent;
+            margin-bottom: 25px;
+        }
+
+        /* Utility classes */
+        .loading-text {
+            text-align: center;
+            font-size: 1.2rem;
+            color: #888;
+            margin-top: 100px;
+        }
     </style>
 </head>
 <body>
-    <aside class="sidebar">
-        <h2 style="color:var(--gold); font-size:1rem; text-align:center; margin-bottom: 30px;">RÉUSSITE DELF</h2>
-        <button class="skill-btn active" onclick="loadSkill('PARCOURS', this)"><i class="fas fa-route"></i> Mon Parcours</button>
-        <button class="skill-btn" onclick="loadSkill('CO', this)"><i class="fas fa-headphones"></i> Comprensión Oral</button>
-        <button class="skill-btn" onclick="loadSkill('CE', this)"><i class="fas fa-book-open"></i> Comprensión Escrita</button>
-        <button class="skill-btn" onclick="loadSkill('PE', this)"><i class="fas fa-pen-nib"></i> Expresión Escrita</button>
-        <button class="skill-btn" onclick="loadSkill('PO', this)"><i class="fas fa-comments"></i> Expresión Oral</button>
-        <button class="skill-btn" onclick="loadSkill('CARNET', this)"><i class="fas fa-list-check"></i> Mon Carnet</button>
-    </aside>
 
-    <main style="flex:1; display:flex; flex-direction:column; overflow:hidden;">
-        <header class="header">
-            <div>
-                <strong>Bonjour, <span id="st-name" style="color:var(--gold);">...</span></strong>
-                <div style="font-size: 0.7rem; color: #888;">CLASE: <span id="st-class">--</span></div>
-                <div class="progress-bar"><div id="st-progress" class="progress-fill"></div></div>
-            </div>
-            <div style="display:flex; gap:30px; align-items:center;">
-                <div style="text-align:center;"><small>NIVEAU</small><div id="st-level" style="font-weight:700;">--</div></div>
-                <div style="text-align:center;"><div id="st-days" style="font-size:1.5rem; font-weight:700; color:var(--green);">0</div><small>JOURS RESTANTS</small></div>
-            </div>
-        </header>
+    <div class="sidebar">
+        <h2>Mon Espace DELF</h2>
+        <button class="skill-btn active" id="btn-CO" onclick="loadSkill('CO')">
+            <i class="fas fa-headphones"></i> Compréhension Orale
+        </button>
+        <button class="skill-btn" id="btn-CE" onclick="loadSkill('CE')">
+            <i class="fas fa-file-alt"></i> Compréhension Écrite
+        </button>
+        <button class="skill-btn" id="btn-PE" onclick="loadSkill('PE')">
+            <i class="fas fa-pen"></i> Production Écrite
+        </button>
+        <button class="skill-btn" id="btn-PO" onclick="loadSkill('PO')">
+            <i class="fas fa-comments"></i> Production Orale
+        </button>
+    </div>
 
-        <section class="workspace">
-            <div id="main-content" class="card">Chargement...</div>
-            <div class="card" style="background:var(--oxford); color:white;">
-                <h4 style="color:var(--gold);">Sophia Tips</h4>
-                <p id="tips-area" style="font-size:0.85rem;">Bienvenue dans votre préparation personnalisée.</p>
+    <div class="main-container">
+        
+        <div class="project-banner">
+            <div class="banner-title">
+                <i class="fas fa-graduation-cap"></i>
+                <h1 id="student-welcome">Chargement...</h1>
             </div>
-        </section>
-    </main>
+            <div class="student-info">
+                <span class="level-badge" id="level-indicator">NIVEAU --</span>
+            </div>
+        </div>
+
+        <div class="content-wrapper">
+            
+            <img src="assets/logo.png" class="watermark-logo" alt="Watermark Logo">
+
+            <div class="filter-section">
+                <label style="color: var(--oxford); font-weight: 600;">Filtrer par Unité:</label>
+                <select id="unit-selector" onchange="changeUnitFilter(this.value)">
+                    <option value="all">Toutes les Unités</option>
+                    <option value="1">Unité 1</option>
+                    <option value="2">Unité 2</option>
+                    <option value="3">Unité 3</option>
+                    <option value="4">Unité 4</option>
+                    <option value="5">Unité 5</option>
+                </select>
+            </div>
+
+            <div id="units-container">
+                <p class="loading-text"><i class="fas fa-spinner fa-spin"></i> Chargement des exercices...</p>
+            </div>
+
+        </div>
+    </div>
 
     <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
-        import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js";
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-        const firebaseConfig = { apiKey: "AIzaSyCgog8tKspHy01ZHE8Dthl9O4W6lw1a_Ec", authDomain: "objectif-reussite-delf.firebaseapp.com", projectId: "objectif-reussite-delf", storageBucket: "objectif-reussite-delf.firebasestorage.app", messagingSenderId: "942279633770", appId: "1:942279633770:web:687ba6d819747eb29c1313" };
-        const app = initializeApp(firebaseConfig); const db = getFirestore(app);
+        const firebaseConfig = {
+            authDomain: "objectif-reussite-delf.firebaseapp.com",
+            projectId: "objectif-reussite-delf",
+            storageBucket: "objectif-reussite-delf.appspot.com",
+        };
 
-        const params = new URLSearchParams(window.location.search);
-        const studentId = params.get('id');
-        let currentLevel = params.get('level') || "";
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        let currentLevel = "B1"; 
+        let currentSkill = "CO"; 
+        let currentUnitFilter = "all";
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const studentId = urlParams.get('id') || 'default_student';
 
         async function init() {
-            if(!studentId) return;
-
-            if(studentId === 'admin_preview') {
-                document.getElementById('st-name').innerText = "Vista Previa";
-                document.getElementById('st-level').innerText = currentLevel;
-                loadSkill('PARCOURS', document.querySelector('.skill-btn.active'));
-                return;
-            }
-
-            const snap = await getDoc(doc(db, "Usuarios", studentId.toLowerCase().trim()));
-            if(snap.exists()){
-                const d = snap.data();
-                currentLevel = d.nivel;
-                document.getElementById('st-name').innerText = d.nombre;
-                document.getElementById('st-class').innerText = d.clase || "General";
-                document.getElementById('st-level').innerText = d.nivel;
-                document.getElementById('st-progress').style.width = (d.progreso || 0) + "%";
-                
-                if(d.fecha_certificacion) {
-                    const diff = Math.ceil((new Date(d.fecha_certificacion) - new Date()) / (1000 * 60 * 60 * 24));
-                    document.getElementById('st-days').innerText = diff > 0 ? diff : 0;
+            try {
+                const userSnap = await getDoc(doc(db, "Usuarios", studentId));
+                if (userSnap.exists()) {
+                    const userData = userSnap.data();
+                    currentLevel = userData.nivel || "B1";
+                    
+                    document.getElementById('student-welcome').innerText = `Bonjour, ${userData.nombre || 'Étudiant'}`;
+                    document.getElementById('level-indicator').innerText = `NIVEAU ${currentLevel}`;
+                } else {
+                    document.getElementById('student-welcome').innerText = "Mon Espace d'Étude";
+                    document.getElementById('level-indicator').innerText = `NIVEAU ${currentLevel}`;
                 }
-                loadSkill('PARCOURS', document.querySelector('.skill-btn.active'));
+                
+                await window.filterUnits(currentUnitFilter, currentSkill);
+            } catch (error) {
+                console.error("Error inicializando la plataforma del alumno:", error);
+                document.getElementById('units-container').innerHTML = `<p style="color:red; text-align:center;">Erreur de connexion avec la base de données.</p>`;
             }
         }
 
-        window.loadSkill = async (skill, btn) => {
-            document.querySelectorAll('.skill-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            const area = document.getElementById('main-content');
+        window.loadSkill = async (skill) => {
+            currentSkill = skill;
             
-            const snap = await getDoc(doc(db, "BibliotecaEjercicios", currentLevel));
-            if(!snap.exists()) {
-                area.innerHTML = `<h3>¡Lo sentimos!</h3><p>Aún no hay material generado para el nivel <strong>${currentLevel}</strong>.</p>`;
-                return;
-            }
-
-            const data = snap.data();
-            const itinerario = data.itinerario || data.itinerario_completo || [];
-
-            if(skill === 'PARCOURS') {
-                area.innerHTML = `<h3>Mi Ruta de Aprendizaje ${currentLevel}</h3><p style="font-size:0.9rem; color:#666;">Selecciona una habilidad en el menú izquierdo para ver tus ejercicios.</p>`;
-                itinerario.forEach(u => {
-                    area.innerHTML += `
-                        <div class="unit-box">
-                            <strong>Unité ${u.unite || u.unidad}:</strong> ${u.tema || u.titulo}
-                            <div style="display:flex; gap:10px; margin-top:10px; font-size:0.75rem;">
-                                <span style="background:#eee; padding:2px 8px; border-radius:4px;">CO</span>
-                                <span style="background:#eee; padding:2px 8px; border-radius:4px;">CE</span>
-                                <span style="background:#eee; padding:2px 8px; border-radius:4px;">PE</span>
-                                <span style="background:#eee; padding:2px 8px; border-radius:4px;">PO</span>
-                            </div>
-                        </div>`;
-                });
-            } else if(['CO', 'CE', 'PE', 'PO'].includes(skill)) {
-                const names = { CO: 'Comprensión Oral', CE: 'Comprensión Escrita', PE: 'Expresión Escrita', PO: 'Expresión Oral' };
-                area.innerHTML = `
-                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
-                        <h3>${names[skill]}</h3>
-                        <select id="unit-filter" style="padding:8px; border-radius:8px; border:1px solid var(--gold); font-family:Montserrat;" onchange="filterUnits(this.value, '${skill}')">
-                            <option value="all">Todas las Clases / Unidades</option>
-                            ${itinerario.map(u => `<option value="${u.unite || u.unidad}">Clase ${u.unite || u.unidad}</option>`).join('')}
-                        </select>
-                    </div>
-                    <div id="units-container"></div>`;
-
-                filterUnits('all', skill);
-            } else if(skill === 'CARNET') {
-                area.innerHTML = `<h3>Carnet de Bord</h3>`;
-                let checklist = data.Checklist || data.checklist_cecrl || data.checklist || [];
-
-                // Si la checklist no es un array, intentar normalizarla aquí también como fallback
-                if (!Array.isArray(checklist) && typeof checklist === 'object' && checklist !== null) {
-                    checklist = Object.keys(checklist).map(key => ({
-                        competence: key.replace(/_/g, ' ').toUpperCase(),
-                        items: checklist[key]
-                    }));
-                }
-
-                if (checklist.length === 0) {
-                    area.innerHTML += `<p style="color:#888;">No hay objetivos registrados para este nivel.</p>`;
-                } else {
-                    checklist.forEach(i => {
-                        const items = i.items || i.descripteurs_b1 || i.descripteurs_a1 || i.descripteurs_a2 || i.descripteurs_b2 || i.descripteurs_c1 || [];
-                        area.innerHTML += `
-                            <div style="padding:15px; border-bottom:1px solid #eee;">
-                                <strong>${i.tema || i.competence || "Objetivo"}</strong>
-                                <ul style="margin:5px 0 0 0; padding-left:20px; font-size:0.85rem; color:#666;">
-                                    ${Array.isArray(items) ? items.map(it => `<li>${it}</li>`).join('') : `<li>${items}</li>`}
-                                </ul>
-                            </div>`;
-                    });
-                }
-            }
+            document.querySelectorAll('.skill-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(`btn-${skill}`).classList.add('active');
+            
+            await window.filterUnits(currentUnitFilter, currentSkill);
         };
 
-       window.filterUnits = async (val, skill) => {
+        window.changeUnitFilter = async (val) => {
+            currentUnitFilter = val;
+            await window.filterUnits(currentUnitFilter, currentSkill);
+        };
+
+        window.filterUnits = async (val, skill) => {
             const container = document.getElementById('units-container');
-            container.innerHTML = "";
-            const snap = await getDoc(doc(db, "BibliotecaEjercicios", currentLevel));
+            container.innerHTML = `<p class="loading-text"><i class="fas fa-spinner fa-spin"></i> Mise à jour des exercices...</p>`;
             
-            if (!snap.exists()) {
-                container.innerHTML = `<p style="color:#888;">No hay datos para el nivel ${currentLevel}.</p>`;
-                return;
-            }
-
-            const data = snap.data();
-            const itinerario = data.itinerario || data.itinerario_completo || [];
-
-            itinerario.forEach(u => {
-                const uNum = (u.unidad || u.unite || "").toString();
-                // Filtro por unidad (si no es 'all')
-                if(val !== 'all' && !uNum.includes(val)) return;
-
-                // Extraemos solo los ejercicios que coinciden con la habilidad seleccionada (CO, CE, PE, PO)
-                const ejercicios = (u.ejercicios || []).filter(e => e.habilidad === skill);
-
-                if(ejercicios && ejercicios.length > 0) {
-                    let htmlContenido = `<div class="unit-box">
-                        <strong style="color: var(--oxford); font-size: 1.1rem;">${u.unidad}:</strong> ${u.tema || ''}
-                        <div style="margin-top: 15px;">`;
-
-                    ejercicios.forEach(ej => {
-                        htmlContenido += `
-                        <div style="background: white; border-left: 4px solid var(--gold); padding: 20px; margin-bottom: 15px; border-radius: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
-                            <h4 style="margin-top: 0; color: var(--oxford);">${ej.instruccion || 'Exercice'}</h4>`;
-
-                        // Si hay texto de lectura (Ej. Comprensión Escrita)
-                        if (ej.texto_lectura) {
-                            htmlContenido += `<div style="background: var(--cream); padding: 15px; border-radius: 5px; font-style: italic; margin-bottom: 15px; line-height: 1.6;">${ej.texto_lectura}</div>`;
-                        }
-
-                        // Renderizado dinámico según el tipo de ejercicio dictado por Sophia
-                        if (ej.tipo === 'opcion_multiple' && ej.preguntas) {
-                            ej.preguntas.forEach((p, index) => {
-                                htmlContenido += `<div style="margin-bottom: 15px;">
-                                    <p><strong>${index + 1}. ${p.pregunta}</strong></p>`;
-                                p.opciones.forEach(opcion => {
-                                    htmlContenido += `
-                                    <label style="display: block; margin-bottom: 8px; cursor: pointer;">
-                                        <input type="radio" name="pregunta_${index}" value="${opcion}"> ${opcion}
-                                    </label>`;
-                                });
-                                htmlContenido += `</div>`;
-                            });
-
-                        } else if (ej.tipo === 'redaccion') {
-                            // Caja de texto para Producción Escrita
-                            htmlContenido += `
-                            <textarea placeholder="Écrivez votre réponse ici..." style="width: 100%; height: 150px; padding: 15px; border: 1px solid #ccc; border-radius: 5px; font-family: 'Montserrat', sans-serif; resize: vertical;"></textarea>
-                            <button style="margin-top: 10px; background: var(--oxford); color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">Soumettre (Évaluation IA)</button>`;
-
-                        } else if (ej.tipo === 'interaccion_tiempo_real') {
-                            // Interfaz de Jurado para Producción Oral
-                            htmlContenido += `
-                            <div style="background: #eef2f5; border: 1px solid #c2d1d9; padding: 15px; border-radius: 5px; text-align: center;">
-                                <p style="color: var(--oxford); font-weight: bold;"><i class="fas fa-microphone" style="color: var(--green);"></i> Mode Jury Actif</p>
-                                <p style="font-size: 0.9rem; margin-bottom: 15px;">El examinador IA está listo para interactuar.</p>
-                                <button style="background: var(--green); color: white; border: none; padding: 12px 25px; border-radius: 5px; cursor: pointer; font-weight: bold;"><i class="fas fa-play"></i> Démarrer l'interaction</button>
-                            </div>`;
-                        }
-
-                        htmlContenido += `</div>`;
-                    });
-
-                    htmlContenido += `</div></div>`;
-                    container.innerHTML += htmlContenido;
+            try {
+                const snap = await getDoc(doc(db, "BibliotecaEjercicios", currentLevel));
+                
+                if (!snap.exists()) {
+                    container.innerHTML = `<p style="color:#888; text-align:center; padding:20px;">Aucun exercice disponible pour le niveau ${currentLevel} dans la base de données.</p>`;
+                    return;
                 }
-            });
 
-            if(container.children.length === 0) {
-                container.innerHTML = `<p style="color:#888; text-align: center; padding: 20px;">Aucun exercice de ${skill} disponible pour cette sélection.</p>`;
+                const data = snap.data();
+                const itinerario = data.itinerario || data.itinerario_completo || [];
+
+                container.innerHTML = ""; 
+
+                itinerario.forEach(u => {
+                    const uNum = (u.unidad || u.unite || "").toString();
+                    
+                    if (val !== 'all' && !uNum.includes(val)) return;
+
+                    const ejercicios = (u.ejercicios || []).filter(e => e.habilidad === skill);
+
+                    if (ejercicios && ejercicios.length > 0) {
+                        let htmlContenido = `
+                        <div class="unit-box">
+                            <h3 style="color: var(--oxford); font-size: 1.2rem; border-bottom: 2px solid #eef2f5; padding-bottom: 8px; margin-bottom: 15px;">
+                                <i class="fas fa-bookmark" style="color: var(--gold); margin-right: 8px;"></i>${u.unidad || 'Unité'} ${u.tema ? `- ${u.tema}` : ''}
+                            </h3>
+                            <div style="margin-top: 10px;">`;
+
+                        ejercicios.forEach(ej => {
+                            htmlContenido += `
+                            <div style="background: white; border-left: 4px solid var(--gold); padding: 25px; margin-bottom: 20px; border-radius: 6px; box-shadow: 0 4px 12px rgba(0,0,0,0.03); position: relative; z-index: 3;">
+                                <h4 style="margin-top: 0; margin-bottom: 15px; color: var(--oxford); font-size: 1.05rem; display: flex; align-items: center; gap: 10px;">
+                                    <i class="fas fa-chevron-right" style="color: var(--gold); font-size: 0.8rem;"></i> ${ej.instruccion || 'Exercice Pratique'}
+                                </h4>`;
+
+                            if (ej.texto_lectura) {
+                                htmlContenido += `<div style="background: #fdfdfd; border: 1px solid #eaeaea; padding: 18px; border-radius: 5px; font-style: normal; margin-bottom: 20px; line-height: 1.7; color: #333;">${ej.texto_lectura}</div>`;
+                            }
+
+                            if (ej.tipo === 'opcion_multiple' && ej.preguntas) {
+                                ej.preguntas.forEach((p, index) => {
+                                    htmlContenido += `
+                                    <div style="margin-bottom: 20px; background: #fafbfc; padding: 15px; border-radius: 6px;">
+                                        <p style="margin-top:0; margin-bottom: 12px; font-weight: 600; color: #222;">${index + 1}. ${p.pregunta}</p>`;
+                                    
+                                    if(p.opciones) {
+                                        p.opciones.forEach(opcion => {
+                                            htmlContenido += `
+                                            <label style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px; cursor: pointer; font-size: 0.95rem; color: #444;">
+                                                <input type="radio" name="pregunta_${index}" value="${opcion}" style="accent-color: var(--oxford);"> ${opcion}
+                                            </label>`;
+                                        });
+                                    }
+                                    htmlContenido += `</div>`;
+                                });
+
+                            } else if (ej.tipo === 'redaccion') {
+                                htmlContenido += `
+                                <textarea placeholder="Rédigez su producción escrita aquí..." style="width: 100%; height: 160px; padding: 15px; border: 1px solid #dcdcdc; border-radius: 6px; font-family: 'Montserrat', sans-serif; font-size: 0.95rem; resize: vertical; box-sizing: border-box; outline: none; transition: border 0.3s;" onfocus="this.style.borderColor='var(--oxford)'" onblur="this.style.borderColor='#dcdcdc'"></textarea>
+                                <div style="display: flex; justify-content: flex-end; margin-top: 12px;">
+                                    <button style="background: var(--oxford); color: white; border: none; padding: 12px 24px; border-radius: 6px; cursor: pointer; font-family: 'Montserrat', sans-serif; font-weight: 600; font-size: 0.9rem; transition: background 0.3s;" onmouseover="this.style.background='#001a38'" onmouseout="this.style.background='var(--oxford)'">
+                                        <i class="fas fa-paper-plane"></i> Soumettre pour Évaluation IA
+                                    </button>
+                                </div>`;
+
+                            } else if (ej.tipo === 'interaccion_tiempo_real') {
+                                htmlContenido += `
+                                <div style="background: #f4f7f9; border: 1px solid #d2dbe0; padding: 20px; border-radius: 6px; text-align: center; margin-top: 15px;">
+                                    <p style="color: var(--oxford); font-weight: bold; font-size: 1.1rem; margin-top: 0; margin-bottom: 8px; display: flex; align-items: center; justify-content: center; gap: 10px;">
+                                        <i class="fas fa-microphone" style="color: var(--green);"></i> MODE JURY ACTIF (Temps Réel)
+                                    </p>
+                                    <p style="font-size: 0.9rem; color: #555; margin-bottom: 20px; max-width: 600px; margin-left: auto; margin-right: auto;">
+                                        Sophia actuará como examinador oficial del DELF interactuando contigo oralmente paso a paso basándose en el juego de roles del libro.
+                                    </p>
+                                    <button style="background: var(--green); color: white; border: none; padding: 14px 30px; border-radius: 6px; cursor: pointer; font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.95rem; display: inline-flex; align-items: center; gap: 10px; box-shadow: 0 4px 12px rgba(40, 167, 69, 0.25);">
+                                        <i class="fas fa-play"></i> Démarrer l'Épreuve Orale
+                                    </button>
+                                </div>`;
+                            }
+
+                            htmlContenido += `</div>`;
+                        });
+
+                        htmlContenido += `</div></div>`;
+                        container.innerHTML += htmlContenido;
+                    }
+                });
+
+                if (container.children.length === 0) {
+                    container.innerHTML = `
+                    <div style="text-align: center; padding: 40px; color: #888;">
+                        <i class="fas fa-folder-open" style="font-size: 3rem; margin-bottom: 15px; color: #ccc;"></i>
+                        <p style="margin: 0;">Aucun exercice de <strong>${skill}</strong> n'a été généré pour ce filtre.</p>
+                    </div>`;
+                }
+            } catch (err) {
+                console.error("Error al renderizar los ejercicios:", err);
+                container.innerHTML = `<p style="color:red; text-align:center;">Erreur lors du chargement des données de l'exercice.</p>`;
             }
         };
+
+        init();
+    </script>
+</body>
+</html>
