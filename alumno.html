@@ -160,37 +160,81 @@
             }
         };
 
-        window.filterUnits = async (val, skill) => {
+       window.filterUnits = async (val, skill) => {
             const container = document.getElementById('units-container');
             container.innerHTML = "";
             const snap = await getDoc(doc(db, "BibliotecaEjercicios", currentLevel));
+            
+            if (!snap.exists()) {
+                container.innerHTML = `<p style="color:#888;">No hay datos para el nivel ${currentLevel}.</p>`;
+                return;
+            }
+
             const data = snap.data();
             const itinerario = data.itinerario || data.itinerario_completo || [];
 
             itinerario.forEach(u => {
-                const uNum = (u.unite || u.unidad).toString();
-                if(val !== 'all' && uNum !== val) return;
+                const uNum = (u.unidad || u.unite || "").toString();
+                // Filtro por unidad (si no es 'all')
+                if(val !== 'all' && !uNum.includes(val)) return;
 
-                // Fallback para estructura de habilidades (soporta objeto skills o llaves directas)
-                const skillData = (u.skills ? u.skills[skill] : u[skill]) || [];
+                // Extraemos solo los ejercicios que coinciden con la habilidad seleccionada (CO, CE, PE, PO)
+                const ejercicios = (u.ejercicios || []).filter(e => e.habilidad === skill);
 
-                if(skillData && skillData.length > 0) {
-                    container.innerHTML += `
-                        <div class="unit-box">
-                            <strong>Unité ${uNum}:</strong> ${u.tema || u.titulo}
-                            <ul>
-                                ${Array.isArray(skillData) ? skillData.map(e => `<li>${e}</li>`).join('') : `<li>${skillData}</li>`}
-                            </ul>
-                        </div>`;
+                if(ejercicios && ejercicios.length > 0) {
+                    let htmlContenido = `<div class="unit-box">
+                        <strong style="color: var(--oxford); font-size: 1.1rem;">${u.unidad}:</strong> ${u.tema || ''}
+                        <div style="margin-top: 15px;">`;
+
+                    ejercicios.forEach(ej => {
+                        htmlContenido += `
+                        <div style="background: white; border-left: 4px solid var(--gold); padding: 20px; margin-bottom: 15px; border-radius: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
+                            <h4 style="margin-top: 0; color: var(--oxford);">${ej.instruccion || 'Exercice'}</h4>`;
+
+                        // Si hay texto de lectura (Ej. Comprensión Escrita)
+                        if (ej.texto_lectura) {
+                            htmlContenido += `<div style="background: var(--cream); padding: 15px; border-radius: 5px; font-style: italic; margin-bottom: 15px; line-height: 1.6;">${ej.texto_lectura}</div>`;
+                        }
+
+                        // Renderizado dinámico según el tipo de ejercicio dictado por Sophia
+                        if (ej.tipo === 'opcion_multiple' && ej.preguntas) {
+                            ej.preguntas.forEach((p, index) => {
+                                htmlContenido += `<div style="margin-bottom: 15px;">
+                                    <p><strong>${index + 1}. ${p.pregunta}</strong></p>`;
+                                p.opciones.forEach(opcion => {
+                                    htmlContenido += `
+                                    <label style="display: block; margin-bottom: 8px; cursor: pointer;">
+                                        <input type="radio" name="pregunta_${index}" value="${opcion}"> ${opcion}
+                                    </label>`;
+                                });
+                                htmlContenido += `</div>`;
+                            });
+
+                        } else if (ej.tipo === 'redaccion') {
+                            // Caja de texto para Producción Escrita
+                            htmlContenido += `
+                            <textarea placeholder="Écrivez votre réponse ici..." style="width: 100%; height: 150px; padding: 15px; border: 1px solid #ccc; border-radius: 5px; font-family: 'Montserrat', sans-serif; resize: vertical;"></textarea>
+                            <button style="margin-top: 10px; background: var(--oxford); color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">Soumettre (Évaluation IA)</button>`;
+
+                        } else if (ej.tipo === 'interaccion_tiempo_real') {
+                            // Interfaz de Jurado para Producción Oral
+                            htmlContenido += `
+                            <div style="background: #eef2f5; border: 1px solid #c2d1d9; padding: 15px; border-radius: 5px; text-align: center;">
+                                <p style="color: var(--oxford); font-weight: bold;"><i class="fas fa-microphone" style="color: var(--green);"></i> Mode Jury Actif</p>
+                                <p style="font-size: 0.9rem; margin-bottom: 15px;">El examinador IA está listo para interactuar.</p>
+                                <button style="background: var(--green); color: white; border: none; padding: 12px 25px; border-radius: 5px; cursor: pointer; font-weight: bold;"><i class="fas fa-play"></i> Démarrer l'interaction</button>
+                            </div>`;
+                        }
+
+                        htmlContenido += `</div>`;
+                    });
+
+                    htmlContenido += `</div></div>`;
+                    container.innerHTML += htmlContenido;
                 }
             });
 
             if(container.children.length === 0) {
-                container.innerHTML = `<p style="color:#888;">No hay ejercicios de ${skill} disponibles para esta selección.</p>`;
+                container.innerHTML = `<p style="color:#888; text-align: center; padding: 20px;">Aucun exercice de ${skill} disponible pour cette sélection.</p>`;
             }
         };
-
-        init();
-    </script>
-</body>
-</html>
