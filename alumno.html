@@ -23,9 +23,9 @@
             overflow: hidden; 
         }
         
-        /* Sidebar Styles */
+        /* SIDEBAR ORIGINAL */
         .sidebar { 
-            width: 280px; 
+            width: 260px; 
             background: var(--oxford); 
             color: white; 
             padding: 30px 20px; 
@@ -45,9 +45,10 @@
             letter-spacing: 1px;
             border-bottom: 2px solid var(--gold);
             padding-bottom: 15px;
+            text-transform: uppercase;
         }
         
-        .skill-btn { 
+        .nav-tab-btn { 
             width: 100%; 
             padding: 15px; 
             margin-bottom: 12px; 
@@ -65,12 +66,12 @@
             transition: all 0.3s ease;
         }
         
-        .skill-btn:hover {
+        .nav-tab-btn:hover {
             background: rgba(255,255,255,0.05);
             border-color: var(--gold);
         }
 
-        .skill-btn.active { 
+        .nav-tab-btn.active { 
             background: var(--gold); 
             color: var(--oxford);
             font-weight: 700;
@@ -78,7 +79,7 @@
             box-shadow: 0 4px 15px rgba(197, 160, 89, 0.4);
         }
 
-        /* Main Layout */
+        /* MAIN INTERFACE LAYOUT */
         .main-container {
             flex-grow: 1;
             display: flex;
@@ -87,64 +88,107 @@
             position: relative;
         }
 
-        /* BRANDING BANNER CON IMAGEN */
+        /* HEADER / BANNER AUTORIZADO CON TU IMAGEN */
         .project-banner {
             background: url('assets/banner.png') no-repeat center center;
             background-size: cover;
             color: white;
-            padding: 25px 40px;
+            padding: 20px 40px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             border-bottom: 4px solid var(--gold);
             box-shadow: 0 4px 10px rgba(0,0,0,0.05);
             position: relative;
+            height: 90px;
+            box-sizing: border-box;
         }
 
-        /* Capa de contraste para asegurar legibilidad sobre tu banner */
         .project-banner::before {
             content: '';
             position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0, 33, 71, 0.65); 
+            background: rgba(0, 33, 71, 0.75); 
             z-index: 1;
         }
 
-        .banner-title, .student-info {
+        .banner-left, .banner-right {
             position: relative;
             z-index: 2;
-        }
-
-        .banner-title {
             display: flex;
             align-items: center;
-            gap: 15px;
         }
 
-        .banner-title i {
-            color: var(--gold);
-            font-size: 1.8rem;
-        }
+        .banner-left { gap: 20px; flex-grow: 1; }
 
-        .banner-title h1 {
+        .banner-left h1 {
             margin: 0;
-            font-size: 1.4rem;
+            font-size: 1.3rem;
             font-weight: 700;
-            letter-spacing: 0.5px;
+            color: var(--gold);
         }
+
+        /* BARRA DE PROGRESO DINÁMICA */
+        .progress-container {
+            width: 250px;
+            margin-left: 20px;
+        }
+        .progress-text {
+            font-size: 0.75rem;
+            color: #ddd;
+            margin-bottom: 4px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .progress-bar-bg {
+            height: 8px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        .progress-bar-fill {
+            height: 100%;
+            width: 0%;
+            background: var(--green);
+            transition: width 0.5s ease;
+        }
+
+        .banner-right { gap: 25px; }
 
         .level-badge {
             background: var(--gold);
             color: var(--oxford);
-            padding: 6px 16px;
+            padding: 6px 18px;
             border-radius: 20px;
             font-weight: 700;
             font-size: 0.9rem;
             box-shadow: 0 2px 8px rgba(0,0,0,0.2);
         }
 
-        /* Content Wrapper */
-        .content-wrapper {
+        /* CRONÓMETRO CUENTA REGRESIVA */
+        .countdown-timer {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--green);
+            font-weight: 700;
+            font-size: 0.95rem;
+            background: rgba(40, 167, 69, 0.1);
+            padding: 6px 14px;
+            border-radius: 6px;
+            border: 1px solid rgba(40, 167, 69, 0.2);
+        }
+
+        /* TWO-COLUMN WORKSPACE WRAPPER */
+        .workspace-split {
+            flex-grow: 1;
+            display: flex;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* LEFT AREA: CONTENT AND SKILLS VIEW */
+        .content-area {
             flex-grow: 1;
             padding: 40px;
             overflow-y: auto;
@@ -157,58 +201,157 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%) rotate(-12deg);
-            width: 380px;
+            width: 360px;
             height: auto;
-            opacity: 0.04; 
+            opacity: 0.035; 
             pointer-events: none; 
             user-select: none;
             z-index: 1;
         }
 
-        /* Content Container over watermark */
-        #units-container {
+        .workspace-content-wrapper {
             position: relative;
             z-index: 2;
-            max-width: 1000px;
+            max-width: 850px;
             margin: 0 auto;
         }
 
-        /* Filter Selector Style */
+        /* SKILL SELECTOR SUB-BAR (DENTRO DE MON PARCOURS) */
+        .skill-selector-bar {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            background: white;
+            padding: 8px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+        }
+
+        .skill-tab-btn {
+            padding: 10px 18px;
+            border: none;
+            background: transparent;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: #666;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: all 0.2s;
+        }
+
+        .skill-tab-btn.active {
+            background: var(--oxford);
+            color: white;
+        }
+
+        /* FILTER SECTION */
         .filter-section {
             margin-bottom: 25px;
             display: flex;
-            gap: 15px;
+            gap: 12px;
             align-items: center;
-            position: relative;
-            z-index: 2;
-            max-width: 1000px;
-            margin: 0 auto 30px auto;
         }
 
         .filter-section select {
-            padding: 10px 20px;
-            border-radius: 8px;
-            border: 1px solid rgba(0,33,71,0.2);
+            padding: 8px 16px;
+            border-radius: 6px;
+            border: 1px solid rgba(0,33,71,0.15);
             font-family: 'Montserrat', sans-serif;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             background: white;
             color: var(--oxford);
             outline: none;
             cursor: pointer;
         }
 
-        /* Dynamic Exercise Boxes */
+        /* CARDS DE UNIDADES CON SU BORDE IZQUIERDO DORADO */
         .unit-box {
             background: transparent;
-            margin-bottom: 25px;
+            margin-bottom: 30px;
         }
 
-        /* Utility classes */
+        .exercise-card {
+            background: white; 
+            border-left: 4px solid var(--gold); 
+            padding: 25px; 
+            margin-bottom: 20px; 
+            border-radius: 6px; 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+        }
+
+        /* RIGHT AREA: SOPHIA TIPS COLUMN FIXED */
+        .sophia-tips-sidebar {
+            width: 320px;
+            background: var(--oxford);
+            color: white;
+            border-left: 4px solid var(--gold);
+            display: flex;
+            flex-direction: column;
+            flex-shrink: 0;
+            z-index: 5;
+            box-shadow: -4px 0 15px rgba(0,0,0,0.05);
+        }
+
+        .sophia-tips-header {
+            padding: 25px 20px;
+            background: var(--dark-blue);
+            border-bottom: 1px solid rgba(197, 160, 89, 0.2);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .sophia-tips-header i {
+            color: var(--gold);
+            font-size: 1.3rem;
+        }
+
+        .sophia-tips-header h3 {
+            margin: 0;
+            font-size: 1rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .sophia-tips-content {
+            padding: 25px 20px;
+            overflow-y: auto;
+            flex-grow: 1;
+        }
+
+        .tip-item {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        /* CARNET DE BORD CHECKLIST VIEW */
+        .checklist-item {
+            background: white;
+            padding: 16px 20px;
+            border-radius: 6px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+            border-left: 3px solid #ccc;
+        }
+        .checklist-item.done {
+            border-left-color: var(--green);
+        }
+
         .loading-text {
             text-align: center;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             color: #888;
-            margin-top: 100px;
+            margin-top: 80px;
         }
     </style>
 </head>
@@ -216,50 +359,84 @@
 
     <div class="sidebar">
         <h2>Mon Espace DELF</h2>
-        <button class="skill-btn active" id="btn-CO" onclick="loadSkill('CO')">
-            <i class="fas fa-headphones"></i> Compréhension Orale
+        <button class="nav-tab-btn active" id="tab-parcours" onclick="switchMainTab('parcours')">
+            <i class="fas fa-route"></i> Mon Parcours
         </button>
-        <button class="skill-btn" id="btn-CE" onclick="loadSkill('CE')">
-            <i class="fas fa-file-alt"></i> Compréhension Écrite
-        </button>
-        <button class="skill-btn" id="btn-PE" onclick="loadSkill('PE')">
-            <i class="fas fa-pen"></i> Production Écrite
-        </button>
-        <button class="skill-btn" id="btn-PO" onclick="loadSkill('PO')">
-            <i class="fas fa-comments"></i> Production Orale
+        <button class="nav-tab-btn" id="tab-carnet" onclick="switchMainTab('carnet')">
+            <i class="fas fa-clipboard-list"></i> Mon Carnet
         </button>
     </div>
 
     <div class="main-container">
         
         <div class="project-banner">
-            <div class="banner-title">
-                <i class="fas fa-graduation-cap"></i>
+            <div class="banner-left">
+                <i class="fas fa-user-circle" style="color: var(--gold); font-size: 1.6rem;"></i>
                 <h1 id="student-welcome">Chargement...</h1>
+                
+                <div class="progress-container">
+                    <div class="progress-text">
+                        <span>Progression</span>
+                        <span id="progress-percentage">0%</span>
+                    </div>
+                    <div class="progress-bar-bg">
+                        <div class="progress-bar-fill" id="progress-bar-fill"></div>
+                    </div>
+                </div>
             </div>
-            <div class="student-info">
+            <div class="banner-right">
+                <div class="countdown-timer">
+                    <i class="far fa-clock"></i>
+                    <span id="countdown-text">-- jours restants</span>
+                </div>
                 <span class="level-badge" id="level-indicator">NIVEAU --</span>
             </div>
         </div>
 
-        <div class="content-wrapper">
+        <div class="workspace-split">
             
-            <img src="assets/logo.png" class="watermark-logo" alt="Watermark Logo">
+            <div class="content-area">
+                
+                <img src="assets/logo.png" class="watermark-logo" alt="Watermark Logo">
 
-            <div class="filter-section">
-                <label style="color: var(--oxford); font-weight: 600;">Filtrer par Unité:</label>
-                <select id="unit-selector" onchange="changeUnitFilter(this.value)">
-                    <option value="all">Toutes les Unités</option>
-                    <option value="1">Unité 1</option>
-                    <option value="2">Unité 2</option>
-                    <option value="3">Unité 3</option>
-                    <option value="4">Unité 4</option>
-                    <option value="5">Unité 5</option>
-                </select>
+                <div class="workspace-content-wrapper">
+                    
+                    <div id="parcours-controls-container">
+                        <div class="skill-selector-bar">
+                            <button class="skill-tab-btn active" id="skill-CO" onclick="setSkillFilter('CO')">Compréhension Orale</button>
+                            <button class="skill-tab-btn" id="skill-CE" onclick="setSkillFilter('CE')">Compréhension Écrite</button>
+                            <button class="skill-tab-btn" id="skill-PE" onclick="setSkillFilter('PE')">Production Écrite</button>
+                            <button class="skill-tab-btn" id="skill-PO" onclick="setSkillFilter('PO')">Production Orale</button>
+                        </div>
+
+                        <div class="filter-section">
+                            <label style="color: var(--oxford); font-weight: 600; font-size: 0.9rem;">Filtrer par Unité:</label>
+                            <select id="unit-selector" onchange="setUnitFilter(this.value)">
+                                <option value="all">Toutes les Unités</option>
+                                <option value="1">Unité 1</option>
+                                <option value="2">Unité 2</option>
+                                <option value="3">Unité 3</option>
+                                <option value="4">Unité 4</option>
+                                <option value="5">Unité 5</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div id="dynamic-workspace-target">
+                        <p class="loading-text"><i class="fas fa-spinner fa-spin"></i> Chargement des données...</p>
+                    </div>
+
+                </div>
             </div>
 
-            <div id="units-container">
-                <p class="loading-text"><i class="fas fa-spinner fa-spin"></i> Chargement des exercices...</p>
+            <div class="sophia-tips-sidebar">
+                <div class="sophia-tips-header">
+                    <i class="fas fa-lightbulb"></i>
+                    <h3>Sophia Tips</h3>
+                </div>
+                <div class="sophia-tips-content" id="sophia-tips-target">
+                    <p style="color: #aaa; font-size: 0.9rem; text-align: center; margin-top: 40px;">Aucun conseil disponible pour le moment.</p>
+                </div>
             </div>
 
         </div>
@@ -278,15 +455,19 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
+        // Variables de estado
+        let activeMainTab = "parcours"; 
         let currentLevel = "B1"; 
         let currentSkill = "CO"; 
         let currentUnitFilter = "all";
+        let dbCacheData = null;
 
         const urlParams = new URLSearchParams(window.location.search);
         const studentId = urlParams.get('id') || 'default_student';
 
         async function init() {
             try {
+                // 1. Cargar metadatos del estudiante
                 const userSnap = await getDoc(doc(db, "Usuarios", studentId));
                 if (userSnap.exists()) {
                     const userData = userSnap.data();
@@ -294,86 +475,129 @@
                     
                     document.getElementById('student-welcome').innerText = `Bonjour, ${userData.nombre || 'Étudiant'}`;
                     document.getElementById('level-indicator').innerText = `NIVEAU ${currentLevel}`;
+                    
+                    // Sincronizar barra de progreso
+                    const prog = userData.progreso || 0;
+                    document.getElementById('progress-percentage').innerText = `${prog}%`;
+                    document.getElementById('progress-bar-fill').style.width = `${prog}%`;
+
+                    // Calcular cuenta regresiva (días restantes)
+                    if(userData.fecha_examen) {
+                        const examDate = new Date(userData.fecha_examen);
+                        const today = new Date();
+                        const diffTime = examDate - today;
+                        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                        document.getElementById('countdown-text').innerText = diffDays > 0 ? `${diffDays} jours restants` : "Examen Terminé";
+                    }
                 } else {
                     document.getElementById('student-welcome').innerText = "Mon Espace d'Étude";
                     document.getElementById('level-indicator').innerText = `NIVEAU ${currentLevel}`;
                 }
                 
-                await window.filterUnits(currentUnitFilter, currentSkill);
+                // 2. Traer el banco de datos JSON del nivel generado por Sophia
+                const snap = await getDoc(doc(db, "BibliotecaEjercicios", currentLevel));
+                if (snap.exists()) {
+                    dbCacheData = snap.data();
+                }
+
+                // Renderizar la vista por defecto
+                renderPlatformView();
+
             } catch (error) {
-                console.error("Error inicializando la plataforma del alumno:", error);
-                document.getElementById('units-container').innerHTML = `<p style="color:red; text-align:center;">Erreur de connexion avec la base de données.</p>`;
+                console.error("Error crítico de inicialización:", error);
+                document.getElementById('dynamic-workspace-target').innerHTML = `<p style="color:red; text-align:center;">Erreur de connexion avec la base de données.</p>`;
             }
         }
 
-        window.loadSkill = async (skill) => {
+        // Controlador de pestañas principales (Mon Parcours vs Mon Carnet)
+        window.switchMainTab = (tabName) => {
+            activeMainTab = tabName;
+            document.querySelectorAll('.nav-tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            if(tabName === 'parcours') {
+                document.getElementById('tab-parcours').classList.add('active');
+                document.getElementById('parcours-controls-container').style.display = 'block';
+            } else {
+                document.getElementById('tab-carnet').classList.add('active');
+                document.getElementById('parcours-controls-container').style.display = 'none';
+            }
+            renderPlatformView();
+        };
+
+        // Cambiar filtros internos de habilidades
+        window.setSkillFilter = (skill) => {
             currentSkill = skill;
-            
-            document.querySelectorAll('.skill-btn').forEach(btn => btn.classList.remove('active'));
-            document.getElementById(`btn-${skill}`).classList.add('active');
-            
-            await window.filterUnits(currentUnitFilter, currentSkill);
+            document.querySelectorAll('.skill-tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(`skill-${skill}`).classList.add('active');
+            renderPlatformView();
         };
 
-        window.changeUnitFilter = async (val) => {
-            currentUnitFilter = val;
-            await window.filterUnits(currentUnitFilter, currentSkill);
+        // Cambiar filtro por unidad
+        window.setUnitFilter = (unit) => {
+            currentUnitFilter = unit;
+            renderPlatformView();
         };
 
-        window.filterUnits = async (val, skill) => {
-            const container = document.getElementById('units-container');
-            container.innerHTML = `<p class="loading-text"><i class="fas fa-spinner fa-spin"></i> Mise à jour des exercices...</p>`;
+        // MOTOR PRINCIPAL DE DESPLIEGUE VISUAL ACORDE AL PLAN AUTORIZADO
+        function renderPlatformView() {
+            const target = document.getElementById('dynamic-workspace-target');
+            const tipsTarget = document.getElementById('sophia-tips-target');
             
-            try {
-                const snap = await getDoc(doc(db, "BibliotecaEjercicios", currentLevel));
-                
-                if (!snap.exists()) {
-                    container.innerHTML = `<p style="color:#888; text-align:center; padding:20px;">Aucun exercice disponible pour le niveau ${currentLevel} dans la base de données.</p>`;
-                    return;
-                }
+            if (!dbCacheData) {
+                target.innerHTML = `<p style="color:#888; text-align:center; padding:20px;">Aucune donnée disponible pour le niveau ${currentLevel}.</p>`;
+                return;
+            }
 
-                const data = snap.data();
-                const itinerario = data.itinerario || data.itinerario_completo || [];
+            // Renderizar la barra lateral de Sophia Tips fija
+            const tips = dbCacheData.sophia_tips || [];
+            if(tips.length > 0) {
+                tipsTarget.innerHTML = "";
+                tips.forEach(t => {
+                    tipsTarget.innerHTML += `<div class="tip-item"><strong>[${t.habilidad || 'Conseil'}]</strong><br>${t.consejo}</div>`;
+                });
+            }
 
-                container.innerHTML = ""; 
+            // Enrutador de pantallas principales
+            if (activeMainTab === "parcours") {
+                // RENDERIZAR MON PARCOURS (EJERCICIOS INTERACTIVOS EXTRAÍDOS DEL LIBRO)
+                const itinerario = dbCacheData.itinerario || dbCacheData.itinerario_completo || [];
+                target.innerHTML = "";
 
                 itinerario.forEach(u => {
                     const uNum = (u.unidad || u.unite || "").toString();
-                    
-                    if (val !== 'all' && !uNum.includes(val)) return;
+                    if (currentUnitFilter !== 'all' && !uNum.includes(currentUnitFilter)) return;
 
-                    const ejercicios = (u.ejercicios || []).filter(e => e.habilidad === skill);
+                    const ejercicios = (u.ejercicios || []).filter(e => e.habilidad === currentSkill);
 
                     if (ejercicios && ejercicios.length > 0) {
                         let htmlContenido = `
                         <div class="unit-box">
-                            <h3 style="color: var(--oxford); font-size: 1.2rem; border-bottom: 2px solid #eef2f5; padding-bottom: 8px; margin-bottom: 15px;">
+                            <h3 style="color: var(--oxford); font-size: 1.2rem; border-bottom: 2px solid #eef2f5; padding-bottom: 8px; margin-bottom: 15px; font-weight:700;">
                                 <i class="fas fa-bookmark" style="color: var(--gold); margin-right: 8px;"></i>${u.unidad || 'Unité'} ${u.tema ? `- ${u.tema}` : ''}
-                            </h3>
-                            <div style="margin-top: 10px;">`;
+                            </h3>`;
 
                         ejercicios.forEach(ej => {
                             htmlContenido += `
-                            <div style="background: white; border-left: 4px solid var(--gold); padding: 25px; margin-bottom: 20px; border-radius: 6px; box-shadow: 0 4px 12px rgba(0,0,0,0.03); position: relative; z-index: 3;">
+                            <div class="exercise-card">
                                 <h4 style="margin-top: 0; margin-bottom: 15px; color: var(--oxford); font-size: 1.05rem; display: flex; align-items: center; gap: 10px;">
                                     <i class="fas fa-chevron-right" style="color: var(--gold); font-size: 0.8rem;"></i> ${ej.instruccion || 'Exercice Pratique'}
                                 </h4>`;
 
                             if (ej.texto_lectura) {
-                                htmlContenido += `<div style="background: #fdfdfd; border: 1px solid #eaeaea; padding: 18px; border-radius: 5px; font-style: normal; margin-bottom: 20px; line-height: 1.7; color: #333;">${ej.texto_lectura}</div>`;
+                                htmlContenido += `<div style="background: #fdfdfd; border: 1px solid #eaeaea; padding: 18px; border-radius: 5px; margin-bottom: 20px; line-height: 1.7; color: #333;">${ej.texto_lectura}</div>`;
                             }
 
+                            // Renderizado interactivo por tipo de ejercicio JSON
                             if (ej.tipo === 'opcion_multiple' && ej.preguntas) {
-                                ej.preguntas.forEach((p, index) => {
+                                ej.preguntas.forEach((p, idx) => {
                                     htmlContenido += `
                                     <div style="margin-bottom: 20px; background: #fafbfc; padding: 15px; border-radius: 6px;">
-                                        <p style="margin-top:0; margin-bottom: 12px; font-weight: 600; color: #222;">${index + 1}. ${p.pregunta}</p>`;
-                                    
+                                        <p style="margin-top:0; margin-bottom: 12px; font-weight: 600; color: #222;">${idx + 1}. ${p.pregunta}</p>`;
                                     if(p.opciones) {
-                                        p.opciones.forEach(opcion => {
+                                        p.opciones.forEach(opt => {
                                             htmlContenido += `
                                             <label style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px; cursor: pointer; font-size: 0.95rem; color: #444;">
-                                                <input type="radio" name="pregunta_${index}" value="${opcion}" style="accent-color: var(--oxford);"> ${opcion}
+                                                <input type="radio" name="quiz_${idx}" value="${opt}" style="accent-color: var(--oxford);"> ${opt}
                                             </label>`;
                                         });
                                     }
@@ -382,12 +606,12 @@
 
                             } else if (ej.tipo === 'redaccion') {
                                 htmlContenido += `
-                                <textarea placeholder="Rédigez su producción escrita aquí..." style="width: 100%; height: 160px; padding: 15px; border: 1px solid #dcdcdc; border-radius: 6px; font-family: 'Montserrat', sans-serif; font-size: 0.95rem; resize: vertical; box-sizing: border-box; outline: none; transition: border 0.3s;" onfocus="this.style.borderColor='var(--oxford)'" onblur="this.style.borderColor='#dcdcdc'"></textarea>
+                                <textarea placeholder="Rédigez votre production écrite ici..." style="width: 100%; height: 160px; padding: 15px; border: 1px solid #dcdcdc; border-radius: 6px; font-family: 'Montserrat', sans-serif; font-size: 0.95rem; resize: vertical; box-sizing: border-box; outline: none;"></textarea>
                                 <div style="display: flex; justify-content: flex-end; margin-top: 12px;">
-                                    <button style="background: var(--oxford); color: white; border: none; padding: 12px 24px; border-radius: 6px; cursor: pointer; font-family: 'Montserrat', sans-serif; font-weight: 600; font-size: 0.9rem; transition: background 0.3s;" onmouseover="this.style.background='#001a38'" onmouseout="this.style.background='var(--oxford)'">
+                                    <button style="background: var(--oxford); color: white; border: none; padding: 12px 24px; border-radius: 6px; cursor: pointer; font-family: 'Montserrat', sans-serif; font-weight: 600; font-size: 0.9rem;">
                                         <i class="fas fa-paper-plane"></i> Soumettre pour Évaluation IA
                                     </button>
-                                </div>`;
+                               </div>`;
 
                             } else if (ej.tipo === 'interaccion_tiempo_real') {
                                 htmlContenido += `
@@ -407,23 +631,45 @@
                             htmlContenido += `</div>`;
                         });
 
-                        htmlContenido += `</div></div>`;
-                        container.innerHTML += htmlContenido;
+                        htmlContenido += `</div>`;
+                        target.innerHTML += htmlContenido;
                     }
                 });
 
-                if (container.children.length === 0) {
-                    container.innerHTML = `
+                if (target.children.length === 0) {
+                    target.innerHTML = `
                     <div style="text-align: center; padding: 40px; color: #888;">
                         <i class="fas fa-folder-open" style="font-size: 3rem; margin-bottom: 15px; color: #ccc;"></i>
-                        <p style="margin: 0;">Aucun exercice de <strong>${skill}</strong> n'a été généré pour ce filtre.</p>
+                        <p style="margin: 0;">Aucun exercice de <strong>${currentSkill}</strong> n'a été généré pour cette sélection.</p>
                     </div>`;
                 }
-            } catch (err) {
-                console.error("Error al renderizar los ejercicios:", err);
-                container.innerHTML = `<p style="color:red; text-align:center;">Erreur lors du chargement des données de l'exercice.</p>`;
+
+            } else if (activeMainTab === "carnet") {
+                // RENDERIZAR MON CARNET (DESCRIPTOR OFICIAL DEL CECRL)
+                const checklist = dbCacheData.checklist || [];
+                target.innerHTML = `<h3 style="color: var(--oxford); font-size: 1.2rem; margin-bottom: 20px; font-weight:700;">Mon Carnet de Bord - Compétences du CECRL</h3>`;
+                
+                if(checklist.length === 0) {
+                    target.innerHTML += `<p style="color:#888;">Aucun descripteur configuré pour ce niveau.</p>`;
+                    return;
+                }
+
+                checklist.forEach(item => {
+                    const statusClass = item.completado ? 'done' : '';
+                    const iconCheck = item.completado ? 'fa-check-circle' : 'fa-circle';
+                    const iconColor = item.completado ? 'var(--green)' : '#ccc';
+
+                    target.innerHTML += `
+                    <div class="checklist-item ${statusClass}">
+                        <i class="far ${iconCheck}" style="color: ${iconColor}; font-size: 1.3rem; cursor:pointer;"></i>
+                        <div>
+                            <span style="font-size:0.75rem; background:#eef2f5; color:var(--oxford); padding:3px 8px; border-radius:4px; font-weight:700; margin-right:10px;">${item.competencia || 'CECRL'}</span>
+                            <span style="font-size:0.95rem; color:#333;">${item.descriptor}</span>
+                        </div>
+                    </div>`;
+                });
             }
-        };
+        }
 
         init();
     </script>
