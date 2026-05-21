@@ -101,15 +101,8 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
         import { getFirestore, doc, setDoc, onSnapshot, getDoc, collection, deleteDoc } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js";
+        import { firebaseConfig } from "./js/firebase-config.js";
 
-        const firebaseConfig = { 
-            apiKey: "AIzaSyCgog8tKspHy01ZHE8Dthl9O4W6lw1a_Ec", 
-            authDomain: "objectif-reussite-delf.firebaseapp.com", 
-            projectId: "objectif-reussite-delf", 
-            storageBucket: "objectif-reussite-delf.firebasestorage.app", 
-            messagingSenderId: "942279633770", 
-            appId: "1:942279633770:web:687ba6d819747eb29c1313" 
-        };
         const app = initializeApp(firebaseConfig); 
         const db = getFirestore(app);
 
@@ -136,12 +129,21 @@ Chaque unité doit proposer des exercices concrets pour les 4 compétences :
     {
       "unite": 1,
       "tema": "Nom du thème de l'unité",
-      "skills": {
-        "CO": ["Titre de l'exercice CO 1", "Titre de l'exercice CO 2"],
-        "CE": ["Titre de l'exercice CE 1", "Titre de l'exercice CE 2"],
-        "PE": ["Sujet de production écrite 1"],
-        "PO": ["Interaction orale suggérée"]
-      }
+      "ejercicios": [
+        {
+          "habilidad": "CO",
+          "instruccion": "Écoutez l'audio y répondez...",
+          "url_audio": "URL_MP3_HERE",
+          "tipo": "opcion_multiple",
+          "preguntas": [
+            {
+              "pregunta": "Quest-ce que...",
+              "opciones": ["A", "B", "C"],
+              "respuesta_correcta": "A"
+            }
+          ]
+        }
+      ]
     }
   ],
   "Checklist": [
@@ -149,14 +151,20 @@ Chaque unité doit proposer des exercices concrets pour les 4 compétences :
       "competence": "Nom de la compétence CECRL",
       "items": ["Objectif 1", "Objectif 2"]
     }
+  ],
+  "sophia_tips": [
+    { "habilidad": "CO", "consejo": "Écoutez les mots-clés..." },
+    { "habilidad": "PE", "consejo": "Structurez votre texte avec des connecteurs..." }
   ]
 }
 
 ## CONTRAINTES CRITIQUES :
 - Réponds EXCLUSIVEMENT avec l'objet JSON pur.
 - PAS d'introduction, PAS de conclusion, PAS de blocs de code markdown (\`\`\`json).
-- Assure-toi que les clés "itinerario", "unite", "tema", "skills" et "Checklist" sont orthographiées exactement comme indiqué.
-- Les exercices de PO doivent être orientés vers une interaction en temps réel.`;
+- Les exercices doivent être interactifs (tipo: opcion_multiple, redaccion, o interaccion_tiempo_real).
+- Pour CO, inclus toujours un 'url_audio' valide.
+- Pour 'opcion_multiple', inclus toujours 'respuesta_correcta'.
+- Assure-toi que les clés sont orthographiées exactement comme indiqué.`;
 
         const loadSophia = async () => {
             // Cargar prompt de Firebase
@@ -234,6 +242,7 @@ Chaque unité doit proposer des exercices concrets pour les 4 compétences :
                 await setDoc(doc(db, "BibliotecaEjercicios", nivel), {
                     itinerario: itinerario,
                     Checklist: checklist,
+                    sophia_tips: finalData.sophia_tips || [],
                     ultima_actualizacion: new Date().toISOString()
                 });
 
@@ -267,7 +276,11 @@ Chaque unité doit proposer des exercices concrets pour les 4 compétences :
 
         window.previewAlumno = () => {
             const lvl = document.getElementById('preview_level').value;
-            window.open(`alumno.html?id=admin_preview&level=${lvl}`, '_blank');
+            const width = 1280;
+            const height = 800;
+            const left = (screen.width - width) / 2;
+            const top = (screen.height - height) / 2;
+            window.open(`alumno.html?id=admin_preview&level=${lvl}`, 'Preview', `width=${width},height=${height},top=${top},left=${left},resizable=yes,scrollbars=yes`);
         };
 
         onSnapshot(collection(db, "Usuarios"), (snap) => {
