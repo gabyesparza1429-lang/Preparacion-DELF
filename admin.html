@@ -25,6 +25,7 @@
         .btn-del { background: var(--red); color: white; border: none; padding: 10px; border-radius: 5px; cursor: pointer; }
         .console { background: #1a1a1a; color: #00ff00; padding: 15px; border-radius: 8px; font-family: monospace; font-size: 0.75rem; margin-top: 15px; min-height: 60px; white-space: pre-wrap;}
 
+        
         /* ESTILOS DE VISTA PREVIA */
         .preview-container { margin-top: 20px; border: 1px solid #ddd; border-radius: 8px; background: #fff; overflow: hidden; display: none; }
         .preview-header { background: var(--oxford); color: white; padding: 15px; display: flex; justify-content: space-between; align-items: center; }
@@ -64,6 +65,7 @@
                 <div style="display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 10px; margin-bottom: 15px;">
                     <input type="password" id="gemini_key_input" placeholder="Pega tu Gemini API Key aquí..." style="margin-top: 0;">
 
+                    
                     <select id="nivel_master" style="margin-top: 0;">
                         <option value="A1" selected>Nivel A1</option>
                         <option value="A2">Nivel A2</option>
@@ -87,6 +89,7 @@
                     <button class="btn-gold" onclick="window.generarBiblio()">1. Procesar y Revisar</button>
                 </div>
 
+                
                 <div id="console_out" class="console">> Sophia: Esperando instrucciones de extracción.</div>
 
                 <div id="preview_box" class="preview-container">
@@ -148,6 +151,7 @@
         let tempHabilidad = null;
 
         const DEFAULT_PROMPT = `Tu nombre es Sophia, Inteligencia Artificial y examinadora oficial certificada del DELF.
+        const DEFAULT_PROMPT = `Tu nombre es Sophia, Inteligencia Artificial y examinadora oficial certificada del DELF. 
 Tu tarea es leer los materiales del libro de preparación y extraer ÚNICAMENTE los datos correspondientes a la habilidad solicitada ([Habilidad]) para el nivel [Nivel].
 
 REGLAS CRÍTICAS DE EXTRACCIÓN PEDAGÓGICA:
@@ -157,6 +161,7 @@ REGLAS CRÍTICAS DE EXTRACCIÓN PEDAGÓGICA:
    - Para PE (Producción Escrita): Extrae la consigna de redacción e incluye "criterios_evaluacion": "usar_descripteur_cecr_db".
    - Para PO (Producción Oral): Extrae las consignas o juegos de roles. Define el tipo como "interaccion_tiempo_real", genera las directrices en "rol_examinador" y añade el campo "ruta_audio".
 3. Regla Crítica de Audios (PO y CO): Como los archivos en Storage tienen caracteres adicionales antes del número de ejercicio, concatena un asterisco al número marcado por el libro.
+3. Regla Crítica de Audios (PO y CO): Como los archivos en Storage tienen caracteres adicionales antes del número de ejercicio, concatena un asterisco al número marcado por el libro. 
    Ruta base para el nivel seleccionado: gs://objectif-reussite-delf.firebasestorage.app/niveles/[Nivel]/audios/*[Número de pista].mp3
    Ejemplo si el libro indica pista 01: gs://objectif-reussite-delf.firebasestorage.app/niveles/[Nivel]/audios/*01.mp3
 
@@ -229,6 +234,14 @@ ESTRUCTURA DE RETORNO EXIGIDA (JSON PURO):
 
             prompt = prompt.replace(/\[Nivel\]/g, nivel).replace(/\[Habilidad\]/g, habilidad);
 
+
+            document.getElementById('preview_box').style.display = 'none';
+            tempJsonData = null; tempNivel = null; tempHabilidad = null;
+
+            if (!key) return alert("Falta tu API Key de Gemini.");
+            
+            prompt = prompt.replace(/\[Nivel\]/g, nivel).replace(/\[Habilidad\]/g, habilidad);
+
             out.innerHTML = `> Sophia: Extrayendo contenido del libro para Nivel: ${nivel} | Habilidad: ${habilidad}...\n> Procesando solicitudes a Gemini...`;
 
             try {
@@ -275,6 +288,9 @@ ESTRUCTURA DE RETORNO EXIGIDA (JSON PURO):
 
                 let baseDoc = { itinerario: [], sophia_tips: [], checklist: [] };
 
+                
+                let baseDoc = { itinerario: [], sophia_tips: [], checklist: [] };
+                
                 if (currentSnap.exists()) {
                     const d = currentSnap.data();
                     baseDoc.itinerario = d.itinerario || d.itinerario_completo || [];
@@ -292,6 +308,29 @@ ESTRUCTURA DE RETORNO EXIGIDA (JSON PURO):
                 nuevosEjercicios.forEach(newEj => {
                     let unidadExistente = baseDoc.itinerario.find(u => (u.unidad || "").toString().toLowerCase().includes((newEj.unidad || "").toString().toLowerCase()));
 
+                    if (unidadExistente) {
+                        if (!unidadExistente.ejercicios) unidadExistente.ejercicios = [];
+                        unidadExistente.ejercicios.push(newEj);
+                        if(newEj.tema && !unidadExistente.tema) unidadExistente.tema = newEj.tema;
+                    } else {
+                        baseDoc.itinerario.push({
+                            unidad: newEj.unidad || "Unité 1",
+                            tema: newEj.tema || "",
+                            ejercicios: [newEj]
+                        });
+                    }
+                });
+
+                baseDoc.sophia_tips = baseDoc.sophia_tips.filter(t => t.habilidad !== tempHabilidad).concat(tempJsonData.sophia_tips || []);
+                baseDoc.checklist = baseDoc.checklist.filter(c => c.competencia !== tempHabilidad).concat(tempJsonData.checklist || []);
+                baseDoc.ultima_actualizacion = new Date().toISOString();
+
+                });
+
+                const nuevosEjercicios = tempJsonData.ejercicios_extraidos || [];
+                nuevosEjercicios.forEach(newEj => {
+                    let unidadExistente = baseDoc.itinerario.find(u => (u.unidad || "").toString().toLowerCase().includes((newEj.unidad || "").toString().toLowerCase()));
+                    
                     if (unidadExistente) {
                         if (!unidadExistente.ejercicios) unidadExistente.ejercicios = [];
                         unidadExistente.ejercicios.push(newEj);
@@ -352,6 +391,9 @@ ESTRUCTURA DE RETORNO EXIGIDA (JSON PURO):
 
             if (!input.files[0]) {
                 alert("Por favor, selecciona primero tu archivo JSON.");
+            
+            if (!input.files[0]) {
+                alert("Por favor, selecciona primero tu archivo banco_Unite1.json");
                 return;
             }
 
@@ -367,6 +409,9 @@ ESTRUCTURA DE RETORNO EXIGIDA (JSON PURO):
                     mensaje.innerText = `Subiendo a Firebase (Nivel ${nivel})... ⏳`;
 
                     const docRef = doc(db, "BibliotecaEjercicios", nivel);
+                    mensaje.innerText = "Subiendo a Firebase... ⏳";
+
+                    const docRef = doc(db, "BibliotecaEjercicios", "A1");
                     await setDoc(docRef, { Valor: textoParaGuardar }, { merge: true });
 
                     mensaje.style.color = "green";
