@@ -6,83 +6,82 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
+        /* TUS ESTILOS ORIGINALES SE MANTIENEN AQUÍ */
         :root { --oxford: #002147; --gold: #C5A059; --cream: #F8F9FA; --green: #28A745; }
-        body { font-family: 'Montserrat', sans-serif; margin: 0; background: var(--cream); padding: 20px; }
-        .card { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); max-width: 800px; margin: auto; }
-        .progress-container { height: 10px; background: #eee; border-radius: 5px; margin-bottom: 30px; }
-        .progress-bar { height: 100%; background: var(--gold); border-radius: 5px; width: 0%; transition: 0.3s; }
-        .btn-action { background: var(--oxford); color: white; border: none; padding: 12px 25px; border-radius: 6px; cursor: pointer; font-weight: 700; width: 100%; }
-        audio { width: 100%; margin: 20px 0; }
+        body { font-family: 'Montserrat', sans-serif; margin: 0; display: flex; height: 100vh; background: var(--cream); }
+        .sidebar { width: 260px; background: var(--oxford); color: white; padding: 30px 20px; }
+        .main { flex: 1; padding: 40px; overflow-y: auto; }
+        /* TUS CLASES DE TARJETAS */
+        .exercise-card { background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); border-left: 5px solid var(--gold); }
+        .btn-action { background: var(--oxford); color: white; border: none; padding: 12px 25px; border-radius: 6px; cursor: pointer; margin-top: 20px; }
     </style>
 </head>
 <body>
-
-    <div class="card">
-        <h2 id="titulo-ejercicio">Cargando...</h2>
-        <div class="progress-container"><div id="barra" class="progress-bar"></div></div>
-        
-        <div id="contenedor-ejercicio"></div>
-        
-        <div id="audio-container"></div>
-        
-        <br>
-        <button id="btn-validar" class="btn-action" onclick="validarRespuesta()">Validar Respuesta</button>
+    <div class="sidebar">
+        <h2>Mon Espace</h2>
+        <div id="progress-container">Progreso: <span id="progress-val">0%</span></div>
+    </div>
+    
+    <div class="main">
+        <div id="dynamic-workspace-target">
+            </div>
     </div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
         import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js";
 
-        const firebaseConfig = { /* Tu config aquí */ };
-        const app = initializeApp(firebaseConfig); 
-        const db = getFirestore(app);
-
-        let ejercicios = [];
+        // ... [TU CONFIG DE FIREBASE] ...
+        
+        let listaEjercicios = [];
         let indiceActual = 0;
 
         async function init() {
             const snap = await getDoc(doc(db, "BibliotecaEjercicios", "A1"));
             const data = snap.data().Valor ? JSON.parse(snap.data().Valor) : snap.data();
             
-            // Aplanamos todos los ejercicios en una sola lista para el "uno a uno"
+            // Aplanamos la lista manteniendo tu estructura
             data.itinerario.forEach(u => {
-                const lista = u.CO || u.ejercicios || [];
-                ejercicios.push(...lista);
+                const ejercicios = u.CO || u.ejercicios || [];
+                listaEjercicios.push(...ejercicios);
             });
-            mostrarEjercicio();
+            renderizarEjercicio();
         }
 
-        function mostrarEjercicio() {
-            if (indiceActual >= ejercicios.length) {
-                document.getElementById('contenedor-ejercicio').innerHTML = "<h3>¡Felicidades! Has terminado los ejercicios.</h3>";
-                document.getElementById('btn-validar').style.display = 'none';
+        function renderizarEjercicio() {
+            const target = document.getElementById('dynamic-workspace-target');
+            if (indiceActual >= listaEjercicios.length) {
+                target.innerHTML = "<h3>Exercice terminé !</h3>";
                 return;
             }
 
-            const ej = ejercicios[indiceActual];
-            document.getElementById('titulo-ejercicio').innerText = ej.instruccion;
-            document.getElementById('barra').style.width = `${(indiceActual / ejercicios.length) * 100}%`;
+            const ej = listaEjercicios[indiceActual];
+            const progreso = ((indiceActual) / listaEjercicios.length) * 100;
+            document.getElementById('progress-val').innerText = `${Math.round(progreso)}%`;
 
-            // Renderizar audio si existe ruta
-            const audioDiv = document.getElementById('audio-container');
-            audioDiv.innerHTML = ej.ruta_audio ? `<audio controls src="${ej.ruta_audio}"></audio>` : "";
+            target.innerHTML = `
+                <div class="exercise-card">
+                    <h4>${ej.instruccion || 'Exercice'}</h4>
+                    ${ej.ruta_audio ? `<audio controls src="${ej.ruta_audio}"></audio>` : ""}
+                    <div id="preguntas-container"></div>
+                    <button class="btn-action" onclick="validar()">Valider la réponse</button>
+                </div>
+            `;
 
-            // Renderizar preguntas
-            let html = "";
-            (ej.preguntas || []).forEach((p, i) => {
-                html += `<p>${p.pregunta}</p>`;
+            // Lógica de preguntas
+            const pCont = document.getElementById('preguntas-container');
+            (ej.preguntas || []).forEach(p => {
+                pCont.innerHTML += `<p>${p.pregunta}</p>`;
                 p.opciones.forEach(opt => {
-                    html += `<label><input type="radio" name="q" value="${opt}"> ${opt}</label><br>`;
+                    pCont.innerHTML += `<label><input type="radio" name="res"> ${opt}</label><br>`;
                 });
             });
-            document.getElementById('contenedor-ejercicio').innerHTML = html;
         }
 
-        window.validarRespuesta = () => {
-            // Aquí puedes agregar la lógica para comparar con ej.respuesta_correcta
-            alert("Respuesta enviada a Sophia para revisión.");
+        window.validar = () => {
+            alert("Réponse envoyée");
             indiceActual++;
-            mostrarEjercicio();
+            renderizarEjercicio();
         };
 
         init();
