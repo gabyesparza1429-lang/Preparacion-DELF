@@ -88,7 +88,7 @@
             position: relative;
         }
 
-        /* BANNER AJUSTADO AL ANCHO Y LARGO (400PX) ESTABLECIDOS SIN CORTARSE */
+        /* BANNER AJUSTADO FIJO A 400PX DE ALTO Y 100% DE ANCHO SIN CORTARSE */
         .project-banner {
             background: var(--oxford) url('./assets/Banner.png') no-repeat center center;
             background-size: 100% 100%; 
@@ -404,7 +404,7 @@
                     <h3>Sophia Tips</h3>
                 </div>
                 <div class="sophia-tips-content" id="sophia-tips-target">
-                    <p style="color: #aaa; font-size: 0.9rem; text-align: center; margin-top: 40px;">Aucun conseil disponible pour le moment.</p>
+                    <p style="color: #aaa; font-size: 0.9rem; text-align: center; margin-top: 40px;">Aucun conseil disponible por le moment.</p>
                 </div>
             </div>
 
@@ -582,7 +582,7 @@
                             <i class="fas fa-chevron-right" style="color: var(--gold); font-size: 0.8rem;"></i> ${ej.instruccion || 'Exercice Pratique'}
                         </h4>`;
 
-                /* ENLACE DIRECTO CORREGIDO A LA API V0 PÚBLICA DE STORAGE */
+                /* CORRECCIÓN ABSOLUTA: CAMBIO DE V1 A V0 PARA EL ACCESO PÚBLICO DESDE GITHUB PAGES */
                 if (ej.ruta_audio) {
                     let audioUrl = ej.ruta_audio;
                     const matchDigitos = audioUrl.match(/\d+/);
@@ -595,9 +595,9 @@
                             numeroPista = "0" + numeroPista;
                         }
                         
-                        // FIX: Cambiado v1 por v0 para permitir la reproducción inmediata sin tokens de autenticación
                         const pathReal = `niveles/${currentLevel}/audios/${numeroPista}.mp3`;
                         const pathEncoded = encodeURIComponent(pathReal);
+                        // FIXED: Cambiado v1/b/ por v0/b/ para abrir la llave del reproductor nativo en la web
                         audioUrl = `https://firebasestorage.googleapis.com/v0/b/objectif-reussite-delf.firebasestorage.app/o/${pathEncoded}?alt=media`;
                     }
 
