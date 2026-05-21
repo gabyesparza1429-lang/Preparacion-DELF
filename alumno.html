@@ -90,7 +90,7 @@
 
         /* HEADER / BANNER AUTORIZADO CON TU IMAGEN */
         .project-banner {
-            background: url('assets/Banner.png') no-repeat center center;
+            background: var(--oxford) url('./assets/Banner.png') no-repeat center center;
             background-size: cover;
             color: white;
             padding: 20px 40px;
@@ -108,7 +108,7 @@
             content: '';
             position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
-            background: none;
+            background: rgba(0, 33, 71, 0.4);
             z-index: 1;
         }
 
@@ -123,9 +123,10 @@
 
         .banner-left h1 {
             margin: 0;
-            font-size: 1.3rem;
+            font-size: 1.6rem;
             font-weight: 700;
-            color: var(--gold);
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
         }
 
         /* BARRA DE PROGRESO DINÁMICA */
@@ -134,11 +135,13 @@
             margin-left: 20px;
         }
         .progress-text {
-            font-size: 0.75rem;
-            color: #ddd;
-            margin-bottom: 4px;
+            font-size: 0.85rem;
+            color: white;
+            margin-bottom: 6px;
             display: flex;
             justify-content: space-between;
+            font-weight: 600;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
         }
         .progress-bar-bg {
             height: 8px;
@@ -158,11 +161,12 @@
         .level-badge {
             background: var(--gold);
             color: var(--oxford);
-            padding: 6px 18px;
+            padding: 8px 22px;
             border-radius: 20px;
             font-weight: 700;
-            font-size: 0.9rem;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            font-size: 1rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+            text-shadow: none;
         }
 
         /* CRONÓMETRO CUENTA REGRESIVA */
@@ -201,9 +205,9 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%) rotate(-12deg);
-            width: 360px;
+            width: 400px;
             height: auto;
-            opacity: 0.035; 
+            opacity: 0.1;
             pointer-events: none; 
             user-select: none;
             z-index: 1;
@@ -397,7 +401,7 @@
             
             <div class="content-area">
                 
-                <img src="assets/Logo.png" class="watermark-logo" alt="Watermark Logo">
+                <img src="./assets/Logo.png" class="watermark-logo" alt="Watermark Logo">
 
                 <div class="workspace-content-wrapper">
                     
@@ -445,15 +449,7 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-
-        const firebaseConfig = {
-            apiKey: "AIzaSyCgog8tKspHy01ZHE8Dthl9O4W6lw1a_Ec",
-            authDomain: "objectif-reussite-delf.firebaseapp.com",
-            projectId: "objectif-reussite-delf",
-            storageBucket: "objectif-reussite-delf.firebasestorage.app",
-            messagingSenderId: "942279633770",
-            appId: "1:942279633770:web:687ba6d819747eb29c1313"
-        };
+        import { firebaseConfig } from "./js/firebase-config.js";
 
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
@@ -471,18 +467,36 @@
         async function init() {
             // Permitir que el nivel sea controlado por URL (especialmente para vista previa)
             const urlLevel = urlParams.get('level');
-            if (urlLevel) currentLevel = urlLevel;
+            if (urlLevel) {
+                currentLevel = urlLevel.toUpperCase().trim();
+            }
 
             try {
                 // 1. Cargar metadatos del estudiante
-                const userSnap = await getDoc(doc(db, "Usuarios", studentId));
-                if (userSnap.exists()) {
-                    const userData = userSnap.data();
-                    // Priorizar el nivel de la URL si existe (para modo vista previa)
-                    if (!urlLevel) currentLevel = userData.nivel || "B1";
-                    
+                let userData = null;
+                if (studentId === 'admin_preview') {
+                    userData = {
+                        nombre: "Admin Preview",
+                        nivel: currentLevel,
+                        progreso: 65,
+                        fecha_examen: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString()
+                    };
+                } else {
+                    const userSnap = await getDoc(doc(db, "Usuarios", studentId));
+                    if (userSnap.exists()) {
+                        userData = userSnap.data();
+                        // Solo sobreescribir el nivel si NO viene por URL
+                        if (!urlLevel && userData.nivel) {
+                            currentLevel = userData.nivel.toUpperCase().trim();
+                        }
+                    }
+                }
+
+                // Actualizar indicadores UI con el nivel final decidido
+                document.getElementById('level-indicator').innerText = `NIVEAU ${currentLevel}`;
+
+                if (userData) {
                     document.getElementById('student-welcome').innerText = `Bonjour, ${userData.nombre || 'Étudiant'}`;
-                    document.getElementById('level-indicator').innerText = `NIVEAU ${currentLevel}`;
                     
                     // Sincronizar barra de progreso
                     const prog = userData.progreso || 0;
