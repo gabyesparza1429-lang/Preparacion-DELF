@@ -88,7 +88,7 @@
             position: relative;
         }
 
-        /* BANNER AJUSTADO AL ANCHO Y LARGO (400PX) ESTABLECIDOS SIN CORTARSE */
+        /* BANNER CONFIGURADO AL ANCHO Y LARGO (400PX) SIN CORTARSE */
         .project-banner {
             background: var(--oxford) url('./assets/Banner.png') no-repeat center center;
             background-size: 100% 100%; 
@@ -499,15 +499,17 @@
             renderPlatformView();
         };
 
+        /* LÓGICA CORREGIDA PARA LEER TU PROPIEDAD ESPECÍFICA "CO" DESDE EL ITINERARIO */
         function actualizarEjerciciosFiltrados() {
             ejerciciosFiltrados = [];
             if (!dbCacheData || !dbCacheData.itinerario) return;
 
             dbCacheData.itinerario.forEach(u => {
                 let subLista = [];
-                if (u[currentSkill]) {
+                // CORRECCIÓN CLAVE: Si la unidad contiene el arreglo directo de la habilidad (ej: u.CO), úsalo
+                if (u[currentSkill] && Array.isArray(u[currentSkill])) {
                     subLista = u[currentSkill];
-                } else if (u.ejercicios) {
+                } else if (u.ejercicios && Array.isArray(u.ejercicios)) {
                     subLista = u.ejercicios.filter(e => e.habilidad === currentSkill);
                 }
 
@@ -546,7 +548,7 @@
                     target.innerHTML = `
                     <div style="text-align: center; padding: 40px; color: #888;">
                         <i class="fas fa-folder-open" style="font-size: 3rem; margin-bottom: 15px; color: #ccc;"></i>
-                        <p style="margin: 0;">Aucun exercice de <strong>${currentSkill}</strong> n'a été généré pour cette sélection.</p>
+                        <p style="margin: 0;">Aucun exercice de <strong>${currentSkill}</strong> n'a été trouvé.</p>
                     </div>`;
                     return;
                 }
@@ -582,25 +584,22 @@
                             <i class="fas fa-chevron-right" style="color: var(--gold); font-size: 0.8rem;"></i> ${ej.instruccion || 'Exercice Pratique'}
                         </h4>`;
 
-                /* LÓGICA ULTRA FIEL A TU STORAGE: BUSCA EL NOMBRE EXACTO DEL JSON SIN MODIFICARLO */
+                /* EXTRACCIÓN INTELIGENTE DE RUTA DEL AUDIO DIRECTA */
                 if (ej.ruta_audio) {
                     let audioUrl = ej.ruta_audio;
                     const matchDigitos = audioUrl.match(/\d+/);
                     if (matchDigitos) {
                         let numeroPista = matchDigitos[0];
-                        // Si por algún motivo se lee el nombre largo anterior, se limita a los últimos 2 dígitos
                         if (numeroPista.length > 2) {
                             numeroPista = numeroPista.slice(-2);
                         }
-                        // Agrega el cero inicial si es un solo dígito (ej: "2" -> "02")
                         if (numeroPista.length === 1) {
                             numeroPista = "0" + numeroPista;
                         }
                         
-                        // Genera el enlace HTTP directo para tu archivo estándar sin hacer restas intermedias
                         const pathReal = `niveles/${currentLevel}/audios/${numeroPista}.mp3`;
                         const pathEncoded = encodeURIComponent(pathReal);
-                        audioUrl = `https://firebasestorage.googleapis.com/v1/b/objectif-reussite-delf.firebasestorage.app/o/${pathEncoded}?alt=media`;
+                        audioUrl = `https://firebasestorage.googleapis.com/v0/b/objectif-reussite-delf.firebasestorage.app/o/${pathEncoded}?alt=media`;
                     }
 
                     htmlContenido += `
