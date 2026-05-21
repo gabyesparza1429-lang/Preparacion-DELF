@@ -448,7 +448,7 @@
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
         import { firebaseConfig } from "./js/firebase-config.js";
 
         const app = initializeApp(firebaseConfig);
@@ -460,7 +460,6 @@
         let currentSkill = "CO"; 
         let currentUnitFilter = "all";
         let dbCacheData = null;
-        let currentExerciseIndex = 0;
 
         const urlParams = new URLSearchParams(window.location.search);
         const studentId = urlParams.get('id') || 'default_student';
@@ -514,6 +513,7 @@
                     }
                 } else {
                     document.getElementById('student-welcome').innerText = "Mon Espace d'Étude";
+                    document.getElementById('level-indicator').innerText = `NIVEAU ${currentLevel}`;
                 }
                 
                 // 2. Traer el banco de datos JSON del nivel generado por Sophia
@@ -549,7 +549,6 @@
         // Cambiar filtros internos de habilidades
         window.setSkillFilter = (skill) => {
             currentSkill = skill;
-            currentExerciseIndex = 0; // Reiniciar al cambiar habilidad
             document.querySelectorAll('.skill-tab-btn').forEach(btn => btn.classList.remove('active'));
             document.getElementById(`skill-${skill}`).classList.add('active');
             renderPlatformView();
@@ -558,71 +557,8 @@
         // Cambiar filtro por unidad
         window.setUnitFilter = (unit) => {
             currentUnitFilter = unit;
-            currentExerciseIndex = 0; // Reiniciar al cambiar unidad
             renderPlatformView();
         };
-
-        window.changeExercise = (delta) => {
-            currentExerciseIndex += delta;
-            renderPlatformView();
-        };
-
-        window.validarEjercicio = (ejIndex, tipo, poolEjerciciosJson) => {
-            const pool = JSON.parse(decodeURIComponent(poolEjerciciosJson));
-            const ej = pool[ejIndex];
-            const feedbackId = `feedback-${ejIndex}`;
-            const feedbackEl = document.getElementById(feedbackId);
-
-            let esCorrecto = false;
-            let mensaje = "";
-
-            if (tipo === 'opcion_multiple') {
-                const totalPreguntas = ej.preguntas.length;
-                let aciertos = 0;
-
-                ej.preguntas.forEach((p, idx) => {
-                    const selector = `input[name="quiz_${idx}"]:checked`;
-                    const selected = document.querySelector(selector);
-                    if (selected && selected.value === p.respuesta_correcta) {
-                        aciertos++;
-                    }
-                });
-
-                esCorrecto = aciertos === totalPreguntas;
-                mensaje = esCorrecto ? "Parfait ! Toutes les réponses sont correctes." : `Vous avez ${aciertos} / ${totalPreguntas} correct. Réessayez !`;
-            }
-
-            feedbackEl.innerHTML = `
-                <div style="margin-top: 15px; padding: 12px; border-radius: 6px; background: ${esCorrecto ? 'rgba(40, 167, 69, 0.1)' : 'rgba(220, 53, 69, 0.1)'}; color: ${esCorrecto ? '#28a745' : '#dc3545'}; border: 1px solid ${esCorrecto ? '#28a745' : '#dc3545'}; font-weight: 600; font-size: 0.9rem;">
-                    <i class="fas ${esCorrecto ? 'fa-check-circle' : 'fa-times-circle'}"></i> ${mensaje}
-                </div>`;
-
-            if (esCorrecto) {
-                updateProgress();
-            }
-        };
-
-        async function updateProgress() {
-            if (studentId === 'admin_preview') return;
-
-            try {
-                const userRef = doc(db, "Usuarios", studentId);
-                const userSnap = await getDoc(userRef);
-
-                if (userSnap.exists()) {
-                    const currentProg = userSnap.data().progreso || 0;
-                    const newProg = Math.min(100, currentProg + 5); // Aumentar 5% por ejercicio validado
-
-                    await setDoc(userRef, { progreso: newProg }, { merge: true });
-
-                    // Actualizar UI
-                    document.getElementById('progress-percentage').innerText = `${newProg}%`;
-                    document.getElementById('progress-bar-fill').style.width = `${newProg}%`;
-                }
-            } catch (e) {
-                console.error("Error al actualizar progreso:", e);
-            }
-        }
 
         // MOTOR PRINCIPAL DE DESPLIEGUE VISUAL ACORDE AL PLAN AUTORIZADO
         function renderPlatformView() {
@@ -645,126 +581,84 @@
 
             // Enrutador de pantallas principales
             if (activeMainTab === "parcours") {
-                // RENDERIZAR MON PARCOURS (EJERCICIOS INTERACTIVOS PASO A PASO)
+                // RENDERIZAR MON PARCOURS (EJERCICIOS INTERACTIVOS EXTRAÍDOS DEL LIBRO)
                 const itinerario = dbCacheData.itinerario || dbCacheData.itinerario_completo || [];
+                target.innerHTML = "";
 
-                // Aplanar todos los ejercicios de la habilidad actual que pasen el filtro de unidad
-                let poolEjercicios = [];
                 itinerario.forEach(u => {
                     const uNum = (u.unidad || u.unite || "").toString();
                     if (currentUnitFilter !== 'all' && !uNum.includes(currentUnitFilter)) return;
 
-                    const ejerciciosDeUnidad = (u.ejercicios || []).filter(e => e.habilidad === currentSkill);
-                    ejerciciosDeUnidad.forEach(ej => {
-                        poolEjercicios.push({
-                            ...ej,
-                            unidadTitulo: `${u.unidad || 'Unité'} ${u.tema ? `- ${u.tema}` : ''}`
-                        });
-                    });
-                });
+                    const ejercicios = (u.ejercicios || []).filter(e => e.habilidad === currentSkill);
 
-                target.innerHTML = "";
+                    if (ejercicios && ejercicios.length > 0) {
+                        let htmlContenido = `
+                        <div class="unit-box">
+                            <h3 style="color: var(--oxford); font-size: 1.2rem; border-bottom: 2px solid #eef2f5; padding-bottom: 8px; margin-bottom: 15px; font-weight:700;">
+                                <i class="fas fa-bookmark" style="color: var(--gold); margin-right: 8px;"></i>${u.unidad || 'Unité'} ${u.tema ? `- ${u.tema}` : ''}
+                            </h3>`;
 
-                if (poolEjercicios.length > 0) {
-                    // Validar índice
-                    if (currentExerciseIndex < 0) currentExerciseIndex = 0;
-                    if (currentExerciseIndex >= poolEjercicios.length) currentExerciseIndex = poolEjercicios.length - 1;
-
-                    const ej = poolEjercicios[currentExerciseIndex];
-
-                    let htmlContenido = `
-                    <div class="unit-box">
-                        <h3 style="color: var(--oxford); font-size: 1.1rem; border-bottom: 2px solid #eef2f5; padding-bottom: 8px; margin-bottom: 15px; font-weight:700; display:flex; justify-content:space-between; align-items:center;">
-                            <span><i class="fas fa-bookmark" style="color: var(--gold); margin-right: 8px;"></i>${ej.unidadTitulo}</span>
-                            <span style="font-size: 0.8rem; color: #888;">Exercice ${currentExerciseIndex + 1} / ${poolEjercicios.length}</span>
-                        </h3>
-
-                        <div class="exercise-card">
-                            <h4 style="margin-top: 0; margin-bottom: 15px; color: var(--oxford); font-size: 1.05rem; display: flex; align-items: center; gap: 10px;">
-                                <i class="fas fa-chevron-right" style="color: var(--gold); font-size: 0.8rem;"></i> ${ej.instruccion || 'Exercice Pratique'}
-                            </h4>`;
-
-                    if (ej.url_audio) {
-                        htmlContenido += `
-                        <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 20px; border: 1px solid #eee; display: flex; align-items: center; gap: 15px;">
-                            <i class="fas fa-headphones" style="color: var(--oxford); font-size: 1.2rem;"></i>
-                            <audio controls style="flex-grow: 1; height: 35px;">
-                                <source src="${ej.url_audio}" type="audio/mpeg">
-                                Votre navigateur ne supporte pas l'élément audio.
-                            </audio>
-                        </div>`;
-                    }
-
-                    if (ej.texto_lectura) {
-                        htmlContenido += `<div style="background: #fdfdfd; border: 1px solid #eaeaea; padding: 18px; border-radius: 5px; margin-bottom: 20px; line-height: 1.7; color: #333;">${ej.texto_lectura}</div>`;
-                    }
-
-                    // Renderizado interactivo por tipo de ejercicio JSON
-                    if (ej.tipo === 'opcion_multiple' && ej.preguntas) {
-                        ej.preguntas.forEach((p, idx) => {
+                        ejercicios.forEach(ej => {
                             htmlContenido += `
-                            <div style="margin-bottom: 20px; background: #fafbfc; padding: 15px; border-radius: 6px;">
-                                <p style="margin-top:0; margin-bottom: 12px; font-weight: 600; color: #222;">${idx + 1}. ${p.pregunta}</p>`;
-                            if(p.opciones) {
-                                p.opciones.forEach(opt => {
-                                    htmlContenido += `
-                                    <label style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px; cursor: pointer; font-size: 0.95rem; color: #444;">
-                                        <input type="radio" name="quiz_${idx}" value="${opt}" style="accent-color: var(--oxford);"> ${opt}
-                                    </label>`;
-                                });
+                            <div class="exercise-card">
+                                <h4 style="margin-top: 0; margin-bottom: 15px; color: var(--oxford); font-size: 1.05rem; display: flex; align-items: center; gap: 10px;">
+                                    <i class="fas fa-chevron-right" style="color: var(--gold); font-size: 0.8rem;"></i> ${ej.instruccion || 'Exercice Pratique'}
+                                </h4>`;
+
+                            if (ej.texto_lectura) {
+                                htmlContenido += `<div style="background: #fdfdfd; border: 1px solid #eaeaea; padding: 18px; border-radius: 5px; margin-bottom: 20px; line-height: 1.7; color: #333;">${ej.texto_lectura}</div>`;
                             }
+
+                            // Renderizado interactivo por tipo de ejercicio JSON
+                            if (ej.tipo === 'opcion_multiple' && ej.preguntas) {
+                                ej.preguntas.forEach((p, idx) => {
+                                    htmlContenido += `
+                                    <div style="margin-bottom: 20px; background: #fafbfc; padding: 15px; border-radius: 6px;">
+                                        <p style="margin-top:0; margin-bottom: 12px; font-weight: 600; color: #222;">${idx + 1}. ${p.pregunta}</p>`;
+                                    if(p.opciones) {
+                                        p.opciones.forEach(opt => {
+                                            htmlContenido += `
+                                            <label style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px; cursor: pointer; font-size: 0.95rem; color: #444;">
+                                                <input type="radio" name="quiz_${idx}" value="${opt}" style="accent-color: var(--oxford);"> ${opt}
+                                            </label>`;
+                                        });
+                                    }
+                                    htmlContenido += `</div>`;
+                                });
+
+                            } else if (ej.tipo === 'redaccion') {
+                                htmlContenido += `
+                                <textarea placeholder="Rédigez votre production écrite ici..." style="width: 100%; height: 160px; padding: 15px; border: 1px solid #dcdcdc; border-radius: 6px; font-family: 'Montserrat', sans-serif; font-size: 0.95rem; resize: vertical; box-sizing: border-box; outline: none;"></textarea>
+                                <div style="display: flex; justify-content: flex-end; margin-top: 12px;">
+                                    <button style="background: var(--oxford); color: white; border: none; padding: 12px 24px; border-radius: 6px; cursor: pointer; font-family: 'Montserrat', sans-serif; font-weight: 600; font-size: 0.9rem;">
+                                        <i class="fas fa-paper-plane"></i> Soumettre pour Évaluation IA
+                                    </button>
+                               </div>`;
+
+                            } else if (ej.tipo === 'interaccion_tiempo_real') {
+                                htmlContenido += `
+                                <div style="background: #f4f7f9; border: 1px solid #d2dbe0; padding: 20px; border-radius: 6px; text-align: center; margin-top: 15px;">
+                                    <p style="color: var(--oxford); font-weight: bold; font-size: 1.1rem; margin-top: 0; margin-bottom: 8px; display: flex; align-items: center; justify-content: center; gap: 10px;">
+                                        <i class="fas fa-microphone" style="color: var(--green);"></i> MODE JURY ACTIF (Temps Réel)
+                                    </p>
+                                    <p style="font-size: 0.9rem; color: #555; margin-bottom: 20px; max-width: 600px; margin-left: auto; margin-right: auto;">
+                                        Sophia actuará como examinador oficial del DELF interactuando contigo oralmente paso a paso basándose en el juego de roles del libro.
+                                    </p>
+                                    <button style="background: var(--green); color: white; border: none; padding: 14px 30px; border-radius: 6px; cursor: pointer; font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.95rem; display: inline-flex; align-items: center; gap: 10px; box-shadow: 0 4px 12px rgba(40, 167, 69, 0.25);">
+                                        <i class="fas fa-play"></i> Démarrer l'Épreuve Orale
+                                    </button>
+                                </div>`;
+                            }
+
                             htmlContenido += `</div>`;
                         });
 
-                        // Botón de validación para opción múltiple
-                        htmlContenido += `
-                        <div id="feedback-${currentExerciseIndex}"></div>
-                        <button onclick="validarEjercicio(${currentExerciseIndex}, 'opcion_multiple', '${encodeURIComponent(JSON.stringify(poolEjercicios))}')" style="margin-top: 10px; background: var(--oxford); color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: 600;">
-                            <i class="fas fa-check"></i> Valider les réponses
-                        </button>`;
-
-                    } else if (ej.tipo === 'redaccion') {
-                        htmlContenido += `
-                        <textarea placeholder="Rédigez votre production écrite ici..." style="width: 100%; height: 160px; padding: 15px; border: 1px solid #dcdcdc; border-radius: 6px; font-family: 'Montserrat', sans-serif; font-size: 0.95rem; resize: vertical; box-sizing: border-box; outline: none;"></textarea>
-                        <div style="display: flex; justify-content: flex-end; margin-top: 12px;">
-                            <button style="background: var(--oxford); color: white; border: none; padding: 12px 24px; border-radius: 6px; cursor: pointer; font-family: 'Montserrat', sans-serif; font-weight: 600; font-size: 0.9rem;">
-                                <i class="fas fa-paper-plane"></i> Soumettre pour Évaluation IA
-                            </button>
-                       </div>
-                       <div id="feedback-${currentExerciseIndex}"></div>
-                       <button onclick="updateProgress(); this.disabled=true; this.innerText='Validé !';" style="margin-top: 10px; background: var(--green); color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: 600;">
-                            <i class="fas fa-check"></i> Marquer comme Terminé
-                       </button>`;
-
-                    } else if (ej.tipo === 'interaccion_tiempo_real') {
-                        htmlContenido += `
-                        <div style="background: #f4f7f9; border: 1px solid #d2dbe0; padding: 20px; border-radius: 6px; text-align: center; margin-top: 15px;">
-                            <p style="color: var(--oxford); font-weight: bold; font-size: 1.1rem; margin-top: 0; margin-bottom: 8px; display: flex; align-items: center; justify-content: center; gap: 10px;">
-                                <i class="fas fa-microphone" style="color: var(--green);"></i> MODE JURY ACTIF (Temps Réel)
-                            </p>
-                            <p style="font-size: 0.9rem; color: #555; margin-bottom: 20px; max-width: 600px; margin-left: auto; margin-right: auto;">
-                                Sophia actuará como examinador oficial del DELF interactuando contigo oralmente paso a paso basándose en el juego de roles del libro.
-                            </p>
-                            <button onclick="updateProgress(); alert('Sophia est prête. (Simulation de démarrage)')" style="background: var(--green); color: white; border: none; padding: 14px 30px; border-radius: 6px; cursor: pointer; font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.95rem; display: inline-flex; align-items: center; gap: 10px; box-shadow: 0 4px 12px rgba(40, 167, 69, 0.25);">
-                                <i class="fas fa-play"></i> Démarrer l'Épreuve Orale
-                            </button>
-                        </div>`;
+                        htmlContenido += `</div>`;
+                        target.innerHTML += htmlContenido;
                     }
+                });
 
-                    htmlContenido += `</div>
-
-                    <div style="display:flex; justify-content:space-between; margin-top:30px;">
-                        <button onclick="changeExercise(-1)" ${currentExerciseIndex === 0 ? 'disabled' : ''} style="background:white; border:1px solid #ddd; padding:10px 20px; border-radius:6px; cursor:pointer; color:${currentExerciseIndex === 0 ? '#ccc' : 'var(--oxford)'}; font-weight:600;">
-                            <i class="fas fa-arrow-left"></i> Précédent
-                        </button>
-                        <button onclick="changeExercise(1)" ${currentExerciseIndex === poolEjercicios.length - 1 ? 'disabled' : ''} style="background:white; border:1px solid #ddd; padding:10px 20px; border-radius:6px; cursor:pointer; color:${currentExerciseIndex === poolEjercicios.length - 1 ? '#ccc' : 'var(--oxford)'}; font-weight:600;">
-                            Suivant <i class="fas fa-arrow-right"></i>
-                        </button>
-                    </div>`;
-
-                    target.innerHTML = htmlContenido;
-
-                } else {
+                if (target.children.length === 0) {
                     target.innerHTML = `
                     <div style="text-align: center; padding: 40px; color: #888;">
                         <i class="fas fa-folder-open" style="font-size: 3rem; margin-bottom: 15px; color: #ccc;"></i>
@@ -774,7 +668,7 @@
 
             } else if (activeMainTab === "carnet") {
                 // RENDERIZAR MON CARNET (DESCRIPTOR OFICIAL DEL CECRL)
-                const checklist = dbCacheData.Checklist || dbCacheData.checklist || [];
+                const checklist = dbCacheData.checklist || [];
                 target.innerHTML = `<h3 style="color: var(--oxford); font-size: 1.2rem; margin-bottom: 20px; font-weight:700;">Mon Carnet de Bord - Compétences du CECRL</h3>`;
                 
                 if(checklist.length === 0) {
@@ -782,31 +676,19 @@
                     return;
                 }
 
-                checklist.forEach(comp => {
-                    if (comp.items && Array.isArray(comp.items)) {
-                        comp.items.forEach(descriptor => {
-                            target.innerHTML += `
-                            <div class="checklist-item">
-                                <i class="far fa-circle" style="color: #ccc; font-size: 1.3rem; cursor:pointer;"></i>
-                                <div>
-                                    <span style="font-size:0.75rem; background:#eef2f5; color:var(--oxford); padding:3px 8px; border-radius:4px; font-weight:700; margin-right:10px;">${comp.competence || 'CECRL'}</span>
-                                    <span style="font-size:0.95rem; color:#333;">${descriptor}</span>
-                                </div>
-                            </div>`;
-                        });
-                    } else if (comp.descriptor) {
-                        const statusClass = comp.completado ? 'done' : '';
-                        const iconCheck = comp.completado ? 'fa-check-circle' : 'fa-circle';
-                        const iconColor = comp.completado ? 'var(--green)' : '#ccc';
-                        target.innerHTML += `
-                        <div class="checklist-item ${statusClass}">
-                            <i class="far ${iconCheck}" style="color: ${iconColor}; font-size: 1.3rem; cursor:pointer;"></i>
-                            <div>
-                                <span style="font-size:0.75rem; background:#eef2f5; color:var(--oxford); padding:3px 8px; border-radius:4px; font-weight:700; margin-right:10px;">${comp.competencia || 'CECRL'}</span>
-                                <span style="font-size:0.95rem; color:#333;">${comp.descriptor}</span>
-                            </div>
-                        </div>`;
-                    }
+                checklist.forEach(item => {
+                    const statusClass = item.completado ? 'done' : '';
+                    const iconCheck = item.completado ? 'fa-check-circle' : 'fa-circle';
+                    const iconColor = item.completado ? 'var(--green)' : '#ccc';
+
+                    target.innerHTML += `
+                    <div class="checklist-item ${statusClass}">
+                        <i class="far ${iconCheck}" style="color: ${iconColor}; font-size: 1.3rem; cursor:pointer;"></i>
+                        <div>
+                            <span style="font-size:0.75rem; background:#eef2f5; color:var(--oxford); padding:3px 8px; border-radius:4px; font-weight:700; margin-right:10px;">${item.competencia || 'CECRL'}</span>
+                            <span style="font-size:0.95rem; color:#333;">${item.descriptor}</span>
+                        </div>
+                    </div>`;
                 });
             }
         }
