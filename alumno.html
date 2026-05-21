@@ -129,7 +129,7 @@
             text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
         }
 
-        /* BARRA DE PROGRESO DINÁMICA */
+        /* BARRA DE PROGRESO CORREGIDA CON ESTILOS DINÁMICOS REALES */
         .progress-container {
             width: 250px;
             margin-left: 20px;
@@ -144,16 +144,19 @@
             text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
         }
         .progress-bar-bg {
-            height: 8px;
-            background: rgba(255,255,255,0.2);
-            border-radius: 4px;
+            height: 12px;
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 6px;
             overflow: hidden;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.2);
         }
         .progress-bar-fill {
             height: 100%;
             width: 0%;
-            background: var(--green);
-            transition: width 0.5s ease;
+            background: linear-gradient(90deg, #28A745, #5cb85c);
+            box-shadow: 0 0 8px rgba(40, 167, 69, 0.6);
+            transition: width 0.4s ease-in-out;
         }
 
         .banner-right { gap: 25px; }
@@ -409,8 +412,7 @@
                             <button class="skill-tab-btn" id="skill-PE" onclick="setSkillFilter('PE')">Production Écrite</button>
                             <button class="skill-tab-btn" id="skill-PO" onclick="setSkillFilter('PO')">Production Orale</button>
                         </div>
-                        
-                        </div>
+                    </div>
 
                     <div id="dynamic-workspace-target">
                         <p class="loading-text"><i class="fas fa-spinner fa-spin"></i> Chargement des données...</p>
@@ -448,13 +450,11 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        // Variables de estado
         let activeMainTab = "parcours"; 
         let currentLevel = "A1"; 
         let currentSkill = "CO"; 
         let dbCacheData = null;
 
-        // Gestión de paginación interna uno por uno
         let ejerciciosFiltrados = [];
         let indiceActual = 0;
 
@@ -516,13 +516,12 @@
 
         window.setSkillFilter = (skill) => {
             currentSkill = skill;
-            indiceActual = 0; // Reiniciar paginación al cambiar de habilidad
+            indiceActual = 0; 
             document.querySelectorAll('.skill-tab-btn').forEach(btn => btn.classList.remove('active'));
             document.getElementById(`skill-${skill}`).classList.add('active');
             renderPlatformView();
         };
 
-        // Generación de lista plana de ejercicios (Filtro por unidad ELIMINADO)
         function actualizarEjerciciosFiltrados() {
             ejerciciosFiltrados = [];
             if (!dbCacheData || !dbCacheData.itinerario) return;
@@ -536,7 +535,6 @@
                 }
 
                 subLista.forEach(ej => {
-                    // Guardamos la unidad y tema en el ejercicio para mantener el título del bloque
                     ej.metaUnidad = u.unidad || 'Unité';
                     ej.metaTema = u.tema || '';
                     ejerciciosFiltrados.push(ej);
@@ -589,8 +587,7 @@
                     return;
                 }
 
-                // Cálculo reactivo del progreso del alumno
-                const progresoCalculado = (indiceActual / ejerciciosFiltrados.length) * 100;
+                const progresoCalculado = ejerciciosFiltrados.length > 0 ? (indiceActual / ejerciciosFiltrados.length) * 100 : 0;
                 document.getElementById('progress-percentage').innerText = `${Math.round(progresoCalculado)}%`;
                 document.getElementById('progress-bar-fill').style.width = `${progresoCalculado}%`;
 
@@ -608,18 +605,19 @@
                             <i class="fas fa-chevron-right" style="color: var(--gold); font-size: 0.8rem;"></i> ${ej.instruccion || 'Exercice Pratique'}
                         </h4>`;
 
-                // AUDIO NATIVO GARANTIZADO: Corrección a URL v0 de Firebase Storage
+                // DIRECCIONAMIENTO DE STORAGE V0 CORREGIDO + LIMPIEZA DE CARACTERES COMODÍN (*)
                 if (ej.ruta_audio) {
                     let audioUrl = ej.ruta_audio;
                     if (audioUrl.startsWith("gs://")) {
                         let pathStr = audioUrl.replace("gs://objectif-reussite-delf.firebasestorage.app/", "");
                         if(pathStr.startsWith("/")) pathStr = pathStr.substring(1);
+                        pathStr = pathStr.replace(/\*/g, ""); // Limpia asteriscos de comodín
                         const pathEncoded = encodeURIComponent(pathStr);
                         audioUrl = `https://firebasestorage.googleapis.com/v0/b/objectif-reussite-delf.firebasestorage.app/o/${pathEncoded}?alt=media`;
                     }
                     htmlContenido += `
                     <div style="margin-bottom: 20px; background: #fdfdfd; padding: 10px; border-radius: 6px; border: 1px dashed var(--gold);">
-                        <audio controls style="width:100%;" src="${audioUrl}"></audio>
+                        <audio controls style="width:100%;" src="${audioUrl}" preload="auto"></audio>
                     </div>`;
                 }
 
@@ -627,7 +625,7 @@
                     htmlContenido += `<div style="background: #fdfdfd; border: 1px solid #eaeaea; padding: 18px; border-radius: 5px; margin-bottom: 20px; line-height: 1.7; color: #333;">${ej.texto_lectura}</div>`;
                 }
 
-                // MOSTRAR PREGUNTAS SI EXISTEN (Sin importar qué diga el tipo)
+                // INYECCIÓN DE PREGUNTAS MUESTRA SIEMPRE QUE EL ARREGLO EXISTA
                 if (ej.preguntas && ej.preguntas.length > 0) {
                     ej.preguntas.forEach((p, idx) => {
                         htmlContenido += `
@@ -644,7 +642,6 @@
                         htmlContenido += `</div>`;
                     });
 
-                    // BOTONES SEPARADOS
                     htmlContenido += `
                     <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 15px;">
                         <button class="btn-validate-exercise" id="btn-submit-ans" onclick="window.validarEjercicioSeleccionado()">
@@ -655,7 +652,7 @@
                         </button>
                     </div>`;
 
-                } else if (ej.tipo === 'redaccion') {
+                } else if (ej.tipo === 'redaccion' || ej.habilidad === 'PE') {
                     htmlContenido += `
                     <textarea placeholder="Rédigez votre production écrite ici..." style="width: 100%; height: 160px; padding: 15px; border: 1px solid #dcdcdc; border-radius: 6px; font-family: 'Montserrat', sans-serif; font-size: 0.95rem; resize: vertical; box-sizing: border-box; outline: none;"></textarea>
                     
@@ -668,7 +665,7 @@
                         </button>
                    </div>`;
 
-                } else if (ej.tipo === 'interaccion_tiempo_real') {
+                } else if (ej.tipo === 'interaccion_tiempo_real' || ej.habilidad === 'PO') {
                     htmlContenido += `
                     <div style="background: #f4f7f9; border: 1px solid #d2dbe0; padding: 20px; border-radius: 6px; text-align: center; margin-top: 15px;">
                         <p style="color: var(--oxford); font-weight: bold; font-size: 1.1rem; margin-top: 0; margin-bottom: 8px; display: flex; align-items: center; justify-content: center; gap: 10px;">
