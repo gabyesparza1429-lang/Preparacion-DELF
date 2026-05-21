@@ -220,7 +220,7 @@
             margin: 0 auto;
         }
 
-        /* SKILL SELECTOR SUB-BAR (DENTRO DE MON PARCOURS) */
+        /* SKILL SELECTOR SUB-BAR */
         .skill-selector-bar {
             display: flex;
             gap: 10px;
@@ -269,7 +269,7 @@
             cursor: pointer;
         }
 
-        /* CARDS DE UNIDADES CON SU BORDE IZQUIERDO DORADO */
+        /* CARDS DE UNIDADES */
         .unit-box {
             background: transparent;
             margin-bottom: 30px;
@@ -282,6 +282,23 @@
             margin-bottom: 20px; 
             border-radius: 6px; 
             box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+        }
+
+        /* BOTÓN DE VALIDACIÓN DE EJERCICIOS */
+        .btn-validate-exercise {
+            background: var(--oxford);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: background 0.2s;
+        }
+        .btn-validate-exercise:hover {
+            background: var(--dark-blue);
         }
 
         /* RIGHT AREA: SOPHIA TIPS COLUMN FIXED */
@@ -401,7 +418,7 @@
             
             <div class="content-area">
                 
-                <img src="./assets/Logo.png" class="watermark-logo" alt="Watermark Logo">
+                <img src="assets/Logo.png" class="watermark-logo" alt="Watermark Logo">
 
                 <div class="workspace-content-wrapper">
                     
@@ -439,7 +456,7 @@
                     <h3>Sophia Tips</h3>
                 </div>
                 <div class="sophia-tips-content" id="sophia-tips-target">
-                    <p style="color: #aaa; font-size: 0.9rem; text-align: center; margin-top: 40px;">Aucun conseil disponible pour le moment.</p>
+                    <p style="color: #aaa; font-size: 0.9rem; text-align: center; margin-top: 40px;">Aucun conseil disponible por le moment.</p>
                 </div>
             </div>
 
@@ -447,63 +464,48 @@
     </div>
 
     <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-        import { firebaseConfig } from "./js/firebase-config.js";
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
+        import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCgog8tKspHy01ZHE8Dthl9O4W6lw1a_Ec",
+            authDomain: "objectif-reussite-delf.firebaseapp.com",
+            projectId: "objectif-reussite-delf",
+            storageBucket: "objectif-reussite-delf.firebasestorage.app",
+            messagingSenderId: "942279633770",
+            appId: "1:942279633770:web:687ba6d819747eb29c1313"
+        };
 
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
         // Variables de estado
         let activeMainTab = "parcours"; 
-        let currentLevel = "B1"; 
+        let currentLevel = "A1"; 
         let currentSkill = "CO"; 
         let currentUnitFilter = "all";
         let dbCacheData = null;
+
+        // Gestión de paginación interna uno por uno
+        let ejerciciosFiltrados = [];
+        let indiceActual = 0;
 
         const urlParams = new URLSearchParams(window.location.search);
         const studentId = urlParams.get('id') || 'default_student';
 
         async function init() {
-            // Permitir que el nivel sea controlado por URL (especialmente para vista previa)
             const urlLevel = urlParams.get('level');
-            if (urlLevel) {
-                currentLevel = urlLevel.toUpperCase().trim();
-            }
+            if (urlLevel) currentLevel = urlLevel;
 
             try {
-                // 1. Cargar metadatos del estudiante
-                let userData = null;
-                if (studentId === 'admin_preview') {
-                    userData = {
-                        nombre: "Admin Preview",
-                        nivel: currentLevel,
-                        progreso: 65,
-                        fecha_examen: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString()
-                    };
-                } else {
-                    const userSnap = await getDoc(doc(db, "Usuarios", studentId));
-                    if (userSnap.exists()) {
-                        userData = userSnap.data();
-                        // Solo sobreescribir el nivel si NO viene por URL
-                        if (!urlLevel && userData.nivel) {
-                            currentLevel = userData.nivel.toUpperCase().trim();
-                        }
-                    }
-                }
-
-                // Actualizar indicadores UI con el nivel final decidido
-                document.getElementById('level-indicator').innerText = `NIVEAU ${currentLevel}`;
-
-                if (userData) {
-                    document.getElementById('student-welcome').innerText = `Bonjour, ${userData.nombre || 'Étudiant'}`;
+                const userSnap = await getDoc(doc(db, "Usuarios", studentId));
+                if (userSnap.exists()) {
+                    const userData = userSnap.data();
+                    if (!urlLevel) currentLevel = userData.nivel || "A1";
                     
-                    // Sincronizar barra de progreso
-                    const prog = userData.progreso || 0;
-                    document.getElementById('progress-percentage').innerText = `${prog}%`;
-                    document.getElementById('progress-bar-fill').style.width = `${prog}%`;
-
-                    // Calcular cuenta regresiva (días restantes)
+                    document.getElementById('student-welcome').innerText = `Bonjour, ${userData.nombre || 'Étudiant'}`;
+                    document.getElementById('level-indicator').innerText = `NIVEAU ${currentLevel}`;
+                    
                     if(userData.fecha_examen) {
                         const examDate = new Date(userData.fecha_examen);
                         const today = new Date();
@@ -516,13 +518,12 @@
                     document.getElementById('level-indicator').innerText = `NIVEAU ${currentLevel}`;
                 }
                 
-                // 2. Traer el banco de datos JSON del nivel generado por Sophia
                 const snap = await getDoc(doc(db, "BibliotecaEjercicios", currentLevel));
                 if (snap.exists()) {
-                    dbCacheData = snap.data();
+                    const RawData = snap.data();
+                    dbCacheData = RawData.Valor ? JSON.parse(RawData.Valor) : RawData;
                 }
 
-                // Renderizar la vista por defecto
                 renderPlatformView();
 
             } catch (error) {
@@ -531,7 +532,6 @@
             }
         }
 
-        // Controlador de pestañas principales (Mon Parcours vs Mon Carnet)
         window.switchMainTab = (tabName) => {
             activeMainTab = tabName;
             document.querySelectorAll('.nav-tab-btn').forEach(btn => btn.classList.remove('active'));
@@ -546,21 +546,46 @@
             renderPlatformView();
         };
 
-        // Cambiar filtros internos de habilidades
         window.setSkillFilter = (skill) => {
             currentSkill = skill;
+            indiceActual = 0; // Reiniciar paginación al cambiar de habilidad
             document.querySelectorAll('.skill-tab-btn').forEach(btn => btn.classList.remove('active'));
             document.getElementById(`skill-${skill}`).classList.add('active');
             renderPlatformView();
         };
 
-        // Cambiar filtro por unidad
         window.setUnitFilter = (unit) => {
             currentUnitFilter = unit;
+            indiceActual = 0; // Reiniciar paginación al cambiar de unidad
             renderPlatformView();
         };
 
-        // MOTOR PRINCIPAL DE DESPLIEGUE VISUAL ACORDE AL PLAN AUTORIZADO
+        // Generación de lista plana de ejercicios según los filtros activos
+        function actualizarEjerciciosFiltrados() {
+            ejerciciosFiltrados = [];
+            if (!dbCacheData || !dbCacheData.itinerario) return;
+
+            dbCacheData.itinerario.forEach(u => {
+                const uNum = (u.unidad || u.unite || "").toString();
+                if (currentUnitFilter !== 'all' && !uNum.includes(currentUnitFilter)) return;
+
+                // Soporte para arreglos directos (CO, CE) o el genérico filtrado
+                let subLista = [];
+                if (u[currentSkill]) {
+                    subLista = u[currentSkill];
+                } else if (u.ejercicios) {
+                    subLista = u.ejercicios.filter(e => e.habilidad === currentSkill);
+                }
+
+                subLista.forEach(ej => {
+                    // Guardamos la unidad y tema en el ejercicio para mantener el título del bloque
+                    ej.metaUnidad = u.unidad || 'Unité';
+                    ej.metaTema = u.tema || '';
+                    ejerciciosFiltrados.push(ej);
+                });
+            });
+        }
+
         function renderPlatformView() {
             const target = document.getElementById('dynamic-workspace-target');
             const tipsTarget = document.getElementById('sophia-tips-target');
@@ -570,7 +595,6 @@
                 return;
             }
 
-            // Renderizar la barra lateral de Sophia Tips fija
             const tips = dbCacheData.sophia_tips || [];
             if(tips.length > 0) {
                 tipsTarget.innerHTML = "";
@@ -579,95 +603,139 @@
                 });
             }
 
-            // Enrutador de pantallas principales
             if (activeMainTab === "parcours") {
-                // RENDERIZAR MON PARCOURS (EJERCICIOS INTERACTIVOS EXTRAÍDOS DEL LIBRO)
-                const itinerario = dbCacheData.itinerario || dbCacheData.itinerario_completo || [];
-                target.innerHTML = "";
+                actualizarEjerciciosFiltrados();
 
-                itinerario.forEach(u => {
-                    const uNum = (u.unidad || u.unite || "").toString();
-                    if (currentUnitFilter !== 'all' && !uNum.includes(currentUnitFilter)) return;
-
-                    const ejercicios = (u.ejercicios || []).filter(e => e.habilidad === currentSkill);
-
-                    if (ejercicios && ejercicios.length > 0) {
-                        let htmlContenido = `
-                        <div class="unit-box">
-                            <h3 style="color: var(--oxford); font-size: 1.2rem; border-bottom: 2px solid #eef2f5; padding-bottom: 8px; margin-bottom: 15px; font-weight:700;">
-                                <i class="fas fa-bookmark" style="color: var(--gold); margin-right: 8px;"></i>${u.unidad || 'Unité'} ${u.tema ? `- ${u.tema}` : ''}
-                            </h3>`;
-
-                        ejercicios.forEach(ej => {
-                            htmlContenido += `
-                            <div class="exercise-card">
-                                <h4 style="margin-top: 0; margin-bottom: 15px; color: var(--oxford); font-size: 1.05rem; display: flex; align-items: center; gap: 10px;">
-                                    <i class="fas fa-chevron-right" style="color: var(--gold); font-size: 0.8rem;"></i> ${ej.instruccion || 'Exercice Pratique'}
-                                </h4>`;
-
-                            if (ej.texto_lectura) {
-                                htmlContenido += `<div style="background: #fdfdfd; border: 1px solid #eaeaea; padding: 18px; border-radius: 5px; margin-bottom: 20px; line-height: 1.7; color: #333;">${ej.texto_lectura}</div>`;
-                            }
-
-                            // Renderizado interactivo por tipo de ejercicio JSON
-                            if (ej.tipo === 'opcion_multiple' && ej.preguntas) {
-                                ej.preguntas.forEach((p, idx) => {
-                                    htmlContenido += `
-                                    <div style="margin-bottom: 20px; background: #fafbfc; padding: 15px; border-radius: 6px;">
-                                        <p style="margin-top:0; margin-bottom: 12px; font-weight: 600; color: #222;">${idx + 1}. ${p.pregunta}</p>`;
-                                    if(p.opciones) {
-                                        p.opciones.forEach(opt => {
-                                            htmlContenido += `
-                                            <label style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px; cursor: pointer; font-size: 0.95rem; color: #444;">
-                                                <input type="radio" name="quiz_${idx}" value="${opt}" style="accent-color: var(--oxford);"> ${opt}
-                                            </label>`;
-                                        });
-                                    }
-                                    htmlContenido += `</div>`;
-                                });
-
-                            } else if (ej.tipo === 'redaccion') {
-                                htmlContenido += `
-                                <textarea placeholder="Rédigez votre production écrite ici..." style="width: 100%; height: 160px; padding: 15px; border: 1px solid #dcdcdc; border-radius: 6px; font-family: 'Montserrat', sans-serif; font-size: 0.95rem; resize: vertical; box-sizing: border-box; outline: none;"></textarea>
-                                <div style="display: flex; justify-content: flex-end; margin-top: 12px;">
-                                    <button style="background: var(--oxford); color: white; border: none; padding: 12px 24px; border-radius: 6px; cursor: pointer; font-family: 'Montserrat', sans-serif; font-weight: 600; font-size: 0.9rem;">
-                                        <i class="fas fa-paper-plane"></i> Soumettre pour Évaluation IA
-                                    </button>
-                               </div>`;
-
-                            } else if (ej.tipo === 'interaccion_tiempo_real') {
-                                htmlContenido += `
-                                <div style="background: #f4f7f9; border: 1px solid #d2dbe0; padding: 20px; border-radius: 6px; text-align: center; margin-top: 15px;">
-                                    <p style="color: var(--oxford); font-weight: bold; font-size: 1.1rem; margin-top: 0; margin-bottom: 8px; display: flex; align-items: center; justify-content: center; gap: 10px;">
-                                        <i class="fas fa-microphone" style="color: var(--green);"></i> MODE JURY ACTIF (Temps Réel)
-                                    </p>
-                                    <p style="font-size: 0.9rem; color: #555; margin-bottom: 20px; max-width: 600px; margin-left: auto; margin-right: auto;">
-                                        Sophia actuará como examinador oficial del DELF interactuando contigo oralmente paso a paso basándose en el juego de roles del libro.
-                                    </p>
-                                    <button style="background: var(--green); color: white; border: none; padding: 14px 30px; border-radius: 6px; cursor: pointer; font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.95rem; display: inline-flex; align-items: center; gap: 10px; box-shadow: 0 4px 12px rgba(40, 167, 69, 0.25);">
-                                        <i class="fas fa-play"></i> Démarrer l'Épreuve Orale
-                                    </button>
-                                </div>`;
-                            }
-
-                            htmlContenido += `</div>`;
-                        });
-
-                        htmlContenido += `</div>`;
-                        target.innerHTML += htmlContenido;
-                    }
-                });
-
-                if (target.children.length === 0) {
+                if (ejerciciosFiltrados.length === 0) {
+                    // Actualización de barra a 0% si no hay elementos
+                    document.getElementById('progress-percentage').innerText = `0%`;
+                    document.getElementById('progress-bar-fill').style.width = `0%`;
+                    
                     target.innerHTML = `
                     <div style="text-align: center; padding: 40px; color: #888;">
                         <i class="fas fa-folder-open" style="font-size: 3rem; margin-bottom: 15px; color: #ccc;"></i>
                         <p style="margin: 0;">Aucun exercice de <strong>${currentSkill}</strong> n'a été généré pour cette sélection.</p>
                     </div>`;
+                    return;
                 }
 
+                // Control de desbordamiento de índice
+                if (indiceActual >= ejerciciosFiltrados.length) {
+                    document.getElementById('progress-percentage').innerText = `100%`;
+                    document.getElementById('progress-bar-fill').style.width = `100%`;
+                    
+                    target.innerHTML = `
+                    <div class="exercise-card" style="text-align: center; padding: 40px;">
+                        <i class="fas fa-check-circle" style="font-size: 3.5rem; color: var(--green); margin-bottom: 15px;"></i>
+                        <h3 style="color: var(--oxford);">Félicitations !</h3>
+                        <p style="color: #555;">Vous avez terminé tous les exercices disponibles pour cette section.</p>
+                    </div>`;
+                    return;
+                }
+
+                // Cálculo reactivo del progreso del alumno
+                const progresoCalculado = (indiceActual / ejerciciosFiltrados.length) * 100;
+                document.getElementById('progress-percentage').innerText = `${Math.round(progresoCalculado)}%`;
+                document.getElementById('progress-bar-fill').style.width = `${progresoCalculado}%`;
+
+                const ej = ejerciciosFiltrados[indiceActual];
+
+                let htmlContenido = `
+                <div class="unit-box">
+                    <h3 style="color: var(--oxford); font-size: 1.2rem; border-bottom: 2px solid #eef2f5; padding-bottom: 8px; margin-bottom: 15px; font-weight:700;">
+                        <i class="fas fa-bookmark" style="color: var(--gold); margin-right: 8px;"></i>${ej.metaUnidad} ${ej.metaTema ? `- ${ej.metaTema}` : ''} 
+                        <span style="font-size: 0.85rem; color: #888; font-weight: 400; float: right;">(${indiceActual + 1} / ${ejerciciosFiltrados.length})</span>
+                    </h3>
+                    
+                    <div class="exercise-card">
+                        <h4 style="margin-top: 0; margin-bottom: 15px; color: var(--oxford); font-size: 1.05rem; display: flex; align-items: center; gap: 10px;">
+                            <i class="fas fa-chevron-right" style="color: var(--gold); font-size: 0.8rem;"></i> ${ej.instruccion || 'Exercice Pratique'}
+                        </h4>`;
+
+                // Inyección segura del reproductor de audio nativo
+                if (ej.ruta_audio) {
+                    let audioUrl = ej.ruta_audio;
+                    if (audioUrl.startsWith("gs://")) {
+                        const parts = audioUrl.replace("gs://", "").split("/");
+                        const bucket = parts.shift();
+                        const path = encodeURIComponent(parts.join("/"));
+                        audioUrl = `https://firebasestorage.googleapis.com/v1/b/${bucket}/o/${path}?alt=media`;
+                    }
+                    htmlContenido += `
+                    <div style="margin-bottom: 20px; background: #fdfdfd; padding: 10px; border-radius: 6px; border: 1px dashed var(--gold);">
+                        <audio controls style="width:100%;" src="${audioUrl}"></audio>
+                    </div>`;
+                }
+
+                if (ej.texto_lectura) {
+                    htmlContenido += `<div style="background: #fdfdfd; border: 1px solid #eaeaea; padding: 18px; border-radius: 5px; margin-bottom: 20px; line-height: 1.7; color: #333;">${ej.texto_lectura}</div>`;
+                }
+
+                // Renderizado condicional por tipo
+                if ((ej.tipo === 'opcion_multiple' || !ej.tipo) && ej.preguntas) {
+                    ej.preguntas.forEach((p, idx) => {
+                        htmlContenido += `
+                        <div style="margin-bottom: 20px; background: #fafbfc; padding: 15px; border-radius: 6px;">
+                            <p style="margin-top:0; margin-bottom: 12px; font-weight: 600; color: #222;">${p.pregunta}</p>`;
+                        if(p.opciones) {
+                            p.opciones.forEach((opt, oIdx) => {
+                                htmlContenido += `
+                                <label style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px; cursor: pointer; font-size: 0.95rem; color: #444;">
+                                    <input type="radio" name="quiz_active_${idx}" value="${opt}" style="accent-color: var(--oxford);"> ${opt}
+                                </label>`;
+                            });
+                        }
+                        htmlContenido += `</div>`;
+                    });
+
+                    // BOTONES SEPARADOS DE ENVIAR Y AVANZAR
+                    htmlContenido += `
+                    <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 15px;">
+                        <button class="btn-validate-exercise" id="btn-submit-ans" onclick="window.validarEjercicioSeleccionado()">
+                            <i class="fas fa-paper-plane"></i> Envoyer (Enviar)
+                        </button>
+                        <button class="btn-validate-exercise" id="btn-next-ans" style="display: none; background: var(--green);" onclick="window.avanzarEjercicio()">
+                            Suivant (Avanzar) <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>`;
+
+                } else if (ej.tipo === 'redaccion') {
+                    htmlContenido += `
+                    <textarea placeholder="Rédigez votre production écrite ici..." style="width: 100%; height: 160px; padding: 15px; border: 1px solid #dcdcdc; border-radius: 6px; font-family: 'Montserrat', sans-serif; font-size: 0.95rem; resize: vertical; box-sizing: border-box; outline: none;"></textarea>
+                    
+                    <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 12px;">
+                        <button class="btn-validate-exercise" id="btn-submit-ans" onclick="window.validarEjercicioSeleccionado()">
+                            <i class="fas fa-paper-plane"></i> Soumettre (Enviar)
+                        </button>
+                        <button class="btn-validate-exercise" id="btn-next-ans" style="display: none; background: var(--green);" onclick="window.avanzarEjercicio()">
+                            Suivant (Avanzar) <i class="fas fa-arrow-right"></i>
+                        </button>
+                   </div>`;
+
+                } else if (ej.tipo === 'interaccion_tiempo_real') {
+                    htmlContenido += `
+                    <div style="background: #f4f7f9; border: 1px solid #d2dbe0; padding: 20px; border-radius: 6px; text-align: center; margin-top: 15px;">
+                        <p style="color: var(--oxford); font-weight: bold; font-size: 1.1rem; margin-top: 0; margin-bottom: 8px; display: flex; align-items: center; justify-content: center; gap: 10px;">
+                            <i class="fas fa-microphone" style="color: var(--green);"></i> MODE JURY ACTIF (Temps Réel)
+                        </p>
+                        <p style="font-size: 0.9rem; color: #555; margin-bottom: 20px; max-width: 600px; margin-left: auto; margin-right: auto;">
+                            Sophia actuará como examinador oficial del DELF interactuando contigo oralmente paso a paso basándose en el juego de roles del libro.
+                        </p>
+                        <div style="display: flex; justify-content: center; gap: 10px; margin-top: 12px;">
+                            <button class="btn-validate-exercise" id="btn-submit-ans" style="background: var(--green); margin-top:0;" onclick="window.validarEjercicioSeleccionado()">
+                                <i class="fas fa-play"></i> Démarrer (Iniciar)
+                            </button>
+                            <button class="btn-validate-exercise" id="btn-next-ans" style="display: none; background: var(--oxford);" onclick="window.avanzarEjercicio()">
+                                Terminer et Suivant (Avanzar) <i class="fas fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>`;
+                }
+
+                htmlContenido += `</div></div>`;
+                target.innerHTML = htmlContenido;
+
             } else if (activeMainTab === "carnet") {
-                // RENDERIZAR MON CARNET (DESCRIPTOR OFICIAL DEL CECRL)
                 const checklist = dbCacheData.checklist || [];
                 target.innerHTML = `<h3 style="color: var(--oxford); font-size: 1.2rem; margin-bottom: 20px; font-weight:700;">Mon Carnet de Bord - Compétences du CECRL</h3>`;
                 
@@ -692,6 +760,24 @@
                 });
             }
         }
+
+        // LÓGICA DE BOTÓN 1: "ENVIAR" (Bloquea respuesta)
+        window.validarEjercicioSeleccionado = () => {
+            const btnSubmit = document.getElementById('btn-submit-ans');
+            const btnNext = document.getElementById('btn-next-ans');
+            
+            if (btnSubmit) btnSubmit.style.display = 'none';
+            if (btnNext) btnNext.style.display = 'inline-block';
+            
+            // Ocultamos opciones para que el alumno sepa que ya entregó la respuesta
+            document.querySelectorAll('input[type="radio"], textarea').forEach(el => el.disabled = true);
+        };
+
+        // LÓGICA DE BOTÓN 2: "AVANZAR" (Pasa a la siguiente etapa de uno por uno)
+        window.avanzarEjercicio = () => {
+            indiceActual++;
+            renderPlatformView();
+        };
 
         init();
     </script>
