@@ -605,19 +605,23 @@
                             <i class="fas fa-chevron-right" style="color: var(--gold); font-size: 0.8rem;"></i> ${ej.instruccion || 'Exercice Pratique'}
                         </h4>`;
 
-                // DIRECCIONAMIENTO DE STORAGE V0 CORREGIDO + LIMPIEZA DE CARACTERES COMODÍN (*)
+                // MOTOR DE AUDIO DINÁMICO REPARADO Y CON BOTÓN DEBUGGER
                 if (ej.ruta_audio) {
                     let audioUrl = ej.ruta_audio;
                     if (audioUrl.startsWith("gs://")) {
-                        let pathStr = audioUrl.replace("gs://objectif-reussite-delf.firebasestorage.app/", "");
-                        if(pathStr.startsWith("/")) pathStr = pathStr.substring(1);
-                        pathStr = pathStr.replace(/\*/g, ""); // Limpia asteriscos de comodín
+                        const parts = audioUrl.replace("gs://", "").split("/");
+                        const bucket = parts.shift(); // Extrae dinámicamente tu bucket real
+                        let pathStr = parts.join("/"); 
+                        pathStr = pathStr.replace(/\*/g, ""); // Limpia asteriscos de IA
                         const pathEncoded = encodeURIComponent(pathStr);
-                        audioUrl = `https://firebasestorage.googleapis.com/v0/b/objectif-reussite-delf.firebasestorage.app/o/${pathEncoded}?alt=media`;
+                        audioUrl = `https://firebasestorage.googleapis.com/v0/b/${bucket}/o/${pathEncoded}?alt=media`;
                     }
                     htmlContenido += `
                     <div style="margin-bottom: 20px; background: #fdfdfd; padding: 10px; border-radius: 6px; border: 1px dashed var(--gold);">
                         <audio controls style="width:100%;" src="${audioUrl}" preload="auto"></audio>
+                        <div style="text-align:right; margin-top:5px;">
+                            <a href="${audioUrl}" target="_blank" style="font-size:0.75rem; color:#007bff; text-decoration:none;"><i class="fas fa-external-link-alt"></i> Diagnóstico: Probar enlace directo</a>
+                        </div>
                     </div>`;
                 }
 
@@ -625,7 +629,6 @@
                     htmlContenido += `<div style="background: #fdfdfd; border: 1px solid #eaeaea; padding: 18px; border-radius: 5px; margin-bottom: 20px; line-height: 1.7; color: #333;">${ej.texto_lectura}</div>`;
                 }
 
-                // INYECCIÓN DE PREGUNTAS MUESTRA SIEMPRE QUE EL ARREGLO EXISTA
                 if (ej.preguntas && ej.preguntas.length > 0) {
                     ej.preguntas.forEach((p, idx) => {
                         htmlContenido += `
