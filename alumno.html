@@ -249,26 +249,6 @@
             color: white;
         }
 
-        /* FILTER SECTION */
-        .filter-section {
-            margin-bottom: 25px;
-            display: flex;
-            gap: 12px;
-            align-items: center;
-        }
-
-        .filter-section select {
-            padding: 8px 16px;
-            border-radius: 6px;
-            border: 1px solid rgba(0,33,71,0.15);
-            font-family: 'Montserrat', sans-serif;
-            font-size: 0.85rem;
-            background: white;
-            color: var(--oxford);
-            outline: none;
-            cursor: pointer;
-        }
-
         /* CARDS DE UNIDADES */
         .unit-box {
             background: transparent;
@@ -429,19 +409,8 @@
                             <button class="skill-tab-btn" id="skill-PE" onclick="setSkillFilter('PE')">Production Écrite</button>
                             <button class="skill-tab-btn" id="skill-PO" onclick="setSkillFilter('PO')">Production Orale</button>
                         </div>
-
-                        <div class="filter-section">
-                            <label style="color: var(--oxford); font-weight: 600; font-size: 0.9rem;">Filtrer par Unité:</label>
-                            <select id="unit-selector" onchange="setUnitFilter(this.value)">
-                                <option value="all">Toutes les Unités</option>
-                                <option value="1">Unité 1</option>
-                                <option value="2">Unité 2</option>
-                                <option value="3">Unité 3</option>
-                                <option value="4">Unité 4</option>
-                                <option value="5">Unité 5</option>
-                            </select>
+                        
                         </div>
-                    </div>
 
                     <div id="dynamic-workspace-target">
                         <p class="loading-text"><i class="fas fa-spinner fa-spin"></i> Chargement des données...</p>
@@ -483,7 +452,6 @@
         let activeMainTab = "parcours"; 
         let currentLevel = "A1"; 
         let currentSkill = "CO"; 
-        let currentUnitFilter = "all";
         let dbCacheData = null;
 
         // Gestión de paginación interna uno por uno
@@ -554,22 +522,12 @@
             renderPlatformView();
         };
 
-        window.setUnitFilter = (unit) => {
-            currentUnitFilter = unit;
-            indiceActual = 0; // Reiniciar paginación al cambiar de unidad
-            renderPlatformView();
-        };
-
-        // Generación de lista plana de ejercicios según los filtros activos
+        // Generación de lista plana de ejercicios (Filtro por unidad ELIMINADO)
         function actualizarEjerciciosFiltrados() {
             ejerciciosFiltrados = [];
             if (!dbCacheData || !dbCacheData.itinerario) return;
 
             dbCacheData.itinerario.forEach(u => {
-                const uNum = (u.unidad || u.unite || "").toString();
-                if (currentUnitFilter !== 'all' && !uNum.includes(currentUnitFilter)) return;
-
-                // Soporte para arreglos directos (CO, CE) o el genérico filtrado
                 let subLista = [];
                 if (u[currentSkill]) {
                     subLista = u[currentSkill];
@@ -607,7 +565,6 @@
                 actualizarEjerciciosFiltrados();
 
                 if (ejerciciosFiltrados.length === 0) {
-                    // Actualización de barra a 0% si no hay elementos
                     document.getElementById('progress-percentage').innerText = `0%`;
                     document.getElementById('progress-bar-fill').style.width = `0%`;
                     
@@ -619,7 +576,6 @@
                     return;
                 }
 
-                // Control de desbordamiento de índice
                 if (indiceActual >= ejerciciosFiltrados.length) {
                     document.getElementById('progress-percentage').innerText = `100%`;
                     document.getElementById('progress-bar-fill').style.width = `100%`;
@@ -652,14 +608,14 @@
                             <i class="fas fa-chevron-right" style="color: var(--gold); font-size: 0.8rem;"></i> ${ej.instruccion || 'Exercice Pratique'}
                         </h4>`;
 
-                // Inyección segura del reproductor de audio nativo
+                // AUDIO NATIVO GARANTIZADO: Corrección a URL v0 de Firebase Storage
                 if (ej.ruta_audio) {
                     let audioUrl = ej.ruta_audio;
                     if (audioUrl.startsWith("gs://")) {
-                        const parts = audioUrl.replace("gs://", "").split("/");
-                        const bucket = parts.shift();
-                        const path = encodeURIComponent(parts.join("/"));
-                        audioUrl = `https://firebasestorage.googleapis.com/v1/b/${bucket}/o/${path}?alt=media`;
+                        let pathStr = audioUrl.replace("gs://objectif-reussite-delf.firebasestorage.app/", "");
+                        if(pathStr.startsWith("/")) pathStr = pathStr.substring(1);
+                        const pathEncoded = encodeURIComponent(pathStr);
+                        audioUrl = `https://firebasestorage.googleapis.com/v0/b/objectif-reussite-delf.firebasestorage.app/o/${pathEncoded}?alt=media`;
                     }
                     htmlContenido += `
                     <div style="margin-bottom: 20px; background: #fdfdfd; padding: 10px; border-radius: 6px; border: 1px dashed var(--gold);">
@@ -671,8 +627,8 @@
                     htmlContenido += `<div style="background: #fdfdfd; border: 1px solid #eaeaea; padding: 18px; border-radius: 5px; margin-bottom: 20px; line-height: 1.7; color: #333;">${ej.texto_lectura}</div>`;
                 }
 
-                // Renderizado condicional por tipo
-                if ((ej.tipo === 'opcion_multiple' || !ej.tipo) && ej.preguntas) {
+                // MOSTRAR PREGUNTAS SI EXISTEN (Sin importar qué diga el tipo)
+                if (ej.preguntas && ej.preguntas.length > 0) {
                     ej.preguntas.forEach((p, idx) => {
                         htmlContenido += `
                         <div style="margin-bottom: 20px; background: #fafbfc; padding: 15px; border-radius: 6px;">
@@ -688,7 +644,7 @@
                         htmlContenido += `</div>`;
                     });
 
-                    // BOTONES SEPARADOS DE ENVIAR Y AVANZAR
+                    // BOTONES SEPARADOS
                     htmlContenido += `
                     <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 15px;">
                         <button class="btn-validate-exercise" id="btn-submit-ans" onclick="window.validarEjercicioSeleccionado()">
@@ -761,7 +717,6 @@
             }
         }
 
-        // LÓGICA DE BOTÓN 1: "ENVIAR" (Bloquea respuesta)
         window.validarEjercicioSeleccionado = () => {
             const btnSubmit = document.getElementById('btn-submit-ans');
             const btnNext = document.getElementById('btn-next-ans');
@@ -769,11 +724,9 @@
             if (btnSubmit) btnSubmit.style.display = 'none';
             if (btnNext) btnNext.style.display = 'inline-block';
             
-            // Ocultamos opciones para que el alumno sepa que ya entregó la respuesta
             document.querySelectorAll('input[type="radio"], textarea').forEach(el => el.disabled = true);
         };
 
-        // LÓGICA DE BOTÓN 2: "AVANZAR" (Pasa a la siguiente etapa de uno por uno)
         window.avanzarEjercicio = () => {
             indiceActual++;
             renderPlatformView();
