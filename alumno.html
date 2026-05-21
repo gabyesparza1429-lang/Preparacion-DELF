@@ -88,10 +88,10 @@
             position: relative;
         }
 
-        /* HEADER / BANNER CONFIGURADO A 400PX CON AJUSTE AUTOMÁTICO */
+        /* BANNER AJUSTADO AL ANCHO Y LARGO (400PX) ESTABLECIDOS SIN CORTARSE */
         .project-banner {
             background: var(--oxford) url('./assets/Banner.png') no-repeat center center;
-            background-size: cover; /* Ajusta la imagen proporcionalmente sin estirarla */
+            background-size: 100% 100%; /* Ajuste forzado exacto al contenedor */
             color: white;
             padding: 20px 40px;
             display: flex;
@@ -100,7 +100,7 @@
             border-bottom: 4px solid var(--gold);
             box-shadow: 0 4px 10px rgba(0,0,0,0.05);
             position: relative;
-            height: 400px; /* Modificado a la altura solicitada */
+            height: 400px; 
             box-sizing: border-box;
         }
 
@@ -108,7 +108,7 @@
             content: '';
             position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0, 33, 71, 0.4);
+            background: rgba(0, 33, 71, 0.2); 
             z-index: 1;
         }
 
@@ -334,29 +334,6 @@
             font-size: 0.9rem;
             line-height: 1.6;
         }
-
-        /* CARNET DE BORD CHECKLIST VIEW */
-        .checklist-item {
-            background: white;
-            padding: 16px 20px;
-            border-radius: 6px;
-            margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
-            border-left: 3px solid #ccc;
-        }
-        .checklist-item.done {
-            border-left-color: var(--green);
-        }
-
-        .loading-text {
-            text-align: center;
-            font-size: 1.1rem;
-            color: #888;
-            margin-top: 80px;
-        }
     </style>
 </head>
 <body>
@@ -400,7 +377,6 @@
         <div class="workspace-split">
             
             <div class="content-area">
-                
                 <img src="assets/Logo.png" class="watermark-logo" alt="Watermark Logo">
 
                 <div class="workspace-content-wrapper">
@@ -427,7 +403,7 @@
                     <h3>Sophia Tips</h3>
                 </div>
                 <div class="sophia-tips-content" id="sophia-tips-target">
-                    <p style="color: #aaa; font-size: 0.9rem; text-align: center; margin-top: 40px;">Aucun conseil disponible por le moment.</p>
+                    <p style="color: #aaa; font-size: 0.9rem; text-align: center; margin-top: 40px;">Aucun conseil disponible pour le moment.</p>
                 </div>
             </div>
 
@@ -547,7 +523,7 @@
             const tipsTarget = document.getElementById('sophia-tips-target');
             
             if (!dbCacheData) {
-                target.innerHTML = `<p style="color:#888; text-align:center; padding:20px;">Aucune donnée disponible pour le niveau ${currentLevel}.</p>`;
+                target.innerHTML = `<p style="color:#888; text-align:center; padding:20px;">Aucune donnée disponible para el nivel ${currentLevel}.</p>`;
                 return;
             }
 
@@ -569,7 +545,7 @@
                     target.innerHTML = `
                     <div style="text-align: center; padding: 40px; color: #888;">
                         <i class="fas fa-folder-open" style="font-size: 3rem; margin-bottom: 15px; color: #ccc;"></i>
-                        <p style="margin: 0;">Aucun exercice de <strong>${currentSkill}</strong> n'a été généré pour cette sélection.</p>
+                        <p style="margin: 0;">Aucun exercice de <strong>${currentSkill}</strong> n'a été généré pour esta sección.</p>
                     </div>`;
                     return;
                 }
@@ -605,20 +581,22 @@
                             <i class="fas fa-chevron-right" style="color: var(--gold); font-size: 0.8rem;"></i> ${ej.instruccion || 'Exercice Pratique'}
                         </h4>`;
 
-                // TRADUCTOR INTELIGENTE DE RUTA: CORRECCIÓN COMPLETA AL FORMATO REAL DE TU STORAGE ("piste_XX.mp3")
+                /* ENLACE UNIVERSAL CON EL NUEVO FORMATO DE REGLA ESTÁNDAR (XX.mp3) */
                 if (ej.ruta_audio) {
                     let audioUrl = ej.ruta_audio;
-                    // Buscamos cualquier número de 1 o 2 dígitos en la ruta que guardó la IA
                     const matchDigitos = audioUrl.match(/\d+/);
                     if (matchDigitos) {
                         let numeroPista = matchDigitos[0];
-                        // Si el número es de un solo dígito (ej: "2"), le agregamos el cero ("02") para que coincida con tus archivos
-                        if (numeroPista.length === 1) numeroPista = "0" + numeroPista;
+                        if (numeroPista.length > 2) {
+                            numeroPista = numeroPista.slice(-2);
+                        }
+                        if (numeroPista.length === 1) {
+                            numeroPista = "0" + numeroPista;
+                        }
                         
-                        // Reconstruimos el enlace público con el formato de tus archivos reales: "piste_XX.mp3"
-                        const pathReal = `niveles/${currentLevel}/audios/piste_${numeroPista}.mp3`;
+                        const pathReal = `niveles/${currentLevel}/audios/${numeroPista}.mp3`;
                         const pathEncoded = encodeURIComponent(pathReal);
-                        audioUrl = `https://firebasestorage.googleapis.com/v0/b/objectif-reussite-delf.firebasestorage.app/o/${pathEncoded}?alt=media`;
+                        audioUrl = `https://firebasestorage.googleapis.com/v1/b/objectif-reussite-delf.firebasestorage.app/o/${pathEncoded}?alt=media`;
                     }
 
                     htmlContenido += `
