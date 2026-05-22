@@ -23,7 +23,6 @@
             overflow: hidden; 
         }
         
-        /* SIDEBAR ORIGINAL */
         .sidebar { 
             width: 260px; 
             background: var(--oxford); 
@@ -79,7 +78,6 @@
             box-shadow: 0 4px 15px rgba(197, 160, 89, 0.4);
         }
 
-        /* MAIN INTERFACE LAYOUT */
         .main-container {
             flex-grow: 1;
             display: flex;
@@ -88,7 +86,6 @@
             position: relative;
         }
 
-        /* BANNER AJUSTADO FIJO A 400PX DE ALTO Y 100% DE ANCHO SIN CORTARSE */
         .project-banner {
             background: var(--oxford) url('./assets/Banner.png') no-repeat center center;
             background-size: 100% 100%; 
@@ -100,7 +97,7 @@
             border-bottom: 4px solid var(--gold);
             box-shadow: 0 4px 10px rgba(0,0,0,0.05);
             position: relative;
-            height: 300px; 
+            height: 400px; 
             box-sizing: border-box;
             flex-shrink: 0;
         }
@@ -130,7 +127,6 @@
             text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
         }
 
-        /* BARRA DE PROGRESO DINÁMICA */
         .progress-container {
             width: 250px;
             margin-left: 20px;
@@ -173,7 +169,6 @@
             text-shadow: none;
         }
 
-        /* CRONÓMETRO CUENTA REGRESIVA */
         .countdown-timer {
             display: flex;
             align-items: center;
@@ -187,7 +182,6 @@
             border: 1px solid rgba(40, 167, 69, 0.2);
         }
 
-        /* TWO-COLUMN WORKSPACE WRAPPER */
         .workspace-split {
             flex-grow: 1;
             display: flex;
@@ -195,7 +189,6 @@
             position: relative;
         }
 
-        /* LEFT AREA: CONTENT AND SKILLS VIEW */
         .content-area {
             flex-grow: 1;
             padding: 40px;
@@ -203,7 +196,6 @@
             position: relative;
         }
 
-        /* MARCA DE AGUA (LOGO ASSETS) */
         .watermark-logo {
             position: absolute;
             top: 50%;
@@ -224,7 +216,6 @@
             margin: 0 auto;
         }
 
-        /* SKILL SELECTOR SUB-BAR */
         .skill-selector-bar {
             display: flex;
             gap: 10px;
@@ -253,7 +244,6 @@
             color: white;
         }
 
-        /* CARDS DE UNIDADES */
         .unit-box {
             background: transparent;
             margin-bottom: 30px;
@@ -268,7 +258,6 @@
             box-shadow: 0 4px 12px rgba(0,0,0,0.02);
         }
 
-        /* BOTÓN DE VALIDACIÓN DE EJERCICIOS */
         .btn-validate-exercise {
             background: var(--oxford);
             color: white;
@@ -285,7 +274,6 @@
             background: var(--dark-blue);
         }
 
-        /* RIGHT AREA: SOPHIA TIPS COLUMN FIXED */
         .sophia-tips-sidebar {
             width: 320px;
             background: var(--oxford);
@@ -341,10 +329,10 @@
 
     <div class="sidebar">
         <h2>Mon Espace DELF</h2>
-        <button class="nav-tab-btn active" id="tab-parcours" onclick="switchMainTab('parcours')">
+        <button class="nav-tab-btn active" id="tab-parcours">
             <i class="fas fa-route"></i> Mon Parcours
         </button>
-        <button class="nav-tab-btn" id="tab-carnet" onclick="switchMainTab('carnet')">
+        <button class="nav-tab-btn" id="tab-carnet">
             <i class="fas fa-clipboard-list"></i> Mon Carnet
         </button>
     </div>
@@ -384,10 +372,10 @@
                     
                     <div id="parcours-controls-container">
                         <div class="skill-selector-bar">
-                            <button class="skill-tab-btn active" id="skill-CO" onclick="setSkillFilter('CO')">Compréhension Orale</button>
-                            <button class="skill-tab-btn" id="skill-CE" onclick="setSkillFilter('CE')">Compréhension Écrite</button>
-                            <button class="skill-tab-btn" id="skill-PE" onclick="setSkillFilter('PE')">Production Écrite</button>
-                            <button class="skill-tab-btn" id="skill-PO" onclick="setSkillFilter('PO')">Production Orale</button>
+                            <button class="skill-tab-btn active" id="skill-CO">Compréhension Orale</button>
+                            <button class="skill-tab-btn" id="skill-CE">Compréhension Écrite</button>
+                            <button class="skill-tab-btn" id="skill-PE">Production Écrite</button>
+                            <button class="skill-tab-btn" id="skill-PO">Production Orale</button>
                         </div>
                     </div>
 
@@ -582,7 +570,6 @@
                             <i class="fas fa-chevron-right" style="color: var(--gold); font-size: 0.8rem;"></i> ${ej.instruccion || 'Exercice Pratique'}
                         </h4>`;
 
-                /* CORRECCIÓN ABSOLUTA: CAMBIO DE V1 A V0 PARA EL ACCESO PÚBLICO DESDE GITHUB PAGES */
                 if (ej.ruta_audio) {
                     let audioUrl = ej.ruta_audio;
                     const matchDigitos = audioUrl.match(/\d+/);
@@ -597,7 +584,6 @@
                         
                         const pathReal = `niveles/${currentLevel}/audios/${numeroPista}.mp3`;
                         const pathEncoded = encodeURIComponent(pathReal);
-                        // FIXED: Cambiado v1/b/ por v0/b/ para abrir la llave del reproductor nativo en la web
                         audioUrl = `https://firebasestorage.googleapis.com/v0/b/objectif-reussite-delf.firebasestorage.app/o/${pathEncoded}?alt=media`;
                     }
 
@@ -629,10 +615,10 @@
 
                     htmlContenido += `
                     <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 15px;">
-                        <button class="btn-validate-exercise" id="btn-submit-ans" onclick="window.validarEjercicioSeleccionado()">
+                        <button class="btn-validate-exercise" id="btn-submit-ans">
                             <i class="fas fa-paper-plane"></i> Envoyer (Enviar)
                         </button>
-                        <button class="btn-validate-exercise" id="btn-next-ans" style="display: none; background: var(--green);" onclick="window.avanzarEjercicio()">
+                        <button class="btn-validate-exercise" id="btn-next-ans" style="display: none; background: var(--green);">
                             Suivant (Avanzar) <i class="fas fa-arrow-right"></i>
                         </button>
                     </div>`;
@@ -642,10 +628,10 @@
                     <textarea placeholder="Rédigez votre production écrite ici..." style="width: 100%; height: 160px; padding: 15px; border: 1px solid #dcdcdc; border-radius: 6px; font-family: 'Montserrat', sans-serif; font-size: 0.95rem; resize: vertical; box-sizing: border-box; outline: none;"></textarea>
                     
                     <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 12px;">
-                        <button class="btn-validate-exercise" id="btn-submit-ans" onclick="window.validarEjercicioSeleccionado()">
+                        <button class="btn-validate-exercise" id="btn-submit-ans">
                             <i class="fas fa-paper-plane"></i> Soumettre (Enviar)
                         </button>
-                        <button class="btn-validate-exercise" id="btn-next-ans" style="display: none; background: var(--green);" onclick="window.avanzarEjercicio()">
+                        <button class="btn-validate-exercise" id="btn-next-ans" style="display: none; background: var(--green);">
                             Suivant (Avanzar) <i class="fas fa-arrow-right"></i>
                         </button>
                    </div>`;
@@ -660,10 +646,10 @@
                             Sophia actuará como examinador oficial del DELF interactuando contigo oralmente paso a paso basándose en el juego de roles del libro.
                         </p>
                         <div style="display: flex; justify-content: center; gap: 10px; margin-top: 12px;">
-                            <button class="btn-validate-exercise" id="btn-submit-ans" style="background: var(--green); margin-top:0;" onclick="window.validarEjercicioSeleccionado()">
+                            <button class="btn-validate-exercise" id="btn-submit-ans" style="background: var(--green); margin-top:0;">
                                 <i class="fas fa-play"></i> Démarrer (Iniciar)
                             </button>
-                            <button class="btn-validate-exercise" id="btn-next-ans" style="display: none; background: var(--oxford);" onclick="window.avanzarEjercicio()">
+                            <button class="btn-validate-exercise" id="btn-next-ans" style="display: none; background: var(--oxford);">
                                 Terminer et Suivant (Avanzar) <i class="fas fa-arrow-right"></i>
                             </button>
                         </div>
@@ -672,6 +658,22 @@
 
                 htmlContenido += `</div></div>`;
                 target.innerHTML = htmlContenido;
+
+                const bSubmit = document.getElementById('btn-submit-ans');
+                const bNext = document.getElementById('btn-next-ans');
+                if (bSubmit) {
+                    bSubmit.addEventListener('click', () => {
+                        bSubmit.style.display = 'none';
+                        if (bNext) bNext.style.display = 'inline-block';
+                        document.querySelectorAll('input[type="radio"], textarea').forEach(el => el.disabled = true);
+                    });
+                }
+                if (bNext) {
+                    bNext.addEventListener('click', () => {
+                        indiceActual++;
+                        renderPlatformView();
+                    });
+                }
 
             } else if (activeMainTab === "carnet") {
                 const checklist = dbCacheData.checklist || [];
@@ -699,20 +701,12 @@
             }
         }
 
-        window.validarEjercicioSeleccionado = () => {
-            const btnSubmit = document.getElementById('btn-submit-ans');
-            const btnNext = document.getElementById('btn-next-ans');
-            
-            if (btnSubmit) btnSubmit.style.display = 'none';
-            if (btnNext) btnNext.style.display = 'inline-block';
-            
-            document.querySelectorAll('input[type="radio"], textarea').forEach(el => el.disabled = true);
-        };
-
-        window.avanzarEjercicio = () => {
-            indiceActual++;
-            renderPlatformView();
-        };
+        document.getElementById('tab-parcours').addEventListener('click', () => window.switchMainTab('parcours'));
+        document.getElementById('tab-carnet').addEventListener('click', () => window.switchMainTab('carnet'));
+        document.getElementById('skill-CO').addEventListener('click', () => window.setSkillFilter('CO'));
+        document.getElementById('skill-CE').addEventListener('click', () => window.setSkillFilter('CE'));
+        document.getElementById('skill-PE').addEventListener('click', () => window.setSkillFilter('PE'));
+        document.getElementById('skill-PO').addEventListener('click', () => window.setSkillFilter('PO'));
 
         init();
     </script>
