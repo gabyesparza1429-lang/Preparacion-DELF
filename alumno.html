@@ -402,6 +402,7 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
         import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js";
+        import { getStorage, ref, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-storage.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyCgog8tKspHy01ZHE8Dthl9O4W6lw1a_Ec",
@@ -414,6 +415,7 @@
 
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
+        const storage = getStorage(app);
 
         let activeMainTab = "parcours"; 
         let currentLevel = "A1"; 
@@ -474,7 +476,7 @@
                 document.getElementById('parcours-controls-container').style.display = 'block';
             } else {
                 document.getElementById('tab-carnet').classList.add('active');
-                document.getElementById('parcours-controls-container').style.display = 'none';
+                document.getElementById('parcours-controls-container').style.none = 'none';
             }
             renderPlatformView();
         };
@@ -507,7 +509,7 @@
             });
         }
 
-        function renderPlatformView() {
+        async function renderPlatformView() {
             const target = document.getElementById('dynamic-workspace-target');
             const tipsTarget = document.getElementById('sophia-tips-target');
             
@@ -557,6 +559,7 @@
                 document.getElementById('progress-bar-fill').style.width = `${progresoCalculado}%`;
 
                 const ej = ejerciciosFiltrados[indiceActual];
+                const audioContainerId = `audio-container-${indiceActual}`;
 
                 let htmlContenido = `
                 <div class="unit-box">
@@ -571,25 +574,9 @@
                         </h4>`;
 
                 if (ej.ruta_audio) {
-                    let audioUrl = ej.ruta_audio;
-                    const matchDigitos = audioUrl.match(/\d+/);
-                    if (matchDigitos) {
-                        let numeroPista = matchDigitos[0];
-                        if (numeroPista.length > 2) {
-                            numeroPista = numeroPista.slice(-2);
-                        }
-                        if (numeroPista.length === 1) {
-                            numeroPista = "0" + numeroPista;
-                        }
-                        
-                        const pathReal = `niveles/${currentLevel}/audios/${numeroPista}.mp3`;
-                        const pathEncoded = encodeURIComponent(pathReal);
-                        audioUrl = `https://firebasestorage.googleapis.com/v0/b/objectif-reussite-delf.firebasestorage.app/o/${pathEncoded}?alt=media`;
-                    }
-
                     htmlContenido += `
-                    <div style="margin-bottom: 20px; background: #fdfdfd; padding: 10px; border-radius: 6px; border: 1px dashed var(--gold);">
-                        <audio controls style="width:100%;" src="${audioUrl}" preload="auto"></audio>
+                    <div id="${audioContainerId}" style="margin-bottom: 20px; background: #fdfdfd; padding: 10px; border-radius: 6px; border: 1px dashed var(--gold); text-align:center; color:#666;">
+                        <i class="fas fa-spinner fa-spin"></i> Chargement de l'audio...
                     </div>`;
                 }
 
@@ -658,6 +645,31 @@
 
                 htmlContenido += `</div></div>`;
                 target.innerHTML = htmlContenido;
+
+                // CARGA ASÍNCRONA SEGURA DEL AUDIO USANDO EL SDK OFICIAL DE FIREBASE STORAGE
+                if (ej.ruta_audio) {
+                    let numeroPista = ej.ruta_audio.match(/\d+/)?.[0] || "02";
+                    if (numeroPista.length > 2) numeroPista = numeroPista.slice(-2);
+                    if (numeroPista.length === 1) numeroPista = "0" + numeroPista;
+
+                    const pathReal = `niveles/${currentLevel}/audios/${numeroPista}.mp3`;
+                    const storageRef = ref(storage, pathReal);
+
+                    getDownloadURL(storageRef)
+                        .then((url) => {
+                            const container = document.getElementById(audioContainerId);
+                            if (container) {
+                                container.innerHTML = `<audio controls style="width:100%;" src="${url}" preload="auto"></audio>`;
+                            }
+                        })
+                        .catch((error) => {
+                            console.error("Error al obtener la URL del audio:", error);
+                            const container = document.getElementById(audioContainerId);
+                            if (container) {
+                                container.innerHTML = `<span style="color:red;"><i class="fas fa-exclamation-triangle"></i> Impossible de charger l'audio (${numeroPista}.mp3)</span>`;
+                            }
+                        });
+                }
 
                 const bSubmit = document.getElementById('btn-submit-ans');
                 const bNext = document.getElementById('btn-next-ans');
