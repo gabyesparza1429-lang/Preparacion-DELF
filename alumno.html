@@ -24,7 +24,7 @@
         }
         
         .sidebar { 
-            width: 300px; 
+            width: 280px; 
             background: var(--oxford); 
             color: white; 
             padding: 30px 15px; 
@@ -60,9 +60,10 @@
             text-align: left; 
             display: flex; 
             align-items: center; 
-            gap: 12px; 
+            justify-content: space-between;
             font-family: 'Montserrat', sans-serif;
             font-size: 0.9rem;
+            box-sizing: border-box;
             transition: all 0.3s ease;
         }
         
@@ -76,42 +77,72 @@
             color: var(--oxford);
             font-weight: 700;
             border-color: var(--gold);
-            box-shadow: 0 4px 12px rgba(197, 160, 89, 0.3);
         }
 
-        /* CONTENEDOR DESPLEGABLE DE ACTIVIDADES */
-        .submenu-unidades {
-            margin-left: 10px;
-            margin-bottom: 15px;
-            border-left: 2px solid rgba(197, 160, 89, 0.3);
-            padding-left: 8px;
-            display: none; 
+        /* DISEÑO EXCLUSIVO DEL MENÚ DESPLEGABLE */
+        .unit-wrapper {
+            margin-bottom: 10px;
+            width: 100%;
+        }
+
+        .unit-toggle-btn {
+            width: 100%;
+            padding: 12px 15px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(197, 160, 89, 0.2);
+            color: white;
+            border-radius: 8px;
+            text-align: left;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.88rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: background 0.2s;
+        }
+
+        .unit-toggle-btn:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: var(--gold);
+        }
+
+        .unit-toggle-btn.active {
+            border-color: var(--gold);
+            background: rgba(197, 160, 89, 0.1);
+        }
+
+        .submenu-activities {
+            margin-left: 15px;
+            margin-top: 5px;
+            border-left: 1px solid rgba(197, 160, 89, 0.3);
+            padding-left: 10px;
+            display: none; /* Se abre dinámicamente */
             flex-direction: column;
             gap: 4px;
         }
 
-        .submenu-unit-btn {
+        .activity-link-btn {
             background: transparent;
             border: none;
-            color: #ccc;
-            padding: 6px 10px;
+            color: #bbb;
+            padding: 8px 12px;
             text-align: left;
             cursor: pointer;
             font-family: 'Montserrat', sans-serif;
-            font-size: 0.78rem;
+            font-size: 0.8rem;
             font-weight: 500;
             border-radius: 6px;
             transition: all 0.2s;
-            display: block;
-            line-height: 1.3;
         }
 
-        .submenu-unit-btn:hover {
+        .activity-link-btn:hover {
             color: var(--gold);
             background: rgba(255,255,255,0.03);
         }
 
-        .submenu-unit-btn.active {
+        .activity-link-btn.active {
             color: white;
             font-weight: 700;
             background: rgba(197, 160, 89, 0.2);
@@ -305,7 +336,7 @@
             <i class="fas fa-route"></i> Mon Parcours
         </button>
         
-        <div class="submenu-unidades" id="sidebar-unidades-list"></div>
+        <div id="sidebar-dynamic-menu" style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 15px;"></div>
 
         <button class="nav-tab-btn" id="tab-carnet">
             <i class="fas fa-address-book"></i> Carnet de compétences
@@ -385,6 +416,7 @@
         let currentExerciseIndex = 0;
         let dbCacheData = null;
         let ejerciciosFiltrados = [];
+        let openUnitsState = {}; // Guarda qué unidades están abiertas
 
         const urlParams = new URLSearchParams(window.location.search);
         const studentId = urlParams.get('id') || 'default_student';
@@ -447,24 +479,24 @@
         };
 
         function renderActiveInterface() {
-            const listContainer = document.getElementById('sidebar-unidades-list');
+            const menuContainer = document.getElementById('sidebar-dynamic-menu');
             
             if (currentActiveTab === "parcours") {
                 document.getElementById('parcours-controls-container').style.display = "flex";
-                listContainer.style.display = "flex"; 
-                generarSubmenuUnidadesEnSidebar();
+                menuContainer.style.display = "flex"; 
+                generarMenuJerarquico();
             } else {
                 document.getElementById('parcours-controls-container').style.display = "none";
-                listContainer.style.display = "none"; 
+                menuContainer.style.display = "none"; 
                 renderCarnetInterface();
             }
         }
 
-        // SE DETALLA EL MENÚ VISUAL PARA MAPEAR UNIDADES Y ACTIVIDADES ESPECÍFICAS
-        function generarSubmenuUnidadesEnSidebar() {
-            const listContainer = document.getElementById('sidebar-unidades-list');
+        // NUEVA FUNCIÓN INTERACTIVA COMPLETA: UNIDAD ➔ ACTIVIDAD
+        function generarMenuJerarquico() {
+            const menuContainer = document.getElementById('sidebar-dynamic-menu');
             const target = document.getElementById('dynamic-workspace-target');
-            listContainer.innerHTML = "";
+            menuContainer.innerHTML = "";
 
             if (!dbCacheData || !dbCacheData.itinerario) {
                 target.innerHTML = `<p style="text-align:center; color:#888;">Aucune donnée disponible.</p>`;
@@ -475,40 +507,67 @@
                 target.innerHTML = `
                 <div style="text-align: center; padding: 60px; color: var(--oxford); margin-top:30px;">
                     <i class="fas fa-arrow-left" style="font-size: 2.5rem; margin-bottom: 15px; color: var(--gold);"></i>
-                    <p style="font-weight: 600;">Veuillez choisir una Activité dans le menu de gauche pour commencer.</p>
+                    <p style="font-weight: 600;">Veuillez choisir une activité dans le menu de gauche pour commencer.</p>
                 </div>`;
             }
 
-            let globalCounter = 0;
             dbCacheData.itinerario.forEach((u, uIdx) => {
-                // Buscamos las actividades que correspondan a la habilidad activa
-                let ejerciciosDeEstaHabilidad = [];
+                let ejerciciosHabilidad = [];
                 if (u.ejercicios) {
-                    ejerciciosDeEstaHabilidad = u.ejercicios.filter(e => e.habilidad === currentSkill);
+                    ejerciciosHabilidad = u.ejercicios.filter(e => e.habilidad === currentSkill);
                 }
 
-                ejerciciosDeEstaHabilidad.forEach((ej, eIdx) => {
-                    const esActivo = (currentUnitIndex === uIdx && currentExerciseIndex === eIdx);
-                    const claseActiva = esActivo ? 'active' : '';
-                    
-                    // Extraer de forma limpia el número de actividad real (ej: "Activité 2")
-                    let tituloActividad = ej.instruccion ? ej.instruccion.split('-')[0].trim() : `Activité ${eIdx + 1}`;
+                if (ejerciciosHabilidad.length === 0) return; // Si la unidad no tiene esta habilidad, no la pintamos
 
-                    listContainer.innerHTML += `
-                        <button class="submenu-unit-btn ${claseActiva}" onclick="window.seleccionarActividadDirecta(${uIdx}, ${eIdx})">
-                            <i class="fas fa-play" style="font-size:0.6rem; margin-right:6px; color:var(--gold);"></i> ${u.unidad} - ${tituloActividad}
+                const isUnitOpen = openUnitsState[uIdx] || (currentUnitIndex === uIdx);
+                const displayStyle = isUnitOpen ? 'flex' : 'none';
+                const chevronIcon = isUnitOpen ? 'fa-chevron-down' : 'fa-chevron-right';
+
+                let unitWrapper = document.createElement('div');
+                unitWrapper.className = 'unit-wrapper';
+
+                // Botón Padre: Muestra únicamente "Unité X" limpio
+                unitWrapper.innerHTML = `
+                    <button class="unit-toggle-btn ${currentUnitIndex === uIdx ? 'active' : ''}" onclick="window.toggleUnitMenu(${uIdx})">
+                        <span><i class="fas fa-book" style="color:var(--gold); margin-right:8px;"></i>${u.unidad}</span>
+                        <i class="fas ${chevronIcon}" style="font-size:0.7rem; color:var(--gold);"></i>
+                    </button>
+                `;
+
+                // Contenedor Hijo: Las actividades internas limpias
+                let subContainer = document.createElement('div');
+                subContainer.className = 'submenu-activities';
+                subContainer.style.display = displayStyle;
+
+                ejerciciosHabilidad.forEach((ej, eIdx) => {
+                    const esActivo = (currentUnitIndex === uIdx && currentExerciseIndex === eIdx);
+                    
+                    // Extraer solo el número (ej: de "Activité 2 - Saluer" se queda con "Activité 2")
+                    let numeroActividad = ej.instruccion ? ej.instruccion.split('-')[0].trim() : `Activité ${eIdx + 1}`;
+
+                    subContainer.innerHTML += `
+                        <button class="activity-link-btn ${esActivo ? 'active' : ''}" onclick="window.cargarActividadDirecta(${uIdx}, ${eIdx})">
+                            <i class="fas fa-play" style="font-size:0.6rem; margin-right:6px;"></i>${numeroActividad}
                         </button>
                     `;
-                    globalCounter++;
                 });
+
+                unitWrapper.appendChild(subContainer);
+                menuContainer.appendChild(unitWrapper);
             });
         }
 
-        window.seleccionarActividadDirecta = (unitIdx, exIdx) => {
-            currentUnitIndex = unitIdx;
-            currentExerciseIndex = exIdx;
-            generarSubmenuUnidadesEnSidebar(); 
-            renderExerciseStructure();  
+        window.toggleUnitMenu = (uIdx) => {
+            openUnitsState[uIdx] = !openUnitsState[uIdx];
+            generarMenuJerarquico();
+        };
+
+        window.cargarActividadDirecta = (uIdx, eIdx) => {
+            currentUnitIndex = uIdx;
+            currentExerciseIndex = eIdx;
+            openUnitsState[uIdx] = true; // Mantenerla abierta
+            generarMenuJerarquico();
+            renderExerciseStructure();
         };
 
         function filtrarEjerciciosDeUnidadActual() {
@@ -588,24 +647,16 @@
 
             target.innerHTML = html;
 
-            // APLICACIÓN DE LA CORRECCIÓN INTELECTUAL DE JULS PARA EVITAR LA CONFUSIÓN DEL A1
+            // METODO DE JULES INTEGRADO PERFECTAMENTE
             if (ej.ruta_audio) {
-                // 1. Primero aislamos el nombre del archivo final (ej: "A1-02.mp3" o "02.mp3") para ignorar carpetas
                 const nombreArchivo = ej.ruta_audio.split('/').pop();
-                
-                // 2. Buscamos el número únicamente dentro del nombre del archivo aislado
                 let trackMatch = nombreArchivo.match(/\d+/);
                 let track = trackMatch ? trackMatch[0] : "02";
                 
-                // Si el número detectado resulta ser un "1" debido a residuos, forzar al "02" inicial
-                if (track === "1" || track === "01") {
-                    track = "02";
-                }
-                
+                if (track === "1" || track === "01") track = "02";
                 if (track.length > 2) track = track.slice(-2);
                 if (track.length === 1) track = "0" + track;
 
-                // Construcción de la ruta limpia unificada según tus archivos de Storage
                 let nombreArchivoFinal = `A1-${track}.mp3`;
 
                 getDownloadURL(ref(storage, `niveles/${currentLevel}/audios/${nombreArchivoFinal}`))
@@ -614,7 +665,6 @@
                         if (container) container.innerHTML = `<audio controls style="width:100%;" src="${url}" preload="auto"></audio>`;
                     })
                     .catch(() => {
-                        // Respaldo secundario por si tus archivos en Storage están guardados sin el prefijo "A1-"
                         getDownloadURL(ref(storage, `niveles/${currentLevel}/audios/${track}.mp3`))
                             .then(url => {
                                 const container = document.getElementById(audioId);
@@ -661,7 +711,7 @@
                     let porcentaje = (aciertos / total) * 100;
                     const txtSophia = document.getElementById('sophia-verdict-text');
                     if (porcentaje >= 70) {
-                        txtSophia.innerHTML = `<strong>Félicitations !</strong> Tu as obtenu <strong>${aciertos}/${total}</strong>. Tu as très bien compris l'exercice, tu peux passer au suivant de manera segura.`;
+                        txtSophia.innerHTML = `<strong>Félicitations !</strong> Tu as obtenu <strong>${aciertos}/${total}</strong>. Tu as très bien compris l'exercice, tu peux passer au suivant de manière sûre.`;
                         txtSophia.style.color = "var(--green)";
                     } else {
                         txtSophia.innerHTML = `<strong>Attention !</strong> Tu as obtenu <strong>${aciertos}/${total}</strong>. Je te conseille de réécouter l'audio, de lire la transcription ci-dessous et de répéter l'exercice.`;
@@ -673,9 +723,8 @@
 
             if (btnNext) {
                 btnNext.addEventListener('click', () => {
-                    // Al dar click en Siguiente, avanzamos a la siguiente actividad mapeada en el menú izquierdo
                     currentExerciseIndex++;
-                    generarSubmenuUnidadesEnSidebar();
+                    generarMenuJerarquico();
                     renderExerciseStructure();
                 });
             }
