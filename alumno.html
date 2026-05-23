@@ -86,30 +86,35 @@
             position: relative;
         }
 
+        /* BANNER REESTRUCTURADO PARA SOPORTAR INFORMACIÓN EN LA PARTE INFERIOR */
         .project-banner {
             background: var(--oxford) url('./assets/Banner.png') no-repeat center center;
             background-size: 100% 100%; 
             color: white;
-            padding: 20px 40px;
+            padding: 15px 40px;
             display: flex;
+            flex-direction: column;
             justify-content: space-between;
-            align-items: center;
             border-bottom: 4px solid var(--gold);
             box-shadow: 0 4px 10px rgba(0,0,0,0.05);
             position: relative;
-            height: 120px; 
+            height: 140px; 
             box-sizing: border-box;
             flex-shrink: 0;
         }
 
-        .banner-left, .banner-right {
-            position: relative;
-            z-index: 2;
+        .banner-top {
             display: flex;
+            justify-content: space-between;
             align-items: center;
+            width: 100%;
         }
 
-        .banner-left { gap: 20px; flex-grow: 1; }
+        .banner-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
 
         .banner-left h1 {
             margin: 0;
@@ -121,10 +126,54 @@
         .level-badge {
             background: var(--gold);
             color: var(--oxford);
-            padding: 8px 22px;
+            padding: 6px 20px;
             border-radius: 20px;
             font-weight: 700;
-            font-size: 1rem;
+            font-size: 0.95rem;
+        }
+
+        /* INFORMACIÓN INFERIOR DEL BANNER (MÁS VISIBLE Y ALINEADA) */
+        .banner-bottom-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            background: rgba(0, 33, 71, 0.75);
+            padding: 8px 15px;
+            border-radius: 6px;
+            box-sizing: border-box;
+            border: 1px solid rgba(197, 160, 89, 0.2);
+        }
+
+        .progress-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            width: 60%;
+        }
+
+        .progress-bar-bg {
+            flex-grow: 1;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            width: 0%;
+            height: 100%;
+            background: var(--gold);
+            transition: width 0.5s ease;
+        }
+
+        .countdown-container {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
         .content-area {
@@ -176,19 +225,6 @@
             color: white;
         }
 
-        .unit-select-dropdown {
-            padding: 10px 15px;
-            border-radius: 6px;
-            border: 1px solid #ddd;
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 600;
-            font-size: 0.85rem;
-            color: var(--oxford);
-            outline: none;
-            cursor: pointer;
-            background: #fff;
-        }
-
         .exercise-card {
             background: white; 
             border-left: 4px solid var(--gold); 
@@ -206,7 +242,6 @@
             border: 1px solid #f0f2f5;
         }
 
-        /* DISEÑO DE CHECKLIST (Carnet) */
         .checklist-item {
             display: flex;
             align-items: flex-start;
@@ -240,12 +275,28 @@
     <div class="main-container">
         
         <div class="project-banner">
-            <div class="banner-left">
-                <i class="fas fa-user-circle" style="color: var(--gold); font-size: 1.8rem;"></i>
-                <h1 id="student-welcome">Chargement...</h1>
+            <div class="banner-top">
+                <div class="banner-left">
+                    <i class="fas fa-user-circle" style="color: var(--gold); font-size: 1.8rem;"></i>
+                    <h1 id="student-welcome">Chargement...</h1>
+                </div>
+                <div class="banner-right">
+                    <span class="level-badge" id="level-indicator">NIVEAU --</span>
+                </div>
             </div>
-            <div class="banner-right">
-                <span class="level-badge" id="level-indicator">NIVEAU --</span>
+
+            <div class="banner-bottom-info">
+                <div class="progress-container">
+                    <span style="font-size: 0.8rem; font-weight: 600;">Progression :</span>
+                    <div class="progress-bar-bg">
+                        <div class="progress-bar-fill" id="progress-bar-target"></div>
+                    </div>
+                    <span style="font-size: 0.8rem; font-weight: 700; color: var(--gold);" id="progress-text-target">0%</span>
+                </div>
+                <div class="countdown-container">
+                    <i class="far fa-clock" style="color: var(--gold);"></i>
+                    <span id="countdown-text-target">-- jours restants avant l'examen</span>
+                </div>
             </div>
         </div>
 
@@ -292,7 +343,7 @@
         let currentActiveTab = "parcours"; 
         let currentLevel = "A1"; 
         let currentSkill = "CO"; 
-        let currentUnitIndex = null; // Inicia en null para no cargar nada de golpe
+        let currentUnitIndex = null; 
         let currentExerciseIndex = 0;
         let dbCacheData = null;
         let ejerciciosFiltrados = [];
@@ -302,18 +353,41 @@
 
         async function init() {
             try {
-                // 1. Cargar perfil del alumno
+                // 1. Cargar perfil del alumno e información de progreso/fechas
                 const userSnap = await getDoc(doc(db, "Usuarios", studentId));
                 if (userSnap.exists()) {
                     const userData = userSnap.data();
                     currentLevel = userData.nivel || "A1";
                     document.getElementById('student-welcome').innerText = `Bonjour, ${userData.nombre || 'Étudiant'}`;
+                    
+                    // Sincronizar barra de progreso dinámica
+                    const prog = userData.progreso || 0;
+                    document.getElementById('progress-bar-target').style.width = `${prog}%`;
+                    document.getElementById('progress-text-target').innerText = `${prog}%`;
+
+                    // Calcular días restantes de forma automática si existe la fecha del examen
+                    if (userData.fecha_examen) {
+                        const fechaExamen = new Date(userData.fecha_examen);
+                        const hoy = new Date();
+                        const diferenciaTiempo = fechaExamen - hoy;
+                        const diasRestantes = Math.ceil(diferenciaTiempo / (1000 * 60 * 60 * 24));
+                        
+                        if (diasRestantes > 0) {
+                            document.getElementById('countdown-text-target').innerText = `${diasRestantes} jours restants avant l'examen`;
+                        } else if (diasRestantes === 0) {
+                            document.getElementById('countdown-text-target').innerText = `C'est le jour de l'examen !`;
+                        } else {
+                            document.getElementById('countdown-text-target').innerText = `Examen terminé`;
+                        }
+                    } else {
+                        document.getElementById('countdown-text-target').innerText = `Pas de date d'examen fixée`;
+                    }
+
                 } else {
                     document.getElementById('student-welcome').innerText = "Mon Espace d'Étude";
                 }
                 document.getElementById('level-indicator').innerText = `NIVEAU ${currentLevel}`;
                 
-                // 2. Cargar ejercicios de la biblioteca
                 const snap = await getDoc(doc(db, "BibliotecaEjercicios", currentLevel));
                 if (snap.exists()) {
                     const raw = snap.data();
@@ -334,7 +408,6 @@
             if (tab === 'parcours') document.getElementById('tab-parcours').classList.add('active');
             if (tab === 'carnet') document.getElementById('tab-carnet').classList.add('active');
             
-            // Si va al carnet, ocultamos los botones de unidades intermedios
             if(tab === 'carnet') {
                 document.getElementById('unidades-botones-container').style.display = 'none';
             } else {
@@ -346,7 +419,7 @@
 
         window.setSkillFilter = (skill) => {
             currentSkill = skill;
-            currentUnitIndex = null; // Forzar a que vuelva a elegir unidad al cambiar de pestaña
+            currentUnitIndex = null; 
             currentExerciseIndex = 0;
             document.querySelectorAll('.skill-tab-btn').forEach(btn => btn.classList.remove('active'));
             document.getElementById(`skill-${skill}`).classList.add('active');
@@ -365,7 +438,6 @@
             }
         }
 
-        // NUEVA FUNCIÓN: Muestra las unidades como botones superiores limpios
         function generarBotonesDeUnidades() {
             const container = document.getElementById('unidades-botones-container');
             const target = document.getElementById('dynamic-workspace-target');
@@ -376,7 +448,6 @@
                 return;
             }
 
-            // Si no hay unidad seleccionada, mostramos un mensaje sutil invitándolo a elegir
             if (currentUnitIndex === null) {
                 target.innerHTML = `
                 <div style="text-align: center; padding: 40px; color: var(--oxford);">
@@ -402,8 +473,8 @@
         window.seleccionarUnidad = (unitIdx) => {
             currentUnitIndex = unitIdx;
             currentExerciseIndex = 0;
-            generarBotonesDeUnidades(); // Refresca estados de los botones
-            renderExerciseStructure();  // Pinta el ejercicio correspondiente
+            generarBotonesDeUnidades(); 
+            renderExerciseStructure();  
         };
 
         function filtrarEjerciciosDeUnidadActual() {
@@ -484,7 +555,6 @@
                 </div>`;
             }
 
-            // Bloque de Sophia y Transcripción Oculta
             html += `
                 <div id="sophia-box" style="display:none; background:#f4f7f9; border-left:4px solid var(--gold); padding:20px; border-radius:6px; margin-top:25px;">
                     <div style="display:flex; align-items:center; gap:10px; font-weight:700; color:var(--oxford); margin-bottom:10px; font-size:0.95rem;">
@@ -500,9 +570,13 @@
 
             target.innerHTML = html;
 
-            // CORRECCIÓN FIJA DE AUDIO: FORMATO DE JULES (A1-XX.mp3)
             if (ej.ruta_audio) {
-                let track = ej.ruta_audio.match(/\d+/)?.[0] || "02";
+                let track = ej.ruta_audio.match(/\d+/)?.[0];
+                
+                if (!track || track === "01") {
+                    track = "02";
+                }
+                
                 if (track.length > 2) track = track.slice(-2);
                 if (track.length === 1) track = "0" + track;
 
@@ -517,7 +591,6 @@
                     });
             }
 
-            // Lógica interactiva de calificación
             const btnSubmit = document.getElementById('btn-submit-exercise');
             const btnNext = document.getElementById('btn-next-exercise');
             const sophiaBox = document.getElementById('sophia-box');
@@ -552,7 +625,7 @@
                     let porcentaje = (aciertos / total) * 100;
                     const txtSophia = document.getElementById('sophia-verdict-text');
                     if (porcentaje >= 70) {
-                        txtSophia.innerHTML = `<strong>Félicitations !</strong> Tu as obtenu <strong>${aciertos}/${total}</strong>. Tu as très bien compris l'exercice, tu peux passer au suivant de manière sûre.`;
+                        txtSophia.innerHTML = `<strong>Félicitations !</strong> Tu as obtenu <strong>${aciertos}/${total}</strong>. Tu as très bien compris l'exercice, tu peux passer au suivant de manera segura.`;
                         txtSophia.style.color = "var(--green)";
                     } else {
                         txtSophia.innerHTML = `<strong>Attention !</strong> Tu as obtenu <strong>${aciertos}/${total}</strong>. Je te conseille de réécouter l'audio, de lire la transcription ci-dessous et de répéter l'exercice.`;
@@ -594,7 +667,7 @@
 
                         target.innerHTML += `
                         <div class="checklist-item ${statusClass}">
-                            <i class="far ${iconCheck}" style="color: ${iconColor}; font-size: 1.3rem; margin-top:2px;"></i>
+                            <i class="far ${iconCheck}" style="color: ${iconColor}; font-size: 1.3rem;"></i>
                             <div>
                                 <span style="font-size:0.75rem; background:#eef2f5; color:var(--oxford); padding:3px 8px; border-radius:4px; font-weight:700; margin-right:10px;">${item.competencia || 'CECRL'}</span>
                                 <span style="font-size:0.95rem; color:#333;">${item.descriptor}</span>
