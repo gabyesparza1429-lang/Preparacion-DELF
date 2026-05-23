@@ -648,7 +648,10 @@
 
                 // CARGA ASÍNCRONA SEGURA DEL AUDIO USANDO EL SDK OFICIAL DE FIREBASE STORAGE
                 if (ej.ruta_audio) {
-                    let numeroPista = ej.ruta_audio.match(/\d+/)?.[0] || "02";
+                    // Extraemos el nombre del archivo para evitar capturar números del nivel (ej: A1)
+                    const nombreArchivo = ej.ruta_audio.split('/').pop();
+                    let numeroPista = nombreArchivo.match(/\d+/)?.[0] || "02";
+
                     if (numeroPista.length > 2) numeroPista = numeroPista.slice(-2);
                     if (numeroPista.length === 1) numeroPista = "0" + numeroPista;
 
