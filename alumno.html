@@ -505,28 +505,28 @@ function generarMenuJerarquico() {
                 target.innerHTML = `
                 <div style="text-align: center; padding: 60px; color: var(--oxford); margin-top:30px;">
                     <i class="fas fa-arrow-left" style="font-size: 2.5rem; margin-bottom: 15px; color: var(--gold);"></i>
-                    <p style="font-weight: 600;">Veuillez choisir une activité dans le menu de gauche para commencer.</p>
+                    <p style="font-weight: 600;">Veuillez choisir une activité dans le menu de gauche pour commencer.</p>
                 </div>`;
             }
 
             dbCacheData.itinerario.forEach((u, uIdx) => {
+                // Filtrar ejercicios por la habilidad activa
                 let ejerciciosHabilidad = [];
                 if (u.ejercicios) {
                     ejerciciosHabilidad = u.ejercicios.filter(e => e.habilidad === currentSkill);
                 }
 
-                if (ejerciciosHabilidad.length === 0) return; 
-
                 const isUnitOpen = openUnitsState[uIdx] || (currentUnitIndex === uIdx);
                 const displayStyle = isUnitOpen ? 'flex' : 'none';
                 const chevronIcon = isUnitOpen ? 'fa-chevron-down' : 'fa-chevron-right';
 
+                // CREACIÓN DE LA UNIDAD (Siempre se dibuja para mantener la estructura clara)
                 let unitWrapper = document.createElement('div');
                 unitWrapper.className = 'unit-wrapper';
 
                 unitWrapper.innerHTML = `
                     <button class="unit-toggle-btn ${currentUnitIndex === uIdx ? 'active' : ''}" onclick="window.toggleUnitMenu(${uIdx})">
-                        <span><i class="fas fa-book" style="color:var(--gold); margin-right:8px;"></i>${u.unidad}</span>
+                        <span><i class="fas fa-book" style="color:var(--gold); margin-right:8px;"></i>${u.unidad} ${u.tema ? `- ${u.tema}` : ''}</span>
                         <i class="fas ${chevronIcon}" style="font-size:0.7rem; color:var(--gold);"></i>
                     </button>
                 `;
@@ -535,29 +535,38 @@ function generarMenuJerarquico() {
                 subContainer.className = 'submenu-activities';
                 subContainer.style.display = displayStyle;
 
-                ejerciciosHabilidad.forEach((ej, eIdx) => {
-                    const esActivo = (currentUnitIndex === uIdx && currentExerciseIndex === eIdx);
-                    
-                    // 1. Intentamos aislar la palabra "Activité" y su número real del texto
-                    let tituloLimpio = "";
-                    if (ej.instruccion) {
-                        let matchActividad = ej.instruccion.match(/Activité\s*\d+/i);
-                        if (matchActividad) {
-                            tituloLimpio = matchActividad[0]; 
-                        }
-                    }
-                    
-                    // 2. Si no viene especificado en la base de datos, forzamos el inicio en Activité 2
-                    if (!tituloLimpio) {
-                        tituloLimpio = `Activité ${eIdx + 2}`;
-                    }
-
-                    subContainer.innerHTML += `
-                        <button class="activity-link-btn ${esActivo ? 'active' : ''}" onclick="window.cargarActividadDirecta(${uIdx}, ${eIdx})">
-                            <i class="fas fa-play" style="font-size:0.6rem; margin-right:6px;"></i>${tituloLimpio}
-                        </button>
+                // SI NO HAY ACTIVIDADES DE ESTA HABILIDAD EN LA UNIDAD
+                if (ejerciciosHabilidad.length === 0) {
+                    subContainer.innerHTML = `
+                        <div style="padding: 8px 12px; font-size: 0.75rem; color: #888; font-style: italic;">
+                            Aucune activité pour cette compétence
+                        </div>
                     `;
-                });
+                } else {
+                    // SI HAY ACTIVIDADES, EXTRAE EL NOMBRE ORIGINAL SIN ALTERAR EL NÚMERO
+                    ejerciciosHabilidad.forEach((ej, eIdx) => {
+                        const esActivo = (currentUnitIndex === uIdx && currentExerciseIndex === eIdx);
+                        
+                        let tituloLimpio = "";
+                        if (ej.instruccion) {
+                            let matchActividad = ej.instruccion.match(/Activité\s*\d+/i);
+                            if (matchActividad) {
+                                tituloLimpio = matchActividad[0]; 
+                            }
+                        }
+                        
+                        // Si no se detecta la palabra en el texto, usa el índice original del documento
+                        if (!tituloLimpio) {
+                            tituloLimpio = `Activité ${eIdx + 1}`;
+                        }
+
+                        subContainer.innerHTML += `
+                            <button class="activity-link-btn ${esActivo ? 'active' : ''}" onclick="window.cargarActividadDirecta(${uIdx}, ${eIdx})">
+                                <i class="fas fa-play" style="font-size:0.6rem; margin-right:6px;"></i>${tituloLimpio}
+                            </button>
+                        `;
+                    });
+                }
 
                 unitWrapper.appendChild(subContainer);
                 menuContainer.appendChild(unitWrapper);
