@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Mon Espace DELF | Réussite</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght::300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root { 
@@ -79,7 +79,6 @@
             border-color: var(--gold);
         }
 
-        /* DISEÑO EXCLUSIVO DEL MENÚ DESPLEGABLE */
         .unit-wrapper {
             margin-bottom: 10px;
             width: 100%;
@@ -118,7 +117,7 @@
             margin-top: 5px;
             border-left: 1px solid rgba(197, 160, 89, 0.3);
             padding-left: 10px;
-            display: none; /* Se abre dinámicamente */
+            display: none; 
             flex-direction: column;
             gap: 4px;
         }
@@ -416,7 +415,7 @@
         let currentExerciseIndex = 0;
         let dbCacheData = null;
         let ejerciciosFiltrados = [];
-        let openUnitsState = {}; // Guarda qué unidades están abiertas
+        let openUnitsState = {}; 
 
         const urlParams = new URLSearchParams(window.location.search);
         const studentId = urlParams.get('id') || 'default_student';
@@ -492,7 +491,6 @@
             }
         }
 
-        // NUEVA FUNCIÓN INTERACTIVA COMPLETA: UNIDAD ➔ ACTIVIDAD
         function generarMenuJerarquico() {
             const menuContainer = document.getElementById('sidebar-dynamic-menu');
             const target = document.getElementById('dynamic-workspace-target');
@@ -517,7 +515,7 @@
                     ejerciciosHabilidad = u.ejercicios.filter(e => e.habilidad === currentSkill);
                 }
 
-                if (ejerciciosHabilidad.length === 0) return; // Si la unidad no tiene esta habilidad, no la pintamos
+                if (ejerciciosHabilidad.length === 0) return; 
 
                 const isUnitOpen = openUnitsState[uIdx] || (currentUnitIndex === uIdx);
                 const displayStyle = isUnitOpen ? 'flex' : 'none';
@@ -526,7 +524,6 @@
                 let unitWrapper = document.createElement('div');
                 unitWrapper.className = 'unit-wrapper';
 
-                // Botón Padre: Muestra únicamente "Unité X" limpio
                 unitWrapper.innerHTML = `
                     <button class="unit-toggle-btn ${currentUnitIndex === uIdx ? 'active' : ''}" onclick="window.toggleUnitMenu(${uIdx})">
                         <span><i class="fas fa-book" style="color:var(--gold); margin-right:8px;"></i>${u.unidad}</span>
@@ -534,7 +531,6 @@
                     </button>
                 `;
 
-                // Contenedor Hijo: Las actividades internas limpias
                 let subContainer = document.createElement('div');
                 subContainer.className = 'submenu-activities';
                 subContainer.style.display = displayStyle;
@@ -542,12 +538,18 @@
                 ejerciciosHabilidad.forEach((ej, eIdx) => {
                     const esActivo = (currentUnitIndex === uIdx && currentExerciseIndex === eIdx);
                     
-                    // Extraer solo el número (ej: de "Activité 2 - Saluer" se queda con "Activité 2")
-                    let numeroActividad = ej.instruccion ? ej.instruccion.split('-')[0].trim() : `Activité ${eIdx + 1}`;
+                    // CORRECCIÓN EXACTA DE BÚSQUEDA DE ACTIVIDAD (Aísla estrictamente la palabra "Activité" y su número)
+                    let tituloLimpio = `Activité ${eIdx + 1}`;
+                    if (ej.instruccion) {
+                        let matchActividad = ej.instruccion.match(/Activité\s*\d+/i);
+                        if (matchActividad) {
+                            tituloLimpio = matchActividad[0]; // Extrae solo "Activité 2", "Activité 3", etc.
+                        }
+                    }
 
                     subContainer.innerHTML += `
                         <button class="activity-link-btn ${esActivo ? 'active' : ''}" onclick="window.cargarActividadDirecta(${uIdx}, ${eIdx})">
-                            <i class="fas fa-play" style="font-size:0.6rem; margin-right:6px;"></i>${numeroActividad}
+                            <i class="fas fa-play" style="font-size:0.6rem; margin-right:6px;"></i>${tituloLimpio}
                         </button>
                     `;
                 });
@@ -565,7 +567,7 @@
         window.cargarActividadDirecta = (uIdx, eIdx) => {
             currentUnitIndex = uIdx;
             currentExerciseIndex = eIdx;
-            openUnitsState[uIdx] = true; // Mantenerla abierta
+            openUnitsState[uIdx] = true; 
             generarMenuJerarquico();
             renderExerciseStructure();
         };
@@ -647,7 +649,6 @@
 
             target.innerHTML = html;
 
-            // METODO DE JULES INTEGRADO PERFECTAMENTE
             if (ej.ruta_audio) {
                 const nombreArchivo = ej.ruta_audio.split('/').pop();
                 let trackMatch = nombreArchivo.match(/\d+/);
