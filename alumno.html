@@ -23,9 +23,8 @@
             overflow: hidden; 
         }
         
-        /* SIDEBAR OPTIMIZADA CON SUBMENÚS */
         .sidebar { 
-            width: 280px; 
+            width: 300px; 
             background: var(--oxford); 
             color: white; 
             padding: 30px 15px; 
@@ -80,32 +79,31 @@
             box-shadow: 0 4px 12px rgba(197, 160, 89, 0.3);
         }
 
-        /* CONTENEDOR DESPLEGABLE EN LA BARRA LATERAL */
+        /* CONTENEDOR DESPLEGABLE DE ACTIVIDADES */
         .submenu-unidades {
-            margin-left: 15px;
+            margin-left: 10px;
             margin-bottom: 15px;
             border-left: 2px solid rgba(197, 160, 89, 0.3);
-            padding-left: 10px;
+            padding-left: 8px;
             display: none; 
             flex-direction: column;
-            gap: 5px;
+            gap: 4px;
         }
 
         .submenu-unit-btn {
             background: transparent;
             border: none;
             color: #ccc;
-            padding: 8px 12px;
+            padding: 6px 10px;
             text-align: left;
             cursor: pointer;
             font-family: 'Montserrat', sans-serif;
-            font-size: 0.8rem;
+            font-size: 0.78rem;
             font-weight: 500;
             border-radius: 6px;
             transition: all 0.2s;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
+            display: block;
+            line-height: 1.3;
         }
 
         .submenu-unit-btn:hover {
@@ -116,7 +114,7 @@
         .submenu-unit-btn.active {
             color: white;
             font-weight: 700;
-            background: rgba(197, 160, 89, 0.15);
+            background: rgba(197, 160, 89, 0.2);
         }
 
         .main-container {
@@ -462,6 +460,7 @@
             }
         }
 
+        // SE DETALLA EL MENÚ VISUAL PARA MAPEAR UNIDADES Y ACTIVIDADES ESPECÍFICAS
         function generarSubmenuUnidadesEnSidebar() {
             const listContainer = document.getElementById('sidebar-unidades-list');
             const target = document.getElementById('dynamic-workspace-target');
@@ -476,25 +475,38 @@
                 target.innerHTML = `
                 <div style="text-align: center; padding: 60px; color: var(--oxford); margin-top:30px;">
                     <i class="fas fa-arrow-left" style="font-size: 2.5rem; margin-bottom: 15px; color: var(--gold);"></i>
-                    <p style="font-weight: 600;">Veuillez choisir une unité dans le menu de gauche pour afficher ses exercices.</p>
+                    <p style="font-weight: 600;">Veuillez choisir una Activité dans le menu de gauche pour commencer.</p>
                 </div>`;
             }
 
-            dbCacheData.itinerario.forEach((u, idx) => {
-                const esActiva = (currentUnitIndex === idx);
-                const claseActiva = esActiva ? 'active' : '';
+            let globalCounter = 0;
+            dbCacheData.itinerario.forEach((u, uIdx) => {
+                // Buscamos las actividades que correspondan a la habilidad activa
+                let ejerciciosDeEstaHabilidad = [];
+                if (u.ejercicios) {
+                    ejerciciosDeEstaHabilidad = u.ejercicios.filter(e => e.habilidad === currentSkill);
+                }
 
-                listContainer.innerHTML += `
-                    <button class="submenu-unit-btn ${claseActiva}" onclick="window.seleccionarUnidadSidebar(${idx})">
-                        <i class="fas fa-book-open" style="font-size:0.7rem; margin-right:6px; color:var(--gold);"></i> ${u.unidad}
-                    </button>
-                `;
+                ejerciciosDeEstaHabilidad.forEach((ej, eIdx) => {
+                    const esActivo = (currentUnitIndex === uIdx && currentExerciseIndex === eIdx);
+                    const claseActiva = esActivo ? 'active' : '';
+                    
+                    // Extraer de forma limpia el número de actividad real (ej: "Activité 2")
+                    let tituloActividad = ej.instruccion ? ej.instruccion.split('-')[0].trim() : `Activité ${eIdx + 1}`;
+
+                    listContainer.innerHTML += `
+                        <button class="submenu-unit-btn ${claseActiva}" onclick="window.seleccionarActividadDirecta(${uIdx}, ${eIdx})">
+                            <i class="fas fa-play" style="font-size:0.6rem; margin-right:6px; color:var(--gold);"></i> ${u.unidad} - ${tituloActividad}
+                        </button>
+                    `;
+                    globalCounter++;
+                });
             });
         }
 
-        window.seleccionarUnidadSidebar = (unitIdx) => {
+        window.seleccionarActividadDirecta = (unitIdx, exIdx) => {
             currentUnitIndex = unitIdx;
-            currentExerciseIndex = 0;
+            currentExerciseIndex = exIdx;
             generarSubmenuUnidadesEnSidebar(); 
             renderExerciseStructure();  
         };
@@ -506,8 +518,6 @@
             const unidadActual = dbCacheData.itinerario[currentUnitIndex];
             if (unidadActual.ejercicios && Array.isArray(unidadActual.ejercicios)) {
                 ejerciciosFiltrados = unidadActual.ejercicios.filter(e => e.habilidad === currentSkill);
-            } else if (unidadActual[currentSkill] && Array.isArray(unidadActual[currentSkill])) {
-                ejerciciosFiltrados = unidadActual[currentSkill];
             }
         }
 
@@ -515,21 +525,8 @@
             const target = document.getElementById('dynamic-workspace-target');
             filtrarEjerciciosDeUnidadActual();
 
-            if (ejerciciosFiltrados.length === 0) {
-                target.innerHTML = `
-                <div style="text-align: center; padding: 30px; color: #888;">
-                    <p>Aucun exercice disponible pour cette compétence dans cette unité.</p>
-                </div>`;
-                return;
-            }
-
-            if (currentExerciseIndex >= ejerciciosFiltrados.length) {
-                target.innerHTML = `
-                <div class="exercise-card" style="text-align: center; padding: 40px;">
-                    <i class="fas fa-check-circle" style="font-size: 3rem; color: var(--green); margin-bottom: 15px;"></i>
-                    <h3 style="color: var(--oxford); margin:0 0 10px 0;">Bravo !</h3>
-                    <p style="margin:0;">Vous avez complété les activités de cette section.</p>
-                </div>`;
+            if (ejerciciosFiltrados.length === 0 || !ejerciciosFiltrados[currentExerciseIndex]) {
+                target.innerHTML = `<p style="text-align:center; color:#888;">Aucun exercice disponible.</p>`;
                 return;
             }
 
@@ -540,7 +537,6 @@
             <div class="exercise-card">
                 <h4 style="margin-top: 0; margin-bottom: 20px; color: var(--oxford); font-size: 1.05rem; font-weight:700;">
                     ${ej.instruccion || 'Exercice'} 
-                    <span style="font-size:0.8rem; color:#888; float:right; font-weight:400;">(${currentExerciseIndex + 1} / ${ejerciciosFiltrados.length})</span>
                 </h4>`;
 
             if (ej.ruta_audio) {
@@ -592,13 +588,16 @@
 
             target.innerHTML = html;
 
-            // RESOLUCIÓN DE LA CONFUSIÓN DEL AUDIO CONTRA EL NIVEL
+            // APLICACIÓN DE LA CORRECCIÓN INTELECTUAL DE JULS PARA EVITAR LA CONFUSIÓN DEL A1
             if (ej.ruta_audio) {
-                // Buscamos cualquier número de dos dígitos en la cadena de texto
-                let trackMatch = ej.ruta_audio.match(/\d+/);
+                // 1. Primero aislamos el nombre del archivo final (ej: "A1-02.mp3" o "02.mp3") para ignorar carpetas
+                const nombreArchivo = ej.ruta_audio.split('/').pop();
+                
+                // 2. Buscamos el número únicamente dentro del nombre del archivo aislado
+                let trackMatch = nombreArchivo.match(/\d+/);
                 let track = trackMatch ? trackMatch[0] : "02";
                 
-                // Si la IA extrajo un '1' debido al "A1" o "Unité 1", lo forzamos a ser el '02' inicial
+                // Si el número detectado resulta ser un "1" debido a residuos, forzar al "02" inicial
                 if (track === "1" || track === "01") {
                     track = "02";
                 }
@@ -606,8 +605,8 @@
                 if (track.length > 2) track = track.slice(-2);
                 if (track.length === 1) track = "0" + track;
 
-                // CONSTRUCCIÓN SEPARADA: Explicamos explícitamente el Nivel y la Pista
-                let nombreArchivoFinal = `${currentLevel}-${track}.mp3`;
+                // Construcción de la ruta limpia unificada según tus archivos de Storage
+                let nombreArchivoFinal = `A1-${track}.mp3`;
 
                 getDownloadURL(ref(storage, `niveles/${currentLevel}/audios/${nombreArchivoFinal}`))
                     .then(url => {
@@ -615,8 +614,16 @@
                         if (container) container.innerHTML = `<audio controls style="width:100%;" src="${url}" preload="auto"></audio>`;
                     })
                     .catch(() => {
-                        const container = document.getElementById(audioId);
-                        if (container) container.innerHTML = `<span style="color:red; font-size:0.85rem;"><i class="fas fa-exclamation-triangle"></i> Audio non disponible (${nombreArchivoFinal})</span>`;
+                        // Respaldo secundario por si tus archivos en Storage están guardados sin el prefijo "A1-"
+                        getDownloadURL(ref(storage, `niveles/${currentLevel}/audios/${track}.mp3`))
+                            .then(url => {
+                                const container = document.getElementById(audioId);
+                                if (container) container.innerHTML = `<audio controls style="width:100%;" src="${url}" preload="auto"></audio>`;
+                            })
+                            .catch(() => {
+                                const container = document.getElementById(audioId);
+                                if (container) container.innerHTML = `<span style="color:red; font-size:0.85rem;"><i class="fas fa-exclamation-triangle"></i> Audio non disponible (${nombreArchivoFinal})</span>`;
+                            });
                     });
             }
 
@@ -654,10 +661,10 @@
                     let porcentaje = (aciertos / total) * 100;
                     const txtSophia = document.getElementById('sophia-verdict-text');
                     if (porcentaje >= 70) {
-                        txtSophia.innerHTML = `<strong>Félicitations !</strong> Tu as obtenu <strong>${aciertos}/${total}</strong>. Tu as très bien compris l'exercice, tu peux passer au suivant de manière sûre.`;
+                        txtSophia.innerHTML = `<strong>Félicitations !</strong> Tu as obtenu <strong>${aciertos}/${total}</strong>. Tu as très bien compris l'exercice, tu peux passer au suivant de manera segura.`;
                         txtSophia.style.color = "var(--green)";
                     } else {
-                        txtSophia.innerHTML = `<strong>Attention !</strong> Tu as obtenu <strong>${aciertos}/${total}</strong>. Je te conseille de réécouter l'audio, de lire la transcription ci-dessous teat de répéter l'exercice.`;
+                        txtSophia.innerHTML = `<strong>Attention !</strong> Tu as obtenu <strong>${aciertos}/${total}</strong>. Je te conseille de réécouter l'audio, de lire la transcription ci-dessous et de répéter l'exercice.`;
                         txtSophia.style.color = "red";
                     }
                     if (sophiaBox) sophiaBox.style.display = "block";
@@ -666,7 +673,9 @@
 
             if (btnNext) {
                 btnNext.addEventListener('click', () => {
+                    // Al dar click en Siguiente, avanzamos a la siguiente actividad mapeada en el menú izquierdo
                     currentExerciseIndex++;
+                    generarSubmenuUnidadesEnSidebar();
                     renderExerciseStructure();
                 });
             }
@@ -704,7 +713,7 @@
                         </div>`;
                     });
                 } else {
-                    target.innerHTML = `<p style="color:#888;">Aucun descripteur trouvé para ce niveau.</p>`;
+                    target.innerHTML = `<p style="color:#888;">Aucun descripteur trouvé pour ce niveau.</p>`;
                 }
             } catch (err) {
                 console.error(err);
