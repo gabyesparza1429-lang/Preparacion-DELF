@@ -23,16 +23,18 @@
             overflow: hidden; 
         }
         
+        /* SIDEBAR OPTIMIZADA CON SUBMENÚS */
         .sidebar { 
-            width: 260px; 
+            width: 280px; 
             background: var(--oxford); 
             color: white; 
-            padding: 30px 20px; 
+            padding: 30px 15px; 
             flex-shrink: 0; 
             display: flex;
             flex-direction: column;
             box-shadow: 4px 0 10px rgba(0,0,0,0.1);
             z-index: 10;
+            overflow-y: auto;
         }
 
         .sidebar h2 {
@@ -49,10 +51,10 @@
         
         .nav-tab-btn { 
             width: 100%; 
-            padding: 15px; 
-            margin-bottom: 12px; 
+            padding: 14px 15px; 
+            margin-bottom: 8px; 
             border-radius: 10px; 
-            border: 1px solid rgba(197, 160, 89, 0.3); 
+            border: 1px solid rgba(197, 160, 89, 0.2); 
             background: transparent; 
             color: white; 
             cursor: pointer; 
@@ -61,7 +63,7 @@
             align-items: center; 
             gap: 12px; 
             font-family: 'Montserrat', sans-serif;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             transition: all 0.3s ease;
         }
         
@@ -75,7 +77,46 @@
             color: var(--oxford);
             font-weight: 700;
             border-color: var(--gold);
-            box-shadow: 0 4px 15px rgba(197, 160, 89, 0.4);
+            box-shadow: 0 4px 12px rgba(197, 160, 89, 0.3);
+        }
+
+        /* CONTENEDOR DESPLEGABLE EN LA BARRA LATERAL */
+        .submenu-unidades {
+            margin-left: 15px;
+            margin-bottom: 15px;
+            border-left: 2px solid rgba(197, 160, 89, 0.3);
+            padding-left: 10px;
+            display: none; 
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .submenu-unit-btn {
+            background: transparent;
+            border: none;
+            color: #ccc;
+            padding: 8px 12px;
+            text-align: left;
+            cursor: pointer;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 500;
+            border-radius: 6px;
+            transition: all 0.2s;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .submenu-unit-btn:hover {
+            color: var(--gold);
+            background: rgba(255,255,255,0.03);
+        }
+
+        .submenu-unit-btn.active {
+            color: white;
+            font-weight: 700;
+            background: rgba(197, 160, 89, 0.15);
         }
 
         .main-container {
@@ -86,7 +127,6 @@
             position: relative;
         }
 
-        /* BANNER REESTRUCTURADO PARA SOPORTAR INFORMACIÓN EN LA PARTE INFERIOR */
         .project-banner {
             background: var(--oxford) url('./assets/Banner.png') no-repeat center center;
             background-size: 100% 100%; 
@@ -132,7 +172,6 @@
             font-size: 0.95rem;
         }
 
-        /* INFORMACIÓN INFERIOR DEL BANNER (MÁS VISIBLE Y ALINEADA) */
         .banner-bottom-info {
             display: flex;
             justify-content: space-between;
@@ -267,6 +306,9 @@
         <button class="nav-tab-btn active" id="tab-parcours">
             <i class="fas fa-route"></i> Mon Parcours
         </button>
+        
+        <div class="submenu-unidades" id="sidebar-unidades-list"></div>
+
         <button class="nav-tab-btn" id="tab-carnet">
             <i class="fas fa-address-book"></i> Carnet de compétences
         </button>
@@ -289,7 +331,7 @@
                 <div class="progress-container">
                     <span style="font-size: 0.8rem; font-weight: 600;">Progression :</span>
                     <div class="progress-bar-bg">
-                        <div class="progress-bar-fill" id="progress-bar-target"></div>
+                        <div class="progress-bar-fill" id="progress-bar-fill"></div>
                     </div>
                     <span style="font-size: 0.8rem; font-weight: 700; color: var(--gold);" id="progress-text-target">0%</span>
                 </div>
@@ -311,8 +353,6 @@
                         <button class="skill-tab-btn" id="skill-PO">Production Orale</button>
                     </div>
                 </div>
-
-                <div id="unidades-botones-container" style="display: flex; gap: 12px; margin-bottom: 25px; flex-wrap: wrap;"></div>
 
                 <div id="dynamic-workspace-target">
                     <p style="text-align:center; color:#666;"><i class="fas fa-spinner fa-spin"></i> Chargement...</p>
@@ -353,39 +393,27 @@
 
         async function init() {
             try {
-                // 1. Cargar perfil del alumno e información de progreso/fechas
                 const userSnap = await getDoc(doc(db, "Usuarios", studentId));
                 if (userSnap.exists()) {
                     const userData = userSnap.data();
                     currentLevel = userData.nivel || "A1";
                     document.getElementById('student-welcome').innerText = `Bonjour, ${userData.nombre || 'Étudiant'}`;
                     
-                    // Sincronizar barra de progreso dinámica
                     const prog = userData.progreso || 0;
-                    document.getElementById('progress-bar-target').style.width = `${prog}%`;
+                    document.getElementById('progress-bar-fill').style.width = `${prog}%`;
                     document.getElementById('progress-text-target').innerText = `${prog}%`;
 
-                    // Calcular días restantes de forma automática si existe la fecha del examen
                     if (userData.fecha_examen) {
                         const fechaExamen = new Date(userData.fecha_examen);
                         const hoy = new Date();
                         const diferenciaTiempo = fechaExamen - hoy;
                         const diasRestantes = Math.ceil(diferenciaTiempo / (1000 * 60 * 60 * 24));
-                        
-                        if (diasRestantes > 0) {
-                            document.getElementById('countdown-text-target').innerText = `${diasRestantes} jours restants avant l'examen`;
-                        } else if (diasRestantes === 0) {
-                            document.getElementById('countdown-text-target').innerText = `C'est le jour de l'examen !`;
-                        } else {
-                            document.getElementById('countdown-text-target').innerText = `Examen terminé`;
-                        }
+                        document.getElementById('countdown-text-target').innerText = diasRestantes > 0 ? `${diasRestantes} jours restants avant l'examen` : "Examen terminé";
                     } else {
-                        document.getElementById('countdown-text-target').innerText = `Pas de date d'examen fixée`;
+                        document.getElementById('countdown-text-target').innerText = "Pas de date d'examen fixée";
                     }
-
-                } else {
-                    document.getElementById('student-welcome').innerText = "Mon Espace d'Étude";
                 }
+                
                 document.getElementById('level-indicator').innerText = `NIVEAU ${currentLevel}`;
                 
                 const snap = await getDoc(doc(db, "BibliotecaEjercicios", currentLevel));
@@ -397,7 +425,7 @@
                 renderActiveInterface();
 
             } catch (error) {
-                console.error("Error en inicialización:", error);
+                console.error(error);
                 document.getElementById('dynamic-workspace-target').innerHTML = `<p style="color:red; text-align:center;">Erreur de connexion.</p>`;
             }
         }
@@ -408,12 +436,6 @@
             if (tab === 'parcours') document.getElementById('tab-parcours').classList.add('active');
             if (tab === 'carnet') document.getElementById('tab-carnet').classList.add('active');
             
-            if(tab === 'carnet') {
-                document.getElementById('unidades-botones-container').style.display = 'none';
-            } else {
-                document.getElementById('unidades-botones-container').style.display = 'flex';
-            }
-
             renderActiveInterface();
         };
 
@@ -427,21 +449,23 @@
         };
 
         function renderActiveInterface() {
+            const listContainer = document.getElementById('sidebar-unidades-list');
+            
             if (currentActiveTab === "parcours") {
                 document.getElementById('parcours-controls-container').style.display = "flex";
-                document.getElementById('unidades-botones-container').style.display = "flex";
-                generarBotonesDeUnidades();
+                listContainer.style.display = "flex"; 
+                generarSubmenuUnidadesEnSidebar();
             } else {
                 document.getElementById('parcours-controls-container').style.display = "none";
-                document.getElementById('unidades-botones-container').style.display = "none";
+                listContainer.style.display = "none"; 
                 renderCarnetInterface();
             }
         }
 
-        function generarBotonesDeUnidades() {
-            const container = document.getElementById('unidades-botones-container');
+        function generarSubmenuUnidadesEnSidebar() {
+            const listContainer = document.getElementById('sidebar-unidades-list');
             const target = document.getElementById('dynamic-workspace-target');
-            container.innerHTML = "";
+            listContainer.innerHTML = "";
 
             if (!dbCacheData || !dbCacheData.itinerario) {
                 target.innerHTML = `<p style="text-align:center; color:#888;">Aucune donnée disponible.</p>`;
@@ -450,30 +474,28 @@
 
             if (currentUnitIndex === null) {
                 target.innerHTML = `
-                <div style="text-align: center; padding: 40px; color: var(--oxford);">
-                    <i class="fas fa-hand-pointer" style="font-size: 2.5rem; margin-bottom: 15px; color: var(--gold);"></i>
-                    <p style="font-weight: 600;">Veuillez choisir une unité ci-dessus pour afficher ses exercices.</p>
+                <div style="text-align: center; padding: 60px; color: var(--oxford); margin-top:30px;">
+                    <i class="fas fa-arrow-left" style="font-size: 2.5rem; margin-bottom: 15px; color: var(--gold);"></i>
+                    <p style="font-weight: 600;">Veuillez choisir une unité dans le menu de gauche pour afficher ses exercices.</p>
                 </div>`;
             }
 
             dbCacheData.itinerario.forEach((u, idx) => {
                 const esActiva = (currentUnitIndex === idx);
-                const estiloBoton = esActiva 
-                    ? "background: var(--gold); color: var(--oxford); border: none; padding: 10px 18px; border-radius: 6px; font-family:'Montserrat'; font-weight:700; cursor:pointer;"
-                    : "background: white; color: var(--oxford); border: 1px solid #ddd; padding: 10px 18px; border-radius: 6px; font-family:'Montserrat'; font-weight:600; cursor:pointer;";
+                const claseActiva = esActiva ? 'active' : '';
 
-                container.innerHTML += `
-                    <button style="${estiloBoton}" onclick="window.seleccionarUnidad(${idx})">
-                        <i class="fas fa-book" style="margin-right:6px; color:${esActiva ? 'var(--oxford)' : 'var(--gold)'};"></i> ${u.unidad}
+                listContainer.innerHTML += `
+                    <button class="submenu-unit-btn ${claseActiva}" onclick="window.seleccionarUnidadSidebar(${idx})">
+                        <i class="fas fa-book-open" style="font-size:0.7rem; margin-right:6px; color:var(--gold);"></i> ${u.unidad}
                     </button>
                 `;
             });
         }
 
-        window.seleccionarUnidad = (unitIdx) => {
+        window.seleccionarUnidadSidebar = (unitIdx) => {
             currentUnitIndex = unitIdx;
             currentExerciseIndex = 0;
-            generarBotonesDeUnidades(); 
+            generarSubmenuUnidadesEnSidebar(); 
             renderExerciseStructure();  
         };
 
@@ -570,24 +592,31 @@
 
             target.innerHTML = html;
 
+            // RESOLUCIÓN DE LA CONFUSIÓN DEL AUDIO CONTRA EL NIVEL
             if (ej.ruta_audio) {
-                let track = ej.ruta_audio.match(/\d+/)?.[0];
+                // Buscamos cualquier número de dos dígitos en la cadena de texto
+                let trackMatch = ej.ruta_audio.match(/\d+/);
+                let track = trackMatch ? trackMatch[0] : "02";
                 
-                if (!track || track === "01") {
+                // Si la IA extrajo un '1' debido al "A1" o "Unité 1", lo forzamos a ser el '02' inicial
+                if (track === "1" || track === "01") {
                     track = "02";
                 }
                 
                 if (track.length > 2) track = track.slice(-2);
                 if (track.length === 1) track = "0" + track;
 
-                getDownloadURL(ref(storage, `niveles/${currentLevel}/audios/A1-${track}.mp3`))
+                // CONSTRUCCIÓN SEPARADA: Explicamos explícitamente el Nivel y la Pista
+                let nombreArchivoFinal = `${currentLevel}-${track}.mp3`;
+
+                getDownloadURL(ref(storage, `niveles/${currentLevel}/audios/${nombreArchivoFinal}`))
                     .then(url => {
                         const container = document.getElementById(audioId);
                         if (container) container.innerHTML = `<audio controls style="width:100%;" src="${url}" preload="auto"></audio>`;
                     })
                     .catch(() => {
                         const container = document.getElementById(audioId);
-                        if (container) container.innerHTML = `<span style="color:red; font-size:0.85rem;"><i class="fas fa-exclamation-triangle"></i> Audio non disponible (A1-${track}.mp3)</span>`;
+                        if (container) container.innerHTML = `<span style="color:red; font-size:0.85rem;"><i class="fas fa-exclamation-triangle"></i> Audio non disponible (${nombreArchivoFinal})</span>`;
                     });
             }
 
@@ -625,10 +654,10 @@
                     let porcentaje = (aciertos / total) * 100;
                     const txtSophia = document.getElementById('sophia-verdict-text');
                     if (porcentaje >= 70) {
-                        txtSophia.innerHTML = `<strong>Félicitations !</strong> Tu as obtenu <strong>${aciertos}/${total}</strong>. Tu as très bien compris l'exercice, tu peux passer au suivant de manera segura.`;
+                        txtSophia.innerHTML = `<strong>Félicitations !</strong> Tu as obtenu <strong>${aciertos}/${total}</strong>. Tu as très bien compris l'exercice, tu peux passer au suivant de manière sûre.`;
                         txtSophia.style.color = "var(--green)";
                     } else {
-                        txtSophia.innerHTML = `<strong>Attention !</strong> Tu as obtenu <strong>${aciertos}/${total}</strong>. Je te conseille de réécouter l'audio, de lire la transcription ci-dessous et de répéter l'exercice.`;
+                        txtSophia.innerHTML = `<strong>Attention !</strong> Tu as obtenu <strong>${aciertos}/${total}</strong>. Je te conseille de réécouter l'audio, de lire la transcription ci-dessous teat de répéter l'exercice.`;
                         txtSophia.style.color = "red";
                     }
                     if (sophiaBox) sophiaBox.style.display = "block";
@@ -675,7 +704,7 @@
                         </div>`;
                     });
                 } else {
-                    target.innerHTML = `<p style="color:#888;">Aucun descripteur trouvé pour ce niveau.</p>`;
+                    target.innerHTML = `<p style="color:#888;">Aucun descripteur trouvé para ce niveau.</p>`;
                 }
             } catch (err) {
                 console.error(err);
