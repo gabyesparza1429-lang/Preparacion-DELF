@@ -510,17 +510,18 @@ function generarMenuJerarquico() {
             }
 
             dbCacheData.itinerario.forEach((u, uIdx) => {
-                // Filtrar ejercicios por la habilidad activa
+                // Filtramos asegurando que compare de forma limpia en mayúsculas y sin espacios
                 let ejerciciosHabilidad = [];
                 if (u.ejercicios) {
-                    ejerciciosHabilidad = u.ejercicios.filter(e => e.habilidad === currentSkill);
+                    ejerciciosHabilidad = u.ejercicios.filter(e => {
+                        return e.habilidad && e.habilidad.trim().toUpperCase() === currentSkill.trim().toUpperCase();
+                    });
                 }
 
                 const isUnitOpen = openUnitsState[uIdx] || (currentUnitIndex === uIdx);
                 const displayStyle = isUnitOpen ? 'flex' : 'none';
                 const chevronIcon = isUnitOpen ? 'fa-chevron-down' : 'fa-chevron-right';
 
-                // CREACIÓN DE LA UNIDAD (Siempre se dibuja para mantener la estructura clara)
                 let unitWrapper = document.createElement('div');
                 unitWrapper.className = 'unit-wrapper';
 
@@ -535,7 +536,6 @@ function generarMenuJerarquico() {
                 subContainer.className = 'submenu-activities';
                 subContainer.style.display = displayStyle;
 
-                // SI NO HAY ACTIVIDADES DE ESTA HABILIDAD EN LA UNIDAD
                 if (ejerciciosHabilidad.length === 0) {
                     subContainer.innerHTML = `
                         <div style="padding: 8px 12px; font-size: 0.75rem; color: #888; font-style: italic;">
@@ -543,7 +543,6 @@ function generarMenuJerarquico() {
                         </div>
                     `;
                 } else {
-                    // SI HAY ACTIVIDADES, EXTRAE EL NOMBRE ORIGINAL SIN ALTERAR EL NÚMERO
                     ejerciciosHabilidad.forEach((ej, eIdx) => {
                         const esActivo = (currentUnitIndex === uIdx && currentExerciseIndex === eIdx);
                         
@@ -555,9 +554,8 @@ function generarMenuJerarquico() {
                             }
                         }
                         
-                        // Si no se detecta la palabra en el texto, usa el índice original del documento
                         if (!tituloLimpio) {
-                            tituloLimpio = `Activité ${eIdx + 1}`;
+                            tituloLimpio = `Activité ${eIdx + 2}`;
                         }
 
                         subContainer.innerHTML += `
@@ -568,6 +566,10 @@ function generarMenuJerarquico() {
                     });
                 }
 
+                unitWrapper.appendChild(subContainer);
+                menuContainer.appendChild(unitWrapper);
+            });
+        }
                 unitWrapper.appendChild(subContainer);
                 menuContainer.appendChild(unitWrapper);
             });
