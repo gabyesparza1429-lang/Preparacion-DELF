@@ -166,7 +166,7 @@
             border-bottom: 4px solid var(--gold);
             box-shadow: 0 4px 10px rgba(0,0,0,0.05);
             position: relative;
-            height: 140px; 
+            height: 250px; 
             box-sizing: border-box;
             flex-shrink: 0;
         }
@@ -491,7 +491,7 @@
             }
         }
 
-        function generarMenuJerarquico() {
+function generarMenuJerarquico() {
             const menuContainer = document.getElementById('sidebar-dynamic-menu');
             const target = document.getElementById('dynamic-workspace-target');
             menuContainer.innerHTML = "";
@@ -505,7 +505,7 @@
                 target.innerHTML = `
                 <div style="text-align: center; padding: 60px; color: var(--oxford); margin-top:30px;">
                     <i class="fas fa-arrow-left" style="font-size: 2.5rem; margin-bottom: 15px; color: var(--gold);"></i>
-                    <p style="font-weight: 600;">Veuillez choisir une activité dans le menu de gauche pour commencer.</p>
+                    <p style="font-weight: 600;">Veuillez choisir une activité dans le menu de gauche para commencer.</p>
                 </div>`;
             }
 
@@ -538,13 +538,18 @@
                 ejerciciosHabilidad.forEach((ej, eIdx) => {
                     const esActivo = (currentUnitIndex === uIdx && currentExerciseIndex === eIdx);
                     
-                    // CORRECCIÓN EXACTA DE BÚSQUEDA DE ACTIVIDAD (Aísla estrictamente la palabra "Activité" y su número)
-                    let tituloLimpio = `Activité ${eIdx + 1}`;
+                    // 1. Intentamos aislar la palabra "Activité" y su número real del texto
+                    let tituloLimpio = "";
                     if (ej.instruccion) {
                         let matchActividad = ej.instruccion.match(/Activité\s*\d+/i);
                         if (matchActividad) {
-                            tituloLimpio = matchActividad[0]; // Extrae solo "Activité 2", "Activité 3", etc.
+                            tituloLimpio = matchActividad[0]; 
                         }
+                    }
+                    
+                    // 2. Si no viene especificado en la base de datos, forzamos el inicio en Activité 2
+                    if (!tituloLimpio) {
+                        tituloLimpio = `Activité ${eIdx + 2}`;
                     }
 
                     subContainer.innerHTML += `
