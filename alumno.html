@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Mon Espace DELF | Réussite</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght::300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root { 
@@ -166,7 +166,7 @@
             border-bottom: 4px solid var(--gold);
             box-shadow: 0 4px 10px rgba(0,0,0,0.05);
             position: relative;
-            height: 250px; 
+            height: 140px; 
             box-sizing: border-box;
             flex-shrink: 0;
         }
@@ -491,7 +491,7 @@
             }
         }
 
-function generarMenuJerarquico() {
+        function generarMenuJerarquico() {
             const menuContainer = document.getElementById('sidebar-dynamic-menu');
             const target = document.getElementById('dynamic-workspace-target');
             menuContainer.innerHTML = "";
@@ -510,7 +510,6 @@ function generarMenuJerarquico() {
             }
 
             dbCacheData.itinerario.forEach((u, uIdx) => {
-                // Filtramos asegurando que compare de forma limpia en mayúsculas y sin espacios
                 let ejerciciosHabilidad = [];
                 if (u.ejercicios) {
                     ejerciciosHabilidad = u.ejercicios.filter(e => {
@@ -570,10 +569,6 @@ function generarMenuJerarquico() {
                 menuContainer.appendChild(unitWrapper);
             });
         }
-                unitWrapper.appendChild(subContainer);
-                menuContainer.appendChild(unitWrapper);
-            });
-        }
 
         window.toggleUnitMenu = (uIdx) => {
             openUnitsState[uIdx] = !openUnitsState[uIdx];
@@ -594,7 +589,9 @@ function generarMenuJerarquico() {
 
             const unidadActual = dbCacheData.itinerario[currentUnitIndex];
             if (unidadActual.ejercicios && Array.isArray(unidadActual.ejercicios)) {
-                ejerciciosFiltrados = unidadActual.ejercicios.filter(e => e.habilidad === currentSkill);
+                ejerciciosFiltrados = unidadActual.ejercicios.filter(e => {
+                    return e.habilidad && e.habilidad.trim().toUpperCase() === currentSkill.trim().toUpperCase();
+                });
             }
         }
 
@@ -674,7 +671,7 @@ function generarMenuJerarquico() {
                 if (track.length > 2) track = track.slice(-2);
                 if (track.length === 1) track = "0" + track;
 
-                let nombreArchivoFinal = `A1-${track}.mp3`;
+                let nombreArchivoFinal = `${currentLevel}-${track}.mp3`;
 
                 getDownloadURL(ref(storage, `niveles/${currentLevel}/audios/${nombreArchivoFinal}`))
                     .then(url => {
