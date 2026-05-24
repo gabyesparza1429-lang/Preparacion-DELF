@@ -24,7 +24,7 @@
         }
         
         .sidebar { 
-            width: 280px; 
+            width: 290px; 
             background: var(--oxford); 
             color: white; 
             padding: 30px 15px; 
@@ -93,7 +93,7 @@
             border-radius: 8px;
             text-align: left;
             font-family: 'Montserrat', sans-serif;
-            font-size: 0.88rem;
+            font-size: 0.85rem;
             font-weight: 600;
             cursor: pointer;
             display: flex;
@@ -444,19 +444,21 @@
                 }
                 
                 document.getElementById('level-indicator').innerText = `NIVEAU ${currentLevel}`;
-                
-                const snap = await getDoc(doc(db, "BibliotecaEjercicios", currentLevel));
-                if (snap.exists()) {
-                    const raw = snap.data();
-                    dbCacheData = raw.Valor ? JSON.parse(raw.Valor) : raw;
-                }
-                
-                renderActiveInterface();
+                await refrescarDatosFirestore();
 
             } catch (error) {
                 console.error(error);
                 document.getElementById('dynamic-workspace-target').innerHTML = `<p style="color:red; text-align:center;">Erreur de connexion.</p>`;
             }
+        }
+
+        async function refrescarDatosFirestore() {
+            const snap = await getDoc(doc(db, "BibliotecaEjercicios", currentLevel));
+            if (snap.exists()) {
+                const raw = snap.data();
+                dbCacheData = raw.Valor ? JSON.parse(raw.Valor) : raw;
+            }
+            renderActiveInterface();
         }
 
         window.switchMainTab = (tab) => {
@@ -510,6 +512,12 @@
             }
 
             dbCacheData.itinerario.forEach((u, uIdx) => {
+                // Validación estricta del nombre de la Unidad para colapsar duplicados erróneos de la IA
+                let nombreUnidadLimpio = u.unidad;
+                if (nombreUnidadLimpio.toLowerCase().includes("activité")) {
+                    nombreUnidadLimpio = "Unité 1"; 
+                }
+
                 let ejerciciosHabilidad = [];
                 if (u.ejercicios) {
                     ejerciciosHabilidad = u.ejercicios.filter(e => {
@@ -526,7 +534,7 @@
 
                 unitWrapper.innerHTML = `
                     <button class="unit-toggle-btn ${currentUnitIndex === uIdx ? 'active' : ''}" onclick="window.toggleUnitMenu(${uIdx})">
-                        <span><i class="fas fa-book" style="color:var(--gold); margin-right:8px;"></i>${u.unidad} ${u.tema ? `- ${u.tema}` : ''}</span>
+                        <span><i class="fas fa-book" style="color:var(--gold); margin-right:8px;"></i>${nombreUnidadLimpio} ${u.tema && !u.tema.toLowerCase().includes("activité") ? `- ${u.tema}` : ''}</span>
                         <i class="fas ${chevronIcon}" style="font-size:0.7rem; color:var(--gold);"></i>
                     </button>
                 `;
@@ -671,7 +679,7 @@
                 if (track.length > 2) track = track.slice(-2);
                 if (track.length === 1) track = "0" + track;
 
-                let nombreArchivoFinal = `${currentLevel}-${track}.mp3`;
+                let nombreArchivoFinal = `A1-${track}.mp3`;
 
                 getDownloadURL(ref(storage, `niveles/${currentLevel}/audios/${nombreArchivoFinal}`))
                     .then(url => {
