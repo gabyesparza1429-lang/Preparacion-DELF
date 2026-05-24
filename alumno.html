@@ -498,8 +498,12 @@
             const target = document.getElementById('dynamic-workspace-target');
             menuContainer.innerHTML = "";
 
-            if (!dbCacheData || !dbCacheData.itinerario) {
-                target.innerHTML = `<p style="text-align:center; color:#888;">Aucune donnée disponible.</p>`;
+            if (!dbCacheData || !dbCacheData.itinerario || dbCacheData.itinerario.length === 0) {
+                target.innerHTML = `
+                <div style="text-align: center; padding: 40px; color: #888;">
+                    <i class="fas fa-folder-open" style="font-size: 2.5rem; margin-bottom: 15px; color: #ccc;"></i>
+                    <p>Aucun exercice chargé pour le moment. Utilisez votre console Python pour commencer.</p>
+                </div>`;
                 return;
             }
 
@@ -512,11 +516,8 @@
             }
 
             dbCacheData.itinerario.forEach((u, uIdx) => {
-                // Validación estricta del nombre de la Unidad para colapsar duplicados erróneos de la IA
-                let nombreUnidadLimpio = u.unidad;
-                if (nombreUnidadLimpio.toLowerCase().includes("activité")) {
-                    nombreUnidadLimpio = "Unité 1"; 
-                }
+                // BLINDAJE DE SEGURIDAD: Filtramos para que no cree unidades corruptas si el texto viene mal
+                if (!u.unidad || u.unidad.toLowerCase().includes("activité")) return;
 
                 let ejerciciosHabilidad = [];
                 if (u.ejercicios) {
@@ -534,7 +535,7 @@
 
                 unitWrapper.innerHTML = `
                     <button class="unit-toggle-btn ${currentUnitIndex === uIdx ? 'active' : ''}" onclick="window.toggleUnitMenu(${uIdx})">
-                        <span><i class="fas fa-book" style="color:var(--gold); margin-right:8px;"></i>${nombreUnidadLimpio} ${u.tema && !u.tema.toLowerCase().includes("activité") ? `- ${u.tema}` : ''}</span>
+                        <span><i class="fas fa-book" style="color:var(--gold); margin-right:8px;"></i>${u.unidad} ${u.tema ? `- ${u.tema}` : ''}</span>
                         <i class="fas ${chevronIcon}" style="font-size:0.7rem; color:var(--gold);"></i>
                     </button>
                 `;
@@ -784,7 +785,7 @@
                         </div>`;
                     });
                 } else {
-                    target.innerHTML = `<p style="color:#888;">Aucun descripteur trouvé pour ce niveau.</p>`;
+                    target.innerHTML = `<p style="pcolor:#888;">Aucun descripteur trouvé pour ce niveau.</p>`;
                 }
             } catch (err) {
                 console.error(err);
