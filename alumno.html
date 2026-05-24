@@ -392,7 +392,7 @@
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
-        import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js";
+        import { getFirestore, doc, getDoc, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js";
         import { getStorage, ref, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-storage.js";
 
         const firebaseConfig = {
@@ -411,9 +411,9 @@
         let currentActiveTab = "parcours"; 
         let currentLevel = "A1"; 
         let currentSkill = "CO"; 
-        let currentUnitIndex = null; 
+        let currentUnitId = null; 
         let currentExerciseIndex = 0;
-        let dbCacheData = null;
+        let unidadesCache = {}; // Cache para guardar documentos indexados por su ID (ej: "Unite_1")
         let ejerciciosFiltrados = [];
         let openUnitsState = {}; 
 
@@ -444,7 +444,7 @@
                 }
                 
                 document.getElementById('level-indicator').innerText = `NIVEAU ${currentLevel}`;
-                await refrescarDatosFirestore();
+                await descargarColeccionUnidades();
 
             } catch (error) {
                 console.error(error);
@@ -452,12 +452,13 @@
             }
         }
 
-        async function refrescarDatosFirestore() {
-            const snap = await getDoc(doc(db, "BibliotecaEjercicios", currentLevel));
-            if (snap.exists()) {
-                const raw = snap.data();
-                dbCacheData = raw.Valor ? JSON.parse(raw.Valor) : raw;
-            }
+        // NUEVA ESTRATEGIA: Descarga la subcolección modular limpia
+        async function descargarColeccionUnidades() {
+            unidadesCache = {};
+            const querySnapshot = await getDocs(collection(db, "BibliotecaEjercicios", currentLevel, "Unidades"));
+            querySnapshot.forEach((docSnap) => {
+                unidadesCache[docSnap.id] = docSnap.data();
+            });
             renderActiveInterface();
         }
 
@@ -472,7 +473,7 @@
 
         window.setSkillFilter = (skill) => {
             currentSkill = skill;
-            currentUnitIndex = null; 
+            currentUnitId = null; 
             currentExerciseIndex = 0;
             document.querySelectorAll('.skill-tab-btn').forEach(btn => btn.classList.remove('active'));
             document.getElementById(`skill-${skill}`).classList.add('active');
@@ -498,7 +499,9 @@
             const target = document.getElementById('dynamic-workspace-target');
             menuContainer.innerHTML = "";
 
-            if (!dbCacheData || !dbCacheData.itinerario || dbCacheData.itinerario.length === 0) {
+            const keys = Object.keys(unidadesCache).sort();
+
+            if (keys.length === 0) {
                 target.innerHTML = `
                 <div style="text-align: center; padding: 40px; color: #888;">
                     <i class="fas fa-folder-open" style="font-size: 2.5rem; margin-bottom: 15px; color: #ccc;"></i>
@@ -507,7 +510,7 @@
                 return;
             }
 
-            if (currentUnitIndex === null) {
+            if (currentUnitId === null) {
                 target.innerHTML = `
                 <div style="text-align: center; padding: 60px; color: var(--oxford); margin-top:30px;">
                     <i class="fas fa-arrow-left" style="font-size: 2.5rem; margin-bottom: 15px; color: var(--gold);"></i>
@@ -515,18 +518,12 @@
                 </div>`;
             }
 
-            dbCacheData.itinerario.forEach((u, uIdx) => {
-                // BLINDAJE DE SEGURIDAD: Filtramos para que no cree unidades corruptas si el texto viene mal
-                if (!u.unidad || u.unidad.toLowerCase().includes("activité")) return;
+            keys.forEach((uId) => {
+                const u = unidadesCache[uId];
+                // Extraemos las actividades guardadas en la propiedad de la habilidad activa (CO, CE, etc.)
+                let ejerciciosHabilidad = u[currentSkill] || [];
 
-                let ejerciciosHabilidad = [];
-                if (u.ejercicios) {
-                    ejerciciosHabilidad = u.ejercicios.filter(e => {
-                        return e.habilidad && e.habilidad.trim().toUpperCase() === currentSkill.trim().toUpperCase();
-                    });
-                }
-
-                const isUnitOpen = openUnitsState[uIdx] || (currentUnitIndex === uIdx);
+                const isUnitOpen = openUnitsState[uId] || (currentUnitId === uId);
                 const displayStyle = isUnitOpen ? 'flex' : 'none';
                 const chevronIcon = isUnitOpen ? 'fa-chevron-down' : 'fa-chevron-right';
 
@@ -534,8 +531,8 @@
                 unitWrapper.className = 'unit-wrapper';
 
                 unitWrapper.innerHTML = `
-                    <button class="unit-toggle-btn ${currentUnitIndex === uIdx ? 'active' : ''}" onclick="window.toggleUnitMenu(${uIdx})">
-                        <span><i class="fas fa-book" style="color:var(--gold); margin-right:8px;"></i>${u.unidad} ${u.tema ? `- ${u.tema}` : ''}</span>
+                    <button class="unit-toggle-btn ${currentUnitId === uId ? 'active' : ''}" onclick="window.toggleUnitMenu('${uId}')">
+                        <span><i class="fas fa-book" style="color:var(--gold); margin-right:8px;"></i>${u.unidad || uId} ${u.tema ? `- ${u.tema}` : ''}</span>
                         <i class="fas ${chevronIcon}" style="font-size:0.7rem; color:var(--gold);"></i>
                     </button>
                 `;
@@ -552,7 +549,7 @@
                     `;
                 } else {
                     ejerciciosHabilidad.forEach((ej, eIdx) => {
-                        const esActivo = (currentUnitIndex === uIdx && currentExerciseIndex === eIdx);
+                        const esActivo = (currentUnitId === uId && currentExerciseIndex === eIdx);
                         
                         let tituloLimpio = "";
                         if (ej.instruccion) {
@@ -567,7 +564,7 @@
                         }
 
                         subContainer.innerHTML += `
-                            <button class="activity-link-btn ${esActivo ? 'active' : ''}" onclick="window.cargarActividadDirecta(${uIdx}, ${eIdx})">
+                            <button class="activity-link-btn ${esActivo ? 'active' : ''}" onclick="window.cargarActividadDirecta('${uId}', ${eIdx})">
                                 <i class="fas fa-play" style="font-size:0.6rem; margin-right:6px;"></i>${tituloLimpio}
                             </button>
                         `;
@@ -579,29 +576,23 @@
             });
         }
 
-        window.toggleUnitMenu = (uIdx) => {
-            openUnitsState[uIdx] = !openUnitsState[uIdx];
+        window.toggleUnitMenu = (uId) => {
+            openUnitsState[uId] = !openUnitsState[uId];
             generarMenuJerarquico();
         };
 
-        window.cargarActividadDirecta = (uIdx, eIdx) => {
-            currentUnitIndex = uIdx;
+        window.cargarActividadDirecta = (uId, eIdx) => {
+            currentUnitId = uId;
             currentExerciseIndex = eIdx;
-            openUnitsState[uIdx] = true; 
+            openUnitsState[uId] = true; 
             generarMenuJerarquico();
             renderExerciseStructure();
         };
 
         function filtrarEjerciciosDeUnidadActual() {
             ejerciciosFiltrados = [];
-            if (currentUnitIndex === null || !dbCacheData || !dbCacheData.itinerario[currentUnitIndex]) return;
-
-            const unidadActual = dbCacheData.itinerario[currentUnitIndex];
-            if (unidadActual.ejercicios && Array.isArray(unidadActual.ejercicios)) {
-                ejerciciosFiltrados = unidadActual.ejercicios.filter(e => {
-                    return e.habilidad && e.habilidad.trim().toUpperCase() === currentSkill.trim().toUpperCase();
-                });
-            }
+            if (currentUnitId === null || !unidadesCache[currentUnitId]) return;
+            ejerciciosFiltrados = unidadesCache[currentUnitId][currentSkill] || [];
         }
 
         function renderExerciseStructure() {
@@ -680,7 +671,7 @@
                 if (track.length > 2) track = track.slice(-2);
                 if (track.length === 1) track = "0" + track;
 
-                let nombreArchivoFinal = `A1-${track}.mp3`;
+                let nombreArchivoFinal = `${currentLevel}-${track}.mp3`;
 
                 getDownloadURL(ref(storage, `niveles/${currentLevel}/audios/${nombreArchivoFinal}`))
                     .then(url => {
@@ -695,7 +686,7 @@
                             })
                             .catch(() => {
                                 const container = document.getElementById(audioId);
-                                if (container) container.innerHTML = `<span style="color:red; font-size:0.85rem;"><i class="fas fa-exclamation-triangle"></i> Audio non disponible (${nombreArchivoFinal})</span>`;
+                                container.innerHTML = `<span style="color:red; font-size:0.85rem;"><i class="fas fa-exclamation-triangle"></i> Audio non disponible (${nombreArchivoFinal})</span>`;
                             });
                     });
             }
@@ -785,7 +776,7 @@
                         </div>`;
                     });
                 } else {
-                    target.innerHTML = `<p style="pcolor:#888;">Aucun descripteur trouvé pour ce niveau.</p>`;
+                    target.innerHTML = `<p style="color:#888;">Aucun descripteur trouvé pour ce niveau.</p>`;
                 }
             } catch (err) {
                 console.error(err);
