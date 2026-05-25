@@ -413,7 +413,7 @@
         let currentSkill = "CO"; 
         let currentUnitId = null; 
         let currentExerciseIndex = 0;
-        let unidadesCache = {}; // Cache para guardar documentos indexados por su ID (ej: "Unite_1")
+        let unidadesCache = {}; 
         let ejerciciosFiltrados = [];
         let openUnitsState = {}; 
 
@@ -452,7 +452,6 @@
             }
         }
 
-        // NUEVA ESTRATEGIA: Descarga la subcolección modular limpia
         async function descargarColeccionUnidades() {
             unidadesCache = {};
             const querySnapshot = await getDocs(collection(db, "BibliotecaEjercicios", currentLevel, "Unidades"));
@@ -520,7 +519,6 @@
 
             keys.forEach((uId) => {
                 const u = unidadesCache[uId];
-                // Extraemos las actividades guardadas en la propiedad de la habilidad activa (CO, CE, etc.)
                 let ejerciciosHabilidad = u[currentSkill] || [];
 
                 const isUnitOpen = openUnitsState[uId] || (currentUnitId === uId);
@@ -560,7 +558,7 @@
                         }
                         
                         if (!tituloLimpio) {
-                            tituloLimpio = `Activité ${eIdx + 2}`;
+                            tituloLimpio = `Activité ${eIdx + 1}`;
                         }
 
                         subContainer.innerHTML += `
@@ -725,7 +723,7 @@
                     let porcentaje = (aciertos / total) * 100;
                     const txtSophia = document.getElementById('sophia-verdict-text');
                     if (porcentaje >= 70) {
-                        txtSophia.innerHTML = `<strong>Félicitations !</strong> Tu as obtenu <strong>${aciertos}/${total}</strong>. Tu as très bien compris l'exercice, tu peux passer au suivant de manière sûre.`;
+                        txtSophia.innerHTML = `<strong>Félicitations !</strong> Tu as obtenu <strong>${aciertos}/${total}</strong>. Tu as très bien compris l'exercice, tu peux passer au siguiente de manière sûre.`;
                         txtSophia.style.color = "var(--green)";
                     } else {
                         txtSophia.innerHTML = `<strong>Attention !</strong> Tu as obtenu <strong>${aciertos}/${total}</strong>. Je te conseille de réécouter l'audio, de lire la transcription ci-dessous et de répéter l'exercice.`;
