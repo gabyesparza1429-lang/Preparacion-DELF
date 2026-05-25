@@ -498,7 +498,9 @@
             const target = document.getElementById('dynamic-workspace-target');
             menuContainer.innerHTML = "";
 
-            const keys = Object.keys(unidadesCache).sort();
+            const keys = Object.keys(unidadesCache).sort((a, b) => {
+                return a.localeCompare(b, undefined, { numeric: true, sensitivity: 'base' });
+            });
 
             if (keys.length === 0) {
                 target.innerHTML = `
@@ -521,7 +523,7 @@
                 const u = unidadesCache[uId];
                 let ejerciciosHabilidad = u[currentSkill] || [];
 
-                const isUnitOpen = openUnitsState[uId] || (currentUnitId === uId);
+                const isUnitOpen = openUnitsState[uId] === true || currentUnitId === uId;
                 const displayStyle = isUnitOpen ? 'flex' : 'none';
                 const chevronIcon = isUnitOpen ? 'fa-chevron-down' : 'fa-chevron-right';
 
@@ -549,6 +551,7 @@
                     ejerciciosHabilidad.forEach((ej, eIdx) => {
                         const esActivo = (currentUnitId === uId && currentExerciseIndex === eIdx);
                         
+                        // EXTRACCIÓN DINÁMICA PERFECTA DESDE EL DOCUMENTO MODULAR
                         let tituloLimpio = "";
                         if (ej.instruccion) {
                             let matchActividad = ej.instruccion.match(/Activité\s*\d+/i);
@@ -557,6 +560,13 @@
                             }
                         }
                         
+                        if (!tituloLimpio && ej.ruta_audio) {
+                            let matchNum = ej.ruta_audio.match(/-(\d+)\.mp3/);
+                            if (matchNum) {
+                                tituloLimpio = `Activité ${parseInt(matchNum[1], 10)}`;
+                            }
+                        }
+
                         if (!tituloLimpio) {
                             tituloLimpio = `Activité ${eIdx + 1}`;
                         }
@@ -575,6 +585,7 @@
         }
 
         window.toggleUnitMenu = (uId) => {
+            // CONTROL ACORDEÓN CORREGIDO: Alterna el estado de apertura/cierre de forma limpia
             openUnitsState[uId] = !openUnitsState[uId];
             generarMenuJerarquico();
         };
