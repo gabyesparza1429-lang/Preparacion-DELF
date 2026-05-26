@@ -5,6 +5,7 @@
     <title>Mon Espace DELF | Réussite</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
     <style>
         :root { 
             --oxford: #002147; 
@@ -309,6 +310,26 @@
             border: 1px solid #f0f2f5;
         }
 
+        /* DISEÑO DE LA HOJA DEL LIBRO AUTOMÁTICA */
+        .pdf-viewer-container {
+            width: 100%;
+            background: #fff;
+            border: 2px solid var(--gold);
+            border-radius: 8px;
+            padding: 10px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            text-align: center;
+            box-sizing: border-box;
+        }
+
+        .pdf-viewer-container canvas {
+            max-width: 100%;
+            height: auto;
+            border-radius: 4px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+
         .checklist-item {
             display: flex;
             align-items: flex-start;
@@ -418,11 +439,21 @@
         let ejerciciosFiltrados = [];
         let openUnitsState = {}; 
 
+        // Configuración para el renderizador automático del libro PDF
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
+        const pdfUrl = './c.orale.pdf'; // El archivo debe estar en la misma carpeta que el HTML
+        let pdfDocInstance = null;
+
         const urlParams = new URLSearchParams(window.location.search);
         const studentId = urlParams.get('id') || 'default_student';
 
         async function init() {
             try {
+                // Precargamos el PDF en secreto para que responda de inmediato
+                pdfjsLib.getDocument(pdfUrl).promise.then(pdf => {
+                    pdfDocInstance = pdf;
+                }).catch(err => console.log("Fichier c.orale.pdf non trouvé localement:", err));
+
                 const userSnap = await getDoc(doc(db, "Usuarios", studentId));
                 if (userSnap.exists()) {
                     const userData = userSnap.data();
@@ -560,13 +591,6 @@
                             }
                         }
                         
-                        if (!tituloLimpio && ej.ruta_audio) {
-                            let matchNum = ej.ruta_audio.match(/-(\d+)\.mp3/);
-                            if (matchNum) {
-                                tituloLimpio = `Activité ${parseInt(matchNum[1], 10)}`;
-                            }
-                        }
-
                         if (!tituloLimpio) {
                             tituloLimpio = `Activité ${eIdx + 1}`;
                         }
@@ -620,6 +644,18 @@
                 <h4 style="margin-top: 0; margin-bottom: 20px; color: var(--oxford); font-size: 1.05rem; font-weight:700;">
                     ${ej.instruccion || 'Exercice'} 
                 </h4>`;
+
+            // VISOR DINÁMICO DEL LIBRO PDF (Solo si Python guardó el número de página)
+            if (ej.pagina_pdf) {
+                html += `
+                <div class="pdf-viewer-container" id="pdf-viewer-block">
+                    <p style="font-size:0.8rem; color:var(--gold); font-weight:600; margin-top:0;"><i class="fas fa-book-open"></i> Document de l'exercice (Page ${ej.pagina_pdf})</p>
+                    <canvas id="pdf-canvas-render"></canvas>
+                </div>`;
+                
+                // Ejecutamos el renderizado asíncrono de la hoja
+                setTimeout(() => renderPageFromBook(ej.pagina_pdf), 50);
+            }
 
             if (ej.ruta_audio) {
                 html += `
@@ -752,6 +788,29 @@
             }
         }
 
+        // FUNCIÓN ENCARGADA DE EXTRAER LA PÁGINA DEL PDF EN TIEMPO REAL
+        function renderPageFromBook(pageNum) {
+            if (!pdfDocInstance) return;
+            
+            pdfDocInstance.getPage(pageNum).then(page => {
+                const canvas = document.getElementById('pdf-canvas-render');
+                if (!canvas) return;
+                
+                const ctx = canvas.getContext('2d');
+                // Ajustamos una escala óptima para que se vea nítido en pantallas normales
+                const viewport = page.getViewport({ scale: 1.5 });
+                
+                canvas.height = viewport.height;
+                canvas.width = viewport.width;
+
+                const renderContext = {
+                    canvasContext: ctx,
+                    viewport: viewport
+                };
+                page.render(renderContext);
+            });
+        }
+
         async function renderCarnetInterface() {
             const target = document.getElementById('dynamic-workspace-target');
             target.innerHTML = `<p style="text-align:center; color:#666;"><i class="fas fa-spinner fa-spin"></i> Chargement des compétences...</p>`;
@@ -802,4 +861,4 @@
         init();
     </script>
 </body>
-</html>
+</html>s
