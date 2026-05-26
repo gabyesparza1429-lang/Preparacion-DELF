@@ -15,7 +15,8 @@
         }
         
         body { 
-            font-family: 'Montserrat', sans-serif; \n            margin: 0; 
+            font-family: 'Montserrat', sans-serif; 
+            margin: 0; 
             display: flex; 
             height: 100vh; 
             background: var(--cream); 
@@ -227,15 +228,9 @@
 
     <div class="sidebar">
         <h2>MON ESPACE DELF</h2>
-        
         <h3>Menu</h3>
-        <button class="nav-btn active" id="tab-parcours">
-            <i class="fas fa-route"></i> Mon Parcours
-        </button>
-        <button class="nav-btn" id="tab-carnet">
-            <i class="fas fa-book"></i> Carnet de réussite
-        </button>
-        
+        <button class="nav-btn active" id="tab-parcours"><i class="fas fa-route"></i> Mon Parcours</button>
+        <button class="nav-btn" id="tab-carnet"><i class="fas fa-book"></i> Carnet de réussite</button>
         <h3>Compétences</h3>
         <button class="nav-btn" id="skill-CO"><i class="fas fa-headphones"></i> Écouter (CO)</button>
         <button class="nav-btn" id="skill-CE"><i class="fas fa-book-open"></i> Lire (CE)</button>
@@ -244,10 +239,8 @@
     </div>
 
     <div class="main-content">
-        
         <div class="top-bar">
             <h1 id="main-view-title">Tableau de bord</h1>
-            
             <div style="display: flex; gap: 25px; align-items: center;">
                 <div class="selector-container" id="top-selectors">
                     <select id="select-level">
@@ -257,15 +250,9 @@
                         <option value="B2" selected>Niveau B2</option>
                         <option value="C1">Niveau C1</option>
                     </select>
-
-                    <select id="select-unite">
-                        </select>
+                    <select id="select-unite"></select>
                 </div>
-                
-                <div class="user-profile">
-                    <i class="fas fa-user-circle"></i>
-                    <span>Étudiant</span>
-                </div>
+                <div class="user-profile"><i class="fas fa-user-circle"></i><span>Étudiant</span></div>
             </div>
         </div>
 
@@ -274,12 +261,10 @@
                 <h3 id="menu-panel-title">Activités</h3>
                 <div id="dynamic-menu-target"></div>
             </div>
-
             <div class="content-panel" id="dynamic-workspace-target">
                 <p style="text-align: center; color: #888; margin-top: 50px;">Sélectionnez una actividad dans le menu de gauche pour commencer.</p>
             </div>
         </div>
-
     </div>
 
     <script type="module">
@@ -300,17 +285,14 @@
         const db = getFirestore(app);
         const storage = getStorage(app);
 
-        // Variables de Control de Estado Global
         let currentTab = 'parcours'; 
         let currentLevel = 'B2';
         let currentUniteId = 'Unite_1'; 
         let currentSkill = 'CO'; 
         let currentExerciseIndex = 0; 
-
         let datosUnidadActual = null; 
         let ejerciciosFiltrados = []; 
 
-        // Inicialización de la Aplicación al Cargar
         async function init() {
             configurarManejadoresDeEventos();
             await cargarListaDeUnidades();
@@ -320,6 +302,7 @@
         function configurarManejadoresDeEventos() {
             document.getElementById('select-level').addEventListener('change', async (e) => {
                 currentLevel = e.target.value;
+                currentUniteId = '';
                 await cargarListaDeUnidades();
                 await descargarDatosDeUnidad();
             });
@@ -363,12 +346,11 @@
 
         async function cargarListaDeUnidades() {
             const selectUnite = document.getElementById('select-unite');
-            selectUnite.innerHTML = '<option>Chargement des unités...</option>';
+            selectUnite.innerHTML = '<option>Chargement...</option>';
 
             try {
                 const colRef = collection(db, "BibliotecaEjercicios", currentLevel, "Unidades");
                 const snapshot = await getDocs(colRef);
-                
                 selectUnite.innerHTML = '';
                 
                 if (snapshot.empty) {
@@ -377,40 +359,33 @@
                 }
 
                 let unidades = [];
-                snapshot.forEach(doc => {
-                    unidades.push({ id: doc.id, ...doc.data() });
-                });
-
+                snapshot.forEach(doc => { unidades.push({ id: doc.id, ...doc.data() }); });
                 unidades.sort((a, b) => a.id.localeCompare(b.id, undefined, {numeric: true}));
 
                 unidades.forEach((u, index) => {
                     const opt = document.createElement('option');
                     opt.value = u.id;
                     opt.innerText = u.unidad ? `${u.unidad} : ${u.tema || ''}` : u.id;
-                    if (index === 0 && !currentUniteId) {
-                        currentUniteId = u.id;
-                    }
                     selectUnite.appendChild(opt);
                 });
 
-                if (unidades.length > 0) {
-                    selectUnite.value = currentUniteId || unidades[0].id;
-                    currentUniteId = selectUnite.value;
+                if (!currentUniteId && unidades.length > 0) {
+                    currentUniteId = unidades[0].id;
                 }
+                selectUnite.value = currentUniteId;
 
             } catch (err) {
-                console.error("Erreur lors de la récupération de la liste des unités :", err);
-                selectUnite.innerHTML = '<option value="">Erreur de chargement</option>';
+                console.error(err);
+                selectUnite.innerHTML = '<option value="">Erreur</option>';
             }
         }
 
         async function descargarDatosDeUnidad() {
             if (!currentUniteId) return;
-            
             const target = document.getElementById('dynamic-workspace-target');
             const menuTarget = document.getElementById('dynamic-menu-target');
             
-            target.innerHTML = `<p style="text-align:center; color:#666; margin-top:50px;"><i class="fas fa-spinner fa-spin"></i> Téléchargement des données depuis Firestore...</p>`;
+            target.innerHTML = `<p style="text-align:center; color:#666; margin-top:50px;"><i class="fas fa-spinner fa-spin"></i> Téléchargement des données...</p>`;
             menuTarget.innerHTML = `<p style="color:#888; font-size:0.85rem;">Chargement...</p>`;
 
             try {
@@ -444,40 +419,30 @@
         function generarMenuJerarquico() {
             const menuTarget = document.getElementById('dynamic-menu-target');
             menuTarget.innerHTML = '';
-            
             filtrarEjerciciosDeUnidadActual();
             document.getElementById('menu-panel-title').innerText = `Activités (${currentSkill})`;
 
             if (ejerciciosFiltrados.length === 0) {
-                menuTarget.innerHTML = `<p style="color:#999; font-size:0.85rem; padding:10px;">Aucune activité disponible pour cette compétence.</p>`;
+                menuTarget.innerHTML = `<p style="color:#999; font-size:0.85rem; padding:10px;">Aucune activité disponible.</p>`;
                 return;
             }
 
             ejerciciosFiltrados.forEach((item, index) => {
                 const btn = document.createElement('div');
                 btn.className = `menu-item ${index === currentExerciseIndex ? 'active' : ''}`;
-                
-                let extractoInstruccion = item.instruccion || `Activité ${index + 1}`;
-                if (extractoInstruccion.length > 32) {
-                    extractoInstruccion = extractoInstruccion.substring(0, 30) + '...';
-                }
-
-                btn.innerHTML = `<i class="fas fa-tasks" style="margin-right:8px; font-size:0.8rem; color:var(--gold);"></i> ${extractoInstruccion}`;
-                
+                let txt = item.instruccion || `Activité ${index + 1}`;
+                if (txt.length > 32) txt = txt.substring(0, 30) + '...';
+                btn.innerHTML = `<i class="fas fa-tasks" style="margin-right:8px; color:var(--gold);"></i> ${txt}`;
                 btn.addEventListener('click', () => {
                     currentExerciseIndex = index;
                     document.querySelectorAll('.menu-item').forEach(el => el.classList.remove('active'));
                     btn.classList.add('active');
                     renderExerciseStructure();
                 });
-
                 menuTarget.appendChild(btn);
             });
         }
 
-        // =====================================================================
-        // RENDERIZADO DINÁMICO CORREGIDO PARA MOSTRAR IMÁGENES EN CUADRÍCULA
-        // =====================================================================
         function renderExerciseStructure() {
             const target = document.getElementById('dynamic-workspace-target');
             filtrarEjerciciosDeUnidadActual();
@@ -497,48 +462,19 @@
                 </h4>`;
 
             if (ej.ruta_audio) {
-                html += `
-                <div id="${audioId}" style="margin-bottom: 20px; background: #fafafa; padding: 12px; border-radius: 6px; border: 1px dashed var(--gold); text-align:center; color:#666; font-size:0.9rem;">
-                    <i class="fas fa-spinner fa-spin"></i> Chargement du fichier audio...
-                </div>`;
+                html += `<div id="${audioId}" style="margin-bottom: 20px; background: #fafafa; padding: 12px; border-radius: 6px; border: 1px dashed var(--gold); text-align:center;"><i class="fas fa-spinner fa-spin"></i> Chargement de l'audio...</div>`;
             }
 
             if (ej.preguntas && ej.preguntas.length > 0) {
                 ej.preguntas.forEach((p, pIdx) => {
                     html += `
-                    <div class="pregunta-block" id="block-preg-${pIdx}" style="padding:15px; border-radius:6px; margin-bottom:15px; border:1px solid #eef2f5; position:relative;">
+                    <div class="pregunta-block" id="block-preg-${pIdx}" style="padding:15px; border-radius:6px; margin-bottom:15px; border:1px solid #eef2f5;">
                         <p style="margin-top:0; margin-bottom:12px; font-weight:600; color:#222; display:flex; align-items:center;">
                             <span id="status-icon-target-${pIdx}"></span>
                             <span>${p.pregunta}</span>
                         </p>`;
                     
-                    // =====================================================================
-                    // CAMBIO CLAVE: DISEÑO DE VISTA DE IMÁGENES EN COLUMNAS (GRID)
-                    // =====================================================================
-                    if (p.descripcion_imagenes && p.descripcion_imagenes.length > 0) {
-                        html += `<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 15px; margin-bottom: 15px;">`;
-                        
-                        p.descripcion_imagenes.forEach((desc, dIdx) => {
-                            let busquedaLimpia = desc.replace(/^Image\s+[A-F]\s*:\s*/i, "");
-                            let identificadorLetra = desc.match(/^Image\s+([A-F])/i) ? desc.match(/^Image\s+([A-F])/i)[0] : `Option ${dIdx + 1}`;
-                            
-                            let urlImagenAutomatica = `https://images.unsplash.com/photo-1546410531-bb4caa6b424d?q=80&w=400`; // Por defecto
-                            if(busquedaLimpia) {
-                                urlImagenAutomatica = `https://source.unsplash.com/featured/400x300/?${encodeURIComponent(busquedaLimpia)}`;
-                            }
-
-                            html += `
-                            <div style="background: white; border: 1px solid #ddd; border-radius: 8px; padding: 10px; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
-                                <img src="${urlImagenAutomatica}" alt="${identificadorLetra}" style="width: 100%; height: 140px; object-fit: cover; border-radius: 6px; margin-bottom: 8px; background: #eaeaea;">
-                                <label style="display: flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer; font-weight: 600; font-size: 0.9rem;">
-                                    <input type="radio" name="question_${pIdx}" value="${identificadorLetra}" style="accent-color:var(--oxford);"> ${identificadorLetra}
-                                </label>
-                            </div>`;
-                        });
-                        
-                        html += `</div>`;
-                    } 
-                    else if (p.opciones) {
+                    if (p.opciones) {
                         p.opciones.forEach((opt) => {
                             html += `
                             <label style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px; cursor: pointer; font-size: 0.95rem;">
@@ -546,27 +482,21 @@
                             </label>`;
                         });
                     }
-                    
                     html += `</div>`;
                 });
 
                 html += `
                 <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px;">
-                    <button class="nav-tab-btn" id="btn-submit-exercise" style="width:auto; margin:0; background:var(--oxford); color:white; padding:10px 22px; font-weight:600; font-size:0.9rem; border-radius:6px;"><i class="fas fa-paper-plane"></i> Envoyer</button>
-                    <button class="nav-tab-btn" id="btn-next-exercise" style="width:auto; margin:0; background:var(--green); color:white; padding:10px 22px; font-weight:600; font-size:0.9rem; border-radius:6px; display:none;">Suivant <i class="fas fa-arrow-right"></i></button>
+                    <button class="nav-tab-btn" id="btn-submit-exercise" style="background:var(--oxford); color:white;"><i class="fas fa-paper-plane"></i> Envoyer</button>
+                    <button class="nav-tab-btn" id="btn-next-exercise" style="background:var(--green); color:white; display:none;">Suivant <i class="fas fa-arrow-right"></i></button>
                 </div>`;
             }
 
             html += `
                 <div id="sophia-box" style="display:none; background:#f4f7f9; border-left:4px solid var(--gold); padding:20px; border-radius:6px; margin-top:25px;">
-                    <div style="display:flex; align-items:center; gap:10px; font-weight:700; color:var(--oxford); margin-bottom:10px; font-size:0.95rem;">
-                        <i class="fas fa-lightbulb" style="color:var(--gold);"></i> CONSEIL DE SOPHIA
-                    </div>
+                    <div style="display:flex; align-items:center; gap:10px; font-weight:700; color:var(--oxford); margin-bottom:10px;"><i class="fas fa-lightbulb" style="color:var(--gold);"></i> CONSEIL DE SOPHIA</div>
                     <p id="sophia-verdict-text" style="margin:0; font-size:0.95rem; line-height:1.5;"></p>
-                    ${ej.transcripcion ? `
-                        <div style="font-weight:700; margin-top:15px; color:var(--oxford); font-size:0.9rem;"><i class="fas fa-file-audio"></i> Transcription :</div>
-                        <div style="background:#fff; border:1px dashed #ccc; padding:12px; border-radius:5px; margin-top:8px; font-size:0.95rem; line-height:1.6; color:#333;">${ej.transcripcion}</div>
-                    ` : ''}
+                    ${ej.transcripcion ? `<div style="font-weight:700; margin-top:15px; color:var(--oxford);"><i class="fas fa-file-audio"></i> Transcription :</div><div style="background:#fff; border:1px dashed #ccc; padding:12px; border-radius:5px; margin-top:8px; font-size:0.95rem; color:#333;">${ej.transcripcion}</div>` : ''}
                 </div>
             </div>`;
 
@@ -584,17 +514,17 @@
                 getDownloadURL(ref(storage, `niveles/${currentLevel}/audios/${nombreArchivoFinal}`))
                     .then(url => {
                         const container = document.getElementById(audioId);
-                        if (container) container.innerHTML = `<audio controls style="width:100%;" src="${url}" preload="auto"></audio>`;
+                        if (container) container.innerHTML = `<audio controls style="width:100%;" src="${url}"></audio>`;
                     })
                     .catch(() => {
                         getDownloadURL(ref(storage, `niveles/${currentLevel}/audios/${track}.mp3`))
                             .then(url => {
                                 const container = document.getElementById(audioId);
-                                if (container) container.innerHTML = `<audio controls style="width:100%;" src="${url}" preload="auto"></audio>`;
+                                if (container) container.innerHTML = `<audio controls style="width:100%;" src="${url}"></audio>`;
                             })
                             .catch(() => {
                                 const container = document.getElementById(audioId);
-                                container.innerHTML = `<span style="color:red; font-size:0.85rem;"><i class="fas fa-exclamation-triangle"></i> Audio non disponible (${nombreArchivoFinal})</span>`;
+                                if (container) container.innerHTML = `<span style="color:red; font-size:0.85rem;"><i class="fas fa-exclamation-triangle"></i> Audio non disponible</span>`;
                             });
                     });
             }
@@ -618,10 +548,10 @@
 
                         if (rAlumno === rCorrecta) {
                             aciertos++;
-                            iconTarget.innerHTML = `<i class="fas fa-check-circle" style="color:var(--green); margin-right:8px; font-size:1.1rem;"></i>`;
+                            iconTarget.innerHTML = `<i class="fas fa-check-circle" style="color:var(--green); margin-right:8px;"></i>`;
                             block.style.borderColor = "var(--green)";
                         } else {
-                            iconTarget.innerHTML = `<i class="fas fa-times-circle" style="color:red; margin-right:8px; font-size:1.1rem;"></i>`;
+                            iconTarget.innerHTML = `<i class="fas fa-times-circle" style="color:red; margin-right:8px;"></i>`;
                             block.style.borderColor = "red";
                         }
                     });
@@ -633,10 +563,10 @@
                     let porcentaje = (aciertos / total) * 100;
                     const txtSophia = document.getElementById('sophia-verdict-text');
                     if (porcentaje >= 70) {
-                        txtSophia.innerHTML = `<strong>Félicitations !</strong> Tu as obtenu <strong>${aciertos}/${total}</strong>. Tu as très bien compris l'exercice, tu peux passer au suivante de manera sûre.`;
+                        txtSophia.innerHTML = `<strong>Félicitations !</strong> Tu as obtenu <strong>${aciertos}/${total}</strong>. Tu as très bien compris l'exercice !`;
                         txtSophia.style.color = "var(--green)";
                     } else {
-                        txtSophia.innerHTML = `<strong>Attention !</strong> Tu as obtenu <strong>${aciertos}/${total}</strong>. Je te conseille de réécouter l'audio, de lire la transcription ci-dessous et de repetir l'exercice.`;
+                        txtSophia.innerHTML = `<strong>Attention !</strong> Tu as obtenu <strong>${aciertos}/${total}</strong>. Je te conseille de réécouter l'audio.`;
                         txtSophia.style.color = "red";
                     }
                     if (sophiaBox) sophiaBox.style.display = "block";
@@ -654,42 +584,25 @@
 
         async function renderCarnetDeReussite() {
             const target = document.getElementById('dynamic-workspace-target');
-            document.getElementById('dynamic-menu-target').innerHTML = `<p style="color:#888; font-size:0.85rem; padding:10px;">Référentiel CECRL actif pour le niveau ${currentLevel}.</p>`;
-            
-            target.innerHTML = `<p style="text-align:center; color:#666;"><i class="fas fa-spinner fa-spin"></i> Analyse de vos compétences...</p>`;
+            document.getElementById('dynamic-menu-target').innerHTML = `<p style="color:#888; font-size:0.85rem; padding:10px;">Référentiel CECRL - ${currentLevel}.</p>`;
+            target.innerHTML = `<p style="text-align:center; color:#666;"><i class="fas fa-spinner fa-spin"></i> Chargement...</p>`;
 
             try {
                 const docRef = doc(db, "BibliotecaEjercicios", currentLevel, "Descriptores", "Lista");
                 const snapshot = await getDoc(docRef);
 
                 if (snapshot.exists()) {
-                    const datos = snapshot.data();
-                    const lista = datos.items || [];
-                    
-                    target.innerHTML = `
-                    <div style="background:#fff; padding:5px;">
-                        <h3 style="margin-top:0; color:var(--oxford); font-weight:700; margin-bottom:5px;">Mon passeport de compétences - ${currentLevel}</h3>
-                        <p style="color:#666; font-size:0.9rem; margin-bottom:25px;">Voici la liste des savoir-faire requis par le Cadre européen (CECRL) que vous validez à travers vos exercices.</p>
-                        <div id="lista-descriptores-container"></div>
-                    </div>`;
-
+                    const lista = snapshot.data().items || [];
+                    target.innerHTML = `<div style="background:#fff; padding:5px;"><h3 style="color:var(--oxford); font-weight:700;">Mon passeport de compétences - ${currentLevel}</h3><div id="lista-descriptores-container"></div></div>`;
                     const container = document.getElementById('lista-descriptores-container');
                     lista.forEach(item => {
-                        container.innerHTML += `
-                        <div style="display:flex; align-items:center; gap:15px; background:#f8fafc; padding:14px; border-radius:8px; margin-bottom:10px; border:1px solid #e2e8f0;">
-                            <i class="fas fa-check-circle" style="color:var(--green); font-size: 1.3rem;"></i>
-                            <div>
-                                <span style="font-size:0.75rem; background:#eef2f5; color:var(--oxford); padding:3px 8px; border-radius:4px; font-weight:700; margin-right:10px;">${item.competencia || 'CECRL'}</span>
-                                <span style="font-size:0.95rem; color:#333;">${item.descriptor}</span>
-                            </div>
-                        </div>`;
+                        container.innerHTML += `<div style="display:flex; align-items:center; gap:15px; background:#f8fafc; padding:14px; border-radius:8px; margin-bottom:10px; border:1px solid #e2e8f0;"><i class="fas fa-check-circle" style="color:var(--green);"></i><div><span style="font-size:0.75rem; background:#eef2f5; color:var(--oxford); padding:3px 8px; border-radius:4px; font-weight:700; margin-right:10px;">${item.competencia || 'CECRL'}</span><span style="font-size:0.95rem; color:#333;">${item.descriptor}</span></div></div>`;
                     });
                 } else {
-                    target.innerHTML = `<p style="color:#888;">Aucun descripteur trouvé pour ce niveau.</p>`;
+                    target.innerHTML = `<p style="color:#888;">Aucun descripteur trouvé.</p>`;
                 }
             } catch (err) {
-                console.error(err);
-                target.innerHTML = `<p style="color:red;">Erreur lors du chargement.</p>`;
+                target.innerHTML = `<p style="color:red;">Erreur.</p>`;
             }
         }
 
