@@ -32,415 +32,575 @@
             display: flex;
             flex-direction: column;
             box-shadow: 4px 0 10px rgba(0,0,0,0.1);
+            z-index: 10;
+            overflow-y: auto;
         }
-        
-        .sidebar h2 { 
-            text-align: center; 
-            font-size: 1.35rem; 
-            margin-bottom: 35px; 
-            font-weight: 700;
+
+        .sidebar h2 {
+            font-size: 1.1rem;
+            color: white;
+            text-align: center;
+            margin-top: 0;
+            margin-bottom: 30px;
             letter-spacing: 1px;
             border-bottom: 2px solid var(--gold);
             padding-bottom: 15px;
-        }
-        
-        .sidebar h3 { 
-            font-size: 0.8rem; 
-            text-transform: uppercase; 
-            color: var(--gold); 
-            margin: 20px 0 10px 10px; 
-            letter-spacing: 1.5px;
-            font-weight: 700;
-        }
-        
-        .nav-btn { 
-            width: 100%; 
-            background: transparent; 
-            border: none; 
-            color: #b0c4de; 
-            padding: 14px 15px; 
-            text-align: left; 
-            cursor: pointer; 
-            font-size: 0.95rem; 
-            border-radius: 8px; 
-            margin-bottom: 6px; 
-            display: flex; 
-            align-items: center; 
-            gap: 12px;
-            font-weight: 400;
-            transition: all 0.3s ease;
-        }
-        
-        .nav-btn:hover, .nav-btn.active { 
-            background: var(--gold); 
-            color: white; 
-            font-weight: 600;
-            transform: translateX(4px);
-        }
-        
-        .main-content { 
-            flex-grow: 1; 
-            padding: 35px; 
-            overflow-y: auto; 
-            display: flex; 
-            flex-direction: column; 
-        }
-        
-        .top-bar { 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            margin-bottom: 30px; 
-            background: white; 
-            padding: 18px 25px; 
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
-        }
-        
-        .top-bar h1 { 
-            margin: 0; 
-            font-size: 1.5rem; 
-            color: var(--oxford); 
-            font-weight: 700;
-        }
-        
-        .selector-container { 
-            display: flex; 
-            gap: 12px; 
-        }
-        
-        select { 
-            padding: 10px 18px; 
-            border: 1px solid #dcdcdc; 
-            border-radius: 8px; 
-            font-size: 0.9rem; 
-            background: white; 
-            color: #333;
-            font-weight: 600;
-            cursor: pointer;
-            transition: border-color 0.3s;
-        }
-        
-        select:focus { 
-            border-color: var(--gold); 
-            outline: none; 
-        }
-        
-        .workspace { 
-            display: flex; 
-            gap: 25px; 
-            flex-grow: 1; 
-            min-height: 0; 
-        }
-        
-        .menu-panel { 
-            width: 320px; 
-            background: white; 
-            border-radius: 12px; 
-            padding: 20px; 
-            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
-            overflow-y: auto; 
-            flex-shrink: 0; 
-        }
-        
-        .menu-panel h3 { 
-            margin-top: 0; 
-            margin-bottom: 20px; 
-            color: var(--oxford); 
-            font-size: 1.1rem; 
-            font-weight: 700;
-            border-bottom: 1px solid #eee;
-            padding-bottom: 10px;
-        }
-        
-        .menu-item { 
-            padding: 12px 15px; 
-            border-radius: 8px; 
-            cursor: pointer; 
-            margin-bottom: 8px; 
-            font-size: 0.9rem; 
-            background: #f8fafc; 
-            border-left: 4px solid transparent;
-            font-weight: 600;
-            color: #4a5568;
-            transition: all 0.2s ease;
-        }
-        
-        .menu-item:hover { 
-            background: #edf2f7; 
-            color: var(--oxford);
-        }
-        
-        .menu-item.active { 
-            background: #e1e7ec; 
-            color: var(--oxford); 
-            border-left-color: var(--gold); 
-        }
-        
-        .content-panel { 
-            flex-grow: 1; 
-            background: white; 
-            border-radius: 12px; 
-            padding: 30px; 
-            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
-            overflow-y: auto; 
-        }
-        
-        .exercise-card { 
-            background: white; 
+            text-transform: uppercase;
         }
         
         .nav-tab-btn { 
-            background: var(--gold); 
+            width: 100%; 
+            padding: 14px 15px; 
+            margin-bottom: 8px; 
+            border-radius: 10px; 
+            border: 1px solid rgba(197, 160, 89, 0.2); 
+            background: transparent; 
             color: white; 
-            border: none; 
-            padding: 12px 25px; 
-            border-radius: 8px; 
             cursor: pointer; 
-            font-weight: 600; 
+            text-align: left; 
+            display: flex; 
+            align-items: center; 
+            justify-content: space-between;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.9rem;
+            box-sizing: border-box;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-tab-btn:hover {
+            background: rgba(255,255,255,0.05);
+            border-color: var(--gold);
+        }
+
+        .nav-tab-btn.active { 
+            background: var(--gold); 
+            color: var(--oxford);
+            font-weight: 700;
+            border-color: var(--gold);
+        }
+
+        .unit-wrapper {
+            margin-bottom: 10px;
+            width: 100%;
+        }
+
+        .unit-toggle-btn {
+            width: 100%;
+            padding: 12px 15px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(197, 160, 89, 0.2);
+            color: white;
+            border-radius: 8px;
+            text-align: left;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: background 0.2s;
+        }
+
+        .unit-toggle-btn:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: var(--gold);
+        }
+
+        .unit-toggle-btn.active {
+            border-color: var(--gold);
+            background: rgba(197, 160, 89, 0.1);
+        }
+
+        .submenu-activities {
+            margin-left: 15px;
+            margin-top: 5px;
+            border-left: 1px solid rgba(197, 160, 89, 0.3);
+            padding-left: 10px;
+            display: none; 
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .activity-link-btn {
+            background: transparent;
+            border: none;
+            color: #bbb;
+            padding: 8px 12px;
+            text-align: left;
+            cursor: pointer;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 500;
+            border-radius: 6px;
+            transition: all 0.2s;
+        }
+
+        .activity-link-btn:hover {
+            color: var(--gold);
+            background: rgba(255,255,255,0.03);
+        }
+
+        .activity-link-btn.active {
+            color: white;
+            font-weight: 700;
+            background: rgba(197, 160, 89, 0.2);
+        }
+
+        .main-container {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            position: relative;
+        }
+
+        .project-banner {
+            background: var(--oxford) url('./assets/Banner.png') no-repeat center center;
+            background-size: 100% 100%; 
+            color: white;
+            padding: 15px 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            border-bottom: 4px solid var(--gold);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            position: relative;
+            height: 140px; 
+            box-sizing: border-box;
+            flex-shrink: 0;
+        }
+
+        .banner-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+
+        .banner-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .banner-left h1 {
+            margin: 0;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: white;
+        }
+
+        .level-badge {
+            background: var(--gold);
+            color: var(--oxford);
+            padding: 6px 20px;
+            border-radius: 20px;
+            font-weight: 700;
             font-size: 0.95rem;
-            transition: background 0.3s;
-            display: inline-flex;
+        }
+
+        .banner-bottom-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            background: rgba(0, 33, 71, 0.75);
+            padding: 8px 15px;
+            border-radius: 6px;
+            box-sizing: border-box;
+            border: 1px solid rgba(197, 160, 89, 0.2);
+        }
+
+        .progress-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            width: 60%;
+        }
+
+        .progress-bar-bg {
+            flex-grow: 1;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            width: 0%;
+            height: 100%;
+            background: var(--gold);
+            transition: width 0.5s ease;
+        }
+
+        .countdown-container {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #fff;
+            display: flex;
             align-items: center;
             gap: 8px;
         }
-        
-        .nav-tab-btn:hover { 
-            background: #b38f4b; 
+
+        .content-area {
+            flex-grow: 1;
+            padding: 30px;
+            overflow-y: auto;
+            position: relative;
         }
-        
-        .user-profile { 
-            display: flex; 
-            align-items: center; 
-            gap: 12px; 
-            font-weight: 600; 
-            color: var(--oxford);
-            font-size: 0.95rem;
+
+        .workspace-content-wrapper {
+            position: relative;
+            z-index: 2;
+            max-width: 900px;
+            margin: 0 auto;
         }
-        
-        .user-profile i { 
-            font-size: 1.3rem; 
-            color: var(--gold); 
+
+        .controls-row {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 25px;
+            background: white;
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+            align-items: center;
+        }
+
+        .skill-selector-bar {
+            display: flex;
+            gap: 5px;
+            flex-grow: 1;
+        }
+
+        .skill-tab-btn {
+            padding: 10px 15px;
+            border: none;
+            background: transparent;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: #666;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: all 0.2s;
+        }
+
+        .skill-tab-btn.active {
+            background: var(--oxford);
+            color: white;
+        }
+
+        .exercise-card {
+            background: white; 
+            border-left: 4px solid var(--gold); 
+            padding: 25px; 
+            margin-bottom: 25px; 
+            border-radius: 6px; 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+        }
+
+        .pregunta-block {
+            margin-bottom: 20px; 
+            background: #fafbfc; 
+            padding: 15px; 
+            border-radius: 6px;
+            border: 1px solid #f0f2f5;
+        }
+
+        .checklist-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            background: white;
+            padding: 15px;
+            margin-bottom: 12px;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.01);
+            border-left: 3px solid #ccc;
+            transition: all 0.2s ease;
+        }
+        .checklist-item.completed {
+            border-left-color: var(--green);
+            background: #f8fff9;
         }
     </style>
 </head>
 <body>
 
     <div class="sidebar">
-        <h2>MON ESPACE DELF</h2>
-        <h3>Menu</h3>
-        <button class="nav-btn active" id="tab-parcours"><i class="fas fa-route"></i> Mon Parcours</button>
-        <button class="nav-btn" id="tab-carnet"><i class="fas fa-book"></i> Carnet de réussite</button>
-        <h3>Compétences</h3>
-        <button class="nav-btn" id="skill-CO"><i class="fas fa-headphones"></i> Écouter (CO)</button>
-        <button class="nav-btn" id="skill-CE"><i class="fas fa-book-open"></i> Lire (CE)</button>
-        <button class="nav-btn" id="skill-PE"><i class="fas fa-pen-nib"></i> Écrire (PE)</button>
-        <button class="nav-btn" id="skill-PO"><i class="fas fa-comments"></i> Parler (PO)</button>
+        <h2>Mon Espace DELF</h2>
+        <button class="nav-tab-btn active" id="tab-parcours">
+            <i class="fas fa-route"></i> Mon Parcours
+        </button>
+        
+        <div id="sidebar-dynamic-menu" style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 15px;"></div>
+
+        <button class="nav-tab-btn" id="tab-carnet">
+            <i class="fas fa-address-book"></i> Carnet de compétences
+        </button>
     </div>
 
-    <div class="main-content">
-        <div class="top-bar">
-            <h1 id="main-view-title">Tableau de bord</h1>
-            <div style="display: flex; gap: 25px; align-items: center;">
-                <div class="selector-container" id="top-selectors">
-                    <select id="select-level">
-                        <option value="A1">Niveau A1</option>
-                        <option value="A2">Niveau A2</option>
-                        <option value="B1">Niveau B1</option>
-                        <option value="B2" selected>Niveau B2</option>
-                        <option value="C1">Niveau C1</option>
-                    </select>
-                    <select id="select-unite"></select>
+    <div class="main-container">
+        
+        <div class="project-banner">
+            <div class="banner-top">
+                <div class="banner-left">
+                    <i class="fas fa-user-circle" style="color: var(--gold); font-size: 1.8rem;"></i>
+                    <h1 id="student-welcome">Chargement...</h1>
                 </div>
-                <div class="user-profile"><i class="fas fa-user-circle"></i><span>Étudiant</span></div>
+                <div class="banner-right">
+                    <span class="level-badge" id="level-indicator">NIVEAU --</span>
+                </div>
+            </div>
+
+            <div class="banner-bottom-info">
+                <div class="progress-container">
+                    <span style="font-size: 0.8rem; font-weight: 600;">Progression :</span>
+                    <div class="progress-bar-bg">
+                        <div class="progress-bar-fill" id="progress-bar-fill"></div>
+                    </div>
+                    <span style="font-size: 0.8rem; font-weight: 700; color: var(--gold);" id="progress-text-target">0%</span>
+                </div>
+                <div class="countdown-container">
+                    <i class="far fa-clock" style="color: var(--gold);"></i>
+                    <span id="countdown-text-target">-- jours restants avant l'examen</span>
+                </div>
             </div>
         </div>
 
-        <div class="workspace" id="main-workspace-area">
-            <div class="menu-panel">
-                <h3 id="menu-panel-title">Activités</h3>
-                <div id="dynamic-menu-target"></div>
-            </div>
-            <div class="content-panel" id="dynamic-workspace-target">
-                <p style="text-align: center; color: #888; margin-top: 50px;">Sélectionnez una actividad dans le menu de gauche pour commencer.</p>
+        <div class="content-area">
+            <div class="workspace-content-wrapper">
+                
+                <div class="controls-row" id="parcours-controls-container">
+                    <div class="skill-selector-bar">
+                        <button class="skill-tab-btn active" id="skill-CO">Compréhension Orale</button>
+                        <button class="skill-tab-btn" id="skill-CE">Compréhension Écrite</button>
+                        <button class="skill-tab-btn" id="skill-PE">Production Écrite</button>
+                        <button class="skill-tab-btn" id="skill-PO">Production Orale</button>
+                    </div>
+                </div>
+
+                <div id="dynamic-workspace-target">
+                    <p style="text-align:center; color:#666;"><i class="fas fa-spinner fa-spin"></i> Chargement...</p>
+                </div>
+
             </div>
         </div>
     </div>
 
     <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getFirestore, doc, collection, getDocs, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-        import { getStorage, ref, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js";
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
+        import { getFirestore, doc, getDoc, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js";
+        import { getStorage, ref, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-storage.js";
 
+        // Configuración de tu proyecto original exacto
         const firebaseConfig = {
-            apiKey: "AIzaSyAjY1aPDRvNfOxf9r7gKJLGjRnYSWunqu8",
-            authDomain: "delfpro-8982a.firebaseapp.com",
-            projectId: "delfpro-8982a",
-            storageBucket: "delfpro-8982a.appspot.com",
-            messagingSenderId: "515918731362",
-            appId: "1:515918731362:web:0cf02c7bb11db4db45300f"
+            apiKey: "AIzaSyCgog8tKspHy01ZHE8Dthl9O4W6lw1a_Ec",
+            authDomain: "objectif-reussite-delf.firebaseapp.com",
+            projectId: "objectif-reussite-delf",
+            storageBucket: "objectif-reussite-delf.firebasestorage.app",
+            messagingSenderId: "942279633770",
+            appId: "1:942279633770:web:687ba6d819747eb29c1313"
         };
 
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
         const storage = getStorage(app);
 
-        let currentTab = 'parcours'; 
-        let currentLevel = 'B2';
-        let currentUniteId = 'Unite_1'; 
-        let currentSkill = 'CO'; 
-        let currentExerciseIndex = 0; 
-        let datosUnidadActual = null; 
-        let ejerciciosFiltrados = []; 
+        let currentActiveTab = "parcours"; 
+        let currentLevel = "A1"; 
+        let currentSkill = "CO"; 
+        let currentUnitId = null; 
+        let currentExerciseIndex = 0;
+        let unidadesCache = {}; 
+        let ejerciciosFiltrados = [];
+        let openUnitsState = {}; 
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const studentId = urlParams.get('id') || 'default_student';
 
         async function init() {
-            configurarManejadoresDeEventos();
-            await cargarListaDeUnidades();
-            await descargarDatosDeUnidad();
-        }
-
-        function configurarManejadoresDeEventos() {
-            document.getElementById('select-level').addEventListener('change', async (e) => {
-                currentLevel = e.target.value;
-                currentUniteId = '';
-                await cargarListaDeUnidades();
-                await descargarDatosDeUnidad();
-            });
-
-            document.getElementById('select-unite').addEventListener('change', async (e) => {
-                currentUniteId = e.target.value;
-                await descargarDatosDeUnidad();
-            });
-        }
-
-        window.switchMainTab = function(tabName) {
-            currentTab = tabName;
-            document.getElementById('tab-parcours').classList.toggle('active', tabName === 'parcours');
-            document.getElementById('tab-carnet').classList.toggle('active', tabName === 'carnet');
-
-            if (tabName === 'carnet') {
-                document.getElementById('main-view-title').innerText = "Carnet de Réussite";
-                document.getElementById('top-selectors').style.display = 'none';
-                renderCarnetDeReussite();
-            } else {
-                document.getElementById('main-view-title').innerText = "Mon Parcours d'Apprentissage";
-                document.getElementById('top-selectors').style.display = 'flex';
-                generarMenuJerarquico();
-                renderExerciseStructure();
-            }
-        }
-
-        window.setSkillFilter = function(skillCode) {
-            window.switchMainTab('parcours');
-            currentSkill = skillCode;
-
-            const skills = ['CO', 'CE', 'PE', 'PO'];
-            skills.forEach(s => {
-                document.getElementById(`skill-${s}`).classList.toggle('active', s === skillCode);
-            });
-
-            currentExerciseIndex = 0;
-            generarMenuJerarquico();
-            renderExerciseStructure();
-        }
-
-        async function cargarListaDeUnidades() {
-            const selectUnite = document.getElementById('select-unite');
-            selectUnite.innerHTML = '<option>Chargement...</option>';
-
             try {
-                const colRef = collection(db, "BibliotecaEjercicios", currentLevel, "Unidades");
-                const snapshot = await getDocs(colRef);
-                selectUnite.innerHTML = '';
+                const userSnap = await getDoc(doc(db, "Usuarios", studentId));
+                if (userSnap.exists()) {
+                    const userData = userSnap.data();
+                    currentLevel = userData.nivel || "A1";
+                    document.getElementById('student-welcome').innerText = `Bonjour, ${userData.nombre || 'Étudiant'}`;
+                    
+                    const prog = userData.progreso || 0;
+                    document.getElementById('progress-bar-fill').style.width = `${prog}%`;
+                    document.getElementById('progress-text-target').innerText = `${prog}%`;
+
+                    if (userData.fecha_examen) {
+                        const fechaExamen = new Date(userData.fecha_examen);
+                        const hoy = new Date();
+                        const diferenciaTiempo = fechaExamen - hoy;
+                        const diasRestantes = Math.ceil(diferenciaTiempo / (1000 * 60 * 60 * 24));
+                        document.getElementById('countdown-text-target').innerText = diasRestantes > 0 ? `${diasRestantes} jours restants avant l'examen` : "Examen terminé";
+                    } else {
+                        document.getElementById('countdown-text-target').innerText = "Pas de date d'examen fixée";
+                    }
+                }
                 
-                if (snapshot.empty) {
-                    selectUnite.innerHTML = '<option value="">Aucune unité</option>';
-                    return;
-                }
+                document.getElementById('level-indicator').innerText = `NIVEAU ${currentLevel}`;
+                await descargarColeccionUnidades();
 
-                let unidades = [];
-                snapshot.forEach(doc => { unidades.push({ id: doc.id, ...doc.data() }); });
-                unidades.sort((a, b) => a.id.localeCompare(b.id, undefined, {numeric: true}));
-
-                unidades.forEach((u, index) => {
-                    const opt = document.createElement('option');
-                    opt.value = u.id;
-                    opt.innerText = u.unidad ? `${u.unidad} : ${u.tema || ''}` : u.id;
-                    selectUnite.appendChild(opt);
-                });
-
-                if (!currentUniteId && unidades.length > 0) {
-                    currentUniteId = unidades[0].id;
-                }
-                selectUnite.value = currentUniteId;
-
-            } catch (err) {
-                console.error(err);
-                selectUnite.innerHTML = '<option value="">Erreur</option>';
+            } catch (error) {
+                console.error(error);
+                document.getElementById('dynamic-workspace-target').innerHTML = `<p style="color:red; text-align:center;">Erreur de connexion.</p>`;
             }
         }
 
-        async function descargarDatosDeUnidad() {
-            if (!currentUniteId) return;
-            const target = document.getElementById('dynamic-workspace-target');
-            const menuTarget = document.getElementById('dynamic-menu-target');
+        async function descargarColeccionUnidades() {
+            unidadesCache = {};
+            const querySnapshot = await getDocs(collection(db, "BibliotecaEjercicios", currentLevel, "Unidades"));
+            querySnapshot.forEach((docSnap) => {
+                unidadesCache[docSnap.id] = docSnap.data();
+            });
+            renderActiveInterface();
+        }
+
+        window.switchMainTab = (tab) => {
+            currentActiveTab = tab;
+            document.querySelectorAll('.sidebar .nav-tab-btn').forEach(btn => btn.classList.remove('active'));
+            if (tab === 'parcours') document.getElementById('tab-parcours').classList.add('active');
+            if (tab === 'carnet') document.getElementById('tab-carnet').classList.add('active');
             
-            target.innerHTML = `<p style="text-align:center; color:#666; margin-top:50px;"><i class="fas fa-spinner fa-spin"></i> Téléchargement des données...</p>`;
-            menuTarget.innerHTML = `<p style="color:#888; font-size:0.85rem;">Chargement...</p>`;
+            renderActiveInterface();
+        };
 
-            try {
-                const docRef = doc(db, "BibliotecaEjercicios", currentLevel, "Unidades", currentUniteId);
-                const snapshot = await getDoc(docRef);
+        window.setSkillFilter = (skill) => {
+            currentSkill = skill;
+            currentUnitId = null; 
+            currentExerciseIndex = 0;
+            document.querySelectorAll('.skill-tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(`skill-${skill}`).classList.add('active');
+            renderActiveInterface();
+        };
 
-                if (snapshot.exists()) {
-                    datosUnidadActual = snapshot.data();
-                    generarMenuJerarquico();
-                    renderExerciseStructure();
-                } else {
-                    datosUnidadActual = null;
-                    ejerciciosFiltrados = [];
-                    target.innerHTML = `<p style="text-align:center; color:orange; margin-top:50px;">Cette unité ne contient aucun contenu.</p>`;
-                    menuTarget.innerHTML = `<p style="color:#888; font-size:0.85rem;">Vide</p>`;
-                }
-            } catch (err) {
-                console.error(err);
-                target.innerHTML = `<p style="text-align:center; color:red; margin-top:50px;">Erreur réseau lors de la synchronisation.</p>`;
+        function renderActiveInterface() {
+            const menuContainer = document.getElementById('sidebar-dynamic-menu');
+            
+            if (currentActiveTab === "parcours") {
+                document.getElementById('parcours-controls-container').style.display = "flex";
+                menuContainer.style.display = "flex"; 
+                generarMenuJerarquico();
+            } else {
+                document.getElementById('parcours-controls-container').style.display = "none";
+                menuContainer.style.display = "none"; 
+                renderCarnetInterface();
             }
-        }
-
-        function filtrarEjerciciosDeUnidadActual() {
-            if (!datosUnidadActual || !datosUnidadActual[currentSkill]) {
-                ejerciciosFiltrados = [];
-                return;
-            }
-            ejerciciosFiltrados = datosUnidadActual[currentSkill];
         }
 
         function generarMenuJerarquico() {
-            const menuTarget = document.getElementById('dynamic-menu-target');
-            menuTarget.innerHTML = '';
-            filtrarEjerciciosDeUnidadActual();
-            document.getElementById('menu-panel-title').innerText = `Activités (${currentSkill})`;
+            const menuContainer = document.getElementById('sidebar-dynamic-menu');
+            const target = document.getElementById('dynamic-workspace-target');
+            menuContainer.innerHTML = "";
 
-            if (ejerciciosFiltrados.length === 0) {
-                menuTarget.innerHTML = `<p style="color:#999; font-size:0.85rem; padding:10px;">Aucune activité disponible.</p>`;
+            const keys = Object.keys(unidadesCache).sort((a, b) => {
+                return a.localeCompare(b, undefined, { numeric: true, sensitivity: 'base' });
+            });
+
+            if (keys.length === 0) {
+                target.innerHTML = `
+                <div style="text-align: center; padding: 40px; color: #888;">
+                    <i class="fas fa-folder-open" style="font-size: 2.5rem; margin-bottom: 15px; color: #ccc;"></i>
+                    <p>Aucun exercice chargé pour le moment. Utilisez votre console Python pour commencer.</p>
+                </div>`;
                 return;
             }
 
-            ejerciciosFiltrados.forEach((item, index) => {
-                const btn = document.createElement('div');
-                btn.className = `menu-item ${index === currentExerciseIndex ? 'active' : ''}`;
-                let txt = item.instruccion || `Activité ${index + 1}`;
-                if (txt.length > 32) txt = txt.substring(0, 30) + '...';
-                btn.innerHTML = `<i class="fas fa-tasks" style="margin-right:8px; color:var(--gold);"></i> ${txt}`;
-                btn.addEventListener('click', () => {
-                    currentExerciseIndex = index;
-                    document.querySelectorAll('.menu-item').forEach(el => el.classList.remove('active'));
-                    btn.classList.add('active');
-                    renderExerciseStructure();
-                });
-                menuTarget.appendChild(btn);
+            if (currentUnitId === null) {
+                target.innerHTML = `
+                <div style="text-align: center; padding: 60px; color: var(--oxford); margin-top:30px;">
+                    <i class="fas fa-arrow-left" style="font-size: 2.5rem; margin-bottom: 15px; color: var(--gold);"></i>
+                    <p style="font-weight: 600;">Veuillez choisir une activité dans le menu de gauche pour commencer.</p>
+                </div>`;
+            }
+
+            keys.forEach((uId) => {
+                const u = unidadesCache[uId];
+                let ejerciciosHabilidad = u[currentSkill] || [];
+
+                const isUnitOpen = openUnitsState[uId] === true || currentUnitId === uId;
+                const displayStyle = isUnitOpen ? 'flex' : 'none';
+                const chevronIcon = isUnitOpen ? 'fa-chevron-down' : 'fa-chevron-right';
+
+                let unitWrapper = document.createElement('div');
+                unitWrapper.className = 'unit-wrapper';
+
+                unitWrapper.innerHTML = `
+                    <button class="unit-toggle-btn ${currentUnitId === uId ? 'active' : ''}" onclick="window.toggleUnitMenu('${uId}')">
+                        <span><i class="fas fa-book" style="color:var(--gold); margin-right:8px;"></i>${u.unidad || uId} ${u.tema ? `- ${u.tema}` : ''}</span>
+                        <i class="fas ${chevronIcon}" style="font-size:0.7rem; color:var(--gold);"></i>
+                    </button>
+                `;
+
+                let subContainer = document.createElement('div');
+                subContainer.className = 'submenu-activities';
+                subContainer.style.display = displayStyle;
+
+                if (ejerciciosHabilidad.length === 0) {
+                    subContainer.innerHTML = `
+                        <div style="padding: 8px 12px; font-size: 0.75rem; color: #888; font-style: italic;">
+                            Aucune activité pour cette compétence
+                        </div>
+                    `;
+                } else {
+                    ejerciciosHabilidad.forEach((ej, eIdx) => {
+                        const esActivo = (currentUnitId === uId && currentExerciseIndex === eIdx);
+                        
+                        let tituloLimpio = "";
+                        if (ej.instruccion) {
+                            let matchActividad = ej.instruccion.match(/Activité\s*\d+/i);
+                            if (matchActividad) {
+                                tituloLimpio = matchActividad[0]; 
+                            }
+                        }
+                        
+                        if (!tituloLimpio && ej.ruta_audio) {
+                            let matchNum = ej.ruta_audio.match(/-(\d+)\.mp3/);
+                            if (matchNum) {
+                                tituloLimpio = `Activité ${parseInt(matchNum[1], 10)}`;
+                            }
+                        }
+
+                        if (!tituloLimpio) {
+                            tituloLimpio = `Activité ${eIdx + 1}`;
+                        }
+
+                        subContainer.innerHTML += `
+                            <button class="activity-link-btn ${esActivo ? 'active' : ''}" onclick="window.cargarActividadDirecta('${uId}', ${eIdx})">
+                                <i class="fas fa-play" style="font-size:0.6rem; margin-right:6px;"></i>${tituloLimpio}
+                            </button>
+                        `;
+                    });
+                }
+
+                unitWrapper.appendChild(subContainer);
+                menuContainer.appendChild(unitWrapper);
             });
+        }
+
+        window.toggleUnitMenu = (uId) => {
+            openUnitsState[uId] = !openUnitsState[uId];
+            generarMenuJerarquico();
+        };
+
+        window.cargarActividadDirecta = (uId, eIdx) => {
+            currentUnitId = uId;
+            currentExerciseIndex = eIdx;
+            openUnitsState[uId] = true; 
+            generarMenuJerarquico();
+            renderExerciseStructure();
+        };
+
+        function filtrarEjerciciosDeUnidadActual() {
+            ejerciciosFiltrados = [];
+            if (currentUnitId === null || !unidadesCache[currentUnitId]) return;
+            ejerciciosFiltrados = unidadesCache[currentUnitId][currentSkill] || [];
         }
 
         function renderExerciseStructure() {
@@ -462,13 +622,16 @@
                 </h4>`;
 
             if (ej.ruta_audio) {
-                html += `<div id="${audioId}" style="margin-bottom: 20px; background: #fafafa; padding: 12px; border-radius: 6px; border: 1px dashed var(--gold); text-align:center;"><i class="fas fa-spinner fa-spin"></i> Chargement de l'audio...</div>`;
+                html += `
+                <div id="${audioId}" style="margin-bottom: 20px; background: #fafafa; padding: 12px; border-radius: 6px; border: 1px dashed var(--gold); text-align:center; color:#666; font-size:0.9rem;">
+                    <i class="fas fa-spinner fa-spin"></i> Chargement du fichier audio...
+                </div>`;
             }
 
             if (ej.preguntas && ej.preguntas.length > 0) {
                 ej.preguntas.forEach((p, pIdx) => {
                     html += `
-                    <div class="pregunta-block" id="block-preg-${pIdx}" style="padding:15px; border-radius:6px; margin-bottom:15px; border:1px solid #eef2f5;">
+                    <div class="pregunta-block" id="block-preg-${pIdx}" style="padding:15px; border-radius:6px; margin-bottom:15px; border:1px solid #eef2f5; position:relative;">
                         <p style="margin-top:0; margin-bottom:12px; font-weight:600; color:#222; display:flex; align-items:center;">
                             <span id="status-icon-target-${pIdx}"></span>
                             <span>${p.pregunta}</span>
@@ -487,16 +650,21 @@
 
                 html += `
                 <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px;">
-                    <button class="nav-tab-btn" id="btn-submit-exercise" style="background:var(--oxford); color:white;"><i class="fas fa-paper-plane"></i> Envoyer</button>
-                    <button class="nav-tab-btn" id="btn-next-exercise" style="background:var(--green); color:white; display:none;">Suivant <i class="fas fa-arrow-right"></i></button>
+                    <button class="nav-tab-btn" id="btn-submit-exercise" style="width:auto; margin:0; background:var(--oxford); color:white; padding:10px 22px; font-weight:600; font-size:0.9rem; border-radius:6px;"><i class="fas fa-paper-plane"></i> Envoyer</button>
+                    <button class="nav-tab-btn" id="btn-next-exercise" style="width:auto; margin:0; background:var(--green); color:white; padding:10px 22px; font-weight:600; font-size:0.9rem; border-radius:6px; display:none;">Suivant <i class="fas fa-arrow-right"></i></button>
                 </div>`;
             }
 
             html += `
                 <div id="sophia-box" style="display:none; background:#f4f7f9; border-left:4px solid var(--gold); padding:20px; border-radius:6px; margin-top:25px;">
-                    <div style="display:flex; align-items:center; gap:10px; font-weight:700; color:var(--oxford); margin-bottom:10px;"><i class="fas fa-lightbulb" style="color:var(--gold);"></i> CONSEIL DE SOPHIA</div>
+                    <div style="display:flex; align-items:center; gap:10px; font-weight:700; color:var(--oxford); margin-bottom:10px; font-size:0.95rem;">
+                        <i class="fas fa-lightbulb" style="color:var(--gold);"></i> CONSEIL DE SOPHIA
+                    </div>
                     <p id="sophia-verdict-text" style="margin:0; font-size:0.95rem; line-height:1.5;"></p>
-                    ${ej.transcripcion ? `<div style="font-weight:700; margin-top:15px; color:var(--oxford);"><i class="fas fa-file-audio"></i> Transcription :</div><div style="background:#fff; border:1px dashed #ccc; padding:12px; border-radius:5px; margin-top:8px; font-size:0.95rem; color:#333;">${ej.transcripcion}</div>` : ''}
+                    ${ej.transcripcion ? `
+                        <div style="font-weight:700; margin-top:15px; color:var(--oxford); font-size:0.9rem;"><i class="fas fa-file-audio"></i> Transcription :</div>
+                        <div style="background:#fff; border:1px dashed #ccc; padding:12px; border-radius:5px; margin-top:8px; font-size:0.95rem; line-height:1.6; color:#333;">${ej.transcripcion}</div>
+                    ` : ''}
                 </div>
             </div>`;
 
@@ -506,25 +674,27 @@
                 const nombreArchivo = ej.ruta_audio.split('/').pop();
                 let trackMatch = nombreArchivo.match(/\d+/);
                 let track = trackMatch ? trackMatch[0] : "02";
+                
                 if (track === "1" || track === "01") track = "02";
                 if (track.length > 2) track = track.slice(-2);
                 if (track.length === 1) track = "0" + track;
+
                 let nombreArchivoFinal = `${currentLevel}-${track}.mp3`;
 
                 getDownloadURL(ref(storage, `niveles/${currentLevel}/audios/${nombreArchivoFinal}`))
                     .then(url => {
                         const container = document.getElementById(audioId);
-                        if (container) container.innerHTML = `<audio controls style="width:100%;" src="${url}"></audio>`;
+                        if (container) container.innerHTML = `<audio controls style="width:100%;" src="${url}" preload="auto"></audio>`;
                     })
                     .catch(() => {
                         getDownloadURL(ref(storage, `niveles/${currentLevel}/audios/${track}.mp3`))
                             .then(url => {
                                 const container = document.getElementById(audioId);
-                                if (container) container.innerHTML = `<audio controls style="width:100%;" src="${url}"></audio>`;
+                                if (container) container.innerHTML = `<audio controls style="width:100%;" src="${url}" preload="auto"></audio>`;
                             })
                             .catch(() => {
                                 const container = document.getElementById(audioId);
-                                if (container) container.innerHTML = `<span style="color:red; font-size:0.85rem;"><i class="fas fa-exclamation-triangle"></i> Audio non disponible</span>`;
+                                container.innerHTML = `<span style="color:red; font-size:0.85rem;"><i class="fas fa-exclamation-triangle"></i> Audio non disponible (${nombreArchivoFinal})</span>`;
                             });
                     });
             }
@@ -548,10 +718,10 @@
 
                         if (rAlumno === rCorrecta) {
                             aciertos++;
-                            iconTarget.innerHTML = `<i class="fas fa-check-circle" style="color:var(--green); margin-right:8px;"></i>`;
+                            iconTarget.innerHTML = `<i class="fas fa-check-circle" style="color:var(--green); margin-right:8px; font-size:1.1rem;"></i>`;
                             block.style.borderColor = "var(--green)";
                         } else {
-                            iconTarget.innerHTML = `<i class="fas fa-times-circle" style="color:red; margin-right:8px;"></i>`;
+                            iconTarget.innerHTML = `<i class="fas fa-times-circle" style="color:red; margin-right:8px; font-size:1.1rem;"></i>`;
                             block.style.borderColor = "red";
                         }
                     });
@@ -566,7 +736,7 @@
                         txtSophia.innerHTML = `<strong>Félicitations !</strong> Tu as obtenu <strong>${aciertos}/${total}</strong>. Tu as très bien compris l'exercice !`;
                         txtSophia.style.color = "var(--green)";
                     } else {
-                        txtSophia.innerHTML = `<strong>Attention !</strong> Tu as obtenu <strong>${aciertos}/${total}</strong>. Je te conseille de réécouter l'audio.`;
+                        txtSophia.innerHTML = `<strong>Attention !</strong> Tu as obtenu <strong>${aciertos}/${total}</strong>. Je te conseille de réécouter l'audio, de lire la transcription ci-dessous et de répéter l'exercice.`;
                         txtSophia.style.color = "red";
                     }
                     if (sophiaBox) sophiaBox.style.display = "block";
@@ -582,27 +752,43 @@
             }
         }
 
-        async function renderCarnetDeReussite() {
+        async function renderCarnetInterface() {
             const target = document.getElementById('dynamic-workspace-target');
-            document.getElementById('dynamic-menu-target').innerHTML = `<p style="color:#888; font-size:0.85rem; padding:10px;">Référentiel CECRL - ${currentLevel}.</p>`;
-            target.innerHTML = `<p style="text-align:center; color:#666;"><i class="fas fa-spinner fa-spin"></i> Chargement...</p>`;
-
+            target.innerHTML = `<p style="text-align:center; color:#666;"><i class="fas fa-spinner fa-spin"></i> Chargement des compétences...</p>`;
+            
             try {
-                const docRef = doc(db, "BibliotecaEjercicios", currentLevel, "Descriptores", "Lista");
-                const snapshot = await getDoc(docRef);
+                const snap = await getDoc(doc(db, "ChecklistNiveles", currentLevel));
+                if (snap.exists()) {
+                    const data = snap.data();
+                    const items = data.items || [];
+                    
+                    target.innerHTML = `<h3 style="color:var(--oxford); margin-top:0; margin-bottom:20px; font-size:1.2rem; font-weight:700;">Mon Carnet de Compétences - ${currentLevel}</h3>`;
+                    
+                    if(items.length === 0) {
+                        target.innerHTML += `<p style="color:#888;">Aucun descripteur disponible.</p>`;
+                        return;
+                    }
 
-                if (snapshot.exists()) {
-                    const lista = snapshot.data().items || [];
-                    target.innerHTML = `<div style="background:#fff; padding:5px;"><h3 style="color:var(--oxford); font-weight:700;">Mon passeport de compétences - ${currentLevel}</h3><div id="lista-descriptores-container"></div></div>`;
-                    const container = document.getElementById('lista-descriptores-container');
-                    lista.forEach(item => {
-                        container.innerHTML += `<div style="display:flex; align-items:center; gap:15px; background:#f8fafc; padding:14px; border-radius:8px; margin-bottom:10px; border:1px solid #e2e8f0;"><i class="fas fa-check-circle" style="color:var(--green);"></i><div><span style="font-size:0.75rem; background:#eef2f5; color:var(--oxford); padding:3px 8px; border-radius:4px; font-weight:700; margin-right:10px;">${item.competencia || 'CECRL'}</span><span style="font-size:0.95rem; color:#333;">${item.descriptor}</span></div></div>`;
+                    items.forEach((item) => {
+                        const statusClass = item.completado ? 'completed' : '';
+                        const iconCheck = item.completado ? 'fa-check-circle' : 'fa-circle';
+                        const iconColor = item.completado ? 'var(--green)' : '#ccc';
+
+                        target.innerHTML += `
+                        <div class="checklist-item ${statusClass}">
+                            <i class="far ${iconCheck}" style="color: ${iconColor}; font-size: 1.3rem;"></i>
+                            <div>
+                                <span style="font-size:0.75rem; background:#eef2f5; color:var(--oxford); padding:3px 8px; border-radius:4px; font-weight:700; margin-right:10px;">${item.competencia || 'CECRL'}</span>
+                                <span style="font-size:0.95rem; color:#333;">${item.descriptor}</span>
+                            </div>
+                        </div>`;
                     });
                 } else {
-                    target.innerHTML = `<p style="color:#888;">Aucun descripteur trouvé.</p>`;
+                    target.innerHTML = `<p style="color:#888;">Aucun descripteur trouvé pour ce niveau.</p>`;
                 }
             } catch (err) {
-                target.innerHTML = `<p style="color:red;">Erreur.</p>`;
+                console.error(err);
+                target.innerHTML = `<p style="color:red;">Erreur lors du chargement.</p>`;
             }
         }
 
