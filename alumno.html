@@ -362,13 +362,14 @@
         // ========================================================
         // CONFIGURACIÓN DE TU PROYECTO FIREBASE
         // ========================================================
+        // NOTA: Recuerda pegar tus credenciales reales aquí antes de correrlo
         const firebaseConfig = {
-            apiKey: "AIzaSyD...", 
-            authDomain: "tu-proyecto.firebaseapp.com",
-            projectId: "tu-proyecto-id",
-            storageBucket: "tu-proyecto.appspot.com",
-            messagingSenderId: "123456789",
-            appId: "1:12345:web:abcd"
+            apiKey: "TU_API_KEY_REAL", 
+            authDomain: "TU_PROJECT_ID.firebaseapp.com",
+            projectId: "TU_PROJECT_ID",
+            storageBucket: "TU_PROJECT_ID.appspot.com",
+            messagingSenderId: "TU_SENDER_ID",
+            appId: "TU_APP_ID"
         };
 
         // Inicializar Firebase Compat
@@ -453,7 +454,7 @@
                 const u = unidadesCache[uId];
                 let ejerciciosHabilidad = u[currentSkill] || [];
                 
-                // CORRECCIÓN FILTRO: Si la unidad no tiene ejercicios para esta habilidad, la ignoramos por completo
+                // Si la unidad no tiene ejercicios para esta habilidad, se oculta del menú
                 if (ejerciciosHabilidad.length === 0) {
                     return; 
                 }
@@ -508,13 +509,12 @@
             currentUnitId = uId;
             currentExerciseIndex = index;
             
-            generarMenuJerarquico(); // Actualiza estados activos en laterales
+            generarMenuJerarquico(); 
 
             const target = document.getElementById('dynamic-workspace-target');
             const unidadDatos = unidadesCache[uId];
             const ejercicioActivo = unidadDatos[currentSkill][index];
 
-            // Renderizado base de la tarjeta
             target.innerHTML = `
                 <div class="exercise-card">
                     <div class="exercise-header">
@@ -529,7 +529,7 @@
 
             const mediaBox = document.getElementById('media-content-placement');
 
-            // 1. CONDICIÓN CO: Mostrar reproductor de audio si viene una ruta configurada
+            // 1. CONDICIÓN CO: Audio
             if (currentSkill === "CO" && ejercicioActivo.ruta_audio) {
                 mediaBox.innerHTML = `
                     <div class="audio-player-container">
@@ -539,7 +539,7 @@
                 `;
             }
 
-            // 2. CORRECCIÓN DEFINITIVA CE: Inyectar el texto de lectura limpio si existe en Firebase
+            // 2. CONDICIÓN CE: Documento de texto/Lectura
             if (currentSkill === "CE" && ejercicioActivo.texto_lectura) {
                 mediaBox.innerHTML = `
                     <div class="reading-container">
@@ -551,7 +551,7 @@
                 `;
             }
 
-            // 3. PINTADO DE PREGUNTAS Y OPCIONES DE OPCIÓN MÚLTIPLE
+            // 3. PINTADO DE PREGUNTAS
             const qBox = document.getElementById('questions-placement');
             if (ejercicioActivo.preguntas && ejercicioActivo.preguntas.length > 0) {
                 ejercicioActivo.preguntas.forEach((q, qIdx) => {
@@ -578,7 +578,7 @@
             }
         };
 
-        // LÓGICA DE EVALUACIÓN Y VALIDACIÓN
+        // LÓGICA DE EVALUACIÓN
         window.evaluarRespuestasEstudiante = function() {
             const ejercicioActivo = unidadesCache[currentUnitId][currentSkill][currentExerciseIndex];
             let aciertos = 0;
@@ -592,12 +592,10 @@
                     lbl.classList.remove('correct-choice', 'incorrect-choice');
                     const radioInput = lbl.querySelector('input');
                     
-                    // Colorear la respuesta correcta en verde siempre
                     if (radioInput.value === q.respuesta_correcta) {
                         lbl.classList.add('correct-choice');
                     }
                     
-                    // Si el alumno se equivocó, pintar su selección errónea en rojo
                     if (seleccionada && radioInput === seleccionada && seleccionada.value !== q.respuesta_correcta) {
                         lbl.classList.add('incorrect-choice');
                     }
@@ -608,7 +606,6 @@
                 }
             });
 
-            // Banner de Feedback final
             const feedBox = document.getElementById('feedback-placement');
             const porcentaje = (aciertos / totalPreguntas) * 100;
 
