@@ -30,712 +30,726 @@
             color: white; 
             padding: 30px 15px; 
             flex-shrink: 0; 
-            display: flex; 
-            flex-direction: column; 
-            box-shadow: 4px 0 15px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            box-shadow: 4px 0 10px rgba(0,0,0,0.1);
+            z-index: 10;
+            overflow-y: auto;
         }
-        
-        .logo-area { 
-            text-align: center; 
-            margin-bottom: 35px; 
-            border-bottom: 1px solid rgba(255,255,255,0.1); 
-            padding-bottom: 20px;
-        }
-        
-        .logo-area h2 { 
-            margin: 0; 
-            font-size: 1.3rem; 
-            letter-spacing: 1px; 
+
+        .sidebar h2 {
+            font-size: 1.1rem;
             color: white;
-        }
-        
-        .logo-area span { 
-            color: var(--gold); 
-            font-size: 0.8rem; 
-            font-weight: 300; 
+            text-align: center;
+            margin-top: 0;
+            margin-bottom: 30px;
+            letter-spacing: 1px;
+            border-bottom: 2px solid var(--gold);
+            padding-bottom: 15px;
             text-transform: uppercase;
         }
         
-        .main-tabs { 
-            display: flex; 
-            gap: 5px; 
-            margin-bottom: 25px; 
-            background: rgba(0,0,0,0.2); 
-            padding: 5px; 
-            border-radius: 8px;
-        }
-        
-        .tab-trigger { 
-            flex: 1; 
-            background: none; 
-            border: none; 
-            color: rgba(255,255,255,0.6); 
-            padding: 10px; 
-            font-size: 0.85rem; 
-            cursor: pointer; 
-            font-weight: 600; 
-            border-radius: 6px; 
-            transition: all 0.3s;
-        }
-        
-        .tab-trigger.active { 
-            background: var(--gold); 
-            color: var(--oxford); 
-        }
-        
-        .menu-scroll { 
-            flex: 1; 
-            overflow-y: auto; 
-            padding-right: 5px;
-        }
-        
-        .menu-scroll::-webkit-scrollbar { 
-            width: 5px; 
-        }
-        
-        .menu-scroll::-webkit-scrollbar-thumb { 
-            background: rgba(255,255,255,0.2); 
-            border-radius: 4px; 
-        }
-        
-        .unit-bloc { 
-            margin-bottom: 12px; 
-            background: rgba(255,255,255,0.03); 
-            border-radius: 8px; 
-            overflow: hidden; 
-            border: 1px solid rgba(255,255,255,0.05);
-        }
-        
-        .unit-header { 
+        .nav-tab-btn { 
             width: 100%; 
-            background: none; 
-            border: none; 
-            color: white; 
             padding: 14px 15px; 
-            text-align: left; 
-            font-size: 0.9rem; 
-            font-weight: 600; 
-            cursor: pointer; 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            transition: background 0.3s;
-        }
-        
-        .unit-header:hover { 
-            background: rgba(255,255,255,0.08); 
-        }
-        
-        .unit-header.active-unit { 
-            border-left: 4px solid var(--gold); 
-            background: rgba(255,255,255,0.05);
-        }
-        
-        .act-list { 
-            background: rgba(0,0,0,0.2); 
-            padding: 6px 0;
-        }
-        
-        .act-item { 
-            width: 100%; 
-            background: none; 
-            border: none; 
-            color: rgba(255,255,255,0.7); 
-            padding: 9px 20px; 
-            text-align: left; 
-            font-size: 0.82rem; 
-            cursor: pointer; 
-            transition: all 0.2s; 
-            display: flex; 
-            align-items: center; 
-            gap: 8px;
-        }
-        
-        .act-item:hover { 
-            color: white; 
-            background: rgba(255,255,255,0.05); 
-        }
-        
-        .act-item.active-act { 
-            color: var(--gold); 
-            font-weight: 700; 
-            background: rgba(197,160,89,0.1);
-        }
-        
-        .app-body { 
-            flex: 1; 
-            display: flex; 
-            flex-direction: column; 
-            overflow: hidden;
-        }
-        
-        .top-navbar { 
-            background: white; 
-            height: 75px; 
-            display: flex; 
-            align-items: center; 
-            padding: 0 40px; 
-            justify-content: space-between; 
-            border-bottom: 1px solid #EAEAEA; 
-            flex-shrink: 0;
-        }
-        
-        .skills-selector { 
-            display: flex; 
-            gap: 8px; 
-        }
-        
-        .skill-pill { 
-            background: #F0F2F5; 
-            border: none; 
-            color: #555; 
-            padding: 9px 18px; 
-            font-size: 0.82rem; 
-            font-weight: 600; 
-            border-radius: 30px; 
-            cursor: pointer; 
-            transition: all 0.3s; 
-            display: flex; 
-            align-items: center; 
-            gap: 8px;
-        }
-        
-        .skill-pill:hover { 
-            background: #E4E6EB; 
-        }
-        
-        .skill-pill.active { 
-            background: var(--oxford); 
-            color: white; 
-        }
-        
-        .content-workspace { 
-            flex: 1; 
-            display: flex; 
-            overflow: hidden; 
-            background: #F1F3F6;
-        }
-        
-        .panel-left { 
-            flex: 1; 
-            overflow-y: auto; 
-            padding: 40px; 
-            display: flex; 
-            flex-direction: column; 
-            gap: 30px;
-        }
-        
-        .panel-right { 
-            width: 450px; 
-            background: white; 
-            border-left: 1px solid #EAEAEA; 
-            display: flex; 
-            flex-direction: column; 
-            overflow: hidden; 
-            flex-shrink: 0;
-        }
-        
-        .right-header { 
-            padding: 20px; 
-            border-bottom: 1px solid #EAEAEA; 
-            font-weight: 700; 
-            color: var(--oxford); 
-            font-size: 0.95rem; 
-            background: var(--cream);
-        }
-        
-        .right-scroll { 
-            flex: 1; 
-            overflow-y: auto; 
-            padding: 20px; 
-            display: flex; 
-            flex-direction: column; 
-            gap: 15px;
-        }
-        
-        .workspace-card { 
-            background: white; 
-            border-radius: 12px; 
-            padding: 35px; 
-            box-shadow: 0 4px 20px rgba(0,0,0,0.03); 
-            border: 1px solid #EAEAEA;
-        }
-        
-        .workspace-card h3 { 
-            margin-top: 0; 
-            margin-bottom: 25px; 
-            color: var(--oxford); 
-            font-size: 1.15rem; 
-            border-bottom: 2px solid #F1F3F6; 
-            padding-bottom: 15px;
-        }
-        
-        .q-wrapper { 
-            margin-bottom: 30px; 
-            background: #F8F9FA; 
-            padding: 20px; 
+            margin-bottom: 8px; 
             border-radius: 10px; 
-            border: 1px solid #EAEAEA;
-        }
-        
-        .q-text { 
-            font-weight: 600; 
-            font-size: 0.95rem; 
-            color: var(--oxford); 
-            margin-bottom: 15px;
-        }
-        
-        .opts-list { 
-            display: flex; 
-            flex-direction: column; 
-            gap: 10px; 
-        }
-        
-        .opt-row { 
+            border: 1px solid rgba(197, 160, 89, 0.2); 
+            background: transparent; 
+            color: white; 
+            cursor: pointer; 
+            text-align: left; 
             display: flex; 
             align-items: center; 
-            background: white; 
-            padding: 12px 15px; 
-            border-radius: 8px; 
-            border: 1px solid #EAEAEA; 
-            cursor: pointer; 
-            font-size: 0.9rem; 
+            justify-content: space-between;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.9rem;
+            box-sizing: border-box;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-tab-btn:hover {
+            background: rgba(255,255,255,0.05);
+            border-color: var(--gold);
+        }
+
+        .nav-tab-btn.active { 
+            background: var(--gold); 
+            color: var(--oxford);
+            font-weight: 700;
+            border-color: var(--gold);
+        }
+
+        .unit-wrapper {
+            margin-bottom: 10px;
+            width: 100%;
+        }
+
+        .unit-toggle-btn {
+            width: 100%;
+            padding: 12px 15px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(197, 160, 89, 0.2);
+            color: white;
+            border-radius: 8px;
+            text-align: left;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: background 0.2s;
+        }
+
+        .unit-toggle-btn:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: var(--gold);
+        }
+
+        .unit-toggle-btn.active {
+            border-color: var(--gold);
+            background: rgba(197, 160, 89, 0.1);
+        }
+
+        .submenu-activities {
+            margin-left: 15px;
+            margin-top: 5px;
+            border-left: 1px solid rgba(197, 160, 89, 0.3);
+            padding-left: 10px;
+            display: none; 
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .activity-link-btn {
+            background: transparent;
+            border: none;
+            color: #bbb;
+            padding: 8px 12px;
+            text-align: left;
+            cursor: pointer;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 500;
+            border-radius: 6px;
             transition: all 0.2s;
         }
-        
-        .opt-row:hover { 
-            border-color: var(--gold); 
-            background: #FCF9F5; 
+
+        .activity-link-btn:hover {
+            color: var(--gold);
+            background: rgba(255,255,255,0.03);
         }
-        
-        .opt-row input { 
-            margin-right: 12px; 
-            accent-color: var(--oxford); 
-            width: 17px; 
-            height: 17px;
+
+        .activity-link-btn.active {
+            color: white;
+            font-weight: 700;
+            background: rgba(197, 160, 89, 0.2);
         }
-        
-        .opt-row.correct { 
-            background: #D4EDDA !important; 
-            border-color: #28A745 !important; 
-            color: #155724; 
-            font-weight: 600;
+
+        .main-container {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            position: relative;
         }
-        
-        .opt-row.wrong { 
-            background: #F8D7DA !important; 
-            border-color: #DC3545 !important; 
-            color: #721C24;
+
+        .project-banner {
+            background: var(--oxford) url('./assets/Banner.png') no-repeat center center;
+            background-size: 100% 100%; 
+            color: white;
+            padding: 15px 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            border-bottom: 4px solid var(--gold);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            position: relative;
+            height: 140px; 
+            box-sizing: border-box;
+            flex-shrink: 0;
         }
-        
-        .action-btn { 
-            background: var(--oxford); 
-            color: white; 
-            border: none; 
-            padding: 15px 30px; 
-            font-size: 0.9rem; 
-            font-weight: 600; 
-            border-radius: 8px; 
-            cursor: pointer; 
-            transition: background 0.3s; 
-            width: 100%; 
-            margin-top: 10px;
+
+        .banner-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
         }
-        
-        .action-btn:hover { 
-            background: var(--dark-blue); 
+
+        .banner-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
         }
-        
-        .book-container { 
-            width: 100%; 
-            background: white; 
-            border-radius: 12px; 
-            box-shadow: 0 4px 20px rgba(0,0,0,0.03); 
-            border: 1px solid #EAEAEA; 
-            padding: 20px; 
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
-            min-height: 400px; 
-            justify-content: center;
+
+        .banner-left h1 {
+            margin: 0;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: white;
         }
-        
-        .book-header { 
-            width: 100%; 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            margin-bottom: 15px; 
-            border-bottom: 1px solid #F1F3F6; 
-            padding-bottom: 10px;
+
+        .level-badge {
+            background: var(--gold);
+            color: var(--oxford);
+            padding: 6px 20px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.95rem;
         }
-        
-        .book-title { 
-            font-size: 0.85rem; 
-            font-weight: 700; 
-            color: var(--gold); 
-            text-transform: uppercase;
+
+        .banner-bottom-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            background: rgba(0, 33, 71, 0.75);
+            padding: 8px 15px;
+            border-radius: 6px;
+            box-sizing: border-box;
+            border: 1px solid rgba(197, 160, 89, 0.2);
         }
-        
-        .book-page-label { 
-            font-size: 0.85rem; 
-            font-weight: 600; 
-            color: #777; 
-            background: #F1F3F6; 
-            padding: 4px 10px; 
+
+        .progress-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            width: 60%;
+        }
+
+        .progress-bar-bg {
+            flex-grow: 1;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.2);
             border-radius: 4px;
+            overflow: hidden;
         }
-        
-        .canvas-wrapper { 
-            width: 100%; 
-            overflow-x: auto; 
-            display: flex; 
-            justify-content: center; 
-            background: #525659; 
-            padding: 15px; 
-            border-radius: 8px;
+
+        .progress-bar-fill {
+            width: 0%;
+            height: 100%;
+            background: var(--gold);
+            transition: width 0.5s ease;
         }
-        
-        canvas { 
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2); 
+
+        .countdown-container {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .content-area {
+            flex-grow: 1;
+            padding: 30px;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .workspace-content-wrapper {
+            position: relative;
+            z-index: 2;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .controls-row {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 25px;
             background: white;
-        }
-        
-        .carnet-card { 
-            background: #FFF; 
-            border-radius: 10px; 
-            padding: 15px; 
-            border: 1px solid #EAEAEA; 
+            padding: 10px;
+            border-radius: 8px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+            align-items: center;
         }
-        
-        .carnet-meta { 
-            font-size: 0.75rem; 
-            color: var(--gold); 
-            font-weight: 700; 
-            margin-bottom: 5px;
+
+        .skill-selector-bar {
+            display: flex;
+            gap: 5px;
+            flex-grow: 1;
         }
-        
-        .carnet-title { 
-            font-size: 0.9rem; 
-            font-weight: 600; 
-            color: var(--oxford); 
-            margin-bottom: 8px;
+
+        .skill-tab-btn {
+            padding: 10px 15px;
+            border: none;
+            background: transparent;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: #666;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: all 0.2s;
         }
-        
-        .carnet-score { 
-            font-size: 0.8rem; 
-            font-weight: 600; 
-            color: #555;
+
+        .skill-tab-btn.active {
+            background: var(--oxford);
+            color: white;
         }
-        
-        .empty-state { 
-            text-align: center; 
-            color: #999; 
-            padding: 40px 20px; 
-            font-size: 0.85rem; 
-            font-style: italic;
+
+        .exercise-card {
+            background: white; 
+            border-left: 4px solid var(--gold); 
+            padding: 25px; 
+            margin-bottom: 25px; 
+            border-radius: 6px; 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+        }
+
+        .pregunta-block {
+            margin-bottom: 20px; 
+            background: #fafbfc; 
+            padding: 15px; 
+            border-radius: 6px;
+            border: 1px solid #f0f2f5;
+        }
+
+        .pdf-viewer-container {
+            width: 100%;
+            background: #fff;
+            border: 2px solid var(--gold);
+            border-radius: 8px;
+            padding: 10px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            text-align: center;
+            box-sizing: border-box;
+        }
+
+        .pdf-viewer-container canvas {
+            max-width: 100%;
+            height: auto;
+            border-radius: 4px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+
+        .checklist-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            background: white;
+            padding: 15px;
+            margin-bottom: 12px;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.01);
+            border-left: 3px solid #ccc;
+            transition: all 0.2s ease;
+        }
+        .checklist-item.completed {
+            border-left-color: var(--green);
+            background: #f8fff9;
         }
     </style>
-    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
 </head>
 <body>
 
     <div class="sidebar">
-        <div class="logo-area">
-            <h2>Espace DELF</h2>
-            <span id="display-nivel">Chargement...</span>
-        </div>
-        <div class="main-tabs">
-            <button id="tab-parcours" class="tab-trigger active">Parcours</button>
-            <button id="tab-carnet" class="tab-trigger">Carnet</button>
-        </div>
-        <div class="menu-scroll" id="menu-container"></div>
+        <h2>Mon Espace DELF</h2>
+        <button class="nav-tab-btn active" id="tab-parcours">
+            <i class="fas fa-route"></i> Mon Parcours
+        </button>
+        
+        <div id="sidebar-dynamic-menu" style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 15px;"></div>
+
+        <button class="nav-tab-btn" id="tab-carnet">
+            <i class="fas fa-address-book"></i> Carnet de compétences
+        </button>
     </div>
 
-    <div class="app-body">
-        <div class="top-navbar">
-            <div class="skills-selector">
-                <button id="skill-CO" class="skill-pill active"><i class="fas fa-headphones"></i> Oral</button>
-                <button id="skill-CE" class="skill-pill"><i class="fas fa-file-alt"></i> Écrit</button>
-                <button id="skill-PE" class="skill-pill"><i class="fas fa-pen"></i> PE</button>
-                <button id="skill-PO" class="skill-pill"><i class="fas fa-comments"></i> PO</button>
+    <div class="main-container">
+        <div class="project-banner">
+            <div class="banner-top">
+                <div class="banner-left">
+                    <i class="fas fa-user-circle" style="color: var(--gold); font-size: 1.8rem;"></i>
+                    <h1 id="student-welcome">Chargement...</h1>
+                </div>
+                <div class="banner-right">
+                    <span class="level-badge" id="level-indicator">NIVEAU --</span>
+                </div>
             </div>
-            <div style="font-size:0.85rem; font-weight:600; color:#555;">
-                <i class="fas fa-user-circle" style="margin-right:5px; color:var(--gold);"></i> Étudiant
+
+            <div class="banner-bottom-info">
+                <div class="progress-container">
+                    <span style="font-size: 0.8rem; font-weight: 600;">Progression :</span>
+                    <div class="progress-bar-bg">
+                        <div class="progress-bar-fill" id="progress-bar-fill"></div>
+                    </div>
+                    <span style="font-size: 0.8rem; font-weight: 700; color: var(--gold);" id="progress-text-target">0%</span>
+                </div>
+                <div class="countdown-container">
+                    <i class="far fa-clock" style="color: var(--gold);"></i>
+                    <span id="countdown-text-target">-- jours restants avant l'examen</span>
+                </div>
             </div>
         </div>
 
-        <div class="content-workspace" id="view-parcours">
-            <div class="panel-left" id="workspace-target"></div>
-            <div class="panel-right">
-                <div class="right-header"><i class="fas fa-book-open" style="margin-right:8px; color:var(--gold);"></i> Livre de l'élève</div>
-                <div class="right-scroll" id="book-target"></div>
-            </div>
-        </div>
+        <div class="content-area">
+            <div class="workspace-content-wrapper">
+                <div class="controls-row" id="parcours-controls-container">
+                    <div class="skill-selector-bar">
+                        <button class="skill-tab-btn active" id="skill-CO">Compréhension Orale</button>
+                        <button class="skill-tab-btn" id="skill-CE">Compréhension Écrite</button>
+                        <button class="skill-tab-btn" id="skill-PE">Production Écrite</button>
+                        <button class="skill-tab-btn" id="skill-PO">Production Orale</button>
+                    </div>
+                </div>
 
-        <div class="content-workspace" id="view-carnet" style="display:none;">
-            <div style="flex:1; padding:40px; overflow-y:auto;">
-                <div class="workspace-card" style="max-width:900px; margin:0 auto;">
-                    <h3><i class="fas fa-graduation-cap" style="margin-right:10px; color:var(--gold);"></i> Mon Historique de Réussite</h3>
-                    <div id="carnet-grid" style="display:grid; grid-template-columns:repeat(auto-fill, minmax(250px, 1fr)); gap:20px;"></div>
+                <div id="dynamic-workspace-target">
+                    <p style="text-align:center; color:#666;"><i class="fas fa-spinner fa-spin"></i> Chargement...</p>
                 </div>
             </div>
         </div>
     </div>
 
-    <script>
-        // CONFIGURACIÓN DE TU PROYECTO FIREBASE
-        // RECUERDA PEGAR AQUÍ TUS CREDENCIALES REALES
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
+        import { getFirestore, doc, getDoc, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js";
+        import { getStorage, ref, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-storage.js";
+
         const firebaseConfig = {
-            apiKey: "AIzaSyD...", 
-            authDomain: "tu-proyecto.firebaseapp.com",
-            projectId: "tu-proyecto-id",
-            storageBucket: "tu-proyecto.appspot.com",
-            messagingSenderId: "123456789",
-            appId: "1:12345:web:abcd"
+            apiKey: "AIzaSyCgog8tKspHy01ZHE8Dthl9O4W6lw1a_Ec",
+            authDomain: "objectif-reussite-delf.firebaseapp.com",
+            projectId: "objectif-reussite-delf",
+            storageBucket: "objectif-reussite-delf.firebasestorage.app",
+            messagingSenderId: "942279633770",
+            appId: "1:942279633770:web:687ba6d819747eb29c1313"
         };
 
-        firebase.initializeApp(firebaseConfig);
-        const db = firebase.firestore();
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const storage = getStorage(app);
 
-        let currentNivel = "A1";
-        let currentMainTab = "parcours";
-        let currentSkill = "CO";
-        let unidadesCache = {};
-        let openUnits = {};
+        let currentActiveTab = "parcours"; 
+        let currentLevel = "A1"; 
+        let currentSkill = "CO"; 
+        let currentUnitId = null; 
+        let currentExerciseIndex = 0;
+        let unidadesCache = {}; 
+        let ejerciciosFiltrados = [];
+        let openUnitsState = {}; 
 
-        let activeUnitId = null;
-        let activeActIndex = null;
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
+        let pdfDocInstance = null; 
 
-        let pdfDocInstance = null;
-        const RUTA_BOOK_PDF = "book.pdf";
+        const mapLivresStorage = {
+            "A1": "ABC DELF A1 - 2025.pdf",
+            "A2": "ABC DELF A2 - 2025.pdf",
+            "B1": "ABC DELF B1 - 2025.pdf",
+            "B2": "ABC DELF B2 - 2025.pdf",
+            "C1": "Le DALF 100% Réussite C1 - C2.pdf"
+        };
 
-        function init() {
-            document.getElementById('display-nivel').innerText = `Niveau ${currentNivel}`;
-            loadLibraryFromFirebase();
-            loadPdfEngine();
-        }
+        const urlParams = new URLSearchParams(window.location.search);
+        const studentId = urlParams.get('id') || 'default_student';
 
-        function loadLibraryFromFirebase() {
-            db.collection("BibliotecaEjercicios").document(currentNivel).collection("Unidades").get()
-            .then(snap => {
-                unidadesCache = {};
-                snap.forEach(doc => { unidadesCache[doc.id] = doc.data(); });
-                renderLeftMenu();
-            }).catch(err => console.error("Erreur Firebase:", err));
-        }
+        async function init() {
+            try {
+                const userSnap = await getDoc(doc(db, "Usuarios", studentId));
+                if (userSnap.exists()) {
+                    const userData = userSnap.data();
+                    currentLevel = userData.nivel || "A1";
+                    document.getElementById('student-welcome').innerText = `Bonjour, ${userData.nombre || 'Étudiant'}`;
+                    
+                    const prog = userData.progreso || 0;
+                    document.getElementById('progress-bar-fill').style.width = `${prog}%`;
+                    document.getElementById('progress-text-target').innerText = `${prog}%`;
 
-        function loadPdfEngine() {
-            if (typeof pdfjsLib !== 'undefined') {
-                pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
-                pdfjsLib.getDocument(RUTA_BOOK_PDF).promise.then(pdf => {
-                    pdfDocInstance = pdf;
-                    console.log("PDF principal cargado con éxito.");
-                }).catch(err => {
-                    console.warn("Falta el archivo book.pdf, el renderizador visual de páginas estará inactivo:", err.message);
-                });
+                    if (userData.fecha_examen) {
+                        const fechaExamen = new Date(userData.fecha_examen);
+                        const hoy = new Date();
+                        const diferenciaTiempo = fechaExamen - hoy;
+                        const diasRestantes = Math.ceil(diferenciaTiempo / (1000 * 60 * 60 * 24));
+                        document.getElementById('countdown-text-target').innerText = diasRestantes > 0 ? `${diasRestantes} jours restants avant l'examen` : "Examen terminé";
+                    } else {
+                        document.getElementById('countdown-text-target').innerText = "Pas de date d'examen fixée";
+                    }
+                }
+                
+                document.getElementById('level-indicator').innerText = `NIVEAU ${currentLevel}`;
+
+                let nombreLivre = mapLivresStorage[currentLevel] || "ABC DELF A1 - 2025.pdf";
+                console.log(`> Téléchargement du livre : niveles/${currentLevel}/libro/${nombreLivre}`);
+                
+                getDownloadURL(ref(storage, `niveles/${currentLevel}/libro/${nombreLivre}`))
+                    .then((url) => {
+                        pdfjsLib.getDocument(url).promise.then(pdf => {
+                            pdfDocInstance = pdf;
+                            console.log(`> Livre chargé avec succès !`);
+                            if (ejerciciosFiltrados[currentExerciseIndex]?.pagina_pdf) {
+                                renderPageFromBook(ejerciciosFiltrados[currentExerciseIndex].pagina_pdf);
+                            }
+                        }).catch(err => console.error("Erreur d'analyse pdf.js:", err));
+                    })
+                    .catch((err) => console.error("Fichier introuvable sur Firebase Storage.", err));
+
+                await descargarColeccionUnidades();
+
+            } catch (error) {
+                console.error(error);
+                document.getElementById('dynamic-workspace-target').innerHTML = `<p style="color:red; text-align:center;">Erreur de connexion.</p>`;
             }
         }
 
-        window.switchMainTab = function(tab) {
-            currentMainTab = tab;
-            document.getElementById('tab-parcours').classList.toggle('active', tab === 'parcours');
-            document.getElementById('tab-carnet').classList.toggle('active', tab === 'carnet');
-            document.getElementById('view-parcours').style.display = tab === 'parcours' ? 'flex' : 'none';
-            document.getElementById('view-carnet').style.display = tab === 'carnet' ? 'flex' : 'none';
-            if (tab === 'carnet') renderCarnetDashboard();
+        async function descargarColeccionUnidades() {
+            unidadesCache = {};
+            const querySnapshot = await getDocs(collection(db, "BibliotecaEjercicios", currentLevel, "Unidades"));
+            querySnapshot.forEach((docSnap) => {
+                unidadesCache[docSnap.id] = docSnap.data();
+            });
+            renderActiveInterface();
+        }
+
+        window.switchMainTab = (tab) => {
+            currentActiveTab = tab;
+            document.querySelectorAll('.sidebar .nav-tab-btn').forEach(btn => btn.classList.remove('active'));
+            if (tab === 'parcours') document.getElementById('tab-parcours').classList.add('active');
+            if (tab === 'carnet') document.getElementById('tab-carnet').classList.add('active');
+            renderActiveInterface();
         };
 
-        window.setSkillFilter = function(skill) {
+        window.setSkillFilter = (skill) => {
             currentSkill = skill;
-            document.querySelectorAll('.skill-pill').forEach(btn => btn.classList.remove('active'));
+            currentUnitId = null; 
+            currentExerciseIndex = 0;
+            document.querySelectorAll('.skill-tab-btn').forEach(btn => btn.classList.remove('active'));
             document.getElementById(`skill-${skill}`).classList.add('active');
-            renderLeftMenu();
+            renderActiveInterface();
         };
 
-        window.toggleUnitFold = function(uId) {
-            openUnits[uId] = !openUnits[uId];
-            renderLeftMenu();
-        };
+        function renderActiveInterface() {
+            const menuContainer = document.getElementById('sidebar-dynamic-menu');
+            if (currentActiveTab === "parcours") {
+                document.getElementById('parcours-controls-container').style.display = "flex";
+                menuContainer.style.display = "flex"; 
+                generarMenuJerarquico();
+            } else {
+                document.getElementById('parcours-controls-container').style.display = "none";
+                menuContainer.style.display = "none"; 
+                renderCarnetInterface();
+            }
+        }
 
-        function renderLeftMenu() {
-            const container = document.getElementById('menu-container');
-            container.innerHTML = "";
-            const keys = Object.keys(unidadesCache).sort((a,b) => a.localeCompare(b, undefined, {numeric:true}));
+        function generarMenuJerarquico() {
+            const menuContainer = document.getElementById('sidebar-dynamic-menu');
+            const target = document.getElementById('dynamic-workspace-target');
+            menuContainer.innerHTML = "";
 
-            keys.forEach(uId => {
+            const keys = Object.keys(unidadesCache).sort((a, b) => a.localeCompare(b, undefined, { numeric: true }));
+
+            if (keys.length === 0) {
+                target.innerHTML = `<div style="text-align: center; padding: 40px; color: #888;"><p>Aucun exercice chargé pour le moment.</p></div>`;
+                return;
+            }
+
+            if (currentUnitId === null) {
+                target.innerHTML = `<div style="text-align: center; padding: 60px; color: var(--oxford); margin-top:30px;"><p style="font-weight: 600;">Veuillez choisir une activité dans le menu de gauche para commencer.</p></div>`;
+            }
+
+            keys.forEach((uId) => {
                 const u = unidadesCache[uId];
-                const ejercicios = u[currentSkill] || [];
-                if (ejercicios.length === 0) return; 
+                let ejerciciosHabilidad = u[currentSkill] || [];
+                
+                // CORRECCIÓN AQUÍ: Estado de apertura gobernado de manera pura por openUnitsState[uId]
+                const isUnitOpen = openUnitsState[uId] === true;
+                const displayStyle = isUnitOpen ? 'flex' : 'none';
+                const chevronIcon = isUnitOpen ? 'fa-chevron-down' : 'fa-chevron-right';
 
-                const isOpen = openUnits[uId] === true;
-                let bloc = document.createElement('div');
-                bloc.className = "unit-bloc";
-                bloc.innerHTML = `
-                    <button class="unit-header ${activeUnitId === uId ? 'active-unit' : ''}" onclick="window.toggleUnitFold('${uId}')">
-                        <span><i class="fas fa-folder" style="margin-right:8px; color:var(--gold);"></i>${u.unidad || uId}</span>
-                        <i class="fas ${isOpen ? 'fa-chevron-down' : 'fa-chevron-right'}" style="font-size:0.7rem; color:var(--gold);"></i>
+                let unitWrapper = document.createElement('div');
+                unitWrapper.className = 'unit-wrapper';
+                unitWrapper.innerHTML = `
+                    <button class="unit-toggle-btn ${currentUnitId === uId ? 'active' : ''}" onclick="window.toggleUnitMenu('${uId}')">
+                        <span><i class="fas fa-book" style="color:var(--gold); margin-right:8px;"></i>${u.unidad || uId} ${u.tema ? `- ${u.tema}` : ''}</span>
+                        <i class="fas ${chevronIcon}" style="font-size:0.7rem; color:var(--gold);"></i>
                     </button>
                 `;
 
-                if (isOpen) {
-                    let list = document.createElement('div');
-                    list.className = "act-list";
-                    ejercicios.forEach((ej, index) => {
-                        let actTitle = ej.instruccion ? (ej.instruccion.match(/Activité\s*\d+/i)?.[0] || `Activité ${index+1}`) : `Activité ${index+1}`;
-                        const isSelected = (activeUnitId === uId && activeActIndex === index);
-                        list.innerHTML += `
-                            <button class="act-item ${isSelected ? 'active-act' : ''}" onclick="window.displayWorkspace('${uId}', ${index})">
-                                <i class="fas fa-file-signature" style="font-size:0.75rem;"></i> ${actTitle}
+                let subContainer = document.createElement('div');
+                subContainer.className = 'submenu-activities';
+                subContainer.style.display = displayStyle;
+
+                if (ejerciciosHabilidad.length === 0) {
+                    subContainer.innerHTML = `<div style="padding: 8px 12px; font-size: 0.75rem; color: #888; font-style: italic;">Aucune activité</div>`;
+                } else {
+                    ejerciciosHabilidad.forEach((ej, eIdx) => {
+                        const esActivo = (currentUnitId === uId && currentExerciseIndex === eIdx);
+                        let tituloLimpio = "";
+                        if (ej.instruccion) {
+                            let matchActividad = ej.instruccion.match(/Activité\s*\d+/i);
+                            if (matchActividad) tituloLimpio = matchActividad[0]; 
+                        }
+                        if (!tituloLimpio) tituloLimpio = `Activité ${eIdx + 1}`;
+
+                        subContainer.innerHTML += `
+                            <button class="activity-link-btn ${esActivo ? 'active' : ''}" onclick="window.cargarActividadDirecta('${uId}', ${eIdx})">
+                                <i class="fas fa-play" style="font-size:0.6rem; margin-right:6px;"></i>${tituloLimpio}
                             </button>
                         `;
                     });
-                    bloc.appendChild(list);
                 }
-                container.appendChild(bloc);
+                unitWrapper.appendChild(subContainer);
+                menuContainer.appendChild(unitWrapper);
             });
-
-            if (container.children.length === 0) {
-                container.innerHTML = `<div class="empty-state">Aucun exercice disponible.</div>`;
-            }
         }
 
-        window.displayWorkspace = function(uId, index) {
-            activeUnitId = uId;
-            activeActIndex = index;
-            renderLeftMenu();
+        window.toggleUnitMenu = (uId) => {
+            openUnitsState[uId] = !openUnitsState[uId];
+            generarMenuJerarquico();
+        };
 
-            const workspace = document.getElementById('workspace-target');
-            const bookTarget = document.getElementById('book-target');
-            const ej = unidadesCache[uId][currentSkill][index];
+        window.cargarActividadDirecta = (uId, eIdx) => {
+            currentUnitId = uId;
+            currentExerciseIndex = eIdx;
+            openUnitsState[uId] = true; 
+            generarMenuJerarquico();
+            renderExerciseStructure();
+        };
 
-            let html = `<div class="workspace-card"><h3>${ej.instruccion || 'Exercice'}</h3>`;
-            const audioId = `audio-player-${uId}-${index}`;
+        function filtrarEjerciciosDeUnidadActual() {
+            ejerciciosFiltrados = [];
+            if (currentUnitId === null || !unidadesCache[currentUnitId]) return;
+            ejerciciosFiltrados = unidadesCache[currentUnitId][currentSkill] || [];
+        }
+
+        function renderExerciseStructure() {
+            const target = document.getElementById('dynamic-workspace-target');
+            filtrarEjerciciosDeUnidadActual();
+
+            if (ejerciciosFiltrados.length === 0 || !ejerciciosFiltrados[currentExerciseIndex]) {
+                target.innerHTML = `<p style="text-align:center; color:#888;">Aucun exercice disponible.</p>`;
+                return;
+            }
+
+            const ej = ejerciciosFiltrados[currentExerciseIndex];
+            const audioId = `audio-container-${currentExerciseIndex}`;
+
+            let html = `
+            <div class="exercise-card">
+                <h4 style="margin-top: 0; margin-bottom: 20px; color: var(--oxford); font-size: 1.05rem; font-weight:700;">
+                    ${ej.instruccion || 'Exercice'} 
+                </h4>`;
+
+            if (ej.pagina_pdf) {
+                html += `
+                <div class="pdf-viewer-container" id="pdf-viewer-block">
+                    <p style="font-size:0.8rem; color:var(--gold); font-weight:600; margin-top:0;"><i class="fas fa-book-open"></i> Page ${ej.pagina_pdf} du livre original</p>
+                    <canvas id="pdf-canvas-render"></canvas>
+                </div>`;
+                setTimeout(() => renderPageFromBook(ej.pagina_pdf), 50);
+            }
 
             if (ej.ruta_audio) {
                 html += `<div id="${audioId}" style="margin-bottom: 20px; text-align:center;"><i class="fas fa-spinner fa-spin"></i> Audio...</div>`;
             }
 
-            // Muestra el documento de lectura en texto plano si no hay número de página asignado
-            if (currentSkill === "CE" && ej.texto_lectura && !ej.pagina_pdf) {
-                html += `<div style="background:#f8f9fa; border-left:4px solid var(--gold); padding:20px; border-radius:6px; margin-bottom:20px; font-size:0.95rem; line-height:1.6; color:#333; white-space:pre-wrap;"><strong><i class="fas fa-file-text" style="color:var(--gold); margin-right:8px;"></i> Document de lecture :</strong><br><br>${ej.texto_lectura}</div>`;
+            if (ej.preguntas && ej.preguntas.length > 0) {
+                ej.preguntas.forEach((p, pIdx) => {
+                    html += `
+                    <div class="pregunta-block" id="block-preg-${pIdx}" style="padding:15px; border-radius:6px; margin-bottom:15px; border:1px solid #eef2f5;">
+                        <p style="margin-top:0; margin-bottom:12px; font-weight:600; color:#222; display:flex; align-items:center;">
+                            <span id="status-icon-target-${pIdx}"></span>
+                            <span>${p.pregunta}</span>
+                        </p>`;
+                    if (p.opciones) {
+                        p.opciones.forEach((opt) => {
+                            html += `
+                            <label style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px; cursor: pointer;">
+                                <input type="radio" name="question_${pIdx}" value="${opt}" style="accent-color:var(--oxford);"> ${opt}
+                            </label>`;
+                        });
+                    }
+                    html += `</div>`;
+                });
+
+                html += `
+                <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px;">
+                    <button class="nav-tab-btn" id="btn-submit-exercise" style="width:auto; background:var(--oxford); color:white; padding:10px 22px;"><i class="fas fa-paper-plane"></i> Envoyer</button>
+                    <button class="nav-tab-btn" id="btn-next-exercise" style="width:auto; background:var(--green); color:white; padding:10px 22px; display:none;">Suivant <i class="fas fa-arrow-right"></i></button>
+                </div>`;
             }
 
-            if (ej.preguntas && ej.preguntas.length > 0) {
-                ej.preguntas.forEach((q, qIdx) => {
-                    let opts = "";
-                    q.opciones.forEach(opc => {
-                        opts += `
-                            <label class="opt-row row-q-${qIdx}">
-                                <input type="radio" name="input-q-${qIdx}" value="${opc}">
-                                <span>${opc}</span>
-                            </label>
-                        `;
-                    });
-                    html += `
-                        <div class="q-wrapper" id="block-q-${qIdx}">
-                            <div class="q-text">${qIdx + 1}. ${q.pregunta}</div>
-                            <div class="opts-list">${opts}</div>
-                        </div>
-                    `;
-                });
-                html += `<button class="action-btn" onclick="window.checkAnswers()">Valider mes réponses</button>`;
-            } else {
-                html += `<p style="font-style:italic; color:#777;">Production libre o exercice écrit. Répondez sur votre cahier.</p>`;
-            }
-            html += `</div>`;
-            workspace.innerHTML = html;
+            html += `
+                <div id="sophia-box" style="display:none; background:#f4f7f9; border-left:4px solid var(--gold); padding:20px; border-radius:6px; margin-top:25px;">
+                    <div style="display:flex; align-items:center; gap:10px; font-weight:700; color:var(--oxford);"><i class="fas fa-lightbulb" style="color:var(--gold);"></i> CONSEIL DE SOPHIA</div>
+                    <p id="sophia-verdict-text" style="margin:0; font-size:0.95rem;"></p>
+                    ${ej.transcripcion ? `<div style="font-weight:700; margin-top:15px; color:var(--oxford);">Transcription :</div><div style="background:#fff; border:1px dashed #ccc; padding:12px; border-radius:5px; margin-top:8px; font-size:0.95rem; line-height:1.6; color:#333;">${ej.transcripcion}</div>` : ''}
+                </div>
+            </div>`;
+
+            target.innerHTML = html;
 
             if (ej.ruta_audio) {
-                db.collection("BibliotecaEjercicios").document(currentNivel).get().then(doc => {
-                    const audiosMap = doc.data()?.audios || {};
-                    const url = audiosMap[ej.ruta_audio];
-                    const playerBox = document.getElementById(audioId);
-                    if (url) {
-                        playerBox.innerHTML = `<audio controls src="${url}" style="width:100%;"></audio>`;
+                const nombreArchivo = ej.ruta_audio.split('/').pop();
+                let trackMatch = nombreArchivo.match(/\d+/);
+                let track = trackMatch ? trackMatch[0] : "02";
+                if (track === "1" || track === "01") track = "02";
+                if (track.length > 2) track = track.slice(-2);
+                if (track.length === 1) track = "0" + track;
+                let nombreArchivoFinal = `${currentLevel}-${track}.mp3`;
+
+                getDownloadURL(ref(storage, `niveles/${currentLevel}/audios/${nombreArchivoFinal}`))
+                    .then(url => {
+                        const container = document.getElementById(audioId);
+                        if (container) container.innerHTML = `<audio controls style="width:100%;" src="${url}"></audio>`;
+                    })
+                    .catch(() => {
+                        getDownloadURL(ref(storage, `niveles/${currentLevel}/audios/${track}.mp3`))
+                            .then(url => {
+                                const container = document.getElementById(audioId);
+                                if (container) container.innerHTML = `<audio controls style="width:100%;" src="${url}"></audio>`;
+                            })
+                            .catch(() => {
+                                const container = document.getElementById(audioId);
+                                container.innerHTML = `<span style="color:red; font-size:0.85rem;"><i class="fas fa-exclamation-triangle"></i> Audio indisponible</span>`;
+                            });
+                    });
+            }
+
+            const btnSubmit = document.getElementById('btn-submit-exercise');
+            const btnNext = document.getElementById('btn-next-exercise');
+            const sophiaBox = document.getElementById('sophia-box');
+
+            if (btnSubmit) {
+                btnSubmit.addEventListener('click', () => {
+                    let total = ej.preguntas.length;
+                    let aciertos = 0;
+                    ej.preguntas.forEach((p, pIdx) => {
+                        const selected = document.querySelector(`input[name="question_${pIdx}"]:checked`);
+                        const iconTarget = document.getElementById(`status-icon-target-${pIdx}`);
+                        const block = document.getElementById(`block-preg-${pIdx}`);
+                        let rAlumno = selected ? selected.value.trim().toLowerCase() : "";
+                        let rCorrecta = p.respuesta_correcta.trim().toLowerCase();
+
+                        if (rAlumno === rCorrecta) {
+                            aciertos++;
+                            iconTarget.innerHTML = `<i class="fas fa-check-circle" style="color:var(--green); margin-right:8px;"></i>`;
+                            block.style.borderColor = "var(--green)";
+                        } else {
+                            iconTarget.innerHTML = `<i class="fas fa-times-circle" style="color:red; margin-right:8px;"></i>`;
+                            block.style.borderColor = "red";
+                        }
+                    });
+
+                    document.querySelectorAll('input[type="radio"]').forEach(r => r.disabled = true);
+                    btnSubmit.style.display = "none";
+                    if (btnNext) btnNext.style.display = "inline-block";
+
+                    let porcentaje = (aciertos / total) * 100;
+                    const txtSophia = document.getElementById('sophia-verdict-text');
+                    if (porcentaje >= 70) {
+                        txtSophia.innerHTML = `<strong>Félicitations !</strong> Tu as obtenu <strong>${aciertos}/${total}</strong>.`;
+                        txtSophia.style.color = "var(--green)";
                     } else {
-                        playerBox.innerHTML = `<span style="font-size:0.8rem; color:#d9534f;"><i class="fas fa-exclamation-triangle"></i> Audio non lié (${ej.ruta_audio})</span>`;
+                        txtSophia.innerHTML = `<strong>Attention !</strong> Tu as obtenu <strong>${aciertos}/${total}</strong>. Revois l'exercice.`;
+                        txtSophia.style.color = "red";
                     }
+                    if (sophiaBox) sophiaBox.style.display = "block";
                 });
-            }
-
-            if (ej.pagina_pdf) {
-                bookTarget.innerHTML = `
-                    <div class="book-container">
-                        <div class="book-header">
-                            <span class="book-title">Livre d'exercices</span>
-                            <span class="book-page-label">Page ${ej.pagina_pdf}</span>
-                        </div>
-                        <div class="canvas-wrapper"><canvas id="pdf-canvas-render"></canvas></div>
-                    </div>
-                `;
-                renderPageFromBook(parseInt(ej.pagina_pdf));
-            } else {
-                bookTarget.innerHTML = `<div class="empty-state">Visuel du livre non requis ou non lié para cet exercice.</div>`;
-            }
-        };
-
-        window.checkAnswers = function() {
-            const ej = unidadesCache[activeUnitId][currentSkill][activeActIndex];
-            let score = 0;
-            let total = ej.preguntas.length;
-
-            ej.preguntas.forEach((q, qIdx) => {
-                const checked = document.querySelector(`input[name="input-q-${qIdx}"]:checked`);
-                const rows = document.querySelectorAll(`.row-q-${qIdx}`);
-
-                rows.forEach(row => {
-                    row.classList.remove('correct', 'wrong');
-                    const val = row.querySelector('input').value;
-                    if (val === q.respuesta_correcta) row.classList.add('correct');
-                    if (checked && row.querySelector('input') === checked && checked.value !== q.respuesta_correcta) {
-                        row.classList.add('wrong');
-                    }
-                });
-
-                if (checked && checked.value === q.respuesta_correcta) score++;
-            });
-
-            let actTitle = ej.instruccion ? (ej.instruccion.match(/Activité\s*\d+/i)?.[0] || `Activité ${activeActIndex+1}`) : `Activité ${activeActIndex+1}`;
-            const keyRecord = `${currentNivel}_${activeUnitId}_${currentSkill}_${activeActIndex}`;
-            localStorage.setItem(keyRecord, JSON.stringify({
-                nivel: currentNivel,
-                unidad: activeUnitId,
-                skill: currentSkill,
-                act: actTitle,
-                score: `${score}/${total}`,
-                date: new Date().toLocaleDateString('fr-FR')
-            }));
-            
-            alert(`Resultat: ${score} / ${total}`);
-        };
-
-        function renderCarnetDashboard() {
-            const grid = document.getElementById('carnet-grid');
-            grid.innerHTML = "";
-            let count = 0;
-
-            for (let i = 0; i < localStorage.length; i++) {
-                const key = localStorage.key(i);
-                if (!key.startsWith(currentNivel + "_")) continue;
-                
-                try {
-                    const data = JSON.parse(localStorage.getItem(key));
-                    count++;
-                    grid.innerHTML += `
-                        <div class="carnet-card">
-                            <div class="carnet-meta">${data.date} | ${data.skill}</div>
-                            <div class="carnet-title">${data.unidad} - ${data.act}</div>
-                            <div class="carnet-score"><i class="fas fa-star" style="color:var(--gold); margin-right:5px;"></i> Score : ${data.score}</div>
-                        </div>
-                    `;
-                } catch(e) {}
-            }
-
-            if (count === 0) {
-                grid.innerHTML = `<div class="empty-state" style="grid-column: 1/-1;">Aucun historique trouvé para le niveau ${currentNivel}.</div>`;
             }
         }
 
