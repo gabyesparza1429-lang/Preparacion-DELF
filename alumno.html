@@ -555,9 +555,13 @@
 
             keys.forEach((uId) => {
                 const u = unidadesCache[uId];
-                // CORRECCIÓN MENÚ: Soportamos claves en mayúsculas o minúsculas nativas de Firebase para que no oculte el nombre de la unidad
                 let ejerciciosHabilidad = u[currentSkill] || u[currentSkill.toLowerCase()] || [];
                 
+                // FILTRO COMPLETO: Si la lista de ejercicios para esta habilidad viene vacía, no genera el contenedor en el menú lateral
+                if (ejerciciosHabilidad.length === 0) {
+                    return; 
+                }
+
                 const isUnitOpen = openUnitsState[uId] === true;
                 const displayStyle = isUnitOpen ? 'flex' : 'none';
                 const chevronIcon = isUnitOpen ? 'fa-chevron-down' : 'fa-chevron-right';
@@ -575,25 +579,22 @@
                 subContainer.className = 'submenu-activities';
                 subContainer.style.display = displayStyle;
 
-                if (ejerciciosHabilidad.length === 0) {
-                    subContainer.innerHTML = `<div style="padding: 8px 12px; font-size: 0.75rem; color: #888; font-style: italic;">Aucune activité</div>`;
-                } else {
-                    ejerciciosHabilidad.forEach((ej, eIdx) => {
-                        const esActivo = (currentUnitId === uId && currentExerciseIndex === eIdx);
-                        let tituloLimpio = "";
-                        if (ej.instruccion) {
-                            let matchActividad = ej.instruccion.match(/Activité\s*\d+/i);
-                            if (matchActividad) tituloLimpio = matchActividad[0]; 
-                        }
-                        if (!tituloLimpio) tituloLimpio = `Activité ${eIdx + 1}`;
+                ejerciciosHabilidad.forEach((ej, eIdx) => {
+                    const esActivo = (currentUnitId === uId && currentExerciseIndex === eIdx);
+                    let tituloLimpio = "";
+                    if (ej.instruccion) {
+                        let matchActividad = ej.instruccion.match(/Activité\s*\d+/i);
+                        if (matchActividad) tituloLimpio = matchActividad[0]; 
+                    }
+                    if (!tituloLimpio) tituloLimpio = `Activité ${eIdx + 1}`;
 
-                        subContainer.innerHTML += `
-                            <button class="activity-link-btn ${esActivo ? 'active' : ''}" onclick="window.cargarActividadDirecta('${uId}', ${eIdx})">
-                                <i class="fas fa-play" style="font-size:0.6rem; margin-right:6px;"></i>${tituloLimpio}
-                            </button>
-                        `;
-                    });
-                }
+                    subContainer.innerHTML += `
+                        <button class="activity-link-btn ${esActivo ? 'active' : ''}" onclick="window.cargarActividadDirecta('${uId}', ${eIdx})">
+                            <i class="fas fa-play" style="font-size:0.6rem; margin-right:6px;"></i>${tituloLimpio}
+                        </button>
+                    `;
+                });
+                
                 unitWrapper.appendChild(subContainer);
                 menuContainer.appendChild(unitWrapper);
             });
