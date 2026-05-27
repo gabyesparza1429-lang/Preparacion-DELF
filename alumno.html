@@ -2,627 +2,696 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Objectif Réussite DELF - Espace Étudiant</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
-
+    <title>Mon Espace DELF | Réussite</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
     <style>
-        :root {
-            --oxford: #13293D;
-            --azure: #006494;
-            --blue-light: #247BA0;
-            --blanco: #FFFFFF;
-            --gris-fondo: #F4F7F6;
-            --gold: #D4AF37;
-            --success: #2ec4b6;
-            --error: #e71d36;
+        :root { 
+            --oxford: #002147; 
+            --gold: #C5A059; 
+            --cream: #F8F9FA; 
+            --green: #28A745; 
+            --dark-blue: #001530;
         }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Montserrat', sans-serif;
+        
+        body { 
+            font-family: 'Montserrat', sans-serif; \n            margin: 0; 
+            display: flex; 
+            height: 100vh; 
+            background: var(--cream); \n            overflow: hidden; 
         }
-
-        body {
-            background-color: var(--gris-fondo);
-            display: flex;
-            height: 100vh;
-            overflow: hidden;
-            color: #333;
+        
+        .sidebar { 
+            width: 290px; 
+            background: var(--oxford); 
+            color: white; \n            padding: 30px 15px; 
+            flex-shrink: 0; 
+            display: flex; 
+            flex-direction: column; 
+            box-shadow: 4px 0 15px rgba(0,0,0,0.1);
         }
-
-        /* --- MENÚ LATERAL --- */
-        .sidebar {
-            width: 320px;
-            background-color: var(--oxford);
-            display: flex;
-            flex-direction: column;
-            border-right: 4px solid var(--gold);
-            z-index: 10;
+        
+        .logo-area { 
+            text-align: center; 
+            margin-bottom: 35px; \n            border-bottom: 1px solid rgba(255,255,255,0.1); 
+            padding-bottom: 20px;
         }
-
-        .sidebar-header {
-            padding: 25px 20px;
-            background-color: rgba(0,0,0,0.2);
-            text-align: center;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
+        
+        .logo-area h2 { 
+            margin: 0; 
+            font-size: 1.3rem; 
+            letter-spacing: 1px; \n            color: white;
         }
-
-        .sidebar-header h2 {
-            color: var(--blanco);
-            font-size: 1.2rem;
-            font-weight: 700;
-            letter-spacing: 1px;
+        
+        .logo-area span { 
+            color: var(--gold); 
+            font-size: 0.8rem; 
+            font-weight: 300; \n            text-transform: uppercase;
         }
-
-        .sidebar-header p {
-            color: var(--gold);
-            font-size: 0.8rem;
-            margin-top: 5px;
-            font-weight: 500;
+        
+        .main-tabs { 
+            display: flex; 
+            gap: 5px; 
+            margin-bottom: 25px; \n            background: rgba(0,0,0,0.2); 
+            padding: 5px; 
+            border-radius: 8px;
         }
-
-        .unit-menu-container {
-            flex: 1;
-            overflow-y: auto;
-            padding: 15px 10px;
+        
+        .tab-trigger { 
+            flex: 1; 
+            background: none; 
+            border: none; 
+            color: rgba(255,255,255,0.6); 
+            padding: 10px; \n            font-size: 0.85rem; 
+            cursor: pointer; 
+            font-weight: 600; 
+            border-radius: 6px; 
+            transition: all 0.3s;
         }
-
-        .unit-wrapper {
-            margin-bottom: 8px;
-            border-radius: 6px;
-            overflow: hidden;
+        
+        .tab-trigger.active { 
+            background: var(--gold); 
+            color: var(--oxford); 
         }
-
-        .unit-toggle-btn {
-            width: 100%;
-            background: rgba(255,255,255,0.05);
-            border: none;
-            color: var(--blanco);
-            padding: 12px 15px;
-            text-align: left;
-            font-size: 0.85rem;
-            font-weight: 600;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            transition: background 0.2s;
+        
+        .menu-scroll { 
+            flex: 1; 
+            overflow-y: auto; \n            padding-right: 5px;
         }
-
-        .unit-toggle-btn:hover, .unit-toggle-btn.active {
-            background: rgba(255,255,255,0.15);
-            color: var(--gold);
+        
+        .menu-scroll::-webkit-scrollbar { 
+            width: 5px; 
         }
-
-        .submenu-activities {
-            background: rgba(0,0,0,0.15);
-            padding: 5px 0;
+        
+        .menu-scroll::-webkit-scrollbar-thumb { 
+            background: rgba(255,255,255,0.2); 
+            border-radius: 4px; 
         }
-
-        .activity-link-btn {
-            width: 100%;
-            background: none;
-            border: none;
-            color: #ccc;
-            padding: 8px 15px;
-            padding-left: 30px;
-            text-align: left;
-            font-size: 0.8rem;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            transition: all 0.2s;
+        
+        .unit-bloc { 
+            margin-bottom: 12px; 
+            background: rgba(255,255,255,0.03); \n            border-radius: 8px; 
+            overflow: hidden; 
+            border: 1px solid rgba(255,255,255,0.05);
         }
-
-        .activity-link-btn:hover {
-            color: var(--blanco);
+        
+        .unit-header { 
+            width: 100%; \n            background: none; 
+            border: none; 
+            color: white; 
+            padding: 14px 15px; 
+            text-align: left; 
+            font-size: 0.9rem; \n            font-weight: 600; 
+            cursor: pointer; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; \n            transition: background 0.3s;
+        }
+        
+        .unit-header:hover { 
+            background: rgba(255,255,255,0.08); 
+        }
+        
+        .unit-header.active-unit { 
+            border-left: 4px solid var(--gold); 
             background: rgba(255,255,255,0.05);
         }
-
-        .activity-link-btn.active {
-            color: var(--gold);
-            font-weight: 700;
-            background: rgba(255,255,255,0.08);
+        
+        .act-list { 
+            background: rgba(0,0,0,0.2); \n            padding: 6px 0;
         }
-
-        /* --- CONTENEDOR PRINCIPAL --- */
-        .main-content {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-        }
-
-        /* PESTAÑAS DE HABILIDADES */
-        .skills-nav {
-            display: flex;
-            background-color: var(--blanco);
-            border-bottom: 2px solid #e0e0e0;
-            padding: 0 20px;
-        }
-
-        .skill-tab-btn {
-            background: none;
-            border: none;
-            padding: 18px 25px;
-            font-size: 0.85rem;
-            font-weight: 700;
-            color: #777;
-            cursor: pointer;
-            position: relative;
-            transition: color 0.2s;
-            display: flex;
-            align-items: center;
+        
+        .act-item { 
+            width: 100%; 
+            background: none; 
+            border: none; 
+            color: rgba(255,255,255,0.7); \n            padding: 9px 20px; 
+            text-align: left; 
+            font-size: 0.82rem; 
+            cursor: pointer; 
+            transition: all 0.2s; \n            display: flex; 
+            align-items: center; 
             gap: 8px;
         }
-
-        .skill-tab-btn:hover {
-            color: var(--azure);
+        
+        .act-item:hover { 
+            color: white; 
+            background: rgba(255,255,255,0.05); \n        }
+        
+        .act-item.active-act { 
+            color: var(--gold); 
+            font-weight: 700; 
+            background: rgba(197,160,89,0.1);
         }
-
-        .skill-tab-btn.active {
-            color: var(--oxford);
+        
+        .app-body { 
+            flex: 1; 
+            display: flex; 
+            flex-direction: column; \n            overflow: hidden;
         }
-
-        .skill-tab-btn.active::after {
-            content: '';
-            position: absolute;
-            bottom: -2px;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background-color: var(--gold);
+        
+        .top-navbar { 
+            background: white; 
+            height: 75px; 
+            display: flex; 
+            align-items: center; \n            padding: 0 40px; 
+            justify-content: space-between; 
+            border-bottom: 1px solid #EAEAEA; 
+            flex-shrink: 0;
         }
-
-        /* ESPACIO DE TRABAJO */
-        .workspace-scroll {
-            flex: 1;
-            overflow-y: auto;
-            padding: 40px;
-            display: flex;
-            justify-content: center;
+        
+        .skills-selector { 
+            display: flex; 
+            gap: 8px; 
         }
-
-        .exercise-card {
-            background-color: var(--blanco);
-            width: 100%;
-            max-width: 800px;
-            border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            padding: 35px;
-            align-self: flex-start;
+        
+        .skill-pill { 
+            background: #F0F2F5; \n            border: none; 
+            color: #555; 
+            padding: 9px 18px; 
+            font-size: 0.82rem; 
+            font-weight: 600; 
+            border-radius: 30px; \n            cursor: pointer; 
+            transition: all 0.3s; 
+            display: flex; 
+            align-items: center; 
+            gap: 8px;
         }
-
-        .exercise-header {
-            border-bottom: 2px solid var(--gris-fondo);
-            padding-bottom: 20px;
-            margin-bottom: 25px;
+        
+        .skill-pill:hover { 
+            background: #E4E6EB; 
         }
-
-        .exercise-header h1 {
-            font-size: 1.4rem;
-            color: var(--oxford);
-            font-weight: 700;
+        
+        .skill-pill.active { 
+            background: var(--oxford); \n            color: white; 
         }
-
-        /* CONTENEDOR DE LECTURA (CE) */
-        .reading-container {
-            background-color: #f8f9fa;
-            border-left: 5px solid var(--azure);
-            padding: 20px;
-            border-radius: 4px;
-            margin-bottom: 25px;
-            color: #333;
-            line-height: 1.6;
-            white-space: pre-wrap;
-            font-size: 0.95rem;
+        
+        .content-workspace { 
+            flex: 1; 
+            display: flex; 
+            overflow: hidden; \n            background: #F1F3F6;
         }
-
-        /* REPRODUCTOR DE AUDIO (CO) */
-        .audio-player-container {
-            background: #f0f4f8;
-            padding: 15px;
-            border-radius: 6px;
-            margin-bottom: 25px;
-            display: flex;
-            align-items: center;
+        
+        .panel-left { 
+            flex: 1; 
+            overflow-y: auto; 
+            padding: 40px; \n            display: flex; 
+            flex-direction: column; 
+            gap: 30px;
+        }
+        
+        .panel-right { 
+            width: 450px; \n            background: white; 
+            border-left: 1px solid #EAEAEA; 
+            display: flex; 
+            flex-direction: column; \n            overflow: hidden; 
+            flex-shrink: 0;
+        }
+        
+        .right-header { 
+            padding: 20px; \n            border-bottom: 1px solid #EAEAEA; 
+            font-weight: 700; 
+            color: var(--oxford); 
+            font-size: 0.95rem; \n            background: var(--cream);
+        }
+        
+        .right-scroll { 
+            flex: 1; 
+            overflow-y: auto; 
+            padding: 20px; \n            display: flex; 
+            flex-direction: column; 
             gap: 15px;
         }
-
-        .audio-player-container audio {
-            flex: 1;
+        
+        .workspace-card { \n            background: white; 
+            border-radius: 12px; 
+            padding: 35px; \n            box-shadow: 0 4px 20px rgba(0,0,0,0.03); 
+            border: 1px solid #EAEAEA;
         }
-
-        /* ESTRUCTURA DE PREGUNTAS */
-        .question-block {
-            margin-bottom: 25px;
-            padding-bottom: 20px;
-            border-bottom: 1px dashed #e0e0e0;
+        
+        .workspace-card h3 { \n            margin-top: 0; 
+            margin-bottom: 25px; 
+            color: var(--oxford); 
+            font-size: 1.15rem; \n            border-bottom: 2px solid #F1F3F6; 
+            padding-bottom: 15px;
         }
-
-        .question-text {
-            font-size: 0.95rem;
-            font-weight: 600;
-            color: var(--oxford);
-            margin-bottom: 12px;
+        
+        .q-wrapper { 
+            margin-bottom: 30px; \n            background: #F8F9FA; 
+            padding: 20px; 
+            border-radius: 10px; \n            border: 1px solid #EAEAEA;
         }
-
-        .options-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
+        
+        .q-text { 
+            font-weight: 600; 
+            font-size: 0.95rem; \n            color: var(--oxford); 
+            margin-bottom: 15px;
         }
-
-        .option-label {
-            display: flex;
-            align-items: center;
-            background-color: var(--gris-fondo);
-            padding: 12px 15px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 0.9rem;
-            font-weight: 500;
-            border: 2px solid transparent;
+        
+        .opts-list { 
+            display: flex; \n            flex-direction: column; 
+            gap: 10px; 
+        }
+        
+        .opt-row { 
+            display: flex; 
+            align-items: center; \n            background: white; 
+            padding: 12px 15px; 
+            border-radius: 8px; \n            border: 1px solid #EAEAEA; 
+            cursor: pointer; 
+            font-size: 0.9rem; 
             transition: all 0.2s;
         }
-
-        .option-label:hover {
-            background-color: #eef2f5;
+        
+        .opt-row:hover { 
+            border-color: var(--gold); 
+            background: #FCF9F5; \n        }
+        
+        .opt-row input { 
+            margin-right: 12px; 
+            accent-color: var(--oxford); \n            width: 17px; 
+            height: 17px;
         }
-
-        .option-label input {
-            margin-right: 12px;
-            accent-color: var(--azure);
-            width: 16px;
-            height: 16px;
-        }
-
-        /* ESTADOS DE CALIFICACIÓN */
-        .option-label.correct-choice {
-            background-color: rgba(46, 196, 182, 0.15);
-            border-color: var(--success);
-            color: #0f5c53;
-        }
-
-        .option-label.incorrect-choice {
-            background-color: rgba(231, 29, 54, 0.12);
-            border-color: var(--error);
-            color: #8a101f;
-        }
-
-        /* BOTÓN DE ACCIÓN */
-        .action-btn {
-            background-color: var(--azure);
-            color: var(--blanco);
-            border: none;
-            padding: 14px 30px;
-            font-size: 0.9rem;
-            font-weight: 700;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: background 0.2s;
-            display: block;
-            width: 100%;
-            margin-top: 20px;
-        }
-
-        .action-btn:hover {
-            background-color: var(--oxford);
-        }
-
-        .feedback-banner {
-            margin-top: 20px;
-            padding: 15px;
-            border-radius: 6px;
+        
+        .opt-row.correct { 
+            background: #D4EDDA !important; \n            border-color: #28A745 !important; 
+            color: #155724; 
             font-weight: 600;
-            text-align: center;
-            font-size: 0.95rem;
+        }
+        
+        .opt-row.wrong { \n            background: #F8D7DA !important; 
+            border-color: #DC3545 !important; 
+            color: #721C24;
+        }
+        
+        .action-btn { \n            background: var(--oxford); 
+            color: white; 
+            border: none; \n            padding: 15px 30px; 
+            font-size: 0.9rem; 
+            font-weight: 600; 
+            border-radius: 8px; \n            cursor: pointer; 
+            transition: background 0.3s; 
+            width: 100%; 
+            margin-top: 10px;
+        }
+        
+        .action-btn:hover { 
+            background: var(--dark-blue); 
+        }
+        
+        .book-container { 
+            width: 100%; \n            background: white; 
+            border-radius: 12px; 
+            box-shadow: 0 4px 20px rgba(0,0,0,0.03); \n            border: 1px solid #EAEAEA; 
+            padding: 20px; 
+            display: flex; 
+            flex-direction: column; \n            align-items: center; 
+            min-height: 400px; 
+            justify-content: center;
+        }
+        
+        .book-header { \n            width: 100%; 
+            display: flex; 
+            justify-content: space-between; \n            align-items: center; 
+            margin-bottom: 15px; 
+            border-bottom: 1px solid #F1F3F6; \n            padding-bottom: 10px;
+        }
+        
+        .book-title { 
+            font-size: 0.85rem; 
+            font-weight: 700; \n            color: var(--gold); 
+            text-transform: uppercase;
+        }
+        
+        .book-page-label { \n            font-size: 0.85rem; 
+            font-weight: 600; 
+            color: #777; 
+            background: #F1F3F6; \n            padding: 4px 10px; 
+            border-radius: 4px;
+        }
+        
+        .canvas-wrapper { 
+            width: 100%; \n            overflow-x: auto; 
+            display: flex; 
+            justify-content: center; 
+            background: #525659; \n            padding: 15px; 
+            border-radius: 8px;
+        }
+        
+        canvas { 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2); \n            background: white;
+        }
+        
+        .carnet-card { 
+            background: #FFF; \n            border-radius: 10px; 
+            padding: 15px; 
+            border: 1px solid #EAEAEA; \n            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+        }
+        
+        .carnet-meta { 
+            font-size: 0.75rem; \n            color: var(--gold); 
+            font-weight: 700; 
+            margin-bottom: 5px;
+        }
+        
+        .carnet-title { \n            font-size: 0.9rem; 
+            font-weight: 600; 
+            color: var(--oxford); 
+            margin-bottom: 8px;
+        }
+        
+        .carnet-score { 
+            font-size: 0.8rem; 
+            font-weight: 600; \n            color: #555;
+        }
+        
+        .empty-state { 
+            text-align: center; \n            color: #999; 
+            padding: 40px 20px; 
+            font-size: 0.85rem; 
+            font-style: italic;
         }
     </style>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
 </head>
 <body>
 
     <div class="sidebar">
-        <div class="sidebar-header">
-            <h2>Espace Étudiant</h2>
-            <p id="label-nivel-activo">Chargement du niveau...</p>
+        <div class="logo-area">
+            <h2>Espace DELF</h2>
+            <span id="display-nivel">Chargement...</span>
         </div>
-        <div class="unit-menu-container" id="sidebar-dynamic-menu">
-            </div>
+        <div class="main-tabs">
+            <button id="tab-parcours" class="tab-trigger active">Parcours</button>
+            <button id="tab-carnet" class="tab-trigger">Carnet</button>
+        </div>
+        <div class="menu-scroll" id="menu-container"></div>
     </div>
 
-    <div class="main-content">
-        <div class="skills-nav">
-            <button class="skill-tab-btn active" id="tab-CO" onclick="cambiarHabilidadGlobal('CO')">
-                <i class="fas fa-headphones"></i> Compréhension Orale
-            </button>
-            <button class="skill-tab-btn" id="tab-CE" onclick="cambiarHabilidadGlobal('CE')">
-                <i class="fas fa-file-alt"></i> Compréhension Écrite
-            </button>
-            <button class="skill-tab-btn" id="tab-PE" onclick="cambiarHabilidadGlobal('PE')">
-                <i class="fas fa-pen"></i> Production Écrite
-            </button>
-            <button class="skill-tab-btn" id="tab-PO" onclick="cambiarHabilidadGlobal('PO')">
-                <i class="fas fa-comments"></i> Production Orale
-            </button>
+    <div class="app-body">
+        <div class="top-navbar">
+            <div class="skills-selector">
+                <button id="skill-CO" class="skill-pill active"><i class="fas fa-headphones"></i> Oral</button>
+                <button id="skill-CE" class="skill-pill"><i class="fas fa-file-alt"></i> Écrit</button>
+                <button id="skill-PE" class="skill-pill"><i class="fas fa-pen"></i> PE</button>
+                <button id="skill-PO" class="skill-pill"><i class="fas fa-comments"></i> PO</button>
+            </div>
+            <div style="font-size:0.85rem; font-weight:600; color:#555;">
+                <i class="fas fa-user-circle" style="margin-right:5px; color:var(--gold);"></i> Étudiant
+            </div>
         </div>
 
-        <div class="workspace-scroll" id="dynamic-workspace-target">
+        <div class="content-workspace" id="view-parcours">
+            <div class="panel-left" id="workspace-target"></div>
+            <div class="panel-right">
+                <div class="right-header"><i class="fas fa-book-open" style="margin-right:8px; color:var(--gold);"></i> Livre de l'élève</div>
+                <div class="right-scroll" id="book-target"></div>
             </div>
+        </div>
+
+        <div class="content-workspace" id="view-carnet" style="display:none;">
+            <div style="flex:1; padding:40px; overflow-y:auto;">
+                <div class="workspace-card" style="max-width:900px; margin:0 auto;">
+                    <h3><i class="fas fa-graduation-cap" style="margin-right:10px; color:var(--gold);"></i> Mon Historique de Réussite</h3>
+                    <div id="carnet-grid" style="display:grid; grid-template-columns:repeat(auto-fill, minmax(250px, 1fr)); gap:20px;"></div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script>
-        // ========================================================
         // CONFIGURACIÓN DE TU PROYECTO FIREBASE
-        // ========================================================
-        // NOTA: Recuerda pegar tus credenciales reales aquí antes de correrlo
+        // RECUERDA PEGAR AQUÍ TUS CREDENCIALES REALES
         const firebaseConfig = {
-            apiKey: "TU_API_KEY_REAL", 
-            authDomain: "TU_PROJECT_ID.firebaseapp.com",
-            projectId: "TU_PROJECT_ID",
-            storageBucket: "TU_PROJECT_ID.appspot.com",
-            messagingSenderId: "TU_SENDER_ID",
-            appId: "TU_APP_ID"
+            apiKey: "AIzaSyD...", 
+            authDomain: "tu-proyecto.firebaseapp.com",
+            projectId: "tu-proyecto-id",
+            storageBucket: "tu-proyecto.appspot.com",
+            messagingSenderId: "123456789",
+            appId: "1:12345:web:abcd"
         };
 
-        // Inicializar Firebase Compat
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
 
-        // VARIABLES DE CONTROL DE ESTADO GLOBAL
-        let currentNivel = "A1"; 
-        let currentSkill = "CO";  
-        let unidadesCache = {};   
-        let openUnitsState = {};  
+        let currentNivel = "A1";
+        let currentMainTab = "parcours";
+        let currentSkill = "CO";
+        let unidadesCache = {};
+        let openUnits = {};
 
-        let currentUnitId = null;
-        let currentExerciseIndex = 0;
+        let activeUnitId = null;
+        let activeActIndex = null;
 
-        // Inicialización al cargar la página
-        window.addEventListener('DOMContentLoaded', () => {
-            document.getElementById('label-nivel-activo').innerText = `Niveau DELF ${currentNivel}`;
-            cargarBibliotecaEjercicios();
-        });
+        let pdfDocInstance = null;
+        const RUTA_BOOK_PDF = "book.pdf";
 
-        // DESCARGA INICIAL DE DATOS DESDE FIREBASE
-        function cargarBibliotecaEjercicios() {
-            db.collection("BibliotecaEjercicios").document(currentNivel).collection("Unidades")
-            .get()
-            .then((querySnapshot) => {
+        function init() {
+            document.getElementById('display-nivel').innerText = `Niveau ${currentNivel}`;
+            loadLibraryFromFirebase();
+            loadPdfEngine();
+        }
+
+        function loadLibraryFromFirebase() {
+            db.collection("BibliotecaEjercicios").document(currentNivel).collection("Unidades").get()
+            .then(snap => {
                 unidadesCache = {};
-                querySnapshot.forEach((doc) => {
-                    unidadesCache[doc.id] = doc.data();
+                snap.forEach(doc => { unidadesCache[doc.id] = doc.data(); });
+                renderLeftMenu();
+            }).catch(err => console.error("Erreur Firebase:", err));
+        }
+
+        function loadPdfEngine() {
+            if (typeof pdfjsLib !== 'undefined') {
+                pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
+                pdfjsLib.getDocument(RUTA_BOOK_PDF).promise.then(pdf => {
+                    pdfDocInstance = pdf;
+                    console.log("PDF principal cargado con éxito.");
+                }).catch(err => {
+                    console.warn("Falta el archivo book.pdf, el renderizador visual de páginas estará inactivo:", err.message);
                 });
-                generarMenuJerarquico();
-            })
-            .catch((error) => {
-                console.error("Error al descargar biblioteca de Firebase: ", error);
-            });
+            }
         }
 
-        // CAMBIO ENTRE PESTAÑAS (CO, CE, PE, PO)
-        function cambiarHabilidadGlobal(nuevaHabilidad) {
-            currentSkill = nuevaHabilidad;
-            
-            // Alternar clases CSS activas en las pestañas
-            document.querySelectorAll('.skill-tab-btn').forEach(btn => btn.classList.remove('active'));
-            document.getElementById(`tab-${nuevaHabilidad}`).classList.add('active');
-
-            // Resetear estados del ejercicio para evitar basura visual
-            currentUnitId = null;
-            currentExerciseIndex = 0;
-
-            // Redibujar el menú lateral con el filtro dinámico de la nueva habilidad
-            generarMenuJerarquico();
-        }
-
-        // CONTROL DE MENÚ APERTURA/CIERRE
-        window.toggleUnitMenu = function(uId) {
-            openUnitsState[uId] = !openUnitsState[uId];
-            generarMenuJerarquico();
+        window.switchMainTab = function(tab) {
+            currentMainTab = tab;
+            document.getElementById('tab-parcours').classList.toggle('active', tab === 'parcours');
+            document.getElementById('tab-carnet').classList.toggle('active', tab === 'carnet');
+            document.getElementById('view-parcours').style.display = tab === 'parcours' ? 'flex' : 'none';
+            document.getElementById('view-carnet').style.display = tab === 'carnet' ? 'flex' : 'none';
+            if (tab === 'carnet') renderCarnetDashboard();
         };
 
-        // ========================================================
-        // GENERACIÓN DEL MENÚ LATERAL CON FILTRADO DINÁMICO
-        // ========================================================
-        function generarMenuJerarquico() {
-            const menuContainer = document.getElementById('sidebar-dynamic-menu');
-            const target = document.getElementById('dynamic-workspace-target');
-            menuContainer.innerHTML = "";
+        window.setSkillFilter = function(skill) {
+            currentSkill = skill;
+            document.querySelectorAll('.skill-pill').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(`skill-${skill}`).classList.add('active');
+            renderLeftMenu();
+        };
 
-            const keys = Object.keys(unidadesCache).sort((a, b) => a.localeCompare(b, undefined, { numeric: true }));
+        window.toggleUnitFold = function(uId) {
+            openUnits[uId] = !openUnits[uId];
+            renderLeftMenu();
+        };
 
-            if (keys.length === 0) {
-                target.innerHTML = `<div style="text-align: center; padding: 40px; color: #888;"><p>Aucun exercice chargé pour le moment.</p></div>`;
-                return;
-            }
+        function renderLeftMenu() {
+            const container = document.getElementById('menu-container');
+            container.innerHTML = "";
+            const keys = Object.keys(unidadesCache).sort((a,b) => a.localeCompare(b, undefined, {numeric:true}));
 
-            if (currentUnitId === null) {
-                target.innerHTML = `<div style="text-align: center; padding: 60px; color: var(--oxford); margin-top:30px;"><p style="font-weight: 600;">Veuillez choisir une activité dans le menu de gauche pour commencer.</p></div>`;
-            }
-
-            let unidadesVisibles = 0;
-
-            keys.forEach((uId) => {
+            keys.forEach(uId => {
                 const u = unidadesCache[uId];
-                let ejerciciosHabilidad = u[currentSkill] || [];
-                
-                // Si la unidad no tiene ejercicios para esta habilidad, se oculta del menú
-                if (ejerciciosHabilidad.length === 0) {
-                    return; 
-                }
+                const ejercicios = u[currentSkill] || [];
+                if (ejercicios.length === 0) return; // Filtro dinámico inteligente de habilidades
 
-                unidadesVisibles++;
-
-                const isUnitOpen = openUnitsState[uId] === true;
-                const displayStyle = isUnitOpen ? 'flex' : 'none';
-                const chevronIcon = isUnitOpen ? 'fa-chevron-down' : 'fa-chevron-right';
-
-                let unitWrapper = document.createElement('div');
-                unitWrapper.className = 'unit-wrapper';
-                unitWrapper.innerHTML = `
-                    <button class="unit-toggle-btn ${currentUnitId === uId ? 'active' : ''}" onclick="window.toggleUnitMenu('${uId}')">
-                        <span><i class="fas fa-book" style="color:var(--gold); margin-right:8px;"></i>${u.unidad || uId} ${u.tema ? `- ${u.tema}` : ''}</span>
-                        <i class="fas ${chevronIcon}" style="font-size:0.7rem; color:var(--gold);"></i>
+                const isOpen = openUnits[uId] === true;
+                let bloc = document.createElement('div');
+                bloc.className = "unit-bloc";
+                bloc.innerHTML = `
+                    <button class="unit-header ${activeUnitId === uId ? 'active-unit' : ''}" onclick="window.toggleUnitFold('${uId}')">
+                        <span><i class="fas fa-folder" style="margin-right:8px; color:var(--gold);"></i>${u.unidad || uId}</span>
+                        <i class="fas ${isOpen ? 'fa-chevron-down' : 'fa-chevron-right'}" style="font-size:0.7rem; color:var(--gold);"></i>
                     </button>
                 `;
 
-                let subContainer = document.createElement('div');
-                subContainer.className = 'submenu-activities';
-                subContainer.style.display = displayStyle;
-
-                ejerciciosHabilidad.forEach((ej, eIdx) => {
-                    const esActivo = (currentUnitId === uId && currentExerciseIndex === eIdx);
-                    let tituloLimpio = "";
-                    if (ej.instruccion) {
-                        let matchActividad = ej.instruccion.match(/Activité\s*\d+/i);
-                        if (matchActividad) tituloLimpio = matchActividad[0]; 
-                    }
-                    if (!tituloLimpio) tituloLimpio = `Activité ${eIdx + 1}`;
-
-                    subContainer.innerHTML += `
-                        <button class="activity-link-btn ${esActivo ? 'active' : ''}" onclick="window.cargarActividadDirecta('${uId}', ${eIdx})">
-                            <i class="fas fa-play" style="font-size:0.6rem; margin-right:6px;"></i>${tituloLimpio}
-                        </button>
-                    `;
-                });
-
-                unitWrapper.appendChild(subContainer);
-                menuContainer.appendChild(unitWrapper);
+                if (isOpen) {
+                    let list = document.createElement('div');
+                    list.className = "act-list";
+                    ejercicios.forEach((ej, index) => {
+                        let actTitle = ej.instruccion ? (ej.instruccion.match(/Activité\s*\d+/i)?.[0] || `Activité ${index+1}`) : `Activité ${index+1}`;
+                        const isSelected = (activeUnitId === uId && activeActIndex === index);
+                        list.innerHTML += `
+                            <button class="act-item ${isSelected ? 'active-act' : ''}" onclick="window.displayWorkspace('${uId}', ${index})">
+                                <i class="fas fa-file-signature" style="font-size:0.75rem;"></i> ${actTitle}
+                            </button>
+                        `;
+                    });
+                    bloc.appendChild(list);
+                }
+                container.appendChild(bloc);
             });
 
-            if (unidadesVisibles === 0) {
-                menuContainer.innerHTML = `<div style="padding: 15px; font-size: 0.8rem; color: #bbb; text-align: center; font-style: italic;"><i class="fas fa-folder-open" style="display:block; margin-bottom:8px; font-size:1.2rem;"></i>Aucune unité disponible pour cette compétence.</div>`;
-                target.innerHTML = `<div style="text-align: center; padding: 60px; color: #888; margin-top:30px;"><p>Aucun exercice disponible pour cette section.</p></div>`;
+            if (container.children.length === 0) {
+                container.innerHTML = `<div class="empty-state">Aucun exercice disponible.</div>`;
             }
         }
 
-        // CARGA Y PINTADO DEL EJERCICIO EN PANTALLA
-        window.cargarActividadDirecta = function(uId, index) {
-            currentUnitId = uId;
-            currentExerciseIndex = index;
-            
-            generarMenuJerarquico(); 
+        window.displayWorkspace = function(uId, index) {
+            activeUnitId = uId;
+            activeActIndex = index;
+            renderLeftMenu();
 
-            const target = document.getElementById('dynamic-workspace-target');
-            const unidadDatos = unidadesCache[uId];
-            const ejercicioActivo = unidadDatos[currentSkill][index];
+            const workspace = document.getElementById('workspace-target');
+            const bookTarget = document.getElementById('book-target');
+            const ej = unidadesCache[uId][currentSkill][index];
 
-            target.innerHTML = `
-                <div class="exercise-card">
-                    <div class="exercise-header">
-                        <h1>${ejercicioActivo.instruccion || 'Exercice'}</h1>
-                    </div>
-                    <div id="media-content-placement"></div>
-                    <div id="questions-placement"></div>
-                    <button class="action-btn" id="btn-principal-evaluar" onclick="evaluarRespuestasEstudiante()">Vérifier mes réponses</button>
-                    <div id="feedback-placement"></div>
-                </div>
-            `;
+            let html = `<div class="workspace-card"><h3>${ej.instruccion || 'Exercice'}</h3>`;
+            const audioId = `audio-player-${uId}-${index}`;
 
-            const mediaBox = document.getElementById('media-content-placement');
-
-            // 1. CONDICIÓN CO: Audio
-            if (currentSkill === "CO" && ejercicioActivo.ruta_audio) {
-                mediaBox.innerHTML = `
-                    <div class="audio-player-container">
-                        <i class="fas fa-volume-up" style="color:var(--azure); font-size:1.2rem;"></i>
-                        <audio controls src="audios/${ejercicioActivo.ruta_audio}"></audio>
-                    </div>
-                `;
+            if (ej.ruta_audio) {
+                html += `<div id="${audioId}" style="margin-bottom: 20px; text-align:center;"><i class="fas fa-spinner fa-spin"></i> Audio...</div>`;
             }
 
-            // 2. CONDICIÓN CE: Documento de texto/Lectura
-            if (currentSkill === "CE" && ejercicioActivo.texto_lectura) {
-                mediaBox.innerHTML = `
-                    <div class="reading-container">
-                        <strong style="display:block; margin-bottom:10px; color:var(--oxford);">
-                            <i class="fas fa-file-text" style="margin-right:8px;"></i> Document de lecture :
-                        </strong>
-                        ${ejercicioActivo.texto_lectura}
-                    </div>
-                `;
+            // NUEVO BLOQUE DE LECTURA (CE): Se activa si viene texto plano desde Firebase y no hay un Canvas de página asociado
+            if (currentSkill === "CE" && ej.texto_lectura && !ej.pagina_pdf) {
+                html += `<div style="background:#f8f9fa; border-left:4px solid var(--gold); padding:20px; border-radius:6px; margin-bottom:20px; font-size:0.95rem; line-height:1.6; color:#333; white-space:pre-wrap;"><strong><i class="fas fa-file-text" style="color:var(--gold); margin-right:8px;"></i> Document de lecture :</strong><br><br>${ej.texto_lectura}</div>`;
             }
 
-            // 3. PINTADO DE PREGUNTAS
-            const qBox = document.getElementById('questions-placement');
-            if (ejercicioActivo.preguntas && ejercicioActivo.preguntas.length > 0) {
-                ejercicioActivo.preguntas.forEach((q, qIdx) => {
-                    let opcionesHTML = "";
-                    q.opciones.forEach((opc) => {
-                        opcionesHTML += `
-                            <label class="option-label q-group-${qIdx}">
-                                <input type="radio" name="question-${qIdx}" value="${opc}">
+            if (ej.preguntas && ej.preguntas.length > 0) {
+                ej.preguntas.forEach((q, qIdx) => {
+                    let opts = "";
+                    q.opciones.forEach(opc => {
+                        opts += `
+                            <label class="opt-row row-q-${qIdx}">
+                                <input type="radio" name="input-q-${qIdx}" value="${opc}">
                                 <span>${opc}</span>
                             </label>
                         `;
                     });
-
-                    qBox.innerHTML += `
-                        <div class="question-block" id="block-q-${qIdx}">
-                            <div class="question-text">${qIdx + 1}. ${q.pregunta}</div>
-                            <div class="options-grid">${opcionesHTML}</div>
+                    html += `
+                        <div class="q-wrapper" id="block-q-${qIdx}">
+                            <div class="q-text">${qIdx + 1}. ${q.pregunta}</div>
+                            <div class="opts-list">${opts}</div>
                         </div>
                     `;
                 });
+                html += `<button class="action-btn" onclick="window.checkAnswers()">Valider mes réponses</button>`;
             } else {
-                qBox.innerHTML = `<p style="color:#666; font-style:italic;">Rédaction ou réponse libre requise pour cet exercice.</p>`;
-                document.getElementById('btn-principal-evaluar').style.display = 'none';
+                html += `<p style="font-style:italic; color:#777;">Production libre ou exercice écrit. Répondez sur votre cahier.</p>`;
+            }
+            html += `</div>`;
+            workspace.innerHTML = html;
+
+            if (ej.ruta_audio) {
+                db.collection("BibliotecaEjercicios").document(currentNivel).get().then(doc => {
+                    const audiosMap = doc.data()?.audios || {};
+                    const url = audiosMap[ej.ruta_audio];
+                    const playerBox = document.getElementById(audioId);
+                    if (url) {
+                        playerBox.innerHTML = `<audio controls src="${url}" style="width:100%;"></audio>`;
+                    } else {
+                        playerBox.innerHTML = `<span style="font-size:0.8rem; color:#d9534f;"><i class="fas fa-exclamation-triangle"></i> Audio non lié (${ej.ruta_audio})</span>`;
+                    }
+                });
+            }
+
+            if (ej.pagina_pdf) {
+                bookTarget.innerHTML = `
+                    <div class="book-container">
+                        <div class="book-header">
+                            <span class="book-title">Livre d'exercices</span>
+                            <span class="book-page-label">Page ${ej.pagina_pdf}</span>
+                        </div>
+                        <div class="canvas-wrapper"><canvas id="pdf-canvas-render"></canvas></div>
+                    </div>
+                `;
+                renderPageFromBook(parseInt(ej.pagina_pdf));
+            } else {
+                bookTarget.innerHTML = `<div class="empty-state">Visuel du livre non requis ou non lié pour cet exercice.</div>`;
             }
         };
 
-        // LÓGICA DE EVALUACIÓN
-        window.evaluarRespuestasEstudiante = function() {
-            const ejercicioActivo = unidadesCache[currentUnitId][currentSkill][currentExerciseIndex];
-            let aciertos = 0;
-            let totalPreguntas = ejercicioActivo.preguntas.length;
+        window.checkAnswers = function() {
+            const ej = unidadesCache[activeUnitId][currentSkill][activeActIndex];
+            let score = 0;
+            let total = ej.preguntas.length;
 
-            ejercicioActivo.preguntas.forEach((q, qIdx) => {
-                const seleccionada = document.querySelector(`input[name="question-${qIdx}"]:checked`);
-                const todasLasOpcionesDeQ = document.querySelectorAll(`.q-group-${qIdx}`);
+            ej.preguntas.forEach((q, qIdx) => {
+                const checked = document.querySelector(`input[name="input-q-${qIdx}"]:checked`);
+                const rows = document.querySelectorAll(`.row-q-${qIdx}`);
 
-                todasLasOpcionesDeQ.forEach(lbl => {
-                    lbl.classList.remove('correct-choice', 'incorrect-choice');
-                    const radioInput = lbl.querySelector('input');
-                    
-                    if (radioInput.value === q.respuesta_correcta) {
-                        lbl.classList.add('correct-choice');
-                    }
-                    
-                    if (seleccionada && radioInput === seleccionada && seleccionada.value !== q.respuesta_correcta) {
-                        lbl.classList.add('incorrect-choice');
+                rows.forEach(row => {
+                    row.classList.remove('correct', 'wrong');
+                    const val = row.querySelector('input').value;
+                    if (val === q.respuesta_correcta) row.classList.add('correct');
+                    if (checked && row.querySelector('input') === checked && checked.value !== q.respuesta_correcta) {
+                        row.classList.add('wrong');
                     }
                 });
 
-                if (seleccionada && seleccionada.value === q.respuesta_correcta) {
-                    aciertos++;
-                }
+                if (checked && checked.value === q.respuesta_correcta) score++;
             });
 
-            const feedBox = document.getElementById('feedback-placement');
-            const porcentaje = (aciertos / totalPreguntas) * 100;
-
-            if (porcentaje >= 60) {
-                feedBox.innerHTML = `
-                    <div class="feedback-banner" style="background-color:rgba(46,196,182,0.15); color:#0f5c53;">
-                        <i class="fas fa-check-circle" style="margin-right:8px;"></i> Score : ${aciertos} / ${totalPreguntas} (${porcentaje.toFixed(0)}%) - Félicitations !
-                    </div>
-                `;
-            } else {
-                feedBox.innerHTML = `
-                    <div class="feedback-banner" style="background-color:rgba(231,29,54,0.12); color:#8a101f;">
-                        <i class="fas fa-exclamation-circle" style="margin-right:8px;"></i> Score : ${aciertos} / ${totalPreguntas} (${porcentaje.toFixed(0)}%) - Continuez à pratiquer !
-                    </div>
-                `;
-            }
+            let actTitle = ej.instruccion ? (ej.instruccion.match(/Activité\s*\d+/i)?.[0] || `Activité ${activeActIndex+1}`) : `Activité ${activeActIndex+1}`;
+            const keyRecord = `${currentNivel}_${activeUnitId}_${currentSkill}_${activeActIndex}`;
+            localStorage.setItem(keyRecord, JSON.stringify({
+                nivel: currentNivel,
+                unidad: activeUnitId,
+                skill: currentSkill,
+                act: actTitle,
+                score: `${score}/${total}`,
+                date: new Date().toLocaleDateString('fr-FR')
+            }));
+            
+            alert(`Resultat: ${score} / ${total}`);
         };
+
+        function renderCarnetDashboard() {
+            const grid = document.getElementById('carnet-grid');
+            grid.innerHTML = "";
+            let count = 0;
+
+            for (let i = 0; i < localStorage.length; i++) {
+                const key = localStorage.key(i);
+                if (!key.startsWith(currentNivel + "_")) continue;
+                
+                try {
+                    const data = JSON.parse(localStorage.getItem(key));
+                    count++;
+                    grid.innerHTML += `
+                        <div class="carnet-card">
+                            <div class="carnet-meta">${data.date} | ${data.skill}</div>
+                            <div class="carnet-title">${data.unidad} - ${data.act}</div>
+                            <div class="carnet-score"><i class="fas fa-star" style="color:var(--gold); margin-right:5px;"></i> Score : ${data.score}</div>
+                        </div>
+                    `;
+                } catch(e) {}
+            }
+
+            if (count === 0) {
+                grid.innerHTML = `<div class="empty-state" style="grid-column: 1/-1;">Aucun historique trouvé para le niveau ${currentNivel}.</div>`;
+            }
+        }
+
+        function renderPageFromBook(pageNum) {
+            if (!pdfDocInstance) {
+                setTimeout(() => renderPageFromBook(pageNum), 1000);
+                return;
+            }
+            pdfDocInstance.getPage(pageNum).then(page => {
+                const canvas = document.getElementById('pdf-canvas-render');
+                if (!canvas) return;
+                const ctx = canvas.getContext('2d');
+                const viewport = page.getViewport({ scale: 1.5 });
+                canvas.height = viewport.height;
+                canvas.width = viewport.width;
+                page.render({ canvasContext: ctx, viewport: viewport });
+            }).catch(err => console.error("Erreur de rendu PDF:", err));
+        }
+
+        init();
     </script>
 </body>
 </html>
