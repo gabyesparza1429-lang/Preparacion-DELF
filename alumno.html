@@ -492,7 +492,7 @@
 
             } catch (error) {
                 console.error(error);
-                document.getElementById('dynamic-workspace-target').innerHTML = `<p style="color:red; text-align:center;">Erreur de connexion.</p>`;
+                document.getElementById('dynamic-workspace-target').innerHTML = `<p style="color:red; text-align:center;">Erreur de conexión.</p>`;
             }
         }
 
@@ -557,9 +557,23 @@
                 const u = unidadesCache[uId];
                 let ejerciciosHabilidad = u[currentSkill] || u[currentSkill.toLowerCase()] || [];
                 
-                // FILTRO COMPLETO: Si la lista de ejercicios para esta habilidad viene vacía, no genera el contenedor en el menú lateral
                 if (ejerciciosHabilidad.length === 0) {
                     return; 
+                }
+
+                // CORRECCIÓN DE TÍTULO DINÁMICO: Si estamos en CE, extrae el título limpio ("Suivre des instructions") del primer reactivo para que no repita el de CO
+                let tituloUnidadMostrar = u.unidad || uId;
+                if (currentSkill === "CE" && ejerciciosHabilidad[0] && ejerciciosHabilidad[0].instruccion) {
+                    let desglose = ejerciciosHabilidad[0].instruccion.split('.');
+                    if (desglose.length > 1 && desglose[1].trim().length > 3) {
+                        tituloUnidadMostrar = `Unité ${uId.replace(/\D/g, '')} - ${desglose[1].trim()}`;
+                    } else if (u.tema && u.tema !== "Identifier un événement") {
+                        tituloUnidadMostrar = `Unité ${uId.replace(/\D/g, '')} - Suivre des instructions`;
+                    } else {
+                        tituloUnidadMostrar = `Unité ${uId.replace(/\D/g, '')} - Suivre des instructions`;
+                    }
+                } else {
+                    tituloUnidadMostrar = `${u.unidad || uId} ${u.tema ? `- ${u.tema}` : ''}`;
                 }
 
                 const isUnitOpen = openUnitsState[uId] === true;
@@ -570,7 +584,7 @@
                 unitWrapper.className = 'unit-wrapper';
                 unitWrapper.innerHTML = `
                     <button class="unit-toggle-btn ${currentUnitId === uId ? 'active' : ''}" onclick="window.toggleUnitMenu('${uId}')">
-                        <span><i class="fas fa-book" style="color:var(--gold); margin-right:8px;"></i>${u.unidad || uId} ${u.tema ? `- ${u.tema}` : ''}</span>
+                        <span><i class="fas fa-book" style="color:var(--gold); margin-right:8px;"></i>${tituloUnidadMostrar}</span>
                         <i class="fas ${chevronIcon}" style="font-size:0.7rem; color:var(--gold);"></i>
                     </button>
                 `;
