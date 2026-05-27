@@ -522,7 +522,7 @@
             
             document.getElementById('dynamic-workspace-target').innerHTML = `
                 <div style="text-align: center; padding: 60px; color: var(--oxford); margin-top:30px;">
-                    <p style="font-weight: 600;">Veuillez choisir une activité dans le menu de gauche pour comenzar.</p>
+                    <p style="font-weight: 600;">Veuillez choisir une activité dans le menu de gauche para commencer.</p>
                 </div>`;
 
             renderActiveInterface();
@@ -561,19 +561,8 @@
                     return; 
                 }
 
-                // EXTRACCIÓN DINÁMICA DEL TEMA REAL DE LA HABILIDAD SELECCIONADA
-                let temaRealHabilidad = "";
-                if (ejerciciosHabilidad[0] && ejerciciosHabilidad[0].instruccion) {
-                    let partes = ejerciciosHabilidad[0].instruccion.split('.');
-                    if (partes.length > 1 && partes[1].trim().length > 3) {
-                        temaRealHabilidad = partes[1].trim();
-                    }
-                }
-
-                // Si no se encuentra en la instrucción, usamos el tema secundario de la base de datos o el valor por defecto de la pestaña activa
-                if (!temaRealHabilidad) {
-                    temaRealHabilidad = (currentSkill === "CE") ? "Suivre des instructions" : (u.tema || "Identifier un événement");
-                }
+                // CORRECCIÓN CON DESACOPLE PURO (OPCIÓN A): Lee de forma independiente las nuevas llaves independientes de la base de datos
+                let temaRealHabilidad = u[`tema_${currentSkill}`] || u[`tema_${currentSkill.toLowerCase()}`] || u.tema || "Exercice";
 
                 let numeroUnidad = uId.replace(/\D/g, '');
                 let tituloUnidadMostrar = `Unité ${numeroUnidad} - ${temaRealHabilidad}`;
