@@ -520,7 +520,6 @@
             document.querySelectorAll('.skill-tab-btn').forEach(btn => btn.classList.remove('active'));
             document.getElementById(`skill-${skill}`).classList.add('active');
             
-            // CORRECCIÓN 1: Limpia el área de trabajo central inmediatamente al cambiar de habilidad
             document.getElementById('dynamic-workspace-target').innerHTML = `
                 <div style="text-align: center; padding: 60px; color: var(--oxford); margin-top:30px;">
                     <p style="font-weight: 600;">Veuillez choisir une activité dans le menu de gauche pour commencer.</p>
@@ -556,7 +555,8 @@
 
             keys.forEach((uId) => {
                 const u = unidadesCache[uId];
-                let ejerciciosHabilidad = u[currentSkill] || [];
+                // CORRECCIÓN MENÚ: Soportamos claves en mayúsculas o minúsculas nativas de Firebase para que no oculte el nombre de la unidad
+                let ejerciciosHabilidad = u[currentSkill] || u[currentSkill.toLowerCase()] || [];
                 
                 const isUnitOpen = openUnitsState[uId] === true;
                 const displayStyle = isUnitOpen ? 'flex' : 'none';
@@ -615,7 +615,7 @@
         function filtrarEjerciciosDeUnidadActual() {
             ejerciciosFiltrados = [];
             if (currentUnitId === null || !unidadesCache[currentUnitId]) return;
-            ejerciciosFiltrados = unidadesCache[currentUnitId][currentSkill] || [];
+            ejerciciosFiltrados = unidadesCache[currentUnitId][currentSkill] || unidadesCache[currentUnitId][currentSkill.toLowerCase()] || [];
         }
 
         function renderExerciseStructure() {
@@ -636,7 +636,6 @@
                     ${ej.instruccion || 'Exercice'} 
                 </h4>`;
 
-            // CORRECCIÓN 2: Renderiza e inyecta la lectura de texto plano si la IA la extrajo para Compréhension Écrite (CE)
             if (currentSkill === "CE" && ej.texto_lectura) {
                 html += `
                 <div style="background: #f8f9fa; border-left: 4px solid var(--gold); padding: 20px; border-radius: 6px; margin-bottom: 25px; font-size: 0.95rem; line-height: 1.6; color: #333; white-space: pre-wrap;">
@@ -682,7 +681,6 @@
                     <button class="nav-tab-btn" id="btn-next-exercise" style="width:auto; background:var(--green); color:white; padding:10px 22px; display:none;">Suivant <i class="fas fa-arrow-right"></i></button>
                 </div>`;
             } else {
-                // CORRECCIÓN EXTRA: Evita que el renderizado se quede en blanco si el ejercicio subido de CE aún no tiene reactivos creados
                 html += `<p style="font-style:italic; color:#777; margin-top:15px;">Production libre ou exercice écrit. Répondez sur votre cahier.</p>`;
             }
 
