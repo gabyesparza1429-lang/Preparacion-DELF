@@ -551,11 +551,20 @@
                 target.innerHTML = `<div style="text-align: center; padding: 60px; color: var(--oxford); margin-top:30px;"><p style="font-weight: 600;">Veuillez choisir une activité dans le menu de gauche para commencer.</p></div>`;
             }
 
+            // Variable para verificar si al menos una unidad es visible para la habilidad actual
+            let unidadesVisibles = 0;
+
             keys.forEach((uId) => {
                 const u = unidadesCache[uId];
                 let ejerciciosHabilidad = u[currentSkill] || [];
                 
-                // CORRECCIÓN AQUÍ: Estado de apertura gobernado de manera pura por openUnitsState[uId]
+                // CORRECCIÓN FILTRO: Si la unidad no tiene ejercicios para esta habilidad, la ignoramos por completo
+                if (ejerciciosHabilidad.length === 0) {
+                    return; 
+                }
+
+                unidadesVisibles++;
+
                 const isUnitOpen = openUnitsState[uId] === true;
                 const displayStyle = isUnitOpen ? 'flex' : 'none';
                 const chevronIcon = isUnitOpen ? 'fa-chevron-down' : 'fa-chevron-right';
@@ -573,28 +582,31 @@
                 subContainer.className = 'submenu-activities';
                 subContainer.style.display = displayStyle;
 
-                if (ejerciciosHabilidad.length === 0) {
-                    subContainer.innerHTML = `<div style="padding: 8px 12px; font-size: 0.75rem; color: #888; font-style: italic;">Aucune activité</div>`;
-                } else {
-                    ejerciciosHabilidad.forEach((ej, eIdx) => {
-                        const esActivo = (currentUnitId === uId && currentExerciseIndex === eIdx);
-                        let tituloLimpio = "";
-                        if (ej.instruccion) {
-                            let matchActividad = ej.instruccion.match(/Activité\s*\d+/i);
-                            if (matchActividad) tituloLimpio = matchActividad[0]; 
-                        }
-                        if (!tituloLimpio) tituloLimpio = `Activité ${eIdx + 1}`;
+                ejerciciosHabilidad.forEach((ej, eIdx) => {
+                    const esActivo = (currentUnitId === uId && currentExerciseIndex === eIdx);
+                    let tituloLimpio = "";
+                    if (ej.instruccion) {
+                        let matchActividad = ej.instruccion.match(/Activité\s*\d+/i);
+                        if (matchActividad) tituloLimpio = matchActividad[0]; 
+                    }
+                    if (!tituloLimpio) tituloLimpio = `Activité ${eIdx + 1}`;
 
-                        subContainer.innerHTML += `
-                            <button class="activity-link-btn ${esActivo ? 'active' : ''}" onclick="window.cargarActividadDirecta('${uId}', ${eIdx})">
-                                <i class="fas fa-play" style="font-size:0.6rem; margin-right:6px;"></i>${tituloLimpio}
-                            </button>
-                        `;
-                    });
-                }
+                    subContainer.innerHTML += `
+                        <button class="activity-link-btn ${esActivo ? 'active' : ''}" onclick="window.cargarActividadDirecta('${uId}', ${eIdx})">
+                            <i class="fas fa-play" style="font-size:0.6rem; margin-right:6px;"></i>${tituloLimpio}
+                        </button>
+                    `;
+                });
+
                 unitWrapper.appendChild(subContainer);
                 menuContainer.appendChild(unitWrapper);
             });
+
+            // Si cambiaste a una habilidad que no tiene absolutamente nada cargado en Firebase todavía
+            if (unidadesVisibles === 0) {
+                menuContainer.innerHTML = `<div style="padding: 15px; font-size: 0.8rem; color: #bbb; text-align: center; font-style: italic;"><i class="fas fa-folder-open" style="display:block; margin-bottom:8px; font-size:1.2rem;"></i>Aucune unité disponible pour cette compétence.</div>`;
+                target.innerHTML = `<div style="text-align: center; padding: 60px; color: #888; margin-top:30px;"><p>Aucun exercice disponible pour cette section.</p></div>`;
+            }
         }
 
         window.toggleUnitMenu = (uId) => {
