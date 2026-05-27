@@ -2,539 +2,435 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Mon Espace DELF | Réussite</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Objectif Réussite DELF - Espace Étudiant</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
+
     <style>
-        :root { 
-            --oxford: #002147; 
-            --gold: #C5A059; 
-            --cream: #F8F9FA; 
-            --green: #28A745; 
-            --dark-blue: #001530;
+        :root {
+            --oxford: #13293D;
+            --azure: #006494;
+            --blue-light: #247BA0;
+            --blanco: #FFFFFF;
+            --gris-fondo: #F4F7F6;
+            --gold: #D4AF37;
+            --success: #2ec4b6;
+            --error: #e71d36;
         }
-        
-        body { 
-            font-family: 'Montserrat', sans-serif; 
-            margin: 0; 
-            display: flex; 
-            height: 100vh; 
-            background: var(--cream); 
-            overflow: hidden; 
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Montserrat', sans-serif;
         }
-        
-        .sidebar { 
-            width: 290px; 
-            background: var(--oxford); 
-            color: white; 
-            padding: 30px 15px; 
-            flex-shrink: 0; 
+
+        body {
+            background-color: var(--gris-fondo);
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+            color: #333;
+        }
+
+        /* --- MENÚ LATERAL --- */
+        .sidebar {
+            width: 320px;
+            background-color: var(--oxford);
             display: flex;
             flex-direction: column;
-            box-shadow: 4px 0 10px rgba(0,0,0,0.1);
+            border-right: 4px solid var(--gold);
             z-index: 10;
-            overflow-y: auto;
         }
 
-        .sidebar h2 {
-            font-size: 1.1rem;
-            color: white;
+        .sidebar-header {
+            padding: 25px 20px;
+            background-color: rgba(0,0,0,0.2);
             text-align: center;
-            margin-top: 0;
-            margin-bottom: 30px;
-            letter-spacing: 1px;
-            border-bottom: 2px solid var(--gold);
-            padding-bottom: 15px;
-            text-transform: uppercase;
-        }
-        
-        .nav-tab-btn { 
-            width: 100%; 
-            padding: 14px 15px; 
-            margin-bottom: 8px; 
-            border-radius: 10px; 
-            border: 1px solid rgba(197, 160, 89, 0.2); 
-            background: transparent; 
-            color: white; 
-            cursor: pointer; 
-            text-align: left; 
-            display: flex; 
-            align-items: center; 
-            justify-content: space-between;
-            font-family: 'Montserrat', sans-serif;
-            font-size: 0.9rem;
-            box-sizing: border-box;
-            transition: all 0.3s ease;
-        }
-        
-        .nav-tab-btn:hover {
-            background: rgba(255,255,255,0.05);
-            border-color: var(--gold);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
         }
 
-        .nav-tab-btn.active { 
-            background: var(--gold); 
-            color: var(--oxford);
+        .sidebar-header h2 {
+            color: var(--blanco);
+            font-size: 1.2rem;
             font-weight: 700;
-            border-color: var(--gold);
+            letter-spacing: 1px;
+        }
+
+        .sidebar-header p {
+            color: var(--gold);
+            font-size: 0.8rem;
+            margin-top: 5px;
+            font-weight: 500;
+        }
+
+        .unit-menu-container {
+            flex: 1;
+            overflow-y: auto;
+            padding: 15px 10px;
         }
 
         .unit-wrapper {
-            margin-bottom: 10px;
-            width: 100%;
+            margin-bottom: 8px;
+            border-radius: 6px;
+            overflow: hidden;
         }
 
         .unit-toggle-btn {
             width: 100%;
+            background: rgba(255,255,255,0.05);
+            border: none;
+            color: var(--blanco);
             padding: 12px 15px;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(197, 160, 89, 0.2);
-            color: white;
-            border-radius: 8px;
             text-align: left;
-            font-family: 'Montserrat', sans-serif;
             font-size: 0.85rem;
             font-weight: 600;
             cursor: pointer;
             display: flex;
-            align-items: center;
             justify-content: space-between;
+            align-items: center;
             transition: background 0.2s;
         }
 
-        .unit-toggle-btn:hover {
-            background: rgba(255, 255, 255, 0.08);
-            border-color: var(--gold);
-        }
-
-        .unit-toggle-btn.active {
-            border-color: var(--gold);
-            background: rgba(197, 160, 89, 0.1);
+        .unit-toggle-btn:hover, .unit-toggle-btn.active {
+            background: rgba(255,255,255,0.15);
+            color: var(--gold);
         }
 
         .submenu-activities {
-            margin-left: 15px;
-            margin-top: 5px;
-            border-left: 1px solid rgba(197, 160, 89, 0.3);
-            padding-left: 10px;
-            display: none; 
-            flex-direction: column;
-            gap: 4px;
+            background: rgba(0,0,0,0.15);
+            padding: 5px 0;
         }
 
         .activity-link-btn {
-            background: transparent;
+            width: 100%;
+            background: none;
             border: none;
-            color: #bbb;
-            padding: 8px 12px;
+            color: #ccc;
+            padding: 8px 15px;
+            padding-left: 30px;
             text-align: left;
-            cursor: pointer;
-            font-family: 'Montserrat', sans-serif;
             font-size: 0.8rem;
-            font-weight: 500;
-            border-radius: 6px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
             transition: all 0.2s;
         }
 
         .activity-link-btn:hover {
-            color: var(--gold);
-            background: rgba(255,255,255,0.03);
+            color: var(--blanco);
+            background: rgba(255,255,255,0.05);
         }
 
         .activity-link-btn.active {
-            color: white;
+            color: var(--gold);
             font-weight: 700;
-            background: rgba(197, 160, 89, 0.2);
+            background: rgba(255,255,255,0.08);
         }
 
-        .main-container {
-            flex-grow: 1;
+        /* --- CONTENEDOR PRINCIPAL --- */
+        .main-content {
+            flex: 1;
             display: flex;
             flex-direction: column;
-            height: 100vh;
-            position: relative;
-        }
-
-        .project-banner {
-            background: var(--oxford) url('./assets/Banner.png') no-repeat center center;
-            background-size: 100% 100%; 
-            color: white;
-            padding: 15px 40px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            border-bottom: 4px solid var(--gold);
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-            position: relative;
-            height: 140px; 
-            box-sizing: border-box;
-            flex-shrink: 0;
-        }
-
-        .banner-top {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            width: 100%;
-        }
-
-        .banner-left {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-
-        .banner-left h1 {
-            margin: 0;
-            font-size: 1.4rem;
-            font-weight: 700;
-            color: white;
-        }
-
-        .level-badge {
-            background: var(--gold);
-            color: var(--oxford);
-            padding: 6px 20px;
-            border-radius: 20px;
-            font-weight: 700;
-            font-size: 0.95rem;
-        }
-
-        .banner-bottom-info {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            width: 100%;
-            background: rgba(0, 33, 71, 0.75);
-            padding: 8px 15px;
-            border-radius: 6px;
-            box-sizing: border-box;
-            border: 1px solid rgba(197, 160, 89, 0.2);
-        }
-
-        .progress-container {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            width: 60%;
-        }
-
-        .progress-bar-bg {
-            flex-grow: 1;
-            height: 8px;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 4px;
             overflow: hidden;
         }
 
-        .progress-bar-fill {
-            width: 0%;
-            height: 100%;
-            background: var(--gold);
-            transition: width 0.5s ease;
+        /* PESTAÑAS DE HABILIDADES */
+        .skills-nav {
+            display: flex;
+            background-color: var(--blanco);
+            border-bottom: 2px solid #e0e0e0;
+            padding: 0 20px;
         }
 
-        .countdown-container {
+        .skill-tab-btn {
+            background: none;
+            border: none;
+            padding: 18px 25px;
             font-size: 0.85rem;
-            font-weight: 600;
-            color: #fff;
+            font-weight: 700;
+            color: #777;
+            cursor: pointer;
+            position: relative;
+            transition: color 0.2s;
             display: flex;
             align-items: center;
             gap: 8px;
         }
 
-        .content-area {
-            flex-grow: 1;
-            padding: 30px;
-            overflow-y: auto;
-            position: relative;
-        }
-
-        .workspace-content-wrapper {
-            position: relative;
-            z-index: 2;
-            max-width: 900px;
-            margin: 0 auto;
-        }
-
-        .controls-row {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 25px;
-            background: white;
-            padding: 10px;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
-            align-items: center;
-        }
-
-        .skill-selector-bar {
-            display: flex;
-            gap: 5px;
-            flex-grow: 1;
-        }
-
-        .skill-tab-btn {
-            padding: 10px 15px;
-            border: none;
-            background: transparent;
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 600;
-            font-size: 0.85rem;
-            color: #666;
-            cursor: pointer;
-            border-radius: 6px;
-            transition: all 0.2s;
+        .skill-tab-btn:hover {
+            color: var(--azure);
         }
 
         .skill-tab-btn.active {
-            background: var(--oxford);
-            color: white;
+            color: var(--oxford);
+        }
+
+        .skill-tab-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background-color: var(--gold);
+        }
+
+        /* ESPACIO DE TRABAJO */
+        .workspace-scroll {
+            flex: 1;
+            overflow-y: auto;
+            padding: 40px;
+            display: flex;
+            justify-content: center;
         }
 
         .exercise-card {
-            background: white; 
-            border-left: 4px solid var(--gold); 
-            padding: 25px; 
-            margin-bottom: 25px; 
-            border-radius: 6px; 
-            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
-        }
-
-        .pregunta-block {
-            margin-bottom: 20px; 
-            background: #fafbfc; 
-            padding: 15px; 
-            border-radius: 6px;
-            border: 1px solid #f0f2f5;
-        }
-
-        .pdf-viewer-container {
+            background-color: var(--blanco);
             width: 100%;
-            background: #fff;
-            border: 2px solid var(--gold);
+            max-width: 800px;
             border-radius: 8px;
-            padding: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            padding: 35px;
+            align-self: flex-start;
+        }
+
+        .exercise-header {
+            border-bottom: 2px solid var(--gris-fondo);
+            padding-bottom: 20px;
             margin-bottom: 25px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-            text-align: center;
-            box-sizing: border-box;
         }
 
-        .pdf-viewer-container canvas {
-            max-width: 100%;
-            height: auto;
+        .exercise-header h1 {
+            font-size: 1.4rem;
+            color: var(--oxford);
+            font-weight: 700;
+        }
+
+        /* CONTENEDOR DE LECTURA (CE) */
+        .reading-container {
+            background-color: #f8f9fa;
+            border-left: 5px solid var(--azure);
+            padding: 20px;
             border-radius: 4px;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+            margin-bottom: 25px;
+            color: #333;
+            line-height: 1.6;
+            white-space: pre-wrap;
+            font-size: 0.95rem;
         }
 
-        .checklist-item {
-            display: flex;
-            align-items: flex-start;
-            gap: 15px;
-            background: white;
+        /* REPRODUCTOR DE AUDIO (CO) */
+        .audio-player-container {
+            background: #f0f4f8;
             padding: 15px;
-            margin-bottom: 12px;
-            border-radius: 8px;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.01);
-            border-left: 3px solid #ccc;
-            transition: all 0.2s ease;
+            border-radius: 6px;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
         }
-        .checklist-item.completed {
-            border-left-color: var(--green);
-            background: #f8fff9;
+
+        .audio-player-container audio {
+            flex: 1;
+        }
+
+        /* ESTRUCTURA DE PREGUNTAS */
+        .question-block {
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 1px dashed #e0e0e0;
+        }
+
+        .question-text {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--oxford);
+            margin-bottom: 12px;
+        }
+
+        .options-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .option-label {
+            display: flex;
+            align-items: center;
+            background-color: var(--gris-fondo);
+            padding: 12px 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 500;
+            border: 2px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .option-label:hover {
+            background-color: #eef2f5;
+        }
+
+        .option-label input {
+            margin-right: 12px;
+            accent-color: var(--azure);
+            width: 16px;
+            height: 16px;
+        }
+
+        /* ESTADOS DE CALIFICACIÓN */
+        .option-label.correct-choice {
+            background-color: rgba(46, 196, 182, 0.15);
+            border-color: var(--success);
+            color: #0f5c53;
+        }
+
+        .option-label.incorrect-choice {
+            background-color: rgba(231, 29, 54, 0.12);
+            border-color: var(--error);
+            color: #8a101f;
+        }
+
+        /* BOTÓN DE ACCIÓN */
+        .action-btn {
+            background-color: var(--azure);
+            color: var(--blanco);
+            border: none;
+            padding: 14px 30px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.2s;
+            display: block;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .action-btn:hover {
+            background-color: var(--oxford);
+        }
+
+        .feedback-banner {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 6px;
+            font-weight: 600;
+            text-align: center;
+            font-size: 0.95rem;
         }
     </style>
 </head>
 <body>
 
     <div class="sidebar">
-        <h2>Mon Espace DELF</h2>
-        <button class="nav-tab-btn active" id="tab-parcours">
-            <i class="fas fa-route"></i> Mon Parcours
-        </button>
-        
-        <div id="sidebar-dynamic-menu" style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 15px;"></div>
-
-        <button class="nav-tab-btn" id="tab-carnet">
-            <i class="fas fa-address-book"></i> Carnet de compétences
-        </button>
+        <div class="sidebar-header">
+            <h2>Espace Étudiant</h2>
+            <p id="label-nivel-activo">Chargement du niveau...</p>
+        </div>
+        <div class="unit-menu-container" id="sidebar-dynamic-menu">
+            </div>
     </div>
 
-    <div class="main-container">
-        <div class="project-banner">
-            <div class="banner-top">
-                <div class="banner-left">
-                    <i class="fas fa-user-circle" style="color: var(--gold); font-size: 1.8rem;"></i>
-                    <h1 id="student-welcome">Chargement...</h1>
-                </div>
-                <div class="banner-right">
-                    <span class="level-badge" id="level-indicator">NIVEAU --</span>
-                </div>
-            </div>
-
-            <div class="banner-bottom-info">
-                <div class="progress-container">
-                    <span style="font-size: 0.8rem; font-weight: 600;">Progression :</span>
-                    <div class="progress-bar-bg">
-                        <div class="progress-bar-fill" id="progress-bar-fill"></div>
-                    </div>
-                    <span style="font-size: 0.8rem; font-weight: 700; color: var(--gold);" id="progress-text-target">0%</span>
-                </div>
-                <div class="countdown-container">
-                    <i class="far fa-clock" style="color: var(--gold);"></i>
-                    <span id="countdown-text-target">-- jours restants avant l'examen</span>
-                </div>
-            </div>
+    <div class="main-content">
+        <div class="skills-nav">
+            <button class="skill-tab-btn active" id="tab-CO" onclick="cambiarHabilidadGlobal('CO')">
+                <i class="fas fa-headphones"></i> Compréhension Orale
+            </button>
+            <button class="skill-tab-btn" id="tab-CE" onclick="cambiarHabilidadGlobal('CE')">
+                <i class="fas fa-file-alt"></i> Compréhension Écrite
+            </button>
+            <button class="skill-tab-btn" id="tab-PE" onclick="cambiarHabilidadGlobal('PE')">
+                <i class="fas fa-pen"></i> Production Écrite
+            </button>
+            <button class="skill-tab-btn" id="tab-PO" onclick="cambiarHabilidadGlobal('PO')">
+                <i class="fas fa-comments"></i> Production Orale
+            </button>
         </div>
 
-        <div class="content-area">
-            <div class="workspace-content-wrapper">
-                <div class="controls-row" id="parcours-controls-container">
-                    <div class="skill-selector-bar">
-                        <button class="skill-tab-btn active" id="skill-CO">Compréhension Orale</button>
-                        <button class="skill-tab-btn" id="skill-CE">Compréhension Écrite</button>
-                        <button class="skill-tab-btn" id="skill-PE">Production Écrite</button>
-                        <button class="skill-tab-btn" id="skill-PO">Production Orale</button>
-                    </div>
-                </div>
-
-                <div id="dynamic-workspace-target">
-                    <p style="text-align:center; color:#666;"><i class="fas fa-spinner fa-spin"></i> Chargement...</p>
-                </div>
+        <div class="workspace-scroll" id="dynamic-workspace-target">
             </div>
-        </div>
     </div>
 
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
-        import { getFirestore, doc, getDoc, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js";
-        import { getStorage, ref, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-storage.js";
-
+    <script>
+        // ========================================================
+        // CONFIGURACIÓN DE TU PROYECTO FIREBASE
+        // ========================================================
         const firebaseConfig = {
-            apiKey: "AIzaSyCgog8tKspHy01ZHE8Dthl9O4W6lw1a_Ec",
-            authDomain: "objectif-reussite-delf.firebaseapp.com",
-            projectId: "objectif-reussite-delf",
-            storageBucket: "objectif-reussite-delf.firebasestorage.app",
-            messagingSenderId: "942279633770",
-            appId: "1:942279633770:web:687ba6d819747eb29c1313"
+            apiKey: "AIzaSyD...", 
+            authDomain: "tu-proyecto.firebaseapp.com",
+            projectId: "tu-proyecto-id",
+            storageBucket: "tu-proyecto.appspot.com",
+            messagingSenderId: "123456789",
+            appId: "1:12345:web:abcd"
         };
 
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
-        const storage = getStorage(app);
+        // Inicializar Firebase Compat
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
 
-        let currentActiveTab = "parcours"; 
-        let currentLevel = "A1"; 
-        let currentSkill = "CO"; 
-        let currentUnitId = null; 
+        // VARIABLES DE CONTROL DE ESTADO GLOBAL
+        let currentNivel = "A1"; 
+        let currentSkill = "CO";  
+        let unidadesCache = {};   
+        let openUnitsState = {};  
+
+        let currentUnitId = null;
         let currentExerciseIndex = 0;
-        let unidadesCache = {}; 
-        let ejerciciosFiltrados = [];
-        let openUnitsState = {}; 
 
-        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
-        let pdfDocInstance = null; 
+        // Inicialización al cargar la página
+        window.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('label-nivel-activo').innerText = `Niveau DELF ${currentNivel}`;
+            cargarBibliotecaEjercicios();
+        });
 
-        const mapLivresStorage = {
-            "A1": "ABC DELF A1 - 2025.pdf",
-            "A2": "ABC DELF A2 - 2025.pdf",
-            "B1": "ABC DELF B1 - 2025.pdf",
-            "B2": "ABC DELF B2 - 2025.pdf",
-            "C1": "Le DALF 100% Réussite C1 - C2.pdf"
-        };
-
-        const urlParams = new URLSearchParams(window.location.search);
-        const studentId = urlParams.get('id') || 'default_student';
-
-        async function init() {
-            try {
-                const userSnap = await getDoc(doc(db, "Usuarios", studentId));
-                if (userSnap.exists()) {
-                    const userData = userSnap.data();
-                    currentLevel = userData.nivel || "A1";
-                    document.getElementById('student-welcome').innerText = `Bonjour, ${userData.nombre || 'Étudiant'}`;
-                    
-                    const prog = userData.progreso || 0;
-                    document.getElementById('progress-bar-fill').style.width = `${prog}%`;
-                    document.getElementById('progress-text-target').innerText = `${prog}%`;
-
-                    if (userData.fecha_examen) {
-                        const fechaExamen = new Date(userData.fecha_examen);
-                        const hoy = new Date();
-                        const diferenciaTiempo = fechaExamen - hoy;
-                        const diasRestantes = Math.ceil(diferenciaTiempo / (1000 * 60 * 60 * 24));
-                        document.getElementById('countdown-text-target').innerText = diasRestantes > 0 ? `${diasRestantes} jours restants avant l'examen` : "Examen terminé";
-                    } else {
-                        document.getElementById('countdown-text-target').innerText = "Pas de date d'examen fixée";
-                    }
-                }
-                
-                document.getElementById('level-indicator').innerText = `NIVEAU ${currentLevel}`;
-
-                let nombreLivre = mapLivresStorage[currentLevel] || "ABC DELF A1 - 2025.pdf";
-                console.log(`> Téléchargement du livre : niveles/${currentLevel}/libro/${nombreLivre}`);
-                
-                getDownloadURL(ref(storage, `niveles/${currentLevel}/libro/${nombreLivre}`))
-                    .then((url) => {
-                        pdfjsLib.getDocument(url).promise.then(pdf => {
-                            pdfDocInstance = pdf;
-                            console.log(`> Livre chargé avec succès !`);
-                            if (ejerciciosFiltrados[currentExerciseIndex]?.pagina_pdf) {
-                                renderPageFromBook(ejerciciosFiltrados[currentExerciseIndex].pagina_pdf);
-                            }
-                        }).catch(err => console.error("Erreur d'analyse pdf.js:", err));
-                    })
-                    .catch((err) => console.error("Fichier introuvable sur Firebase Storage.", err));
-
-                await descargarColeccionUnidades();
-
-            } catch (error) {
-                console.error(error);
-                document.getElementById('dynamic-workspace-target').innerHTML = `<p style="color:red; text-align:center;">Erreur de connexion.</p>`;
-            }
-        }
-
-        async function descargarColeccionUnidades() {
-            unidadesCache = {};
-            const querySnapshot = await getDocs(collection(db, "BibliotecaEjercicios", currentLevel, "Unidades"));
-            querySnapshot.forEach((docSnap) => {
-                unidadesCache[docSnap.id] = docSnap.data();
-            });
-            renderActiveInterface();
-        }
-
-        window.switchMainTab = (tab) => {
-            currentActiveTab = tab;
-            document.querySelectorAll('.sidebar .nav-tab-btn').forEach(btn => btn.classList.remove('active'));
-            if (tab === 'parcours') document.getElementById('tab-parcours').classList.add('active');
-            if (tab === 'carnet') document.getElementById('tab-carnet').classList.add('active');
-            renderActiveInterface();
-        };
-
-        window.setSkillFilter = (skill) => {
-            currentSkill = skill;
-            currentUnitId = null; 
-            currentExerciseIndex = 0;
-            document.querySelectorAll('.skill-tab-btn').forEach(btn => btn.classList.remove('active'));
-            document.getElementById(`skill-${skill}`).classList.add('active');
-            renderActiveInterface();
-        };
-
-        function renderActiveInterface() {
-            const menuContainer = document.getElementById('sidebar-dynamic-menu');
-            if (currentActiveTab === "parcours") {
-                document.getElementById('parcours-controls-container').style.display = "flex";
-                menuContainer.style.display = "flex"; 
+        // DESCARGA INICIAL DE DATOS DESDE FIREBASE
+        function cargarBibliotecaEjercicios() {
+            db.collection("BibliotecaEjercicios").document(currentNivel).collection("Unidades")
+            .get()
+            .then((querySnapshot) => {
+                unidadesCache = {};
+                querySnapshot.forEach((doc) => {
+                    unidadesCache[doc.id] = doc.data();
+                });
                 generarMenuJerarquico();
-            } else {
-                document.getElementById('parcours-controls-container').style.display = "none";
-                menuContainer.style.display = "none"; 
-                renderCarnetInterface();
-            }
+            })
+            .catch((error) => {
+                console.error("Error al descargar biblioteca de Firebase: ", error);
+            });
         }
 
+        // CAMBIO ENTRE PESTAÑAS (CO, CE, PE, PO)
+        function cambiarHabilidadGlobal(nuevaHabilidad) {
+            currentSkill = nuevaHabilidad;
+            
+            // Alternar clases CSS activas en las pestañas
+            document.querySelectorAll('.skill-tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(`tab-${nuevaHabilidad}`).classList.add('active');
+
+            // Resetear estados del ejercicio para evitar basura visual
+            currentUnitId = null;
+            currentExerciseIndex = 0;
+
+            // Redibujar el menú lateral con el filtro dinámico de la nueva habilidad
+            generarMenuJerarquico();
+        }
+
+        // CONTROL DE MENÚ APERTURA/CIERRE
+        window.toggleUnitMenu = function(uId) {
+            openUnitsState[uId] = !openUnitsState[uId];
+            generarMenuJerarquico();
+        };
+
+        // ========================================================
+        // GENERACIÓN DEL MENÚ LATERAL CON FILTRADO DINÁMICO
+        // ========================================================
         function generarMenuJerarquico() {
             const menuContainer = document.getElementById('sidebar-dynamic-menu');
             const target = document.getElementById('dynamic-workspace-target');
@@ -548,10 +444,9 @@
             }
 
             if (currentUnitId === null) {
-                target.innerHTML = `<div style="text-align: center; padding: 60px; color: var(--oxford); margin-top:30px;"><p style="font-weight: 600;">Veuillez choisir une activité dans le menu de gauche para commencer.</p></div>`;
+                target.innerHTML = `<div style="text-align: center; padding: 60px; color: var(--oxford); margin-top:30px;"><p style="font-weight: 600;">Veuillez choisir une activité dans le menu de gauche pour commencer.</p></div>`;
             }
 
-            // Variable para verificar si al menos una unidad es visible para la habilidad actual
             let unidadesVisibles = 0;
 
             keys.forEach((uId) => {
@@ -602,195 +497,135 @@
                 menuContainer.appendChild(unitWrapper);
             });
 
-            // Si cambiaste a una habilidad que no tiene absolutamente nada cargado en Firebase todavía
             if (unidadesVisibles === 0) {
                 menuContainer.innerHTML = `<div style="padding: 15px; font-size: 0.8rem; color: #bbb; text-align: center; font-style: italic;"><i class="fas fa-folder-open" style="display:block; margin-bottom:8px; font-size:1.2rem;"></i>Aucune unité disponible pour cette compétence.</div>`;
                 target.innerHTML = `<div style="text-align: center; padding: 60px; color: #888; margin-top:30px;"><p>Aucun exercice disponible pour cette section.</p></div>`;
             }
         }
 
-        window.toggleUnitMenu = (uId) => {
-            openUnitsState[uId] = !openUnitsState[uId];
-            generarMenuJerarquico();
-        };
-
-        window.cargarActividadDirecta = (uId, eIdx) => {
+        // CARGA Y PINTADO DEL EJERCICIO EN PANTALLA
+        window.cargarActividadDirecta = function(uId, index) {
             currentUnitId = uId;
-            currentExerciseIndex = eIdx;
-            openUnitsState[uId] = true; 
-            generarMenuJerarquico();
-            renderExerciseStructure();
+            currentExerciseIndex = index;
+            
+            generarMenuJerarquico(); // Actualiza estados activos en laterales
+
+            const target = document.getElementById('dynamic-workspace-target');
+            const unidadDatos = unidadesCache[uId];
+            const ejercicioActivo = unidadDatos[currentSkill][index];
+
+            // Renderizado base de la tarjeta
+            target.innerHTML = `
+                <div class="exercise-card">
+                    <div class="exercise-header">
+                        <h1>${ejercicioActivo.instruccion || 'Exercice'}</h1>
+                    </div>
+                    <div id="media-content-placement"></div>
+                    <div id="questions-placement"></div>
+                    <button class="action-btn" id="btn-principal-evaluar" onclick="evaluarRespuestasEstudiante()">Vérifier mes réponses</button>
+                    <div id="feedback-placement"></div>
+                </div>
+            `;
+
+            const mediaBox = document.getElementById('media-content-placement');
+
+            // 1. CONDICIÓN CO: Mostrar reproductor de audio si viene una ruta configurada
+            if (currentSkill === "CO" && ejercicioActivo.ruta_audio) {
+                mediaBox.innerHTML = `
+                    <div class="audio-player-container">
+                        <i class="fas fa-volume-up" style="color:var(--azure); font-size:1.2rem;"></i>
+                        <audio controls src="audios/${ejercicioActivo.ruta_audio}"></audio>
+                    </div>
+                `;
+            }
+
+            // 2. CORRECCIÓN DEFINITIVA CE: Inyectar el texto de lectura limpio si existe en Firebase
+            if (currentSkill === "CE" && ejercicioActivo.texto_lectura) {
+                mediaBox.innerHTML = `
+                    <div class="reading-container">
+                        <strong style="display:block; margin-bottom:10px; color:var(--oxford);">
+                            <i class="fas fa-file-text" style="margin-right:8px;"></i> Document de lecture :
+                        </strong>
+                        ${ejercicioActivo.texto_lectura}
+                    </div>
+                `;
+            }
+
+            // 3. PINTADO DE PREGUNTAS Y OPCIONES DE OPCIÓN MÚLTIPLE
+            const qBox = document.getElementById('questions-placement');
+            if (ejercicioActivo.preguntas && ejercicioActivo.preguntas.length > 0) {
+                ejercicioActivo.preguntas.forEach((q, qIdx) => {
+                    let opcionesHTML = "";
+                    q.opciones.forEach((opc) => {
+                        opcionesHTML += `
+                            <label class="option-label q-group-${qIdx}">
+                                <input type="radio" name="question-${qIdx}" value="${opc}">
+                                <span>${opc}</span>
+                            </label>
+                        `;
+                    });
+
+                    qBox.innerHTML += `
+                        <div class="question-block" id="block-q-${qIdx}">
+                            <div class="question-text">${qIdx + 1}. ${q.pregunta}</div>
+                            <div class="options-grid">${opcionesHTML}</div>
+                        </div>
+                    `;
+                });
+            } else {
+                qBox.innerHTML = `<p style="color:#666; font-style:italic;">Rédaction ou réponse libre requise pour cet exercice.</p>`;
+                document.getElementById('btn-principal-evaluar').style.display = 'none';
+            }
         };
 
-        function filtrarEjerciciosDeUnidadActual() {
-            ejerciciosFiltrados = [];
-            if (currentUnitId === null || !unidadesCache[currentUnitId]) return;
-            ejerciciosFiltrados = unidadesCache[currentUnitId][currentSkill] || [];
-        }
+        // LÓGICA DE EVALUACIÓN Y VALIDACIÓN
+        window.evaluarRespuestasEstudiante = function() {
+            const ejercicioActivo = unidadesCache[currentUnitId][currentSkill][currentExerciseIndex];
+            let aciertos = 0;
+            let totalPreguntas = ejercicioActivo.preguntas.length;
 
-        function renderExerciseStructure() {
-            const target = document.getElementById('dynamic-workspace-target');
-            filtrarEjerciciosDeUnidadActual();
+            ejercicioActivo.preguntas.forEach((q, qIdx) => {
+                const seleccionada = document.querySelector(`input[name="question-${qIdx}"]:checked`);
+                const todasLasOpcionesDeQ = document.querySelectorAll(`.q-group-${qIdx}`);
 
-            if (ejerciciosFiltrados.length === 0 || !ejerciciosFiltrados[currentExerciseIndex]) {
-                target.innerHTML = `<p style="text-align:center; color:#888;">Aucun exercice disponible.</p>`;
-                return;
-            }
-
-            const ej = ejerciciosFiltrados[currentExerciseIndex];
-            const audioId = `audio-container-${currentExerciseIndex}`;
-
-            let html = `
-            <div class="exercise-card">
-                <h4 style="margin-top: 0; margin-bottom: 20px; color: var(--oxford); font-size: 1.05rem; font-weight:700;">
-                    ${ej.instruccion || 'Exercice'} 
-                </h4>`;
-
-            if (ej.pagina_pdf) {
-                html += `
-                <div class="pdf-viewer-container" id="pdf-viewer-block">
-                    <p style="font-size:0.8rem; color:var(--gold); font-weight:600; margin-top:0;"><i class="fas fa-book-open"></i> Page ${ej.pagina_pdf} du livre original</p>
-                    <canvas id="pdf-canvas-render"></canvas>
-                </div>`;
-                setTimeout(() => renderPageFromBook(ej.pagina_pdf), 50);
-            }
-
-            if (ej.ruta_audio) {
-                html += `<div id="${audioId}" style="margin-bottom: 20px; text-align:center;"><i class="fas fa-spinner fa-spin"></i> Audio...</div>`;
-            }
-
-            if (ej.preguntas && ej.preguntas.length > 0) {
-                ej.preguntas.forEach((p, pIdx) => {
-                    html += `
-                    <div class="pregunta-block" id="block-preg-${pIdx}" style="padding:15px; border-radius:6px; margin-bottom:15px; border:1px solid #eef2f5;">
-                        <p style="margin-top:0; margin-bottom:12px; font-weight:600; color:#222; display:flex; align-items:center;">
-                            <span id="status-icon-target-${pIdx}"></span>
-                            <span>${p.pregunta}</span>
-                        </p>`;
-                    if (p.opciones) {
-                        p.opciones.forEach((opt) => {
-                            html += `
-                            <label style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px; cursor: pointer;">
-                                <input type="radio" name="question_${pIdx}" value="${opt}" style="accent-color:var(--oxford);"> ${opt}
-                            </label>`;
-                        });
+                todasLasOpcionesDeQ.forEach(lbl => {
+                    lbl.classList.remove('correct-choice', 'incorrect-choice');
+                    const radioInput = lbl.querySelector('input');
+                    
+                    // Colorear la respuesta correcta en verde siempre
+                    if (radioInput.value === q.respuesta_correcta) {
+                        lbl.classList.add('correct-choice');
                     }
-                    html += `</div>`;
+                    
+                    // Si el alumno se equivocó, pintar su selección errónea en rojo
+                    if (seleccionada && radioInput === seleccionada && seleccionada.value !== q.respuesta_correcta) {
+                        lbl.classList.add('incorrect-choice');
+                    }
                 });
 
-                html += `
-                <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px;">
-                    <button class="nav-tab-btn" id="btn-submit-exercise" style="width:auto; background:var(--oxford); color:white; padding:10px 22px;"><i class="fas fa-paper-plane"></i> Envoyer</button>
-                    <button class="nav-tab-btn" id="btn-next-exercise" style="width:auto; background:var(--green); color:white; padding:10px 22px; display:none;">Suivant <i class="fas fa-arrow-right"></i></button>
-                </div>`;
+                if (seleccionada && seleccionada.value === q.respuesta_correcta) {
+                    aciertos++;
+                }
+            });
+
+            // Banner de Feedback final
+            const feedBox = document.getElementById('feedback-placement');
+            const porcentaje = (aciertos / totalPreguntas) * 100;
+
+            if (porcentaje >= 60) {
+                feedBox.innerHTML = `
+                    <div class="feedback-banner" style="background-color:rgba(46,196,182,0.15); color:#0f5c53;">
+                        <i class="fas fa-check-circle" style="margin-right:8px;"></i> Score : ${aciertos} / ${totalPreguntas} (${porcentaje.toFixed(0)}%) - Félicitations !
+                    </div>
+                `;
+            } else {
+                feedBox.innerHTML = `
+                    <div class="feedback-banner" style="background-color:rgba(231,29,54,0.12); color:#8a101f;">
+                        <i class="fas fa-exclamation-circle" style="margin-right:8px;"></i> Score : ${aciertos} / ${totalPreguntas} (${porcentaje.toFixed(0)}%) - Continuez à pratiquer !
+                    </div>
+                `;
             }
-
-            html += `
-                <div id="sophia-box" style="display:none; background:#f4f7f9; border-left:4px solid var(--gold); padding:20px; border-radius:6px; margin-top:25px;">
-                    <div style="display:flex; align-items:center; gap:10px; font-weight:700; color:var(--oxford);"><i class="fas fa-lightbulb" style="color:var(--gold);"></i> CONSEIL DE SOPHIA</div>
-                    <p id="sophia-verdict-text" style="margin:0; font-size:0.95rem;"></p>
-                    ${ej.transcripcion ? `<div style="font-weight:700; margin-top:15px; color:var(--oxford);">Transcription :</div><div style="background:#fff; border:1px dashed #ccc; padding:12px; border-radius:5px; margin-top:8px; font-size:0.95rem; line-height:1.6; color:#333;">${ej.transcripcion}</div>` : ''}
-                </div>
-            </div>`;
-
-            target.innerHTML = html;
-
-            if (ej.ruta_audio) {
-                const nombreArchivo = ej.ruta_audio.split('/').pop();
-                let trackMatch = nombreArchivo.match(/\d+/);
-                let track = trackMatch ? trackMatch[0] : "02";
-                if (track === "1" || track === "01") track = "02";
-                if (track.length > 2) track = track.slice(-2);
-                if (track.length === 1) track = "0" + track;
-                let nombreArchivoFinal = `${currentLevel}-${track}.mp3`;
-
-                getDownloadURL(ref(storage, `niveles/${currentLevel}/audios/${nombreArchivoFinal}`))
-                    .then(url => {
-                        const container = document.getElementById(audioId);
-                        if (container) container.innerHTML = `<audio controls style="width:100%;" src="${url}"></audio>`;
-                    })
-                    .catch(() => {
-                        getDownloadURL(ref(storage, `niveles/${currentLevel}/audios/${track}.mp3`))
-                            .then(url => {
-                                const container = document.getElementById(audioId);
-                                if (container) container.innerHTML = `<audio controls style="width:100%;" src="${url}"></audio>`;
-                            })
-                            .catch(() => {
-                                const container = document.getElementById(audioId);
-                                container.innerHTML = `<span style="color:red; font-size:0.85rem;"><i class="fas fa-exclamation-triangle"></i> Audio indisponible</span>`;
-                            });
-                    });
-            }
-
-            const btnSubmit = document.getElementById('btn-submit-exercise');
-            const btnNext = document.getElementById('btn-next-exercise');
-            const sophiaBox = document.getElementById('sophia-box');
-
-            if (btnSubmit) {
-                btnSubmit.addEventListener('click', () => {
-                    let total = ej.preguntas.length;
-                    let aciertos = 0;
-                    ej.preguntas.forEach((p, pIdx) => {
-                        const selected = document.querySelector(`input[name="question_${pIdx}"]:checked`);
-                        const iconTarget = document.getElementById(`status-icon-target-${pIdx}`);
-                        const block = document.getElementById(`block-preg-${pIdx}`);
-                        let rAlumno = selected ? selected.value.trim().toLowerCase() : "";
-                        let rCorrecta = p.respuesta_correcta.trim().toLowerCase();
-
-                        if (rAlumno === rCorrecta) {
-                            aciertos++;
-                            iconTarget.innerHTML = `<i class="fas fa-check-circle" style="color:var(--green); margin-right:8px;"></i>`;
-                            block.style.borderColor = "var(--green)";
-                        } else {
-                            iconTarget.innerHTML = `<i class="fas fa-times-circle" style="color:red; margin-right:8px;"></i>`;
-                            block.style.borderColor = "red";
-                        }
-                    });
-
-                    document.querySelectorAll('input[type="radio"]').forEach(r => r.disabled = true);
-                    btnSubmit.style.display = "none";
-                    if (btnNext) btnNext.style.display = "inline-block";
-
-                    let porcentaje = (aciertos / total) * 100;
-                    const txtSophia = document.getElementById('sophia-verdict-text');
-                    if (porcentaje >= 70) {
-                        txtSophia.innerHTML = `<strong>Félicitations !</strong> Tu as obtenu <strong>${aciertos}/${total}</strong>.`;
-                        txtSophia.style.color = "var(--green)";
-                    } else {
-                        txtSophia.innerHTML = `<strong>Attention !</strong> Tu as obtenu <strong>${aciertos}/${total}</strong>. Revois l'exercice.`;
-                        txtSophia.style.color = "red";
-                    }
-                    if (sophiaBox) sophiaBox.style.display = "block";
-                });
-            }
-        }
-
-        function renderPageFromBook(pageNum) {
-            if (!pdfDocInstance) {
-                setTimeout(() => renderPageFromBook(pageNum), 1000);
-                return;
-            }
-            pdfDocInstance.getPage(pageNum).then(page => {
-                const canvas = document.getElementById('pdf-canvas-render');
-                if (!canvas) return;
-                const ctx = canvas.getContext('2d');
-                const viewport = page.getViewport({ scale: 1.5 });
-                canvas.height = viewport.height;
-                canvas.width = viewport.width;
-                page.render({ canvasContext: ctx, viewport: viewport });
-            }).catch(err => console.error("Erreur de rendu PDF:", err));
-        }
-
-        async function renderCarnetInterface() { /* ... non modifié ... */ }
-
-        document.getElementById('tab-parcours').addEventListener('click', () => window.switchMainTab('parcours'));
-        document.getElementById('tab-carnet').addEventListener('click', () => window.switchMainTab('carnet'));
-        document.getElementById('skill-CO').addEventListener('click', () => window.setSkillFilter('CO'));
-        document.getElementById('skill-CE').addEventListener('click', () => window.setSkillFilter('CE'));
-        document.getElementById('skill-PE').addEventListener('click', () => window.setSkillFilter('PE'));
-        document.getElementById('skill-PO').addEventListener('click', () => window.setSkillFilter('PO'));
-
-        init();
+        };
     </script>
 </body>
 </html>
