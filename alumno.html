@@ -16,16 +16,19 @@
         }
         
         body { 
-            font-family: 'Montserrat', sans-serif; \n            margin: 0; 
+            font-family: 'Montserrat', sans-serif; 
+            margin: 0; 
             display: flex; 
             height: 100vh; 
-            background: var(--cream); \n            overflow: hidden; 
+            background: var(--cream); 
+            overflow: hidden; 
         }
         
         .sidebar { 
             width: 290px; 
             background: var(--oxford); 
-            color: white; \n            padding: 30px 15px; 
+            color: white; 
+            padding: 30px 15px; 
             flex-shrink: 0; 
             display: flex; 
             flex-direction: column; 
@@ -34,26 +37,30 @@
         
         .logo-area { 
             text-align: center; 
-            margin-bottom: 35px; \n            border-bottom: 1px solid rgba(255,255,255,0.1); 
+            margin-bottom: 35px; 
+            border-bottom: 1px solid rgba(255,255,255,0.1); 
             padding-bottom: 20px;
         }
         
         .logo-area h2 { 
             margin: 0; 
             font-size: 1.3rem; 
-            letter-spacing: 1px; \n            color: white;
+            letter-spacing: 1px; 
+            color: white;
         }
         
         .logo-area span { 
             color: var(--gold); 
             font-size: 0.8rem; 
-            font-weight: 300; \n            text-transform: uppercase;
+            font-weight: 300; 
+            text-transform: uppercase;
         }
         
         .main-tabs { 
             display: flex; 
             gap: 5px; 
-            margin-bottom: 25px; \n            background: rgba(0,0,0,0.2); 
+            margin-bottom: 25px; 
+            background: rgba(0,0,0,0.2); 
             padding: 5px; 
             border-radius: 8px;
         }
@@ -63,7 +70,8 @@
             background: none; 
             border: none; 
             color: rgba(255,255,255,0.6); 
-            padding: 10px; \n            font-size: 0.85rem; 
+            padding: 10px; 
+            font-size: 0.85rem; 
             cursor: pointer; 
             font-weight: 600; 
             border-radius: 6px; 
@@ -77,7 +85,8 @@
         
         .menu-scroll { 
             flex: 1; 
-            overflow-y: auto; \n            padding-right: 5px;
+            overflow-y: auto; 
+            padding-right: 5px;
         }
         
         .menu-scroll::-webkit-scrollbar { 
@@ -91,22 +100,26 @@
         
         .unit-bloc { 
             margin-bottom: 12px; 
-            background: rgba(255,255,255,0.03); \n            border-radius: 8px; 
+            background: rgba(255,255,255,0.03); 
+            border-radius: 8px; 
             overflow: hidden; 
             border: 1px solid rgba(255,255,255,0.05);
         }
         
         .unit-header { 
-            width: 100%; \n            background: none; 
+            width: 100%; 
+            background: none; 
             border: none; 
             color: white; 
             padding: 14px 15px; 
             text-align: left; 
-            font-size: 0.9rem; \n            font-weight: 600; 
+            font-size: 0.9rem; 
+            font-weight: 600; 
             cursor: pointer; 
             display: flex; 
             justify-content: space-between; 
-            align-items: center; \n            transition: background 0.3s;
+            align-items: center; 
+            transition: background 0.3s;
         }
         
         .unit-header:hover { 
@@ -119,25 +132,29 @@
         }
         
         .act-list { 
-            background: rgba(0,0,0,0.2); \n            padding: 6px 0;
+            background: rgba(0,0,0,0.2); 
+            padding: 6px 0;
         }
         
         .act-item { 
             width: 100%; 
             background: none; 
             border: none; 
-            color: rgba(255,255,255,0.7); \n            padding: 9px 20px; 
+            color: rgba(255,255,255,0.7); 
+            padding: 9px 20px; 
             text-align: left; 
             font-size: 0.82rem; 
             cursor: pointer; 
-            transition: all 0.2s; \n            display: flex; 
+            transition: all 0.2s; 
+            display: flex; 
             align-items: center; 
             gap: 8px;
         }
         
         .act-item:hover { 
             color: white; 
-            background: rgba(255,255,255,0.05); \n        }
+            background: rgba(255,255,255,0.05); 
+        }
         
         .act-item.active-act { 
             color: var(--gold); 
@@ -148,14 +165,16 @@
         .app-body { 
             flex: 1; 
             display: flex; 
-            flex-direction: column; \n            overflow: hidden;
+            flex-direction: column; 
+            overflow: hidden;
         }
         
         .top-navbar { 
             background: white; 
             height: 75px; 
             display: flex; 
-            align-items: center; \n            padding: 0 40px; 
+            align-items: center; 
+            padding: 0 40px; 
             justify-content: space-between; 
             border-bottom: 1px solid #EAEAEA; 
             flex-shrink: 0;
@@ -167,12 +186,14 @@
         }
         
         .skill-pill { 
-            background: #F0F2F5; \n            border: none; 
+            background: #F0F2F5; 
+            border: none; 
             color: #555; 
             padding: 9px 18px; 
             font-size: 0.82rem; 
             font-weight: 600; 
-            border-radius: 30px; \n            cursor: pointer; 
+            border-radius: 30px; 
+            cursor: pointer; 
             transition: all 0.3s; 
             display: flex; 
             align-items: center; 
@@ -184,81 +205,99 @@
         }
         
         .skill-pill.active { 
-            background: var(--oxford); \n            color: white; 
+            background: var(--oxford); 
+            color: white; 
         }
         
         .content-workspace { 
             flex: 1; 
             display: flex; 
-            overflow: hidden; \n            background: #F1F3F6;
+            overflow: hidden; 
+            background: #F1F3F6;
         }
         
         .panel-left { 
             flex: 1; 
             overflow-y: auto; 
-            padding: 40px; \n            display: flex; 
+            padding: 40px; 
+            display: flex; 
             flex-direction: column; 
             gap: 30px;
         }
         
         .panel-right { 
-            width: 450px; \n            background: white; 
+            width: 450px; 
+            background: white; 
             border-left: 1px solid #EAEAEA; 
             display: flex; 
-            flex-direction: column; \n            overflow: hidden; 
+            flex-direction: column; 
+            overflow: hidden; 
             flex-shrink: 0;
         }
         
         .right-header { 
-            padding: 20px; \n            border-bottom: 1px solid #EAEAEA; 
+            padding: 20px; 
+            border-bottom: 1px solid #EAEAEA; 
             font-weight: 700; 
             color: var(--oxford); 
-            font-size: 0.95rem; \n            background: var(--cream);
+            font-size: 0.95rem; 
+            background: var(--cream);
         }
         
         .right-scroll { 
             flex: 1; 
             overflow-y: auto; 
-            padding: 20px; \n            display: flex; 
+            padding: 20px; 
+            display: flex; 
             flex-direction: column; 
             gap: 15px;
         }
         
-        .workspace-card { \n            background: white; 
+        .workspace-card { 
+            background: white; 
             border-radius: 12px; 
-            padding: 35px; \n            box-shadow: 0 4px 20px rgba(0,0,0,0.03); 
+            padding: 35px; 
+            box-shadow: 0 4px 20px rgba(0,0,0,0.03); 
             border: 1px solid #EAEAEA;
         }
         
-        .workspace-card h3 { \n            margin-top: 0; 
+        .workspace-card h3 { 
+            margin-top: 0; 
             margin-bottom: 25px; 
             color: var(--oxford); 
-            font-size: 1.15rem; \n            border-bottom: 2px solid #F1F3F6; 
+            font-size: 1.15rem; 
+            border-bottom: 2px solid #F1F3F6; 
             padding-bottom: 15px;
         }
         
         .q-wrapper { 
-            margin-bottom: 30px; \n            background: #F8F9FA; 
+            margin-bottom: 30px; 
+            background: #F8F9FA; 
             padding: 20px; 
-            border-radius: 10px; \n            border: 1px solid #EAEAEA;
+            border-radius: 10px; 
+            border: 1px solid #EAEAEA;
         }
         
         .q-text { 
             font-weight: 600; 
-            font-size: 0.95rem; \n            color: var(--oxford); 
+            font-size: 0.95rem; 
+            color: var(--oxford); 
             margin-bottom: 15px;
         }
         
         .opts-list { 
-            display: flex; \n            flex-direction: column; 
+            display: flex; 
+            flex-direction: column; 
             gap: 10px; 
         }
         
         .opt-row { 
             display: flex; 
-            align-items: center; \n            background: white; 
+            align-items: center; 
+            background: white; 
             padding: 12px 15px; 
-            border-radius: 8px; \n            border: 1px solid #EAEAEA; 
+            border-radius: 8px; 
+            border: 1px solid #EAEAEA; 
             cursor: pointer; 
             font-size: 0.9rem; 
             transition: all 0.2s;
@@ -266,31 +305,38 @@
         
         .opt-row:hover { 
             border-color: var(--gold); 
-            background: #FCF9F5; \n        }
+            background: #FCF9F5; 
+        }
         
         .opt-row input { 
             margin-right: 12px; 
-            accent-color: var(--oxford); \n            width: 17px; 
+            accent-color: var(--oxford); 
+            width: 17px; 
             height: 17px;
         }
         
         .opt-row.correct { 
-            background: #D4EDDA !important; \n            border-color: #28A745 !important; 
+            background: #D4EDDA !important; 
+            border-color: #28A745 !important; 
             color: #155724; 
             font-weight: 600;
         }
         
-        .opt-row.wrong { \n            background: #F8D7DA !important; 
+        .opt-row.wrong { 
+            background: #F8D7DA !important; 
             border-color: #DC3545 !important; 
             color: #721C24;
         }
         
-        .action-btn { \n            background: var(--oxford); 
+        .action-btn { 
+            background: var(--oxford); 
             color: white; 
-            border: none; \n            padding: 15px 30px; 
+            border: none; 
+            padding: 15px 30px; 
             font-size: 0.9rem; 
             font-weight: 600; 
-            border-radius: 8px; \n            cursor: pointer; 
+            border-radius: 8px; 
+            cursor: pointer; 
             transition: background 0.3s; 
             width: 100%; 
             margin-top: 10px;
@@ -301,61 +347,77 @@
         }
         
         .book-container { 
-            width: 100%; \n            background: white; 
+            width: 100%; 
+            background: white; 
             border-radius: 12px; 
-            box-shadow: 0 4px 20px rgba(0,0,0,0.03); \n            border: 1px solid #EAEAEA; 
+            box-shadow: 0 4px 20px rgba(0,0,0,0.03); 
+            border: 1px solid #EAEAEA; 
             padding: 20px; 
             display: flex; 
-            flex-direction: column; \n            align-items: center; 
+            flex-direction: column; 
+            align-items: center; 
             min-height: 400px; 
             justify-content: center;
         }
         
-        .book-header { \n            width: 100%; 
+        .book-header { 
+            width: 100%; 
             display: flex; 
-            justify-content: space-between; \n            align-items: center; 
+            justify-content: space-between; 
+            align-items: center; 
             margin-bottom: 15px; 
-            border-bottom: 1px solid #F1F3F6; \n            padding-bottom: 10px;
+            border-bottom: 1px solid #F1F3F6; 
+            padding-bottom: 10px;
         }
         
         .book-title { 
             font-size: 0.85rem; 
-            font-weight: 700; \n            color: var(--gold); 
+            font-weight: 700; 
+            color: var(--gold); 
             text-transform: uppercase;
         }
         
-        .book-page-label { \n            font-size: 0.85rem; 
+        .book-page-label { 
+            font-size: 0.85rem; 
             font-weight: 600; 
             color: #777; 
-            background: #F1F3F6; \n            padding: 4px 10px; 
+            background: #F1F3F6; 
+            padding: 4px 10px; 
             border-radius: 4px;
         }
         
         .canvas-wrapper { 
-            width: 100%; \n            overflow-x: auto; 
+            width: 100%; 
+            overflow-x: auto; 
             display: flex; 
             justify-content: center; 
-            background: #525659; \n            padding: 15px; 
+            background: #525659; 
+            padding: 15px; 
             border-radius: 8px;
         }
         
         canvas { 
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2); \n            background: white;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2); 
+            background: white;
         }
         
         .carnet-card { 
-            background: #FFF; \n            border-radius: 10px; 
+            background: #FFF; 
+            border-radius: 10px; 
             padding: 15px; 
-            border: 1px solid #EAEAEA; \n            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+            border: 1px solid #EAEAEA; 
+            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
         }
         
         .carnet-meta { 
-            font-size: 0.75rem; \n            color: var(--gold); 
+            font-size: 0.75rem; 
+            color: var(--gold); 
             font-weight: 700; 
             margin-bottom: 5px;
         }
         
-        .carnet-title { \n            font-size: 0.9rem; 
+        .carnet-title { 
+            font-size: 0.9rem; 
             font-weight: 600; 
             color: var(--oxford); 
             margin-bottom: 8px;
@@ -363,11 +425,13 @@
         
         .carnet-score { 
             font-size: 0.8rem; 
-            font-weight: 600; \n            color: #555;
+            font-weight: 600; 
+            color: #555;
         }
         
         .empty-state { 
-            text-align: center; \n            color: #999; 
+            text-align: center; 
+            color: #999; 
             padding: 40px 20px; 
             font-size: 0.85rem; 
             font-style: italic;
@@ -504,7 +568,7 @@
             keys.forEach(uId => {
                 const u = unidadesCache[uId];
                 const ejercicios = u[currentSkill] || [];
-                if (ejercicios.length === 0) return; // Filtro dinámico inteligente de habilidades
+                if (ejercicios.length === 0) return; 
 
                 const isOpen = openUnits[uId] === true;
                 let bloc = document.createElement('div');
@@ -554,7 +618,7 @@
                 html += `<div id="${audioId}" style="margin-bottom: 20px; text-align:center;"><i class="fas fa-spinner fa-spin"></i> Audio...</div>`;
             }
 
-            // NUEVO BLOQUE DE LECTURA (CE): Se activa si viene texto plano desde Firebase y no hay un Canvas de página asociado
+            // Muestra el documento de lectura en texto plano si no hay número de página asignado
             if (currentSkill === "CE" && ej.texto_lectura && !ej.pagina_pdf) {
                 html += `<div style="background:#f8f9fa; border-left:4px solid var(--gold); padding:20px; border-radius:6px; margin-bottom:20px; font-size:0.95rem; line-height:1.6; color:#333; white-space:pre-wrap;"><strong><i class="fas fa-file-text" style="color:var(--gold); margin-right:8px;"></i> Document de lecture :</strong><br><br>${ej.texto_lectura}</div>`;
             }
@@ -579,7 +643,7 @@
                 });
                 html += `<button class="action-btn" onclick="window.checkAnswers()">Valider mes réponses</button>`;
             } else {
-                html += `<p style="font-style:italic; color:#777;">Production libre ou exercice écrit. Répondez sur votre cahier.</p>`;
+                html += `<p style="font-style:italic; color:#777;">Production libre o exercice écrit. Répondez sur votre cahier.</p>`;
             }
             html += `</div>`;
             workspace.innerHTML = html;
@@ -609,7 +673,7 @@
                 `;
                 renderPageFromBook(parseInt(ej.pagina_pdf));
             } else {
-                bookTarget.innerHTML = `<div class="empty-state">Visuel du livre non requis ou non lié pour cet exercice.</div>`;
+                bookTarget.innerHTML = `<div class="empty-state">Visuel du livre non requis ou non lié para cet exercice.</div>`;
             }
         };
 
@@ -690,6 +754,15 @@
                 page.render({ canvasContext: ctx, viewport: viewport });
             }).catch(err => console.error("Erreur de rendu PDF:", err));
         }
+
+        async function renderCarnetInterface() { /* ... non modifié ... */ }
+
+        document.getElementById('tab-parcours').addEventListener('click', () => window.switchMainTab('parcours'));
+        document.getElementById('tab-carnet').addEventListener('click', () => window.switchMainTab('carnet'));
+        document.getElementById('skill-CO').addEventListener('click', () => window.setSkillFilter('CO'));
+        document.getElementById('skill-CE').addEventListener('click', () => window.setSkillFilter('CE'));
+        document.getElementById('skill-PE').addEventListener('click', () => window.setSkillFilter('PE'));
+        document.getElementById('skill-PO').addEventListener('click', () => window.setSkillFilter('PO'));
 
         init();
     </script>
