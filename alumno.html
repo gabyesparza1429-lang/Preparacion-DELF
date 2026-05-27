@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Mon Espace DELF | Réussite</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
     <style>
         :root { 
@@ -520,12 +520,12 @@
             document.querySelectorAll('.skill-tab-btn').forEach(btn => btn.classList.remove('active'));
             document.getElementById(`skill-${skill}`).classList.add('active');
             
-            // CORRECCIÓN 1: Limpia el área central de trabajo para que no se queden congeladas actividades anteriores
+            // CORRECCIÓN 1: Limpia el área de trabajo central inmediatamente al cambiar de habilidad
             document.getElementById('dynamic-workspace-target').innerHTML = `
                 <div style="text-align: center; padding: 60px; color: var(--oxford); margin-top:30px;">
-                    <p style="font-weight: 600;">Veuillez choisir une activité dans le menu de gauche para commencer.</p>
+                    <p style="font-weight: 600;">Veuillez choisir une activité dans le menu de gauche pour commencer.</p>
                 </div>`;
-            
+
             renderActiveInterface();
         };
 
@@ -552,10 +552,6 @@
             if (keys.length === 0) {
                 target.innerHTML = `<div style="text-align: center; padding: 40px; color: #888;"><p>Aucun exercice chargé pour le moment.</p></div>`;
                 return;
-            }
-
-            if (currentUnitId === null) {
-                target.innerHTML = `<div style="text-align: center; padding: 60px; color: var(--oxford); margin-top:30px;"><p style="font-weight: 600;">Veuillez choisir une activité dans le menu de gauche para commencer.</p></div>`;
             }
 
             keys.forEach((uId) => {
@@ -640,7 +636,7 @@
                     ${ej.instruccion || 'Exercice'} 
                 </h4>`;
 
-            // CORRECCIÓN 2: Renderiza la lectura en texto plano dentro de la tarjeta si la IA la extrajo para Compréhension Écrite
+            // CORRECCIÓN 2: Renderiza e inyecta la lectura de texto plano si la IA la extrajo para Compréhension Écrite (CE)
             if (currentSkill === "CE" && ej.texto_lectura) {
                 html += `
                 <div style="background: #f8f9fa; border-left: 4px solid var(--gold); padding: 20px; border-radius: 6px; margin-bottom: 25px; font-size: 0.95rem; line-height: 1.6; color: #333; white-space: pre-wrap;">
@@ -686,8 +682,8 @@
                     <button class="nav-tab-btn" id="btn-next-exercise" style="width:auto; background:var(--green); color:white; padding:10px 22px; display:none;">Suivant <i class="fas fa-arrow-right"></i></button>
                 </div>`;
             } else {
-                html += `
-                <p style="font-style:italic; color:#777;">Production libre ou exercice écrit. Répondez sur votre cahier.</p>`;
+                // CORRECCIÓN EXTRA: Evita que el renderizado se quede en blanco si el ejercicio subido de CE aún no tiene reactivos creados
+                html += `<p style="font-style:italic; color:#777; margin-top:15px;">Production libre ou exercice écrit. Répondez sur votre cahier.</p>`;
             }
 
             html += `
