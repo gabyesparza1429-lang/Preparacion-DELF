@@ -310,7 +310,6 @@
             border: 1px solid #f0f2f5;
         }
 
-        /* Conteneur pour afficher le livre complet sans découpage */
         .pdf-viewer-container {
             width: 100%;
             background: #fff;
@@ -438,7 +437,6 @@
         pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
         let pdfDocInstance = null; 
 
-        // Base de données des noms exacts des fichiers stockés sur Firebase
         const mapLivresStorage = {
             "A1": "ABC DELF A1 - 2025.pdf",
             "A2": "ABC DELF A2 - 2025.pdf",
@@ -475,7 +473,6 @@
                 
                 document.getElementById('level-indicator').innerText = `NIVEAU ${currentLevel}`;
 
-                // Téléchargement du bon livre en temps réel depuis Firebase Storage
                 let nombreLivre = mapLivresStorage[currentLevel] || "ABC DELF A1 - 2025.pdf";
                 console.log(`> Téléchargement du livre : niveles/${currentLevel}/libro/${nombreLivre}`);
                 
@@ -551,13 +548,15 @@
             }
 
             if (currentUnitId === null) {
-                target.innerHTML = `<div style="text-align: center; padding: 60px; color: var(--oxford); margin-top:30px;"><p style="font-weight: 600;">Veuillez choisir une activité dans le menu de gauche pour commencer.</p></div>`;
+                target.innerHTML = `<div style="text-align: center; padding: 60px; color: var(--oxford); margin-top:30px;"><p style="font-weight: 600;">Veuillez choisir une activité dans le menu de gauche para commencer.</p></div>`;
             }
 
             keys.forEach((uId) => {
                 const u = unidadesCache[uId];
                 let ejerciciosHabilidad = u[currentSkill] || [];
-                const isUnitOpen = openUnitsState[uId] === true || currentUnitId === uId;
+                
+                // CORRECCIÓN AQUÍ: Estado de apertura gobernado de manera pura por openUnitsState[uId]
+                const isUnitOpen = openUnitsState[uId] === true;
                 const displayStyle = isUnitOpen ? 'flex' : 'none';
                 const chevronIcon = isUnitOpen ? 'fa-chevron-down' : 'fa-chevron-right';
 
