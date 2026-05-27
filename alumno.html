@@ -522,7 +522,7 @@
             
             document.getElementById('dynamic-workspace-target').innerHTML = `
                 <div style="text-align: center; padding: 60px; color: var(--oxford); margin-top:30px;">
-                    <p style="font-weight: 600;">Veuillez choisir une activité dans le menu de gauche pour commencer.</p>
+                    <p style="font-weight: 600;">Veuillez choisir une activité dans le menu de gauche pour comenzar.</p>
                 </div>`;
 
             renderActiveInterface();
@@ -561,20 +561,22 @@
                     return; 
                 }
 
-                // CORRECCIÓN DE TÍTULO DINÁMICO: Si estamos en CE, extrae el título limpio ("Suivre des instructions") del primer reactivo para que no repita el de CO
-                let tituloUnidadMostrar = u.unidad || uId;
-                if (currentSkill === "CE" && ejerciciosHabilidad[0] && ejerciciosHabilidad[0].instruccion) {
-                    let desglose = ejerciciosHabilidad[0].instruccion.split('.');
-                    if (desglose.length > 1 && desglose[1].trim().length > 3) {
-                        tituloUnidadMostrar = `Unité ${uId.replace(/\D/g, '')} - ${desglose[1].trim()}`;
-                    } else if (u.tema && u.tema !== "Identifier un événement") {
-                        tituloUnidadMostrar = `Unité ${uId.replace(/\D/g, '')} - Suivre des instructions`;
-                    } else {
-                        tituloUnidadMostrar = `Unité ${uId.replace(/\D/g, '')} - Suivre des instructions`;
+                // EXTRACCIÓN DINÁMICA DEL TEMA REAL DE LA HABILIDAD SELECCIONADA
+                let temaRealHabilidad = "";
+                if (ejerciciosHabilidad[0] && ejerciciosHabilidad[0].instruccion) {
+                    let partes = ejerciciosHabilidad[0].instruccion.split('.');
+                    if (partes.length > 1 && partes[1].trim().length > 3) {
+                        temaRealHabilidad = partes[1].trim();
                     }
-                } else {
-                    tituloUnidadMostrar = `${u.unidad || uId} ${u.tema ? `- ${u.tema}` : ''}`;
                 }
+
+                // Si no se encuentra en la instrucción, usamos el tema secundario de la base de datos o el valor por defecto de la pestaña activa
+                if (!temaRealHabilidad) {
+                    temaRealHabilidad = (currentSkill === "CE") ? "Suivre des instructions" : (u.tema || "Identifier un événement");
+                }
+
+                let numeroUnidad = uId.replace(/\D/g, '');
+                let tituloUnidadMostrar = `Unité ${numeroUnidad} - ${temaRealHabilidad}`;
 
                 const isUnitOpen = openUnitsState[uId] === true;
                 const displayStyle = isUnitOpen ? 'flex' : 'none';
