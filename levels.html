@@ -2,172 +2,129 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NeuroRéussit - Niveaux</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        :root { 
-            --bg-dark: #2f3640;
-            --white: #ffffff; 
-            --gold: #C5A059; 
-            --glass-blue: rgba(176, 218, 255, 0.05);
-            --border-blue: rgba(176, 218, 255, 0.15);
-            --shadow-blue: rgba(52, 152, 219, 0.15);
-        }
-        
-        body { 
-            font-family: 'Montserrat', sans-serif; 
-            margin: 0; 
-            background: var(--bg-dark); 
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
-            justify-content: center; 
-            min-height: 100vh; 
-            color: var(--white);
-            position: relative;
+        :root {
+            --oxford: #002147;
+            --gold: #C5A059;
+            --white: #ffffff;
+            --light-bg: #f4f7f9;
         }
 
-        .header { 
-            text-align: center; 
-            margin-bottom: 50px; 
+        body {
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            background-color: var(--light-bg);
+            color: var(--oxford);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
         }
-        .header h1 { 
-            font-size: 2.2rem;
-            margin-bottom: 5px;
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .header p {
+            color: var(--gold);
+            font-weight: bold;
             letter-spacing: 1px;
-        }
-        .header p { 
-            color: #bdc3c7; 
-            font-weight: bold; 
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-size: 0.9rem;
             margin: 0;
         }
 
-        .container { 
-            display: flex; 
-            gap: 25px; 
-            justify-content: center; 
-            padding: 20px; 
+        .container {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
             flex-wrap: wrap;
+            padding: 20px;
             max-width: 1200px;
         }
 
-        /* ESTILO BASE PARA TARJETAS DE CRISTAL AZUL (A1 A B2) */
-        .level-card { 
-            background: var(--glass-blue);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            width: 180px; 
-            height: 220px;
-            padding: 20px; 
-            border-radius: 16px; 
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3); 
-            text-align: center; 
-            text-decoration: none; 
-            color: var(--white); 
-            transition: all 0.4s ease; 
-            border: 1px solid var(--border-blue);
-            box-sizing: border-box; 
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
+        .level-card {
+            background: var(--white);
+            width: 160px;
+            height: 160px;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             justify-content: center;
+            text-decoration: none;
+            color: inherit;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 2px solid transparent;
         }
 
-        .level-card:hover { 
-            transform: translateY(-12px); 
-            border-color: #3498db; 
-            background: rgba(176, 218, 255, 0.12);
-            box-shadow: 0 15px 35px var(--shadow-blue);
+        .level-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            border-color: var(--gold);
         }
 
         .level-name {
-            font-size: 3rem;
+            font-size: 2.5rem;
             font-weight: 700;
-            color: #3498db; /* Azul suave para los nombres de niveles estándar */
             margin: 0;
-            line-height: 1;
-            transition: transform 0.3s ease;
-        }
-        
-        .level-card:hover .level-name {
-            transform: scale(1.1);
-        }
-
-        /* EDICIÓN ESPECIAL EXCLUSIVA PARA EL C1 (DORADO) */
-        .level-card.c1-gold {
-            background: rgba(197, 160, 89, 0.03);
-            border: 1px solid rgba(197, 160, 89, 0.3);
-        }
-
-        .level-card.c1-gold:hover {
-            border-color: var(--gold);
-            background: rgba(197, 160, 89, 0.08);
-            box-shadow: 0 15px 35px rgba(197, 160, 89, 0.25);
-        }
-
-        .level-card.c1-gold .level-name {
-            color: var(--gold); /* Nombre dorado */
+            color: var(--oxford);
         }
 
         .level-desc {
-            font-size: 0.9rem;
-            margin-top: 15px;
-            letter-spacing: 1px;
-            color: rgba(255, 255, 255, 0.6);
-            text-transform: capitalize;
-        }
-
-        .back-link {
-            position: absolute;
-            top: 30px;
-            left: 30px;
-            color: rgba(255, 255, 255, 0.5);
-            text-decoration: none;
-            font-size: 0.9rem;
-            font-weight: bold;
-            transition: color 0.2s;
-        }
-        .back-link:hover {
-            color: #3498db;
+            font-size: 0.85rem;
+            color: #7f8c8d;
+            margin-top: 5px;
+            font-weight: 400;
         }
     </style>
 </head>
 <body>
 
-    <a href="index.html" class="back-link">← Accueil</a>
-
     <div class="header">
         <h1>Choisissez votre niveau</h1>
-        <p>Selecciona tu nivel de certificación DELF</p>
+        <p>SELECCIONA TU NIVEL</p>
     </div>
 
     <div class="container">
+        <!-- Nivel A1 -->
         <a href="units.html?level=A1" class="level-card">
             <h2 class="level-name">A1</h2>
             <span class="level-desc">Découverte</span>
         </a>
 
+        <!-- Nivel A2 -->
         <a href="units.html?level=A2" class="level-card">
             <h2 class="level-name">A2</h2>
             <span class="level-desc">Survie</span>
         </a>
 
+        <!-- Nivel B1 -->
         <a href="units.html?level=B1" class="level-card">
             <h2 class="level-name">B1</h2>
             <span class="level-desc">Seuil</span>
         </a>
 
+        <!-- Nivel B2 -->
         <a href="units.html?level=B2" class="level-card">
             <h2 class="level-name">B2</h2>
             <span class="level-desc">Avancé</span>
         </a>
 
-        <a href="units.html?level=C1" class="level-card c1-gold">
+        <!-- Nivel C1 -->
+        <a href="units.html?level=C1" class="level-card">
             <h2 class="level-name">C1</h2>
-            <span class="level-desc" style="color: rgba(197, 160, 89, 0.8);">Autonome</span>
+            <span class="level-desc">Autonome</span>
         </a>
     </div>
 
