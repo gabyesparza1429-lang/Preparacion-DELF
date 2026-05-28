@@ -2,21 +2,126 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Niveaux | Objectif Réussite</title>
+    <title>NeuroRéussit - Niveaux</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        :root { --oxford: #002147; --gold: #C5A059; --white: #ffffff; }
-        body { font-family: 'Montserrat', sans-serif; margin: 0; background: #f4f7f9; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; color: var(--oxford); position: relative; }
-        .admin-access { position: absolute; top: 0; left: 0; width: 60px; height: 60px; background: transparent; cursor: default; z-index: 100; }
-        .header { text-align: center; margin-bottom: 50px; }
-        .container { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; padding: 20px; }
-        .level-card { background: var(--white); width: 150px; padding: 30px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); text-align: center; text-decoration: none; color: inherit; transition: 0.3s; border: 2px solid transparent; }
-        .level-card:hover { transform: translateY(-5px); border-color: var(--gold); }
-        .level-card h2 { margin: 0; font-size: 2.5rem; color: var(--gold); }
+        :root { 
+            --oxford: #002147; 
+            --gold: #C5A059; 
+            --white: #ffffff; 
+            --bg-dark: #2f3640;
+        }
+        
+        body { 
+            font-family: 'Montserrat', sans-serif; 
+            margin: 0; 
+            background: var(--bg-dark); 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: center; 
+            min-height: 100vh; 
+            color: var(--white);
+            position: relative;
+        }
+
+        .header { 
+            text-align: center; 
+            margin-bottom: 50px; 
+        }
+        .header h1 { 
+            font-size: 2.2rem;
+            margin-bottom: 5px;
+            letter-spacing: 1px;
+        }
+        .header p { 
+            color: var(--gold); 
+            font-weight: bold; 
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.9rem;
+            margin: 0;
+        }
+
+        .container { 
+            display: flex; 
+            gap: 25px; 
+            justify-content: center; 
+            padding: 20px; 
+            flex-wrap: wrap;
+            max-width: 1200px;
+        }
+
+        /* TARJETAS ESTILO PREMIUM CON RESPLANDOR DORADO */
+        .level-card { 
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            width: 180px; 
+            height: 220px;
+            padding: 20px; 
+            border-radius: 16px; 
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3); 
+            text-align: center; 
+            text-decoration: none; 
+            color: var(--white); 
+            transition: all 0.4s ease; 
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-sizing: border-box; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: center;
+        }
+
+        /* EFECTO DE ELEVACIÓN Y BRILLO AL PASAR EL MOUSE */
+        .level-card:hover { 
+            transform: translateY(-12px); 
+            border-color: var(--gold); 
+            background: rgba(255, 255, 255, 0.07);
+            box-shadow: 0 15px 35px rgba(197, 160, 89, 0.2);
+        }
+
+        .level-name {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--gold);
+            margin: 0;
+            line-height: 1;
+            transition: transform 0.3s ease;
+        }
+        
+        .level-card:hover .level-name {
+            transform: scale(1.1);
+        }
+
+        .level-desc {
+            font-size: 0.9rem;
+            margin-top: 15px;
+            letter-spacing: 1px;
+            color: rgba(255, 255, 255, 0.7);
+            text-transform: capitalize;
+        }
+
+        /* BOTÓN DE RETORNO INVISIBLE O DISCRETO (OPCIONAL) */
+        .back-link {
+            position: absolute;
+            top: 30px;
+            left: 30px;
+            color: rgba(255, 255, 255, 0.5);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: bold;
+            transition: color 0.2s;
+        }
+        .back-link:hover {
+            color: var(--gold);
+        }
     </style>
 </head>
 <body>
-    <div class="admin-access" onclick="window.location.href='admin.html'"></div>
+
+    <a href="index.html" class="back-link">← Accueil</a>
 
     <div class="header">
         <h1>Choisissez votre niveau</h1>
@@ -24,11 +129,31 @@
     </div>
 
     <div class="container">
-        <a href="login.html?level=A1" class="level-card"><h2>A1</h2><p>Découverte</p></a>
-        <a href="login.html?level=A2" class="level-card"><h2>A2</h2><p>Survie</p></a>
-        <a href="login.html?level=B1" class="level-card"><h2>B1</h2><p>Seuil</p></a>
-        <a href="login.html?level=B2" class="level-card"><h2>B2</h2><p>Avancé</p></a>
-        <a href="login.html?level=C1" class="level-card"><h2>C1</h2><p>Autonome</p></a>
+        <a href="units.html?level=A1" class="level-card">
+            <h2 class="level-name">A1</h2>
+            <span class="level-desc">Découverte</span>
+        </a>
+
+        <a href="units.html?level=A2" class="level-card">
+            <h2 class="level-name">A2</h2>
+            <span class="level-desc">Survie</span>
+        </a>
+
+        <a href="units.html?level=B1" class="level-card">
+            <h2 class="level-name">B1</h2>
+            <span class="level-desc">Seuil</span>
+        </a>
+
+        <a href="units.html?level=B2" class="level-card">
+            <h2 class="level-name">B2</h2>
+            <span class="level-desc">Avancé</span>
+        </a>
+
+        <a href="units.html?level=C1" class="level-card">
+            <h2 class="level-name">C1</h2>
+            <span class="level-desc">Autonome</span>
+        </a>
     </div>
+
 </body>
 </html>
