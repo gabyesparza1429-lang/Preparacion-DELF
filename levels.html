@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NeuroRéussit - Niveaux</title>
+    <title>Objectif Réussite - Niveaux</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -21,112 +21,413 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
             min-height: 100vh;
         }
 
-        .header {
-            text-align: center;
+        /* BARRA SUPERIOR DE NAVEGACIÓN */
+        .navbar {
+            width: 100%;
+            max-width: 1200px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .nav-logo {
+            font-weight: 700;
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .btn-connexion {
+            background-color: var(--oxford);
+            color: var(--white);
+            padding: 10px 24px;
+            border-radius: 8px;
+            font-weight: 700;
+            text-decoration: none;
+            font-size: 0.9rem;
+            box-shadow: 0 4px 10px rgba(0, 33, 71, 0.2);
+            cursor: pointer;
+            border: none;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        /* CONTENEDOR DEL BANNER PRINCIPAL */
+        .banner-container {
+            width: 90%;
+            max-width: 1100px;
+            margin-top: 10px;
             margin-bottom: 40px;
         }
 
-        .header h1 {
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-            font-weight: 700;
+        .banner-img {
+            width: 100%;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            display: block;
         }
 
-        .header p {
-            color: var(--gold);
-            font-weight: bold;
-            letter-spacing: 1px;
-            margin: 0;
-        }
-
+        /* CONTENEDOR DE TARJETAS DE NIVEL */
         .container {
             display: flex;
-            gap: 20px;
+            gap: 15px;
             justify-content: center;
             flex-wrap: wrap;
             padding: 20px;
-            max-width: 1200px;
+            width: 100%;
+            max-width: 1100px;
+            box-sizing: border-box;
         }
 
         .level-card {
-            background: var(--white);
-            width: 160px;
-            height: 160px;
-            border-radius: 15px;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+            background: var(--oxford);
+            width: 180px;
+            height: 240px;
+            border-radius: 18px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             text-decoration: none;
-            color: inherit;
+            color: var(--white);
             transition: transform 0.3s, box-shadow 0.3s;
-            border: 2px solid transparent;
+            cursor: pointer;
+            border: none;
         }
 
         .level-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
-            border-color: var(--gold);
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
         }
 
-        .level-name {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin: 0;
+        .level-card.c1-gold {
+            background: var(--gold);
             color: var(--oxford);
         }
 
+        .level-name {
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin: 0;
+        }
+
         .level-desc {
+            font-size: 0.75rem;
+            margin-top: 15px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            opacity: 0.8;
+            font-weight: 400;
+        }
+
+        .c1-gold .level-desc {
+            color: var(--oxford);
+            opacity: 0.7;
+        }
+
+        /* ACORDEÓN DE CONTENIDOS (OCULTO POR DEFECTO) */
+        .accordion-content {
+            width: 100%;
+            max-width: 960px;
+            background: var(--white);
+            border-radius: 14px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+            margin: 20px auto;
+            padding: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out, padding 0.4s ease-out;
+            box-sizing: border-box;
+        }
+
+        .accordion-content.active {
+            max-height: 500px;
+            padding: 25px;
+            border-left: 5px solid var(--oxford);
+        }
+
+        .accordion-content.active.gold-border {
+            border-left: 5px solid var(--gold);
+        }
+
+        .accordion-content h3 {
+            margin-top: 0;
+            color: var(--oxford);
+        }
+
+        .accordion-content ul {
+            padding-left: 20px;
+            line-height: 1.6;
+        }
+
+        /* VENTANA EMERGENTE (MODAL) DE CUENTA DEL ESTUDIANTE */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-card {
+            background: var(--white);
+            padding: 30px;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+            text-align: center;
+            position: relative;
+            transform: translateY(-20px);
+            transition: transform 0.3s ease;
+        }
+
+        .modal-overlay.active .modal-card {
+            transform: translateY(0);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #95a5a6;
+            font-weight: bold;
+        }
+
+        .student-avatar {
+            width: 80px;
+            height: 80px;
+            background: var(--light-bg);
+            border-radius: 50%;
+            margin: 0 auto 15px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            border: 2px solid var(--oxford);
+        }
+
+        .btn-logout {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-weight: bold;
+            margin-top: 15px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .footer-text {
             font-size: 0.85rem;
             color: #7f8c8d;
-            margin-top: 5px;
-            font-weight: 400;
+            font-style: italic;
+            margin-top: 50px;
+            margin-bottom: 30px;
         }
     </style>
 </head>
 <body>
 
-    <div class="header">
-        <h1>Choisissez votre niveau</h1>
-        <p>SELECCIONA TU NIVEL</p>
+    <!-- Barra de navegación superior -->
+    <div class="navbar">
+        <div class="nav-logo">Objectif Réussite</div>
+        <button class="btn-connexion" onclick="abrirPerfilEstudiante()">Connexion Étudiant</button>
     </div>
 
+    <!-- Banner central de París -->
+    <div class="banner-container">
+        <img src="./assets/Banner.png" alt="Objectif Réussite DELF" class="banner-img">
+    </div>
+
+    <!-- Bloques de niveles de certificación -->
     <div class="container">
         <!-- Nivel A1 -->
-        <a href="units.html?level=A1" class="level-card">
+        <button class="level-card" onclick="mostrarContenido('A1', this)">
             <h2 class="level-name">A1</h2>
             <span class="level-desc">Découverte</span>
-        </a>
+        </button>
 
         <!-- Nivel A2 -->
-        <a href="units.html?level=A2" class="level-card">
+        <button class="level-card" onclick="mostrarContenido('A2', this)">
             <h2 class="level-name">A2</h2>
             <span class="level-desc">Survie</span>
-        </a>
+        </button>
 
         <!-- Nivel B1 -->
-        <a href="units.html?level=B1" class="level-card">
+        <button class="level-card" onclick="mostrarContenido('B1', this)">
             <h2 class="level-name">B1</h2>
             <span class="level-desc">Seuil</span>
-        </a>
+        </button>
 
         <!-- Nivel B2 -->
-        <a href="units.html?level=B2" class="level-card">
+        <button class="level-card" onclick="mostrarContenido('B2', this)">
             <h2 class="level-name">B2</h2>
-            <span class="level-desc">Avancé</span>
-        </a>
+            <span class="level-desc">Indépendant</span>
+        </button>
 
-        <!-- Nivel C1 -->
-        <a href="units.html?level=C1" class="level-card">
+        <!-- Nivel C1 Oro -->
+        <button class="level-card c1-gold" onclick="mostrarContenido('C1', this)">
             <h2 class="level-name">C1</h2>
             <span class="level-desc">Autonome</span>
-        </a>
+        </button>
     </div>
 
+    <!-- SECCIÓN ÚNICA DEL ACORDEÓN (CAMBIA DINÁMICAMENTE) -->
+    <div id="accordion" class="accordion-content">
+        <h3 id="accordion-title">Nivel</h3>
+        <ul id="accordion-list">
+            <!-- Los objetivos se inyectan por JavaScript -->
+        </ul>
+    </div>
+
+    <!-- VENTANA EMERGENTE (MODAL) DE CUENTA -->
+    <div id="student-modal" class="modal-overlay" onclick="cerrarPerfilEstudiante(event)">
+        <div class="modal-card" onclick="event.stopPropagation()">
+            <span class="close-modal" onclick="cerrarPerfilEstudiante(null)">&times;</span>
+            <div class="student-avatar">👨‍🎓</div>
+            <h3 style="margin-bottom: 5px;">Mon Compte</h3>
+            <p style="color: #7f8c8d; font-size: 0.9rem; margin-top: 0;">Espace Étudiant Actif</p>
+            <hr style="border: 0; border-top: 1px solid #eee; margin: 15px 0;">
+            <div style="text-align: left; font-size: 0.9rem; color: var(--oxford);">
+                <p><strong>Niveau préparé:</strong> B1 - Seuil</p>
+                <p><strong>Dernière connexion:</strong> Aujourd'hui</p>
+            </div>
+            <button class="btn-logout" onclick="cerrarPerfilEstudiante(null)">Déconnexion</button>
+        </div>
+    </div>
+
+    <!-- Lema inferior -->
+    <div class="footer-text">De la intención a la certificación.</div>
+
+    <script>
+        // Datos de la Ingeniería Pedagógica para cada nivel
+        const contenidosDelf = {
+            'A1': {
+                titulo: "Niveau A1 - Découverte (Principiante)",
+                items: [
+                    "Comprender y utilizar expresiones cotidianas de uso muy frecuente.",
+                    "Presentarse a sí mismo y a otros de forma sencilla.",
+                    "Hacer preguntas y responder sobre datos personales (dónde vive, sus pertenencias).",
+                    "Interactuar de forma elemental si el interlocutor habla despacio."
+                ],
+                esOro: false
+            },
+            'A2': {
+                titulo: "Niveau A2 - Survie (Elemental)",
+                items: [
+                    "Comprender frases aisladas y expresiones relativas a áreas de prioridad inmediata.",
+                    "Comunicarse para llevar a cabo tareas simples y cotidianas.",
+                    "Describir en términos sencillos aspectos de su pasado y su entorno.",
+                    "Intercambiar información directa sobre temas familiares."
+                ],
+                esOro: false
+            },
+            'B1': {
+                titulo: "Niveau B1 - Seuil (Intermedio)",
+                items: [
+                    "Comprender los puntos principales de textos claros sobre temas conocidos.",
+                    "Desenvolverse en la mayor parte de las situaciones durante un viaje.",
+                    "Producir textos sencillos y coherentes sobre temas de interés personal.",
+                    "Describir experiencias, acontecimientos, deseos y justificar brevemente sus opiniones."
+                ],
+                esOro: false
+            },
+            'B2': {
+                titulo: "Niveau B2 - Indépendant (Intermedio Avanzado)",
+                items: [
+                    "Entender las ideas principales de textos complejos sobre temas tanto concretos como abstractos.",
+                    "Relacionarse con hablantes nativos con un grado suficiente de fluidez y naturalidad.",
+                    "Producir textos claros y detallados sobre temas diversos.",
+                    "Defender un punto de vista sobre temas generales indicando pros y contras."
+                ],
+                esOro: false
+            },
+            'C1': {
+                titulo: "Niveau C1 - Autonome (Avanzado)",
+                items: [
+                    "Comprender una amplia variedad de textos extensos y exigentes, reconociendo sentidos implícitos.",
+                    "Expresarse de forma fluida y espontánea sin muestras muy evidentes de esfuerzo.",
+                    "Hacer un uso flexible y eficaz del idioma para fines sociales, académicos y profesionales.",
+                    "Producir textos claros, bien estructurados y detallados sobre temas de cierta complejidad."
+                ],
+                esOro: true
+            }
+        };
+
+        let nivelActual = null;
+
+        function mostrarContenido(nivel, elemento) {
+            const accordion = document.getElementById('accordion');
+            const title = document.getElementById('accordion-title');
+            const list = document.getElementById('accordion-list');
+            
+            // Si da clic en el mismo nivel activo, se cierra
+            if (nivelActual === nivel) {
+                accordion.classList.remove('active');
+                nivelActual = null;
+                return;
+            }
+
+            nivelActual = nivel;
+            const datos = contenidosDelf[nivel];
+
+            // Inyectar la información estructurada
+            title.textContent = datos.titulo;
+            list.innerHTML = "";
+            datos.items.forEach(item => {
+                const li = document.createElement('li');
+                li.textContent = item;
+                list.appendChild(li);
+            });
+
+            // Darle el color del borde correspondiente
+            if (datos.esOro) {
+                accordion.classList.add('gold-border');
+            } else {
+                accordion.classList.remove('gold-border');
+            }
+
+            // Desplegar el acordeón de forma animada
+            accordion.classList.add('active');
+            
+            // Auto-scroll suave para centrar la información y no perder el foco
+            setTimeout(() => {
+                accordion.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }, 100);
+        }
+
+        // Funciones para la Ventana Emergente del Estudiante
+        function abrirPerfilEstudiante() {
+            document.getElementById('student-modal').classList.add('active');
+        }
+
+        function cerrarPerfilEstudiante(event) {
+            // Cierra si da clic en la X, en el botón o fuera de la tarjeta blanca
+            document.getElementById('student-modal').classList.remove('active');
+        }
+    </script>
 </body>
 </html>
