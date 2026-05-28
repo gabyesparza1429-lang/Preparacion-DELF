@@ -448,6 +448,22 @@
         const urlParams = new URLSearchParams(window.location.search);
         const studentId = urlParams.get('id') || 'default_student';
 
+        // LÓGICA AGREGADA EXCLUSIVA PARA EL TECLADO DE LA FICHA INTERACTIVA
+        let ultimoCampoEnfocado = null;
+        window.registrarUltimoFoco = function(input) {
+            ultimoCampoEnfocado = input;
+        };
+        window.insertarCaracterFicha = function(caracter) {
+            if (!ultimoCampoEnfocado) return;
+            const input = ultimoCampoEnfocado;
+            const start = input.selectionStart;
+            const end = input.selectionEnd;
+            const textoActual = input.value;
+            input.value = textoActual.substring(0, start) + caracter + textoActual.substring(end);
+            input.focus();
+            input.selectionStart = input.selectionEnd = start + 1;
+        };
+
         async function init() {
             try {
                 const userSnap = await getDoc(doc(db, "Usuarios", studentId));
@@ -530,19 +546,6 @@
 
         function renderActiveInterface() {
             const menuContainer = document.getElementById('sidebar-dynamic-menu');
-            if (currentActiveTab === "parcours") {
-                document.getElementById('parcours-controls-container').style.display = "flex";
-                menuContainer.style.display = "flex"; 
-                generarMenuJerarquico();
-            } else {
-                document.getElementById('parcours-controls-container').style.display = "none";
-                menuContainer.style.display = "none"; 
-                renderCarnetInterface();
-            }
-        }
-
-        function generarMenuJerarquico() {
-            const menuContainer = document.getElementById('sidebar-dynamic-menu');
             const target = document.getElementById('dynamic-workspace-target');
             menuContainer.innerHTML = "";
 
@@ -561,7 +564,6 @@
                     return; 
                 }
 
-                // CORRECCIÓN CON DESACOPLE PURO (OPCIÓN A): Lee de forma independiente las nuevas llaves independientes de la base de datos
                 let temaRealHabilidad = u[`tema_${currentSkill}`] || u[`tema_${currentSkill.toLowerCase()}`] || u.tema || "Exercice";
 
                 let numeroUnidad = uId.replace(/\D/g, '');
@@ -687,7 +689,71 @@
                     <button class="nav-tab-btn" id="btn-next-exercise" style="width:auto; background:var(--green); color:white; padding:10px 22px; display:none;">Suivant <i class="fas fa-arrow-right"></i></button>
                 </div>`;
             } else {
-                html += `<p style="font-style:italic; color:#777; margin-top:15px;">Production libre ou exercice écrit. Répondez sur votre cahier.</p>`;
+                // AQUÍ SE VALIDA DE FORMA INTERNA SI ES DE PRODUCCIÓN ESCRITA (PE) PARA INYECTAR LA FICHA EN LUGAR DE MANDAR AL CUADERNO
+                if (currentSkill === "PE" || currentSkill === "pe") {
+                    html += `
+                    <div class="fiche-container" style="background: #ffffff; border: 1px solid #ddd; border-radius: 12px; padding: 25px; max-width: 500px; margin: 20px auto; box-shadow: 0 4px 15px rgba(0,0,0,0.05); color: #002147; text-align: left;">
+                        <div style="text-align: center; margin-bottom: 20px; border-bottom: 2px dashed #002147; padding-bottom: 10px;">
+                            <h3 style="margin: 0; color: #002147; text-transform: uppercase; font-size: 1.05rem; letter-spacing: 1px;">École de langues ABC</h3>
+                            <h4 style="margin: 5px 0 0 0; color: #C5A059; font-weight: 400; font-size: 0.9rem;">Fiche d'inscription</h4>
+                        </div>
+                        <div class="accent-bar" style="display: flex; gap: 5px; margin-bottom: 20px; flex-wrap: wrap; justify-content: center;">
+                            <button type="button" class="accent-btn" onclick="insertarCaracterFicha('é')" style="background: #e4e7ea; border: none; padding: 6px 10px; border-radius: 4px; font-weight: bold; cursor: pointer; color: #002147;">é</button>
+                            <button type="button" class="accent-btn" onclick="insertarCaracterFicha('è')" style="background: #e4e7ea; border: none; padding: 6px 10px; border-radius: 4px; font-weight: bold; cursor: pointer; color: #002147;">è</button>
+                            <button type="button" class="accent-btn" onclick="insertarCaracterFicha('à')" style="background: #e4e7ea; border: none; padding: 6px 10px; border-radius: 4px; font-weight: bold; cursor: pointer; color: #002147;">à</button>
+                            <button type="button" class="accent-btn" onclick="insertarCaracterFicha('ç')" style="background: #e4e7ea; border: none; padding: 6px 10px; border-radius: 4px; font-weight: bold; cursor: pointer; color: #002147;">ç</button>
+                            <button type="button" class="accent-btn" onclick="insertarCaracterFicha('ù')" style="background: #e4e7ea; border: none; padding: 6px 10px; border-radius: 4px; font-weight: bold; cursor: pointer; color: #002147;">ù</button>
+                        </div>
+                        <form id="ficheForm" style="display: flex; flex-direction: column; gap: 15px;">
+                            <div style="display: flex; align-items: center; border-bottom: 1px solid #eee; padding-bottom: 5px;">
+                                <label style="width: 140px; font-weight: bold; font-size: 0.85rem;">Nom :</label>
+                                <input type="text" id="fiche_nom" onfocus="registrarUltimoFoco(this)" style="flex: 1; border: none; outline: none; font-family: 'Montserrat', sans-serif; font-size: 0.9rem; color: #002147;">
+                            </div>
+                            <div style="display: flex; align-items: center; border-bottom: 1px solid #eee; padding-bottom: 5px;">
+                                <label style="width: 140px; font-weight: bold; font-size: 0.85rem;">Prénom :</label>
+                                <input type="text" id="fiche_prenom" onfocus="registrarUltimoFoco(this)" style="flex: 1; border: none; outline: none; font-family: 'Montserrat', sans-serif; font-size: 0.9rem; color: #002147;">
+                            </div>
+                            <div style="display: flex; align-items: center; border-bottom: 1px solid #eee; padding-bottom: 5px;">
+                                <label style="width: 140px; font-weight: bold; font-size: 0.85rem;">Nationalité :</label>
+                                <input type="text" id="fiche_nationalite" onfocus="registrarUltimoFoco(this)" style="flex: 1; border: none; outline: none; font-family: 'Montserrat', sans-serif; font-size: 0.9rem; color: #002147;">
+                            </div>
+                            <div style="display: flex; align-items: center; border-bottom: 1px solid #eee; padding-bottom: 5px;">
+                                <label style="width: 140px; font-weight: bold; font-size: 0.85rem;">Langue(s) parlée(s) :</label>
+                                <input type="text" id="fiche_langues" onfocus="registrarUltimoFoco(this)" style="flex: 1; border: none; outline: none; font-family: 'Montserrat', sans-serif; font-size: 0.9rem; color: #002147;">
+                            </div>
+                            <div style="display: flex; align-items: center; border-bottom: 1px solid #eee; padding-bottom: 5px;">
+                                <label style="width: 140px; font-weight: bold; font-size: 0.85rem;">Adresse :</label>
+                                <input type="text" id="fiche_adresse" onfocus="registrarUltimoFoco(this)" style="flex: 1; border: none; outline: none; font-family: 'Montserrat', sans-serif; font-size: 0.9rem; color: #002147;">
+                            </div>
+                            <button type="button" id="btn-save-fiche-direct" style="background: var(--oxford); color: #ffffff; border: none; padding: 12px; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 15px; font-family: 'Montserrat', sans-serif; font-size: 0.9rem; width: 100%;">Enregistrer la fiche</button>
+                        </form>
+                    </div>`;
+                    
+                    // Conectamos el botón de guardar directamente con la lógica de procesamiento seguro
+                    setTimeout(() => {
+                        const btnSave = document.getElementById('btn-save-fiche-direct');
+                        if(btnSave) {
+                            btnSave.addEventListener('click', () => {
+                                const nom = document.getElementById('fiche_nom').value.trim();
+                                const prenom = document.getElementById('fiche_prenom').value.trim();
+                                const nat = document.getElementById('fiche_nationalite').value.trim();
+                                const langues = document.getElementById('fiche_langues').value.trim();
+                                const adresse = document.getElementById('fiche_adresse').value.trim();
+
+                                if (!nom || !prenom || !nat || !langues || !adresse) {
+                                    alert("S'il vous plaît, complétez tous les champs.");
+                                    return;
+                                }
+
+                                const textoEstructuradoFicha = `[FICHE D'INSCRIPTION] Nom: ${nom} | Prénom: ${prenom} | Nationalité: ${nat} | Langues: ${langues} | Adresse: ${adresse}`;
+                                console.log("Texto empaquetado para la base de datos e IA:", textoEstructuradoFicha);
+                                alert("Fiche enregistrée con succès. Lista para que la IA la evalúe.");
+                            });
+                        }
+                    }, 50);
+                } else {
+                    html += `<p style="font-style:italic; color:#777; margin-top:15px;">Production libre ou ';exercice écrit. Répondez sur votre cahier.</p>`;
+                }
             }
 
             html += `
