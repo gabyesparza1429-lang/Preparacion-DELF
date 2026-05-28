@@ -30,14 +30,13 @@
             height: 80px; 
             background: transparent; 
             cursor: pointer; 
-            text-decoration: none; 
             z-index: 99999; 
         }
     </style>
 </head>
 <body>
 
-    <a href="admin.html" class="admin-secret-link" title="Connexion"></a>
+    <div class="admin-secret-link" onclick="accesoAdminSeguro()" title="Connexion"></div>
 
     <div class="header">
         <h1>NeuroRéussit</h1>
@@ -55,6 +54,21 @@
             <button class="btn-entrar" style="background: #B099CE;">Entrar</button>
         </a>
     </div>
+
+    <script>
+        function accesoAdminSeguro() {
+            // Ventana emergente que solicita la clave secreta
+            const clave = prompt("Mot de passe administrateur / Contraseña de administrador:");
+            
+            if (clave === "Gaby1429") {
+                // Si es correcta, te redirige al panel de administración
+                window.location.href = "admin.html";
+            } else if (clave !== null) {
+                // Si es incorrecta (y no presionaste cancelar)
+                alert("Accès refusé. Contraseña incorrecta.");
+            }
+        }
+    </script>
 
 </body>
 </html>
