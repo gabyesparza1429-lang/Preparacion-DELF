@@ -7,15 +7,19 @@
     <style>
         :root { --oxford: #002147; --gold: #C5A059; --white: #ffffff; }
         body { font-family: 'Montserrat', sans-serif; margin: 0; background: #2f3640; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; color: var(--white); position: relative; }
-        .header { text-align: center; margin-bottom: 40px; }
-        .header h1 { color: var(--white); }
-        .container { display: flex; gap: 30px; justify-content: center; padding: 20px; }
-        .card { background: var(--white); width: 320px; padding: 35px 25px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); text-align: center; text-decoration: none; color: var(--oxford); transition: 0.3s; border: 2px solid transparent; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; justify-content: space-between; min-height: 420px; }
-        .card:hover { transform: translateY(-10px); border-color: var(--gold); }
-        .btn { background: var(--oxford); color: white; padding: 12px 20px; border-radius: 8px; font-weight: bold; margin-top: 15px; display: inline-block; width: 85%; text-align: center; border: none; }
+        .header { text-align: center; margin-bottom: 60px; }
+        .header h1 { color: var(--white); margin-bottom: 5px; }
         
-        /* LOGOS GRANDES Y VISIBLES */
-        .logo-proyecto { width: 220px; height: 140px; object-fit: contain; margin-bottom: 10px; }
+        .container { display: flex; gap: 80px; justify-content: center; padding: 20px; align-items: center; }
+        
+        /* LOGOS COMO PUERTAS DIRECTAS (SIN RECUADROS) */
+        .puerta-proyecto { display: flex; flex-direction: column; align-items: center; text-decoration: none; color: inherit; transition: transform 0.3s; cursor: pointer; }
+        .puerta-proyecto:hover { transform: translateY(-10px); }
+        
+        .logo-grande { width: 320px; height: 200px; object-fit: contain; margin-bottom: 20px; }
+        
+        /* BOTÓN LIMPIO ABAJO DE CADA LOGO */
+        .btn-entrar { color: white; padding: 12px 35px; border-radius: 30px; font-weight: bold; font-family: 'Montserrat', sans-serif; font-size: 0.95rem; text-transform: uppercase; letter-spacing: 1px; transition: background 0.2s; box-shadow: 0 4px 15px rgba(0,0,0,0.2); border: none; }
         
         /* BOTÓN DE ACCESO INVISIBLE PARA ADMINISTRADOR */
         .admin-secret-link { position: absolute; top: 0; left: 0; width: 60px; height: 60px; background: transparent; cursor: default; text-decoration: none; z-index: 999; }
@@ -28,28 +32,20 @@
 
     <div class="header">
         <h1>NeuroRéussit</h1>
-        <p style="color: var(--gold); font-weight: bold;">ACCESSIBILITÉ ÉDUCATIVE</p>
+        <p style="color: var(--gold); font-weight: bold; margin: 0; letter-spacing: 1px;">ACCESSIBILITÉ ÉDUCATIVE</p>
     </div>
 
     <div class="container">
-        <!-- PROYECTO 1: REUSSITE DELF -->
-        <a href="levels.html" class="card">
-            <div style="display: flex; flex-direction: column; align-items: center;">
-                <img src="./assets/Logo.png" alt="Logo Réussite DELF" class="logo-proyecto">
-                <h2 style="margin: 10px 0 5px 0;">Réussite DELF</h2>
-                <p style="margin: 5px 0; font-size: 0.95rem;">Preparación especializada para exámenes.</p>
-            </div>
-            <div class="btn">Entrar</div>
+        <!-- PUERTA 1: REUSSITE DELF -->
+        <a href="levels.html" class="puerta-proyecto">
+            <img src="./assets/Logo.png" alt="Logo Réussite DELF" class="logo-grande">
+            <button class="btn-entrar" style="background: var(--oxford);">Entrar</button>
         </a>
 
-        <!-- PROYECTO 2: NEUROCLARITY -->
-        <a href="neuroclarity.html" class="card">
-            <div style="display: flex; flex-direction: column; align-items: center;">
-                <img src="./assets/NeuroClarity.png" alt="Logo NeuroClarity" class="logo-proyecto">
-                <h2 style="margin: 10px 0 5px 0;">NeuroClarity</h2>
-                <p style="margin: 5px 0; font-size: 0.95rem;">Ingeniería pedagógica para mentes diversas.</p>
-            </div>
-            <div class="btn" style="background: #B099CE;">Entrar</div>
+        <!-- PUERTA 2: NEUROCLARITY -->
+        <a href="neuroclarity.html" class="puerta-proyecto">
+            <img src="./assets/NeuroClarity.png" alt="Logo NeuroClarity" class="logo-grande">
+            <button class="btn-entrar" style="background: #B099CE;">Entrar</button>
         </a>
     </div>
 
