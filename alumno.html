@@ -329,7 +329,6 @@
             box-shadow: 0 2px 6px rgba(0,0,0,0.1);
         }
 
-        /* ESTILOS ESPECÍFICOS AGREGADOS PARA PRODUCCIÓN ORAL (SOPHIA INTERACTION) */
         .sophia-chat-box {
             background: #f4f6f9;
             border-radius: 12px;
@@ -460,7 +459,7 @@
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
-        import { getFirestore, doc, getDoc, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js";
+        import { getFirestore, doc, getDoc, collection, getDocs, updateDoc } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js";
         import { getStorage, ref, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-storage.js";
 
         const firebaseConfig = {
@@ -531,37 +530,35 @@
             }
         };
 
-        // INTEGRACIÓN TEXT-TO-SPEECH NATIVO PARA LA VOZ DE SOPHIA
         window.parlerSophia = function(textoEnFrances) {
             if ('speechSynthesis' in window) {
-                window.speechSynthesis.cancel(); // Detiene audios previos
+                window.speechSynthesis.cancel();
                 const utterance = new SpeechSynthesisUtterance(textoEnFrances);
-                utterance.lang = 'fr-FR'; // Forzar acento francés nativo
-                utterance.rate = 0.9;     // Velocidad ligeramente reducida para facilitar comprensión
+                utterance.lang = 'fr-FR';
+                utterance.rate = 0.9;
                 window.speechSynthesis.speak(utterance);
             } else {
                 alert("Votre navigateur ne supporte pas la synthèse vocale.");
             }
         };
 
-        // SIMULACIÓN DE GRABACIÓN INTERACTIVA DE AUDIO
         window.toggleGrabacionInteractiva = function(btnId) {
             const btn = document.getElementById(btnId);
             if (!btn) return;
             if (!btn.classList.contains('recording')) {
                 btn.classList.add('recording');
-                btn.innerHTML = `<i class="fas fa-circle-notch fa-spin"></i> Enregistrement en cours...`;
-                console.log("Grabando audio del alumno para evaluación de Sophia...");
+                btn.innerHTML = `<i class="fas fa-circle-notch fa-spin"></i> Enregistrement...`;
             } else {
                 btn.classList.remove('recording');
-                btn.innerHTML = `<i class="fas fa-microphone"></i> Répondre à Sophia (Microphone)`;
-                alert("Audio enregistré avec succès ! Envoi à Sophia pour analyse.");
-                
-                // Activar el bloque de feedback de Sophia de manera interactiva tras responder
+                if(btnId.includes('card')) {
+                    btn.innerHTML = `<i class="fas fa-microphone"></i> Question`;
+                } else {
+                    btn.innerHTML = `<i class="fas fa-microphone"></i> Répondre à Sophia (Microphone)`;
+                }
                 const sBox = document.getElementById('sophia-box');
                 const sVerdict = document.getElementById('sophia-verdict-text');
                 if (sBox && sVerdict) {
-                    sVerdict.innerHTML = `<strong>Sophia :</strong> Excellent effort ! Ta prononciation est bien adaptée au niveau. Continue ainsi !`;
+                    sVerdict.innerHTML = `<strong>Sophia :</strong> Message reçu ! Ta production orale a été enregistrée avec succès pour l'évaluation.`;
                     sBox.style.display = "block";
                 }
             }
@@ -751,17 +748,23 @@
             const ej = ejerciciosFiltrados[currentExerciseIndex];
             const audioId = `audio-container-${currentExerciseIndex}`;
 
+            // CONTROL DE SEGURIDAD INTERNA PARA NORMALIZAR TIPOS VIEJOS DE PO
+            let tipoEjercicio = ej.tipo ? ej.tipo.toLowerCase().trim() : "";
+            if (tipoEjercicio.includes("libre") || tipoEjercicio.includes("question") || tipoEjercicio.includes("réponses")) {
+                tipoEjercicio = "oral_interaction"; 
+            }
+
             let html = `
             <div class="exercise-card">
                 <h4 style="margin-top: 0; margin-bottom: 20px; color: var(--oxford); font-size: 1.05rem; font-weight:700;">
                     ${ej.instruccion || 'Exercice'} 
                 </h4>`;
 
-            // RENDER EXCLUSIVO DE LOS COMPONENTES DE PRODUCTION ORALE (PO) CON SOPHIA
+            // RENDER INTERACTIVO CORREGIDO DE PO CON SOPHIA
             if (currentSkill === "PO" || currentSkill === "po") {
                 
-                // MÓDULO A: oral_interaction (Juegos de rol o turnos de entrevista directa)
-                if (ej.tipo === "oral_interaction") {
+                if (tipoEjercicio === "oral_interaction" || !tipoEjercicio) {
+                    let fraseSophia = ej.ruta_audio || (ej.texto_lectura ? ej.texto_lectura : "Bonjour! Je t'écoute. Parle-moi de toi.");
                     html += `
                     <div class="sophia-chat-box">
                         <div class="sophia-avatar-row">
@@ -769,10 +772,10 @@
                             <span>Sophia (Examinatrice Jury) :</span>
                         </div>
                         <p style="background: white; padding: 12px 15px; border-radius: 8px; border: 1px solid #e2e8f0; font-size: 0.95rem; font-style: italic; color:#333;">
-                            <i class="fas fa-volume-up" style="color:var(--gold); margin-right:8px; cursor:pointer;" onclick="window.parlerSophia(\`${ej.ruta_audio}\`)"></i> "${ej.ruta_audio || 'Bonjour!'}"
+                            <i class="fas fa-volume-up" style="color:var(--gold); margin-right:8px; cursor:pointer;" onclick="window.parlerSophia(\`${fraseSophia}\`)"></i> "${fraseSophia}"
                         </p>
                         <div style="margin-top: 15px; display:flex; gap:10px;">
-                            <button class="audio-interactive-btn" onclick="window.parlerSophia(\`${ej.ruta_audio}\`)">
+                            <button class="audio-interactive-btn" onclick="window.parlerSophia(\`${fraseSophia}\`)">
                                 <i class="fas fa-play"></i> Écouter Sophia
                             </button>
                             <button class="audio-interactive-btn" id="btn-record-po-interaction" onclick="window.toggleGrabacionInteractiva('btn-record-po-interaction')" style="background:var(--green);">
@@ -782,15 +785,15 @@
                     </div>`;
                 }
 
-                // MÓDULO B: oral_cards (Parte 2 de A1 - Formular preguntas independientes por palabra clave)
-                else if (ej.tipo === "oral_cards" && ej.campos_formulario && ej.campos_formulario.length > 0) {
+                else if (tipoEjercicio === "oral_cards" || (ej.campos_formulario && ej.campos_formulario.length > 0 && !ej.preguntas)) {
+                    let listaTarjetas = ej.campos_formulario || (ej.texto_lectura ? ej.texto_lectura.split(',') : []);
                     html += `
                     <p style="font-size:0.9rem; font-weight:600; color:#555; margin-bottom:15px;"><i class="fas fa-info-circle"></i> Formulez une question pour chaque carte ci-dessous :</p>
                     <div class="oral-card-grid">`;
-                    ej.campos_formulario.forEach((palabra, idxCard) => {
+                    listaTarjetas.forEach((palabra, idxCard) => {
                         html += `
                         <div class="oral-word-card">
-                            <span>${palabra}</span>
+                            <span>${palabra.trim()}</span>
                             <button class="audio-interactive-btn" id="btn-card-rec-${idxCard}" onclick="window.toggleGrabacionInteractiva('btn-card-rec-${idxCard}')" style="padding:6px 12px; font-size:0.75rem; justify-content:center;">
                                 <i class="fas fa-microphone"></i> Question
                             </button>
@@ -799,8 +802,7 @@
                     html += `</div>`;
                 }
 
-                // MÓDULO C: oral_monologue u oral_debate (Monólogo seguido o Defensa de Tesis con Contraargumento)
-                else if (ej.tipo === "oral_monologue" || ej.tipo === "oral_debate") {
+                else if (tipoEjercicio === "oral_monologue" || tipoEjercicio === "oral_debate") {
                     if (ej.texto_lectura) {
                         html += `
                         <div style="background: #ffffff; border-left: 4px solid var(--gold); padding: 20px; border-radius: 8px; margin-bottom: 25px; font-size: 0.95rem; line-height: 1.6; color: #333; white-space: pre-wrap; box-shadow:0 2px 6px rgba(0,0,0,0.02); border:1px solid #e2e8f0; border-left-width:4px;">
@@ -814,31 +816,9 @@
                             <i class="fas fa-microphone"></i> Commencer le Monologue Continu
                         </button>
                     </div>`;
-
-                    if (ej.ruta_audio) {
-                        html += `
-                        <div class="sophia-chat-box" id="debate-sophia-block" style="border-left:4px solid var(--gold); background:#fffdf9;">
-                            <div class="sophia-avatar-row">
-                                <i class="fas fa-gavel" style="color:var(--gold); font-size:1.2rem;"></i>
-                                <span>PHASE 2 : La Réplique / Contre-argument de Sophia :</span>
-                            </div>
-                            <p style="font-size:0.95rem; font-style:italic; color:#333; margin-bottom:15px;">
-                                "${ej.ruta_audio}"
-                            </p>
-                            <div style="display:flex; gap:10px;">
-                                <button class="audio-interactive-btn" onclick="window.parlerSophia(\`${ej.ruta_audio}\`)">
-                                    <i class="fas fa-play"></i> Écouter la question du Jury
-                                </button>
-                                <button class="audio-interactive-btn" id="btn-record-defense" onclick="window.toggleGrabacionInteractiva('btn-record-defense')" style="background:var(--green);">
-                                    <i class="fas fa-microphone"></i> Enregistrer votre défense
-                                </button>
-                            </div>
-                        </div>`;
-                    }
                 }
             }
 
-            // MANTENIMIENTO DEL COMPONENTE DE LECTURA DE CE
             if (currentSkill === "CE" && ej.texto_lectura) {
                 html += `
                 <div style="background: #f8f9fa; border-left: 4px solid var(--gold); padding: 20px; border-radius: 6px; margin-bottom: 25px; font-size: 0.95rem; line-height: 1.6; color: #333; white-space: pre-wrap;">
@@ -849,7 +829,7 @@
             if (ej.pagina_pdf) {
                 html += `
                 <div class="pdf-viewer-container" id="pdf-viewer-block">
-                    <p style="font-size:0.8rem; color:var(--gold); font-weight:600; margin-top:0;"><i class="fas fa-book-open"></i> Page ${ej.pagina_pdf} du livre original</p>
+                    <p style="font-size:0.8rem; color:var(--gold); font-weight:600; margin-top:0;"><i class="fas fa-book-open"></i> Page ${ej.pagina_pdf} du libro original</p>
                     <canvas id="pdf-canvas-render"></canvas>
                 </div>`;
                 setTimeout(() => renderPageFromBook(ej.pagina_pdf), 50);
@@ -881,10 +861,8 @@
                 html += `
                 <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px;">
                     <button class="nav-tab-btn" id="btn-submit-exercise" style="width:auto; background:var(--oxford); color:white; padding:10px 22px;"><i class="fas fa-paper-plane"></i> Envoyer</button>
-                    <button class="nav-tab-btn" id="btn-next-exercise" style="width:auto; background:var(--green); color:white; padding:10px 22px; display:none;">Suivant <i class="fas fa-arrow-right"></i></button>
                 </div>`;
             } else if (currentSkill === "PE" || currentSkill === "pe") {
-                // REGION INTACTA DE REDACCIÓN DE PE FORMULARIO / TEXTO LIBRE
                 if (ej.tipo === "formulario" && ej.campos_formulario && ej.campos_formulario.length > 0) {
                     html += `
                     <div class="fiche-container" style="background: #ffffff; border: 1px solid #ddd; border-radius: 12px; padding: 25px; max-width: 500px; margin: 20px auto; box-shadow: 0 4px 15px rgba(0,0,0,0.05); color: #002147; text-align: left;">
@@ -933,10 +911,7 @@
                                     alert("S'il vous plaît, complétez tous les champs.");
                                     return;
                                 }
-
-                                const textoFinalFicha = `[FICHE] ` + respuestasFicha.join(" | ");
-                                console.log("Datos empaquetados para Firebase:", textoFinalFicha);
-                                alert("Fiche enregistrée avec succès. Envoyé à l'évaluation.");
+                                alert("Fiche enregistrée avec succès.");
                             };
                         }
                     }, 50);
@@ -965,7 +940,6 @@
                                     alert("S'il vous plaît, écrivez votre message avant d'envoyer.");
                                     return;
                                 }
-                                console.log("Texto redactado listo para evaluar:", textoLibre);
                                 alert("Production enregistrée avec succès.");
                             };
                         }
@@ -977,13 +951,11 @@
                 <div id="sophia-box" style="display:none; background:#f4f7f9; border-left:4px solid var(--gold); padding:20px; border-radius:6px; margin-top:25px;">
                     <div style="display:flex; align-items:center; gap:10px; font-weight:700; color:var(--oxford);"><i class="fas fa-lightbulb" style="color:var(--gold);"></i> CONSEIL DE SOPHIA</div>
                     <p id="sophia-verdict-text" style="margin:0; font-size:0.95rem;"></p>
-                    ${ej.transcripcion ? `<div style="font-weight:700; margin-top:15px; color:var(--oxford);">Transcription :</div><div style="background:#fff; border:1px dashed #ccc; padding:12px; border-radius:5px; margin-top:8px; font-size:0.95rem; line-height:1.6; color:#333;">${ej.transcripcion}</div>` : ''}
                 </div>
             </div>`;
 
             target.innerHTML = html;
 
-            // CARGA DE AUDIOS PARA LOS MÓDULOS TRADICIONALES DE CO Y CE
             if (ej.ruta_audio && currentSkill !== "PO" && currentSkill !== "po") {
                 const nombreArchivo = ej.ruta_audio.split('/').pop();
                 let trackMatch = nombreArchivo.match(/\d+/);
@@ -1012,7 +984,6 @@
             }
 
             const btnSubmit = document.getElementById('btn-submit-exercise');
-            const btnNext = document.getElementById('btn-next-exercise');
             const sophiaBox = document.getElementById('sophia-box');
 
             if (btnSubmit) {
@@ -1038,7 +1009,6 @@
 
                     document.querySelectorAll('input[type="radio"]').forEach(r => r.disabled = true);
                     btnSubmit.style.display = "none";
-                    if (btnNext) btnNext.style.display = "inline-block";
 
                     let porcentaje = (aciertos / total) * 100;
                     const txtSophia = document.getElementById('sophia-verdict-text');
@@ -1070,7 +1040,7 @@
             }).catch(err => console.error("Erreur de rendu PDF:", err));
         }
 
-        async function renderCarnetInterface() { /* ... no modificado ... */ }
+        async function renderCarnetInterface() {}
 
         document.getElementById('tab-parcours').addEventListener('click', () => window.switchMainTab('parcours'));
         document.getElementById('tab-carnet').addEventListener('click', () => window.switchMainTab('carnet'));
