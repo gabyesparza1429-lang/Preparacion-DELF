@@ -6,10 +6,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root { 
-            --oxford: #002147; 
-            --gold: #C5A059; 
-            --white: #ffffff; 
             --bg-dark: #2f3640;
+            --white: #ffffff; 
+            --gold: #C5A059; 
+            --glass-blue: rgba(176, 218, 255, 0.05);
+            --border-blue: rgba(176, 218, 255, 0.15);
+            --shadow-blue: rgba(52, 152, 219, 0.15);
         }
         
         body { 
@@ -35,7 +37,7 @@
             letter-spacing: 1px;
         }
         .header p { 
-            color: var(--gold); 
+            color: #bdc3c7; 
             font-weight: bold; 
             text-transform: uppercase;
             letter-spacing: 2px;
@@ -52,9 +54,9 @@
             max-width: 1200px;
         }
 
-        /* TARJETAS ESTILO PREMIUM CON RESPLANDOR DORADO */
+        /* ESTILO BASE PARA TARJETAS DE CRISTAL AZUL (A1 A B2) */
         .level-card { 
-            background: rgba(255, 255, 255, 0.03);
+            background: var(--glass-blue);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
             width: 180px; 
@@ -66,7 +68,7 @@
             text-decoration: none; 
             color: var(--white); 
             transition: all 0.4s ease; 
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--border-blue);
             box-sizing: border-box; 
             display: flex; 
             flex-direction: column; 
@@ -74,18 +76,17 @@
             justify-content: center;
         }
 
-        /* EFECTO DE ELEVACIÓN Y BRILLO AL PASAR EL MOUSE */
         .level-card:hover { 
             transform: translateY(-12px); 
-            border-color: var(--gold); 
-            background: rgba(255, 255, 255, 0.07);
-            box-shadow: 0 15px 35px rgba(197, 160, 89, 0.2);
+            border-color: #3498db; 
+            background: rgba(176, 218, 255, 0.12);
+            box-shadow: 0 15px 35px var(--shadow-blue);
         }
 
         .level-name {
             font-size: 3rem;
             font-weight: 700;
-            color: var(--gold);
+            color: #3498db; /* Azul suave para los nombres de niveles estándar */
             margin: 0;
             line-height: 1;
             transition: transform 0.3s ease;
@@ -95,15 +96,30 @@
             transform: scale(1.1);
         }
 
+        /* EDICIÓN ESPECIAL EXCLUSIVA PARA EL C1 (DORADO) */
+        .level-card.c1-gold {
+            background: rgba(197, 160, 89, 0.03);
+            border: 1px solid rgba(197, 160, 89, 0.3);
+        }
+
+        .level-card.c1-gold:hover {
+            border-color: var(--gold);
+            background: rgba(197, 160, 89, 0.08);
+            box-shadow: 0 15px 35px rgba(197, 160, 89, 0.25);
+        }
+
+        .level-card.c1-gold .level-name {
+            color: var(--gold); /* Nombre dorado */
+        }
+
         .level-desc {
             font-size: 0.9rem;
             margin-top: 15px;
             letter-spacing: 1px;
-            color: rgba(255, 255, 255, 0.7);
+            color: rgba(255, 255, 255, 0.6);
             text-transform: capitalize;
         }
 
-        /* BOTÓN DE RETORNO INVISIBLE O DISCRETO (OPCIONAL) */
         .back-link {
             position: absolute;
             top: 30px;
@@ -115,7 +131,7 @@
             transition: color 0.2s;
         }
         .back-link:hover {
-            color: var(--gold);
+            color: #3498db;
         }
     </style>
 </head>
@@ -149,9 +165,9 @@
             <span class="level-desc">Avancé</span>
         </a>
 
-        <a href="units.html?level=C1" class="level-card">
+        <a href="units.html?level=C1" class="level-card c1-gold">
             <h2 class="level-name">C1</h2>
-            <span class="level-desc">Autonome</span>
+            <span class="level-desc" style="color: rgba(197, 160, 89, 0.8);">Autonome</span>
         </a>
     </div>
 
