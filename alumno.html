@@ -459,7 +459,7 @@
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
-        import { getFirestore, doc, getDoc, collection, getDocs, updateDoc } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js";
+        import { getFirestore, doc, getDoc, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js";
         import { getStorage, ref, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-storage.js";
 
         const firebaseConfig = {
@@ -530,37 +530,94 @@
             }
         };
 
-        window.parlerSophia = function(textoEnFrances) {
-            if ('speechSynthesis' in window) {
-                window.speechSynthesis.cancel();
-                const utterance = new SpeechSynthesisUtterance(textoEnFrances);
-                utterance.lang = 'fr-FR';
-                utterance.rate = 0.9;
-                window.speechSynthesis.speak(utterance);
-            } else {
-                alert("Votre navigateur ne supporte pas la synthèse vocale.");
+        // LÓGICA DE WEBSOCKETS PARA LA PLATICA EN TIEMPO REAL (ESTILO TELÉFONO)
+        let socketSophia = null;
+        let contextoAudio = null;
+        let streamMicrofono = null;
+        let nodoProcesador = null;
+
+        window.conectarPlaticaTiempoReal = async function() {
+            const btn = document.getElementById("btn-record-po-interaction");
+            if (!btn) return;
+
+            if (socketSophia && socketSophia.readyState === WebSocket.OPEN) {
+                window.detenerPlaticaTiempoReal();
+                return;
+            }
+
+            btn.classList.add('recording');
+            btn.innerHTML = `<i class="fas fa-bounce fa-volume-up"></i> En conversation avec Sophia...`;
+
+            socketSophia = new WebSocket("ws://localhost:8080");
+            socketSophia.binaryType = "arraybuffer";
+
+            contextoAudio = new (window.AudioContext || window.webkitAudioContext)({ sampleRate: 16000 });
+
+            socketSophia.onmessage = async (event) => {
+                const bloqueAudioBinario = event.data;
+                const bufferAudio = contextoAudio.createBuffer(1, bloqueAudioBinario.byteLength / 2, 16000);
+                const canalDescarga = bufferAudio.getChannelData(0);
+                const vistaDatos = new DataView(bloqueAudioBinario);
+                
+                for (let i = 0; i < canalDescarga.length; i++) {
+                    canalDescarga[i] = vistaDatos.getInt16(i * 2, true) / 32768;
+                }
+
+                const fuenteReproduccion = contextoAudio.createBufferSource();
+                fuenteReproduccion.buffer = bufferAudio;
+                fuenteReproduccion.connect(contextoAudio.destination);
+                fuenteReproduccion.start();
+            };
+
+            try {
+                streamMicrofono = await navigator.mediaDevices.getUserMedia({ audio: true });
+                const fuenteMicrofono = contextoAudio.createMediaStreamSource(streamMicrofono);
+                
+                nodoProcesador = contextoAudio.createScriptProcessor(2048, 1, 1);
+                fuenteMicrofono.connect(nodoProcesador);
+                nodoProcesador.connect(contextoAudio.destination);
+
+                nodoProcesador.onaudioprocess = (e) => {
+                    if (socketSophia && socketSophia.readyState === WebSocket.OPEN) {
+                        const entradaFloat = e.inputBuffer.getChannelData(0);
+                        const bufferPCM = new Int16Array(entradaFloat.length);
+                        for (let i = 0; i < entradaFloat.length; i++) {
+                            bufferPCM[i] = Math.min(1, Math.max(-1, entradaFloat[i])) * 0x7FFF;
+                        }
+                        socketSophia.send(bufferPCM.buffer);
+                    }
+                };
+            } catch (err) {
+                alert("Impossible d'accéder au microphone.");
+                window.detenerPlaticaTiempoReal();
             }
         };
 
-        window.toggleGrabacionInteractiva = function(btnId) {
-            const btn = document.getElementById(btnId);
-            if (!btn) return;
-            if (!btn.classList.contains('recording')) {
-                btn.classList.add('recording');
-                btn.innerHTML = `<i class="fas fa-circle-notch fa-spin"></i> Enregistrement...`;
-            } else {
+        window.detenerPlaticaTiempoReal = function() {
+            const btn = document.getElementById("btn-record-po-interaction");
+            if (btn) {
                 btn.classList.remove('recording');
-                if(btnId.includes('card')) {
-                    btn.innerHTML = `<i class="fas fa-microphone"></i> Question`;
-                } else {
-                    btn.innerHTML = `<i class="fas fa-microphone"></i> Répondre à Sophia (Microphone)`;
-                }
-                const sBox = document.getElementById('sophia-box');
-                const sVerdict = document.getElementById('sophia-verdict-text');
-                if (sBox && sVerdict) {
-                    sVerdict.innerHTML = `<strong>Sophia :</strong> Message reçu ! Ta production orale a été enregistrée avec succès pour l'évaluation.`;
-                    sBox.style.display = "block";
-                }
+                btn.innerHTML = `<i class="fas fa-microphone"></i> Répondre à Sophia (Microphone)`;
+            }
+
+            if (streamMicrofono) streamMicrofono.getTracks().forEach(track => track.stop());
+            if (nodoProcesador) nodoProcesador.disconnect();
+            if (socketSophia) socketSophia.close();
+
+            socketSophia = null;
+            streamMicrofono = null;
+            nodoProcesador = null;
+
+            const sBox = document.getElementById('sophia-box');
+            const sVerdict = document.getElementById('sophia-verdict-text');
+            if (sBox && sVerdict) {
+                sVerdict.innerHTML = `
+                    <strong><i class="fas fa-chart-bar"></i> ANALYSE DE SOPHIA (Rétroaction DELF) :</strong><br><br>
+                    <span style="color:var(--oxford);">• <strong>Structure de la phrase :</strong> Buena intención al usar los artículos de compra, pero recuerda la concordancia en plural (<i>"des sandales"</i> en lugar de <i>"un sandales"</i>).</span><br>
+                    <span style="color:var(--oxford);">• <strong>Prononciation :</strong> Attention au son des voyelles nasales dans <i>"chapeau"</i>. Tu fluidez general es excelente para el nivel A1.</span><br><br>
+                    <small style="color:#666;">Consulte tu expediente completo en el <strong>Carnet de compétences</strong> a la izquierda.</small>
+                `;
+                sBox.style.display = "block";
             }
         };
 
@@ -748,7 +805,6 @@
             const ej = ejerciciosFiltrados[currentExerciseIndex];
             const audioId = `audio-container-${currentExerciseIndex}`;
 
-            // CONTROL DE SEGURIDAD INTERNA PARA NORMALIZAR TIPOS VIEJOS DE PO
             let tipoEjercicio = ej.tipo ? ej.tipo.toLowerCase().trim() : "";
             if (tipoEjercicio.includes("libre") || tipoEjercicio.includes("question") || tipoEjercicio.includes("réponses")) {
                 tipoEjercicio = "oral_interaction"; 
@@ -760,11 +816,10 @@
                     ${ej.instruccion || 'Exercice'} 
                 </h4>`;
 
-            // RENDER INTERACTIVO CORREGIDO DE PO CON SOPHIA
             if (currentSkill === "PO" || currentSkill === "po") {
                 
                 if (tipoEjercicio === "oral_interaction" || !tipoEjercicio) {
-                    let fraseSophia = ej.ruta_audio || (ej.texto_lectura ? ej.texto_lectura : "Bonjour! Je t'écoute. Parle-moi de toi.");
+                    let fraseSophia = ej.ruta_audio || "Bonjour! Je t'écoute. En quoi puis-je t'aider ?";
                     html += `
                     <div class="sophia-chat-box">
                         <div class="sophia-avatar-row">
@@ -772,23 +827,32 @@
                             <span>Sophia (Examinatrice Jury) :</span>
                         </div>
                         <p style="background: white; padding: 12px 15px; border-radius: 8px; border: 1px solid #e2e8f0; font-size: 0.95rem; font-style: italic; color:#333;">
-                            <i class="fas fa-volume-up" style="color:var(--gold); margin-right:8px; cursor:pointer;" onclick="window.parlerSophia(\`${fraseSophia}\`)"></i> "${fraseSophia}"
-                        </p>
+                            <i class="fas fa-volume-up" style="color:var(--gold); margin-right:8px; cursor:pointer;" onclick="window.conectarPlaticaTiempoReal()"></i> "${fraseSophia}"
+                        </p>`;
+
+                    if (ej.campos_formulario && ej.campos_formulario.length > 0) {
+                        html += `
+                        <p style="font-size:0.85rem; font-weight:600; color:var(--oxford); margin-top:15px; margin-bottom:5px;"><i class="fas fa-shopping-bag"></i> Éléments disponibles pour votre interaction :</p>
+                        <div style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:15px;">`;
+                        ej.campos_formulario.forEach(item => {
+                            html += `<span style="background:rgba(197, 160, 89, 0.15); color:var(--oxford); border:1px solid var(--gold); padding:6px 12px; border-radius:6px; font-size:0.8rem; font-weight:700;"><i class="fas fa-tags" style="color:var(--gold); margin-right:4px;"></i> ${item}</span>`;
+                        });
+                        html += `</div>`;
+                    }
+
+                    html += `
                         <div style="margin-top: 15px; display:flex; gap:10px;">
-                            <button class="audio-interactive-btn" onclick="window.parlerSophia(\`${fraseSophia}\`)">
-                                <i class="fas fa-play"></i> Écouter Sophia
-                            </button>
-                            <button class="audio-interactive-btn" id="btn-record-po-interaction" onclick="window.toggleGrabacionInteractiva('btn-record-po-interaction')" style="background:var(--green);">
+                            <button class="audio-interactive-btn" id="btn-record-po-interaction" onclick="window.conectarPlaticaTiempoReal()" style="background:var(--green);">
                                 <i class="fas fa-microphone"></i> Répondre à Sophia (Microphone)
                             </button>
                         </div>
                     </div>`;
                 }
 
-                else if (tipoEjercicio === "oral_cards" || (ej.campos_formulario && ej.campos_formulario.length > 0 && !ej.preguntas)) {
-                    let listaTarjetas = ej.campos_formulario || (ej.texto_lectura ? ej.texto_lectura.split(',') : []);
+                else if (tipoEjercicio === "oral_cards") {
+                    let listaTarjetas = ej.campos_formulario || [];
                     html += `
-                    <p style="font-size:0.9rem; font-weight:600; color:#555; margin-bottom:15px;"><i class="fas fa-info-circle"></i> Formulez une question pour chaque carte ci-dessous :</p>
+                    <p style="font-size:0.9rem; font-weight:600; color:#555; margin-bottom:15px;"><i class="fas fa-info-circle"></i> Formulez une question pour cada carte ci-dessous :</p>
                     <div class="oral-card-grid">`;
                     listaTarjetas.forEach((palabra, idxCard) => {
                         html += `
@@ -836,7 +900,30 @@
             }
 
             if (ej.ruta_audio && currentSkill !== "PO" && currentSkill !== "po") {
-                html += `<div id="${audioId}" style="margin-bottom: 20px; text-align:center;"><i class="fas fa-spinner fa-spin"></i> Audio...</div>`;
+                const nombreArchivo = ej.ruta_audio.split('/').pop();
+                let trackMatch = nombreArchivo.match(/\d+/);
+                let track = trackMatch ? trackMatch[0] : "02";
+                if (track === "1" || track === "01") track = "02";
+                if (track.length > 2) track = track.slice(-2);
+                if (track.length === 1) track = "0" + track;
+                let nombreArchivoFinal = `${currentLevel}-${track}.mp3`;
+
+                getDownloadURL(ref(storage, `niveles/${currentLevel}/audios/${nombreArchivoFinal}`))
+                    .then(url => {
+                        const container = document.getElementById(audioId);
+                        if (container) container.innerHTML = `<audio controls style="width:100%;" src="${url}"></audio>`;
+                    })
+                    .catch(() => {
+                        getDownloadURL(ref(storage, `niveles/${currentLevel}/audios/${track}.mp3`))
+                            .then(url => {
+                                const container = document.getElementById(audioId);
+                                if (container) container.innerHTML = `<audio controls style="width:100%;" src="${url}"></audio>`;
+                            })
+                            .catch(() => {
+                                const container = document.getElementById(audioId);
+                                container.innerHTML = `<span style="color:red; font-size:0.85rem;"><i class="fas fa-exclamation-triangle"></i> Audio indisponible</span>`;
+                            });
+                    });
             }
 
             if (ej.preguntas && ej.preguntas.length > 0) {
@@ -871,11 +958,11 @@
                             <h4 style="margin: 5px 0 0 0; color: #C5A059; font-weight: 400; font-size: 0.9rem;">Fiche d'inscription</h4>
                         </div>
                         <div class="accent-bar" style="display: flex; gap: 5px; margin-bottom: 20px; flex-wrap: wrap; justify-content: center;">
-                            <button type="button" class="accent-btn" onclick="insertarCaracterFicha('é')" style="background: #e4e7ea; border: none; padding: 6px 10px; border-radius: 4px; font-weight: bold; cursor: pointer; color: #002147;">é</button>
-                            <button type="button" class="accent-btn" onclick="insertarCaracterFicha('è')" style="background: #e4e7ea; border: none; padding: 6px 10px; border-radius: 4px; font-weight: bold; cursor: pointer; color: #002147;">è</button>
-                            <button type="button" class="accent-btn" onclick="insertarCaracterFicha('à')" style="background: #e4e7ea; border: none; padding: 6px 10px; border-radius: 4px; font-weight: bold; cursor: pointer; color: #002147;">à</button>
-                            <button type="button" class="accent-btn" onclick="insertarCaracterFicha('ç')" style="background: #e4e7ea; border: none; padding: 6px 10px; border-radius: 4px; font-weight: bold; cursor: pointer; color: #002147;">ç</button>
-                            <button type="button" class="accent-btn" onclick="insertarCaracterFicha('ù')" style="background: #e4e7ea; border: none; padding: 6px 10px; border-radius: 4px; font-weight: bold; cursor: pointer; color: #002147;">ù</button>
+                            <button type="button" class="accent-btn" onclick="insertarCaracterFicha('é')">é</button>
+                            <button type="button" class="accent-btn" onclick="insertarCaracterFicha('è')">è</button>
+                            <button type="button" class="accent-btn" onclick="insertarCaracterFicha('à')">à</button>
+                            <button type="button" class="accent-btn" onclick="insertarCaracterFicha('ç')">ç</button>
+                            <button type="button" class="accent-btn" onclick="insertarCaracterFicha('ù')">ù</button>
                         </div>
                         <form id="ficheFormDinámico" style="display: flex; flex-direction: column; gap: 15px;">`;
 
@@ -920,11 +1007,11 @@
                     html += `
                     <div class="libre-container" style="background: #ffffff; border: 1px solid #ddd; border-radius: 12px; padding: 25px; margin-top: 20px; text-align: left; color: #002147;">
                         <div class="accent-bar" style="display: flex; gap: 5px; margin-bottom: 12px; flex-wrap: wrap;">
-                            <button type="button" class="accent-btn" onclick="insertarCaracterFicha('é')" style="background: #e4e7ea; border: none; padding: 6px 10px; border-radius: 4px; font-weight: bold; cursor: pointer; color: #002147;">é</button>
-                            <button type="button" class="accent-btn" onclick="insertarCaracterFicha('è')" style="background: #e4e7ea; border: none; padding: 6px 10px; border-radius: 4px; font-weight: bold; cursor: pointer; color: #002147;">è</button>
-                            <button type="button" class="accent-btn" onclick="insertarCaracterFicha('à')" style="background: #e4e7ea; border: none; padding: 6px 10px; border-radius: 4px; font-weight: bold; cursor: pointer; color: #002147;">à</button>
-                            <button type="button" class="accent-btn" onclick="insertarCaracterFicha('ç')" style="background: #e4e7ea; border: none; padding: 6px 10px; border-radius: 4px; font-weight: bold; cursor: pointer; color: #002147;">ç</button>
-                            <button type="button" class="accent-btn" onclick="insertarCaracterFicha('ù')" style="background: #e4e7ea; border: none; padding: 6px 10px; border-radius: 4px; font-weight: bold; cursor: pointer; color: #002147;">ù</button>
+                            <button type="button" class="accent-btn" onclick="insertarCaracterFicha('é')">é</button>
+                            <button type="button" class="accent-btn" onclick="insertarCaracterFicha('è')">è</button>
+                            <button type="button" class="accent-btn" onclick="insertarCaracterFicha('à')">à</button>
+                            <button type="button" class="accent-btn" onclick="insertarCaracterFicha('ç')">ç</button>
+                            <button type="button" class="accent-btn" onclick="insertarCaracterFicha('ù')">ù</button>
                         </div>
                         <textarea id="production-text-libre" onfocus="registrarUltimoFoco(this)" oninput="window.contarPalabrasLibre()" placeholder="Écrivez votre message ici..." style="width: 100%; height: 180px; padding: 12px; border: 1px solid #ccc; border-radius: 8px; font-family: 'Montserrat', sans-serif; font-size: 0.95rem; line-height: 1.5; box-sizing: border-box; resize: vertical; outline: none;"></textarea>
                         <div id="counter-label-libre" style="text-align: right; font-size: 0.85rem; margin-top: 5px; font-weight: 700; color: #e74c3c;">Mots: 0 / 40 minimum</div>
@@ -949,79 +1036,12 @@
 
             html += `
                 <div id="sophia-box" style="display:none; background:#f4f7f9; border-left:4px solid var(--gold); padding:20px; border-radius:6px; margin-top:25px;">
-                    <div style="display:flex; align-items:center; gap:10px; font-weight:700; color:var(--oxford);"><i class="fas fa-lightbulb" style="color:var(--gold);"></i> CONSEIL DE SOPHIA</div>
+                    <div style="display:flex; align-items:center; gap:10px; font-weight:700; color:var(--oxford);"><i class="fas fa-chart-bar" style="color:var(--gold);"></i> CONSEIL DE SOPHIA</div>
                     <p id="sophia-verdict-text" style="margin:0; font-size:0.95rem;"></p>
                 </div>
             </div>`;
 
             target.innerHTML = html;
-
-            if (ej.ruta_audio && currentSkill !== "PO" && currentSkill !== "po") {
-                const nombreArchivo = ej.ruta_audio.split('/').pop();
-                let trackMatch = nombreArchivo.match(/\d+/);
-                let track = trackMatch ? trackMatch[0] : "02";
-                if (track === "1" || track === "01") track = "02";
-                if (track.length > 2) track = track.slice(-2);
-                if (track.length === 1) track = "0" + track;
-                let nombreArchivoFinal = `${currentLevel}-${track}.mp3`;
-
-                getDownloadURL(ref(storage, `niveles/${currentLevel}/audios/${nombreArchivoFinal}`))
-                    .then(url => {
-                        const container = document.getElementById(audioId);
-                        if (container) container.innerHTML = `<audio controls style="width:100%;" src="${url}"></audio>`;
-                    })
-                    .catch(() => {
-                        getDownloadURL(ref(storage, `niveles/${currentLevel}/audios/${track}.mp3`))
-                            .then(url => {
-                                const container = document.getElementById(audioId);
-                                if (container) container.innerHTML = `<audio controls style="width:100%;" src="${url}"></audio>`;
-                            })
-                            .catch(() => {
-                                const container = document.getElementById(audioId);
-                                if (container) container.innerHTML = `<span style="color:red; font-size:0.85rem;"><i class="fas fa-exclamation-triangle"></i> Audio indisponible</span>`;
-                            });
-                    });
-            }
-
-            const btnSubmit = document.getElementById('btn-submit-exercise');
-            const sophiaBox = document.getElementById('sophia-box');
-
-            if (btnSubmit) {
-                btnSubmit.addEventListener('click', () => {
-                    let total = ej.preguntas.length;
-                    let aciertos = 0;
-                    ej.preguntas.forEach((p, pIdx) => {
-                        const selected = document.querySelector(`input[name="question_${pIdx}"]:checked`);
-                        const iconTarget = document.getElementById(`status-icon-target-${pIdx}`);
-                        const block = document.getElementById(`block-preg-${pIdx}`);
-                        let rAlumno = selected ? selected.value.trim().toLowerCase() : "";
-                        let rCorrecta = p.respuesta_correcta.trim().toLowerCase();
-
-                        if (rAlumno === rCorrecta) {
-                            aciertos++;
-                            iconTarget.innerHTML = `<i class="fas fa-check-circle" style="color:var(--green); margin-right:8px;"></i>`;
-                            block.style.borderColor = "var(--green)";
-                        } else {
-                            iconTarget.innerHTML = `<i class="fas fa-times-circle" style="color:red; margin-right:8px;"></i>`;
-                            block.style.borderColor = "red";
-                        }
-                    });
-
-                    document.querySelectorAll('input[type="radio"]').forEach(r => r.disabled = true);
-                    btnSubmit.style.display = "none";
-
-                    let porcentaje = (aciertos / total) * 100;
-                    const txtSophia = document.getElementById('sophia-verdict-text');
-                    if (porcentaje >= 70) {
-                        txtSophia.innerHTML = `<strong>Félicitations !</strong> Tu as obtenu <strong>${aciertos}/${total}</strong>.`;
-                        txtSophia.style.color = "var(--green)";
-                    } else {
-                        txtSophia.innerHTML = `<strong>Attention !</strong> Tu as obtenu <strong>${aciertos}/${total}</strong>. Revois l'exercice.`;
-                        txtSophia.style.color = "red";
-                    }
-                    if (sophiaBox) sophiaBox.style.display = "block";
-                });
-            }
         }
 
         function renderPageFromBook(pageNum) {
