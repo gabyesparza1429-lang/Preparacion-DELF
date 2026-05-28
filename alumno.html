@@ -448,7 +448,7 @@
         const urlParams = new URLSearchParams(window.location.search);
         const studentId = urlParams.get('id') || 'default_student';
 
-        // GESTIÓN DE CURSOR ACTIVO E INYECCIÓN DE CARACTERES
+        // LÓGICA DE TECLADO VIRTUAL DE ALUMNO
         let ultimoCampoEnfocado = null;
         window.registrarUltimoFoco = function(input) {
             ultimoCampoEnfocado = input;
@@ -716,43 +716,97 @@
                     <button class="nav-tab-btn" id="btn-next-exercise" style="width:auto; background:var(--green); color:white; padding:10px 22px; display:none;">Suivant <i class="fas fa-arrow-right"></i></button>
                 </div>`;
             } else {
-                // SECCIÓN UNIFICADA DEFINITIVA PARA PRODUCTION ÉCRITE (PE)
+                // MAQUETACIÓN INTEGRADA DE PRODUCTION ÉCRITE MODULAR
                 if (currentSkill === "PE" || currentSkill === "pe") {
-                    html += `
-                    <div class="libre-container" style="background: #ffffff; border: 1px solid #ddd; border-radius: 12px; padding: 25px; margin-top: 20px; text-align: left; color: #002147;">
-                        <p style="font-size: 0.85rem; color: #666; margin-bottom: 15px; font-style: italic;">
-                            <i class="fas fa-info-circle"></i> S'il s'agit d'un formulaire, écrivez chaque donnée sur une nouvelle ligne (Exemple : Nom: VotreNom / Prénom: VotrePrénom).
-                        </p>
-                        
-                        <div class="accent-bar" style="display: flex; gap: 5px; margin-bottom: 12px; flex-wrap: wrap;">
-                            <button type="button" class="accent-btn" onclick="insertarCaracterFicha('é')" style="background: #e4e7ea; border: none; padding: 6px 10px; border-radius: 4px; font-weight: bold; cursor: pointer; color: #002147;">é</button>
-                            <button type="button" class="accent-btn" onclick="insertarCaracterFicha('è')" style="background: #e4e7ea; border: none; padding: 6px 10px; border-radius: 4px; font-weight: bold; cursor: pointer; color: #002147;">è</button>
-                            <button type="button" class="accent-btn" onclick="insertarCaracterFicha('à')" style="background: #e4e7ea; border: none; padding: 6px 10px; border-radius: 4px; font-weight: bold; cursor: pointer; color: #002147;">à</button>
-                            <button type="button" class="accent-btn" onclick="insertarCaracterFicha('ç')" style="background: #e4e7ea; border: none; padding: 6px 10px; border-radius: 4px; font-weight: bold; cursor: pointer; color: #002147;">ç</button>
-                            <button type="button" class="accent-btn" onclick="insertarCaracterFicha('ù')" style="background: #e4e7ea; border: none; padding: 6px 10px; border-radius: 4px; font-weight: bold; cursor: pointer; color: #002147;">ù</button>
-                        </div>
-                        
-                        <textarea id="production-text-libre" onfocus="registrarUltimoFoco(this)" oninput="window.contarPalabrasLibre()" placeholder="Écrivez votre réponse ici..." style="width: 100%; height: 180px; padding: 12px; border: 1px solid #ccc; border-radius: 8px; font-family: 'Montserrat', sans-serif; font-size: 0.95rem; line-height: 1.5; box-sizing: border-box; resize: vertical; outline: none;"></textarea>
-                        
-                        <div id="counter-label-libre" style="text-align: right; font-size: 0.85rem; margin-top: 5px; font-weight: 700; color: #e74c3c;">Mots: 0 / 40 minimum</div>
-                        
-                        <button type="button" id="btn-save-libre-direct" style="background: var(--oxford); color: #ffffff; border: none; padding: 12px; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 15px; font-family: 'Montserrat', sans-serif; font-size: 0.9rem; width: 100%;">Envoyer la production</button>
-                    </div>`;
                     
-                    setTimeout(() => {
-                        const btnSaveLibre = document.getElementById('btn-save-libre-direct');
-                        if(btnSaveLibre) {
-                            btnSaveLibre.onclick = function() {
-                                const textoLibre = document.getElementById('production-text-libre').value.trim();
-                                if(!textoLibre) {
-                                    alert("S'il vous plaît, écrivez votre message avant d'envoyer.");
-                                    return;
-                                }
-                                console.log("Texto estructurado enviado para evaluación de la IA:", textoLibre);
-                                alert("Production enregistrée con succès.");
-                            };
-                        }
-                    }, 50);
+                    if (ej.tipo === "formulario" && ej.campos_formulario && ej.campos_formulario.length > 0) {
+                        // OPCIÓN 1: FORMULARIO DINÁMICO AUTO-GENERADO
+                        html += `
+                        <div class="fiche-container" style="background: #ffffff; border: 1px solid #ddd; border-radius: 12px; padding: 25px; max-width: 500px; margin: 20px auto; box-shadow: 0 4px 15px rgba(0,0,0,0.05); color: #002147; text-align: left;">
+                            <div style="text-align: center; margin-bottom: 20px; border-bottom: 2px dashed #002147; padding-bottom: 10px;">
+                                <h3 style="margin: 0; color: #002147; text-transform: uppercase; font-size: 1.05rem; letter-spacing: 1px;">École de langues</h3>
+                                <h4 style="margin: 5px 0 0 0; color: #C5A059; font-weight: 400; font-size: 0.9rem;">Fiche d'inscription</h4>
+                            </div>
+                            <div class="accent-bar" style="display: flex; gap: 5px; margin-bottom: 20px; flex-wrap: wrap; justify-content: center;">
+                                <button type="button" class="accent-btn" onclick="insertarCaracterFicha('é')" style="background: #e4e7ea; border: none; padding: 6px 10px; border-radius: 4px; font-weight: bold; cursor: pointer; color: #002147;">é</button>
+                                <button type="button" class="accent-btn" onclick="insertarCaracterFicha('è')" style="background: #e4e7ea; border: none; padding: 6px 10px; border-radius: 4px; font-weight: bold; cursor: pointer; color: #002147;">è</button>
+                                <button type="button" class="accent-btn" onclick="insertarCaracterFicha('à')" style="background: #e4e7ea; border: none; padding: 6px 10px; border-radius: 4px; font-weight: bold; cursor: pointer; color: #002147;">à</button>
+                                <button type="button" class="accent-btn" onclick="insertarCaracterFicha('ç')" style="background: #e4e7ea; border: none; padding: 6px 10px; border-radius: 4px; font-weight: bold; cursor: pointer; color: #002147;">ç</button>
+                                <button type="button" class="accent-btn" onclick="insertarCaracterFicha('ù')" style="background: #e4e7ea; border: none; padding: 6px 10px; border-radius: 4px; font-weight: bold; cursor: pointer; color: #002147;">ù</button>
+                            </div>
+                            <form id="ficheFormDinámico" style="display: flex; flex-direction: column; gap: 15px;">`;
+
+                        ej.campos_formulario.forEach((campo) => {
+                            html += `
+                            <div style="display: flex; align-items: center; border-bottom: 1px solid #eee; padding-bottom: 5px;">
+                                <label style="width: 155px; font-weight: bold; font-size: 0.85rem;">${campo} :</label>
+                                <input type="text" data-campo-nombre="${campo}" class="input-dinamico-ficha" onfocus="registrarUltimoFoco(this)" style="flex: 1; border: none; outline: none; font-family: 'Montserrat', sans-serif; font-size: 0.9rem; color: #002147;">
+                            </div>`;
+                        });
+
+                        html += `
+                                <button type="button" id="btn-save-fiche-dinamico" style="background: var(--oxford); color: #ffffff; border: none; padding: 12px; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 15px; font-family: 'Montserrat', sans-serif; font-size: 0.9rem; width: 100%;">Enregistrer la fiche</button>
+                            </form>
+                        </div>`;
+                        
+                        setTimeout(() => {
+                            const btnSaveDin = document.getElementById('btn-save-fiche-dinamico');
+                            if(btnSaveDin) {
+                                btnSaveDin.onclick = function() {
+                                    let respuestasFicha = [];
+                                    let inputs = document.querySelectorAll('.input-dinamico-ficha');
+                                    let incompleto = false;
+
+                                    inputs.forEach(inp => {
+                                        let etiqueta = inp.getAttribute('data-campo-nombre');
+                                        let valor = inp.value.trim();
+                                        if(!valor) incompleto = true;
+                                        respuestasFicha.push(`${etiqueta}: ${valor}`);
+                                    });
+
+                                    if(incompleto) {
+                                        alert("S'il vous plaît, complétez tous les champs.");
+                                        return;
+                                    }
+
+                                    const textoFinalFicha = `[FICHE] ` + respuestasFicha.join(" | ");
+                                    console.log("Datos empaquetados para Firebase:", textoFinalFicha);
+                                    alert("Fiche enregistrée con succès. Enviado a evaluación.");
+                                };
+                            }
+                        }, 50);
+
+                    } else {
+                        // OPCIÓN 2: AREA DE REDACCIÓN LIBRE TRADICIONAL CON CONTADOR
+                        html += `
+                        <div class="libre-container" style="background: #ffffff; border: 1px solid #ddd; border-radius: 12px; padding: 25px; margin-top: 20px; text-align: left; color: #002147;">
+                            <div class="accent-bar" style="display: flex; gap: 5px; margin-bottom: 12px; flex-wrap: wrap;">
+                                <button type="button" class="accent-btn" onclick="insertarCaracterFicha('é')" style="background: #e4e7ea; border: none; padding: 6px 10px; border-radius: 4px; font-weight: bold; cursor: pointer; color: #002147;">é</button>
+                                <button type="button" class="accent-btn" onclick="insertarCaracterFicha('è')" style="background: #e4e7ea; border: none; padding: 6px 10px; border-radius: 4px; font-weight: bold; cursor: pointer; color: #002147;">è</button>
+                                <button type="button" class="accent-btn" onclick="insertarCaracterFicha('à')" style="background: #e4e7ea; border: none; padding: 6px 10px; border-radius: 4px; font-weight: bold; cursor: pointer; color: #002147;">à</button>
+                                <button type="button" class="accent-btn" onclick="insertarCaracterFicha('ç')" style="background: #e4e7ea; border: none; padding: 6px 10px; border-radius: 4px; font-weight: bold; cursor: pointer; color: #002147;">ç</button>
+                                <button type="button" class="accent-btn" onclick="insertarCaracterFicha('ù')" style="background: #e4e7ea; border: none; padding: 6px 10px; border-radius: 4px; font-weight: bold; cursor: pointer; color: #002147;">ù</button>
+                            </div>
+                            <textarea id="production-text-libre" onfocus="registrarUltimoFoco(this)" oninput="window.contarPalabrasLibre()" placeholder="Écrivez votre message ici..." style="width: 100%; height: 180px; padding: 12px; border: 1px solid #ccc; border-radius: 8px; font-family: 'Montserrat', sans-serif; font-size: 0.95rem; line-height: 1.5; box-sizing: border-box; resize: vertical; outline: none;"></textarea>
+                            <div id="counter-label-libre" style="text-align: right; font-size: 0.85rem; margin-top: 5px; font-weight: 700; color: #e74c3c;">Mots: 0 / 40 minimum</div>
+                            <button type="button" id="btn-save-libre-direct" style="background: var(--oxford); color: #ffffff; border: none; padding: 12px; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 15px; font-family: 'Montserrat', sans-serif; font-size: 0.9rem; width: 100%;">Envoyer la production</button>
+                        </div>`;
+                        
+                        setTimeout(() => {
+                            const btnSaveLibre = document.getElementById('btn-save-libre-direct');
+                            if(btnSaveLibre) {
+                                btnSaveLibre.onclick = function() {
+                                    const textoLibre = document.getElementById('production-text-libre').value.trim();
+                                    if(!textoLibre) {
+                                        alert("S'il vous plaît, écrivez votre message avant d'envoyer.");
+                                        return;
+                                    }
+                                    print("Texto redactado listo para evaluar:", textoLibre);
+                                    alert("Production enregistrée con succès.");
+                                };
+                            }
+                        }, 50);
+                    }
                 } else {
                     html += `<p style="font-style:italic; color:#777; margin-top:15px;">Production libre ou exercice écrit. Répondez sur votre cahier.</p>`;
                 }
