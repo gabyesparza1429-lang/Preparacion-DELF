@@ -11,8 +11,8 @@
         .container { display: flex; gap: 30px; justify-content: center; padding: 20px; }
         .card { background: var(--white); width: 280px; padding: 30px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); text-align: center; text-decoration: none; color: inherit; transition: 0.3s; border: 2px solid transparent; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; justify-content: space-between; }
         .card:hover { transform: translateY(-10px); border-color: var(--gold); }
-        .btn { background: var(--oxford); color: white; padding: 10px 20px; border-radius: 8px; font-weight: bold; margin-top: 15px; display: inline-block; width: 80%; }
-        .logo-proyecto { width: 100px; height: 100px; object-fit: contain; margin-bottom: 15px; }
+        .btn { background: var(--oxford); color: white; padding: 10px 20px; border-radius: 8px; font-weight: bold; margin-top: 15px; display: inline-block; width: 80%; text-align: center; }
+        .logo-proyecto { width: 120px; height: 120px; object-fit: contain; margin-bottom: 15px; }
         
         /* BOTÓN DE ACCESO INVISIBLE PARA ADMINISTRADOR */
         .admin-secret-link { position: absolute; top: 0; left: 0; width: 60px; height: 60px; background: transparent; cursor: default; text-decoration: none; z-index: 999; }
@@ -20,7 +20,6 @@
 </head>
 <body>
 
-    <!-- Acceso secreto invisible arriba a la izquierda -->
     <a href="admin.html" class="admin-secret-link" title="Connexion"></a>
 
     <div class="header">
@@ -29,20 +28,18 @@
     </div>
 
     <div class="container">
-        <!-- PROYECTO 1: REUSSITE DELF -->
         <a href="levels.html" class="card">
             <div>
-                <img src="./assets/logo_delf.png" alt="Logo Réussite DELF" class="logo-proyecto">
+                <img src="./assets/Logo.png" alt="Logo Réussite DELF" class="logo-proyecto">
                 <h2>Réussite DELF</h2>
                 <p>Preparación especializada para exámenes.</p>
             </div>
             <div class="btn">Entrar</div>
         </a>
 
-        <!-- PROYECTO 2: NEUROCLARITY -->
         <a href="neuroclarity.html" class="card">
             <div>
-                <img src="./assets/logo_neuroclarity.png" alt="Logo NeuroClarity" class="logo-proyecto">
+                <img src="./assets/NeuroClarity.png" alt="Logo NeuroClarity" class="logo-proyecto">
                 <h2>NeuroClarity</h2>
                 <p>Ingeniería pedagógica para mentes diversas.</p>
             </div>
