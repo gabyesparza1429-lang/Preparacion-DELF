@@ -267,7 +267,10 @@
 
         window.previewAlumno = () => {
             const lvl = document.getElementById('preview_level').value;
-            window.open(`alumno.html?id=admin_preview&level=${lvl}`, '_blank');
+            // Quitamos .html para compatibilidad con Clean URLs de Firebase Hosting
+            const url = window.location.origin + "/alumno?id=admin_preview&level=" + lvl;
+            console.log("Abriendo vista previa en:", url);
+            window.open(url, '_blank');
         };
 
         window.subirJSONaFirebase = async function() {
