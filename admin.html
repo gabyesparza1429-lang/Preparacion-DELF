@@ -267,8 +267,8 @@
 
         window.previewAlumno = () => {
             const lvl = document.getElementById('preview_level').value;
-            // Quitamos .html para compatibilidad con Clean URLs de Firebase Hosting
-            const url = window.location.origin + "/alumno?id=admin_preview&level=" + lvl;
+            // Usamos la ruta absoluta al archivo para asegurar que Firebase lo encuentre
+            const url = "/alumno.html?id=admin_preview&level=" + lvl;
             console.log("Abriendo vista previa en:", url);
             window.open(url, '_blank');
         };
