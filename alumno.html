@@ -497,6 +497,7 @@
 
         const urlParams = new URLSearchParams(window.location.search);
         const studentId = urlParams.get('id') || 'default_student';
+        const previewLevel = urlParams.get('level');
 
         let ultimoCampoEnfocado = null;
         window.registrarUltimoFoco = function(input) {
@@ -623,27 +624,38 @@
 
         async function init() {
             try {
-                const userSnap = await getDoc(doc(db, "Usuarios", studentId));
-                if (userSnap.exists()) {
-                    const userData = userSnap.data();
-                    currentLevel = userData.nivel || "A1";
-                    document.getElementById('student-welcome').innerText = `Bonjour, ${userData.nombre || 'Étudiant'}`;
-                    
-                    const prog = userData.progreso || 0;
-                    document.getElementById('progress-bar-fill').style.width = `${prog}%`;
-                    document.getElementById('progress-text-target').innerText = `${prog}%`;
+                if (studentId === 'admin_preview') {
+                    currentLevel = previewLevel || "A1";
+                    document.getElementById('student-welcome').innerText = `Bonjour, Administrateur (Aperçu)`;
+                    document.getElementById('progress-bar-fill').style.width = `100%`;
+                    document.getElementById('progress-text-target').innerText = `100%`;
+                    document.getElementById('countdown-text-target').innerText = "Mode Prévisualisation";
+                } else {
+                    const userSnap = await getDoc(doc(db, "Usuarios", studentId));
+                    if (userSnap.exists()) {
+                        const userData = userSnap.data();
+                        currentLevel = userData.nivel || "A1";
+                        document.getElementById('student-welcome').innerText = `Bonjour, ${userData.nombre || 'Étudiant'}`;
 
-                    if (userData.fecha_examen) {
-                        const fechaExamen = new Date(userData.fecha_examen);
-                        const hoy = new Date();
-                        const diferenciaTiempo = fechaExamen - hoy;
-                        const diasRestantes = Math.ceil(diferenciaTiempo / (1000 * 60 * 60 * 24));
-                        document.getElementById('countdown-text-target').innerText = diasRestantes > 0 ? `${diasRestantes} jours restants avant l'examen` : "Examen terminé";
-                    } else {
-                        document.getElementById('countdown-text-target').innerText = "Pas de date d'examen fixée";
+                        const prog = userData.progreso || 0;
+                        document.getElementById('progress-bar-fill').style.width = `${prog}%`;
+                        document.getElementById('progress-text-target').innerText = `${prog}%`;
+
+                        if (userData.fecha_examen) {
+                            const fechaExamen = new Date(userData.fecha_examen);
+                            const hoy = new Date();
+                            const diferenciaTiempo = fechaExamen - hoy;
+                            const diasRestantes = Math.ceil(diferenciaTiempo / (1000 * 60 * 60 * 24));
+                            document.getElementById('countdown-text-target').innerText = diasRestantes > 0 ? `${diasRestantes} jours restants avant l'examen` : "Examen terminé";
+                        } else {
+                            document.getElementById('countdown-text-target').innerText = "Pas de date d'examen fixée";
+                        }
                     }
                 }
                 
+                // Prioridad al nivel forzado por URL para previsualización
+                if (previewLevel) currentLevel = previewLevel;
+
                 document.getElementById('level-indicator').innerText = `NIVEAU ${currentLevel}`;
 
                 let nombreLivre = mapLivresStorage[currentLevel] || "ABC DELF A1 - 2025.pdf";
