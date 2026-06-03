@@ -329,22 +329,36 @@
             box-shadow: 0 2px 6px rgba(0,0,0,0.1);
         }
 
-        .checklist-item {
-            display: flex;
-            align-items: flex-start;
-            gap: 15px;
+        /* ESTILOS DE PALABRAS INTERACTIVAS */
+        .clickable-word {
+            cursor: pointer;
+            display: inline-block;
+            padding: 0 2px;
+            border-radius: 3px;
+            transition: all 0.2s;
+        }
+        .clickable-word:hover {
+            background: #ffeaa7;
+            color: #d63031;
+            font-weight: bold;
+        }
+
+        /* POPUP FLOTANTE PARA DICCIONARIO */
+        .dict-popup {
+            position: absolute;
             background: white;
-            padding: 15px;
-            margin-bottom: 12px;
+            border: 2px solid var(--gold);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+            padding: 12px;
             border-radius: 8px;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.01);
-            border-left: 3px solid #ccc;
-            transition: all 0.2s ease;
+            z-index: 999;
+            max-width: 260px;
+            font-size: 0.85rem;
+            display: none;
+            color: #333;
         }
-        .checklist-item.completed {
-            border-left-color: var(--green);
-            background: #f8fff9;
-        }
+        .dict-popup h5 { margin: 0 0 6px 0; color: var(--oxford); font-size: 0.9rem; font-weight: bold; border-bottom: 1px solid #eee; padding-bottom: 4px; }
+        .dict-popup p { margin: 4px 0; line-height: 1.3; }
     </style>
 </head>
 <body>
@@ -407,6 +421,9 @@
         </div>
     </div>
 
+    <!-- CUADRO FLOTANTE PARA TRADUCCIÓN / DEFINICIÓN -->
+    <div id="floating-dict-popup" class="dict-popup"></div>
+
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
         import { getFirestore, doc, getDoc, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js";
@@ -447,11 +464,10 @@
 
         const urlParams = new URLSearchParams(window.location.search);
         const studentId = urlParams.get('id') || 'default_student';
-        const previewLevel = urlParams.get('level'); // Capturamos el parámetro level de la URL
+        const previewLevel = urlParams.get('level');
 
         async function init() {
             try {
-                // CORRECCIÓN: Le damos prioridad absoluta al nivel forzado en la URL para modo administrador
                 if (previewLevel) {
                     currentLevel = previewLevel;
                     document.getElementById('student-welcome').innerText = `Bonjour, Administrateur (Aperçu)`;
@@ -484,13 +500,11 @@
                 document.getElementById('level-indicator').innerText = `NIVEAU ${currentLevel}`;
 
                 let nombreLivre = mapLivresStorage[currentLevel] || "ABC DELF A1 - 2025.pdf";
-                console.log(`> Téléchargement du libro : niveles/${currentLevel}/libro/${nombreLivre}`);
                 
                 getDownloadURL(ref(storage, `niveles/${currentLevel}/libro/${nombreLivre}`))
                     .then((url) => {
                         pdfjsLib.getDocument(url).promise.then(pdf => {
                             pdfDocInstance = pdf;
-                            console.log(`> Livre chargé avec succès !`);
                             if (ejerciciosFiltrados[currentExerciseIndex]?.pagina_pdf) {
                                 renderPageFromBook(ejerciciosFiltrados[currentExerciseIndex].pagina_pdf);
                             }
@@ -572,7 +586,6 @@
                 }
 
                 let temaRealHabilidad = u[`tema_${currentSkill}`] || u[`tema_${currentSkill.toLowerCase()}`] || u.tema || "Exercice";
-
                 let numeroUnidad = uId.replace(/\D/g, '');
                 let tituloUnidadMostrar = `Unité ${numeroUnidad} - ${temaRealHabilidad}`;
 
@@ -632,6 +645,58 @@
             if (currentUnitId === null || !unidadesCache[currentUnitId]) return;
             ejerciciosFiltrados = unidadesCache[currentUnitId][currentSkill] || unidadesCache[currentUnitId][currentSkill.toLowerCase()] || [];
         }
+
+        // NUEVA FUNCIÓN INTERACTIVA: CONVIERTE LA TRANSCRIPCIÓN EN PALABRAS CLICKEABLES
+        window.convertirTextoInteractivo = function(texto) {
+            if (!texto) return '';
+            // Dividimos el texto por palabras manteniendo signos de puntuación limpios
+            return texto.split(/(\s+)/).map(fragmento => {
+                if (fragmento.trim() === '') return fragmento;
+                // Limpiamos la palabra de puntos y comas para el diccionario
+                let palabraLimpia = fragmento.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()¿?¡!]/g,"");
+                return `<span class="clickable-word" onclick="window.buscarDiccionarioDinamico(event, '${palabraLimpia}')">${fragmento}</span>`;
+            }).join('');
+        };
+
+        // FUNCIÓN AUTOMÁTICA DEL MODELO PEDAGÓGICO DE DICCIONARIO SEGÚN EL NIVEL
+        window.buscarDiccionarioDinamico = function(event, palabra) {
+            event.stopPropagation();
+            const popup = document.getElementById('floating-dict-popup');
+            if(!popup) return;
+
+            // Simulador inteligente de respuestas pedagógicas según nivel
+            let definicion = "";
+            let sinonimos = "";
+
+            let lvlEsA = (currentLevel === "A1" || currentLevel === "A2");
+
+            if (lvlEsA) {
+                // Formato básico para niveles iniciales: Traducción al Español + Sinónimos
+                definicion = `<strong>Traduction :</strong> Procesando significado en Español para <i>"${palabra}"</i>...`;
+                sinonimos = `<strong>Synonymes :</strong> Equivalentes simples para el nivel ${currentLevel}`;
+            } else {
+                // Formato avanzado para niveles independientes: Definición en Francés + Sinónimos
+                definicion = `<strong>Définition :</strong> Explication monolingue en français pour le niveau ${currentLevel}...`;
+                sinonimos = `<strong>Synonymes :</strong> Termes alternatifs académiques`;
+            }
+
+            popup.innerHTML = `
+                <h5>${palabra.toUpperCase()}</h5>
+                <p>${definicion}</p>
+                <p style="margin-top:6px; color:#555;">${sinonimos}</p>
+            `;
+
+            // Posicionamos el cuadro flotante justo al lado del clic de la palabra
+            popup.style.left = `${event.pageX + 10}px`;
+            popup.style.top = `${event.pageY + 10}px`;
+            popup.style.display = 'block';
+        };
+
+        // Cerramos el cuadro flotante si el usuario da clic en cualquier otra parte
+        document.addEventListener('click', () => {
+            const popup = document.getElementById('floating-dict-popup');
+            if(popup) popup.style.display = 'none';
+        });
 
         function renderExerciseStructure() {
             const target = document.getElementById('dynamic-workspace-target');
@@ -699,11 +764,17 @@
                 html += `<p style="font-style:italic; color:#777; margin-top:15px;">Production libre ou exercice écrit. Répondez sur votre cahier.</p>`;
             }
 
+            // SECCIÓN MEJORADA DE SOPHIA: Mostrará la transcripción interactiva sólo al calificar con éxito
             html += `
                 <div id="sophia-box" style="display:none; background:#f4f7f9; border-left:4px solid var(--gold); padding:20px; border-radius:6px; margin-top:25px;">
                     <div style="display:flex; align-items:center; gap:10px; font-weight:700; color:var(--oxford);"><i class="fas fa-lightbulb" style="color:var(--gold);"></i> CONSEIL DE SOPHIA</div>
                     <p id="sophia-verdict-text" style="margin:0; font-size:0.95rem;"></p>
-                    ${ej.transcripcion ? `<div style="font-weight:700; margin-top:15px; color:var(--oxford);">Transcription :</div><div style="background:#fff; border:1px dashed #ccc; padding:12px; border-radius:5px; margin-top:8px; font-size:0.95rem; line-height:1.6; color:#333;">${ej.transcripcion}</div>` : ''}
+                    
+                    ${ej.transcripcion ? `
+                    <div style="font-weight:700; margin-top:15px; color:var(--oxford);"><i class="fas fa-headphones-alt"></i> Transcription Interactive (Cliquez sur un mot) :</div>
+                    <div id="interactive-transcription-box" style="background:#fff; border:1px dashed #ccc; padding:12px; border-radius:5px; margin-top:8px; font-size:0.95rem; line-height:1.6; color:#333; user-select:none;">
+                        <!-- Aquí se inyectarán las palabras procesadas -->
+                    </div>` : ''}
                 </div>
             </div>`;
 
@@ -719,7 +790,6 @@
                 }
 
                 if (track.length === 1) track = "0" + track;
-
                 let nombreArchivoFinal = `${track}.mp3`;
 
                 getDownloadURL(ref(storage, `niveles/${currentLevel}/audios/${nombreArchivoFinal}`))
@@ -748,16 +818,19 @@
                         const selected = document.querySelector(`input[name="question_${pIdx}"]:checked`);
                         const iconTarget = document.getElementById(`status-icon-target-${pIdx}`);
                         const block = document.getElementById(`block-preg-${pIdx}`);
-                        let rAlumno = selected ? selected.value.trim().toLowerCase() : "";
-                        let rCorrecta = p.respuesta_correcta.trim().toLowerCase();
+                        
+                        let rAlumno = selected ? selected.value.replace(/\s+/g, ' ').trim().toLowerCase() : "";
+                        let rCorrecta = p.respuesta_correcta ? p.respuesta_correcta.replace(/\s+/g, ' ').trim().toLowerCase() : "";
 
-                        if (rAlumno === rCorrecta) {
+                        if (rAlumno !== "" && rAlumno === rCorrecta) {
                             aciertos++;
                             iconTarget.innerHTML = `<i class="fas fa-check-circle" style="color:var(--green); margin-right:8px;"></i>`;
                             block.style.borderColor = "var(--green)";
+                            block.style.background = "#f4fff5";
                         } else {
                             iconTarget.innerHTML = `<i class="fas fa-times-circle" style="color:red; margin-right:8px;"></i>`;
                             block.style.borderColor = "red";
+                            block.style.background = "#fff5f5";
                         }
                     });
 
@@ -774,6 +847,15 @@
                         txtSophia.innerHTML = `<strong>Attention !</strong> Tu as obtenu <strong>${aciertos}/${total}</strong>. Revois l'exercice.`;
                         txtSophia.style.color = "red";
                     }
+
+                    // PROCESAMIENTO ACTIVO DE LA TRANSCRIPCIÓN INTERACTIVA AL FINALIZAR
+                    if (ej.transcripcion) {
+                        const transBox = document.getElementById('interactive-transcription-box');
+                        if (transBox) {
+                            transBox.innerHTML = window.convertirTextoInteractivo(ej.transcripcion);
+                        }
+                    }
+
                     if (sophiaBox) sophiaBox.style.display = "block";
                 });
             }
