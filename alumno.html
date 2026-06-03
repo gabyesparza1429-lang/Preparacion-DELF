@@ -447,27 +447,37 @@
 
         const urlParams = new URLSearchParams(window.location.search);
         const studentId = urlParams.get('id') || 'default_student';
+        const previewLevel = urlParams.get('level'); // Capturamos el parámetro level de la URL
 
         async function init() {
             try {
-                const userSnap = await getDoc(doc(db, "Usuarios", studentId));
-                if (userSnap.exists()) {
-                    const userData = userSnap.data();
-                    currentLevel = userData.nivel || "A1";
-                    document.getElementById('student-welcome').innerText = `Bonjour, ${userData.nombre || 'Étudiant'}`;
-                    
-                    const prog = userData.progreso || 0;
-                    document.getElementById('progress-bar-fill').style.width = `${prog}%`;
-                    document.getElementById('progress-text-target').innerText = `${prog}%`;
+                // CORRECCIÓN: Le damos prioridad absoluta al nivel forzado en la URL para modo administrador
+                if (previewLevel) {
+                    currentLevel = previewLevel;
+                    document.getElementById('student-welcome').innerText = `Bonjour, Administrateur (Aperçu)`;
+                    document.getElementById('progress-bar-fill').style.width = `100%`;
+                    document.getElementById('progress-text-target').innerText = `100%`;
+                    document.getElementById('countdown-text-target').innerText = "Mode Prévisualisation";
+                } else {
+                    const userSnap = await getDoc(doc(db, "Usuarios", studentId));
+                    if (userSnap.exists()) {
+                        const userData = userSnap.data();
+                        currentLevel = userData.nivel || "A1";
+                        document.getElementById('student-welcome').innerText = `Bonjour, ${userData.nombre || 'Étudiant'}`;
+                        
+                        const prog = userData.progreso || 0;
+                        document.getElementById('progress-bar-fill').style.width = `${prog}%`;
+                        document.getElementById('progress-text-target').innerText = `${prog}%`;
 
-                    if (userData.fecha_examen) {
-                        const fechaExamen = new Date(userData.fecha_examen);
-                        const hoy = new Date();
-                        const diferenciaTiempo = fechaExamen - hoy;
-                        const diasRestantes = Math.ceil(diferenciaTiempo / (1000 * 60 * 60 * 24));
-                        document.getElementById('countdown-text-target').innerText = diasRestantes > 0 ? `${diasRestantes} jours restants avant l'examen` : "Examen terminé";
-                    } else {
-                        document.getElementById('countdown-text-target').innerText = "Pas de date d'examen fixée";
+                        if (userData.fecha_examen) {
+                            const fechaExamen = new Date(userData.fecha_examen);
+                            const hoy = new Date();
+                            const diferenciaTiempo = fechaExamen - hoy;
+                            const diasRestantes = Math.ceil(diferenciaTiempo / (1000 * 60 * 60 * 24));
+                            document.getElementById('countdown-text-target').innerText = diasRestantes > 0 ? `${diasRestantes} jours restants avant l'examen` : "Examen terminé";
+                        } else {
+                            document.getElementById('countdown-text-target').innerText = "Pas de date d'examen fixée";
+                        }
                     }
                 }
                 
@@ -692,14 +702,13 @@
             html += `
                 <div id="sophia-box" style="display:none; background:#f4f7f9; border-left:4px solid var(--gold); padding:20px; border-radius:6px; margin-top:25px;">
                     <div style="display:flex; align-items:center; gap:10px; font-weight:700; color:var(--oxford);"><i class="fas fa-lightbulb" style="color:var(--gold);"></i> CONSEIL DE SOPHIA</div>
-                    <p id="sophia-verdict-text" style="margin:0; font-size:0.95rem Papel"></p>
+                    <p id="sophia-verdict-text" style="margin:0; font-size:0.95rem;"></p>
                     ${ej.transcripcion ? `<div style="font-weight:700; margin-top:15px; color:var(--oxford);">Transcription :</div><div style="background:#fff; border:1px dashed #ccc; padding:12px; border-radius:5px; margin-top:8px; font-size:0.95rem; line-height:1.6; color:#333;">${ej.transcripcion}</div>` : ''}
                 </div>
             </div>`;
 
             target.innerHTML = html;
 
-            // MEJORA INTEGRADA DE COMPRÉHENSION ORALE: Lee el número de track impreso en el libro de forma segura
             if (ej.ruta_audio) {
                 let numerosEncontrados = ej.ruta_audio.match(/\d+/);
                 let track = "02"; 
