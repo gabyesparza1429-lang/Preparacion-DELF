@@ -681,19 +681,22 @@
             return await llamarApiTraduccion(query, 'fr|fr');
         }
 
-        // SOLUCIÓN LINGÜÍSTICA DEFINITIVA CON FILTRO CONTEXTUAL DE IDIOMAS (SÓLO FRANCÉS Y ESPAÑOL)
+        // Función principal expuesta al DOM
         window.buscarDiccionarioDinamico = async function(event, palabra) {
+            // --- Lógica de UI para carga ---
             event.stopPropagation();
             const levelToUse = window.currentLevel || currentLevel;
             const esNivelA = (levelToUse === 'A1' || levelToUse === 'A2');
             const popup = document.getElementById('floating-dict-popup');
-            if(!popup) return;
+            if (popup) {
+                popup.innerHTML = `<h5>${palabra}</h5><p style="color:#777;"><i class="fas fa-spinner fa-spin"></i> Recherche...</p>`;
+                popup.style.left = `${event.pageX + 10}px`;
+                popup.style.top = `${event.pageY + 10}px`;
+                popup.style.display = 'block';
+            }
+            // ------------------------------
 
-            popup.innerHTML = `<h5>${palabra}</h5><p style="color:#777;"><i class="fas fa-spinner fa-spin"></i> Recherche...</p>`;
-            popup.style.left = `${event.pageX + 10}px`;
-            popup.style.top = `${event.pageY + 10}px`;
-            popup.style.display = 'block';
-
+            // Se asume que currentLevel está definido globalmente como indicaste
             const esNivelA = (currentLevel === 'A1' || currentLevel === 'A2');
 
             try {
@@ -712,7 +715,10 @@
 
             } catch (error) {
                 console.error("Error en diccionario:", error);
-                popup.innerHTML = `<h5>${palabra}</h5><p style="color:red;">Definición no disponible en este momento.</p>`;
+                if (popup) {
+                    popup.innerHTML = `<h5>${palabra}</h5><p style="color:red;">Definición no disponible en este momento.</p>`;
+                }
+                return "Definición no disponible en este momento.";
             }
         };
 
