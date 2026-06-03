@@ -685,6 +685,8 @@
         window.buscarDiccionarioDinamico = async function(event, palabra) {
             // --- Lógica de UI para carga ---
             event.stopPropagation();
+            const levelToUse = window.currentLevel || currentLevel;
+            const esNivelA = (levelToUse === 'A1' || levelToUse === 'A2');
             const popup = document.getElementById('floating-dict-popup');
             if (popup) {
                 popup.innerHTML = `<h5>${palabra}</h5><p style="color:#777;"><i class="fas fa-spinner fa-spin"></i> Recherche...</p>`;
@@ -706,14 +708,10 @@
                     resultado = await obtenerDefinicionFrances(palabra);
                 }
 
-                // Aquí insertarías la lógica para mostrar el resultado en tu diccionario flotante
-                // Ejemplo: mostrarTooltip(event, resultado);
-                if (popup) {
-                    popup.innerHTML = `<h5>${palabra.toUpperCase()}</h5><p>${resultado}</p>`;
-                }
-
-                console.log("Resultado del diccionario:", resultado);
-                return resultado;
+                popup.innerHTML = `
+                    <h5>${palabra.toUpperCase()}</h5>
+                    <p><strong>${esNivelA ? 'Traduction' : 'Définition'} :</strong> ${resultado}</p>
+                `;
 
             } catch (error) {
                 console.error("Error en diccionario:", error);
