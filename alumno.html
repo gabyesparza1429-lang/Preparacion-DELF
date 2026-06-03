@@ -614,7 +614,7 @@
 
                     subContainer.innerHTML += `
                         <button class="activity-link-btn ${esActivo ? 'active' : ''}" onclick="window.cargarActividadDirecta('${uId}', ${eIdx})">
-                            <i class="fas fa-play" style="font-size:0.6rem; margin-right:6px;"></i>${tituloLinter}
+                            <i class="fas fa-play" style="font-size:0.6rem; margin-right:6px;"></i>${tituloLimpio}
                         </button>
                     `;
                 });
@@ -804,7 +804,6 @@
                         const iconTarget = document.getElementById(`status-icon-target-${pIdx}`);
                         const block = document.getElementById(`block-preg-${pIdx}`);
                         
-                        // Extraemos todas las opciones disponibles del HTML de esta pregunta para mapear letras (A, B, C)
                         const radiosDePregunta = document.querySelectorAll(`input[name="question_${pIdx}"]`);
                         let indiceCorrectoPorLetra = -1;
                         
@@ -819,13 +818,11 @@
                             let valorSeleccionado = selected.value.replace(/\s+/g, ' ').trim().toLowerCase();
                             
                             if (indiceCorrectoPorLetra !== -1 && radiosDePregunta[indiceCorrectoPorLetra]) {
-                                // Caso 1: La base de datos guardó una letra (A, B, C) pero en pantalla está el texto completo
                                 let textoCorrectoMapeado = radiosDePregunta[indiceCorrectoPorLetra].value.replace(/\s+/g, ' ').trim().toLowerCase();
                                 if (valorSeleccionado === textoCorrectoMapeado) {
                                     esCorrecto = true;
                                 }
                             } else {
-                                // Caso 2: La base de datos guardó el texto completo directo
                                 let textoCorrectoDirecto = rCorrectaRaw.toLowerCase();
                                 if (valorSeleccionado === textoCorrectoDirecto) {
                                     esCorrecto = true;
@@ -859,7 +856,6 @@
                         txtSophia.style.color = "red";
                     }
 
-                    // CORRECCIÓN SEGURA: Forzamos a que la transcripción se renderice SIEMPRE que exista
                     if (ej.transcripcion) {
                         const transBox = document.getElementById('interactive-transcription-box');
                         if (transBox) {
