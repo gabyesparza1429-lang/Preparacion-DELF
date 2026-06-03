@@ -167,7 +167,7 @@
             border-bottom: 4px solid var(--gold);
             box-shadow: 0 4px 10px rgba(0,0,0,0.05);
             position: relative;
-            height: 200px; 
+            height: 140px; 
             box-sizing: border-box;
             flex-shrink: 0;
         }
@@ -329,71 +329,21 @@
             box-shadow: 0 2px 6px rgba(0,0,0,0.1);
         }
 
-        .sophia-chat-box {
-            background: #f4f6f9;
-            border-radius: 12px;
-            padding: 20px;
-            margin: 20px 0;
-            border: 1px solid #e2e8f0;
-        }
-        .sophia-avatar-row {
+        .checklist-item {
             display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 15px;
-            color: var(--oxford);
-            font-weight: 700;
-        }
-        .audio-interactive-btn {
-            background: var(--oxford);
-            color: white;
-            border: none;
-            padding: 12px 20px;
-            border-radius: 8px;
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 600;
-            font-size: 0.9rem;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            transition: all 0.2s;
-        }
-        .audio-interactive-btn:hover {
-            background: var(--gold);
-            color: var(--oxford);
-        }
-        .audio-interactive-btn.recording {
-            background: #ef4444;
-            animation: pulseRecord 1.5s infinite;
-        }
-        @keyframes pulseRecord {
-            0% { opacity: 1; }
-            50% { opacity: 0.6; }
-            100% { opacity: 1; }
-        }
-        .oral-card-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            align-items: flex-start;
             gap: 15px;
-            margin: 20px 0;
-        }
-        .oral-word-card {
-            background: #ffffff;
-            border: 2px dashed var(--gold);
-            border-radius: 10px;
+            background: white;
             padding: 15px;
-            text-align: center;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            gap: 10px;
+            margin-bottom: 12px;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.01);
+            border-left: 3px solid #ccc;
+            transition: all 0.2s ease;
         }
-        .oral-word-card span {
-            font-weight: 700;
-            color: var(--oxford);
-            font-size: 0.95rem;
+        .checklist-item.completed {
+            border-left-color: var(--green);
+            background: #f8fff9;
         }
     </style>
 </head>
@@ -497,173 +447,40 @@
 
         const urlParams = new URLSearchParams(window.location.search);
         const studentId = urlParams.get('id') || 'default_student';
-        const previewLevel = urlParams.get('level');
-
-        let ultimoCampoEnfocado = null;
-        window.registrarUltimoFoco = function(input) {
-            ultimoCampoEnfocado = input;
-        };
-        window.insertarCaracterFicha = function(caracter) {
-            if (!ultimoCampoEnfocado) return;
-            const input = ultimoCampoEnfocado;
-            const start = input.selectionStart;
-            const end = input.selectionEnd;
-            const textoActual = input.value;
-            input.value = textoActual.substring(0, start) + caracter + textoActual.substring(end);
-            input.focus();
-            input.selectionStart = input.selectionEnd = start + 1;
-            if(input.id === "production-text-libre") {
-                window.contarPalabrasLibre();
-            }
-        };
-
-        window.contarPalabrasLibre = function() {
-            const txtArea = document.getElementById('production-text-libre');
-            const label = document.getElementById('counter-label-libre');
-            if(!txtArea || !label) return;
-            const texto = txtArea.value.trim();
-            const palabras = texto === "" ? 0 : texto.split(/\s+/).length;
-            label.innerText = `Mots: ${palabras} / 40 minimum`;
-            if (palabras >= 40) {
-                label.style.color = "#28A745";
-            } else {
-                label.style.color = "#e74c3c";
-            }
-        };
-
-        // LÓGICA DE WEBSOCKETS PARA LA PLATICA EN TIEMPO REAL (ESTILO TELÉFONO)
-        let socketSophia = null;
-        let contextoAudio = null;
-        let streamMicrofono = null;
-        let nodoProcesador = null;
-
-        window.conectarPlaticaTiempoReal = async function() {
-            const btn = document.getElementById("btn-record-po-interaction");
-            if (!btn) return;
-
-            if (socketSophia && socketSophia.readyState === WebSocket.OPEN) {
-                window.detenerPlaticaTiempoReal();
-                return;
-            }
-
-            btn.classList.add('recording');
-            btn.innerHTML = `<i class="fas fa-bounce fa-volume-up"></i> En conversation avec Sophia...`;
-
-            socketSophia = new WebSocket("ws://localhost:8080");
-            socketSophia.binaryType = "arraybuffer";
-
-            contextoAudio = new (window.AudioContext || window.webkitAudioContext)({ sampleRate: 16000 });
-
-            socketSophia.onmessage = async (event) => {
-                const bloqueAudioBinario = event.data;
-                const bufferAudio = contextoAudio.createBuffer(1, bloqueAudioBinario.byteLength / 2, 16000);
-                const canalDescarga = bufferAudio.getChannelData(0);
-                const vistaDatos = new DataView(bloqueAudioBinario);
-                
-                for (let i = 0; i < canalDescarga.length; i++) {
-                    canalDescarga[i] = vistaDatos.getInt16(i * 2, true) / 32768;
-                }
-
-                const fuenteReproduccion = contextoAudio.createBufferSource();
-                fuenteReproduccion.buffer = bufferAudio;
-                fuenteReproduccion.connect(contextoAudio.destination);
-                fuenteReproduccion.start();
-            };
-
-            try {
-                streamMicrofono = await navigator.mediaDevices.getUserMedia({ audio: true });
-                const fuenteMicrofono = contextoAudio.createMediaStreamSource(streamMicrofono);
-                
-                nodoProcesador = contextoAudio.createScriptProcessor(2048, 1, 1);
-                fuenteMicrofono.connect(nodoProcesador);
-                nodoProcesador.connect(contextoAudio.destination);
-
-                nodoProcesador.onaudioprocess = (e) => {
-                    if (socketSophia && socketSophia.readyState === WebSocket.OPEN) {
-                        const entradaFloat = e.inputBuffer.getChannelData(0);
-                        const bufferPCM = new Int16Array(entradaFloat.length);
-                        for (let i = 0; i < entradaFloat.length; i++) {
-                            bufferPCM[i] = Math.min(1, Math.max(-1, entradaFloat[i])) * 0x7FFF;
-                        }
-                        socketSophia.send(bufferPCM.buffer);
-                    }
-                };
-            } catch (err) {
-                alert("Impossible d'accéder au microphone.");
-                window.detenerPlaticaTiempoReal();
-            }
-        };
-
-        window.detenerPlaticaTiempoReal = function() {
-            const btn = document.getElementById("btn-record-po-interaction");
-            if (btn) {
-                btn.classList.remove('recording');
-                btn.innerHTML = `<i class="fas fa-microphone"></i> Répondre à Sophia (Microphone)`;
-            }
-
-            if (streamMicrofono) streamMicrofono.getTracks().forEach(track => track.stop());
-            if (nodoProcesador) nodoProcesador.disconnect();
-            if (socketSophia) socketSophia.close();
-
-            socketSophia = null;
-            streamMicrofono = null;
-            nodoProcesador = null;
-
-            const sBox = document.getElementById('sophia-box');
-            const sVerdict = document.getElementById('sophia-verdict-text');
-            if (sBox && sVerdict) {
-                sVerdict.innerHTML = `
-                    <strong><i class="fas fa-chart-bar"></i> ANALYSE DE SOPHIA (Rétroaction DELF) :</strong><br><br>
-                    <span style="color:var(--oxford);">• <strong>Structure de la phrase :</strong> Buena intención al usar los artículos de compra, pero recuerda la concordancia en plural (<i>"des sandales"</i> en lugar de <i>"un sandales"</i>).</span><br>
-                    <span style="color:var(--oxford);">• <strong>Prononciation :</strong> Attention au son des voyelles nasales dans <i>"chapeau"</i>. Tu fluidez general es excelente para el nivel A1.</span><br><br>
-                    <small style="color:#666;">Consulte tu expediente completo en el <strong>Carnet de compétences</strong> a la izquierda.</small>
-                `;
-                sBox.style.display = "block";
-            }
-        };
 
         async function init() {
             try {
-                if (studentId === 'admin_preview') {
-                    currentLevel = previewLevel || "A1";
-                    document.getElementById('student-welcome').innerText = `Bonjour, Administrateur (Aperçu)`;
-                    document.getElementById('progress-bar-fill').style.width = `100%`;
-                    document.getElementById('progress-text-target').innerText = `100%`;
-                    document.getElementById('countdown-text-target').innerText = "Mode Prévisualisation";
-                } else {
-                    const userSnap = await getDoc(doc(db, "Usuarios", studentId));
-                    if (userSnap.exists()) {
-                        const userData = userSnap.data();
-                        currentLevel = userData.nivel || "A1";
-                        document.getElementById('student-welcome').innerText = `Bonjour, ${userData.nombre || 'Étudiant'}`;
+                const userSnap = await getDoc(doc(db, "Usuarios", studentId));
+                if (userSnap.exists()) {
+                    const userData = userSnap.data();
+                    currentLevel = userData.nivel || "A1";
+                    document.getElementById('student-welcome').innerText = `Bonjour, ${userData.nombre || 'Étudiant'}`;
+                    
+                    const prog = userData.progreso || 0;
+                    document.getElementById('progress-bar-fill').style.width = `${prog}%`;
+                    document.getElementById('progress-text-target').innerText = `${prog}%`;
 
-                        const prog = userData.progreso || 0;
-                        document.getElementById('progress-bar-fill').style.width = `${prog}%`;
-                        document.getElementById('progress-text-target').innerText = `${prog}%`;
-
-                        if (userData.fecha_examen) {
-                            const fechaExamen = new Date(userData.fecha_examen);
-                            const hoy = new Date();
-                            const diferenciaTiempo = fechaExamen - hoy;
-                            const diasRestantes = Math.ceil(diferenciaTiempo / (1000 * 60 * 60 * 24));
-                            document.getElementById('countdown-text-target').innerText = diasRestantes > 0 ? `${diasRestantes} jours restants avant l'examen` : "Examen terminé";
-                        } else {
-                            document.getElementById('countdown-text-target').innerText = "Pas de date d'examen fixée";
-                        }
+                    if (userData.fecha_examen) {
+                        const fechaExamen = new Date(userData.fecha_examen);
+                        const hoy = new Date();
+                        const diferenciaTiempo = fechaExamen - hoy;
+                        const diasRestantes = Math.ceil(diferenciaTiempo / (1000 * 60 * 60 * 24));
+                        document.getElementById('countdown-text-target').innerText = diasRestantes > 0 ? `${diasRestantes} jours restants avant l'examen` : "Examen terminé";
+                    } else {
+                        document.getElementById('countdown-text-target').innerText = "Pas de date d'examen fixée";
                     }
                 }
                 
-                // Prioridad al nivel forzado por URL para previsualización
-                if (previewLevel) currentLevel = previewLevel;
-
                 document.getElementById('level-indicator').innerText = `NIVEAU ${currentLevel}`;
 
                 let nombreLivre = mapLivresStorage[currentLevel] || "ABC DELF A1 - 2025.pdf";
+                console.log(`> Téléchargement du libro : niveles/${currentLevel}/libro/${nombreLivre}`);
                 
                 getDownloadURL(ref(storage, `niveles/${currentLevel}/libro/${nombreLivre}`))
                     .then((url) => {
                         pdfjsLib.getDocument(url).promise.then(pdf => {
                             pdfDocInstance = pdf;
+                            console.log(`> Livre chargé avec succès !`);
                             if (ejerciciosFiltrados[currentExerciseIndex]?.pagina_pdf) {
                                 renderPageFromBook(ejerciciosFiltrados[currentExerciseIndex].pagina_pdf);
                             }
@@ -675,7 +492,7 @@
 
             } catch (error) {
                 console.error(error);
-                document.getElementById('dynamic-workspace-target').innerHTML = `<p style="color:red; text-align:center;">Erreur de connexion.</p>`;
+                document.getElementById('dynamic-workspace-target').innerHTML = `<p style="color:red; text-align:center;">Erreur de conexión.</p>`;
             }
         }
 
@@ -705,7 +522,7 @@
             
             document.getElementById('dynamic-workspace-target').innerHTML = `
                 <div style="text-align: center; padding: 60px; color: var(--oxford); margin-top:30px;">
-                    <p style="font-weight: 600;">Veuillez choisir une activité dans le menu de gauche pour commencer.</p>
+                    <p style="font-weight: 600;">Veuillez choisir une activité dans le menu de gauche para commencer.</p>
                 </div>`;
 
             renderActiveInterface();
@@ -745,6 +562,7 @@
                 }
 
                 let temaRealHabilidad = u[`tema_${currentSkill}`] || u[`tema_${currentSkill.toLowerCase()}`] || u.tema || "Exercice";
+
                 let numeroUnidad = uId.replace(/\D/g, '');
                 let tituloUnidadMostrar = `Unité ${numeroUnidad} - ${temaRealHabilidad}`;
 
@@ -817,83 +635,11 @@
             const ej = ejerciciosFiltrados[currentExerciseIndex];
             const audioId = `audio-container-${currentExerciseIndex}`;
 
-            let tipoEjercicio = ej.tipo ? ej.tipo.toLowerCase().trim() : "";
-            if (tipoEjercicio.includes("libre") || tipoEjercicio.includes("question") || tipoEjercicio.includes("réponses")) {
-                tipoEjercicio = "oral_interaction"; 
-            }
-
             let html = `
             <div class="exercise-card">
                 <h4 style="margin-top: 0; margin-bottom: 20px; color: var(--oxford); font-size: 1.05rem; font-weight:700;">
                     ${ej.instruccion || 'Exercice'} 
                 </h4>`;
-
-            if (currentSkill === "PO" || currentSkill === "po") {
-                
-                if (tipoEjercicio === "oral_interaction" || !tipoEjercicio) {
-                    let fraseSophia = ej.ruta_audio || "Bonjour! Je t'écoute. En quoi puis-je t'aider ?";
-                    html += `
-                    <div class="sophia-chat-box">
-                        <div class="sophia-avatar-row">
-                            <i class="fas fa-robot" style="color:var(--gold); font-size:1.3rem;"></i>
-                            <span>Sophia (Examinatrice Jury) :</span>
-                        </div>
-                        <p style="background: white; padding: 12px 15px; border-radius: 8px; border: 1px solid #e2e8f0; font-size: 0.95rem; font-style: italic; color:#333;">
-                            <i class="fas fa-volume-up" style="color:var(--gold); margin-right:8px; cursor:pointer;" onclick="window.conectarPlaticaTiempoReal()"></i> "${fraseSophia}"
-                        </p>`;
-
-                    if (ej.campos_formulario && ej.campos_formulario.length > 0) {
-                        html += `
-                        <p style="font-size:0.85rem; font-weight:600; color:var(--oxford); margin-top:15px; margin-bottom:5px;"><i class="fas fa-shopping-bag"></i> Éléments disponibles pour votre interaction :</p>
-                        <div style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:15px;">`;
-                        ej.campos_formulario.forEach(item => {
-                            html += `<span style="background:rgba(197, 160, 89, 0.15); color:var(--oxford); border:1px solid var(--gold); padding:6px 12px; border-radius:6px; font-size:0.8rem; font-weight:700;"><i class="fas fa-tags" style="color:var(--gold); margin-right:4px;"></i> ${item}</span>`;
-                        });
-                        html += `</div>`;
-                    }
-
-                    html += `
-                        <div style="margin-top: 15px; display:flex; gap:10px;">
-                            <button class="audio-interactive-btn" id="btn-record-po-interaction" onclick="window.conectarPlaticaTiempoReal()" style="background:var(--green);">
-                                <i class="fas fa-microphone"></i> Répondre à Sophia (Microphone)
-                            </button>
-                        </div>
-                    </div>`;
-                }
-
-                else if (tipoEjercicio === "oral_cards") {
-                    let listaTarjetas = ej.campos_formulario || [];
-                    html += `
-                    <p style="font-size:0.9rem; font-weight:600; color:#555; margin-bottom:15px;"><i class="fas fa-info-circle"></i> Formulez une question pour cada carte ci-dessous :</p>
-                    <div class="oral-card-grid">`;
-                    listaTarjetas.forEach((palabra, idxCard) => {
-                        html += `
-                        <div class="oral-word-card">
-                            <span>${palabra.trim()}</span>
-                            <button class="audio-interactive-btn" id="btn-card-rec-${idxCard}" onclick="window.toggleGrabacionInteractiva('btn-card-rec-${idxCard}')" style="padding:6px 12px; font-size:0.75rem; justify-content:center;">
-                                <i class="fas fa-microphone"></i> Question
-                            </button>
-                        </div>`;
-                    });
-                    html += `</div>`;
-                }
-
-                else if (tipoEjercicio === "oral_monologue" || tipoEjercicio === "oral_debate") {
-                    if (ej.texto_lectura) {
-                        html += `
-                        <div style="background: #ffffff; border-left: 4px solid var(--gold); padding: 20px; border-radius: 8px; margin-bottom: 25px; font-size: 0.95rem; line-height: 1.6; color: #333; white-space: pre-wrap; box-shadow:0 2px 6px rgba(0,0,0,0.02); border:1px solid #e2e8f0; border-left-width:4px;">
-                            <strong><i class="fas fa-file-invoice" style="color:var(--gold); margin-right:8px;"></i> Document Détonateur / Consigne :</strong><br><br>${ej.texto_lectura}
-                        </div>`;
-                    }
-                    html += `
-                    <div class="sophia-chat-box" style="border-left:4px solid var(--green);">
-                        <div style="font-weight:700; font-size:0.9rem; margin-bottom:10px; color:var(--oxford);"><i class="fas fa-microphone-alt"></i> PHASE 1 : ENREGISTREMENT DE VOTRE EXPOSÉ CONTINU</div>
-                        <button class="audio-interactive-btn" id="btn-record-expose" onclick="window.toggleGrabacionInteractiva('btn-record-expose')" style="background:var(--oxford); width:100%; justify-content:center; padding:15px;">
-                            <i class="fas fa-microphone"></i> Commencer le Monologue Continu
-                        </button>
-                    </div>`;
-                }
-            }
 
             if (currentSkill === "CE" && ej.texto_lectura) {
                 html += `
@@ -905,37 +651,14 @@
             if (ej.pagina_pdf) {
                 html += `
                 <div class="pdf-viewer-container" id="pdf-viewer-block">
-                    <p style="font-size:0.8rem; color:var(--gold); font-weight:600; margin-top:0;"><i class="fas fa-book-open"></i> Page ${ej.pagina_pdf} du libro original</p>
+                    <p style="font-size:0.8rem; color:var(--gold); font-weight:600; margin-top:0;"><i class="fas fa-book-open"></i> Page ${ej.pagina_pdf} du livre original</p>
                     <canvas id="pdf-canvas-render"></canvas>
                 </div>`;
                 setTimeout(() => renderPageFromBook(ej.pagina_pdf), 50);
             }
 
-            if (ej.ruta_audio && currentSkill !== "PO" && currentSkill !== "po") {
-                const nombreArchivo = ej.ruta_audio.split('/').pop();
-                let trackMatch = nombreArchivo.match(/\d+/);
-                let track = trackMatch ? trackMatch[0] : "02";
-                if (track === "1" || track === "01") track = "02";
-                if (track.length > 2) track = track.slice(-2);
-                if (track.length === 1) track = "0" + track;
-                let nombreArchivoFinal = `${currentLevel}-${track}.mp3`;
-
-                getDownloadURL(ref(storage, `niveles/${currentLevel}/audios/${nombreArchivoFinal}`))
-                    .then(url => {
-                        const container = document.getElementById(audioId);
-                        if (container) container.innerHTML = `<audio controls style="width:100%;" src="${url}"></audio>`;
-                    })
-                    .catch(() => {
-                        getDownloadURL(ref(storage, `niveles/${currentLevel}/audios/${track}.mp3`))
-                            .then(url => {
-                                const container = document.getElementById(audioId);
-                                if (container) container.innerHTML = `<audio controls style="width:100%;" src="${url}"></audio>`;
-                            })
-                            .catch(() => {
-                                const container = document.getElementById(audioId);
-                                container.innerHTML = `<span style="color:red; font-size:0.85rem;"><i class="fas fa-exclamation-triangle"></i> Audio indisponible</span>`;
-                            });
-                    });
+            if (ej.ruta_audio) {
+                html += `<div id="${audioId}" style="margin-bottom: 20px; text-align:center;"><i class="fas fa-spinner fa-spin"></i> Audio...</div>`;
             }
 
             if (ej.preguntas && ej.preguntas.length > 0) {
@@ -960,100 +683,91 @@
                 html += `
                 <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px;">
                     <button class="nav-tab-btn" id="btn-submit-exercise" style="width:auto; background:var(--oxford); color:white; padding:10px 22px;"><i class="fas fa-paper-plane"></i> Envoyer</button>
+                    <button class="nav-tab-btn" id="btn-next-exercise" style="width:auto; background:var(--green); color:white; padding:10px 22px; display:none;">Suivant <i class="fas fa-arrow-right"></i></button>
                 </div>`;
-            } else if (currentSkill === "PE" || currentSkill === "pe") {
-                if (ej.tipo === "formulario" && ej.campos_formulario && ej.campos_formulario.length > 0) {
-                    html += `
-                    <div class="fiche-container" style="background: #ffffff; border: 1px solid #ddd; border-radius: 12px; padding: 25px; max-width: 500px; margin: 20px auto; box-shadow: 0 4px 15px rgba(0,0,0,0.05); color: #002147; text-align: left;">
-                        <div style="text-align: center; margin-bottom: 20px; border-bottom: 2px dashed #002147; padding-bottom: 10px;">
-                            <h3 style="margin: 0; color: #002147; text-transform: uppercase; font-size: 1.05rem; letter-spacing: 1px;">École de langues</h3>
-                            <h4 style="margin: 5px 0 0 0; color: #C5A059; font-weight: 400; font-size: 0.9rem;">Fiche d'inscription</h4>
-                        </div>
-                        <div class="accent-bar" style="display: flex; gap: 5px; margin-bottom: 20px; flex-wrap: wrap; justify-content: center;">
-                            <button type="button" class="accent-btn" onclick="insertarCaracterFicha('é')">é</button>
-                            <button type="button" class="accent-btn" onclick="insertarCaracterFicha('è')">è</button>
-                            <button type="button" class="accent-btn" onclick="insertarCaracterFicha('à')">à</button>
-                            <button type="button" class="accent-btn" onclick="insertarCaracterFicha('ç')">ç</button>
-                            <button type="button" class="accent-btn" onclick="insertarCaracterFicha('ù')">ù</button>
-                        </div>
-                        <form id="ficheFormDinámico" style="display: flex; flex-direction: column; gap: 15px;">`;
-
-                    ej.campos_formulario.forEach((campo) => {
-                        html += `
-                        <div style="display: flex; align-items: center; border-bottom: 1px solid #eee; padding-bottom: 5px;">
-                            <label style="width: 155px; font-weight: bold; font-size: 0.85rem;">${campo} :</label>
-                            <input type="text" data-campo-nombre="${campo}" class="input-dinamico-ficha" onfocus="registrarUltimoFoco(this)" style="flex: 1; border: none; outline: none; font-family: 'Montserrat', sans-serif; font-size: 0.9rem; color: #002147;">
-                        </div>`;
-                    });
-
-                    html += `
-                            <button type="button" id="btn-save-fiche-dinamico" style="background: var(--oxford); color: #ffffff; border: none; padding: 12px; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 15px; font-family: 'Montserrat', sans-serif; font-size: 0.9rem; width: 100%;">Enregistrer la fiche</button>
-                        </form>
-                    </div>`;
-                    
-                    setTimeout(() => {
-                        const btnSaveDin = document.getElementById('btn-save-fiche-dinamico');
-                        if(btnSaveDin) {
-                            btnSaveDin.onclick = function() {
-                                let respuestasFicha = [];
-                                let inputs = document.querySelectorAll('.input-dinamico-ficha');
-                                let incompleto = false;
-
-                                inputs.forEach(inp => {
-                                    let etiqueta = inp.getAttribute('data-campo-nombre');
-                                    let valor = inp.value.trim();
-                                    if(!valor) incompleto = true;
-                                    respuestasFicha.push(`${etiqueta}: ${valor}`);
-                                });
-
-                                if(incompleto) {
-                                    alert("S'il vous plaît, complétez tous les champs.");
-                                    return;
-                                }
-                                alert("Fiche enregistrée avec succès.");
-                            };
-                        }
-                    }, 50);
-
-                } else {
-                    html += `
-                    <div class="libre-container" style="background: #ffffff; border: 1px solid #ddd; border-radius: 12px; padding: 25px; margin-top: 20px; text-align: left; color: #002147;">
-                        <div class="accent-bar" style="display: flex; gap: 5px; margin-bottom: 12px; flex-wrap: wrap;">
-                            <button type="button" class="accent-btn" onclick="insertarCaracterFicha('é')">é</button>
-                            <button type="button" class="accent-btn" onclick="insertarCaracterFicha('è')">è</button>
-                            <button type="button" class="accent-btn" onclick="insertarCaracterFicha('à')">à</button>
-                            <button type="button" class="accent-btn" onclick="insertarCaracterFicha('ç')">ç</button>
-                            <button type="button" class="accent-btn" onclick="insertarCaracterFicha('ù')">ù</button>
-                        </div>
-                        <textarea id="production-text-libre" onfocus="registrarUltimoFoco(this)" oninput="window.contarPalabrasLibre()" placeholder="Écrivez votre message ici..." style="width: 100%; height: 180px; padding: 12px; border: 1px solid #ccc; border-radius: 8px; font-family: 'Montserrat', sans-serif; font-size: 0.95rem; line-height: 1.5; box-sizing: border-box; resize: vertical; outline: none;"></textarea>
-                        <div id="counter-label-libre" style="text-align: right; font-size: 0.85rem; margin-top: 5px; font-weight: 700; color: #e74c3c;">Mots: 0 / 40 minimum</div>
-                        <button type="button" id="btn-save-libre-direct" style="background: var(--oxford); color: #ffffff; border: none; padding: 12px; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 15px; font-family: 'Montserrat', sans-serif; font-size: 0.9rem; width: 100%;">Envoyer la production</button>
-                    </div>`;
-                    
-                    setTimeout(() => {
-                        const btnSaveLibre = document.getElementById('btn-save-libre-direct');
-                        if(btnSaveLibre) {
-                            btnSaveLibre.onclick = function() {
-                                const textoLibre = document.getElementById('production-text-libre').value.trim();
-                                if(!textoLibre) {
-                                    alert("S'il vous plaît, écrivez votre message avant d'envoyer.");
-                                    return;
-                                }
-                                alert("Production enregistrée avec succès.");
-                            };
-                        }
-                    }, 50);
-                }
+            } else {
+                html += `<p style="font-style:italic; color:#777; margin-top:15px;">Production libre ou exercice écrit. Répondez sur votre cahier.</p>`;
             }
 
             html += `
                 <div id="sophia-box" style="display:none; background:#f4f7f9; border-left:4px solid var(--gold); padding:20px; border-radius:6px; margin-top:25px;">
-                    <div style="display:flex; align-items:center; gap:10px; font-weight:700; color:var(--oxford);"><i class="fas fa-chart-bar" style="color:var(--gold);"></i> CONSEIL DE SOPHIA</div>
-                    <p id="sophia-verdict-text" style="margin:0; font-size:0.95rem;"></p>
+                    <div style="display:flex; align-items:center; gap:10px; font-weight:700; color:var(--oxford);"><i class="fas fa-lightbulb" style="color:var(--gold);"></i> CONSEIL DE SOPHIA</div>
+                    <p id="sophia-verdict-text" style="margin:0; font-size:0.95rem Papel"></p>
+                    ${ej.transcripcion ? `<div style="font-weight:700; margin-top:15px; color:var(--oxford);">Transcription :</div><div style="background:#fff; border:1px dashed #ccc; padding:12px; border-radius:5px; margin-top:8px; font-size:0.95rem; line-height:1.6; color:#333;">${ej.transcripcion}</div>` : ''}
                 </div>
             </div>`;
 
             target.innerHTML = html;
+
+            // MEJORA INTEGRADA DE COMPRÉHENSION ORALE: Lee el número de track impreso en el libro de forma segura
+            if (ej.ruta_audio) {
+                let numerosEncontrados = ej.ruta_audio.match(/\d+/);
+                let track = "02"; 
+
+                if (numerosEncontrados) {
+                    let numeroPuro = numerosEncontrados[0];
+                    track = numeroPuro.length > 2 ? numeroPuro.slice(-2) : numeroPuro;
+                }
+
+                if (track.length === 1) track = "0" + track;
+
+                let nombreArchivoFinal = `${track}.mp3`;
+
+                getDownloadURL(ref(storage, `niveles/${currentLevel}/audios/${nombreArchivoFinal}`))
+                    .then(url => {
+                        const container = document.getElementById(audioId);
+                        if (container) container.innerHTML = `<audio controls style="width:100%;" src="${url}"></audio>`;
+                    })
+                    .catch((error) => {
+                        console.error("Error al cargar desde el libro:", error);
+                        const container = document.getElementById(audioId);
+                        if (container) {
+                            container.innerHTML = `<span style="color:red; font-size:0.85rem;"><i class="fas fa-exclamation-triangle"></i> Audio ${nombreArchivoFinal} non trouvé dans le Storage</span>`;
+                        }
+                    });
+            }
+
+            const btnSubmit = document.getElementById('btn-submit-exercise');
+            const btnNext = document.getElementById('btn-next-exercise');
+            const sophiaBox = document.getElementById('sophia-box');
+
+            if (btnSubmit) {
+                btnSubmit.addEventListener('click', () => {
+                    let total = ej.preguntas.length;
+                    let aciertos = 0;
+                    ej.preguntas.forEach((p, pIdx) => {
+                        const selected = document.querySelector(`input[name="question_${pIdx}"]:checked`);
+                        const iconTarget = document.getElementById(`status-icon-target-${pIdx}`);
+                        const block = document.getElementById(`block-preg-${pIdx}`);
+                        let rAlumno = selected ? selected.value.trim().toLowerCase() : "";
+                        let rCorrecta = p.respuesta_correcta.trim().toLowerCase();
+
+                        if (rAlumno === rCorrecta) {
+                            aciertos++;
+                            iconTarget.innerHTML = `<i class="fas fa-check-circle" style="color:var(--green); margin-right:8px;"></i>`;
+                            block.style.borderColor = "var(--green)";
+                        } else {
+                            iconTarget.innerHTML = `<i class="fas fa-times-circle" style="color:red; margin-right:8px;"></i>`;
+                            block.style.borderColor = "red";
+                        }
+                    });
+
+                    document.querySelectorAll('input[type="radio"]').forEach(r => r.disabled = true);
+                    btnSubmit.style.display = "none";
+                    if (btnNext) btnNext.style.display = "inline-block";
+
+                    let porcentaje = (aciertos / total) * 100;
+                    const txtSophia = document.getElementById('sophia-verdict-text');
+                    if (porcentaje >= 70) {
+                        txtSophia.innerHTML = `<strong>Félicitations !</strong> Tu as obtenu <strong>${aciertos}/${total}</strong>.`;
+                        txtSophia.style.color = "var(--green)";
+                    } else {
+                        txtSophia.innerHTML = `<strong>Attention !</strong> Tu as obtenu <strong>${aciertos}/${total}</strong>. Revois l'exercice.`;
+                        txtSophia.style.color = "red";
+                    }
+                    if (sophiaBox) sophiaBox.style.display = "block";
+                });
+            }
         }
 
         function renderPageFromBook(pageNum) {
