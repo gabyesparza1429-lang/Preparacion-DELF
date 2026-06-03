@@ -684,6 +684,8 @@
         // SOLUCIÓN LINGÜÍSTICA DEFINITIVA CON FILTRO CONTEXTUAL DE IDIOMAS (SÓLO FRANCÉS Y ESPAÑOL)
         window.buscarDiccionarioDinamico = async function(event, palabra) {
             event.stopPropagation();
+            const levelToUse = window.currentLevel || currentLevel;
+            const esNivelA = (levelToUse === 'A1' || levelToUse === 'A2');
             const popup = document.getElementById('floating-dict-popup');
             if(!popup) return;
 
@@ -705,7 +707,7 @@
 
                 popup.innerHTML = `
                     <h5>${palabra.toUpperCase()}</h5>
-                    <p>${resultado}</p>
+                    <p><strong>${esNivelA ? 'Traduction' : 'Définition'} :</strong> ${resultado}</p>
                 `;
 
             } catch (error) {
