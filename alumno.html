@@ -804,29 +804,15 @@
                         const iconTarget = document.getElementById(`status-icon-target-${pIdx}`);
                         const block = document.getElementById(`block-preg-${pIdx}`);
                         
-                        const radiosDePregunta = document.querySelectorAll(`input[name="question_${pIdx}"]`);
-                        let indiceCorrectoPorLetra = -1;
-                        
-                        let rCorrectaRaw = p.respuesta_correcta ? p.respuesta_correcta.trim().toUpperCase() : "";
-                        if (rCorrectaRaw === "A") indiceCorrectoPorLetra = 0;
-                        else if (rCorrectaRaw === "B") indiceCorrectoPorLetra = 1;
-                        else if (rCorrectaRaw === "C") indiceCorrectoPorLetra = 2;
-
                         let esCorrecto = false;
                         
                         if (selected) {
-                            let valorSeleccionado = selected.value.replace(/\s+/g, ' ').trim().toLowerCase();
+                            // MEJORA AGREGADA: Limpiamos absolutamente signos de puntuación, puntos y comas extras para evitar desajustes
+                            let valorSeleccionado = selected.value.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()¿?¡!]/g,"").replace(/\s+/g, ' ').trim().toLowerCase();
+                            let textoCorrectoDirecto = p.respuesta_correcta ? p.respuesta_correcta.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()¿?¡!]/g,"").replace(/\s+/g, ' ').trim().toLowerCase() : "";
                             
-                            if (indiceCorrectoPorLetra !== -1 && radiosDePregunta[indiceCorrectoPorLetra]) {
-                                let textoCorrectoMapeado = radiosDePregunta[indiceCorrectoPorLetra].value.replace(/\s+/g, ' ').trim().toLowerCase();
-                                if (valorSeleccionado === textoCorrectoMapeado) {
-                                    esCorrecto = true;
-                                }
-                            } else {
-                                let textoCorrectoDirecto = rCorrectaRaw.toLowerCase();
-                                if (valorSeleccionado === textoCorrectoDirecto) {
-                                    esCorrecto = true;
-                                }
+                            if (valorSeleccionado === textoCorrectoDirecto) {
+                                esCorrecto = true;
                             }
                         }
 
