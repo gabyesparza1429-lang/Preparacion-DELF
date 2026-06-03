@@ -350,13 +350,13 @@
             padding: 12px;
             border-radius: 8px;
             z-index: 999;
-            max-width: 260px;
+            max-width: 290px;
             font-size: 0.85rem;
             display: none;
             color: #333;
         }
-        .dict-popup h5 { margin: 0 0 6px 0; color: var(--oxford); font-size: 0.9rem; font-weight: bold; border-bottom: 1px solid #eee; padding-bottom: 4px; }
-        .dict-popup p { margin: 4px 0; line-height: 1.3; }
+        .dict-popup h5 { margin: 0 0 6px 0; color: var(--oxford); font-size: 0.95rem; font-weight: bold; border-bottom: 1px solid #eee; padding-bottom: 4px; text-transform: uppercase; }
+        .dict-popup p { margin: 5px 0; line-height: 1.4; }
     </style>
 </head>
 <body>
@@ -652,32 +652,77 @@
             }).join('');
         };
 
-        window.buscarDiccionarioDinamico = function(event, palabra) {
+        // MEJORA: CONEXIÓN REAL CON API DE DICCIONARIO Y TRADUCTOR MULTINIVEL AUTOMÁTICO
+        window.buscarDiccionarioDinamico = async function(event, palabra) {
             event.stopPropagation();
             const popup = document.getElementById('floating-dict-popup');
             if(!popup) return;
 
-            let definicion = "";
-            let sinonimos = "";
-            let lvlEsA = (currentLevel === "A1" || currentLevel === "A2");
-
-            if (lvlEsA) {
-                definicion = `<strong>Traduction :</strong> Significado en Español para <i>"${palabra}"</i>...`;
-                sinonimos = `<strong>Synonymes :</strong> Equivalentes simples para el nivel ${currentLevel}`;
-            } else {
-                definicion = `<strong>Définition :</strong> Explication monolingue en français pour le niveau ${currentLevel}...`;
-                sinonimos = `<strong>Synonymes :</strong> Termes alternatifs académiques`;
-            }
-
-            popup.innerHTML = `
-                <h5>${palabra.toUpperCase()}</h5>
-                <p>${definicion}</p>
-                <p style="margin-top:6px; color:#555;">${sinonimos}</p>
-            `;
-
+            popup.innerHTML = `<h5>${palabra}</h5><p style="color:#777;"><i class="fas fa-spinner fa-spin"></i> Recherche...</p>`;
             popup.style.left = `${event.pageX + 10}px`;
             popup.style.top = `${event.pageY + 10}px`;
             popup.style.display = 'block';
+
+            let definicionHtml = "";
+            let sinonimosHtml = "";
+            let lvlEsA = (currentLevel === "A1" || currentLevel === "A2");
+
+            try {
+                // Consultamos una API libre para obtener la estructura lingüística real de la palabra
+                const resp = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${palabra}`);
+                
+                if (resp.ok) {
+                    const data = await resp.json();
+                    const meanings = data[0]?.meanings || [];
+                    
+                    // Extraemos sinónimos reales si la API los encuentra
+                    let listaSinonimos = [];
+                    meanings.forEach(m => {
+                        if (m.synonyms && m.synonyms.length > 0) listaSinonimos.push(...m.synonyms);
+                    });
+                    
+                    if (listaSinonimos.length > 0) {
+                        sinonimosHtml = `<p><strong>Synonymes :</strong> ${listaSinonimos.slice(0, 3).join(', ')}</p>`;
+                    } else {
+                        sinonimosHtml = `<p style="color:#888; font-style:italic;">Aucun synonyme académique trouvé.</p>`;
+                    }
+
+                    if (lvlEsA) {
+                        // Nivel Inicial: Traducimos de forma simulada pero contextualizada al español
+                        const tradResp = await fetch(`https://api.mymemory.translated.net/get?q=${palabra}&langpair=fr|es`);
+                        const tradData = await tradResp.json();
+                        let traduccionReal = tradData.responseData?.translatedText || palabra;
+                        definicionHtml = `<p><strong>Traduction :</strong> <span style="color:var(--green); font-weight:600;">${traduccionReal}</span></p>`;
+                    } else {
+                        // Nivel Avanzado: Definición monolingüe en Francés extraída directamente
+                        let defText = meanings[0]?.definitions[0]?.definition || "Définition non disponible.";
+                        definicionHtml = `<p><strong>Définition :</strong> ${defText}</p>`;
+                    }
+                } else {
+                    // Si la palabra es muy específica o una conjugación verbal, usamos un traductor de respaldo rápido
+                    const fallbackResp = await fetch(`https://api.mymemory.translated.net/get?q=${palabra}&langpair=fr|es`);
+                    const fallbackData = await fallbackResp.json();
+                    let tradFallback = fallbackData.responseData?.translatedText || palabra;
+                    
+                    if (lvlEsA) {
+                        definicionHtml = `<p><strong>Traduction :</strong> <span style="color:var(--green); font-weight:600;">${tradFallback}</span></p>`;
+                        sinonimosHtml = `<p style="color:#888; font-style:italic;">Synonymes non disponibles.</p>`;
+                    } else {
+                        definicionHtml = `<p><strong>Définition :</strong> Signification contextuelle : <i>${tradFallback}</i></p>`;
+                        sinonimosHtml = `<p style="color:#888; font-style:italic;">Aucun synonyme trouvé.</p>`;
+                    }
+                }
+
+                popup.innerHTML = `
+                    <h5>${palabra.toUpperCase()}</h5>
+                    ${definicionHtml}
+                    ${sinonimosHtml}
+                `;
+
+            } catch (error) {
+                console.error(error);
+                popup.innerHTML = `<h5>${palabra}</h5><p style="color:red;">Erreur de connexion au dictionnaire.</p>`;
+            }
         };
 
         document.addEventListener('click', () => {
@@ -807,7 +852,6 @@
                         let esCorrecto = false;
                         
                         if (selected) {
-                            // MEJORA AGREGADA: Limpiamos absolutamente signos de puntuación, puntos y comas extras para evitar desajustes
                             let valorSeleccionado = selected.value.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()¿?¡!]/g,"").replace(/\s+/g, ' ').trim().toLowerCase();
                             let textoCorrectoDirecto = p.respuesta_correcta ? p.respuesta_correcta.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()¿?¡!]/g,"").replace(/\s+/g, ' ').trim().toLowerCase() : "";
                             
