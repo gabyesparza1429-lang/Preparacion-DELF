@@ -676,13 +676,12 @@
 
         // Función auxiliar para definición monolingüe (Niveles B/C)
         async function obtenerDefinicionFrances(palabra) {
-            // MyMemory no soporta fr|fr directamente. Intentamos obtener una definición
-            // o usamos español como fallback pedagógico.
+            // Se fuerza la cadena de búsqueda para solicitar la definición
             const query = `définition de ${palabra}`;
-            return await llamarApiTraduccion(query, 'fr|es');
+            return await llamarApiTraduccion(query, 'fr|fr');
         }
 
-        // Función principal expuesta al DOM
+        // SOLUCIÓN LINGÜÍSTICA DEFINITIVA CON FILTRO CONTEXTUAL DE IDIOMAS (SÓLO FRANCÉS Y ESPAÑOL)
         window.buscarDiccionarioDinamico = async function(event, palabra) {
             event.stopPropagation();
             const levelToUse = window.currentLevel || currentLevel;
@@ -694,6 +693,8 @@
             popup.style.left = `${event.pageX + 10}px`;
             popup.style.top = `${event.pageY + 10}px`;
             popup.style.display = 'block';
+
+            const esNivelA = (currentLevel === 'A1' || currentLevel === 'A2');
 
             try {
                 let resultado = "";
