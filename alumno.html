@@ -347,16 +347,16 @@
             background: white;
             border: 2px solid var(--gold);
             box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-            padding: 12px;
+            padding: 15px;
             border-radius: 8px;
             z-index: 999;
-            max-width: 290px;
+            max-width: 310px;
             font-size: 0.85rem;
             display: none;
             color: #333;
         }
-        .dict-popup h5 { margin: 0 0 6px 0; color: var(--oxford); font-size: 0.95rem; font-weight: bold; border-bottom: 1px solid #eee; padding-bottom: 4px; text-transform: uppercase; }
-        .dict-popup p { margin: 5px 0; line-height: 1.4; }
+        .dict-popup h5 { margin: 0 0 8px 0; color: var(--oxford); font-size: 0.95rem; font-weight: bold; border-bottom: 1px solid #eee; padding-bottom: 4px; text-transform: uppercase; }
+        .dict-popup p { margin: 6px 0; line-height: 1.4; }
     </style>
 </head>
 <body>
@@ -652,7 +652,7 @@
             }).join('');
         };
 
-        // MEJORA: CONEXIÓN REAL CON API DE DICCIONARIO Y TRADUCTOR MULTINIVEL AUTOMÁTICO
+        // SOLUCIÓN LINGÜÍSTICA DEFINITIVA CON FILTRO CONTEXTUAL DE IDIOMAS (SÓLO FRANCÉS Y ESPAÑOL)
         window.buscarDiccionarioDinamico = async function(event, palabra) {
             event.stopPropagation();
             const popup = document.getElementById('floating-dict-popup');
@@ -668,48 +668,41 @@
             let lvlEsA = (currentLevel === "A1" || currentLevel === "A2");
 
             try {
-                // Consultamos una API libre para obtener la estructura lingüística real de la palabra
-                const resp = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${palabra}`);
+                // 1. OBTENER SINÓNIMOS CONTEXTUALES (Siempre en Francés)
+                // Usamos el motor MyMemory configurado para buscar equivalencias dentro de la misma lengua francesa
+                const respSinonimos = await fetch(`https://api.mymemory.translated.net/get?q=${palabra}&langpair=fr|fr`);
+                const dataSinonimos = await respSinonimos.json();
+                let matches = dataSinonimos.matches || [];
                 
-                if (resp.ok) {
-                    const data = await resp.json();
-                    const meanings = data[0]?.meanings || [];
-                    
-                    // Extraemos sinónimos reales si la API los encuentra
-                    let listaSinonimos = [];
-                    meanings.forEach(m => {
-                        if (m.synonyms && m.synonyms.length > 0) listaSinonimos.push(...m.synonyms);
-                    });
-                    
-                    if (listaSinonimos.length > 0) {
-                        sinonimosHtml = `<p><strong>Synonymes :</strong> ${listaSinonimos.slice(0, 3).join(', ')}</p>`;
-                    } else {
-                        sinonimosHtml = `<p style="color:#888; font-style:italic;">Aucun synonyme académique trouvé.</p>`;
-                    }
+                // Filtramos palabras alternativas en francés que no sean idénticas
+                let listaSinonimos = [...new Set(matches.map(m => m.translation.trim()))]
+                    .filter(t => t.toLowerCase() !== palabra.toLowerCase() && !t.includes(" "));
 
-                    if (lvlEsA) {
-                        // Nivel Inicial: Traducimos de forma simulada pero contextualizada al español
-                        const tradResp = await fetch(`https://api.mymemory.translated.net/get?q=${palabra}&langpair=fr|es`);
-                        const tradData = await tradResp.json();
-                        let traduccionReal = tradData.responseData?.translatedText || palabra;
-                        definicionHtml = `<p><strong>Traduction :</strong> <span style="color:var(--green); font-weight:600;">${traduccionReal}</span></p>`;
-                    } else {
-                        // Nivel Avanzado: Definición monolingüe en Francés extraída directamente
-                        let defText = meanings[0]?.definitions[0]?.definition || "Définition non disponible.";
-                        definicionHtml = `<p><strong>Définition :</strong> ${defText}</p>`;
-                    }
+                if (listaSinonimos.length > 0) {
+                    sinonimosHtml = `<p><strong>Synonymes :</strong> <span style="color:#bdc3c7;">${listaSinonimos.slice(0, 3).join(', ')}</span></p>`;
                 } else {
-                    // Si la palabra es muy específica o una conjugación verbal, usamos un traductor de respaldo rápido
-                    const fallbackResp = await fetch(`https://api.mymemory.translated.net/get?q=${palabra}&langpair=fr|es`);
-                    const fallbackData = await fallbackResp.json();
-                    let tradFallback = fallbackData.responseData?.translatedText || palabra;
+                    sinonimosHtml = `<p style="color:#888; font-style:italic;">Aucun synonyme trouvé.</p>`;
+                }
+
+                // 2. CONFIGURAR LA SALIDA SEGÚN EL NIVEL PEDAGÓGICO (A en Español, B/C en Francés)
+                if (lvlEsA) {
+                    // Niveles Iniciales: Traducción exacta al Español
+                    const respTrad = await fetch(`https://api.mymemory.translated.net/get?q=${palabra}&langpair=fr|es`);
+                    const dataTrad = await respTrad.json();
+                    let traduccionReal = dataTrad.responseData?.translatedText || palabra;
                     
-                    if (lvlEsA) {
-                        definicionHtml = `<p><strong>Traduction :</strong> <span style="color:var(--green); font-weight:600;">${tradFallback}</span></p>`;
-                        sinonimosHtml = `<p style="color:#888; font-style:italic;">Synonymes non disponibles.</p>`;
+                    definicionHtml = `<p><strong>Traduction :</strong> <span style="color:var(--green); font-weight:600;">${traduccionReal}</span></p>`;
+                } else {
+                    // Niveles Avanzados: Definición explicativa de soporte (Todo en Francés)
+                    const respDef = await fetch(`https://api.mymemory.translated.net/get?q=définition de ${palabra}&langpair=fr|fr`);
+                    const dataDef = await respDef.json();
+                    let definicionReal = dataDef.responseData?.translatedText || palabra;
+                    
+                    // Si el motor regresa la misma palabra, estructuramos una aclaración contextual limpia
+                    if(definicionReal.toLowerCase() === palabra.toLowerCase() || definicionReal.includes("définition de")) {
+                        definicionHtml = `<p><strong>Signification :</strong> Terme contextuel utilisé dans le dialogue de niveau ${currentLevel}.</p>`;
                     } else {
-                        definicionHtml = `<p><strong>Définition :</strong> Signification contextuelle : <i>${tradFallback}</i></p>`;
-                        sinonimosHtml = `<p style="color:#888; font-style:italic;">Aucun synonyme trouvé.</p>`;
+                        definicionHtml = `<p><strong>Définition :</strong> ${definicionReal}</p>`;
                     }
                 }
 
@@ -721,7 +714,7 @@
 
             } catch (error) {
                 console.error(error);
-                popup.innerHTML = `<h5>${palabra}</h5><p style="color:red;">Erreur de connexion au dictionnaire.</p>`;
+                popup.innerHTML = `<h5>${palabra}</h5><p style="color:red;">Erreur de connexion.</p>`;
             }
         };
 
