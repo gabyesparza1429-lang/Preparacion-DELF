@@ -7,6 +7,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
     
+    <!-- ================================================================= -->
+    <!-- [TEMA 1] DISEÑO GENERAL Y ESTILOS VISUALES (CSS)                  -->
+    <!-- ================================================================= -->
     <style>
         :root { 
             --oxford: #002147; 
@@ -362,6 +365,9 @@
 </head>
 <body>
 
+    <!-- ================================================================= -->
+    <!-- [TEMA 2] ESTRUCTURA DE LA BARRA LATERAL (SIDEBAR HTML)             -->
+    <!-- ================================================================= -->
     <div class="sidebar">
         <h2>Mon Espace DELF</h2>
         <button class="nav-tab-btn active" id="tab-parcours">
@@ -375,6 +381,9 @@
         </button>
     </div>
 
+    <!-- ================================================================= -->
+    <!-- [TEMA 3] CONTENEDOR PRINCIPAL Y BANNER (MAIN INTERFACE HTML)       -->
+    <!-- ================================================================= -->
     <div class="main-container">
         <div class="project-banner">
             <div class="banner-top">
@@ -402,6 +411,9 @@
             </div>
         </div>
 
+        <!-- ================================================================= -->
+        <!-- [TEMA 4] ZONA DE TRABAJO DINÁMICA (WORKSPACE HTML)                -->
+        <!-- ================================================================= -->
         <div class="content-area">
             <div class="workspace-content-wrapper">
                 <div class="controls-row" id="parcours-controls-container">
@@ -420,8 +432,12 @@
         </div>
     </div>
 
+    <!-- Elemento flotante para el diccionario -->
     <div id="floating-dict-popup" class="dict-popup"></div>
 
+    <!-- ================================================================= -->
+    <!-- [TEMA 5] CONFIGURACIÓN E INICIALIZACIÓN DE FIREBASE (JS)          -->
+    <!-- ================================================================= -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
         import { getFirestore, doc, getDoc, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js";
@@ -650,7 +666,7 @@
 
         window.convertirTextoInteractivo = function(texto) {
             if (!texto) return '';
-            return texto.split(/(\s+)/).map(fragmento => {
+            return text.split(/(\s+)/).map(fragmento => {
                 if (fragmento.trim() === '') return fragmento;
                 let palabraLimpia = fragmento.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()¿?¡!]/g,"");
                 return `<span class="clickable-word" onclick="window.buscarDiccionarioDinamico(event, '${palabraLimpia}')">${fragmento}</span>`;
@@ -716,179 +732,13 @@
             if(popup) popup.style.display = 'none';
         });
 
-        // ================================================================= -->
-        // [TEMA 7] RENDERIZADO Y CONTROL DE EJERCICIOS (DOM GENERATION)     -->
-        // ================================================================= -->
-        function renderExerciseStructure() {
-            const target = document.getElementById('dynamic-workspace-target');
-            filtrarEjerciciosDeUnidadActual();
+        init();
+    </script>
 
-            if (ejerciciosFiltrados.length === 0 || !ejerciciosFiltrados[currentExerciseIndex]) {
-                target.innerHTML = `<p style="text-align:center; color:#888;">Aucun exercice disponible.</p>`;
-                return;
-            }
-
-            const ej = ejerciciosFiltrados[currentExerciseIndex];
-            const audioId = `audio-container-${currentExerciseIndex}`;
-
-            let html = `
-            <div class="exercise-card">
-                <h4 style="margin-top: 0; margin-bottom: 20px; color: var(--oxford); font-size: 1.05rem; font-weight:700;">
-                    ${ej.instruccion || 'Exercice'} 
-                </h4>`;
-
-            if (currentSkill === "CE" && ej.texto_lectura) {
-                html += `
-                <div style="background: #f8f9fa; border-left: 4px solid var(--gold); padding: 20px; border-radius: 6px; margin-bottom: 25px; font-size: 0.95rem; line-height: 1.6; color: #333; white-space: pre-wrap;">
-                    <strong><i class="fas fa-file-alt" style="color:var(--gold); margin-right:8px;"></i> Document de lecture :</strong><br><br>${ej.texto_lectura}
-                </div>`;
-            }
-
-            if (ej.pagina_pdf) {
-                html += `
-                <div class="pdf-viewer-container" id="pdf-viewer-block">
-                    <p style="font-size:0.8rem; color:var(--gold); font-weight:600; margin-top:0;"><i class="fas fa-book-open"></i> Page ${ej.pagina_pdf} du livre original</p>
-                    <canvas id="pdf-canvas-render"></canvas>
-                </div>`;
-                setTimeout(() => window.renderPageFromBook(ej.pagina_pdf), 50);
-            }
-
-            if (ej.ruta_audio) {
-                html += `<div id="${audioId}" style="margin-bottom: 20px; text-align:center;"><i class="fas fa-spinner fa-spin"></i> Audio...</div>`;
-            }
-
-            if (ej.preguntas && ej.preguntas.length > 0) {
-                ej.preguntas.forEach((p, pIdx) => {
-                    html += `
-                    <div class="pregunta-block" id="block-preg-${pIdx}" style="padding:15px; border-radius:6px; margin-bottom:15px; border:1px solid #eef2f5;">
-                        <p style="margin-top:0; margin-bottom:12px; font-weight:600; color:#222; display:flex; align-items:center;">
-                            <span id="status-icon-target-${pIdx}"></span>
-                            <span>${p.pregunta}</span>
-                        </p>`;
-                    if (p.opciones) {
-                        p.opciones.forEach((opt) => {
-                            html += `
-                            <label style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px; cursor: pointer;">
-                                <input type="radio" name="question_${pIdx}" value="${opt}" style="accent-color:var(--oxford);"> ${opt}
-                            </label>`;
-                        });
-                    }
-                    html += `</div>`;
-                });
-
-                html += `
-                <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px;">
-                    <button class="nav-tab-btn" id="btn-submit-exercise" style="width:auto; background:var(--oxford); color:white; padding:10px 22px;"><i class="fas fa-paper-plane"></i> Envoyer</button>
-                    <button class="nav-tab-btn" id="btn-next-exercise" style="width:auto; background:var(--green); color:white; padding:10px 22px; display:none;">Suivant <i class="fas fa-arrow-right"></i></button>
-                </div>`;
-            } else {
-                html += `<p style="font-style:italic; color:#777; margin-top:15px;">Production libre ou exercice écrit. Répondez sur votre cahier.</p>`;
-            }
-
-            html += `
-                <div id="sophia-box" style="display:none; background:#f4f7f9; border-left:4px solid var(--gold); padding:20px; border-radius:6px; margin-top:25px;">
-                    <div style="display:flex; align-items:center; gap:10px; font-weight:700; color:var(--oxford);"><i class="fas fa-lightbulb" style="color:var(--gold);"></i> CONSEIL DE SOPHIA</div>
-                    <p id="sophia-verdict-text" style="margin:0; font-size:0.95rem;"></p>
-                    
-                    ${ej.transcripcion ? `
-                    <div style="font-weight:700; margin-top:15px; color:var(--oxford);"><i class="fas fa-headphones-alt"></i> Transcription Interactive (Cliquez sur un mot) :</div>
-                    <div id="interactive-transcription-box" style="background:#fff; border:1px dashed #ccc; padding:12px; border-radius:5px; margin-top:8px; font-size:0.95rem; line-height:1.6; color:#333; user-select:none;"></div>` : ''}
-                </div>
-            </div>`;
-
-            target.innerHTML = html;
-
-            if (ej.ruta_audio) {
-                let numerosEncontrados = ej.ruta_audio.match(/\d+/);
-                let track = "02"; 
-
-                if (numerosEncontrados) {
-                    let numeroPuro = numerosEncontrados[0];
-                    track = numeroPuro.length > 2 ? numeroPuro.slice(-2) : numeroPuro;
-                }
-
-                if (track.length === 1) track = "0" + track;
-                let nombreArchivoFinal = `${track}.mp3`;
-
-                getDownloadURL(ref(storage, `niveles/${currentLevel}/audios/${nombreArchivoFinal}`))
-                    .then(url => {
-                        const container = document.getElementById(audioId);
-                        if (container) container.innerHTML = `<audio controls style="width:100%;" src="${url}"></audio>`;
-                    })
-                    .catch((error) => {
-                        console.error("Error al cargar desde el libro:", error);
-                        const container = document.getElementById(audioId);
-                        if (container) {
-                            container.innerHTML = `<span style="color:red; font-size:0.85rem;"><i class="fas fa-exclamation-triangle"></i> Audio ${nombreArchivoFinal} non trouvé dans le Storage</span>`;
-                        }
-                    });
-            }
-
-            const btnSubmit = document.getElementById('btn-submit-exercise');
-            const btnNext = document.getElementById('btn-next-exercise');
-            const sophiaBox = document.getElementById('sophia-box');
-
-            if (btnSubmit) {
-                btnSubmit.addEventListener('click', () => {
-                    let total = ej.preguntas.length;
-                    let aciertos = 0;
-                    
-                    ej.preguntas.forEach((p, pIdx) => {
-                        const selected = document.querySelector(`input[name="question_${pIdx}"]:checked`);
-                        const iconTarget = document.getElementById(`status-icon-target-${pIdx}`);
-                        const block = document.getElementById(`block-preg-${pIdx}`);
-                        
-                        let esCorrecto = false;
-                        
-                        if (selected) {
-                            let valorSeleccionado = selected.value.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()¿?¡!]/g,"").replace(/\s+/g, ' ').trim().toLowerCase();
-                            let textoCorrectoDirecto = p.respuesta_correcta ? p.respuesta_correcta.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()¿?¡!]/g,"").replace(/\s+/g, ' ').trim().toLowerCase() : "";
-                            
-                            if (valorSeleccionado === textoCorrectoDirecto) {
-                                esCorrecto = true;
-                            }
-                        }
-
-                        if (esCorrecto) {
-                            aciertos++;
-                            iconTarget.innerHTML = `<i class="fas fa-check-circle" style="color:var(--green); margin-right:8px;"></i>`;
-                            block.style.borderColor = "var(--green)";
-                            block.style.background = "#f4fff5";
-                        } else {
-                            iconTarget.innerHTML = `<i class="fas fa-times-circle" style="color:red; margin-right:8px;"></i>`;
-                            block.style.borderColor = "red";
-                            block.style.background = "#fff5f5";
-                        }
-                    });
-
-                    document.querySelectorAll('input[type="radio"]').forEach(r => r.disabled = true);
-                    btnSubmit.style.display = "none";
-                    if (btnNext) btnNext.style.display = "inline-block";
-
-                    let porcentaje = (aciertos / total) * 100;
-                    const txtSophia = document.getElementById('sophia-verdict-text');
-                    if (porcentaje >= 70) {
-                        txtSophia.innerHTML = `<strong>Félicitations !</strong> Tu as obtenu <strong>${aciertos}/${total}</strong>.`;
-                        txtSophia.style.color = "var(--green)";
-                    } else {
-                        txtSophia.innerHTML = `<strong>Attention !</strong> Tu as obtenu <strong>${aciertos}/${total}</strong>. Revois l'exercice.`;
-                        txtSophia.style.color = "red";
-                    }
-
-                    if (ej.transcripcion) {
-                        const transBox = document.getElementById('interactive-transcription-box');
-                        if (transBox) {
-                            transBox.innerHTML = window.convertirTextoInteractivo(ej.transcripcion);
-                        }
-                    }
-
-                    if (sophiaBox) sophiaBox.style.display = "block";
-                });
-            }
-        }
-
-        async function renderCarnetInterface() {}
-
+    <!-- ================================================================= -->
+    <!-- [TEMA 7] RENDERIZADO Y CONTROL DE EJERCICIOS (DOM GENERATION)     -->
+    <!-- ================================================================= -->
+    <script>
         window.renderPageFromBook = function(pageNum) {
             if (!window.pdfDocInstance) {
                 setTimeout(() => window.renderPageFromBook(pageNum), 1000);
@@ -905,13 +755,18 @@
             }).catch(err => console.error("Erreur de rendu PDF:", err));
         }
 
-        // Inicialización nativa e independiente del DOM de habilidades dinámicas
-        document.getElementById('tab-parcours').addEventListener('click', () => window.switchMainTab('parcours'));
-        document.getElementById('tab-carnet').addEventListener('click', () => window.switchMainTab('carnet'));
+        async function renderCarnetInterface() {}
 
-        const containerControles habilidades = document.getElementById('parcours-controls-container');
-        if (containerControles) {
-            containerControles.addEventListener('click', (e) => {
+        // Vinculación segura de clics fijos
+        const btnParcours = document.getElementById('tab-parcours');
+        const btnCarnet = document.getElementById('tab-carnet');
+        if (btnParcours) btnParcours.addEventListener('click', () => window.switchMainTab('parcours'));
+        if (btnCarnet) btnCarnet.addEventListener('click', () => window.switchMainTab('carnet'));
+
+        // Delegación de eventos para las pestañas de habilidades dinámicas
+        const controlsContainer = document.getElementById('parcours-controls-container');
+        if (controlsContainer) {
+            controlsContainer.addEventListener('click', (e) => {
                 const botonHabilidad = e.target.closest('.skill-tab-btn');
                 if (botonHabilidad) {
                     const skillCode = botonHabilidad.id.replace('skill-', '');
@@ -919,8 +774,6 @@
                 }
             });
         }
-
-        init();
     </script>
 </body>
 </html>
