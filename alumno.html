@@ -435,7 +435,7 @@
     <!-- Elemento flotante para el diccionario -->
     <div id="floating-dict-popup" class="dict-popup"></div>
 
-    <!-- ================================================================= -->
+   <!-- ================================================================= -->
     <!-- [TEMA 5] CONFIGURACIÓN E INICIALIZACIÓN DE FIREBASE (JS)          -->
     <!-- ================================================================= -->
     <script type="module">
@@ -671,68 +671,9 @@
             }).join('');
         };
 
-        };
-
-window.buscarDiccionarioDinamico = async function(event, palabra) {
-    event.stopPropagation();
-    const popup = document.getElementById('floating-dict-popup');
-    
-    if (popup) {
-        popup.innerHTML = `<h5>${palabra}</h5><p style="color:#777;"><i class="fas fa-spinner fa-spin"></i> Recherche...</p>`;
-        popup.style.left = `${event.pageX + 10}px`;
-        popup.style.top = `${event.pageY + 10}px`;
-        popup.style.display = 'block';
-    }
-
-    try {
-        const unidadActual = unidadesCache[currentUnitId];
-        const diccionario = unidadActual?.diccionario_unidad || [];
-        const termino = palabra.toLowerCase().trim();
-        const entrada = diccionario.find(item => item.palabra === termino || item.lema === termino);
-
-        if (entrada) {
-            const sinonimosTexto = entrada.sinonimos && entrada.sinonimos.length > 0 
-                ? entrada.sinonimos.join(', ') 
-                : 'Aucun';
-
-            popup.innerHTML = `
-                <h5>${entrada.palabra.toUpperCase()}</h5>
-                <p style="font-size:0.75rem; color:#A4B0BE; margin-top:-5px; font-style:italic;">
-                    Leme: ${entrada.lema} (${entrada.tipo_gramatical})
-                </p>
-                <p><strong>Définition :</strong> ${entrada.definicion}</p>
-                <p><strong>Synonymes :</strong> ${sinonimosTexto}</p>
-                <p style="background:#F1F2F6; padding:6px; border-radius:4px; font-style:italic; border-left:3px solid var(--gold);">
-                    <strong>Ex:</strong> ${entrada.ejemplo_uso}
-                </p>
-            `;
-        } else {
-            popup.innerHTML = `
-                <h5>${palabra.toUpperCase()}</h5>
-                <p style="color:#777; font-style:italic;">Mot non répertorié dans cette unité.</p>
-            `;
-        }
-
-    } catch (error) {
-        console.error("Error en el diccionario local:", error);
-        if (popup) {
-            popup.innerHTML = `<h5>${palabra}</h5><p style="color:red;">Erreur de chargement.</p>`;
-        }
-    }
-};
-
-document.addEventListener('click', () => {
-    const popup = document.getElementById('floating-dict-popup');
-    if(popup) popup.style.display = 'none';
-});
-
-// Inicialización de la app
-init();
-</script>
-
-        <!-- ================================================================= -->
-        <!-- [TEMA 6] MOTOR DEL DICCIONARIO DINÁMICO NATIVO DESDE FIREBASE      -->
-        <!-- ================================================================= -->
+        // ================================================================= -->
+        // [TEMA 6] MOTOR DEL DICCIONARIO DINÁMICO NATIVO DESDE FIREBASE      -->
+        // ================================================================= -->
         
         window.buscarDiccionarioDinamico = async function(event, palabra) {
             event.stopPropagation();
@@ -786,6 +727,9 @@ init();
             const popup = document.getElementById('floating-dict-popup');
             if(popup) popup.style.display = 'none';
         });
+
+        init();
+    </script>
 
         <!-- ================================================================= -->
         <!-- [TEMA 7] RENDERIZADO Y CONTROL DE EJERCICIOS (DOM GENERATION)     -->
