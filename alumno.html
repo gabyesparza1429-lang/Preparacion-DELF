@@ -547,12 +547,9 @@
             currentActiveTab = tab;
             document.querySelectorAll('.sidebar .nav-tab-btn').forEach(btn => btn.classList.remove('active'));
             
-            // CORREGIDO: Se reestableció el uso correcto de classList
             if (tab === 'parcours') document.getElementById('tab-parcours').classList.add('active');
             if (tab === 'carnet') document.getElementById('tab-carnet').classList.add('active');
             
-            document.getElementById('tab-parcours').classList.toggle('active', tab === 'parcours');
-            document.getElementById('tab-carnet').classList.toggle('active', tab === 'carnet');
             renderActiveInterface();
         };
 
@@ -690,11 +687,8 @@
             }
 
             try {
-                // Obtenemos el diccionario local precargado en la unidad desde Firebase
                 const unidadActual = unidadesCache[currentUnitId];
                 const diccionario = unidadActual?.diccionario_unidad || [];
-                
-                // Buscamos la palabra exacta (sin importar mayúsculas)
                 const termino = palabra.toLowerCase().trim();
                 const entrada = diccionario.find(item => item.palabra === termino || item.lema === termino);
 
