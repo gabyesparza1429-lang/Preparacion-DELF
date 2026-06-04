@@ -7,6 +7,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
     
+    <!-- ================================================================= -->
+    <!-- [TEMA 1] DISEÑO GENERAL Y ESTILOS VISUALES (CSS)                  -->
+    <!-- ================================================================= -->
     <style>
         :root { 
             --oxford: #002147; 
@@ -362,6 +365,9 @@
 </head>
 <body>
 
+    <!-- ================================================================= -->
+    <!-- [TEMA 2] ESTRUCTURA DE LA BARRA LATERAL (SIDEBAR HTML)             -->
+    <!-- ================================================================= -->
     <div class="sidebar">
         <h2>Mon Espace DELF</h2>
         <button class="nav-tab-btn active" id="tab-parcours">
@@ -375,6 +381,9 @@
         </button>
     </div>
 
+    <!-- ================================================================= -->
+    <!-- [TEMA 3] CONTENEDOR PRINCIPAL Y BANNER (MAIN INTERFACE HTML)       -->
+    <!-- ================================================================= -->
     <div class="main-container">
         <div class="project-banner">
             <div class="banner-top">
@@ -402,6 +411,9 @@
             </div>
         </div>
 
+        <!-- ================================================================= -->
+        <!-- [TEMA 4] ZONA DE TRABAJO DINÁMICA (WORKSPACE HTML)                -->
+        <!-- ================================================================= -->
         <div class="content-area">
             <div class="workspace-content-wrapper">
                 <div class="controls-row" id="parcours-controls-container">
@@ -420,8 +432,12 @@
         </div>
     </div>
 
+    <!-- Elemento flotante para el diccionario -->
     <div id="floating-dict-popup" class="dict-popup"></div>
 
+    <!-- ================================================================= -->
+    <!-- [TEMA 5] CONFIGURACIÓN E INICIALIZACIÓN DE FIREBASE (JS)          -->
+    <!-- ================================================================= -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
         import { getFirestore, doc, getDoc, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js";
@@ -530,10 +546,7 @@
         window.switchMainTab = (tab) => {
             currentActiveTab = tab;
             document.querySelectorAll('.sidebar .nav-tab-btn').forEach(btn => btn.classList.remove('active'));
-            if (tab === 'parcours') document.getElementById('tab-parcours').add('active'); // Nota: Cambiado a classList.add en la versión funcional
-            if (tab === 'carnet') document.getElementById('tab-carnet').add('active');
             
-            // Corrección de consistencia nativa del archivo
             document.getElementById('tab-parcours').classList.toggle('active', tab === 'parcours');
             document.getElementById('tab-carnet').classList.toggle('active', tab === 'carnet');
             renderActiveInterface();
@@ -657,31 +670,12 @@
             }).join('');
         };
 
-        async function llamarApiTraduccion(query, langpair) {
-            const url = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(query)}&langpair=${langpair}`;
-            const response = await fetch(url);
-            const data = await response.json();
-
-            if (data.responseData && data.responseData.translatedText) {
-                return data.responseData.translatedText;
-            } else {
-                throw new Error("No se pudo obtener el resultado de la API.");
-            }
-        }
-
-        async function obtenerTraduccion(palabra) {
-            return await llamarApiTraduccion(palabra, 'fr|es');
-        }
-
-        async function obtenerDefinicionFrances(palabra) {
-            const query = `définition de ${palabra}`;
-            return await llamarApiTraduccion(query, 'fr|fr');
-        }
-
+        <!-- ================================================================= -->
+        <!-- [TEMA 6] MOTOR DEL DICCIONARIO DINÁMICO NATIVO DESDE FIREBASE      -->
+        <!-- ================================================================= -->
+        
         window.buscarDiccionarioDinamico = async function(event, palabra) {
             event.stopPropagation();
-            const levelToUse = window.currentLevel || currentLevel;
-            const esNivelA = (levelToUse === 'A1' || levelToUse === 'A2');
             const popup = document.getElementById('floating-dict-popup');
             
             if (popup) {
@@ -692,27 +686,42 @@
             }
 
             try {
-                let resultado = "";
+                // Obtenemos el diccionario local precargado en la unidad desde Firebase
+                const unidadActual = unidadesCache[currentUnitId];
+                const diccionario = unidadActual?.diccionario_unidad || [];
+                
+                // Buscamos la palabra exacta (sin importar mayúsculas)
+                const termino = palabra.toLowerCase().trim();
+                const entrada = diccionario.find(item => item.palabra === termino || item.lema === termino);
 
-                if (esNivelA) {
-                    resultado = await obtenerTraduccion(palabra);
+                if (entrada) {
+                    const sinonimosTexto = entrada.sinonimos && entrada.sinonimos.length > 0 
+                        ? entrada.sinonimos.join(', ') 
+                        : 'Aucun';
+
+                    popup.innerHTML = `
+                        <h5>${entrada.palabra.toUpperCase()}</h5>
+                        <p style="font-size:0.75rem; color:#A4B0BE; margin-top:-5px; font-style:italic;">
+                            Leme: ${entrada.lema} (${entrada.tipo_gramatical})
+                        </p>
+                        <p><strong>Définition :</strong> ${entrada.definicion}</p>
+                        <p><strong>Synonymes :</strong> ${sinonimosTexto}</p>
+                        <p style="background:#F1F2F6; padding:6px; border-radius:4px; font-style:italic; border-left:3px solid var(--gold);">
+                            <strong>Ex:</strong> ${entrada.ejemplo_uso}
+                        </p>
+                    `;
                 } else {
-                    resultado = await obtenerDefinicionFrances(palabra);
-                }
-
-                if (popup) {
                     popup.innerHTML = `
                         <h5>${palabra.toUpperCase()}</h5>
-                        <p><strong>${esNivelA ? 'Traduction' : 'Définition'} :</strong> ${resultado}</p>
+                        <p style="color:#777; font-style:italic;">Mot non répertorié dans cette unité.</p>
                     `;
                 }
 
             } catch (error) {
-                console.error("Error en diccionario:", error);
+                console.error("Error en el diccionario local:", error);
                 if (popup) {
-                    popup.innerHTML = `<h5>${palabra}</h5><p style="color:red;">Definición no disponible en este momento.</p>`;
+                    popup.innerHTML = `<h5>${palabra}</h5><p style="color:red;">Erreur de chargement.</p>`;
                 }
-                return "Definición no disponible en este momento.";
             }
         };
 
@@ -721,6 +730,9 @@
             if(popup) popup.style.display = 'none';
         });
 
+        <!-- ================================================================= -->
+        <!-- [TEMA 7] RENDERIZADO Y CONTROL DE EJERCICIOS (DOM GENERATION)     -->
+        <!-- ================================================================= -->
         function renderExerciseStructure() {
             const target = document.getElementById('dynamic-workspace-target');
             filtrarEjerciciosDeUnidadActual();
