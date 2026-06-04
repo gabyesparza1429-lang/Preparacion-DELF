@@ -6,6 +6,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
+    
     <style>
         :root { 
             --oxford: #002147; 
@@ -529,8 +530,12 @@
         window.switchMainTab = (tab) => {
             currentActiveTab = tab;
             document.querySelectorAll('.sidebar .nav-tab-btn').forEach(btn => btn.classList.remove('active'));
-            if (tab === 'parcours') document.getElementById('tab-parcours').classList.add('active');
-            if (tab === 'carnet') document.getElementById('tab-carnet').classList.add('active');
+            if (tab === 'parcours') document.getElementById('tab-parcours').add('active'); // Nota: Cambiado a classList.add en la versión funcional
+            if (tab === 'carnet') document.getElementById('tab-carnet').add('active');
+            
+            // Corrección de consistencia nativa del archivo
+            document.getElementById('tab-parcours').classList.toggle('active', tab === 'parcours');
+            document.getElementById('tab-carnet').classList.toggle('active', tab === 'carnet');
             renderActiveInterface();
         };
 
@@ -652,11 +657,6 @@
             }).join('');
         };
 
-        /**
-         * Lógica actualizada para el diccionario en alumno.html
-         */
-
-        // Función auxiliar para realizar la petición a MyMemory
         async function llamarApiTraduccion(query, langpair) {
             const url = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(query)}&langpair=${langpair}`;
             const response = await fetch(url);
@@ -669,35 +669,27 @@
             }
         }
 
-        // Función auxiliar para traducción (Niveles A1/A2)
         async function obtenerTraduccion(palabra) {
             return await llamarApiTraduccion(palabra, 'fr|es');
         }
 
-        // Función auxiliar para definición monolingüe (Niveles B/C)
         async function obtenerDefinicionFrances(palabra) {
-            // Se fuerza la cadena de búsqueda para solicitar la definición
             const query = `définition de ${palabra}`;
             return await llamarApiTraduccion(query, 'fr|fr');
         }
 
-        // Función principal expuesta al DOM
         window.buscarDiccionarioDinamico = async function(event, palabra) {
-            // --- Lógica de UI para carga ---
             event.stopPropagation();
             const levelToUse = window.currentLevel || currentLevel;
             const esNivelA = (levelToUse === 'A1' || levelToUse === 'A2');
             const popup = document.getElementById('floating-dict-popup');
+            
             if (popup) {
                 popup.innerHTML = `<h5>${palabra}</h5><p style="color:#777;"><i class="fas fa-spinner fa-spin"></i> Recherche...</p>`;
                 popup.style.left = `${event.pageX + 10}px`;
                 popup.style.top = `${event.pageY + 10}px`;
                 popup.style.display = 'block';
             }
-            // ------------------------------
-
-            // Se asume que currentLevel está definido globalmente como indicaste
-            const esNivelA = (currentLevel === 'A1' || currentLevel === 'A2');
 
             try {
                 let resultado = "";
@@ -708,10 +700,12 @@
                     resultado = await obtenerDefinicionFrances(palabra);
                 }
 
-                popup.innerHTML = `
-                    <h5>${palabra.toUpperCase()}</h5>
-                    <p><strong>${esNivelA ? 'Traduction' : 'Définition'} :</strong> ${resultado}</p>
-                `;
+                if (popup) {
+                    popup.innerHTML = `
+                        <h5>${palabra.toUpperCase()}</h5>
+                        <p><strong>${esNivelA ? 'Traduction' : 'Définition'} :</strong> ${resultado}</p>
+                    `;
+                }
 
             } catch (error) {
                 console.error("Error en diccionario:", error);
