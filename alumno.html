@@ -564,7 +564,7 @@
             
             document.getElementById('dynamic-workspace-target').innerHTML = `
                 <div style="text-align: center; padding: 60px; color: var(--oxford); margin-top:30px;">
-                    <p style="font-weight: 600;">Veuillez choisir une activité dans le menu de gauche pour commencer.</p>
+                    <p style="font-weight: 600;">Veuillez choisir une activité dans el menu de gauche pour commencer.</p>
                 </div>`;
 
             renderActiveInterface();
@@ -664,9 +664,10 @@
             ejerciciosFiltrados = unidadesCache[currentUnitId][currentSkill] || unidadesCache[currentUnitId][currentSkill.toLowerCase()] || [];
         }
 
+        // CORREGIDO: Cambiado 'text' por 'texto' para solucionar el ReferenceError fatal
         window.convertirTextoInteractivo = function(texto) {
             if (!texto) return '';
-            return text.split(/(\s+)/).map(fragmento => {
+            return texto.split(/(\s+)/).map(fragmento => {
                 if (fragmento.trim() === '') return fragmento;
                 let palabraLimpia = fragmento.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()¿?¡!]/g,"");
                 return `<span class="clickable-word" onclick="window.buscarDiccionarioDinamico(event, '${palabraLimpia}')">${fragmento}</span>`;
