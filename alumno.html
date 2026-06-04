@@ -673,13 +673,14 @@
             }
 
             try {
-                // CORRECCIÓN CRÍTICA: Extraemos solo los números del ID de la unidad
-                // Si es "Unite_1" o "Unité 1", se convierte en "1" para coincidir con la base de datos
-                const idLimpio = currentUnitId ? currentUnitId.replace(/\D/g, '') : '';
+                // 1. Extraemos el número limpio de la unidad por si acaso (ej: "1")
+                const idNum = currentUnitId ? currentUnitId.replace(/\D/g, '') : '';
                 
-                // Buscamos en el caché usando el ID numérico puro o el original por si acaso
-                const unidadActual = unidadesCache[idLimpio] || unidadesCache[currentUnitId];
-                const diccionario = unidadActual?.diccionario_unidad || [];
+                // 2. Buscamos la unidad en el caché probando todas las combinaciones posibles de nombres
+                const unidadActual = unidadesCache[idNum] || unidadesCache[currentUnitId] || unidadesCache[`Unite_${idNum}`] || unidadesCache[`Unité ${idNum}`];
+                
+                // 3. Buscamos el diccionario probando si se guardó con minúsculas, mayúsculas o estructuras anidadas
+                const diccionario = unidadActual?.diccionario_unidad || unidadActual?.diccionario || unidadActual?.vocabulario || [];
                 
                 const termino = palabra.toLowerCase().trim();
                 const entrada = diccionario.find(item => item.palabra === termino || item.lema === termino);
