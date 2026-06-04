@@ -657,7 +657,7 @@
             }).join('');
         };
 
-        // ================================================================= -->
+       // ================================================================= -->
         // [TEMA 6] MOTOR DEL DICCIONARIO DINÁMICO NATIVO DESDE FIREBASE      -->
         // ================================================================= -->
         
@@ -673,8 +673,14 @@
             }
 
             try {
-                const unidadActual = unidadesCache[currentUnitId];
+                // CORRECCIÓN CRÍTICA: Extraemos solo los números del ID de la unidad
+                // Si es "Unite_1" o "Unité 1", se convierte en "1" para coincidir con la base de datos
+                const idLimpio = currentUnitId ? currentUnitId.replace(/\D/g, '') : '';
+                
+                // Buscamos en el caché usando el ID numérico puro o el original por si acaso
+                const unidadActual = unidadesCache[idLimpio] || unidadesCache[currentUnitId];
                 const diccionario = unidadActual?.diccionario_unidad || [];
+                
                 const termino = palabra.toLowerCase().trim();
                 const entrada = diccionario.find(item => item.palabra === termino || item.lema === termino);
 
@@ -686,7 +692,7 @@
 
                         popup.innerHTML = `
                             <h5>${entrada.palabra.toUpperCase()}</h5>
-                            <p style="font-size:0.75rem; color:#A4B0BE; margin-top:-5px; font-style:italic;">
+                            <p style="font-size:0.75rem; color:#C5A059; margin-top:-5px; font-style:italic;">
                                 Leme: ${entrada.lema} (${entrada.tipo_gramatical})
                             </p>
                             <p><strong>Définition :</strong> ${entrada.definicion}</p>
@@ -710,12 +716,7 @@
                 }
             }
         };
-
-        document.addEventListener('click', () => {
-            const popup = document.getElementById('floating-dict-popup');
-            if(popup) popup.style.display = 'none';
-        });
-
+        
         // ================================================================= -->
         // [TEMA 7] RENDERIZADO Y CONTROL DE EJERCICIOS (DOM GENERATION)     -->
         // ================================================================= -->
