@@ -422,6 +422,9 @@
 
     <div id="floating-dict-popup" class="dict-popup"></div>
 
+    <!-- ================================================================= -->
+    <!-- ZONA 1: SCRIPT DE INICIALIZACIÓN Y CONEXIÓN CON FIREBASE          -->
+    <!-- ================================================================= -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
         import { getFirestore, doc, getDoc, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js";
@@ -657,10 +660,9 @@
             }).join('');
         };
 
-       // ================================================================= -->
-        // [TEMA 6] MOTOR DEL DICCIONARIO DINÁMICO NATIVO DESDE FIREBASE      -->
         // ================================================================= -->
-        
+        // ZONA 2: MOTOR DEL DICCIONARIO DINÁMICO NATIVO (BÚSQUEDA)          -->
+        // ================================================================= -->
         window.buscarDiccionarioDinamico = async function(event, palabra) {
             event.stopPropagation();
             const popup = document.getElementById('floating-dict-popup');
@@ -673,13 +675,8 @@
             }
 
             try {
-                // 1. Extraemos el número limpio de la unidad por si acaso (ej: "1")
                 const idNum = currentUnitId ? currentUnitId.replace(/\D/g, '') : '';
-                
-                // 2. Buscamos la unidad en el caché probando todas las combinaciones posibles de nombres
                 const unidadActual = unidadesCache[idNum] || unidadesCache[currentUnitId] || unidadesCache[`Unite_${idNum}`] || unidadesCache[`Unité ${idNum}`];
-                
-                // 3. Buscamos el diccionario probando si se guardó con minúsculas, mayúsculas o estructuras anidadas
                 const diccionario = unidadActual?.diccionario_unidad || unidadActual?.diccionario || unidadActual?.vocabulario || [];
                 
                 const termino = palabra.toLowerCase().trim();
@@ -719,7 +716,7 @@
         };
         
         // ================================================================= -->
-        // [TEMA 7] RENDERIZADO Y CONTROL DE EJERCICIOS (DOM GENERATION)     -->
+        // ZONA 3: RENDERIZADO Y CONTROL DE EJERCICIOS (DOM GENERATION)     -->
         // ================================================================= -->
         window.renderExerciseStructure = function() {
             const target = document.getElementById('dynamic-workspace-target');
@@ -892,6 +889,9 @@
         init();
     </script>
 
+    <!-- ================================================================= -->
+    <!-- ZONA 4: CONTROL DE INTERFAZ GENERAL Y CIERRE DE POPUPS (CANDADO)  -->
+    <!-- ================================================================= -->
     <script>
         window.renderPageFromBook = function(pageNum) {
             if (!window.pdfDocInstance) {
@@ -923,6 +923,25 @@
                 if (botonHabilidad) {
                     const skillCode = botonHabilidad.id.replace('skill-', '');
                     window.setSkillFilter(skillCode);
+                }
+            });
+        }
+
+        // ==========================================================
+        // CANDADO AGREGADO: CIERRE INTELIGENTE DE VENTANA FLOTANTE
+        // ==========================================================
+        const popupGlosario = document.getElementById('floating-dict-popup');
+
+        if (popupGlosario) {
+            // Acción A: Si el cursor sale del popup, este se cierra de inmediato
+            popupGlosario.addEventListener('mouseleave', () => {
+                popupGlosario.style.display = 'none';
+            });
+
+            // Acción B: Si hacen clic en cualquier otra parte de la pantalla, también se cierra
+            document.addEventListener('click', (e) => {
+                if (!popupGlosario.contains(e.target) && !e.target.classList.contains('clickable-word')) {
+                    popupGlosario.style.display = 'none';
                 }
             });
         }
