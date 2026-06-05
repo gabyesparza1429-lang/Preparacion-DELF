@@ -308,7 +308,7 @@
             background: #fafbfc; 
             padding: 15px; 
             border-radius: 6px;
-            border: 1px solid #f0f2f5;
+            border: 1px solid #eef2f5;
         }
 
         .pdf-viewer-container {
@@ -343,6 +343,13 @@
             font-weight: bold;
         }
 
+        /* Estilos de la palabra leída con error */
+        .word-wrong {
+            color: #d63031 !important;
+            text-decoration: line-through;
+            font-weight: 600;
+        }
+
         .dict-popup {
             position: absolute;
             background: white;
@@ -358,6 +365,33 @@
         }
         .dict-popup h5 { margin: 0 0 8px 0; color: var(--oxford); font-size: 0.95rem; font-weight: bold; border-bottom: 1px solid #eee; padding-bottom: 4px; text-transform: uppercase; }
         .dict-popup p { margin: 6px 0; line-height: 1.4; }
+
+        /* Botón del micrófono interactivo */
+        .btn-mic {
+            background: #d63031;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 700;
+            border-radius: 20px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+            margin-top: 10px;
+        }
+        .btn-mic.recording {
+            background: #28A745;
+            animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.04); }
+            100% { transform: scale(1); }
+        }
     </style>
 </head>
 <body>
@@ -551,7 +585,7 @@
             
             document.getElementById('dynamic-workspace-target').innerHTML = `
                 <div style="text-align: center; padding: 60px; color: var(--oxford); margin-top:30px;">
-                    <p style="font-weight: 600;">Veuillez choisir une activité dans le menu de gauche pour commencer.</p>
+                    <p style="font-weight: 600;">Veuillez choisir une actividad dans le menu de gauche pour commencer.</p>
                 </div>`;
 
             renderActiveInterface();
@@ -656,7 +690,8 @@
             return texto.split(/(\s+)/).map(fragmento => {
                 if (fragmento.trim() === '') return fragmento;
                 let palabraLimpia = fragmento.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()¿?¡!]/g,"");
-                return `<span class="clickable-word" onclick="window.buscarDiccionarioDinamico(event, '${palabraLimpia}')">${fragmento}</span>`;
+                // Le agregamos un atributo data-word para poder identificar y pintar la palabra si hay error de lectura
+                return `<span class="clickable-word" data-word="${palabraLimpia.toLowerCase()}" onclick="window.buscarDiccionarioDinamico(event, '${palabraLimpia}')">${fragmento}</span>`;
             }).join('');
         };
 
@@ -716,7 +751,7 @@
         };
         
         // ================================================================= -->
-        // ZONA 3: RENDERIZADO Y CONTROL DE EJERCICIOS (DOM GENERATION)     -->
+        // ZONA 3: RENDERIZADO, CONTROL DE EJERCICIOS Y MICROFONO INTERACTIVO-->
         // ================================================================= -->
         window.renderExerciseStructure = function() {
             const target = document.getElementById('dynamic-workspace-target');
@@ -784,14 +819,20 @@
                 html += `<p style="font-style:italic; color:#777; margin-top:15px;">Production libre ou exercice escrito. Répondez sur votre cahier.</p>`;
             }
 
+            // CAJA DE CONSEJO Y TRANSCRIPCIÓN INTERACTIVA CON MICRÓFONO COSTO CERO
             html += `
                 <div id="sophia-box" style="display:none; background:#f4f7f9; border-left:4px solid var(--gold); padding:20px; border-radius:6px; margin-top:25px;">
                     <div style="display:flex; align-items:center; gap:10px; font-weight:700; color:var(--oxford);"><i class="fas fa-lightbulb" style="color:var(--gold);"></i> CONSEIL DE SOPHIA</div>
                     <p id="sophia-verdict-text" style="margin:0; font-size:0.95rem;"></p>
                     
                     ${ej.transcripcion ? `
-                    <div style="font-weight:700; margin-top:15px; color:var(--oxford);"><i class="fas fa-headphones-alt"></i> Transcription Interactive (Cliquez sur un mot) :</div>
-                    <div id="interactive-transcription-box" style="background:#fff; border:1px dashed #ccc; padding:12px; border-radius:5px; margin-top:8px; font-size:0.95rem; line-height:1.6; color:#333; user-select:none;"></div>` : ''}
+                    <div style="font-weight:700; margin-top:15px; color:var(--oxford); display:flex; justify-content:space-between; align-items:center;">
+                        <span><i class="fas fa-headphones-alt"></i> Transcription (Cliquez sur un mot) :</span>
+                        <button id="btn-record-transcription" class="btn-mic"><i class="fas fa-microphone"></i> Lire à haute voix</button>
+                    </div>
+                    <div id="interactive-transcription-box" style="background:#fff; border:1px dashed #ccc; padding:12px; border-radius:5px; margin-top:8px; font-size:0.95rem; line-height:1.6; color:#333; user-select:none;"></div>
+                    <p id="audio-reading-feedback" style="font-size:0.8rem; margin-top:5px; font-weight:600; color:#666;"></p>
+                    ` : ''}
                 </div>
             </div>`;
 
@@ -879,11 +920,90 @@
                         if (transBox) {
                             transBox.innerHTML = window.convertirTextoInteractivo(ej.transcripcion);
                         }
+                        // Inicializamos el micrófono para esta lectura interactiva
+                        window.inicializarLectorVozGratuito(ej.transcripcion);
                     }
 
                     if (sophiaBox) sophiaBox.style.display = "block";
                 });
             }
+        };
+
+        // ================================================================= -->
+        // [NUEVO] RECONOCIMIENTO DE VOZ LOCAL GRATUITO (WEB SPEECH API)     -->
+        // ================================================================= -->
+        window.inicializarLectorVozGratuito = function(textoOriginal) {
+            const btnRecord = document.getElementById('btn-record-transcription');
+            const feedback = document.getElementById('audio-reading-feedback');
+            
+            if (!btnRecord) return;
+
+            // Validar si el navegador soporta dictado por voz de forma interna
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            if (!SpeechRecognition) {
+                btnRecord.style.display = "none";
+                feedback.innerText = "Reconocimiento de voz no soportado en este navegador.";
+                return;
+            }
+
+            const recognition = new SpeechRecognition();
+            recognition.lang = 'fr-FR'; // Forzar idioma francés
+            recognition.interimResults = false;
+            recognition.maxAlternatives = 1;
+
+            let estaGrabando = false;
+
+            btnRecord.addEventListener('click', () => {
+                if (!estaGrabando) {
+                    // Limpiar errores previos
+                    document.querySelectorAll('.clickable-word').forEach(span => span.classList.remove('word-wrong'));
+                    feedback.innerText = "Écoute en cours... Parlez maintenant.";
+                    feedback.style.color = "var(--green)";
+                    btnRecord.classList.add('recording');
+                    btnRecord.innerHTML = `<i class="fas fa-stop"></i> Arrêter`;
+                    recognition.start();
+                    estaGrabando = true;
+                } else {
+                    recognition.stop();
+                }
+            });
+
+            recognition.onend = () => {
+                estaGrabando = false;
+                btnRecord.classList.remove('recording');
+                btnRecord.innerHTML = `<i class="fas fa-microphone"></i> Lire à haute voix`;
+            };
+
+            recognition.onerror = () => {
+                feedback.innerText = "Erreur de capture. Réessayez.";
+                feedback.style.color = "red";
+            };
+
+            recognition.onresult = (event) => {
+                const textoEscuchado = event.results[0][0].transcript.toLowerCase();
+                
+                // Limpiar caracteres extraños matemáticamente para comparar textos limpios
+                let limpiasOriginales = textoOriginal.toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()¿?¡!]/g,"").split(/\s+/);
+                let limpiasEscuchadas = textoEscuchado.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()¿?¡!]/g,"").split(/\s+/);
+
+                let erroresEncontrados = 0;
+
+                // Marcar de forma inteligente las palabras que el alumno omitió o pronunció mal
+                limpiasOriginales.forEach(palabra => {
+                    if (palabra.trim() !== "" && !limpiasEscuchadas.includes(palabra)) {
+                        erroresEncontrados++;
+                        // Pintamos en rojo directo la palabra en la pantalla del alumno
+                        const elementosPalabra = document.querySelectorAll(`.clickable-word[data-word="${palabra}"]`);
+                        elementosPalabra.forEach(el => el.classList.add('word-wrong'));
+                    }
+                });
+
+                if (erroresEncontrados === 0) {
+                    feedback.innerHTML = `<span style="color:var(--green);"><i class="fas fa-check-double"></i> Prononciation excellente ! Tout est correct.</span>`;
+                } else {
+                    feedback.innerHTML = `<span style="color:#d63031;"><i class="fas fa-exclamation-circle"></i> Pratique les mots marqués en rouge.</span>`;
+                }
+            };
         };
 
         init();
@@ -927,18 +1047,13 @@
             });
         }
 
-        // ==========================================================
-        // CANDADO AGREGADO: CIERRE INTELIGENTE DE VENTANA FLOTANTE
-        // ==========================================================
         const popupGlosario = document.getElementById('floating-dict-popup');
 
         if (popupGlosario) {
-            // Acción A: Si el cursor sale del popup, este se cierra de inmediato
             popupGlosario.addEventListener('mouseleave', () => {
                 popupGlosario.style.display = 'none';
             });
 
-            // Acción B: Si hacen clic en cualquier otra parte de la pantalla, también se cierra
             document.addEventListener('click', (e) => {
                 if (!popupGlosario.contains(e.target) && !e.target.classList.contains('clickable-word')) {
                     popupGlosario.style.display = 'none';
