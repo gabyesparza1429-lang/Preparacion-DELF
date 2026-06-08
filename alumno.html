@@ -745,16 +745,19 @@ function displayCardDiccionario(data) {
             border-radius: 8px; 
             box-shadow: 0 4px 15px rgba(0,0,0,0.15);
             font-family: Arial, sans-serif;
-            color: #333;">
+            color: #333;
+            max-height: 400px; /* Evita que crezca de más hacia abajo */
+            overflow-y: auto;  /* Si el texto es muy largo crea una mini barra de scroll interna */
+            box-sizing: border-box;">
             
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-                <h3 style="margin: 0; color: #1a73e8; font-size: 20px; text-transform: lowercase;">${data.palabra}</h3>
-                <span style="background: #e8f0fe; color: #1a73e8; padding: 3px 8px; border-radius: 12px; font-size: 12px; font-weight: bold;">${data.tipo_gramatical}</span>
+                <h3 style="margin: 0; color: #1a73e8; font-size: 20px; text-transform: lowercase;">\${data.palabra}</h3>
+                <span style="background: #e8f0fe; color: #1a73e8; padding: 3px 8px; border-radius: 12px; font-size: 12px; font-weight: bold;">\${data.tipo_gramatical}</span>
             </div>
             
-            <p style="margin: 5px 0; font-size: 14px;"><strong>Traducción:</strong> <span style="color: #202124;">${data.significado_espanol}</span></p>
+            <p style="margin: 5px 0; font-size: 14px;"><strong>Traducción:</strong> <span style="color: #202124;">\${data.significado_espanol}</span></p>
             <hr style="border: 0; border-top: 1px solid #eee; margin: 12px 0;">
-            <p style="margin: 5px 0; font-size: 14px; line-height: 1.4;"><strong>Définition:</strong> ${data.definicion}</p>
+            <p style="margin: 5px 0; font-size: 14px; line-height: 1.4;"><strong>Définition:</strong> \${data.definicion}</p>
             
             \${data.sinonimos && data.sinonimos.length > 0 ? 
                 \`<p style="margin: 5px 0; font-size: 14px;"><strong>Synonymes:</strong> <span style="color: #5f6368;">\${data.sinonimos.join(', ')}</span></p>\` : ''}
@@ -770,10 +773,10 @@ function displayCardDiccionario(data) {
         </div>
     `;
     
-    // Desplegamos el contenedor en pantalla
+    // Ajuste de posición: la subimos a 'bottom: 60px' para librar la barra de Windows perfectamente
+    container.style.bottom = "60px";
     container.style.display = "block";
 }
-
 /**
  * 3. ESCUCHADOR DE EVENTOS (INTERACTIVIDAD)
  * Detecta cuando el alumno hace doble clic sobre cualquier palabra del texto.
