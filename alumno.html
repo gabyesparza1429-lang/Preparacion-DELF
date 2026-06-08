@@ -695,60 +695,96 @@
             }).join('');
         };
 
-        // ================================================================= -->
-        // ZONA 2: MOTOR DEL DICCIONARIO DINÁMICO NATIVO (BÚSQUEDA)          -->
-        // ================================================================= -->
-        window.buscarDiccionarioDinamico = async function(event, palabra) {
-            event.stopPropagation();
-            const popup = document.getElementById('floating-dict-popup');
+        // ========================================================
+// ZONA 2: GLOSARIO INTERACTIF (CONEXIÓN FIRESTORE)
+// ========================================================
+const db = firebase.firestore();
+
+/**
+ * 1. FUNCIÓN PRINCIPAL DE BÚSQUEDA
+ * Se activa al dar doble clic sobre una palabra o mediante el buscador manual.
+ */
+async function chercherMotDiccionario(palabraOriginal) {
+    // Limpiamos la palabra de signos de puntuación pegados y cambiamos diagonales por guiones
+    const palabraLimpia = palabraOriginal.trim().toLowerCase().replace(/[\.,\?!\(\)"«»]/g, "").replace("/", "-");
+    
+    // Si la selección está vacía o es un solo carácter suelto, no hace nada
+    if (!palabraLimpia || palabraLimpia.length <= 1) return;
+    
+    console.log(`🔍 Buscando en Firestore: ${palabraLimpia}`);
+    
+    try {
+        // Apunta directo al documento único de la palabra en tu colección
+        const docRef = db.collection("diccionario_maestro").doc(palabraLimpia);
+        const docSnap = await docRef.get();
+
+        if (docSnap.exists) {
+            const data = docSnap.data();
+            displayCardDiccionario(data);
+        } else {
+            console.log(`❌ No se encontró en el diccionario: ${palabraLimpia}`);
+        }
+    } catch (error) {
+        console.error("⚠️ Error al conectar con Firestore:", error);
+    }
+}
+
+/**
+ * 2. RENDERIZADO DE LA TARJETA PREMIUM
+ * Dibuja la tarjeta flotante con el formato pedagógico exacto.
+ */
+function displayCardDiccionario(data) {
+    const container = document.getElementById("glosario-flotante-container");
+    if (!container) return;
+
+    container.innerHTML = `
+        <div class="diccionario-card-premium" style="
+            background: #ffffff; 
+            border-left: 5px solid #1a73e8; 
+            padding: 18px; 
+            border-radius: 8px; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+            font-family: Arial, sans-serif;
+            color: #333;">
             
-            if (popup) {
-                popup.innerHTML = `<h5>${palabra}</h5><p style="color:#777;"><i class="fas fa-spinner fa-spin"></i> Recherche...</p>`;
-                popup.style.left = `${event.pageX + 10}px`;
-                popup.style.top = `${event.pageY + 10}px`;
-                popup.style.display = 'block';
-            }
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                <h3 style="margin: 0; color: #1a73e8; font-size: 20px; text-transform: lowercase;">${data.palabra}</h3>
+                <span style="background: #e8f0fe; color: #1a73e8; padding: 3px 8px; border-radius: 12px; font-size: 12px; font-weight: bold;">${data.tipo_gramatical}</span>
+            </div>
+            
+            <p style="margin: 5px 0; font-size: 14px;"><strong>Traducción:</strong> <span style="color: #202124;">${data.significado_espanol}</span></p>
+            <hr style="border: 0; border-top: 1px solid #eee; margin: 12px 0;">
+            <p style="margin: 5px 0; font-size: 14px; line-height: 1.4;"><strong>Définition:</strong> ${data.definicion}</p>
+            
+            \${data.sinonimos && data.sinonimos.length > 0 ? 
+                \`<p style="margin: 5px 0; font-size: 14px;"><strong>Synonymes:</strong> <span style="color: #5f6368;">\${data.sinonimos.join(', ')}</span></p>\` : ''}
+            
+            <p style="margin: 10px 0 0 0; font-size: 14px; background: #f8f9fa; padding: 8px; border-radius: 4px; border-left: 3px solid #34a853;">
+                <strong>Exemple:</strong> <em>"\${data.ejemplo_uso}"</em>
+            </p>
+            
+            <button onclick="document.getElementById('glosario-flotante-container').style.display='none'" style="
+                margin-top: 12px; width: 100%; background: #f1f3f4; border: none; padding: 6px; border-radius: 4px; cursor: pointer; font-size: 12px; color: #5f6368; font-weight: bold;">
+                Fermer
+            </button>
+        </div>
+    `;
+    
+    // Desplegamos el contenedor en pantalla
+    container.style.display = "block";
+}
 
-            try {
-                const idNum = currentUnitId ? currentUnitId.replace(/\D/g, '') : '';
-                const unidadActual = unidadesCache[idNum] || unidadesCache[currentUnitId] || unidadesCache[`Unite_${idNum}`] || unidadesCache[`Unité ${idNum}`];
-                const diccionario = unidadActual?.diccionario_unidad || unidadActual?.diccionario || unidadActual?.vocabulario || [];
-                
-                const termino = palabra.toLowerCase().trim();
-                const entrada = diccionario.find(item => item.palabra === termino || item.lema === termino);
-
-                if (popup) {
-                    if (entrada) {
-                        const sinonimosTexto = entrada.sinonimos && entrada.sinonimos.length > 0 
-                            ? entrada.sinonimos.join(', ') 
-                            : 'Aucun';
-
-                        popup.innerHTML = `
-                            <h5>${entrada.palabra.toUpperCase()}</h5>
-                            <p style="font-size:0.75rem; color:#C5A059; margin-top:-5px; font-style:italic;">
-                                Leme: ${entrada.lema} (${entrada.tipo_gramatical})
-                            </p>
-                            <p><strong>Définition :</strong> ${entrada.definicion}</p>
-                            <p><strong>Synonymes :</strong> ${sinonimosTexto}</p>
-                            <p style="background:#F1F2F6; padding:6px; border-radius:4px; font-style:italic; border-left:3px solid var(--gold);">
-                                <strong>Ex:</strong> ${entrada.ejemplo_uso}
-                            </p>
-                        `;
-                    } else {
-                        popup.innerHTML = `
-                            <h5>${palabra.toUpperCase()}</h5>
-                            <p style="color:#777; font-style:italic;">Mot non répertorié dans cette unité.</p>
-                        `;
-                    }
-                }
-
-            } catch (error) {
-                console.error("Error en el diccionario local:", error);
-                if (popup) {
-                    popup.innerHTML = `<h5>${palabra}</h5><p style="color:red;">Erreur de chargement.</p>`;
-                }
-            }
-        };
+/**
+ * 3. ESCUCHADOR DE EVENTOS (INTERACTIVIDAD)
+ * Detecta cuando el alumno hace doble clic sobre cualquier palabra del texto.
+ */
+document.addEventListener("dblclick", function(event) {
+    const seleccion = window.getSelection().toString().trim();
+    // Si contiene espacios significa que seleccionó más de una palabra, lo ignoramos
+    if (seleccion && !seleccion.includes(" ")) {
+        chercherMotDiccionario(seleccion);
+    }
+});
         
         // ================================================================= -->
         // ZONA 3: RENDERIZADO, CONTROL DE EJERCICIOS Y MICROFONO INTERACTIVO-->
