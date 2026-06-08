@@ -343,7 +343,6 @@
             font-weight: bold;
         }
 
-        /* Estilos de la palabra leída con error */
         .word-wrong {
             color: #d63031 !important;
             text-decoration: line-through;
@@ -366,7 +365,6 @@
         .dict-popup h5 { margin: 0 0 8px 0; color: var(--oxford); font-size: 0.95rem; font-weight: bold; border-bottom: 1px solid #eee; padding-bottom: 4px; text-transform: uppercase; }
         .dict-popup p { margin: 6px 0; line-height: 1.4; }
 
-        /* Botón del micrófono interactivo */
         .btn-mic {
             background: #d63031;
             color: white;
@@ -455,10 +453,9 @@
     </div>
 
     <div id="floating-dict-popup" class="dict-popup"></div>
+    
+    <div id="glosario-flotante-container" style="display:none; position: fixed; bottom: 65px; right: 30px; z-index: 9999; width: 320px;"></div>
 
-    <!-- ================================================================= -->
-    <!-- ZONA 1: SCRIPT DE INICIALIZACIÓN Y CONEXIÓN CON FIREBASE          -->
-    <!-- ================================================================= -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
         import { getFirestore, doc, getDoc, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js";
@@ -585,7 +582,7 @@
             
             document.getElementById('dynamic-workspace-target').innerHTML = `
                 <div style="text-align: center; padding: 60px; color: var(--oxford); margin-top:30px;">
-                    <p style="font-weight: 600;">Veuillez choisir une actividad dans le menu de gauche pour commencer.</p>
+                    <p style="font-weight: 600;">Veuillez choisir une activité dans le menu de gauche pour commencer.</p>
                 </div>`;
 
             renderActiveInterface();
@@ -676,7 +673,7 @@
             currentExerciseIndex = eIdx;
             openUnitsState[uId] = true; 
             generarMenuJerarquico();
-            renderExerciseStructure();
+            window.renderExerciseStructure();
         };
 
         function filtrarEjerciciosDeUnidadActual() {
@@ -690,110 +687,90 @@
             return texto.split(/(\s+)/).map(fragmento => {
                 if (fragmento.trim() === '') return fragmento;
                 let palabraLimpia = fragmento.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()¿?¡!]/g,"");
-                // Le agregamos un atributo data-word para poder identificar y pintar la palabra si hay error de lectura
-                return `<span class="clickable-word" data-word="${palabraLimpia.toLowerCase()}" onclick="window.buscarDiccionarioDinamico(event, '${palabraLimpia}')">${fragmento}</span>`;
+                return `<span class="clickable-word" data-word="${palabraLimpia.toLowerCase()}" onclick="window.chercherMotDiccionario('${palabraLimpia}')">${fragmento}</span>`;
             }).join('');
         };
 
         // ========================================================
-// ZONA 2: GLOSARIO INTERACTIF (CONEXIÓN FIRESTORE)
-// ========================================================
-const db = firebase.firestore();
+        // ZONA 2 VERSION MODERNA INTEGRADA EN EL FLUJO MODULE
+        // ========================================================
+        window.chercherMotDiccionario = async function(palabraOriginal) {
+            const palabraLimpia = palabraOriginal.trim().toLowerCase().replace(/[\.,\?!\(\)"«»]/g, "").replace("/", "-");
+            if (!palabraLimpia || palabraLimpia.length <= 1) return;
+            
+            console.log("🔍 Buscando en Firestore:", palabraLimpia);
+            
+            try {
+                const docRef = doc(db, "diccionario_maestro", palabraLimpia);
+                const docSnap = await getDoc(docRef);
 
-/**
- * 1. FUNCIÓN PRINCIPAL DE BÚSQUEDA
- * Se activa al dar doble clic sobre una palabra.
- */
-async function chercherMotDiccionario(palabraOriginal) {
-    // Limpiamos la palabra de signos de puntuación pegados y cambiamos diagonales por guiones
-    const palabraLimpia = palabraOriginal.trim().toLowerCase().replace(/[\.,\?!\(\)"«»]/g, "").replace("/", "-");
-    
-    if (!palabraLimpia || palabraLimpia.length <= 1) return;
-    
-    console.log("🔍 Buscando en Firestore:", palabraLimpia);
-    
-    try {
-        const docRef = db.collection("diccionario_maestro").doc(palabraLimpia);
-        const docSnap = await docRef.get();
-
-        if (docSnap.exists) {
-            const data = docSnap.data();
-            displayCardDiccionario(data);
-        } else {
-            console.log("❌ No se encontró en el diccionario:", palabraLimpia);
+                if (docSnap.exists()) {
+                    const data = docSnap.data();
+                    displayCardDiccionario(data);
+                } else {
+                    console.log("❌ No se encontró en el diccionario:", palabraLimpia);
+                }
+            } catch (error) {
+                console.error("⚠️ Error al conectar con Firestore:", error);
+            }
         }
-    } catch (error) {
-        console.error("⚠️ Error al conectar con Firestore:", error);
-    }
-}
 
-/**
- * 2. RENDERIZADO DE LA TARJETA PREMIUM
- * Dibuja la tarjeta flotante con scroll interno y ajuste de altura.
- */
-function displayCardDiccionario(data) {
-    const container = document.getElementById("glosario-flotante-container");
-    if (!container) return;
+        function displayCardDiccionario(data) {
+            const container = document.getElementById("glosario-flotante-container");
+            if (!container) return;
 
-    // Validamos si existen sinónimos para guardarlos en una variable limpia
-    let sinonimosHTML = "";
-    if (data.sinonimos && data.sinonimos.length > 0) {
-        sinonimosHTML = `<p style="margin: 5px 0; font-size: 14px;"><strong>Synonymes:</strong> <span style="color: #5f6368;">${data.sinonimos.join(', ')}</span></p>`;
-    }
+            let sinonimosHTML = "";
+            if (data.sinonimos && data.sinonimos.length > 0) {
+                sinonimosHTML = `<p style="margin: 5px 0; font-size: 14px;"><strong>Synonymes:</strong> <span style="color: #5f6368;">${data.sinonimos.join(', ')}</span></p>`;
+            }
 
-    container.innerHTML = `
-        <div class="diccionario-card-premium" style="
-            background: #ffffff; 
-            border-left: 5px solid #1a73e8; 
-            padding: 18px; 
-            border-radius: 8px; 
-            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-            font-family: Arial, sans-serif;
-            color: #333;
-            max-height: 380px;
-            overflow-y: auto;
-            box-sizing: border-box;">
+            container.innerHTML = `
+                <div class="diccionario-card-premium" style="
+                    background: #ffffff; 
+                    border-left: 5px solid #1a73e8; 
+                    padding: 18px; 
+                    border-radius: 8px; 
+                    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+                    font-family: Arial, sans-serif;
+                    color: #333;
+                    max-height: 380px;
+                    overflow-y: auto;
+                    box-sizing: border-box;">
+                    
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                        <h3 style="margin: 0; color: #1a73e8; font-size: 20px; text-transform: lowercase;">${data.palabra}</h3>
+                        <span style="background: #e8f0fe; color: #1a73e8; padding: 3px 8px; border-radius: 12px; font-size: 12px; font-weight: bold;">${data.tipo_gramatical}</span>
+                    </div>
+                    
+                    <p style="margin: 5px 0; font-size: 14px;"><strong>Traducción:</strong> <span style="color: #202124;">${data.significado_espanol}</span></p>
+                    <hr style="border: 0; border-top: 1px solid #eee; margin: 12px 0;">
+                    <p style="margin: 5px 0; font-size: 14px; line-height: 1.4;"><strong>Définition:</strong> ${data.definicion}</p>
+                    
+                    ${sinonimosHTML}
+                    
+                    <p style="margin: 10px 0 0 0; font-size: 14px; background: #f8f9fa; padding: 8px; border-radius: 4px; border-left: 3px solid #34a853;">
+                        <strong>Exemple:</strong> <em>"${data.ejemplo_uso}"</em>
+                    </p>
+                    
+                    <button onclick="document.getElementById('glosario-flotante-container').style.display='none'" style="
+                        margin-top: 12px; width: 100%; background: #f1f3f4; border: none; padding: 6px; border-radius: 4px; cursor: pointer; font-size: 12px; color: #5f6368; font-weight: bold;">
+                        Fermer
+                    </button>
+                </div>
+            `;
             
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-                <h3 style="margin: 0; color: #1a73e8; font-size: 20px; text-transform: lowercase;">${data.palabra}</h3>
-                <span style="background: #e8f0fe; color: #1a73e8; padding: 3px 8px; border-radius: 12px; font-size: 12px; font-weight: bold;">${data.tipo_gramatical}</span>
-            </div>
-            
-            <p style="margin: 5px 0; font-size: 14px;"><strong>Traducción:</strong> <span style="color: #202124;">${data.significado_espanol}</span></p>
-            <hr style="border: 0; border-top: 1px solid #eee; margin: 12px 0;">
-            <p style="margin: 5px 0; font-size: 14px; line-height: 1.4;"><strong>Définition:</strong> ${data.definicion}</p>
-            
-            ${sinonimosHTML}
-            
-            <p style="margin: 10px 0 0 0; font-size: 14px; background: #f8f9fa; padding: 8px; border-radius: 4px; border-left: 3px solid #34a853;">
-                <strong>Exemple:</strong> <em>"${data.ejemplo_uso}"</em>
-            </p>
-            
-            <button onclick="document.getElementById('glosario-flotante-container').style.display='none'" style="
-                margin-top: 12px; width: 100%; background: #f1f3f4; border: none; padding: 6px; border-radius: 4px; cursor: pointer; font-size: 12px; color: #5f6368; font-weight: bold;">
-                Fermer
-            </button>
-        </div>
-    `;
-    
-    // Posición segura para librar la barra de Windows perfectamente
-    container.style.bottom = "65px";
-    container.style.display = "block";
-}
+            container.style.display = "block";
+        }
 
-/**
- * 3. ESCUCHADOR DE EVENTOS
- * Detecta el doble clic en el texto.
- */
-document.addEventListener("dblclick", function(event) {
-    const seleccion = window.getSelection().toString().trim();
-    if (seleccion && !seleccion.includes(" ")) {
-        chercherMotDiccionario(seleccion);
-    }
-});
+        document.addEventListener("dblclick", function(event) {
+            const seleccion = window.getSelection().toString().trim();
+            if (seleccion && !seleccion.includes(" ")) {
+                window.chercherMotDiccionario(seleccion);
+            }
+        });
 
         // ================================================================= -->
-        // ZONA 3: RENDERIZADO, CONTROL DE EJERCICIOS Y MICROFONO INTERACTIVO-->
+        // ZONA 3: RENDERIZADO Y CONTROL DE EJERCICIOS                       -->
         // ================================================================= -->
         window.renderExerciseStructure = function() {
             const target = document.getElementById('dynamic-workspace-target');
@@ -858,10 +835,9 @@ document.addEventListener("dblclick", function(event) {
                     <button class="nav-tab-btn" id="btn-next-exercise" style="width:auto; background:var(--green); color:white; padding:10px 22px; display:none;">Suivant <i class="fas fa-arrow-right"></i></button>
                 </div>`;
             } else {
-                html += `<p style="font-style:italic; color:#777; margin-top:15px;">Production libre ou exercice escrito. Répondez sur votre cahier.</p>`;
+                html += `<p style="font-style:italic; color:#777; margin-top:15px;">Production libre ou exercice écrit. Répondez sur votre cahier.</p>`;
             }
 
-            // CAJA DE CONSEJO Y TRANSCRIPCIÓN INTERACTIVA CON MICRÓFONO COSTO CERO
             html += `
                 <div id="sophia-box" style="display:none; background:#f4f7f9; border-left:4px solid var(--gold); padding:20px; border-radius:6px; margin-top:25px;">
                     <div style="display:flex; align-items:center; gap:10px; font-weight:700; color:var(--oxford);"><i class="fas fa-lightbulb" style="color:var(--gold);"></i> CONSEIL DE SOPHIA</div>
@@ -898,7 +874,7 @@ document.addEventListener("dblclick", function(event) {
                         if (container) container.innerHTML = `<audio controls style="width:100%;" src="${url}"></audio>`;
                     })
                     .catch((error) => {
-                        console.error("Error al cargar desde el libro:", error);
+                        console.error("Error al cargar audio:", error);
                         const container = document.getElementById(audioId);
                         if (container) {
                             container.innerHTML = `<span style="color:red; font-size:0.85rem;"><i class="fas fa-exclamation-triangle"></i> Audio ${nombreArchivoFinal} non trouvé dans le Storage</span>`;
@@ -962,7 +938,6 @@ document.addEventListener("dblclick", function(event) {
                         if (transBox) {
                             transBox.innerHTML = window.convertirTextoInteractivo(ej.transcripcion);
                         }
-                        // Inicializamos el micrófono para esta lectura interactiva
                         window.inicializarLectorVozGratuito(ej.transcripcion);
                     }
 
@@ -972,7 +947,7 @@ document.addEventListener("dblclick", function(event) {
         };
 
         // ================================================================= -->
-        // [NUEVO] RECONOCIMIENTO DE VOZ LOCAL GRATUITO (WEB SPEECH API)     -->
+        // RECONOCIMIENTO DE VOZ LOCAL GRATUITO                              -->
         // ================================================================= -->
         window.inicializarLectorVozGratuito = function(textoOriginal) {
             const btnRecord = document.getElementById('btn-record-transcription');
@@ -980,7 +955,6 @@ document.addEventListener("dblclick", function(event) {
             
             if (!btnRecord) return;
 
-            // Validar si el navegador soporta dictado por voz de forma interna
             const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
             if (!SpeechRecognition) {
                 btnRecord.style.display = "none";
@@ -989,7 +963,7 @@ document.addEventListener("dblclick", function(event) {
             }
 
             const recognition = new SpeechRecognition();
-            recognition.lang = 'fr-FR'; // Forzar idioma francés
+            recognition.lang = 'fr-FR'; 
             recognition.interimResults = false;
             recognition.maxAlternatives = 1;
 
@@ -997,7 +971,6 @@ document.addEventListener("dblclick", function(event) {
 
             btnRecord.addEventListener('click', () => {
                 if (!estaGrabando) {
-                    // Limpiar errores previos
                     document.querySelectorAll('.clickable-word').forEach(span => span.classList.remove('word-wrong'));
                     feedback.innerText = "Écoute en cours... Parlez maintenant.";
                     feedback.style.color = "var(--green)";
@@ -1024,19 +997,16 @@ document.addEventListener("dblclick", function(event) {
             recognition.onresult = (event) => {
                 const textoEscuchado = event.results[0][0].transcript.toLowerCase();
                 
-                // Limpiar caracteres extraños matemáticamente para comparar textos limpios
                 let limpiasOriginales = textoOriginal.toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()¿?¡!]/g,"").split(/\s+/);
                 let limpiasEscuchadas = textoEscuchado.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()¿?¡!]/g,"").split(/\s+/);
 
                 let erroresEncontrados = 0;
 
-                // Marcar de forma inteligente las palabras que el alumno omitió o pronunció mal
                 limpiasOriginales.forEach(palabra => {
                     if (palabra.trim() !== "" && !limpiasEscuchadas.includes(palabra)) {
                         erroresEncontrados++;
-                        // Pintamos en rojo directo la palabra en la pantalla del alumno
                         const elementosPalabra = document.querySelectorAll(`.clickable-word[data-word="${palabra}"]`);
-                        elementosPalabra.forEach(el => el.classList.add('word-wrong'));
+                        elementorPalabra.forEach(el => el.classList.add('word-wrong'));
                     }
                 });
 
@@ -1051,9 +1021,6 @@ document.addEventListener("dblclick", function(event) {
         init();
     </script>
 
-    <!-- ================================================================= -->
-    <!-- ZONA 4: CONTROL DE INTERFAZ GENERAL Y CIERRE DE POPUPS (CANDADO)  -->
-    <!-- ================================================================= -->
     <script>
         window.renderPageFromBook = function(pageNum) {
             if (!window.pdfDocInstance) {
@@ -1090,7 +1057,6 @@ document.addEventListener("dblclick", function(event) {
         }
 
         const popupGlosario = document.getElementById('floating-dict-popup');
-
         if (popupGlosario) {
             popupGlosario.addEventListener('mouseleave', () => {
                 popupGlosario.style.display = 'none';
