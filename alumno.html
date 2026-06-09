@@ -363,6 +363,23 @@
             50% { transform: scale(1.04); }
             100% { transform: scale(1); }
         }
+
+        .production-textbox {
+            width: 100%;
+            height: 180px;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.95rem;
+            resize: vertical;
+            outline: none;
+            box-sizing: border-box;
+            transition: border-color 0.3s;
+        }
+        .production-textbox:focus {
+            border-color: var(--oxford);
+        }
     </style>
 </head>
 <body>
@@ -383,9 +400,12 @@
     <div class="main-container">
         <div class="project-banner">
             <div class="banner-top">
-                <div class="banner-left">
+                <div class="banner-left" style="display: flex; align-items: center; gap: 20px;">
                     <i class="fas fa-user-circle" style="color: var(--gold); font-size: 1.8rem;"></i>
                     <h1 id="student-welcome">Chargement...</h1>
+                    <span id="banner-credits-badge" style="background: rgba(255,255,255,0.15); color: #fff; padding: 4px 12px; border-radius: 12px; font-size: 0.8rem; font-weight: 600; border: 1px solid rgba(255,255,255,0.25); display: none;">
+                        <i class="fas fa-magic" style="color: var(--gold); margin-right: 6px;"></i> <span id="banner-credits-count">50</span> / 50 Sophia Credits
+                    </span>
                 </div>
                 <div class="banner-right">
                     <span class="level-badge" id="level-indicator">NIVEAU --</span>
@@ -471,12 +491,19 @@
 
         async function init() {
             try {
-                if (previewLevel) {
-                    currentLevel = previewLevel;
+                if (studentId === 'admin_preview' || previewLevel) {
+                    currentLevel = previewLevel || "B1";
                     document.getElementById('student-welcome').innerText = `Bonjour, Administrateur (Aperçu)`;
                     document.getElementById('progress-bar-fill').style.width = `100%`;
                     document.getElementById('progress-text-target').innerText = `100%`;
                     document.getElementById('countdown-text-target').innerText = "Mode Prévisualisation";
+                    
+                    const badgeCreditos = document.getElementById('banner-credits-badge');
+                    const contadorCreditos = document.getElementById('banner-credits-count');
+                    if (badgeCreditos && contadorCreditos) {
+                        contadorCreditos.innerText = "∞";
+                        badgeCreditos.style.display = "inline-flex";
+                    }
                 } else {
                     const userSnap = await getDoc(doc(db, "Usuarios", studentId));
                     if (userSnap.exists()) {
@@ -484,6 +511,14 @@
                         currentLevel = userData.nivel || "A1";
                         document.getElementById('student-welcome').innerText = `Bonjour, ${userData.nombre || 'Étudiant'}`;
                         
+                        const badgeCreditos = document.getElementById('banner-credits-badge');
+                        const contadorCreditos = document.getElementById('banner-credits-count');
+                        if (badgeCreditos && contadorCreditos) {
+                            const creditosActuales = userData.creditos_glosario !== undefined ? userData.creditos_glosario : 50;
+                            contadorCreditos.innerText = creditosActuales;
+                            badgeCreditos.style.display = "inline-flex";
+                        }
+
                         const prog = userData.progreso || 0;
                         document.getElementById('progress-bar-fill').style.width = `${prog}%`;
                         document.getElementById('progress-text-target').innerText = `${prog}%`;
@@ -535,6 +570,7 @@
 
         window.setSkillFilter = (skill) => {
             currentSkill = skill;
+            window.currentSkill = skill;
             currentUnitId = null; 
             currentExerciseIndex = 0;
             document.querySelectorAll('.skill-tab-btn').forEach(btn => btn.classList.remove('active'));
@@ -668,37 +704,37 @@
             container.style.display = "block";
 
             try {
-                const userRef = doc(db, "Usuarios", window.currentUserEmail);
-                const userSnap = await getDoc(userRef);
-
-                const hoy = new Date().toISOString().split('T')[0];
                 let creditosDisponibles = 50;
-                let ultimaFechaConsulta = hoy;
+                let esModoAdmin = (window.currentUserEmail === 'admin_preview');
 
-                if (userSnap.exists()) {
-                    const userData = userSnap.data();
-                    ultimaFechaConsulta = userData.fecha_glosario || hoy;
-                    if (ultimaFechaConsulta === hoy) {
-                        creditosDisponibles = userData.creditos_glosario !== undefined ? userData.creditos_glosario : 50;
-                    } else {
-                        creditosDisponibles = 50;
+                if (!esModoAdmin) {
+                    const userRef = doc(db, "Usuarios", window.currentUserEmail);
+                    const userSnap = await getDoc(userRef);
+                    const hoy = new Date().toISOString().split('T')[0];
+
+                    if (userSnap.exists()) {
+                        const userData = userSnap.data();
+                        let ultimaFechaConsulta = userData.fecha_glosario || hoy;
+                        if (ultimaFechaConsulta === hoy) {
+                            creditosDisponibles = userData.creditos_glosario !== undefined ? userData.creditos_glosario : 50;
+                        }
                     }
-                }
 
-                if (creditosDisponibles <= 0) {
-                    container.innerHTML = `
-                        <div class="diccionario-card-premium" style="border-left: 5px solid #ea4335;">
-                            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px; color: #ea4335; font-weight: bold;">
-                                <i class="fas fa-exclamation-circle" style="font-size: 20px;"></i>
-                                <h3 style="margin: 0; font-size: 15px;">Limite quotidienne atteinte</h3>
+                    if (creditosDisponibles <= 0) {
+                        container.innerHTML = `
+                            <div class="diccionario-card-premium" style="border-left: 5px solid #ea4335;">
+                                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px; color: #ea4335; font-weight: bold;">
+                                    <i class="fas fa-exclamation-circle" style="font-size: 20px;"></i>
+                                    <h3 style="margin: 0; font-size: 15px;">Limite quotidienne atteinte</h3>
+                                </div>
+                                <p style="margin: 5px 0; font-size: 13px; color: #5f6368; line-height: 1.4;">
+                                    Has alcanzado tu límite de consultas diarias. Mañana se restablecerán automáticamente.
+                                </p>
+                                <button onclick="document.getElementById('glosario-flotante-container').style.display='none'" style="margin-top: 12px; width: 100%; background: #f1f3f4; border: none; padding: 6px; border-radius: 4px; cursor: pointer; font-size: 12px; color: #5f6368; font-weight: bold;">Fermer</button>
                             </div>
-                            <p style="margin: 5px 0; font-size: 13px; color: #5f6368; line-height: 1.4;">
-                                Has alcanzado tu límite de <strong>50 consultas diarias</strong> en el glosario. Mañana se restablecerán tus créditos automáticamente.
-                            </p>
-                            <button onclick="document.getElementById('glosario-flotante-container').style.display='none'" style="margin-top: 12px; width: 100%; background: #f1f3f4; border: none; padding: 6px; border-radius: 4px; cursor: pointer; font-size: 12px; color: #5f6368; font-weight: bold;">Fermer</button>
-                        </div>
-                    `;
-                    return;
+                        `;
+                        return;
+                    }
                 }
 
                 const response = await fetch("http://localhost:5000/api/chat", {
@@ -708,12 +744,18 @@
                 });
 
                 const data = await response.json();
-                creditosDisponibles--;
 
-                await updateDoc(userRef, {
-                    creditos_glosario: creditosDisponibles,
-                    fecha_glosario: hoy
-                });
+                // PROTECCIÓN MAESTRA: Solo descontar créditos si NO estamos en vista previa
+                if (!esModoAdmin) {
+                    creditosDisponibles--;
+                    const userRef = doc(db, "Usuarios", window.currentUserEmail);
+                    await updateDoc(userRef, {
+                        creditos_glosario: creditosDisponibles,
+                        fecha_glosario: new Date().toISOString().split('T')[0]
+                    });
+                    const bannerCount = document.getElementById('banner-credits-count');
+                    if (bannerCount) bannerCount.innerText = creditosDisponibles;
+                }
 
                 container.innerHTML = `
                     <div class="diccionario-card-premium" style="max-height: 380px; overflow-y: auto; box-sizing: border-box; color: #333;">
@@ -725,7 +767,7 @@
                                 <p style="margin: 3px 0 0 0; font-size: 15px; font-weight: bold; color: #202124;">"${frase}"</p>
                             </div>
                             <span style="background: #f1f3f4; color: #5f6368; padding: 3px 8px; border-radius: 12px; font-size: 11px; font-weight: bold; white-space: nowrap;">
-                                ${creditosDisponibles} / 50
+                                ${esModoAdmin ? '∞' : creditosDisponibles + ' / 50'}
                             </span>
                         </div>
                         <hr style="border: 0; border-top: 1px solid #eee; margin: 10px 0;">
@@ -764,10 +806,10 @@
                     ${ej.instruccion || 'Exercice'} 
                 </h4>`;
 
-            if (currentSkill === "CE" && ej.texto_lectura) {
+            if ((window.currentSkill === "CE" || window.currentSkill === "PE") && ej.texto_lectura) {
                 html += `
                 <div style="background: #f8f9fa; border-left: 4px solid var(--gold); padding: 20px; border-radius: 6px; margin-bottom: 25px; font-size: 0.95rem; line-height: 1.6; color: #333; white-space: pre-wrap;">
-                    <strong><i class="fas fa-file-alt" style="color:var(--gold); margin-right:8px;"></i> Document de lecture :</strong><br><br>${window.convertirTextoInteractivo(ej.texto_lectura)}
+                    <strong><i class="fas fa-file-alt" style="color:var(--gold); margin-right:8px;"></i> Document :</strong><br><br>${window.convertirTextoInteractivo(ej.texto_lectura)}
                 </div>`;
             }
 
@@ -775,7 +817,25 @@
                 html += `<div id="${audioId}" style="margin-bottom: 20px; text-align:center;"><i class="fas fa-spinner fa-spin"></i> Audio...</div>`;
             }
 
-            if (ej.preguntas && ej.preguntas.length > 0) {
+            if (window.currentSkill === "PE") {
+                html += `
+                <div style="margin-bottom: 20px;">
+                    <p style="font-weight: 600; color: #333; margin-bottom: 10px;"><i class="fas fa-pen-fancy"></i> Rédigez votre réponse ci-dessous :</p>
+                    <textarea id="pe-student-response" class="production-textbox" placeholder="Écrivez votre texte ici..."></textarea>
+                </div>
+                <div style="display: flex; justify-content: flex-end; gap: 10px;">
+                    <button class="nav-tab-btn" id="btn-submit-pe" style="width:auto; background:var(--oxford); color:white; padding:10px 22px;"><i class="fas fa-paper-plane"></i> Soumettre la production</button>
+                </div>`;
+            }
+            else if (window.currentSkill === "PO") {
+                html += `
+                <div style="margin-bottom: 20px; text-align: center; background: #fafbfc; padding: 30px; border-radius: 8px; border: 1px dashed #ccc;">
+                    <p style="font-weight: 600; color: #333; margin-bottom: 15px;"><i class="fas fa-microphone"></i> Enregistrez votre réponse orale :</p>
+                    <button id="btn-record-po" class="btn-mic" style="padding: 12px 30px; font-size: 1rem;"><i class="fas fa-microphone"></i> Commencer l'enregistrement</button>
+                    <p id="po-recording-status" style="font-size:0.85rem; margin-top:10px; color:#666; font-weight:600;"></p>
+                </div>`;
+            }
+            else if (ej.preguntas && ej.preguntas.length > 0) {
                 ej.preguntas.forEach((p, pIdx) => {
                     html += `
                     <div class="pregunta-block" id="block-preg-${pIdx}" style="padding:15px; border-radius:6px; margin-bottom:15px; border:1px solid #eef2f5;">
@@ -800,13 +860,13 @@
                     <button class="nav-tab-btn" id="btn-next-exercise" style="width:auto; background:var(--green); color:white; padding:10px 22px; display:none;">Suivant <i class="fas fa-arrow-right"></i></button>
                 </div>`;
             } else {
-                html += `<p style="font-style:italic; color:#777; margin-top:15px;">Production libre ou exercice écrit. Répondez sur votre cahier.</p>`;
+                html += `<p style="font-style:italic; color:#777; margin-top:15px;">Exercice libre. Répondez sur votre cahier.</p>`;
             }
 
             html += `
                 <div id="sophia-box" style="display:none; background:#f4f7f9; border-left:4px solid var(--gold); padding:20px; border-radius:6px; margin-top:25px;">
-                    <div style="display:flex; align-items:center; gap:10px; font-weight:700; color:var(--oxford);"><i class="fas fa-lightbulb" style="color:var(--gold);"></i> CONSEIL DE SOPHIA</div>
-                    <p id="sophia-verdict-text" style="margin:0; font-size:0.95rem;"></p>
+                    <div style="display:flex; align-items:center; gap:10px; font-weight:700; color:var(--oxford);"><i class="fas fa-lightbulb" style="color:var(--gold);"></i> CONSEIL DE SOPHIA (EXAMINATRICE DELF)</div>
+                    <p id="sophia-verdict-text" style="margin:10px 0 0 0; font-size:0.95rem; line-height:1.5; color:#333; white-space: pre-wrap;"></p>
                     
                     ${ej.transcripcion ? `
                     <div style="font-weight:700; margin-top:15px; color:var(--oxford); display:flex; justify-content:space-between; align-items:center;">
@@ -836,12 +896,96 @@
                         const container = document.getElementById(audioId);
                         if (container) container.innerHTML = `<audio controls style="width:100%;" src="${url}"></audio>`;
                     })
-                    .catch((error) => {
+                    .catch(() => {
                         const container = document.getElementById(audioId);
-                        if (container) {
-                            container.innerHTML = `<span style="color:red; font-size:0.85rem;"><i class="fas fa-exclamation-triangle"></i> Audio ${nombreArchivoFinal} non trouvé</span>`;
+                        if (container) container.innerHTML = `<span style="color:red; font-size:0.85rem;"><i class="fas fa-exclamation-triangle"></i> Audio non trouvé</span>`;
+                    });
+            }
+
+            const btnSubmitPE = document.getElementById('btn-submit-pe');
+            if (btnSubmitPE) {
+                btnSubmitPE.addEventListener('click', async () => {
+                    const studentText = document.getElementById('pe-student-response').value.trim();
+                    if (!studentText) return;
+
+                    btnSubmitPE.disabled = true;
+                    btnSubmitPE.innerText = "Évaluation en cours...";
+
+                    try {
+                        const response = await fetch("http://localhost:5000/api/chat", {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify({
+                                message: `Actúa como examinadora oficial DELF nativa. Evalúa la siguiente producción escrita para el nivel ${window.currentLevel}. Analiza la correspondencia con la consigna, la corrección léxica y gramatical. Da tu veredicto pedagógico directo, constructivo y sin rodeos de máximo 3 líneas y completamente en francés:\n\n"${studentText}"`
+                            })
+                        });
+                        const data = await response.json();
+                        
+                        document.getElementById('sophia-verdict-text').innerHTML = `<strong>Grille d'évaluation :</strong><br>${data.reply}`;
+                        document.getElementById('sophia-box').style.display = "block";
+                    } catch (e) {
+                        document.getElementById('sophia-verdict-text').innerText = "Erreur de connexion avec Sophia.";
+                        document.getElementById('sophia-box').style.display = "block";
+                    }
+                    btnSubmitPE.innerText = "Soumis";
+                });
+            }
+
+            const btnRecordPO = document.getElementById('btn-record-po');
+            const poStatus = document.getElementById('po-recording-status');
+            if (btnRecordPO) {
+                const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+                if (!SpeechRecognition) {
+                    btnRecordPO.style.display = "none";
+                    poStatus.innerText = "Le navigateur de l'élève ne supporte pas l'enregistrement de voix.";
+                } else {
+                    const recognitionPO = new SpeechRecognition();
+                    recognitionPO.lang = 'fr-FR';
+                    recognitionPO.interimResults = false;
+                    let recordingPO = false;
+
+                    btnRecordPO.addEventListener('click', () => {
+                        if (!recordingPO) {
+                            poStatus.innerText = "Sophia vous écoute... Parlez librement.";
+                            poStatus.style.color = "var(--green)";
+                            btnRecordPO.classList.add('recording');
+                            btnRecordPO.innerHTML = `<i class="fas fa-stop"></i> Terminer l'enregistrement`;
+                            recognitionPO.start();
+                            recordingPO = true;
+                        } else {
+                            recognitionPO.stop();
                         }
                     });
+
+                    recognitionPO.onend = () => {
+                        recordingPO = false;
+                        btnRecordPO.classList.remove('recording');
+                        btnRecordPO.innerHTML = `<i class="fas fa-microphone"></i> Recommencer`;
+                    };
+
+                    recognitionPO.onresult = async (event) => {
+                        const speechText = event.results[0][0].transcript.trim();
+                        poStatus.innerText = `Analyse de : "${speechText.substring(0, 30)}..."`;
+                        poStatus.style.color = "var(--oxford)";
+
+                        try {
+                            const res = await fetch("http://localhost:5000/evaluar-pronunciacion", {
+                                method: "POST",
+                                headers: { "Content-Type": "application/json" },
+                                body: JSON.stringify({
+                                    guion_esperado: "Production libre orale de l'étudiant",
+                                    texto_alumno: speechText,
+                                    nivel: window.currentLevel
+                                })
+                            });
+                            const data = await res.json();
+                            document.getElementById('sophia-verdict-text').innerHTML = `<strong>Analyse de performance :</strong><br>${data.evaluacion}`;
+                            document.getElementById('sophia-box').style.display = "block";
+                        } catch (e) {
+                            poStatus.innerText = "Erreur de connexion.";
+                        }
+                    };
+                }
             }
 
             const btnSubmit = document.getElementById('btn-submit-exercise');
@@ -909,7 +1053,6 @@
             const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
             if (!SpeechRecognition) {
                 btnRecord.style.display = "none";
-                feedback.innerText = "Reconocimiento de voz no soportado.";
                 return;
             }
 
@@ -965,24 +1108,33 @@
         // ================================================================= -->
         async function renderCarnetInterface() {}
 
-        // Disparador de Clic Directo en Palabras Individuales
+        // AISLAMIENTO DE ARRASTRE DE RATÓN: Manejador limpio nativo
+        let selectionStartTimeout = null;
+
+        document.addEventListener('selectionchange', () => {
+            clearTimeout(selectionStartTimeout);
+            selectionStartTimeout = setTimeout(() => {
+                const textoSeleccionado = window.getSelection().toString().trim();
+                // Si la selección tiene más de una palabra, es un arrastre de frase inmediato
+                if (textoSeleccionado && textoSeleccionado.includes(" ") && textoSeleccionado.length > 4 && !textoSeleccionado.includes("\n")) {
+                    console.log("🚀 Frase detectada por arrastre nativo:", textoSeleccionado);
+                    window.ejecutarConsultaSophiaConFiltro(textoSeleccionado);
+                    window.getSelection().removeAllRanges(); // Limpiar selección para evitar bucles
+                }
+            }, 700); // Retraso de cortesía para esperar a que termine el arrastre
+        });
+
+        // Evento exclusivo de Clic en palabras sueltas sin interferir con la selección
         document.addEventListener('click', (e) => {
+            const textoSeleccionado = window.getSelection().toString().trim();
+            if (textoSeleccionado.includes(" ")) return; // Si hay frase seleccionada, omitir el clic
+
             if (e.target.classList.contains('clickable-word')) {
                 const palabraUnica = e.target.getAttribute('data-word') || e.target.innerText.trim();
                 if (palabraUnica.length > 1) {
-                    console.log(`🎯 Clic directo en palabra. Sophia analiza: "${palabraUnica}"`);
+                    console.log("🎯 Clic limpio en palabra suelta:", palabraUnica);
                     window.ejecutarConsultaSophiaConFiltro(palabraUnica);
                 }
-            }
-        });
-
-        // Disparador de Arrastre y Selección de Frases Completas (MouseUp)
-        document.addEventListener('mouseup', () => {
-            const seleccionFrase = window.getSelection().toString().trim();
-            // Validamos que sea una frase real (más de una palabra o al menos 3 caracteres significativos)
-            if (seleccionFrase && seleccionFrase.length > 2 && !seleccionFrase.includes("\n")) {
-                console.log(`🚀 Frase seleccionada por arrastre. Sophia analiza: "${seleccionFrase}"`);
-                window.ejecutarConsultaSophiaConFiltro(seleccionFrase);
             }
         });
 
