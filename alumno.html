@@ -726,7 +726,6 @@
             container.style.display = "block";
 
             try {
-                // CORRECCIÓN MAESTRA: Se unifica la consulta apuntando a la colección real "Usuarios" con mayúscula
                 const userRef = doc(db, "Usuarios", window.currentUserEmail);
                 const userSnap = await getDoc(userRef);
 
@@ -776,7 +775,6 @@
                 const data = await response.json();
                 creditosDisponibles--;
 
-                // CORRECCIÓN: Usamos updateDoc para modificar campos específicos sin romper el esquema del usuario
                 await updateDoc(userRef, {
                     creditos_glosario: creditosDisponibles,
                     fecha_glosario: hoy
@@ -893,7 +891,7 @@
                     <button class="nav-tab-btn" id="btn-next-exercise" style="width:auto; background:var(--green); color:white; padding:10px 22px; display:none;">Suivant <i class="fas fa-arrow-right"></i></button>
                 </div>`;
             } else {
-                html += `<p style="font-style:italic; color:#777; margin-top:15px;">Production libre ou ';exercice écrit. Répondez sur votre cahier.</p>`;
+                html += `<p style="font-style:italic; color:#777; margin-top:15px;">Production libre ou exercice écrit. Répondez sur votre cahier.</p>`;
             }
 
             html += `
@@ -958,6 +956,8 @@
                         
                         if (selected) {
                             let valorSeleccionado = selected.value.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()¿?¡!]/g,"").replace(/\s+/g, ' ').trim().toLowerCase();
+                            
+                            // CORRECCIÓN: Buscamos la llave 'respuesta_correcta' tal cual viene de Firestore
                             let textoCorrectoDirecto = p.respuesta_correcta ? p.respuesta_correcta.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()¿?¡!]/g,"").replace(/\s+/g, ' ').trim().toLowerCase() : "";
                             
                             if (valorSeleccionado === textoCorrectoDirecto) {
@@ -1069,7 +1069,7 @@
                 });
 
                 if (erroresEncontrados === 0) {
-                    feedback.innerHTML = `<span style="color:var(--green);"><i class="fas fa-check-double"></i> Prononciation excellente ! Tout es correct.</span>`;
+                    feedback.innerHTML = `<span style="color:var(--green);"><i class="fas fa-check-double"></i> Prononciation excellente ! Tout est correct.</span>`;
                 } else {
                     feedback.innerHTML = `<span style="color:#d63031;"><i class="fas fa-exclamation-circle"></i> Pratique les mots marqués en rouge.</span>`;
                 }
