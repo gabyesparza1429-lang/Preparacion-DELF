@@ -690,111 +690,155 @@
                 return `<span class="clickable-word" data-word="${palabraLimpia.toLowerCase()}" onclick="window.chercherMotDiccionario('${palabraLimpia}')">${fragmento}</span>`;
             }).join('');
         };
+      // ========================================================
+        // ZONA 2: ASISTENTE DICCIONARIO INTELIGENTE CON SOPHIA IA
+        // (CON CONTROL DE CRÉDITOS DIARIOS - MÁXIMO 50 AL DÍA)
         // ========================================================
-        // ZONA 2 VERSION MODERNA INTEGRADA EN EL FLUJO MODULE
-        // ========================================================
-        window.chercherMotDiccionario = async function(palabraOriginal) {
-            // 1. Limpieza inicial de signos de puntuación pegados
-            let palabraLimpia = palabraOriginal.trim().toLowerCase().replace(/[\.,\?!\(\)"«»:\*]/g, "");
+        
+        // Escucha cuando el alumno suelta el mouse tras seleccionar una frase o palabra
+        document.addEventListener("mouseup", function() {
+            const seleccion = window.getSelection().toString().trim();
             
-            // 2. FILTRO UNIVERSAL DE APÓSTROFES: Mocha cualquier letra antes de la comilla (ej: c'est -> est, l'école -> école)
-            if (palabraLimpia.includes("'")) {
-                const partes = palabraLimpia.split("'");
-                // Tomamos la parte que queda a la derecha de la apóstrofe
-                palabraLimpia = partes[partes.length - 1] || palabraLimpia;
+            // Solo actúa si la selección tiene una longitud válida (evita ruidos o clics sueltos)
+            if (seleccion && seleccion.length > 1 && !seleccion.includes("\n")) {
+                console.log(`🚀 Solicitando análisis para: "${seleccion}"`);
+                ejecutarConsultaSophiaConFiltro(seleccion);
             }
-            
-            // Reemplazamos diagonales por guiones por seguridad de Firebase
-            palabraLimpia = palabraLimpia.replace("/", "-").trim();
-            if (!palabraLimpia || palabraLimpia.length <= 1) return;
-            
-            console.log("🔍 Buscando en Firestore:", palabraLimpia);
-            
-            try {
-                // INTENTO 1: Buscar la palabra exacta (ej: "mes", "chaussure", "est")
-                let docRef = doc(db, "diccionario_maestro", palabraLimpia);
-                let docSnap = await getDoc(docRef);
+        });
 
-                // INTENTO 2: Si no existe, termina en 's' Y TIENE MÁS DE 3 LETRAS (Protege monosílabos como "mes")
-                if (!docSnap.exists && palabraLimpia.endsWith('s') && palabraLimpia.length > 3) {
-                    const palabraSingular = palabraLimpia.slice(0, -1);
-                    console.log(`➔ Intentando en singular seguro: ${palabraSingular}`);
-                    docRef = doc(db, "diccionario_maestro", palabraSingular);
-                    docSnap = await getDoc(docRef);
-                }
-
-                // INTENTO 3: Plurales irregulares en 'x' (más de 3 letras)
-                if (!docSnap.exists && palabraLimpia.endsWith('x') && palabraLimpia.length > 3) {
-                    const palabraAl = palabraLimpia.slice(0, -2) + "al";
-                    console.log(`➔ Intentando raíz en 'al': ${palabraAl}`);
-                    docRef = doc(db, "diccionario_maestro", palabraAl);
-                    docSnap = await getDoc(docRef);
-                }
-
-                if (docSnap.exists) {
-                    const data = docSnap.data();
-                    displayCardDiccionario(data);
-                } else {
-                    console.log("❌ No se encontró en el diccionario:", palabraLimpia);
-                }
-            } catch (error) {
-                console.error("⚠️ Error al conectar con Firestore:", error);
-            }
-        }
-
-        function displayCardDiccionario(data) {
+        /**
+         * Valida los créditos del alumno en Firestore antes de llamar a la IA
+         */
+        async function ejecutarConsultaSophiaConFiltro(frase) {
             const container = document.getElementById("glosario-flotante-container");
             if (!container) return;
 
-            let sinonimosHTML = "";
-            if (data.sinonimos && data.sinonimos.length > 0) {
-                sinonimosHTML = `<p style="margin: 5px 0; font-size: 14px;"><strong>Synonymes:</strong> <span style="color: #5f6368;">${data.sinonimos.join(', ')}</span></p>`;
+            // Verificación de seguridad: ¿Hay un usuario logueado en la plataforma?
+            if (!window.currentUserEmail) {
+                container.innerHTML = `
+                    <div style="background: #ffffff; padding: 15px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.15); font-family: Arial; border-left: 5px solid #f4b400;">
+                        <p style="margin:0; color:#333; font-size:13px;">⚠️ Por favor, inicia sesión para usar el glosario interactivo.</p>
+                    </div>
+                `;
+                container.style.display = "block";
+                return;
             }
 
+            // Mostramos estado de carga inicial
             container.innerHTML = `
-                <div class="diccionario-card-premium" style="
-                    background: #ffffff; 
-                    border-left: 5px solid #1a73e8; 
-                    padding: 18px; 
-                    border-radius: 8px; 
-                    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-                    font-family: Arial, sans-serif;
-                    color: #333;
-                    max-height: 380px;
-                    overflow-y: auto;
-                    box-sizing: border-box;">
-                    
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-                        <h3 style="margin: 0; color: #1a73e8; font-size: 20px; text-transform: lowercase;">${data.palabra}</h3>
-                        <span style="background: #e8f0fe; color: #1a73e8; padding: 3px 8px; border-radius: 12px; font-size: 12px; font-weight: bold;">${data.tipo_gramatical}</span>
-                    </div>
-                    
-                    <p style="margin: 5px 0; font-size: 14px;"><strong>Traducción:</strong> <span style="color: #202124;">${data.significado_espanol}</span></p>
-                    <hr style="border: 0; border-top: 1px solid #eee; margin: 12px 0;">
-                    <p style="margin: 5px 0; font-size: 14px; line-height: 1.4;"><strong>Définition:</strong> ${data.definicion}</p>
-                    
-                    ${sinonimosHTML}
-                    
-                    <p style="margin: 10px 0 0 0; font-size: 14px; background: #f8f9fa; padding: 8px; border-radius: 4px; border-left: 3px solid #34a853;">
-                        <strong>Exemple:</strong> <em>"${data.ejemplo_uso}"</em>
-                    </p>
-                    
-                    <button onclick="document.getElementById('glosario-flotante-container').style.display='none'" style="
-                        margin-top: 12px; width: 100%; background: #f1f3f4; border: none; padding: 6px; border-radius: 4px; cursor: pointer; font-size: 12px; color: #5f6368; font-weight: bold;">
-                        Fermer
-                    </button>
+                <div style="background: #ffffff; padding: 15px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.15); font-family: Arial;">
+                    <p style="margin:0; color:#666; font-size:13px;"><i class="fas fa-spinner fa-spin"></i> Sophia está analizando vuestra selección...</p>
                 </div>
             `;
-            
             container.style.display = "block";
-        }
 
-        document.addEventListener("dblclick", function(event) {
-            const seleccion = window.getSelection().toString().trim();
-            if (seleccion && !seleccion.includes(" ")) {
-                window.chercherMotDiccionario(seleccion);
+            try {
+                // Referencia al documento del alumno en Firestore (Colección 'usuarios')
+                const userRef = doc(db, "usuarios", window.currentUserEmail);
+                const userSnap = await getDoc(userRef);
+
+                const hoy = new Date().toISOString().split('T')[0]; // Formato YYYY-MM-DD
+                let creditosDisponibles = 50;
+                let ultimaFechaConsulta = hoy;
+
+                if (userSnap.exists()) {
+                    const userData = userSnap.data();
+                    ultimaFechaConsulta = userData.fecha_glosario || hoy;
+                    
+                    if (ultimaFechaConsulta === hoy) {
+                        // Si es el mismo día, recuperamos sus créditos restantes (si no existe el campo, asumimos 50)
+                        creditosDisponibles = userData.creditos_glosario !== undefined ? userData.creditos_glosario : 50;
+                    } else {
+                        // Si es un día nuevo, se le reinicia automáticamente su cuota a 50
+                        creditosDisponibles = 50;
+                    }
+                }
+
+                // CANDADO: Si ya se terminó sus 50 créditos del día, bloqueamos la consulta
+                if (creditosDisponibles <= 0) {
+                    container.innerHTML = `
+                        <div class="diccionario-card-premium" style="background: #ffffff; border-left: 5px solid #ea4335; padding: 18px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.15); font-family: Arial, sans-serif;">
+                            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px; color: #ea4335; font-weight: bold;">
+                                <i class="fas fa-exclamation-circle" style="font-size: 20px;"></i>
+                                <h3 style="margin: 0; font-size: 16px;">Limite quotidien atteint</h3>
+                            </div>
+                            <p style="margin: 5px 0; font-size: 13px; color: #5f6368; line-height: 1.4;">
+                                Has alcanzado tu límite de <strong>50 consultas diarias</strong> en el glosario. Mañana se restablecerán tus créditos automáticamente para que sigas estudiando. ¡Buen trabajo hoy!
+                            </p>
+                            <button onclick="document.getElementById('glosario-flotante-container').style.display='none'" style="margin-top: 12px; width: 100%; background: #f1f3f4; border: none; padding: 6px; border-radius: 4px; cursor: pointer; font-size: 12px; color: #5f6368; font-weight: bold;">Fermer</button>
+                        </div>
+                    `;
+                    return;
+                }
+
+                // SI TIENE CRÉDITOS: Llamamos a tu servidor de Sophia
+                const response = await fetch("http://localhost:5000/api/chat", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        message: `Actúa como un diccionario pedagógico avanzado para estudiantes DELF. Analiza la siguiente palabra o frase extraída de un texto en francés: "${frase}". 
+                        Devuelve una respuesta armada directamente en código HTML limpio y compacto (sin usar bloques markdown de tipo \`\`\`), estructurada así:
+                        <p style="margin: 0 0 8px 0; font-size: 14px;"><strong>Traduction:</strong> <span style="color: #202124;">[Traducción al español adaptada al contexto]</span></p>
+                        <p style="margin: 0 0 8px 0; font-size: 14px; line-height: 1.4;"><strong>Analyse:</strong> [Si es plural, verbo conjugado o palabra compleja, explica brevemente su forma raíz o infinitivo. Si es simple, indica categoría gramatical]</p>
+                        <p style="margin: 8px 0 0 0; font-size: 14px; background: #f8f9fa; padding: 8px; border-radius: 4px; border-left: 3px solid #34a853;"><strong>Exemple:</strong> <em>"[Un ejemplo corto y claro en francés]"</em></p>`
+                    })
+                });
+
+                const data = await response.json();
+                
+                // Descontamos un crédito del contador local
+                creditosDisponibles--;
+
+                // Actualizamos Firestore con los créditos nuevos y la fecha del día actual
+                await setDoc(userRef, {
+                    creditos_glosario: creditosDisponibles,
+                    fecha_glosario: hoy
+                }, { merge: true });
+
+                // Renderizamos la tarjeta final con la respuesta de Sophia y su contador de fichas
+                container.innerHTML = `
+                    <div class="diccionario-card-premium" style="
+                        background: #ffffff; 
+                        border-left: 5px solid #1a73e8; 
+                        padding: 18px; 
+                        border-radius: 8px; 
+                        box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+                        font-family: Arial, sans-serif;
+                        color: #333;
+                        max-height: 380px;
+                        overflow-y: auto;
+                        box-sizing: border-box;">
+                        
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px;">
+                            <div>
+                                <h4 style="margin: 0; color: #1a73e8; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px;">Contextuel (Sophia IA)</h4>
+                                <p style="margin: 3px 0 0 0; font-size: 16px; font-weight: bold; color: #202124;">"${frase}"</p>
+                            </div>
+                            <span style="background: #f1f3f4; color: #5f6368; padding: 3px 8px; border-radius: 12px; font-size: 11px; font-weight: bold; white-space: nowrap;">
+                                ${creditosDisponibles} / 50 restants
+                            </span>
+                        </div>
+                        <hr style="border: 0; border-top: 1px solid #eee; margin: 10px 0;">
+                        
+                        <div style="font-size: 14px;">
+                            ${data.reply}
+                        </div>
+                        
+                        <button onclick="document.getElementById('glosario-flotante-container').style.display='none'" style="
+                            margin-top: 12px; width: 100%; background: #f1f3f4; border: none; padding: 6px; border-radius: 4px; cursor: pointer; font-size: 12px; color: #5f6368; font-weight: bold;">
+                            Fermer
+                        </button>
+                    </div>
+                `;
+            } catch (error) {
+                console.error("⚠️ Error general en el asistente Sophia:", error);
+                container.innerHTML = `
+                    <div style="background: #ffffff; padding: 15px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.15); font-family: Arial; border-left: 5px solid red;">
+                        <p style="margin:0; color:red; font-size:13px;">❌ Error de conexión. Asegúrate de tener encendido vuestro servidor de Sophia.</p>
+                    </div>
+                `;
             }
-        });
+        }
         
         // ================================================================= -->
         // ZONA 3: RENDERIZADO Y CONTROL DE EJERCICIOS                       -->
