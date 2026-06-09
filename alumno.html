@@ -348,7 +348,6 @@
             border-color: var(--oxford);
         }
 
-        /* DISEÑO EXCLUSIVO DE LA GUÍA DE BIENVENIDA BILINGÜE */
         .modal-guide-overlay {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -405,13 +404,25 @@
             margin-bottom: 8px;
         }
 
-        /* ESTILO PARA CADA PÁRRAFO DE DIÁLOGO LIMPIO */
         .text-paragraph-block {
             display: block;
             margin: 0 0 14px 0;
             line-height: 1.8;
             font-size: 0.98rem;
             color: #333;
+        }
+
+        /* CONTENEDOR FLOTANTE PARA FIJAR LOS CONTROLES DEL MIC EN LA TRANSCRIPCIÓN */
+        .transcription-control-sticky-panel {
+            background: #fafbfc;
+            border-top: 1px solid #ddd;
+            padding: 12px 15px;
+            border-bottom-left-radius: 8px;
+            border-bottom-right-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
         }
     </style>
 </head>
@@ -447,7 +458,7 @@
             </div>
 
             <button onclick="document.getElementById('welcome-guide-modal').style.display='none'" class="nav-tab-btn" style="width: 100%; background: var(--oxford); color: white; text-align: center; justify-content: center; font-weight: 700; padding: 15px; margin-top: 15px;">
-                Commencer la préparation / Comenzar preparación
+                Commencer la préparation / Comenzar préparation
             </button>
         </div>
     </div>
@@ -524,7 +535,7 @@
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
-        import { getFirestore, doc, getDoc, updateDoc, collection, getDocs, query, where } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js";
+        import { getFirestore, doc, getDoc, setDoc, updateDoc, collection, getDocs, query, where } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js";
         import { getStorage, ref, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-storage.js";
 
         const firebaseConfig = {
@@ -557,22 +568,16 @@
         let mapaAciertosAlumno = {}; 
         let totalReactivosHabilidadGlobal = 0;
 
-        // FORMATEADOR DE TEXTO DE PASADA ÚNICA (EVITA EL ENTRERENGLONADO EXTRAÑO)
         window.convertirTextoInteractivo = function(texto) {
             if (!texto) return '';
-            
-            // Separar de forma limpia por signos de puntuación conversacionales
             let bloquesFrases = texto.split(/(?<=[?.!])\s+/);
-            
             return bloquesFrases.map(bloque => {
                 if (bloque.trim() === '') return '';
-                
                 let palabrasHtml = bloque.split(/(\s+)/).map(fragmento => {
                     if (fragmento.trim() === '') return fragmento;
                     let palabraLimpia = fragmento.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()¿?¡!]/g,"");
                     return `<span class="clickable-word" data-word="${palabraLimpia.toLowerCase()}">${fragmento}</span>`;
                 }).join('');
-                
                 return `<p class="text-paragraph-block">${palabrasHtml}</p>`;
             }).join('');
         };
@@ -791,14 +796,13 @@
                 });
                 const data = await response.json();
 
-                // BLINDAJE DE ACTUALIZACIÓN: Solo corre si el documento existe y no estamos en modo admin preview
                 if (docRefValidado && urlId !== 'admin_preview') {
                     getDoc(docRefValidado).then(snap => {
                         if (snap.exists()) {
                             let creds = snap.data().creditos_glosario !== undefined ? snap.data().creditos_glosario : 50;
                             if (creds > 0) { updateDoc(docRefValidado, { creditos_glosario: --creds }); document.getElementById('banner-credits-count').innerText = creds; }
                         }
-                    }).catch(e => console.log("Aviso de escritura mitigado de forma segura."));
+                    }).catch(() => {});
                 }
 
                 container.innerHTML = `
@@ -851,7 +855,7 @@
                 html += `
                 <div style="margin-bottom:20px; text-align:center; background:#fafbfc; padding:30px; border-radius:8px; border:1px dashed #ccc;">
                     <button id="btn-record-po" class="btn-mic" style="padding:12px 30px; font-size:1rem;"><i class="fas fa-microphone"></i> Commencer</button>
-                    <p id="po-recording-status" style="font-size:0.85rem; margin-top:10px; color:#666行业;"></p>
+                    <p id="po-recording-status" style="font-size:0.85rem; margin-top:10px; color:#666;"></p>
                 </div>`;
             } else if (ej.preguntas && ej.preguntas.length > 0) {
                 ej.preguntas.forEach((p, pIdx) => {
@@ -873,7 +877,7 @@
                 </div>`;
             }
 
-            // CAJA DE RETROALIMENTACIÓN DE SOPHIA Y TRANSCRIPCIÓN BLINDADA
+            // CONTENEDOR DE TRANSCRIPCIÓN OPTIMIZADO CON PANEL DE BOTONES FIJO ABAJO (SOLICITADO)
             html += `
                 <div id="sophia-box" style="display:none; background:#f4f7f9; border-left:4px solid var(--gold); padding:20px; border-radius:6px; margin-top:25px;">
                     <div style="font-weight:700; color:var(--oxford);"><i class="fas fa-lightbulb" style="color:var(--gold);"></i> CONSEIL DE SOPHIA</div>
@@ -881,12 +885,18 @@
                     <p id="sophia-verdict-text" style="margin:10px 0 0 0; font-size:0.95rem; line-height:1.5; color:#333;"></p>
                     
                     ${ej.transcripcion ? `
-                    <div style="font-weight:700; margin-top:25px; color:var(--oxford); display:flex; justify-content:space-between; align-items:center;">
-                        <span><i class="fas fa-headphones-alt"></i> Transcription (Cliquez sur un mot) :</span>
-                        <button id="btn-record-transcription" class="btn-mic"><i class="fas fa-microphone"></i> Lire à haute voix</button>
+                    <div style="font-weight:700; margin-top:25px; color:var(--oxford); margin-bottom:8px;">
+                        <i class="fas fa-headphones-alt"></i> Transcription (Cliquez sur un mot) :
                     </div>
-                    <div id="interactive-transcription-box" style="background:#fff; border:1px dashed #ccc; padding:15px; border-radius:8px; margin-top:8px; user-select:none; max-height: 250px; overflow-y: auto;"></div>
-                    <p id="audio-reading-feedback" style="font-size:0.8rem; margin-top:5px; font-weight:600; color:#666;"></p>
+                    
+                    <div style="border:1px dashed #ccc; border-radius:8px; background:#fff; display:flex; flex-direction:column; overflow:hidden;">
+                        <div id="interactive-transcription-box" style="padding:15px; user-select:none; max-height:220px; overflow-y:auto;"></div>
+                        
+                        <div class="transcription-control-sticky-panel">
+                            <p id="audio-reading-feedback" style="font-size:0.82rem; margin:0; font-weight:600; color:#666;">Prêt pour l'écoute / Listo</p>
+                            <button id="btn-record-transcription" class="btn-mic" style="margin-top:0; padding:10px 20px;"><i class="fas fa-microphone"></i> Commencer l'enregistrement</button>
+                        </div>
+                    </div>
                     ` : ''}
                 </div>
             </div>`;
@@ -945,7 +955,6 @@
                     }
                     document.getElementById('sophia-verdict-text').innerHTML = `Tu as obtenu <strong>${aciertosN} / ${totalR}</strong> aciertos.`;
                     
-                    // RENDERIZAR LA TRANSCRIPCIÓN CON EL FORMATO LIMPIO
                     if (ej.transcripcion) {
                         document.getElementById('interactive-transcription-box').innerHTML = window.convertirTextoInteractivo(ej.transcripcion);
                         window.inicializarLectorVozGratuito(ej.transcripcion);
@@ -970,6 +979,7 @@
             }
         };
 
+        // MOTOR REVOLUCIONADO DE AUDIO PERSISTENTE CONTROLADO MANUALMENTE (INMUNE A SILENCIOS)
         window.inicializarLectorVozGratuito = function(textoOriginal) {
             const btnRecord = document.getElementById('btn-record-transcription');
             const feedback = document.getElementById('audio-reading-feedback');
@@ -980,39 +990,70 @@
 
             const recognition = new SpeechRecognition();
             recognition.lang = 'fr-FR'; 
-            recognition.continuous = true; // MIC CONTINUO ACTIVADO INDISPENSABLE
+            recognition.continuous = true; 
+            recognition.interimResults = false;
 
-            let estaGrabando = false;
+            let modoGrabacionManualActivo = false;
+            let buzonTextoAcumuladoHistorico = ""; 
 
             btnRecord.addEventListener('click', () => {
-                if (!estaGrabando) {
-                    feedback.innerText = "Écoute en cours... Parlez maintenant.";
+                if (!modoGrabacionManualActivo) {
+                    // Acción: Encender grabación manual
+                    modoGrabacionManualActivo = true;
+                    buzonTextoAcumuladoHistorico = ""; 
+                    document.querySelectorAll('.clickable-word').forEach(span => span.classList.remove('word-wrong'));
+                    
+                    feedback.innerText = "Sophia vous écoute... Parlez à votre rythme.";
                     feedback.style.color = "var(--green)";
                     btnRecord.classList.add('recording');
+                    btnRecord.innerHTML = `<i class="fas fa-stop"></i> Terminer et évaluer`;
+                    
                     recognition.start();
-                    estaGrabando = true;
                 } else {
+                    // Acción: Apagar y evaluar bloque completo
+                    modoGrabacionManualActivo = false;
                     recognition.stop();
                 }
             });
 
+            // BLINDAJE ANTI-SILENCIOS: Si el motor nativo intenta apagarse solo, el código lo despierta al instante si el botón sigue encendido
             recognition.onend = () => {
-                estaGrabando = false;
-                btnRecord.classList.remove('recording');
-                btnRecord.innerHTML = `<i class="fas fa-microphone"></i> Lire à haute voix`;
+                if (modoGrabacionManualActivo) {
+                    console.log("⚡ Relanzamiento seguro del micrófono activado por bache de silencio.");
+                    recognition.start();
+                } else {
+                    // Evaluación final definitiva del bloque guardado
+                    btnRecord.classList.remove('recording');
+                    btnRecord.innerHTML = `<i class="fas fa-microphone"></i> Commencer l'enregistrement`;
+                    
+                    let limpiasOriginales = textoOriginal.toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()¿?¡!]/g,"").split(/\s+/);
+                    let limpiasEscuchadas = buzonTextoAcumuladoHistorico.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()¿?¡!]/g,"").split(/\s+/);
+                    let conteoErroresLectura = 0;
+
+                    limpiasOriginales.forEach(palabra => {
+                        if (palabra.trim() !== "" && !limpiasEscuchadas.includes(palabra)) {
+                            conteoErroresLectura++;
+                            const elementosPalabra = document.querySelectorAll(`.clickable-word[data-word="${palabra}"]`);
+                            elementosPalabra.forEach(el => el.classList.add('word-wrong'));
+                        }
+                    });
+
+                    if (conteoErroresLectura === 0) {
+                        feedback.innerHTML = `<span style="color:var(--green);"><i class="fas fa-check-double"></i> Prononciation excellente !</span>`;
+                    } else {
+                        feedback.innerHTML = `<span style="color:#d63031;"><i class="fas fa-exclamation-circle"></i> Pratique les mots en rouge.</span>`;
+                    }
+                }
             };
 
+            // Ir acumulando todas las ráfagas de palabras que el alumno diga de corrido
             recognition.onresult = (event) => {
-                const textoEscuchado = event.results[0][0].transcript.toLowerCase();
-                let limpiasOriginales = textoOriginal.toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()¿?¡!]/g,"").split(/\s+/);
-                let limpiasEscuchadas = textoEscuchado.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()¿?¡!]/g,"").split(/\s+/);
-
-                limpiasOriginales.forEach(palabra => {
-                    if (palabra.trim() !== "" && !limpiasEscuchadas.includes(palabra)) {
-                        const elementosPalabra = document.querySelectorAll(`.clickable-word[data-word="${palabra}"]`);
-                        elementosPalabra.forEach(el => el.classList.add('word-wrong'));
+                for (let i = event.resultIndex; i < event.results.length; ++i) {
+                    if (event.results[i].isFinal) {
+                        buzonTextoAcumuladoHistorico += " " + event.results[i][0].transcript.toLowerCase();
                     }
-                });
+                }
+                console.log("🎙️ Texto acumulándose en el buzón seguro:", buzonTextoAcumuladoHistorico);
             };
         };
 
