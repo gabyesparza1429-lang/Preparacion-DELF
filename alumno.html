@@ -491,7 +491,7 @@
             "A2": "ABC DELF A2 - 2025.pdf",
             "B1": "ABC DELF B1 - 2025.pdf",
             "B2": "ABC DELF B2 - 2025.pdf",
-            "C1": "Le DALF 100% Réuresite C1 - C2.pdf"
+            "C1": "Le DALF 100% Réussite C1 - C2.pdf"
         };
 
         const urlParams = new URLSearchParams(window.location.search);
@@ -499,6 +499,16 @@
         const previewLevel = urlParams.get('level');
 
         window.currentUserEmail = studentId;
+
+        // SECCIÓN INVERSIÓN: Declaramos la función del texto antes de que Firebase intente renderizar
+        window.convertirTextoInteractivo = function(texto) {
+            if (!texto) return '';
+            return texto.split(/(\s+)/).map(fragmento => {
+                if (fragmento.trim() === '') return fragmento;
+                let palabraLimpia = fragmento.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()¿?¡!]/g,"");
+                return `<span class="clickable-word" data-word="${palabraLimpia.toLowerCase()}">${fragmento}</span>`;
+            }).join('');
+        };
 
         async function init() {
             try {
@@ -683,15 +693,6 @@
             if (currentUnitId === null || !unidadesCache[currentUnitId]) return;
             ejerciciosFiltrados = unidadesCache[currentUnitId][currentSkill] || unidadesCache[currentUnitId][currentSkill.toLowerCase()] || [];
         }
-
-        window.convertirTextoInteractivo = function(texto) {
-            if (!texto) return '';
-            return texto.split(/(\s+)/).map(fragmento => {
-                if (fragmento.trim() === '') return fragmento;
-                let palabraLimpia = fragmento.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()¿?¡!]/g,"");
-                return `<span class="clickable-word" data-word="${palabraLimpia.toLowerCase()}">${fragmento}</span>`;
-            }).join('');
-        };
 
         // ========================================================
         // ZONA 2: ASISTENTE DICCIONARIO INTELIGENTE CON SOPHIA IA
