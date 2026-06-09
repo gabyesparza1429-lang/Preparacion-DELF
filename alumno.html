@@ -458,7 +458,7 @@
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
-        import { getFirestore, doc, getDoc, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js";
+        import { getFirestore, doc, getDoc, setDoc, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js";
         import { getStorage, ref, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-storage.js";
 
         const firebaseConfig = {
@@ -497,6 +497,9 @@
         const urlParams = new URLSearchParams(window.location.search);
         const studentId = urlParams.get('id') || 'default_student';
         const previewLevel = urlParams.get('level');
+
+        // Candado de seguridad: Guardamos el ID del alumno globalmente para la Zona 2
+        window.currentUserEmail = studentId;
 
         async function init() {
             try {
@@ -582,7 +585,7 @@
             
             document.getElementById('dynamic-workspace-target').innerHTML = `
                 <div style="text-align: center; padding: 60px; color: var(--oxford); margin-top:30px;">
-                    <p style="font-weight: 600;">Veuillez choisir une activité dans le menu de gauche pour commencer.</p>
+                    <p style="font-weight: 600;">Veuillez choisir une activité dans le menu de gauche para commencer.</p>
                 </div>`;
 
             renderActiveInterface();
@@ -687,57 +690,53 @@
             return texto.split(/(\s+)/).map(fragmento => {
                 if (fragmento.trim() === '') return fragmento;
                 let palabraLimpia = fragmento.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()¿?¡!]/g,"");
-                return `<span class="clickable-word" data-word="${palabraLimpia.toLowerCase()}" onclick="window.chercherMotDiccionario('${palabraLimpia}')">${fragmento}</span>`;
+                return `<span class="clickable-word" data-word="${palabraLimpia.toLowerCase()}">${fragmento}</span>`;
             }).join('');
         };
-      // ========================================================
+
+        // ========================================================
         // ZONA 2: ASISTENTE DICCIONARIO INTELIGENTE CON SOPHIA IA
         // (CON CONTROL DE CRÉDITOS DIARIOS - MÁXIMO 50 AL DÍA)
         // ========================================================
         
-        // Escucha cuando el alumno suelta el mouse tras seleccionar una frase o palabra
+        // Escucha cuando el alumno arrastra el mouse para seleccionar frases complejas o palabras sueltas
         document.addEventListener("mouseup", function() {
             const seleccion = window.getSelection().toString().trim();
             
-            // Solo actúa si la selección tiene una longitud válida (evita ruidos o clics sueltos)
+            // Filtro de seguridad: evita disparar la tarjeta con clics fantasmas o saltos de línea
             if (seleccion && seleccion.length > 1 && !seleccion.includes("\n")) {
-                console.log(`🚀 Solicitando análisis para: "${seleccion}"`);
+                console.log(`🚀 Solicitando análisis contextual de Sophia para: "${seleccion}"`);
                 ejecutarConsultaSophiaConFiltro(seleccion);
             }
         });
 
-        /**
-         * Valida los créditos del alumno en Firestore antes de llamar a la IA
-         */
         async function ejecutarConsultaSophiaConFiltro(frase) {
             const container = document.getElementById("glosario-flotante-container");
             if (!container) return;
 
-            // Verificación de seguridad: ¿Hay un usuario logueado en la plataforma?
             if (!window.currentUserEmail) {
                 container.innerHTML = `
                     <div style="background: #ffffff; padding: 15px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.15); font-family: Arial; border-left: 5px solid #f4b400;">
-                        <p style="margin:0; color:#333; font-size:13px;">⚠️ Por favor, inicia sesión para usar el glosario interactivo.</p>
+                        <p style="margin:0; color:#333; font-size:13px;">⚠️ Identifiant étudiant introuvable.</p>
                     </div>
                 `;
                 container.style.display = "block";
                 return;
             }
 
-            // Mostramos estado de carga inicial
             container.innerHTML = `
                 <div style="background: #ffffff; padding: 15px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.15); font-family: Arial;">
-                    <p style="margin:0; color:#666; font-size:13px;"><i class="fas fa-spinner fa-spin"></i> Sophia está analizando vuestra selección...</p>
+                    <p style="margin:0; color:#666; font-size:13px;"><i class="fas fa-spinner fa-spin"></i> Sophia analiza "${frase}"...</p>
                 </div>
             `;
             container.style.display = "block";
 
             try {
-                // Referencia al documento del alumno en Firestore (Colección 'usuarios')
-                const userRef = doc(db, "usuarios", window.currentUserEmail);
+                // Consultamos directamente el estatus en la colección "Usuarios" de Firestore
+                const userRef = doc(db, "Usuarios", window.currentUserEmail);
                 const userSnap = await getDoc(userRef);
 
-                const hoy = new Date().toISOString().split('T')[0]; // Formato YYYY-MM-DD
+                const hoy = new Date().toISOString().split('T')[0];
                 let creditosDisponibles = 50;
                 let ultimaFechaConsulta = hoy;
 
@@ -746,24 +745,22 @@
                     ultimaFechaConsulta = userData.fecha_glosario || hoy;
                     
                     if (ultimaFechaConsulta === hoy) {
-                        // Si es el mismo día, recuperamos sus créditos restantes (si no existe el campo, asumimos 50)
                         creditosDisponibles = userData.creditos_glosario !== undefined ? userData.creditos_glosario : 50;
                     } else {
-                        // Si es un día nuevo, se le reinicia automáticamente su cuota a 50
                         creditosDisponibles = 50;
                     }
                 }
 
-                // CANDADO: Si ya se terminó sus 50 créditos del día, bloqueamos la consulta
+                // CANDADO: Bloqueo si ya consumió sus 50 tokens de hoy
                 if (creditosDisponibles <= 0) {
                     container.innerHTML = `
                         <div class="diccionario-card-premium" style="background: #ffffff; border-left: 5px solid #ea4335; padding: 18px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.15); font-family: Arial, sans-serif;">
                             <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px; color: #ea4335; font-weight: bold;">
                                 <i class="fas fa-exclamation-circle" style="font-size: 20px;"></i>
-                                <h3 style="margin: 0; font-size: 16px;">Limite quotidien atteint</h3>
+                                <h3 style="margin: 0; font-size: 15px;">Limite quotidienne atteinte</h3>
                             </div>
                             <p style="margin: 5px 0; font-size: 13px; color: #5f6368; line-height: 1.4;">
-                                Has alcanzado tu límite de <strong>50 consultas diarias</strong> en el glosario. Mañana se restablecerán tus créditos automáticamente para que sigas estudiando. ¡Buen trabajo hoy!
+                                Has alcanzado tu límite de <strong>50 consultas diarias</strong> en el glosario. Mañana se restablecerán tus créditos automáticamente.
                             </p>
                             <button onclick="document.getElementById('glosario-flotante-container').style.display='none'" style="margin-top: 12px; width: 100%; background: #f1f3f4; border: none; padding: 6px; border-radius: 4px; cursor: pointer; font-size: 12px; color: #5f6368; font-weight: bold;">Fermer</button>
                         </div>
@@ -771,31 +768,28 @@
                     return;
                 }
 
-                // SI TIENE CRÉDITOS: Llamamos a tu servidor de Sophia
+                // Llamada a Sophia mandando la frase seleccionada en crudo
                 const response = await fetch("http://localhost:5000/api/chat", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({
                         message: `Actúa como un diccionario pedagógico avanzado para estudiantes DELF. Analiza la siguiente palabra o frase extraída de un texto en francés: "${frase}". 
-                        Devuelve una respuesta armada directamente en código HTML limpio y compacto (sin usar bloques markdown de tipo \`\`\`), estructurada así:
-                        <p style="margin: 0 0 8px 0; font-size: 14px;"><strong>Traduction:</strong> <span style="color: #202124;">[Traducción al español adaptada al contexto]</span></p>
-                        <p style="margin: 0 0 8px 0; font-size: 14px; line-height: 1.4;"><strong>Analyse:</strong> [Si es plural, verbo conjugado o palabra compleja, explica brevemente su forma raíz o infinitivo. Si es simple, indica categoría gramatical]</p>
-                        <p style="margin: 8px 0 0 0; font-size: 14px; background: #f8f9fa; padding: 8px; border-radius: 4px; border-left: 3px solid #34a853;"><strong>Exemple:</strong> <em>"[Un ejemplo corto y claro en francés]"</em></p>`
+                        Devuelve una respuesta armada directamente en código HTML limpio y compacto (sin usar bloques markdown de tipo \`\`\`), estructurada exactamente así:
+                        <p style="margin: 0 0 8px 0; font-size: 14px;"><strong>Traduction:</strong> <span style="color: #202124;">[Traducción al español según el contexto real]</span></p>
+                        <p style="margin: 0 0 8px 0; font-size: 14px; line-height: 1.4;"><strong>Analyse:</strong> [Si es un plural o verbo conjugado, explica de qué palabra o infinitivo proviene. Si es palabra simple, indica tipo gramatical de forma breve]</p>
+                        <p style="margin: 8px 0 0 0; font-size: 14px; background: #f8f9fa; padding: 8px; border-radius: 4px; border-left: 3px solid #34a853;"><strong>Exemple:</strong> <em>"[Un ejemplo corto en francés]"</em></p>`
                     })
                 });
 
                 const data = await response.json();
-                
-                // Descontamos un crédito del contador local
                 creditosDisponibles--;
 
-                // Actualizamos Firestore con los créditos nuevos y la fecha del día actual
+                // Almacenamos la resta de la ficha del alumno en Firestore
                 await setDoc(userRef, {
                     creditos_glosario: creditosDisponibles,
                     fecha_glosario: hoy
                 }, { merge: true });
 
-                // Renderizamos la tarjeta final con la respuesta de Sophia y su contador de fichas
                 container.innerHTML = `
                     <div class="diccionario-card-premium" style="
                         background: #ffffff; 
@@ -815,7 +809,7 @@
                                 <p style="margin: 3px 0 0 0; font-size: 16px; font-weight: bold; color: #202124;">"${frase}"</p>
                             </div>
                             <span style="background: #f1f3f4; color: #5f6368; padding: 3px 8px; border-radius: 12px; font-size: 11px; font-weight: bold; white-space: nowrap;">
-                                ${creditosDisponibles} / 50 restants
+                                ${creditosDisponibles} / 50
                             </span>
                         </div>
                         <hr style="border: 0; border-top: 1px solid #eee; margin: 10px 0;">
@@ -831,19 +825,23 @@
                     </div>
                 `;
             } catch (error) {
-                console.error("⚠️ Error general en el asistente Sophia:", error);
+                console.error("⚠️ Error en el asistente Sophia:", error);
                 container.innerHTML = `
                     <div style="background: #ffffff; padding: 15px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.15); font-family: Arial; border-left: 5px solid red;">
-                        <p style="margin:0; color:red; font-size:13px;">❌ Error de conexión. Asegúrate de tener encendido vuestro servidor de Sophia.</p>
+                        <p style="margin:0; color:red; font-size:13px;">❌ Error de conexión con Sophia. Revisa tu terminal de Python.</p>
                     </div>
                 `;
             }
         }
-        
+
+        init();
+    </script>
+    
         // ================================================================= -->
         // ZONA 3: RENDERIZADO Y CONTROL DE EJERCICIOS                       -->
         // ================================================================= -->
-        window.renderExerciseStructure = function() {
+    <script>    
+    window.renderExerciseStructure = function() {
             const target = document.getElementById('dynamic-workspace-target');
             filtrarEjerciciosDeUnidadActual();
 
