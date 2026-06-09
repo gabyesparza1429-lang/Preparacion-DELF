@@ -989,11 +989,23 @@
             };
         };
 
-        // ================================================================= -->
-        // ZONA 4: CONTROL DE INTERFAZ GENERAL Y ENLACE DE EVENTOS SÍCRONOS   -->
+// ================================================================= -->
+        // ZONA 4: CONTROL DE INTERFAZ GENERAL Y EVENTOS DE SELECCIÓN        -->
         // ================================================================= -->
         async function renderCarnetInterface() {}
 
+        // Disparador 1: Escucha cuando el alumno da un clic directo sobre una palabra individual
+        document.addEventListener('click', (e) => {
+            if (e.target.classList.contains('clickable-word')) {
+                const palabraUnica = e.target.getAttribute('data-word') || e.target.innerText.trim();
+                if (palabraUnica.length > 1) {
+                    console.log(`🎯 Clic directo en palabra. Sophia analiza: "${palabraUnica}"`);
+                    ejecutarConsultaSophiaConFiltro(palabraUnica);
+                }
+            }
+        });
+
+        // Eventos de control para pestañas de la interfaz
         const btnParcours = document.getElementById('tab-parcours');
         const btnCarnet = document.getElementById('tab-carnet');
         if (btnParcours) btnParcours.addEventListener('click', () => window.switchMainTab('parcours'));
@@ -1020,6 +1032,7 @@
             });
         }
 
+        // Inicialización obligatoria de la base de datos al cargar la página
         init();
     </script>
 </body>
