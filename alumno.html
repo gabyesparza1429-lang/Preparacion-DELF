@@ -214,7 +214,7 @@
             border-bottom: 4px solid var(--gold);
             box-shadow: 0 4px 10px rgba(0,0,0,0.05);
             position: relative;
-            height: 250px; 
+            height: 250px; /* BANNER AJUSTADO A 250 DE ALTO */
             box-sizing: border-box;
             flex-shrink: 0;
         }
@@ -346,9 +346,109 @@
         .production-textbox:focus {
             border-color: var(--oxford);
         }
+
+        /* DISEÑO EXCLUSIVO DE LA GUÍA DE BIENVENIDA BILINGÜE */
+        .modal-guide-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 33, 71, 0.85);
+            z-index: 99999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-guide-card {
+            background: white;
+            width: 90%;
+            max-width: 680px;
+            max-height: 85vh;
+            border-radius: 12px;
+            padding: 30px;
+            box-sizing: border-box;
+            overflow-y: auto;
+            border-top: 6px solid var(--gold);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .guide-section {
+            border-bottom: 1px solid #eee;
+            padding-bottom: 15px;
+            margin-bottom: 15px;
+        }
+
+        .guide-lang-fr {
+            font-size: 0.95rem;
+            color: var(--oxford);
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .guide-lang-es {
+            font-size: 0.85rem;
+            color: #555;
+            font-style: italic;
+        }
+        
+        .audio-counter-badge {
+            background: rgba(0, 33, 71, 0.08);
+            color: var(--oxford);
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            border: 1px solid rgba(0, 33, 71, 0.15);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 8px;
+        }
+
+        /* DISEÑO PARA INTERVENCIONES DE DIÁLOGO */
+        .dialogue-line {
+            display: block;
+            margin-bottom: 10px;
+            padding-left: 15px;
+            text-indent: -15px;
+        }
     </style>
 </head>
 <body>
+
+    <div id="welcome-guide-modal" class="modal-guide-overlay">
+        <div class="modal-guide-card">
+            <h2 style="color: var(--oxford); text-align: center; margin-top: 0; margin-bottom: 5px; font-weight: 700;">Bienvenue à ton Espace DELF 🚀</h2>
+            <p style="text-align: center; color: #666; font-style: italic; font-size: 0.85rem; margin-bottom: 25px;">Guide d'utilisation de la plateforme / Guía de uso de la plataforma</p>
+            
+            <div class="guide-section">
+                <div class="guide-lang-fr"><i class="fas fa-chart-line" style="color: var(--gold);"></i> 1. Le Barème de Notations (25 points)</div>
+                <div class="guide-lang-fr" style="font-weight: 400; font-size: 0.88rem; margin-left: 20px; margin-bottom: 6px;">
+                    Chaque compétence (CO, CE, PE, PO) est évaluée sur **25 points**, comme à l'examen réel. Ta note augmentera de manière cumulative au fur et à mesure que tu obtiendras des réponses correctes dans toutes les unités.
+                </div>
+                <div class="guide-lang-es"><i class="fas fa-chevron-right"></i> Cada competencia se evalúa sobre **25 puntos**, como en el examen real. Tu nota subirá de forma acumulativa conforme ganes respuestas correctas en todas las unidades.</div>
+            </div>
+
+            <div class="guide-section">
+                <div class="guide-lang-fr"><i class="fas fa-headphones" style="color: var(--gold);"></i> 2. Limite d'écoutes des audios</div>
+                <div class="guide-lang-fr" style="font-weight: 400; font-size: 0.88rem; margin-left: 20px; margin-bottom: 6px;">
+                    Pour simuler l'examen, tu as un maximum de **2 écoutes** par audio. Après la deuxième écoute, le lecteur sera bloqué. Si tu as besoin de recommencer l'exercice, clique sur le bouton "Réessayer" pour recalculer tes points.
+                </div>
+                <div class="guide-lang-es"><i class="fas fa-chevron-right"></i> Para simular el examen, tienes un máximo de **2 escuchas** por audio. Después de la segunda escucha, el reproductor se bloqueará. Si necesitas reiniciar el ejercicio, dale al botón "Rehacer" para recalcular tus puntos.</div>
+            </div>
+
+            <div class="guide-section">
+                <div class="guide-lang-fr"><i class="fas fa-book-open" style="color: var(--gold);"></i> 3. Assistant de Dictionnaire Intelligent</div>
+                <div class="guide-lang-fr" style="font-weight: 400; font-size: 0.88rem; margin-left: 20px; margin-bottom: 6px;">
+                    Si tu ne comprends pas un mot, **clique simplement dessus** pour voir sa traduction. Si tu veux analyser une phrase entière, **sélectionne-la avec ta souris** et Sophia IA t'expliquera sa structure.
+                </div>
+                <div class="guide-lang-es"><i class="fas fa-chevron-right"></i> Si no entiendes una palabra, **solo dale un clic** para ver su traducción. Si deseas analizar una frase completa, **selecciónala con el mouse** y Sophia IA te explicará su estructura gramatical.</div>
+            </div>
+
+            <button onclick="document.getElementById('welcome-guide-modal').style.display='none'" class="nav-tab-btn" style="width: 100%; background: var(--oxford); color: white; text-align: center; justify-content: center; font-weight: 700; padding: 15px; margin-top: 15px;">
+                Commencer la préparation / Comenzar preparación
+            </button>
+        </div>
+    </div>
 
     <div class="sidebar">
         <h2>Mon Espace DELF</h2>
@@ -391,6 +491,10 @@
         <button class="nav-tab-btn" id="tab-carnet">
             <i class="fas fa-address-book"></i> Carnet de compétences
         </button>
+        
+        <button class="activity-link-btn" onclick="document.getElementById('welcome-guide-modal').style.display='flex'" style="margin-top:auto; text-align:center; color:var(--gold); font-weight:600;">
+            <i class="far fa-question-circle"></i> Guide d'utilisation / Guía
+        </button>
     </div>
 
     <div class="main-container">
@@ -418,7 +522,7 @@
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
-        import { getFirestore, doc, getDoc, updateDoc, collection, getDocs, query, where } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js";
+        import { getFirestore, doc, getDoc, setDoc, updateDoc, collection, getDocs, query, where } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js";
         import { getStorage, ref, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-storage.js";
 
         const firebaseConfig = {
@@ -447,45 +551,53 @@
         let urlId = urlParams.get('id') || 'default_student';
         const previewLevel = urlParams.get('level');
 
-        // Esta variable guardará de forma blindada la llave real del documento de Firestore
         let docRefValidado = null; 
+        let mapaAciertosAlumno = {}; 
+        let totalReactivosHabilidadGlobal = 0;
 
+        // FORMATEADOR DE DIÁLOGOS AUTOMÁTICO INTELIGENTE
         window.convertirTextoInteractivo = function(texto) {
             if (!texto) return '';
-            return texto.split(/(\s+)/).map(fragmento => {
-                if (fragmento.trim() === '') return fragmento;
-                let palabraLimpia = fragmento.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()¿?¡!]/g,"");
-                return `<span class="clickable-word" data-word="${palabraLimpia.toLowerCase()}">${fragmento}</span>`;
+            
+            // 1. Limpiar pegaduras defectuosas de puntuación comunes en OCR y añadir marcas de diálogo estructuradas
+            let textoFormateado = texto
+                .replace(/\?/g, '? ')
+                .replace(/\!/g, '! ')
+                .replace(/\s+/g, ' ')
+                .trim();
+
+            // 2. Insertar saltos de línea estéticos y guiones teatrales en estructuras conversacionales clave
+            let lineas = textoFormateado.split(/(?<=[?.!])\s+(?=[A-Z])/);
+            
+            let htmlFinal = lineas.map(linea => {
+                if(linea.trim() === '') return '';
+                
+                // Convertir palabras individuales en interactivas para el diccionario flotante
+                let palabrasSpan = linea.split(/(\s+)/).map(fragmento => {
+                    if (fragmento.trim() === '') return fragmento;
+                    let palabraLimpia = fragmento.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()¿?¡!]/g,"");
+                    return `<span class="clickable-word" data-word="${palabraLimpia.toLowerCase()}">${fragmento}</span>`;
+                }).join('');
+
+                return `<span class="dialogue-line">— ${palabrasSpan}</span>`;
             }).join('');
+
+            return htmlFinal;
         };
 
         function calcularDiasRestantes(fechaString) {
             if (!fechaString) return "Pas de date d'examen";
             try {
                 let partes = fechaString.includes('-') ? fechaString.split('-') : fechaString.split('/');
-                let fechaExamen;
-                
-                if (partes[0].length === 4) {
-                    fechaExamen = new Date(partes[0], partes[1] - 1, partes[2]);
-                } else {
-                    fechaExamen = new Date(partes[2], partes[1] - 1, partes[0]);
-                }
-
+                let fechaExamen = partes[0].length === 4 ? new Date(partes[0], partes[1] - 1, partes[2]) : new Date(partes[2], partes[1] - 1, partes[0]);
                 const hoy = new Date();
                 hoy.setHours(0,0,0,0);
                 fechaExamen.setHours(0,0,0,0);
-                
-                const diferenciaTiempo = fechaExamen - hoy;
-                const dias = Math.ceil(diferenciaTiempo / (1000 * 60 * 60 * 24));
-                
-                if (isNaN(dias)) return "Date d'examen invalide";
+                const dias = Math.ceil((fechaExamen - hoy) / (1000 * 60 * 60 * 24));
                 return dias > 0 ? `${dias} jours restants` : (dias === 0 ? "Examen aujourd'hui" : "Examen terminé");
-            } catch(e) {
-                return "Format date invalide";
-            }
+            } catch(e) { return "Format date invalide"; }
         }
 
-        // CANDADO DE DETECCIÓN Y LOGIN SEGURO
         async function init() {
             try {
                 if (urlId === 'admin_preview' || previewLevel) {
@@ -499,7 +611,6 @@
                     return;
                 }
 
-                // 1. Buscar coincidencia exacta por ID de documento
                 let testRef = doc(db, "Usuarios", urlId);
                 let testSnap = await getDoc(testRef);
                 let userData = null;
@@ -508,67 +619,65 @@
                     docRefValidado = testRef;
                     userData = testSnap.data();
                 } else {
-                    // 2. Si falló el ID del documento, buscar de forma adaptativa por campo interno 'id'
                     const q = query(collection(db, "Usuarios"), where("id", "==", urlId));
                     const qSnap = await getDocs(q);
-                    
                     if (!qSnap.empty) {
                         docRefValidado = doc(db, "Usuarios", qSnap.docs[0].id);
                         userData = qSnap.docs[0].data();
                     }
                 }
 
-                // DETECTOR DE INTRUSOS: Si no está en la base de datos, bloquear el acceso
                 if (!userData) {
                     document.getElementById('sidebar-dynamic-menu').innerHTML = "";
                     document.getElementById('dynamic-workspace-target').innerHTML = `
                         <div style="text-align: center; padding: 50px; background: #fff; border-radius: 8px; border-left: 5px solid red; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
                             <i class="fas fa-lock" style="font-size: 3rem; color: red; margin-bottom: 15px;"></i>
                             <h2 style="color: var(--oxford); margin-bottom: 10px;">Identifiant non valide</h2>
-                            <p style="color: #555; font-size: 0.95rem;">L'identifiant est incorrect. Veuillez contacter votre professeur pour y accéder.</p>
+                            <p style="color: #555; font-size: 0.95rem;">L'identifiant est incorrect. Veuillez contacter votre professeur.</p>
                         </div>`;
                     document.getElementById('student-welcome').innerText = "Accès Bloqué";
                     return;
                 }
 
-                // Cargar la interfaz con el usuario verificado
+                mapaAciertosAlumno = userData.mapa_aciertos || {};
                 currentLevel = userData.nivel || "A1";
                 document.getElementById('student-welcome').innerText = `${userData.nombre || 'Étudiant'}`;
+                document.getElementById('banner-credits-count').innerText = userData.creditos_glosario !== undefined ? userData.creditos_glosario : 50;
                 
-                const contadorCreditos = document.getElementById('banner-credits-count');
-                if (contadorCreditos) {
-                    contadorCreditos.innerText = userData.creditos_glosario !== undefined ? userData.creditos_glosario : 50;
-                }
-
                 const prog = userData.progreso || 0;
                 document.getElementById('progress-bar-fill').style.width = `${prog}%`;
                 document.getElementById('progress-text-target').innerText = `${prog}%`;
 
-                let fechaGuardada = userData.fecha_certificacion || userData.fecha_examen || userData.fechaExamen || null;
+                let fechaGuardada = userData.fecha_certificacion || userData.fecha_examen || null;
                 document.getElementById('countdown-text-target').innerText = calcularDiasRestantes(fechaGuardada);
-                
                 document.getElementById('level-indicator').innerText = `NIVEAU ${currentLevel}`;
                 window.currentLevel = currentLevel;
 
                 await descargarColeccionUnidades();
-
-            } catch (error) {
-                console.error("Error crítico en login:", error);
-                document.getElementById('dynamic-workspace-target').innerHTML = `<p style="color:red; text-align:center;">Erreur système.</p>`;
-            }
+            } catch (error) { console.error(error); }
         }
 
         async function descargarColeccionUnidades() {
             try {
                 unidadesCache = {};
                 const querySnapshot = await getDocs(collection(db, "BibliotecaEjercicios", currentLevel, "Unidades"));
-                querySnapshot.forEach((docSnap) => {
-                    unidadesCache[docSnap.id] = docSnap.data();
-                });
+                querySnapshot.forEach((docSnap) => { unidadesCache[docSnap.id] = docSnap.data(); });
+                calcularTotalReactivosHabilidadActual();
                 renderActiveInterface();
-            } catch (err) {
-                console.error("Error al descargar unidades:", err);
-            }
+            } catch (err) { console.error(err); }
+        }
+
+        function calcularTotalReactivosHabilidadActual() {
+            totalReactivosHabilidadGlobal = 0;
+            Object.keys(unidadesCache).forEach(uId => {
+                const u = unidadesCache[uId];
+                const ejercicios = u[currentSkill] || u[currentSkill.toLowerCase()] || [];
+                ejercicios.forEach(ej => {
+                    if (ej.preguntas && Array.isArray(ej.preguntas)) {
+                        totalReactivosHabilidadGlobal += ej.preguntas.length;
+                    }
+                });
+            });
         }
 
         window.switchMainTab = (tab) => {
@@ -592,6 +701,7 @@
                 <div style="text-align: center; padding: 60px; color: var(--oxford); margin-top:30px;">
                     <p style="font-weight: 600;">Veuillez choisir une activité dans le menu de gauche pour commencer.</p>
                 </div>`;
+            calcularTotalReactivosHabilidadActual();
             renderActiveInterface();
         };
 
@@ -604,7 +714,7 @@
             } else {
                 document.getElementById('parcours-controls-container').style.display = "none";
                 menuContainer.style.display = "none"; 
-                renderCarnetInterface();
+                document.getElementById('dynamic-workspace-target').innerHTML = `<p style="padding:20px; color:#666;">Carnet de compétences en développement.</p>`;
             }
         }
 
@@ -614,53 +724,37 @@
             menuContainer.innerHTML = "";
 
             const keys = Object.keys(unidadesCache).sort((a, b) => a.localeCompare(b, undefined, { numeric: true }));
-
-            if (keys.length === 0) {
-                target.innerHTML = `<div style="text-align: center; padding: 40px; color: #888;"><p>Aucun exercice chargé pour le moment.</p></div>`;
-                return;
-            }
+            if (keys.length === 0) return;
 
             keys.forEach((uId) => {
                 const u = unidadesCache[uId];
                 let ejerciciosHabilidad = u[currentSkill] || u[currentSkill.toLowerCase()] || [];
-                
                 if (ejerciciosHabilidad.length === 0) return; 
 
                 let temaRealHabilidad = u[`tema_${currentSkill}`] || u[`tema_${currentSkill.toLowerCase()}`] || u.tema || "Exercice";
-                let numeroUnidad = uId.replace(/\D/g, '');
-                let tituloUnidadMostrar = `Unité ${numeroUnidad} - ${temaRealHabilidad}`;
-
+                let tituloUnidadMostrar = `Unité ${uId.replace(/\D/g, '')} - ${temaRealHabilidad}`;
                 const isUnitOpen = openUnitsState[uId] === true;
-                const displayStyle = isUnitOpen ? 'flex' : 'none';
-                const chevronIcon = isUnitOpen ? 'fa-chevron-down' : 'fa-chevron-right';
 
                 let unitWrapper = document.createElement('div');
                 unitWrapper.className = 'unit-wrapper';
                 unitWrapper.innerHTML = `
                     <button class="unit-toggle-btn ${currentUnitId === uId ? 'active' : ''}" onclick="window.toggleUnitMenu('${uId}')">
                         <span><i class="fas fa-book" style="color:var(--gold); margin-right:8px;"></i>${tituloUnidadMostrar}</span>
-                        <i class="fas ${chevronIcon}" style="font-size:0.7rem; color:var(--gold);"></i>
-                    </button>
-                `;
+                        <i class="fas ${isUnitOpen ? 'fa-chevron-down' : 'fa-chevron-right'}" style="font-size:0.7rem; color:var(--gold);"></i>
+                    </button>`;
 
                 let subContainer = document.createElement('div');
                 subContainer.className = 'submenu-activities';
-                subContainer.style.display = displayStyle;
+                subContainer.style.display = isUnitOpen ? 'flex' : 'none';
 
                 ejerciciosHabilidad.forEach((ej, eIdx) => {
-                    const esActivo = (currentUnitId === uId && currentExerciseIndex === eIdx);
-                    let tituloLimpio = "";
-                    if (ej.instruccion) {
-                        let matchActividad = ej.instruccion.match(/Activité\s*\d+/i);
-                        if (matchActividad) tituloLimpio = matchActividad[0]; 
-                    }
+                    let tituloLimpio = ej.instruccion ? (ej.instruccion.match(/Activité\s*\d+/i) || [])[0] : "";
                     if (!tituloLimpio) tituloLimpio = `Activité ${eIdx + 1}`;
 
                     subContainer.innerHTML += `
-                        <button class="activity-link-btn ${esActivo ? 'active' : ''}" onclick="window.cargarActividadDirecta('${uId}', ${eIdx})">
+                        <button class="activity-link-btn ${currentUnitId === uId && currentExerciseIndex === eIdx ? 'active' : ''}" onclick="window.cargarActividadDirecta('${uId}', ${eIdx})">
                             <i class="fas fa-play" style="font-size:0.6rem; margin-right:6px;"></i>${tituloLimpio}
-                        </button>
-                    `;
+                        </button>`;
                 });
                 
                 unitWrapper.appendChild(subContainer);
@@ -681,13 +775,6 @@
             window.renderExerciseStructure();
         };
 
-        function filtrarEjerciciosDeUnidadActual() {
-            ejerciciosFiltrados = [];
-            if (currentUnitId === null || !unidadesCache[currentUnitId]) return;
-            ejerciciosFiltrados = unidadesCache[currentUnitId][currentSkill] || unidadesCache[currentUnitId][currentSkill.toLowerCase()] || [];
-        }
-
-        // AISLAMIENTO TOTAL DE SOPHIA (DICCIONARIO SEPARADO DE LOS CRASH DE RED)
         window.ejecutarConsultaSophiaConFiltro = async function(frase) {
             const container = document.getElementById("glosario-flotante-container");
             if (!container) return;
@@ -696,23 +783,15 @@
             let promptFormateado = frase;
 
             if (esPalabraSuelta) {
-                promptFormateado = `Actúa como un diccionario pedagógico avanzado para estudiantes DELF. Analiza la siguiente palabra o frase extraída de un texto en francés: "${frase}". 
-                Devuelve una respuesta armada directamente en código HTML limpio y compacto (sin usar bloques markdown de tipo \`\`\`), estructurada exactamente así:
-                <p style="margin: 0 0 8px 0; font-size: 14px;"><strong>Traduction:</strong> <span style="color: #202124;">[Traducción al español según el contexto real]</span></p>
-                <p style="margin: 0 0 8px 0; font-size: 14px; line-height: 1.4;"><strong>Analyse:</strong> [Si es un plural o verbo conjugado, explica de qué palabra o infinitivo proviene. Si es palabra simple, indica tipo gramatical de forma breve]</p>
-                <p style="margin: 8px 0 0 0; font-size: 14px; background: #f8f9fa; padding: 8px; border-radius: 4px; border-left: 3px solid #34a853;"><strong>Exemple:</strong> <em>"[Un ejemplo corto en francés]"</em></p>`;
+                promptFormateado = `Actúa como un diccionario pedagógico avanzado para estudiantes DELF. Analiza la siguiente palabra o frase extraída de un texto en francés: "${frase}". Devuelve una respuesta armada directamente en código HTML limpio y compacto (sin bloques markdown), estructurada así: <p><strong>Traduction:</strong> [Traducción]</p><p><strong>Analyse:</strong> [Breve análisis]</p>`;
             } else {
-                promptFormateado = `Actúa como un profesor de francés avanzado. Analiza el significado contextual de esta frase completa: "${frase}". Tradúcela al español de manera natural y explica brevemente cualquier estructura gramatical relevante, modismo o modulación importante en el nivel DELF. Devuelve todo estructurado directamente en etiquetas HTML compactas.`;
+                promptFormateado = `Actúa como un profesor de francés avanzado. Analiza el significado de esta frase: "${frase}". Tradúcela al español de manera natural y explica brevemente su estructura gramatical en HTML limpio.`;
             }
 
-            container.innerHTML = `
-                <div style="background: #ffffff; padding: 15px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.15); font-family: Arial;">
-                    <p style="margin:0; color:#666; font-size:13px;"><i class="fas fa-spinner fa-spin"></i> Sophia analiza "${frase.substring(0, 20)}..."...</p>
-                </div>`;
+            container.innerHTML = `<div style="background:#fff; padding:15px; border-radius:8px; box-shadow:0 4px 15px rgba(0,0,0,0.15); font-family:Arial;"><p style="margin:0; font-size:13px;"><i class="fas fa-spinner fa-spin"></i> Sophia...</p></div>`;
             container.style.display = "block";
 
             try {
-                // Consultar API externa local de Python
                 const response = await fetch("http://localhost:5000/api/chat", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
@@ -720,379 +799,188 @@
                 });
                 const data = await response.json();
 
-                // Intentar restar el crédito en Firebase de forma asíncrona y segura (Si falla, el diccionario se muestra igual)
                 if (docRefValidado) {
                     getDoc(docRefValidado).then(snap => {
                         if (snap.exists()) {
                             let creds = snap.data().creditos_glosario !== undefined ? snap.data().creditos_glosario : 50;
-                            if (creds > 0) {
-                                creds--;
-                                updateDoc(docRefValidado, { creditos_glosario: creds });
-                                document.getElementById('banner-credits-count').innerText = creds;
-                            }
+                            if (creds > 0) { updateDoc(docRefValidado, { creditos_glosario: --creds }); document.getElementById('banner-credits-count').innerText = creds; }
                         }
-                    }).catch(e => console.log("Aviso: Sincronización de créditos en segundo plano omitida."));
+                    });
                 }
 
                 container.innerHTML = `
-                    <div class="diccionario-card-premium" style="max-height: 380px; overflow-y: auto; box-sizing: border-box; color: #333;">
-                        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px;">
-                            <div>
-                                <h4 style="margin: 0; color: #1a73e8; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px;">
-                                    ${esPalabraSuelta ? 'Dictionnaire' : 'Analyse de Phrase'} (Sophia IA)
-                                </h4>
-                                <p style="margin: 3px 0 0 0; font-size: 15px; font-weight: bold; color: #202124;">"${frase}"</p>
-                            </div>
-                        </div>
-                        <hr style="border: 0; border-top: 1px solid #eee; margin: 10px 0;">
-                        <div style="font-size: 13.5px; line-height:1.5;">${data.reply}</div>
-                        <button onclick="document.getElementById('glosario-flotante-container').style.display='none'" style="margin-top: 12px; width: 100%; background: #f1f3f4; border: none; padding: 6px; border-radius: 4px; cursor: pointer; font-size: 12px; color: #5f6368; font-weight: bold;">Fermer</button>
+                    <div style="background:#fff; padding:15px; border-radius:8px; box-shadow:0 4px 15px rgba(0,0,0,0.15); max-height:380px; overflow-y:auto; font-family:Arial;">
+                        <p style="margin:0; font-size:11px; color:#1a73e8; font-weight:700; text-transform:uppercase;">Sophia IA</p>
+                        <p style="margin:5px 0; font-weight:bold;">"${frase}"</p>
+                        <hr style="border:0; border-top:1px solid #eee; margin:10px 0;">
+                        <div style="font-size:13px; line-height:1.4;">${data.reply}</div>
+                        <button onclick="document.getElementById('glosario-flotante-container').style.display='none'" style="margin-top:10px; width:100%; background:#f1f3f4; border:none; padding:6px; border-radius:4px; cursor:pointer; font-size:12px; font-weight:bold; color:#5f6368;">Fermer</button>
                     </div>`;
-            } catch (error) {
-                container.innerHTML = `
-                    <div style="background: #ffffff; padding: 15px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.15); font-family: Arial; border-left: 5px solid red;">
-                        <p style="margin:0; color:red; font-size:13px;">❌ Error de conexión con Sophia. Revisa tu terminal de Python.</p>
-                    </div>`;
-            }
-        }
+            } catch (error) { container.style.display = "none"; }
+        };
 
-        // ================================================================= -->
-        // RENDERIZADO INTERACTIVO MAESTRO DE EJERCICIOS                     -->
-        // ================================================================= -->
         window.renderExerciseStructure = function() {
             const target = document.getElementById('dynamic-workspace-target');
-            filtrarEjerciciosDeUnidadActual();
+            if (currentUnitId === null || !unidadesCache[currentUnitId]) return;
+            ejerciciosFiltrados = unidadesCache[currentUnitId][currentSkill] || unidadesCache[currentUnitId][currentSkill.toLowerCase()] || [];
 
-            if (ejerciciosFiltrados.length === 0 || !ejerciciosFiltrados[currentExerciseIndex]) {
-                target.innerHTML = `<p style="text-align:center; color:#888;">Aucun exercice disponible.</p>`;
-                return;
-            }
-
+            if (ejerciciosFiltrados.length === 0 || !ejerciciosFiltrados[currentExerciseIndex]) return;
             const ej = ejerciciosFiltrados[currentExerciseIndex];
             const audioId = `audio-container-${currentExerciseIndex}`;
+            const claveUnicaActividad = `${currentUnitId}_${currentSkill}_${currentExerciseIndex}`;
 
             let html = `
             <div class="exercise-card">
-                <h4 style="margin-top: 0; margin-bottom: 20px; color: var(--oxford); font-size: 1.05rem; font-weight:700;">
-                    ${ej.instruccion || 'Exercice'} 
-                </h4>`;
+                <h4 style="margin-top:0; margin-bottom:20px; color:var(--oxford); font-size:1.05rem; font-weight:700;">${ej.instruccion || 'Exercice'}</h4>`;
 
             if ((window.currentSkill === "CE" || window.currentSkill === "PE") && ej.texto_lectura) {
                 html += `
-                <div style="background: #f8f9fa; border-left: 4px solid var(--gold); padding: 20px; border-radius: 6px; margin-bottom: 25px; font-size: 0.95rem; line-height: 1.6; color: #333; white-space: pre-wrap;">
+                <div style="background:#f8f9fa; border-left:4px solid var(--gold); padding:20px; border-radius:6px; margin-bottom:25px; font-size:0.95rem; line-height:1.6; color:#333;">
                     <strong><i class="fas fa-file-alt" style="color:var(--gold); margin-right:8px;"></i> Document :</strong><br><br>${window.convertirTextoInteractivo(ej.texto_lectura)}
                 </div>`;
             }
 
             if (ej.ruta_audio) {
-                html += `<div id="${audioId}" style="margin-bottom: 20px; text-align:center;"><i class="fas fa-spinner fa-spin"></i> Audio...</div>`;
+                html += `
+                <div style="background:#f1f3f5; padding:15px; border-radius:8px; margin-bottom:20px; text-align:center;">
+                    <div class="audio-counter-badge"><i class="fas fa-headphones"></i><span id="audio-count-label">Écoutes / Escuchas : 0 / 2</span></div>
+                    <div id="${audioId}" style="margin-top:10px;"><i class="fas fa-spinner fa-spin"></i> Loading...</div>
+                </div>`;
             }
 
             if (window.currentSkill === "PE") {
                 html += `
-                <div style="margin-bottom: 20px;">
-                    <p style="font-weight: 600; color: #333; margin-bottom: 10px;"><i class="fas fa-pen-fancy"></i> Rédigez votre réponse ci-dessous :</p>
+                <div style="margin-bottom:20px;">
                     <textarea id="pe-student-response" class="production-textbox" placeholder="Écrivez votre texte ici..."></textarea>
                 </div>
-                <div style="display: flex; justify-content: flex-end; gap: 10px;">
-                    <button class="nav-tab-btn" id="btn-submit-pe" style="width:auto; background:var(--oxford); color:white; padding:10px 22px;"><i class="fas fa-paper-plane"></i> Soumettre la production</button>
-                </div>`;
-            }
-            else if (window.currentSkill === "PO") {
+                <div style="display:flex; justify-content:flex-end;"><button class="nav-tab-btn" id="btn-submit-pe" style="width:auto; background:var(--oxford); color:white; padding:10px 22px;">Soumettre</button></div>`;
+            } else if (window.currentSkill === "PO") {
                 html += `
-                <div style="margin-bottom: 20px; text-align: center; background: #fafbfc; padding: 30px; border-radius: 8px; border: 1px dashed #ccc;">
-                    <p style="font-weight: 600; color: #333; margin-bottom: 15px;"><i class="fas fa-microphone"></i> Enregistrez votre réponse orale :</p>
-                    <button id="btn-record-po" class="btn-mic" style="padding: 12px 30px; font-size: 1rem;"><i class="fas fa-microphone"></i> Commencer l'enregistrement</button>
-                    <p id="po-recording-status" style="font-size:0.85rem; margin-top:10px; color:#666; font-weight:600;"></p>
+                <div style="margin-bottom:20px; text-align:center; background:#fafbfc; padding:30px; border-radius:8px; border:1px dashed #ccc;">
+                    <button id="btn-record-po" class="btn-mic" style="padding:12px 30px; font-size:1rem;"><i class="fas fa-microphone"></i> Commencer</button>
+                    <p id="po-recording-status" style="font-size:0.85rem; margin-top:10px; color:#666;"></p>
                 </div>`;
-            }
-            else if (ej.preguntas && ej.preguntas.length > 0) {
+            } else if (ej.preguntas && ej.preguntas.length > 0) {
                 ej.preguntas.forEach((p, pIdx) => {
                     html += `
-                    <div class="pregunta-block" id="block-preg-${pIdx}" style="padding:15px; border-radius:6px; margin-bottom:15px; border:1px solid #eef2f5;">
-                        <p style="margin-top:0; margin-bottom:12px; font-weight:600; color:#222; display:flex; align-items:center;">
-                            <span id="status-icon-target-${pIdx}"></span>
-                            <span>${p.pregunta}</span>
-                        </p>`;
+                    <div class="pregunta-block" id="block-preg-${pIdx}">
+                        <p style="margin:0 0 12px 0; font-weight:600; display:flex; align-items:center;"><span id="status-icon-target-${pIdx}"></span><span>${p.pregunta}</span></p>`;
                     if (p.opciones) {
                         p.opciones.forEach((opt) => {
-                            html += `
-                            <label style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px; cursor: pointer;">
-                                <input type="radio" name="question_${pIdx}" value="${opt}" style="accent-color:var(--oxford);"> ${opt}
-                            </label>`;
+                            html += `<label style="display:flex; align-items:center; gap:10px; margin-bottom:10px; cursor:pointer;"><input type="radio" name="question_${pIdx}" value="${opt}"> ${opt}</label>`;
                         });
                     }
                     html += `</div>`;
                 });
 
                 html += `
-                <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px;">
-                    <button class="nav-tab-btn" id="btn-submit-exercise" style="width:auto; background:var(--oxford); color:white; padding:10px 22px;"><i class="fas fa-paper-plane"></i> Envoyer</button>
-                    <button class="nav-tab-btn" id="btn-next-exercise" style="width:auto; background:var(--green); color:white; padding:10px 22px; display:none;">Suivant <i class="fas fa-arrow-right"></i></button>
+                <div style="display:flex; justify-content:flex-end; gap:10px; margin-top:20px;">
+                    <button class="nav-tab-btn" id="btn-submit-exercise" style="width:auto; background:var(--oxford); color:white; padding:10px 22px;">Envoyer</button>
+                    <button class="nav-tab-btn" id="btn-redo-exercise" style="width:auto; background:var(--gold); color:var(--oxford); padding:10px 22px; display:none; font-weight:700;">Réessayer / Rehacer</button>
                 </div>`;
             }
 
             html += `
                 <div id="sophia-box" style="display:none; background:#f4f7f9; border-left:4px solid var(--gold); padding:20px; border-radius:6px; margin-top:25px;">
-                    <div style="display:flex; align-items:center; gap:10px; font-weight:700; color:var(--oxford);"><i class="fas fa-lightbulb" style="color:var(--gold);"></i> CONSEIL DE SOPHIA (EXAMINATRICE DELF)</div>
-                    <p id="sophia-verdict-text" style="margin:10px 0 0 0; font-size:0.95rem; line-height:1.5; color:#333; white-space: pre-wrap;"></p>
-                    
-                    ${ej.transcripcion ? `
-                    <div style="font-weight:700; margin-top:15px; color:var(--oxford); display:flex; justify-content:space-between; align-items:center;">
-                        <span><i class="fas fa-headphones-alt"></i> Transcription (Cliquez sur un mot) :</span>
-                        <button id="btn-record-transcription" class="btn-mic"><i class="fas fa-microphone"></i> Lire à haute voix</button>
-                    </div>
-                    <div id="interactive-transcription-box" style="background:#fff; border:1px dashed #ccc; padding:12px; border-radius:5px; margin-top:8px; font-size:0.95rem; line-height:1.6; color:#333; user-select:none;"></div>
-                    <p id="audio-reading-feedback" style="font-size:0.8rem; margin-top:5px; font-weight:600; color:#666;"></p>
-                    ` : ''}
+                    <div style="font-weight:700; color:var(--oxford);"><i class="fas fa-lightbulb" style="color:var(--gold);"></i> CONSEIL DE SOPHIA</div>
+                    <div id="sophia-score-badge" style="margin-top:12px; background:white; padding:10px; border-radius:6px; border:1px solid #ddd; font-weight:700; display:none;"></div>
+                    <p id="sophia-verdict-text" style="margin:10px 0 0 0; font-size:0.95rem; line-height:1.5; color:#333;"></p>
+                    ${ej.transcripcion ? `<div style="font-weight:700; margin-top:15px;">Transcription :</div><div id="interactive-transcription-box" style="background:#fff; border:1px dashed #ccc; padding:12px; border-radius:5px; margin-top:8px;"></div>` : ''}
                 </div>
             </div>`;
 
             target.innerHTML = html;
 
             if (ej.ruta_audio) {
-                let numerosEncontrados = ej.ruta_audio.match(/\d+/);
-                let track = "02"; 
-                if (numerosEncontrados) {
-                    let numeroPuro = numerosEncontrados[0];
-                    track = numeroPuro.length > 2 ? numeroPuro.slice(-2) : numeroPuro;
-                }
-                if (track.length === 1) track = "0" + track;
-                let nombreArchivoFinal = `${track}.mp3`;
-
-                getDownloadURL(ref(storage, `niveles/${currentLevel}/audios/${nombreArchivoFinal}`))
-                    .then(url => {
-                        const container = document.getElementById(audioId);
-                        if (container) container.innerHTML = `<audio controls style="width:100%;" src="${url}"></audio>`;
-                    })
-                    .catch(() => {
-                        const container = document.getElementById(audioId);
-                        if (container) container.innerHTML = `<span style="color:red; font-size:0.85rem;"><i class="fas fa-exclamation-triangle"></i> Audio non trouvé</span>`;
-                    });
-            }
-
-            // A. Escucha para envío de Producción Escrita
-            const btnSubmitPE = document.getElementById('btn-submit-pe');
-            if (btnSubmitPE) {
-                btnSubmitPE.addEventListener('click', async () => {
-                    const studentText = document.getElementById('pe-student-response').value.trim();
-                    if (!studentText) return;
-
-                    btnSubmitPE.disabled = true;
-                    btnSubmitPE.innerText = "Évaluation...";
-
-                    try {
-                        const response = await fetch("http://localhost:5000/api/chat", {
-                            method: "POST",
-                            headers: { "Content-Type": "application/json" },
-                            body: JSON.stringify({
-                                message: `Actúa como examinadora oficial DELF nativa. Evalúa la siguiente producción escrita para el nivel ${window.currentLevel}. Analiza la correspondencia con la consigna, la corrección léxica y gramatical. Da tu veredicto pedagógico directo, constructivo y sin rodeos de máximo 3 líneas y completamente en francés:\n\n"${studentText}"`
-                            })
-                        });
-                        const data = await response.json();
-                        document.getElementById('sophia-verdict-text').innerHTML = `<strong>Grille d'évaluation :</strong><br>${data.reply}`;
-                        document.getElementById('sophia-box').style.display = "block";
-                    } catch (e) {
-                        document.getElementById('sophia-verdict-text').innerText = "Erreur Sophia.";
+                let track = (ej.ruta_audio.match(/\d+/) || ["02"])[0].padStart(2, '0');
+                getDownloadURL(ref(storage, `niveles/${currentLevel}/audios/${track.slice(-2)}.mp3`)).then(url => {
+                    const container = document.getElementById(audioId);
+                    if (container) {
+                        container.innerHTML = `<audio id="native-audio-player" controls style="width:100%;" src="${url}"></audio>`;
+                        const player = document.getElementById("native-audio-player");
+                        let listenCount = 0; let activeListen = false;
+                        player.addEventListener('play', () => { if (!activeListen) { listenCount++; document.getElementById('audio-count-label').innerText = `Écoutes / Escuchas : ${listenCount} / 2`; activeListen = true; } });
+                        player.addEventListener('ended', () => { activeListen = false; if (listenCount >= 2) { player.pause(); player.src = ""; container.innerHTML = `<span style="color:red; font-weight:700;">Limite d'écoutes atteinte (2/2)</span>`; } });
                     }
-                });
+                }).catch(() => { document.getElementById(audioId).innerHTML = `<span style="color:red;">Audio non trouvé</span>`; });
             }
 
-            // B. Escucha para Grabación de Producción Oral
-            const btnRecordPO = document.getElementById('btn-record-po');
-            const poStatus = document.getElementById('po-recording-status');
-            if (btnRecordPO) {
-                const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-                if (SpeechRecognition) {
-                    const recognitionPO = new SpeechRecognition();
-                    recognitionPO.lang = 'fr-FR';
-                    recognitionPO.continuous = true;
-                    let recordingPO = false;
-
-                    btnRecordPO.addEventListener('click', () => {
-                        if (!recordingPO) {
-                            poStatus.innerText = "Sophia vous écoute...";
-                            btnRecordPO.classList.add('recording');
-                            recognitionPO.start();
-                            recordingPO = true;
-                        } else {
-                            recognitionPO.stop();
-                        }
-                    });
-
-                    recognitionPO.onend = () => {
-                        recordingPO = false;
-                        btnRecordPO.classList.remove('recording');
-                        btnRecordPO.innerHTML = `<i class="fas fa-microphone"></i> Recommencer`;
-                    };
-
-                    recognitionPO.onresult = async (event) => {
-                        const speechText = event.results[0][0].transcript.trim();
-                        try {
-                            const res = await fetch("http://localhost:5000/evaluar-pronunciacion", {
-                                method: "POST",
-                                headers: { "Content-Type": "application/json" },
-                                body: JSON.stringify({
-                                    guion_esperado: "Production libre orale",
-                                    texto_alumno: speechText,
-                                    nivel: window.currentLevel
-                                })
-                            });
-                            const data = await res.json();
-                            document.getElementById('sophia-verdict-text').innerHTML = `<strong>Analyse DELF :</strong><br>${data.evaluacion}`;
-                            document.getElementById('sophia-box').style.display = "block";
-                        } catch (e) {
-                            poStatus.innerText = "Erreur.";
-                        }
-                    };
-                }
-            }
-
-            // C. Cuestionarios Tradicionales (CO / CE) con Guardado de Progreso Blindado
             const btnSubmit = document.getElementById('btn-submit-exercise');
-            const btnNext = document.getElementById('btn-next-exercise');
-            const sophiaBox = document.getElementById('sophia-box');
-
+            const btnRedo = document.getElementById('btn-redo-exercise');
             if (btnSubmit) {
                 btnSubmit.addEventListener('click', async () => {
-                    let total = ej.preguntas.length;
-                    let aciertos = 0;
-                    
+                    let totalR = ej.preguntas.length; let aciertosN = 0;
                     ej.preguntas.forEach((p, pIdx) => {
-                        const selected = document.querySelector(`input[name="question_${pIdx}"]:checked`);
-                        const iconTarget = document.getElementById(`status-icon-target-${pIdx}`);
-                        const block = document.getElementById(`block-preg-${pIdx}`);
-                        let esCorrecto = false;
-                        
-                        if (selected) {
-                            let valorSeleccionado = selected.value.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()¿?¡!]/g,"").trim().toLowerCase();
-                            let textoCorrectoDirecto = p.respuesta_correcta ? p.respuesta_correcta.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()¿?¡!]/g,"").trim().toLowerCase() : "";
-                            if (valorSeleccionado === textoCorrectoDirecto) esCorrecto = true;
-                        }
-
-                        if (esCorrecto) {
-                            aciertos++;
-                            iconTarget.innerHTML = `<i class="fas fa-check-circle" style="color:var(--green); margin-right:8px;"></i>`;
-                            block.style.borderColor = "var(--green)";
-                            block.style.background = "#f4fff5";
-                        } else {
-                            iconTarget.innerHTML = `<i class="fas fa-times-circle" style="color:red; margin-right:8px;"></i>`;
-                            block.style.borderColor = "red";
-                            block.style.background = "#fff5f5";
-                        }
+                        const sel = document.querySelector(`input[name="question_${pIdx}"]:checked`);
+                        const icon = document.getElementById(`status-icon-target-${pIdx}`);
+                        const blk = document.getElementById(`block-preg-${pIdx}`);
+                        let ok = sel && sel.value.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()¿?¡!]/g,"").trim().toLowerCase() === (p.respuesta_correcta || "").replace(/[.,\/#!$%\^&\*;:{}=\-_`~()¿?¡!]/g,"").trim().toLowerCase();
+                        if (ok) { aciertosN++; icon.innerHTML = `<i class="fas fa-check-circle" style="color:var(--green); margin-right:8px;"></i>`; blk.style.background = "#f4fff5"; }
+                        else { icon.innerHTML = `<i class="fas fa-times-circle" style="color:red; margin-right:8px;"></i>`; blk.style.background = "#fff5f5"; }
                     });
 
                     document.querySelectorAll('input[type="radio"]').forEach(r => r.disabled = true);
-                    btnSubmit.style.display = "none";
-                    if (btnNext) btnNext.style.display = "inline-block";
+                    btnSubmit.style.display = "none"; if (btnRedo) btnRedo.style.display = "inline-block";
 
-                    let porcentaje = Math.round((aciertos / total) * 100);
-                    const txtSophia = document.getElementById('sophia-verdict-text');
-                    txtSophia.innerHTML = porcentaje >= 70 ? `<strong>Félicitations !</strong> (${aciertos}/${total})` : `<strong>Attention !</strong> (${aciertos}/${total})`;
-                    txtSophia.style.color = porcentaje >= 70 ? "var(--green)" : "red";
+                    mapaAciertosAlumno[claveUnicaActividad] = aciertosN;
+                    let totalH = 0; Object.keys(mapaAciertosAlumno).forEach(k => { if (k.includes(`_${currentSkill}_`)) totalH += mapaAciertosAlumno[k]; });
+                    if (totalReactivosHabilidadGlobal === 0) totalReactivosHabilidadGlobal = totalR;
+                    
+                    let nota25 = parseFloat(((totalH / totalReactivosHabilidadGlobal) * 25).toFixed(2));
+                    let progCurso = Math.round((totalH / totalReactivosHabilidadGlobal) * 100);
 
-                    // SINCRONIZACIÓN DE AVANCE AL PUNTERO REAL VALIDADO
-                    if (docRefValidado) {
-                        try {
-                            await updateDoc(docRefValidado, { progreso: porcentaje });
-                            document.getElementById('progress-bar-fill').style.width = `${porcentaje}%`;
-                            document.getElementById('progress-text-target').innerText = `${porcentaje}%`;
-                        } catch(fbErr) {
-                            console.error("Fallo de guardado en Firebase mitigado.");
-                        }
+                    if (docRefValidado) { updateDoc(docRefValidado, { mapa_aciertos: mapaAciertosAlumno, progreso: progCurso }).then(() => { document.getElementById('progress-bar-fill').style.width = `${progCurso}%`; document.getElementById('progress-text-target').innerText = `${progCurso}%`; }); }
+
+                    const badge = document.getElementById('sophia-score-badge');
+                    if (badge) {
+                        badge.innerHTML = `<div><i class="fas fa-star" style="color:var(--gold);"></i> <strong>Note de la compétence (${currentSkill}) :</strong> <span style="color:var(--green);">${nota25}</span> / 25 pts</div><div style="font-size:0.75rem; color:#666; font-style:italic;">(${totalH} / ${totalReactivosHabilidadGlobal} globales)</div>`;
+                        badge.style.display = "block";
                     }
+                    document.getElementById('sophia-verdict-text').innerHTML = `Tu as obtenu <strong>${aciertosN} / ${totalR}</strong> aciertos.`;
+                    if (ej.transcripcion) document.getElementById('interactive-transcription-box').innerHTML = window.convertirTextoInteractivo(ej.transcripcion);
+                    document.getElementById('sophia-box').style.display = "block";
+                });
+            }
 
-                    if (ej.transcripcion) {
-                        const transBox = document.getElementById('interactive-transcription-box');
-                        if (transBox) transBox.innerHTML = window.convertirTextoInteractivo(ej.transcripcion);
-                        window.inicializarLectorVozGratuito(ej.transcripcion);
+            if (btnRedo) {
+                btnRedo.addEventListener('click', () => {
+                    document.querySelectorAll('input[type="radio"]').forEach(r => { r.disabled = false; r.checked = false; });
+                    ej.preguntas.forEach((p, pIdx) => { document.getElementById(`status-icon-target-${pIdx}`).innerHTML = ""; let b = document.getElementById(`block-preg-${pIdx}`); b.style.background = "#fafbfc"; });
+                    if (ej.ruta_audio) {
+                        let track = (ej.ruta_audio.match(/\d+/) || ["02"])[0].padStart(2, '0');
+                        getDownloadURL(ref(storage, `niveles/${currentLevel}/audios/${track.slice(-2)}.mp3`)).then(url => {
+                            document.getElementById(audioId).innerHTML = `<audio id="native-audio-player" controls style="width:100%;" src="${url}"></audio>`;
+                            document.getElementById('audio-count-label').innerText = "Écoute de pénalité active (1/1)";
+                        });
                     }
-                    if (sophiaBox) sophiaBox.style.display = "block";
+                    btnRedo.style.display = "none"; document.getElementById('sophia-box').style.display = "none"; btnSubmit.style.display = "inline-block";
                 });
             }
         };
 
-        window.inicializarLectorVozGratuito = function(textoOriginal) {
-            const btnRecord = document.getElementById('btn-record-transcription');
-            const feedback = document.getElementById('audio-reading-feedback');
-            if (!btnRecord) return;
-
-            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-            if (!SpeechRecognition) return;
-
-            const recognition = new SpeechRecognition();
-            recognition.lang = 'fr-FR'; 
-            recognition.continuous = true;
-            let estaGrabando = false;
-
-            btnRecord.addEventListener('click', () => {
-                if (!estaGrabando) {
-                    feedback.innerText = "Écoute...";
-                    btnRecord.classList.add('recording');
-                    recognition.start();
-                    estaGrabando = true;
-                } else {
-                    recognition.stop();
-                }
-            });
-
-            recognition.onend = () => {
-                estaGrabando = false;
-                btnRecord.classList.remove('recording');
-            };
-
-            recognition.onresult = (event) => {
-                const textoEscuchado = event.results[0][0].transcript.toLowerCase();
-                let limpiasOriginales = textoOriginal.toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()¿?¡!]/g,"").split(/\s+/);
-                let limpiasEscuchadas = textoEscuchado.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()¿?¡!]/g,"").split(/\s+/);
-
-                limpiasOriginales.forEach(palabra => {
-                    if (palabra.trim() !== "" && !limpiasEscuchadas.includes(palabra)) {
-                        const elementosPalabra = document.querySelectorAll(`.clickable-word[data-word="${palabra}"]`);
-                        elementosPalabra.forEach(el => el.classList.add('word-wrong'));
-                    }
-                });
-            };
-        };
-
-        // EVENTOS DE SELECCIÓN LIMPIOS
-        let selectionStartTimeout = null;
+        let selectionTimeout = null;
         document.addEventListener('selectionchange', () => {
-            clearTimeout(selectionStartTimeout);
-            selectionStartTimeout = setTimeout(() => {
-                const textoSeleccionado = window.getSelection().toString().trim();
-                if (textoSeleccionado && textoSeleccionado.includes(" ") && textoSeleccionado.length > 4 && !textoSeleccionado.includes("\n")) {
-                    window.ejecutarConsultaSophiaConFiltro(textoSeleccionado);
-                    window.getSelection().removeAllRanges(); 
-                }
+            clearTimeout(selectionTimeout);
+            selectionTimeout = setTimeout(() => {
+                const txt = window.getSelection().toString().trim();
+                if (txt && txt.includes(" ") && txt.length > 4 && !txt.includes("\n")) { window.ejecutarConsultaSophiaConFiltro(txt); window.getSelection().removeAllRanges(); }
             }, 700); 
         });
 
         document.addEventListener('click', (e) => {
-            const textoSeleccionado = window.getSelection().toString().trim();
-            if (textoSeleccionado.includes(" ")) return; 
+            if (window.getSelection().toString().trim().includes(" ")) return;
             if (e.target.classList.contains('clickable-word')) {
-                const palabraUnica = e.target.getAttribute('data-word') || e.target.innerText.trim();
-                if (palabraUnica.length > 1) {
-                    window.ejecutarConsultaSophiaConFiltro(palabraUnica);
-                }
+                const pal = e.target.getAttribute('data-word') || e.target.innerText.trim();
+                if (pal.length > 1) window.ejecutarConsultaSophiaConFiltro(pal);
             }
         });
 
-        const btnParcours = document.getElementById('tab-parcours');
-        const btnCarnet = document.getElementById('tab-carnet');
-        if (btnParcours) btnParcours.addEventListener('click', () => window.switchMainTab('parcours'));
-        if (btnCarnet) btnCarnet.addEventListener('click', () => window.switchMainTab('carnet'));
-
-        const controlsContainer = document.getElementById('parcours-controls-container');
-        if (controlsContainer) {
-            controlsContainer.addEventListener('click', (e) => {
-                const botonHabilidad = e.target.closest('.skill-tab-btn');
-                if (botonHabilidad) {
-                    window.setSkillFilter(botonHabilidad.id.replace('skill-', ''));
-                }
-            });
-        }
+        document.getElementById('tab-parcours').addEventListener('click', () => window.switchMainTab('parcours'));
+        document.getElementById('tab-carnet').addEventListener('click', () => window.switchMainTab('carnet'));
+        document.getElementById('parcours-controls-container').addEventListener('click', (e) => {
+            const btn = e.target.closest('.skill-tab-btn');
+            if (btn) window.setSkillFilter(btn.id.replace('skill-', ''));
+        });
 
         init();
     </script>
