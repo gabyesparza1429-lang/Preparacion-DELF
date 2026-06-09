@@ -691,20 +691,37 @@
             }).join('');
         };
 
-        // ========================================================
+// ========================================================
         // ZONA 2 VERSION MODERNA INTEGRADA EN EL FLUJO MODULE
         // ========================================================
         window.chercherMotDiccionario = async function(palabraOriginal) {
-            const palabraLimpia = palabraOriginal.trim().toLowerCase().replace(/[\.,\?!\(\)"«»]/g, "").replace("/", "-");
+            let palabraLimpia = palabraOriginal.trim().toLowerCase().replace(/[\.,\?!\(\)"«»]/g, "").replace("/", "-");
             if (!palabraLimpia || palabraLimpia.length <= 1) return;
             
             console.log("🔍 Buscando en Firestore:", palabraLimpia);
             
             try {
-                const docRef = doc(db, "diccionario_maestro", palabraLimpia);
-                const docSnap = await getDoc(docRef);
+                // Intento 1: Buscar la palabra exacta (ej: "chaussure")
+                let docRef = doc(db, "diccionario_maestro", palabraLimpia);
+                let docSnap = await getDoc(docRef);
 
-                if (docSnap.exists()) {
+                // Intento 2: Si no existe y termina en 's', buscar el singular (ej: "chaussures" -> "chaussure")
+                if (!docSnap.exists && palabraLimpia.endsWith('s') && palabraLimpia.length > 3) {
+                    const palabraSingular = palabraLimpia.slice(0, -1);
+                    console.log(`➔ Intentando en singular: ${palabraSingular}`);
+                    docRef = doc(db, "diccionario_maestro", palabraSingular);
+                    docSnap = await getDoc(docRef);
+                }
+
+                // Intento 3: Si termina en 'x' (plurales como "chevaux"), buscar raíz en 'al' ("cheval")
+                if (!docSnap.exists && palabraLimpia.endsWith('x') && palabraLimpia.length > 3) {
+                    const palabraAl = palabraLimpia.slice(0, -2) + "al";
+                    console.log(`➔ Intentando raíz en 'al': ${palabraAl}`);
+                    docRef = doc(db, "diccionario_maestro", palabraAl);
+                    docSnap = await getDoc(docRef);
+                }
+
+                if (docSnap.exists) {
                     const data = docSnap.data();
                     displayCardDiccionario(data);
                 } else {
@@ -769,6 +786,11 @@
             }
         });
 
+        // ================================================================= -->
+        // ZONA 3: RENDERIZADO Y CONTROL DE EJERCICIOS                       -->
+        // ================================================================= -->
+        window.renderExerciseStructure = function() {
+        
 // ================================================================= -->
         // ZONA 3: RENDERIZADO Y CONTROL DE EJERCICIOS                       -->
         // ================================================================= -->
