@@ -690,30 +690,40 @@
                 return `<span class="clickable-word" data-word="${palabraLimpia.toLowerCase()}" onclick="window.chercherMotDiccionario('${palabraLimpia}')">${fragmento}</span>`;
             }).join('');
         };
-
         // ========================================================
         // ZONA 2 VERSION MODERNA INTEGRADA EN EL FLUJO MODULE
         // ========================================================
         window.chercherMotDiccionario = async function(palabraOriginal) {
-            let palabraLimpia = palabraOriginal.trim().toLowerCase().replace(/[\.,\?!\(\)"«»]/g, "").replace("/", "-");
+            // 1. Limpieza inicial de signos de puntuación pegados
+            let palabraLimpia = palabraOriginal.trim().toLowerCase().replace(/[\.,\?!\(\)"«»:\*]/g, "");
+            
+            // 2. FILTRO UNIVERSAL DE APÓSTROFES: Mocha cualquier letra antes de la comilla (ej: c'est -> est, l'école -> école)
+            if (palabraLimpia.includes("'")) {
+                const partes = palabraLimpia.split("'");
+                // Tomamos la parte que queda a la derecha de la apóstrofe
+                palabraLimpia = partes[partes.length - 1] || palabraLimpia;
+            }
+            
+            // Reemplazamos diagonales por guiones por seguridad de Firebase
+            palabraLimpia = palabraLimpia.replace("/", "-").trim();
             if (!palabraLimpia || palabraLimpia.length <= 1) return;
             
             console.log("🔍 Buscando en Firestore:", palabraLimpia);
             
             try {
-                // Intento 1: Buscar la palabra exacta (ej: "chaussure")
+                // INTENTO 1: Buscar la palabra exacta (ej: "mes", "chaussure", "est")
                 let docRef = doc(db, "diccionario_maestro", palabraLimpia);
                 let docSnap = await getDoc(docRef);
 
-                // Intento 2: Si no existe y termina en 's', buscar el singular (ej: "chaussures" -> "chaussure")
+                // INTENTO 2: Si no existe, termina en 's' Y TIENE MÁS DE 3 LETRAS (Protege monosílabos como "mes")
                 if (!docSnap.exists && palabraLimpia.endsWith('s') && palabraLimpia.length > 3) {
                     const palabraSingular = palabraLimpia.slice(0, -1);
-                    console.log(`➔ Intentando en singular: ${palabraSingular}`);
+                    console.log(`➔ Intentando en singular seguro: ${palabraSingular}`);
                     docRef = doc(db, "diccionario_maestro", palabraSingular);
                     docSnap = await getDoc(docRef);
                 }
 
-                // Intento 3: Si termina en 'x' (plurales como "chevaux"), buscar raíz en 'al' ("cheval")
+                // INTENTO 3: Plurales irregulares en 'x' (más de 3 letras)
                 if (!docSnap.exists && palabraLimpia.endsWith('x') && palabraLimpia.length > 3) {
                     const palabraAl = palabraLimpia.slice(0, -2) + "al";
                     console.log(`➔ Intentando raíz en 'al': ${palabraAl}`);
@@ -785,7 +795,7 @@
                 window.chercherMotDiccionario(seleccion);
             }
         });
-
+        
         // ================================================================= -->
         // ZONA 3: RENDERIZADO Y CONTROL DE EJERCICIOS                       -->
         // ================================================================= -->
