@@ -491,14 +491,13 @@
             "A2": "ABC DELF A2 - 2025.pdf",
             "B1": "ABC DELF B1 - 2025.pdf",
             "B2": "ABC DELF B2 - 2025.pdf",
-            "C1": "Le DALF 100% Réussite C1 - C2.pdf"
+            "C1": "Le DALF 100% Réuresite C1 - C2.pdf"
         };
 
         const urlParams = new URLSearchParams(window.location.search);
         const studentId = urlParams.get('id') || 'default_student';
         const previewLevel = urlParams.get('level');
 
-        // Candado de seguridad: Guardamos el ID del alumno globalmente para la Zona 2
         window.currentUserEmail = studentId;
 
         async function init() {
@@ -585,7 +584,7 @@
             
             document.getElementById('dynamic-workspace-target').innerHTML = `
                 <div style="text-align: center; padding: 60px; color: var(--oxford); margin-top:30px;">
-                    <p style="font-weight: 600;">Veuillez choisir une activité dans le menu de gauche para commencer.</p>
+                    <p style="font-weight: 600;">Veuillez choisir une activité dans le menu de gauche pour commencer.</p>
                 </div>`;
 
             renderActiveInterface();
@@ -696,14 +695,9 @@
 
         // ========================================================
         // ZONA 2: ASISTENTE DICCIONARIO INTELIGENTE CON SOPHIA IA
-        // (CON CONTROL DE CRÉDITOS DIARIOS - MÁXIMO 50 AL DÍA)
         // ========================================================
-        
-        // Escucha cuando el alumno arrastra el mouse para seleccionar frases complejas o palabras sueltas
         document.addEventListener("mouseup", function() {
             const seleccion = window.getSelection().toString().trim();
-            
-            // Filtro de seguridad: evita disparar la tarjeta con clics fantasmas o saltos de línea
             if (seleccion && seleccion.length > 1 && !seleccion.includes("\n")) {
                 console.log(`🚀 Solicitando análisis contextual de Sophia para: "${seleccion}"`);
                 ejecutarConsultaSophiaConFiltro(seleccion);
@@ -732,7 +726,6 @@
             container.style.display = "block";
 
             try {
-                // Consultamos directamente el estatus en la colección "Usuarios" de Firestore
                 const userRef = doc(db, "Usuarios", window.currentUserEmail);
                 const userSnap = await getDoc(userRef);
 
@@ -751,7 +744,6 @@
                     }
                 }
 
-                // CANDADO: Bloqueo si ya consumió sus 50 tokens de hoy
                 if (creditosDisponibles <= 0) {
                     container.innerHTML = `
                         <div class="diccionario-card-premium" style="background: #ffffff; border-left: 5px solid #ea4335; padding: 18px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.15); font-family: Arial, sans-serif;">
@@ -768,7 +760,6 @@
                     return;
                 }
 
-                // Llamada a Sophia mandando la frase seleccionada en crudo
                 const response = await fetch("http://localhost:5000/api/chat", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
@@ -784,7 +775,6 @@
                 const data = await response.json();
                 creditosDisponibles--;
 
-                // Almacenamos la resta de la ficha del alumno en Firestore
                 await setDoc(userRef, {
                     creditos_glosario: creditosDisponibles,
                     fecha_glosario: hoy
@@ -836,12 +826,9 @@
 
         init();
     </script>
-    
-        // ================================================================= -->
-        // ZONA 3: RENDERIZADO Y CONTROL DE EJERCICIOS                       -->
-        // ================================================================= -->
-    <script>    
-    window.renderExerciseStructure = function() {
+
+    <script>
+        window.renderExerciseStructure = function() {
             const target = document.getElementById('dynamic-workspace-target');
             filtrarEjerciciosDeUnidadActual();
 
@@ -859,7 +846,6 @@
                     ${ej.instruccion || 'Exercice'} 
                 </h4>`;
 
-            // CORRECCIÓN MAESTRA: Activamos el glosario interactivo en los documentos de lectura largos (CE)
             if (currentSkill === "CE" && ej.texto_lectura) {
                 html += `
                 <div style="background: #f8f9fa; border-left: 4px solid var(--gold); padding: 20px; border-radius: 6px; margin-bottom: 25px; font-size: 0.95rem; line-height: 1.6; color: #333; white-space: pre-wrap;">
@@ -1076,7 +1062,7 @@
                     if (palabra.trim() !== "" && !limpiasEscuchadas.includes(palabra)) {
                         erroresEncontrados++;
                         const elementosPalabra = document.querySelectorAll(`.clickable-word[data-word="${palabra}"]`);
-                        elementorPalabra.forEach(el => el.classList.add('word-wrong'));
+                        elementosPalabra.forEach(el => el.classList.add('word-wrong'));
                     }
                 });
 
@@ -1087,8 +1073,6 @@
                 }
             };
         };
-
-        init();
     </script>
 
     <script>
