@@ -25,10 +25,10 @@
         }
         
         .sidebar { 
-            width: 290px; 
+            width: 300px; 
             background: var(--oxford); 
             color: white; 
-            padding: 30px 15px; 
+            padding: 25px 15px; 
             flex-shrink: 0; 
             display: flex;
             flex-direction: column;
@@ -42,11 +42,63 @@
             color: white;
             text-align: center;
             margin-top: 0;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
             letter-spacing: 1px;
             border-bottom: 2px solid var(--gold);
             padding-bottom: 15px;
             text-transform: uppercase;
+        }
+
+        .sidebar-student-info {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(197, 160, 89, 0.2);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+            font-size: 0.85rem;
+        }
+
+        .sidebar-student-info h3 {
+            margin: 0 0 10px 0;
+            font-size: 1rem;
+            color: white;
+            font-weight: 600;
+        }
+
+        .sidebar-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+            color: #ccc;
+        }
+
+        .sidebar-meta-item i {
+            color: var(--gold);
+            width: 16px;
+            text-align: center;
+        }
+
+        .sidebar-progress-container {
+            margin-top: 12px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 10px;
+        }
+
+        .sidebar-progress-bar-bg {
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 3px;
+            overflow: hidden;
+            margin-top: 5px;
+        }
+
+        .sidebar-progress-bar-fill {
+            width: 0%;
+            height: 100%;
+            background: var(--gold);
+            transition: width 0.5s ease;
         }
         
         .nav-tab-btn { 
@@ -159,89 +211,12 @@
         .project-banner {
             background: var(--oxford) url('./assets/Banner.png') no-repeat center center;
             background-size: 100% 100%; 
-            color: white;
-            padding: 15px 40px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
             border-bottom: 4px solid var(--gold);
             box-shadow: 0 4px 10px rgba(0,0,0,0.05);
             position: relative;
-            height: 140px; 
+            height: 90px; 
             box-sizing: border-box;
             flex-shrink: 0;
-        }
-
-        .banner-top {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            width: 100%;
-        }
-
-        .banner-left {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-
-        .banner-left h1 {
-            margin: 0;
-            font-size: 1.4rem;
-            font-weight: 700;
-            color: white;
-        }
-
-        .level-badge {
-            background: var(--gold);
-            color: var(--oxford);
-            padding: 6px 20px;
-            border-radius: 20px;
-            font-weight: 700;
-            font-size: 0.95rem;
-        }
-
-        .banner-bottom-info {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            width: 100%;
-            background: rgba(0, 33, 71, 0.75);
-            padding: 8px 15px;
-            border-radius: 6px;
-            box-sizing: border-box;
-            border: 1px solid rgba(197, 160, 89, 0.2);
-        }
-
-        .progress-container {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            width: 60%;
-        }
-
-        .progress-bar-bg {
-            flex-grow: 1;
-            height: 8px;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 4px;
-            overflow: hidden;
-        }
-
-        .progress-bar-fill {
-            width: 0%;
-            height: 100%;
-            background: var(--gold);
-            transition: width 0.5s ease;
-        }
-
-        .countdown-container {
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: #fff;
-            display: flex;
-            align-items: center;
-            gap: 8px;
         }
 
         .content-area {
@@ -329,15 +304,6 @@
             font-weight: 600;
         }
 
-        .diccionario-card-premium {
-            background: #ffffff;
-            border-left: 5px solid #1a73e8;
-            padding: 18px;
-            border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-            font-family: Arial, sans-serif;
-        }
-        
         .btn-mic {
             background: #d63031;
             color: white;
@@ -386,6 +352,36 @@
 
     <div class="sidebar">
         <h2>Mon Espace DELF</h2>
+        
+        <div class="sidebar-student-info">
+            <h3 id="student-welcome">Vérification...</h3>
+            
+            <div class="sidebar-meta-item">
+                <i class="fas fa-graduation-cap"></i>
+                <span id="level-indicator" style="font-weight: 700; color: var(--gold);">NIVEAU --</span>
+            </div>
+            
+            <div class="sidebar-meta-item">
+                <i class="fas fa-magic"></i>
+                <span><span id="banner-credits-count">--</span> / 50 Crédits</span>
+            </div>
+            
+            <div class="sidebar-meta-item">
+                <i class="far fa-clock"></i>
+                <span id="countdown-text-target">Calcul...</span>
+            </div>
+
+            <div class="sidebar-progress-container">
+                <div style="display:flex; justify-content:space-between; font-size:0.75rem; color:#bbb;">
+                    <span>Progression :</span>
+                    <span id="progress-text-target" style="color:var(--gold); font-weight:700;">0%</span>
+                </div>
+                <div class="sidebar-progress-bar-bg">
+                    <div class="sidebar-progress-bar-fill" id="progress-bar-fill"></div>
+                </div>
+            </div>
+        </div>
+
         <button class="nav-tab-btn active" id="tab-parcours">
             <i class="fas fa-route"></i> Mon Parcours
         </button>
@@ -398,34 +394,7 @@
     </div>
 
     <div class="main-container">
-        <div class="project-banner">
-            <div class="banner-top">
-                <div class="banner-left" style="display: flex; align-items: center; gap: 20px;">
-                    <i class="fas fa-user-circle" style="color: var(--gold); font-size: 1.8rem;"></i>
-                    <h1 id="student-welcome">Chargement...</h1>
-                    <span id="banner-credits-badge" style="background: rgba(255,255,255,0.15); color: #fff; padding: 4px 12px; border-radius: 12px; font-size: 0.8rem; font-weight: 600; border: 1px solid rgba(255,255,255,0.25); display: none;">
-                        <i class="fas fa-magic" style="color: var(--gold); margin-right: 6px;"></i> <span id="banner-credits-count">50</span> / 50 Sophia Credits
-                    </span>
-                </div>
-                <div class="banner-right">
-                    <span class="level-badge" id="level-indicator">NIVEAU --</span>
-                </div>
-            </div>
-
-            <div class="banner-bottom-info">
-                <div class="progress-container">
-                    <span style="font-size: 0.8rem; font-weight: 600;">Progression :</span>
-                    <div class="progress-bar-bg">
-                        <div class="progress-bar-fill" id="progress-bar-fill"></div>
-                    </div>
-                    <span style="font-size: 0.8rem; font-weight: 700; color: var(--gold);" id="progress-text-target">0%</span>
-                </div>
-                <div class="countdown-container">
-                    <i class="far fa-clock" style="color: var(--gold);"></i>
-                    <span id="countdown-text-target">-- jours restants avant l'examen</span>
-                </div>
-            </div>
-        </div>
+        <div class="project-banner"></div>
 
         <div class="content-area">
             <div class="workspace-content-wrapper">
@@ -449,7 +418,7 @@
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
-        import { getFirestore, doc, getDoc, updateDoc, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js";
+        import { getFirestore, doc, getDoc, updateDoc, collection, getDocs, query, where } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js";
         import { getStorage, ref, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-storage.js";
 
         const firebaseConfig = {
@@ -475,10 +444,11 @@
         let openUnitsState = {}; 
 
         const urlParams = new URLSearchParams(window.location.search);
-        const studentId = urlParams.get('id') || 'default_student';
+        let urlId = urlParams.get('id') || 'default_student';
         const previewLevel = urlParams.get('level');
 
-        window.currentUserEmail = studentId;
+        // Esta variable guardará de forma blindada la llave real del documento de Firestore
+        let docRefValidado = null; 
 
         window.convertirTextoInteractivo = function(texto) {
             if (!texto) return '';
@@ -489,51 +459,93 @@
             }).join('');
         };
 
+        function calcularDiasRestantes(fechaString) {
+            if (!fechaString) return "Pas de date d'examen";
+            try {
+                let partes = fechaString.includes('-') ? fechaString.split('-') : fechaString.split('/');
+                let fechaExamen;
+                
+                if (partes[0].length === 4) {
+                    fechaExamen = new Date(partes[0], partes[1] - 1, partes[2]);
+                } else {
+                    fechaExamen = new Date(partes[2], partes[1] - 1, partes[0]);
+                }
+
+                const hoy = new Date();
+                hoy.setHours(0,0,0,0);
+                fechaExamen.setHours(0,0,0,0);
+                
+                const diferenciaTiempo = fechaExamen - hoy;
+                const dias = Math.ceil(diferenciaTiempo / (1000 * 60 * 60 * 24));
+                
+                if (isNaN(dias)) return "Date d'examen invalide";
+                return dias > 0 ? `${dias} jours restants` : (dias === 0 ? "Examen aujourd'hui" : "Examen terminé");
+            } catch(e) {
+                return "Format date invalide";
+            }
+        }
+
+        // CANDADO DE DETECCIÓN Y LOGIN SEGURO
         async function init() {
             try {
-                if (studentId === 'admin_preview' || previewLevel) {
+                if (urlId === 'admin_preview' || previewLevel) {
                     currentLevel = previewLevel || "B1";
-                    document.getElementById('student-welcome').innerText = `Bonjour, Administrateur (Aperçu)`;
+                    document.getElementById('student-welcome').innerText = `Administrateur`;
                     document.getElementById('progress-bar-fill').style.width = `100%`;
                     document.getElementById('progress-text-target').innerText = `100%`;
-                    document.getElementById('countdown-text-target').innerText = "Mode Prévisualisation";
-                    
-                    const badgeCreditos = document.getElementById('banner-credits-badge');
-                    const contadorCreditos = document.getElementById('banner-credits-count');
-                    if (badgeCreditos && contadorCreditos) {
-                        contadorCreditos.innerText = "∞";
-                        badgeCreditos.style.display = "inline-flex";
-                    }
+                    document.getElementById('countdown-text-target').innerText = "Mode Aperçu";
+                    document.getElementById('banner-credits-count').innerText = "∞";
+                    await descargarColeccionUnidades();
+                    return;
+                }
+
+                // 1. Buscar coincidencia exacta por ID de documento
+                let testRef = doc(db, "Usuarios", urlId);
+                let testSnap = await getDoc(testRef);
+                let userData = null;
+
+                if (testSnap.exists()) {
+                    docRefValidado = testRef;
+                    userData = testSnap.data();
                 } else {
-                    const userSnap = await getDoc(doc(db, "Usuarios", studentId));
-                    if (userSnap.exists()) {
-                        const userData = userSnap.data();
-                        currentLevel = userData.nivel || "A1";
-                        document.getElementById('student-welcome').innerText = `Bonjour, ${userData.nombre || 'Étudiant'}`;
-                        
-                        const badgeCreditos = document.getElementById('banner-credits-badge');
-                        const contadorCreditos = document.getElementById('banner-credits-count');
-                        if (badgeCreditos && contadorCreditos) {
-                            const creditosActuales = userData.creditos_glosario !== undefined ? userData.creditos_glosario : 50;
-                            contadorCreditos.innerText = creditosActuales;
-                            badgeCreditos.style.display = "inline-flex";
-                        }
-
-                        const prog = userData.progreso || 0;
-                        document.getElementById('progress-bar-fill').style.width = `${prog}%`;
-                        document.getElementById('progress-text-target').innerText = `${prog}%`;
-
-                        if (userData.fecha_examen) {
-                            const fechaExamen = new Date(userData.fecha_examen);
-                            const hoy = new Date();
-                            const diferenciaTiempo = fechaExamen - hoy;
-                            const diasRestantes = Math.ceil(diferenciaTiempo / (1000 * 60 * 60 * 24));
-                            document.getElementById('countdown-text-target').innerText = diasRestantes > 0 ? `${diasRestantes} jours restants avant l'examen` : "Examen terminé";
-                        } else {
-                            document.getElementById('countdown-text-target').innerText = "Pas de date d'examen fixée";
-                        }
+                    // 2. Si falló el ID del documento, buscar de forma adaptativa por campo interno 'id'
+                    const q = query(collection(db, "Usuarios"), where("id", "==", urlId));
+                    const qSnap = await getDocs(q);
+                    
+                    if (!qSnap.empty) {
+                        docRefValidado = doc(db, "Usuarios", qSnap.docs[0].id);
+                        userData = qSnap.docs[0].data();
                     }
                 }
+
+                // DETECTOR DE INTRUSOS: Si no está en la base de datos, bloquear el acceso
+                if (!userData) {
+                    document.getElementById('sidebar-dynamic-menu').innerHTML = "";
+                    document.getElementById('dynamic-workspace-target').innerHTML = `
+                        <div style="text-align: center; padding: 50px; background: #fff; border-radius: 8px; border-left: 5px solid red; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
+                            <i class="fas fa-lock" style="font-size: 3rem; color: red; margin-bottom: 15px;"></i>
+                            <h2 style="color: var(--oxford); margin-bottom: 10px;">Identifiant non valide</h2>
+                            <p style="color: #555; font-size: 0.95rem;">L'identifiant est incorrect. Veuillez contacter votre professeur pour y accéder.</p>
+                        </div>`;
+                    document.getElementById('student-welcome').innerText = "Accès Bloqué";
+                    return;
+                }
+
+                // Cargar la interfaz con el usuario verificado
+                currentLevel = userData.nivel || "A1";
+                document.getElementById('student-welcome').innerText = `${userData.nombre || 'Étudiant'}`;
+                
+                const contadorCreditos = document.getElementById('banner-credits-count');
+                if (contadorCreditos) {
+                    contadorCreditos.innerText = userData.creditos_glosario !== undefined ? userData.creditos_glosario : 50;
+                }
+
+                const prog = userData.progreso || 0;
+                document.getElementById('progress-bar-fill').style.width = `${prog}%`;
+                document.getElementById('progress-text-target').innerText = `${prog}%`;
+
+                let fechaGuardada = userData.fecha_certificacion || userData.fecha_examen || userData.fechaExamen || null;
+                document.getElementById('countdown-text-target').innerText = calcularDiasRestantes(fechaGuardada);
                 
                 document.getElementById('level-indicator').innerText = `NIVEAU ${currentLevel}`;
                 window.currentLevel = currentLevel;
@@ -541,8 +553,8 @@
                 await descargarColeccionUnidades();
 
             } catch (error) {
-                console.error("Error al inicializar sesión:", error);
-                await descargarColeccionUnidades();
+                console.error("Error crítico en login:", error);
+                document.getElementById('dynamic-workspace-target').innerHTML = `<p style="color:red; text-align:center;">Erreur système.</p>`;
             }
         }
 
@@ -555,8 +567,7 @@
                 });
                 renderActiveInterface();
             } catch (err) {
-                console.error("Error al descargar unidades desde Firestore:", err);
-                document.getElementById('dynamic-workspace-target').innerHTML = `<p style="color:red; text-align:center;">Erreur de connexion a la base de datos.</p>`;
+                console.error("Error al descargar unidades:", err);
             }
         }
 
@@ -676,9 +687,7 @@
             ejerciciosFiltrados = unidadesCache[currentUnitId][currentSkill] || unidadesCache[currentUnitId][currentSkill.toLowerCase()] || [];
         }
 
-        // ================================================================= -->
-        // ZONA 2: ASISTENTE DICCIONARIO INTELIGENTE CON SOPHIA IA          -->
-        // ================================================================= -->
+        // AISLAMIENTO TOTAL DE SOPHIA (DICCIONARIO SEPARADO DE LOS CRASH DE RED)
         window.ejecutarConsultaSophiaConFiltro = async function(frase) {
             const container = document.getElementById("glosario-flotante-container");
             if (!container) return;
@@ -699,62 +708,30 @@
             container.innerHTML = `
                 <div style="background: #ffffff; padding: 15px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.15); font-family: Arial;">
                     <p style="margin:0; color:#666; font-size:13px;"><i class="fas fa-spinner fa-spin"></i> Sophia analiza "${frase.substring(0, 20)}..."...</p>
-                </div>
-            `;
+                </div>`;
             container.style.display = "block";
 
             try {
-                let creditosDisponibles = 50;
-                let esModoAdmin = (window.currentUserEmail === 'admin_preview');
-
-                if (!esModoAdmin) {
-                    const userRef = doc(db, "Usuarios", window.currentUserEmail);
-                    const userSnap = await getDoc(userRef);
-                    const hoy = new Date().toISOString().split('T')[0];
-
-                    if (userSnap.exists()) {
-                        const userData = userSnap.data();
-                        let ultimaFechaConsulta = userData.fecha_glosario || hoy;
-                        if (ultimaFechaConsulta === hoy) {
-                            creditosDisponibles = userData.creditos_glosario !== undefined ? userData.creditos_glosario : 50;
-                        }
-                    }
-
-                    if (creditosDisponibles <= 0) {
-                        container.innerHTML = `
-                            <div class="diccionario-card-premium" style="border-left: 5px solid #ea4335;">
-                                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px; color: #ea4335; font-weight: bold;">
-                                    <i class="fas fa-exclamation-circle" style="font-size: 20px;"></i>
-                                    <h3 style="margin: 0; font-size: 15px;">Limite quotidienne atteinte</h3>
-                                </div>
-                                <p style="margin: 5px 0; font-size: 13px; color: #5f6368; line-height: 1.4;">
-                                    Has alcanzado tu límite de consultas diarias. Mañana se restablecerán automáticamente.
-                                </p>
-                                <button onclick="document.getElementById('glosario-flotante-container').style.display='none'" style="margin-top: 12px; width: 100%; background: #f1f3f4; border: none; padding: 6px; border-radius: 4px; cursor: pointer; font-size: 12px; color: #5f6368; font-weight: bold;">Fermer</button>
-                            </div>
-                        `;
-                        return;
-                    }
-                }
-
+                // Consultar API externa local de Python
                 const response = await fetch("http://localhost:5000/api/chat", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ message: promptFormateado })
                 });
-
                 const data = await response.json();
 
-                // PROTECCIÓN MAESTRA: Solo descontar créditos si NO estamos en vista previa
-                if (!esModoAdmin) {
-                    creditosDisponibles--;
-                    const userRef = doc(db, "Usuarios", window.currentUserEmail);
-                    await updateDoc(userRef, {
-                        creditos_glosario: creditosDisponibles,
-                        fecha_glosario: new Date().toISOString().split('T')[0]
-                    });
-                    const bannerCount = document.getElementById('banner-credits-count');
-                    if (bannerCount) bannerCount.innerText = creditosDisponibles;
+                // Intentar restar el crédito en Firebase de forma asíncrona y segura (Si falla, el diccionario se muestra igual)
+                if (docRefValidado) {
+                    getDoc(docRefValidado).then(snap => {
+                        if (snap.exists()) {
+                            let creds = snap.data().creditos_glosario !== undefined ? snap.data().creditos_glosario : 50;
+                            if (creds > 0) {
+                                creds--;
+                                updateDoc(docRefValidado, { creditos_glosario: creds });
+                                document.getElementById('banner-credits-count').innerText = creds;
+                            }
+                        }
+                    }).catch(e => console.log("Aviso: Sincronización de créditos en segundo plano omitida."));
                 }
 
                 container.innerHTML = `
@@ -766,27 +743,21 @@
                                 </h4>
                                 <p style="margin: 3px 0 0 0; font-size: 15px; font-weight: bold; color: #202124;">"${frase}"</p>
                             </div>
-                            <span style="background: #f1f3f4; color: #5f6368; padding: 3px 8px; border-radius: 12px; font-size: 11px; font-weight: bold; white-space: nowrap;">
-                                ${esModoAdmin ? '∞' : creditosDisponibles + ' / 50'}
-                            </span>
                         </div>
                         <hr style="border: 0; border-top: 1px solid #eee; margin: 10px 0;">
                         <div style="font-size: 13.5px; line-height:1.5;">${data.reply}</div>
                         <button onclick="document.getElementById('glosario-flotante-container').style.display='none'" style="margin-top: 12px; width: 100%; background: #f1f3f4; border: none; padding: 6px; border-radius: 4px; cursor: pointer; font-size: 12px; color: #5f6368; font-weight: bold;">Fermer</button>
-                    </div>
-                `;
+                    </div>`;
             } catch (error) {
-                console.error("⚠️ Error en el asistente Sophia:", error);
                 container.innerHTML = `
                     <div style="background: #ffffff; padding: 15px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.15); font-family: Arial; border-left: 5px solid red;">
                         <p style="margin:0; color:red; font-size:13px;">❌ Error de conexión con Sophia. Revisa tu terminal de Python.</p>
-                    </div>
-                `;
+                    </div>`;
             }
         }
 
         // ================================================================= -->
-        // ZONA 3: RENDERIZADO INTERACTIVO MAESTRO DE EJERCICIOS             -->
+        // RENDERIZADO INTERACTIVO MAESTRO DE EJERCICIOS                     -->
         // ================================================================= -->
         window.renderExerciseStructure = function() {
             const target = document.getElementById('dynamic-workspace-target');
@@ -859,8 +830,6 @@
                     <button class="nav-tab-btn" id="btn-submit-exercise" style="width:auto; background:var(--oxford); color:white; padding:10px 22px;"><i class="fas fa-paper-plane"></i> Envoyer</button>
                     <button class="nav-tab-btn" id="btn-next-exercise" style="width:auto; background:var(--green); color:white; padding:10px 22px; display:none;">Suivant <i class="fas fa-arrow-right"></i></button>
                 </div>`;
-            } else {
-                html += `<p style="font-style:italic; color:#777; margin-top:15px;">Exercice libre. Répondez sur votre cahier.</p>`;
             }
 
             html += `
@@ -902,6 +871,7 @@
                     });
             }
 
+            // A. Escucha para envío de Producción Escrita
             const btnSubmitPE = document.getElementById('btn-submit-pe');
             if (btnSubmitPE) {
                 btnSubmitPE.addEventListener('click', async () => {
@@ -909,7 +879,7 @@
                     if (!studentText) return;
 
                     btnSubmitPE.disabled = true;
-                    btnSubmitPE.innerText = "Évaluation en cours...";
+                    btnSubmitPE.innerText = "Évaluation...";
 
                     try {
                         const response = await fetch("http://localhost:5000/api/chat", {
@@ -920,36 +890,28 @@
                             })
                         });
                         const data = await response.json();
-                        
                         document.getElementById('sophia-verdict-text').innerHTML = `<strong>Grille d'évaluation :</strong><br>${data.reply}`;
                         document.getElementById('sophia-box').style.display = "block";
                     } catch (e) {
-                        document.getElementById('sophia-verdict-text').innerText = "Erreur de connexion avec Sophia.";
-                        document.getElementById('sophia-box').style.display = "block";
+                        document.getElementById('sophia-verdict-text').innerText = "Erreur Sophia.";
                     }
-                    btnSubmitPE.innerText = "Soumis";
                 });
             }
 
+            // B. Escucha para Grabación de Producción Oral
             const btnRecordPO = document.getElementById('btn-record-po');
             const poStatus = document.getElementById('po-recording-status');
             if (btnRecordPO) {
                 const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-                if (!SpeechRecognition) {
-                    btnRecordPO.style.display = "none";
-                    poStatus.innerText = "Le navigateur de l'élève ne supporte pas l'enregistrement de voix.";
-                } else {
+                if (SpeechRecognition) {
                     const recognitionPO = new SpeechRecognition();
                     recognitionPO.lang = 'fr-FR';
-                    recognitionPO.interimResults = false;
                     let recordingPO = false;
 
                     btnRecordPO.addEventListener('click', () => {
                         if (!recordingPO) {
-                            poStatus.innerText = "Sophia vous écoute... Parlez librement.";
-                            poStatus.style.color = "var(--green)";
+                            poStatus.innerText = "Sophia vous écoute...";
                             btnRecordPO.classList.add('recording');
-                            btnRecordPO.innerHTML = `<i class="fas fa-stop"></i> Terminer l'enregistrement`;
                             recognitionPO.start();
                             recordingPO = true;
                         } else {
@@ -965,35 +927,33 @@
 
                     recognitionPO.onresult = async (event) => {
                         const speechText = event.results[0][0].transcript.trim();
-                        poStatus.innerText = `Analyse de : "${speechText.substring(0, 30)}..."`;
-                        poStatus.style.color = "var(--oxford)";
-
                         try {
                             const res = await fetch("http://localhost:5000/evaluar-pronunciacion", {
                                 method: "POST",
                                 headers: { "Content-Type": "application/json" },
                                 body: JSON.stringify({
-                                    guion_esperado: "Production libre orale de l'étudiant",
+                                    guion_esperado: "Production libre orale",
                                     texto_alumno: speechText,
                                     nivel: window.currentLevel
                                 })
                             });
                             const data = await res.json();
-                            document.getElementById('sophia-verdict-text').innerHTML = `<strong>Analyse de performance :</strong><br>${data.evaluacion}`;
+                            document.getElementById('sophia-verdict-text').innerHTML = `<strong>Analyse DELF :</strong><br>${data.evaluacion}`;
                             document.getElementById('sophia-box').style.display = "block";
                         } catch (e) {
-                            poStatus.innerText = "Erreur de connexion.";
+                            poStatus.innerText = "Erreur.";
                         }
                     };
                 }
             }
 
+            // C. Cuestionarios Tradicionales (CO / CE) con Guardado de Progreso Blindado
             const btnSubmit = document.getElementById('btn-submit-exercise');
             const btnNext = document.getElementById('btn-next-exercise');
             const sophiaBox = document.getElementById('sophia-box');
 
             if (btnSubmit) {
-                btnSubmit.addEventListener('click', () => {
+                btnSubmit.addEventListener('click', async () => {
                     let total = ej.preguntas.length;
                     let aciertos = 0;
                     
@@ -1004,8 +964,8 @@
                         let esCorrecto = false;
                         
                         if (selected) {
-                            let valorSeleccionado = selected.value.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()¿?¡!]/g,"").replace(/\s+/g, ' ').trim().toLowerCase();
-                            let textoCorrectoDirecto = p.respuesta_correcta ? p.respuesta_correcta.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()¿?¡!]/g,"").replace(/\s+/g, ' ').trim().toLowerCase() : "";
+                            let valorSeleccionado = selected.value.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()¿?¡!]/g,"").trim().toLowerCase();
+                            let textoCorrectoDirecto = p.respuesta_correcta ? p.respuesta_correcta.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()¿?¡!]/g,"").trim().toLowerCase() : "";
                             if (valorSeleccionado === textoCorrectoDirecto) esCorrecto = true;
                         }
 
@@ -1025,14 +985,20 @@
                     btnSubmit.style.display = "none";
                     if (btnNext) btnNext.style.display = "inline-block";
 
-                    let porcentaje = (aciertos / total) * 100;
+                    let porcentaje = Math.round((aciertos / total) * 100);
                     const txtSophia = document.getElementById('sophia-verdict-text');
-                    if (porcentaje >= 70) {
-                        txtSophia.innerHTML = `<strong>Félicitations !</strong> Tu as obtenu <strong>${aciertos}/${total}</strong>.`;
-                        txtSophia.style.color = "var(--green)";
-                    } else {
-                        txtSophia.innerHTML = `<strong>Attention !</strong> Tu as obtenu <strong>${aciertos}/${total}</strong>. Revois l'exercice.`;
-                        txtSophia.style.color = "red";
+                    txtSophia.innerHTML = porcentaje >= 70 ? `<strong>Félicitations !</strong> (${aciertos}/${total})` : `<strong>Attention !</strong> (${aciertos}/${total})`;
+                    txtSophia.style.color = porcentaje >= 70 ? "var(--green)" : "red";
+
+                    // SINCRONIZACIÓN DE AVANCE AL PUNTERO REAL VALIDADO
+                    if (docRefValidado) {
+                        try {
+                            await updateDoc(docRefValidado, { progreso: porcentaje });
+                            document.getElementById('progress-bar-fill').style.width = `${porcentaje}%`;
+                            document.getElementById('progress-text-target').innerText = `${porcentaje}%`;
+                        } catch(fbErr) {
+                            console.error("Fallo de guardado en Firebase mitigado.");
+                        }
                     }
 
                     if (ej.transcripcion) {
@@ -1051,23 +1017,16 @@
             if (!btnRecord) return;
 
             const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-            if (!SpeechRecognition) {
-                btnRecord.style.display = "none";
-                return;
-            }
+            if (!SpeechRecognition) return;
 
             const recognition = new SpeechRecognition();
             recognition.lang = 'fr-FR'; 
-            recognition.interimResults = false;
             let estaGrabando = false;
 
             btnRecord.addEventListener('click', () => {
                 if (!estaGrabando) {
-                    document.querySelectorAll('.clickable-word').forEach(span => span.classList.remove('word-wrong'));
-                    feedback.innerText = "Écoute en cours... Parlez maintenant.";
-                    feedback.style.color = "var(--green)";
+                    feedback.innerText = "Écoute...";
                     btnRecord.classList.add('recording');
-                    btnRecord.innerHTML = `<i class="fas fa-stop"></i> Arrêter`;
                     recognition.start();
                     estaGrabando = true;
                 } else {
@@ -1078,61 +1037,41 @@
             recognition.onend = () => {
                 estaGrabando = false;
                 btnRecord.classList.remove('recording');
-                btnRecord.innerHTML = `<i class="fas fa-microphone"></i> Lire à haute voix`;
             };
 
             recognition.onresult = (event) => {
                 const textoEscuchado = event.results[0][0].transcript.toLowerCase();
                 let limpiasOriginales = textoOriginal.toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()¿?¡!]/g,"").split(/\s+/);
                 let limpiasEscuchadas = textoEscuchado.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()¿?¡!]/g,"").split(/\s+/);
-                let erroresEncontrados = 0;
 
                 limpiasOriginales.forEach(palabra => {
                     if (palabra.trim() !== "" && !limpiasEscuchadas.includes(palabra)) {
-                        erroresEncontrados++;
                         const elementosPalabra = document.querySelectorAll(`.clickable-word[data-word="${palabra}"]`);
                         elementosPalabra.forEach(el => el.classList.add('word-wrong'));
                     }
                 });
-
-                if (erroresEncontrados === 0) {
-                    feedback.innerHTML = `<span style="color:var(--green);"><i class="fas fa-check-double"></i> Prononciation excellente !</span>`;
-                } else {
-                    feedback.innerHTML = `<span style="color:#d63031;"><i class="fas fa-exclamation-circle"></i> Pratique les mots en rouge.</span>`;
-                }
             };
         };
 
-        // ================================================================= -->
-        // ZONA 4: CONTROL DE INTERFAZ GENERAL Y EVENTOS DE SELECCIÓN        -->
-        // ================================================================= -->
-        async function renderCarnetInterface() {}
-
-        // AISLAMIENTO DE ARRASTRE DE RATÓN: Manejador limpio nativo
+        // EVENTOS DE SELECCIÓN LIMPIOS
         let selectionStartTimeout = null;
-
         document.addEventListener('selectionchange', () => {
             clearTimeout(selectionStartTimeout);
             selectionStartTimeout = setTimeout(() => {
                 const textoSeleccionado = window.getSelection().toString().trim();
-                // Si la selección tiene más de una palabra, es un arrastre de frase inmediato
                 if (textoSeleccionado && textoSeleccionado.includes(" ") && textoSeleccionado.length > 4 && !textoSeleccionado.includes("\n")) {
-                    console.log("🚀 Frase detectada por arrastre nativo:", textoSeleccionado);
                     window.ejecutarConsultaSophiaConFiltro(textoSeleccionado);
-                    window.getSelection().removeAllRanges(); // Limpiar selección para evitar bucles
+                    window.getSelection().removeAllRanges(); 
                 }
-            }, 700); // Retraso de cortesía para esperar a que termine el arrastre
+            }, 700); 
         });
 
-        // Evento exclusivo de Clic en palabras sueltas sin interferir con la selección
         document.addEventListener('click', (e) => {
             const textoSeleccionado = window.getSelection().toString().trim();
-            if (textoSeleccionado.includes(" ")) return; // Si hay frase seleccionada, omitir el clic
-
+            if (textoSeleccionado.includes(" ")) return; 
             if (e.target.classList.contains('clickable-word')) {
                 const palabraUnica = e.target.getAttribute('data-word') || e.target.innerText.trim();
                 if (palabraUnica.length > 1) {
-                    console.log("🎯 Clic limpio en palabra suelta:", palabraUnica);
                     window.ejecutarConsultaSophiaConFiltro(palabraUnica);
                 }
             }
@@ -1148,8 +1087,7 @@
             controlsContainer.addEventListener('click', (e) => {
                 const botonHabilidad = e.target.closest('.skill-tab-btn');
                 if (botonHabilidad) {
-                    const skillCode = botonHabilidad.id.replace('skill-', '');
-                    window.setSkillFilter(skillCode);
+                    window.setSkillFilter(botonHabilidad.id.replace('skill-', ''));
                 }
             });
         }
