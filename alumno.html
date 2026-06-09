@@ -458,7 +458,7 @@
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
-        import { getFirestore, doc, getDoc, setDoc, updateDoc, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js";
+        import { getFirestore, doc, getDoc, updateDoc, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js";
         import { getStorage, ref, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-storage.js";
 
         const firebaseConfig = {
@@ -473,6 +473,12 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
         const storage = getStorage(app);
+
+        // Exponemos las herramientas de Firebase al objeto global Window para que la Zona 3 tradicional las use sin trabas
+        window.db = db;
+        window.storage = storage;
+        window.getDownloadURL = getDownloadURL;
+        window.ref = ref;
 
         let currentActiveTab = "parcours"; 
         let currentLevel = "A1"; 
@@ -549,9 +555,7 @@
                     .then((url) => {
                         pdfjsLib.getDocument(url).promise.then(pdf => {
                             window.pdfDocInstance = pdf;
-                            if (ejerciciosFiltrados[currentExerciseIndex]?.pagina_pdf) {
-                                window.renderPageFromBook(ejerciciosFiltrados[currentExerciseIndex].pagina_pdf);
-                            }
+                            window.actualizarRenderPdfEstatico();
                         }).catch(err => console.error("Erreur d'analyse pdf.js:", err));
                     })
                     .catch((err) => console.error("Fichier introuvable sur Firebase Storage.", err));
@@ -570,6 +574,7 @@
             querySnapshot.forEach((docSnap) => {
                 unidadesCache[docSnap.id] = docSnap.data();
             });
+            window.unidadesCache = unidadesCache; // Compartimos el cache a nivel global
             renderActiveInterface();
         }
 
@@ -585,8 +590,11 @@
 
         window.setSkillFilter = (skill) => {
             currentSkill = skill;
+            window.currentSkill = skill;
             currentUnitId = null; 
+            window.currentUnitId = null;
             currentExerciseIndex = 0;
+            window.currentExerciseIndex = 0;
             document.querySelectorAll('.skill-tab-btn').forEach(btn => btn.classList.remove('active'));
             const activeBtn = document.getElementById(`skill-${skill}`);
             if (activeBtn) activeBtn.classList.add('active');
@@ -681,20 +689,28 @@
 
         window.cargarActividadDirecta = (uId, eIdx) => {
             currentUnitId = uId;
+            window.currentUnitId = uId;
             currentExerciseIndex = eIdx;
+            window.currentExerciseIndex = eIdx;
             openUnitsState[uId] = true; 
             generarMenuJerarquico();
             window.renderExerciseStructure();
         };
 
-        function filtrarEjerciciosDeUnidadActual() {
-            ejerciciosFiltrados = [];
-            if (currentUnitId === null || !unidadesCache[currentUnitId]) return;
-            ejerciciosFiltrados = unidadesCache[currentUnitId][currentSkill] || unidadesCache[currentUnitId][currentSkill.toLowerCase()] || [];
-        }
+        window.filtrarEjerciciosDeUnidadActual = function() {
+            window.ejerciciosFiltrados = [];
+            if (window.currentUnitId === null || !window.unidadesCache[window.currentUnitId]) return;
+            window.ejerciciosFiltrados = window.unidadesCache[window.currentUnitId][window.currentSkill] || window.unidadesCache[window.currentUnitId][window.currentSkill.toLowerCase()] || [];
+        };
+
+        window.actualizarRenderPdfEstatico = function() {
+            if (window.pdfDocInstance && window.ejerciciosFiltrados && window.ejerciciosFiltrados[window.currentExerciseIndex]?.pagina_pdf) {
+                window.renderPageFromBook(window.ejerciciosFiltrados[window.currentExerciseIndex].pagina_pdf);
+            }
+        };
 
         // ========================================================
-        // ZONA 2: ASISTENTE DICCIONARIO INTELIGENTE CON SOPHIA IA
+        // ASISTENTE DICCIONARIO INTELIGENTE CON SOPHIA IA
         // ========================================================
         document.addEventListener("mouseup", function() {
             const seleccion = window.getSelection().toString().trim();
@@ -830,15 +846,15 @@
     <script>
         window.renderExerciseStructure = function() {
             const target = document.getElementById('dynamic-workspace-target');
-            filtrarEjerciciosDeUnidadActual();
+            window.filtrarEjerciciosDeUnidadActual();
 
-            if (ejerciciosFiltrados.length === 0 || !ejerciciosFiltrados[currentExerciseIndex]) {
+            if (!window.ejerciciosFiltrados || window.ejerciciosFiltrados.length === 0 || !window.ejerciciosFiltrados[window.currentExerciseIndex]) {
                 target.innerHTML = `<p style="text-align:center; color:#888;">Aucun exercice disponible.</p>`;
                 return;
             }
 
-            const ej = ejerciciosFiltrados[currentExerciseIndex];
-            const audioId = `audio-container-${currentExerciseIndex}`;
+            const ej = window.ejerciciosFiltrados[window.currentExerciseIndex];
+            const audioId = `audio-container-${window.currentExerciseIndex}`;
 
             let html = `
             <div class="exercise-card">
@@ -846,7 +862,7 @@
                     ${ej.instruccion || 'Exercice'} 
                 </h4>`;
 
-            if (currentSkill === "CE" && ej.texto_lectura) {
+            if (window.currentSkill === "CE" && ej.texto_lectura) {
                 html += `
                 <div style="background: #f8f9fa; border-left: 4px solid var(--gold); padding: 20px; border-radius: 6px; margin-bottom: 25px; font-size: 0.95rem; line-height: 1.6; color: #333; white-space: pre-wrap;">
                     <strong><i class="fas fa-file-alt" style="color:var(--gold); margin-right:8px;"></i> Document de lecture :</strong><br><br>${window.convertirTextoInteractivo(ej.texto_lectura)}
@@ -912,7 +928,7 @@
 
             target.innerHTML = html;
 
-            if (ej.ruta_audio) {
+            if (ej.ruta_audio && window.getDownloadURL) {
                 let numerosEncontrados = ej.ruta_audio.match(/\d+/);
                 let track = "02"; 
 
@@ -924,7 +940,7 @@
                 if (track.length === 1) track = "0" + track;
                 let nombreArchivoFinal = `${track}.mp3`;
 
-                getDownloadURL(ref(storage, `niveles/${currentLevel}/audios/${nombreArchivoFinal}`))
+                window.getDownloadURL(window.ref(window.storage, `niveles/${window.currentLevel}/audios/${nombreArchivoFinal}`))
                     .then(url => {
                         const container = document.getElementById(audioId);
                         if (container) container.innerHTML = `<audio controls style="width:100%;" src="${url}"></audio>`;
@@ -956,8 +972,6 @@
                         
                         if (selected) {
                             let valorSeleccionado = selected.value.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()¿?¡!]/g,"").replace(/\s+/g, ' ').trim().toLowerCase();
-                            
-                            // CORRECCIÓN: Buscamos la llave 'respuesta_correcta' tal cual viene de Firestore
                             let textoCorrectoDirecto = p.respuesta_correcta ? p.respuesta_correcta.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()¿?¡!]/g,"").replace(/\s+/g, ' ').trim().toLowerCase() : "";
                             
                             if (valorSeleccionado === textoCorrectoDirecto) {
