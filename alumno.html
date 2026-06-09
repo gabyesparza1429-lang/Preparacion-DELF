@@ -214,7 +214,7 @@
             border-bottom: 4px solid var(--gold);
             box-shadow: 0 4px 10px rgba(0,0,0,0.05);
             position: relative;
-            height: 250px; /* BANNER AJUSTADO A 250 DE ALTO */
+            height: 250px; 
             box-sizing: border-box;
             flex-shrink: 0;
         }
@@ -288,9 +288,10 @@
         .clickable-word {
             cursor: pointer;
             display: inline-block;
-            padding: 0 2px;
-            border-radius: 3px;
+            padding: 2px 4px;
+            border-radius: 4px;
             transition: all 0.2s;
+            line-height: 1.8;
         }
         .clickable-word:hover {
             background: #ffeaa7;
@@ -404,12 +405,13 @@
             margin-bottom: 8px;
         }
 
-        /* DISEÑO PARA INTERVENCIONES DE DIÁLOGO */
-        .dialogue-line {
+        /* ESTILO PARA CADA PÁRRAFO DE DIÁLOGO LIMPIO */
+        .text-paragraph-block {
             display: block;
-            margin-bottom: 10px;
-            padding-left: 15px;
-            text-indent: -15px;
+            margin: 0 0 14px 0;
+            line-height: 1.8;
+            font-size: 0.98rem;
+            color: #333;
         }
     </style>
 </head>
@@ -522,7 +524,7 @@
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
-        import { getFirestore, doc, getDoc, setDoc, updateDoc, collection, getDocs, query, where } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js";
+        import { getFirestore, doc, getDoc, updateDoc, collection, getDocs, query, where } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js";
         import { getStorage, ref, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-storage.js";
 
         const firebaseConfig = {
@@ -555,34 +557,24 @@
         let mapaAciertosAlumno = {}; 
         let totalReactivosHabilidadGlobal = 0;
 
-        // FORMATEADOR DE DIÁLOGOS AUTOMÁTICO INTELIGENTE
+        // FORMATEADOR DE TEXTO DE PASADA ÚNICA (EVITA EL ENTRERENGLONADO EXTRAÑO)
         window.convertirTextoInteractivo = function(texto) {
             if (!texto) return '';
             
-            // 1. Limpiar pegaduras defectuosas de puntuación comunes en OCR y añadir marcas de diálogo estructuradas
-            let textoFormateado = texto
-                .replace(/\?/g, '? ')
-                .replace(/\!/g, '! ')
-                .replace(/\s+/g, ' ')
-                .trim();
-
-            // 2. Insertar saltos de línea estéticos y guiones teatrales en estructuras conversacionales clave
-            let lineas = textoFormateado.split(/(?<=[?.!])\s+(?=[A-Z])/);
+            // Separar de forma limpia por signos de puntuación conversacionales
+            let bloquesFrases = texto.split(/(?<=[?.!])\s+/);
             
-            let htmlFinal = lineas.map(linea => {
-                if(linea.trim() === '') return '';
+            return bloquesFrases.map(bloque => {
+                if (bloque.trim() === '') return '';
                 
-                // Convertir palabras individuales en interactivas para el diccionario flotante
-                let palabrasSpan = linea.split(/(\s+)/).map(fragmento => {
+                let palabrasHtml = bloque.split(/(\s+)/).map(fragmento => {
                     if (fragmento.trim() === '') return fragmento;
                     let palabraLimpia = fragmento.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()¿?¡!]/g,"");
                     return `<span class="clickable-word" data-word="${palabraLimpia.toLowerCase()}">${fragmento}</span>`;
                 }).join('');
-
-                return `<span class="dialogue-line">— ${palabrasSpan}</span>`;
+                
+                return `<p class="text-paragraph-block">${palabrasHtml}</p>`;
             }).join('');
-
-            return htmlFinal;
         };
 
         function calcularDiasRestantes(fechaString) {
@@ -799,13 +791,14 @@
                 });
                 const data = await response.json();
 
-                if (docRefValidado) {
+                // BLINDAJE DE ACTUALIZACIÓN: Solo corre si el documento existe y no estamos en modo admin preview
+                if (docRefValidado && urlId !== 'admin_preview') {
                     getDoc(docRefValidado).then(snap => {
                         if (snap.exists()) {
                             let creds = snap.data().creditos_glosario !== undefined ? snap.data().creditos_glosario : 50;
                             if (creds > 0) { updateDoc(docRefValidado, { creditos_glosario: --creds }); document.getElementById('banner-credits-count').innerText = creds; }
                         }
-                    });
+                    }).catch(e => console.log("Aviso de escritura mitigado de forma segura."));
                 }
 
                 container.innerHTML = `
@@ -858,7 +851,7 @@
                 html += `
                 <div style="margin-bottom:20px; text-align:center; background:#fafbfc; padding:30px; border-radius:8px; border:1px dashed #ccc;">
                     <button id="btn-record-po" class="btn-mic" style="padding:12px 30px; font-size:1rem;"><i class="fas fa-microphone"></i> Commencer</button>
-                    <p id="po-recording-status" style="font-size:0.85rem; margin-top:10px; color:#666;"></p>
+                    <p id="po-recording-status" style="font-size:0.85rem; margin-top:10px; color:#666行业;"></p>
                 </div>`;
             } else if (ej.preguntas && ej.preguntas.length > 0) {
                 ej.preguntas.forEach((p, pIdx) => {
@@ -876,16 +869,25 @@
                 html += `
                 <div style="display:flex; justify-content:flex-end; gap:10px; margin-top:20px;">
                     <button class="nav-tab-btn" id="btn-submit-exercise" style="width:auto; background:var(--oxford); color:white; padding:10px 22px;">Envoyer</button>
-                    <button class="nav-tab-btn" id="btn-redo-exercise" style="width:auto; background:var(--gold); color:var(--oxford); padding:10px 22px; display:none; font-weight:700;">Réessayer / Rehacer</button>
+                    <button class="nav-tab-btn" id="btn-redo-exercise" style="width:auto; background:var(--gold); color:var(--oxford); padding:10px 22px; display:none; font-weight:700;"><i class="fas fa-undo"></i> Réessayer / Rehacer</button>
                 </div>`;
             }
 
+            // CAJA DE RETROALIMENTACIÓN DE SOPHIA Y TRANSCRIPCIÓN BLINDADA
             html += `
                 <div id="sophia-box" style="display:none; background:#f4f7f9; border-left:4px solid var(--gold); padding:20px; border-radius:6px; margin-top:25px;">
                     <div style="font-weight:700; color:var(--oxford);"><i class="fas fa-lightbulb" style="color:var(--gold);"></i> CONSEIL DE SOPHIA</div>
                     <div id="sophia-score-badge" style="margin-top:12px; background:white; padding:10px; border-radius:6px; border:1px solid #ddd; font-weight:700; display:none;"></div>
                     <p id="sophia-verdict-text" style="margin:10px 0 0 0; font-size:0.95rem; line-height:1.5; color:#333;"></p>
-                    ${ej.transcripcion ? `<div style="font-weight:700; margin-top:15px;">Transcription :</div><div id="interactive-transcription-box" style="background:#fff; border:1px dashed #ccc; padding:12px; border-radius:5px; margin-top:8px;"></div>` : ''}
+                    
+                    ${ej.transcripcion ? `
+                    <div style="font-weight:700; margin-top:25px; color:var(--oxford); display:flex; justify-content:space-between; align-items:center;">
+                        <span><i class="fas fa-headphones-alt"></i> Transcription (Cliquez sur un mot) :</span>
+                        <button id="btn-record-transcription" class="btn-mic"><i class="fas fa-microphone"></i> Lire à haute voix</button>
+                    </div>
+                    <div id="interactive-transcription-box" style="background:#fff; border:1px dashed #ccc; padding:15px; border-radius:8px; margin-top:8px; user-select:none; max-height: 250px; overflow-y: auto;"></div>
+                    <p id="audio-reading-feedback" style="font-size:0.8rem; margin-top:5px; font-weight:600; color:#666;"></p>
+                    ` : ''}
                 </div>
             </div>`;
 
@@ -929,7 +931,12 @@
                     let nota25 = parseFloat(((totalH / totalReactivosHabilidadGlobal) * 25).toFixed(2));
                     let progCurso = Math.round((totalH / totalReactivosHabilidadGlobal) * 100);
 
-                    if (docRefValidado) { updateDoc(docRefValidado, { mapa_aciertos: mapaAciertosAlumno, progreso: progCurso }).then(() => { document.getElementById('progress-bar-fill').style.width = `${progCurso}%`; document.getElementById('progress-text-target').innerText = `${progCurso}%`; }); }
+                    if (docRefValidado && urlId !== 'admin_preview') { 
+                        updateDoc(docRefValidado, { mapa_aciertos: mapaAciertosAlumno, progreso: progCurso }).then(() => { 
+                            document.getElementById('progress-bar-fill').style.width = `${progCurso}%`; 
+                            document.getElementById('progress-text-target').innerText = `${progCurso}%`; 
+                        }); 
+                    }
 
                     const badge = document.getElementById('sophia-score-badge');
                     if (badge) {
@@ -937,7 +944,12 @@
                         badge.style.display = "block";
                     }
                     document.getElementById('sophia-verdict-text').innerHTML = `Tu as obtenu <strong>${aciertosN} / ${totalR}</strong> aciertos.`;
-                    if (ej.transcripcion) document.getElementById('interactive-transcription-box').innerHTML = window.convertirTextoInteractivo(ej.transcripcion);
+                    
+                    // RENDERIZAR LA TRANSCRIPCIÓN CON EL FORMATO LIMPIO
+                    if (ej.transcripcion) {
+                        document.getElementById('interactive-transcription-box').innerHTML = window.convertirTextoInteractivo(ej.transcripcion);
+                        window.inicializarLectorVozGratuito(ej.transcripcion);
+                    }
                     document.getElementById('sophia-box').style.display = "block";
                 });
             }
@@ -956,6 +968,52 @@
                     btnRedo.style.display = "none"; document.getElementById('sophia-box').style.display = "none"; btnSubmit.style.display = "inline-block";
                 });
             }
+        };
+
+        window.inicializarLectorVozGratuito = function(textoOriginal) {
+            const btnRecord = document.getElementById('btn-record-transcription');
+            const feedback = document.getElementById('audio-reading-feedback');
+            if (!btnRecord) return;
+
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            if (!SpeechRecognition) return;
+
+            const recognition = new SpeechRecognition();
+            recognition.lang = 'fr-FR'; 
+            recognition.continuous = true; // MIC CONTINUO ACTIVADO INDISPENSABLE
+
+            let estaGrabando = false;
+
+            btnRecord.addEventListener('click', () => {
+                if (!estaGrabando) {
+                    feedback.innerText = "Écoute en cours... Parlez maintenant.";
+                    feedback.style.color = "var(--green)";
+                    btnRecord.classList.add('recording');
+                    recognition.start();
+                    estaGrabando = true;
+                } else {
+                    recognition.stop();
+                }
+            });
+
+            recognition.onend = () => {
+                estaGrabando = false;
+                btnRecord.classList.remove('recording');
+                btnRecord.innerHTML = `<i class="fas fa-microphone"></i> Lire à haute voix`;
+            };
+
+            recognition.onresult = (event) => {
+                const textoEscuchado = event.results[0][0].transcript.toLowerCase();
+                let limpiasOriginales = textoOriginal.toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()¿?¡!]/g,"").split(/\s+/);
+                let limpiasEscuchadas = textoEscuchado.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()¿?¡!]/g,"").split(/\s+/);
+
+                limpiasOriginales.forEach(palabra => {
+                    if (palabra.trim() !== "" && !limpiasEscuchadas.includes(palabra)) {
+                        const elementosPalabra = document.querySelectorAll(`.clickable-word[data-word="${palabra}"]`);
+                        elementosPalabra.forEach(el => el.classList.add('word-wrong'));
+                    }
+                });
+            };
         };
 
         let selectionTimeout = null;
