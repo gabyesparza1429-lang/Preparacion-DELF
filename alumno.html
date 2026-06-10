@@ -792,7 +792,7 @@
             const descCO = isBasic ? "Comprendre des expressions fréquentes. / Comprender expresiones." : "Peut comprendre les points principaux d'une intervention claire (école, travail).";
             const descCE = isBasic ? "Lire des textes courts. / Leer textos cortos." : "Peut comprendre des textes rédigés essentiellement dans une langue courante.";
             const descPE = isBasic ? "Écrire des messages simples. / Escribir mensajes." : "Peut écrire un texte suivi simple et articulé sur des sujets familiers.";
-            const descPO = isBasic ? "S'exprimer en situation simple. / Expresarse en situaciones cotidianas." : "Peut s'exprimer de manière cohérente sur des expériences ou projets.";
+            const descPO = isBasic ? "S'exprimer en situation simple. / Expresarse en situations cotidianas." : "Peut s'exprimer de manière cohérente sur des expériences ou proyectos.";
 
             const check = (clave) => (mapaAciertosAlumno && mapaAciertosAlumno[clave]) ? 'checked' : '';
             const iconCheck = (clave) => (mapaAciertosAlumno && mapaAciertosAlumno[clave]) ? 'fas fa-check-circle' : 'far fa-circle';
@@ -913,26 +913,25 @@
                 <div style="display:flex; justify-content:flex-end;">
                     <button class="nav-tab-btn" id="btn-submit-pe" style="width:auto; background:var(--oxford); color:white; padding:10px 22px;"><i class="fas fa-paper-plane"></i> Soumettre la production</button>
                 </div>`;
+                
             } else if (window.currentSkill === "PO") {
                 html += `
                 <div style="margin-bottom:20px; text-align:center; background:#fafbfc; padding:30px; border-radius:8px; border:1px dashed #ccc;">
                     <button id="btn-record-po" class="btn-mic" style="padding:12px 30px; font-size:1rem;"><i class="fas fa-microphone"></i> Commencer</button>
                 </div>`;
-          } else if (ej.preguntas && ej.preguntas.length > 0) {
+                
+            } else if (ej.preguntas && ej.preguntas.length > 0) {
                 html += `<div id="preguntas-wrapper-bloque">`;
                 
-                // Comprobamos si es un ejercicio de matriz Oui/Non de nivel B1
                 const esMatrizB1 = ej.preguntas[0].opciones.includes("Oui") || ej.preguntas[0].opciones.includes("Non");
                 
                 if (esMatrizB1) {
-                    // Estructura para agrupar preguntas por anuncio
                     let anunciosAgrupados = {};
                     
                     ej.preguntas.forEach((p, pIdx) => {
-                        let nombreAnuncio = "Critères d'évaluation"; // Nombre por defecto si no detecta guion
+                        let nombreAnuncio = "Critères d'évaluation"; 
                         let textoCriterio = p.pregunta;
                         
-                        // Separación inteligente de cadenas por guion o dos puntos
                         if (p.pregunta.includes(" - ")) {
                             let partes = p.pregunta.split(" - ");
                             nombreAnuncio = partes[0].trim();
@@ -953,11 +952,10 @@
                         });
                     });
                     
-                    // Renderizamos una sub-tabla independiente por cada anuncio detectado
                     Object.keys(anunciosAgrupados).forEach((tituloAnuncio) => {
                         html += `
                         <div class="card-anuncio-matriz" style="background: white; border: 1px solid #ddd; border-radius: 8px; padding: 18px; margin-bottom: 25px; box-shadow: 0 2px 6px rgba(0,0,0,0.04);">
-                            <h5 style="margin: 0 0 15px 0; color: var(--oxford); font-size: 1.02rem; font-weight: 700; border-left: 4px solid var(--gold); padding-left: 10px; text-transform: uppercase; font-family: 'Montserrat';">
+                            <h5 style="margin: 0 0 15px 0; color: var(--oxford); font-size: 1.02rem; font-weight: 700; border-left: 4px solid var(--gold); padding-left: 10px; text-transform: uppercase;">
                                 ${tituloAnuncio}
                             </h5>
                             <table style="width: 100%; border-collapse: collapse; font-size: 0.88rem;">
@@ -972,7 +970,7 @@
                         
                         anunciosAgrupados[tituloAnuncio].forEach((item) => {
                             html += `
-                                    <tr id="block-preg-${item.originalIndex}" style="border-bottom: 1px solid #eef2f5; transition: background 0.2s;">
+                                    <tr id="block-preg-${item.originalIndex}" style="border-bottom: 1px solid #eef2f5;">
                                         <td style="padding: 11px 10px; color: #333; font-weight: 500; line-height: 1.4;">
                                             <span id="status-icon-target-${item.originalIndex}"></span>
                                             <span>${item.criterio}</span>
@@ -997,7 +995,6 @@
                     });
                     
                 } else {
-                    // Si es A1, A2 o una actividad normal de opción múltiple, mantiene los bloques apilados tradicionales
                     ej.preguntas.forEach((p, pIdx) => {
                         html += `<div class="pregunta-block" id="block-preg-${pIdx}"><p style="margin:0 0 12px 0; font-weight:600;"><span id="status-icon-target-${pIdx}"></span><span>${p.pregunta}</span></p>`;
                         if (p.opciones) p.opciones.forEach((opt) => { html += `<label style="display:flex; align-items:center; gap:10px; margin-bottom:10px; cursor:pointer;"><input type="radio" name="question_${pIdx}" value="${opt}"> ${opt}</label>`; });
@@ -1007,16 +1004,6 @@
                 
                 html += `</div>`;
                 
-                // Zona unificada de botones de acción al pie de la pantalla
-                html += `
-                <div style="display:flex; justify-content:flex-end; margin-top:15px;" id="contenedor-acciones-ejercicio">
-                    <button class="nav-tab-btn" id="btn-submit-exercise" style="width:auto; background:var(--oxford); color:white; padding:10px 22px;">Envoyer</button>
-                    <button class="btn-avanzar-dinamico" id="btn-avanzar-siguiente" style="display:none;" onclick="window.avanzarSiguienteEjercicio()">Activité Suivante <i class="fas fa-arrow-right"></i></button>
-                </div>`;
-            }                
-                html += `</div>`;
-                
-                // Contenedor de botones de acción
                 html += `
                 <div style="display:flex; justify-content:flex-end; margin-top:15px;" id="contenedor-acciones-ejercicio">
                     <button class="nav-tab-btn" id="btn-submit-exercise" style="width:auto; background:var(--oxford); color:white; padding:10px 22px;">Envoyer</button>
@@ -1025,7 +1012,6 @@
             }
 
             html += `
-            
                 <div id="sophia-box" style="display:none; background:#f4f7f9; border-left:4px solid var(--gold); padding:20px; border-radius:6px; margin-top:25px;">
                     <div id="sophia-verdict-text"></div>
                     ${ej.transcripcion ? `<div style="border:1px dashed #ccc; border-radius:8px; background:#fff; display:flex; flex-direction:column; overflow:hidden; margin-top:15px;"><div id="interactive-transcription-box" style="padding:15px; max-height:220px; overflow-y:auto;"></div><div class="transcription-control-sticky-panel"><p id="audio-reading-feedback" style="font-size:0.82rem; margin:0; font-weight:600;">Prêt</p><button id="btn-record-transcription" class="btn-mic" style="margin-top:0;"><i class="fas fa-microphone"></i> Commencer l'enregistrement</button></div></div>` : ''}
@@ -1082,7 +1068,6 @@
                     let aciertosN = 0;
                     let totalPreguntas = ej.preguntas.length;
 
-                    // 1. Evaluar visualmente cada pregunta (Verde si está bien, Rojo si falló)
                     ej.preguntas.forEach((p, pIdx) => {
                         const sel = document.querySelector(`input[name="question_${pIdx}"]:checked`);
                         const icon = document.getElementById(`status-icon-target-${pIdx}`);
@@ -1092,7 +1077,6 @@
                         else { icon.innerHTML = `<i class="fas fa-times-circle" style="color:red; margin-right:8px;"></i>`; blk.style.background = "#fff5f5"; }
                     });
 
-                    // Deshabilitar las opciones de radio para congelar este intento evaluado
                     document.querySelectorAll('#preguntas-wrapper-bloque input[type="radio"]').forEach(r => r.disabled = true);
                     document.getElementById('sophia-verdict-text').innerHTML = `Tu as obtenu <strong>${aciertosN} / ${totalPreguntas}</strong> aciertos.`;
                     
@@ -1102,12 +1086,10 @@
                     }
                     document.getElementById('sophia-box').style.display = "block";
 
-                    // 2. REGISTRO SEGURO: El alumno ya realizó la actividad. Se añade al mapa de Firestore.
                     const claveUnica = `${currentUnitId}_${currentSkill}_${currentExerciseIndex}`;
                     mapaAciertosAlumno = mapaAciertosAlumno || {};
                     mapaAciertosAlumno[claveUnica] = true; 
 
-                    // Calcular el progreso global del nivel usando el gran total absoluto de ejercicios publicados
                     let totalActividadesNivel = 0;
                     let completadasNivel = 0;
                     Object.keys(unidadesCache).forEach(uKey => {
@@ -1131,19 +1113,15 @@
                         } catch (err) { console.error("Error al guardar en la base de datos:", err); }
                     }
 
-                    // Actualizar de forma inmediata los indicadores de progreso del Sidebar
                     document.getElementById('progress-text-target').innerText = `${finalProgresoCalculado}%`;
                     document.getElementById('progress-bar-fill').style.width = `${finalProgresoCalculado}%`;
 
-                    // 3. DECISIÓN DE NAVEGACIÓN: Se activa el botón dorado "Activité Suivante".
-                    // El alumno ve su nota y decide si avanza de lección o si repite usando el menú izquierdo.
                     btnSubmit.style.display = "none";
                     document.getElementById('btn-avanzar-siguiente').style.display = "inline-flex";
                 });
             }
         };
 
-        // ENRUTADOR MANDATORIO: Cambia secuencialmente al siguiente índice sin recargar el DOM completo
         window.avanzarSiguienteEjercicio = function() {
             let ejercicios = unidadesCache[currentUnitId][currentSkill] || unidadesCache[currentUnitId][currentSkill.toLowerCase()] || [];
             if (currentExerciseIndex + 1 < ejercicios.length) {
