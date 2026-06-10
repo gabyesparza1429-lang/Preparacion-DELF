@@ -53,64 +53,53 @@
 
         <div id="tab-delf" class="content active">
             <div class="card">
-                <h3 style="color: var(--oxford); margin-top:0;"><i class="fas fa-robot" style="color:var(--gold);"></i> Entrenamiento e Instrucción para Sophia IA</h3>
-                <p style="font-size:0.85rem; color:#555; margin-bottom:15px;">Establece las reglas de evaluación oficiales según el Marco Común Europeo de Referencia (CECRL).</p>
-                
+                <h3 style="color: var(--oxford); margin-top:0;"><i class="fas fa-robot" style="color:var(--gold);"></i> Entrenamiento para Sophia IA</h3>
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
                     <div>
-                        <label style="font-size:0.8rem; font-weight:700; color:var(--oxford);">Selecciona Nivel para IA:</label>
+                        <label style="font-size:0.8rem; font-weight:700; color:var(--oxford);">Nivel IA:</label>
                         <select id="nivel_ia_config" style="margin-top:5px;">
                             <option value="A1">Nivel A1</option><option value="A2">Nivel A2</option>
                             <option value="B1">Nivel B1</option><option value="B2">Nivel B2</option><option value="C1">Nivel C1</option>
                         </select>
                     </div>
                     <div>
-                        <label style="font-size:0.8rem; font-weight:700; color:var(--oxford);">Habilidad de Criterio:</label>
+                        <label style="font-size:0.8rem; font-weight:700; color:var(--oxford);">Habilidad:</label>
                         <select id="habilidad_ia_config" style="margin-top:5px;">
                             <option value="PO">Production Orale (PO)</option>
                             <option value="PE">Production Écrite (PE)</option>
                         </select>
                     </div>
                 </div>
-
                 <div class="ia-upload-box">
                     <div class="ia-dropzone">
-                        <h4 style="margin:0 0 10px 0; font-size:0.9rem; color:var(--oxford);"><i class="fas fa-file-alt"></i> 1. Référentiel CEFR</h4>
-                        <input type="file" id="file_referentiel" accept=".pdf,.json,.txt" style="font-size:0.75rem;">
+                        <h4 style="margin:0 0 10px 0; font-size:0.9rem;"><i class="fas fa-file-alt"></i> 1. Référentiel</h4>
+                        <input type="file" id="file_referentiel" accept=".pdf,.json,.txt">
                         <span id="status_referentiel" class="ia-status-msg" style="color:#888;">Esperando archivo...</span>
                     </div>
                     <div class="ia-dropzone">
-                        <h4 style="margin:0 0 10px 0; font-size:0.9rem; color:var(--oxford);"><i class="fas fa-gavel"></i> 2. Grille d'évaluation (CER)</h4>
-                        <input type="file" id="file_grille" accept=".pdf,.json,.txt" style="font-size:0.75rem;">
+                        <h4 style="margin:0 0 10px 0; font-size:0.9rem;"><i class="fas fa-gavel"></i> 2. Grille d'évaluation</h4>
+                        <input type="file" id="file_grille" accept=".pdf,.json,.txt">
                         <span id="status_grille" class="ia-status-msg" style="color:#888;">Esperando archivo...</span>
                     </div>
                 </div>
-                
-                <button class="btn-gold" onclick="window.subirConfiguracionIA()">🚀 Vincular y Cargar Directrices a la IA</button>
+                <button class="btn-gold" onclick="window.subirConfiguracionIA()">🚀 Vincular Directrices</button>
             </div>
 
             <div class="card">
-                <h3 style="color: var(--oxford); margin-top:0;"><i class="fas fa-cloud-upload-alt" style="color:var(--gold);"></i> Cargar Banco de Ejercicios Masivo (JSON)</h3>
-                <div style="background: #fff3cd; color: #856404; padding: 12px; border-radius: 8px; margin-bottom: 15px; font-size: 0.8rem; border: 1px solid #ffeeba;">
-                    <i class="fas fa-info-circle"></i> Sube el archivo estructurado generado por tu script de Python para sincronizar las unidades de comprensión y lectura.
-                </div>
-                
+                <h3><i class="fas fa-cloud-upload-alt"></i> Cargar Banco de Ejercicios (JSON)</h3>
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap:15px; margin-bottom:15px;">
                     <div>
-                        <label style="font-size:0.8rem; font-weight:700;">Nivel de Destino:</label>
                         <select id="json_target_level">
                             <option value="A1">Nivel A1</option><option value="A2">Nivel A2</option>
                             <option value="B1">Nivel B1</option><option value="B2">Nivel B2</option><option value="C1">Nivel C1</option>
                         </select>
                     </div>
                     <div>
-                        <label style="font-size:0.8rem; font-weight:700;">Archivo del Banco:</label>
-                        <input type="file" id="archivoJson" accept=".json" style="margin-top:8px; padding:8px;">
+                        <input type="file" id="archivoJson" accept=".json">
                     </div>
                 </div>
-
-                <button class="btn-gold" onclick="window.subirJSONaFirebase()">🚀 Publicar Ejercicios en Firebase</button>
-                <p id="mensajeEstado" style="font-weight: bold; margin-top: 15px; text-align:center; font-size:0.9rem;"></p>
+                <button class="btn-gold" onclick="window.subirJSONaFirebase()">🚀 Publicar Ejercicios</button>
+                <p id="mensajeEstado" style="font-weight: bold; margin-top: 15px; text-align:center;"></p>
             </div>
         </div>
 
@@ -120,7 +109,7 @@
                 <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:10px;">
                     <input type="text" id="user_name" placeholder="Nombre Completo">
                     <input type="text" id="user_id" placeholder="ID de Acceso (ej: constanza2026)">
-                    <input type="text" id="user_class" placeholder="Clase / Grupo (ej: Matutino)">
+                    <input type="text" id="user_class" placeholder="Clase / Grupo">
                     <input type="date" id="user_cert_date">
                     <select id="user_level">
                         <option value="A1">Nivel A1</option><option value="A2">Nivel A2</option>
@@ -132,8 +121,8 @@
             <div id="lista_alumnos" style="margin-top:20px;"></div>
         </div>
 
-        <div id="tab-clarity" class="content"><div class="card"><h3>NeuroClarity</h3><p>Módulo empresarial activo.</p></div></div>
-        <div id="tab-resico" class="content"><div class="card"><h3>RESICO / SAT</h3><p>Contabilidad profesional.</p></div></div>
+        <div id="tab-clarity" class="content"><div class="card"><h3>NeuroClarity</h3></div></div>
+        <div id="tab-resico" class="content"><div class="card"><h3>RESICO / SAT</h3></div></div>
     </div>
 
     <script type="module">
@@ -141,7 +130,6 @@
         import { getFirestore, doc, setDoc, onSnapshot, collection, deleteDoc } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js";
         import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-storage.js";
 
-        // Credenciales Oficiales de Producción
         const firebaseConfig = { 
             apiKey: "AIzaSyCgog8tKspHy01ZHE8Dthl9O4W6lw1a_Ec", 
             authDomain: "objectif-reussite-delf.firebaseapp.com", 
@@ -154,14 +142,11 @@
         const db = getFirestore(app);
         const storage = getStorage(app);
 
-        // Vista Previa de Alumnos
         window.previewAlumno = () => {
             const lvl = document.getElementById('preview_level').value;
-            const url = "alumno.html?id=admin_preview&level=" + lvl;
-            window.open(url, '_blank');
+            window.open("alumno.html?id=admin_preview&level=" + lvl, '_blank');
         };
 
-        // Sincronización Directrices IA
         window.subirConfiguracionIA = async function() {
             const nivel = document.getElementById('nivel_ia_config').value;
             const habilidad = document.getElementById('habilidad_ia_config').value;
@@ -170,68 +155,44 @@
             const statusRef = document.getElementById('status_referentiel');
             const statusGrille = document.getElementById('status_grille');
             
-            if(!fileRef && !fileGrille) {
-                alert("Por favor selecciona al menos un archivo para cargar (Référentiel o Grille).");
-                return;
-            }
-
             try {
                 if(fileRef) {
-                    statusRef.style.color = "orange"; statusRef.innerText = "Subiendo... ⏳";
-                    const storageRef = ref(storage, `ia_config/niveles/${nivel}/${habilidad}/referentiel_${fileRef.name}`);
+                    statusRef.innerText = "⏳";
+                    const storageRef = ref(storage, `ia_config/${nivel}/${habilidad}/ref_${fileRef.name}`);
                     await uploadBytes(storageRef, fileRef);
-                    const downloadUrl = await getDownloadURL(storageRef);
-                    await setDoc(doc(db, "IA_Directrices", `${nivel}_${habilidad}`), { url_referentiel: downloadUrl }, { merge: true });
-                    statusRef.style.color = "green"; statusRef.innerText = "¡Cargado con éxito!  ";
+                    const url = await getDownloadURL(storageRef);
+                    await setDoc(doc(db, "IA_Directrices", `${nivel}_${habilidad}`), { url_referentiel: url }, { merge: true });
+                    statusRef.innerText = "✅";
                 }
-
                 if(fileGrille) {
-                    statusGrille.style.color = "orange"; statusGrille.innerText = "Subiendo... ⏳";
-                    const storageRef = ref(storage, `ia_config/niveles/${nivel}/${habilidad}/grille_${fileGrille.name}`);
+                    statusGrille.innerText = "⏳";
+                    const storageRef = ref(storage, `ia_config/${nivel}/${habilidad}/gri_${fileGrille.name}`);
                     await uploadBytes(storageRef, fileGrille);
-                    const downloadUrl = await getDownloadURL(storageRef);
-                    await setDoc(doc(db, "IA_Directrices", `${nivel}_${habilidad}`), { url_grille: downloadUrl }, { merge: true });
-                    statusGrille.style.color = "green"; statusGrille.innerText = "¡Cargado con éxito!  ";
+                    const url = await getDownloadURL(storageRef);
+                    await setDoc(doc(db, "IA_Directrices", `${nivel}_${habilidad}`), { url_grille: url }, { merge: true });
+                    statusGrille.innerText = "✅";
                 }
-                alert("Directrices vinculadas correctamente. La IA aplicará estas reglas de inmediato.");
-            } catch (error) {
-                console.error(error);
-                alert("Ocurrió un fallo en la sincronización con Firebase Storage.");
-            }
+                alert("Directrices vinculadas.");
+            } catch (e) { alert("Error en Storage."); }
         };
 
-        // Carga e Inyección masiva JSON
         window.subirJSONaFirebase = async function() {
             const input = document.getElementById('archivoJson');
             const mensaje = document.getElementById('mensajeEstado');
             const nivelDestino = document.getElementById('json_target_level').value;
-            
-            if (!input.files[0]) {
-                alert("Por favor, selecciona primero tu archivo banco JSON.");
-                return;
-            }
-
-            const file = input.files[0];
+            if (!input.files[0]) return alert("Selecciona un archivo JSON.");
             const reader = new FileReader();
             reader.onload = async function(e) {
                 try {
-                    const datosJSON = JSON.parse(e.target.result);
-                    const textoParaGuardar = JSON.stringify(datosJSON);
-                    mensaje.style.color = "orange"; mensaje.innerText = "Subiendo banco de datos... ⏳";
-                    const docRef = doc(db, "BibliotecaEjercicios", nivelDestino);
-                    await setDoc(docRef, { Valor: textoParaGuardar }, { merge: true });
-                    mensaje.style.color = "green"; mensaje.innerText = `¡ÉXITO TOTAL! 🎉 Banco de ejercicios publicado para el nivel ${nivelDestino}.`;
-                } catch (error) {
-                    alert("Error leyendo o subiendo el archivo JSON.");
-                    mensaje.style.color = "red"; mensaje.innerText = "Hubo un error de conexión con Firebase.";
-                }
+                    mensaje.innerText = "Subiendo... ⏳";
+                    await setDoc(doc(db, "BibliotecaEjercicios", nivelDestino), { Valor: JSON.stringify(JSON.parse(e.target.result)) }, { merge: true });
+                    mensaje.innerText = "¡Éxito total! 🎉";
+                } catch (error) { mensaje.innerText = "Error Firestore."; }
             };
-            reader.readAsText(file);
+            reader.readAsText(input.files[0]);
         };
 
-// ==========================================
-        // SECCIÓN BLOQUEADA CONTRA BORRADOS DE AVANCE/PROGRESIÓN/CRÉDITOS
-        // ==========================================
+        // BLOQUEO TOTAL CONTROLADO: Protege avance existente sin reiniciar campos informativos fijos
         window.registrarAlumno = async function() {
             try {
                 const name = document.getElementById('user_name').value.trim();
@@ -240,15 +201,9 @@
                 const fecha_cert = document.getElementById('user_cert_date').value;
                 const nivel = document.getElementById('user_level').value;
 
-                if (!name || !rawId) {
-                    return alert("El Nombre Completo y el ID de Acceso son obligatorios.");
-                }
-
+                if (!name || !rawId) return alert("Nombre e ID obligatorios.");
                 const id = rawId.toLowerCase().replace(/\s+/g, '_');
 
-                // BLINDAJE ABSOLUTO: Solo se envían los datos personales base.
-                // Al quitar 'progreso', 'minutos_estudio', 'creditos' y 'mapa_aciertos',
-                // Firestore no tocará los contadores ni el avance que los alumnos ya tengan en línea.
                 await setDoc(doc(db, "Usuarios", id), { 
                     nombre: name, 
                     id: id,
@@ -258,20 +213,16 @@
                     fecha_alta: new Date().toISOString().split('T')[0]
                 }, { merge: true });
 
-                alert(`¡Éxito! Alumno procesado correctamente.\nID: ${id}`);
-                
+                alert(`¡Éxito! Guardado.\nID: ${id}`);
                 document.getElementById('user_name').value = "";
                 document.getElementById('user_id').value = "";
                 document.getElementById('user_class').value = "";
                 document.getElementById('user_cert_date').value = "";
-
-            } catch (error) {
-                console.error("Error al registrar alumno en Firestore:", error);
-                alert("Hubo un error de conexión con la base de datos de Firebase.");
-            }
+            } catch (error) { alert("Error de conexión."); }
         };
 
-        // Control de Pestañas (Tabs)
+        window.eliminarUser = async (id) => { if(confirm("¿Eliminar?")) await deleteDoc(doc(db, "Usuarios", id)); };
+
         window.tab = (id, btn) => {
             document.querySelectorAll('.content').forEach(c => c.classList.remove('active'));
             document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
@@ -280,33 +231,23 @@
             document.getElementById('tab-title').innerText = btn.innerText;
         };
 
-        // Renderizado e Interfaz de Alumnos en Tiempo Real
         onSnapshot(collection(db, "Usuarios"), (snap) => {
-            const list = document.getElementById('lista_alumnos'); 
-            if (!list) return;
+            const list = document.getElementById('lista_alumnos'); if (!list) return;
             list.innerHTML = "";
             snap.forEach(d => {
-                const u = d.data();
-                const prog = u.progreso || 0;
+                const u = d.data(); const prog = u.progreso || 0;
                 list.innerHTML += `
                 <div class="user-row">
                     <div style="flex:1;">
-                        <a href="alumno.html?id=${u.id}" target="_blank">
-                            <strong>${u.nombre}</strong> <small>(${u.nivel} - ${u.clase || 'S/C'})</small>
-                        </a>
-                        <div style="font-size:0.6rem; color:#888; margin-top:5px;">ID: ${u.id} | Alta: ${u.fecha_alta || '--'}</div>
+                        <a href="alumno.html?id=${u.id}" target="_blank"><strong>${u.nombre}</strong> <small>(${u.nivel})</small></a>
+                        <div style="font-size:0.6rem; color:#888;">ID: ${u.id}</div>
                     </div>
                     <div style="width:120px; margin:0 20px;">
-                        <div style="font-size:0.7rem; margin-bottom:3px;">Progreso: ${prog}%</div>
-                        <div style="height:6px; background:#eee; border-radius:5px; overflow:hidden;">
-                            <div style="width:${prog}%; height:100%; background:var(--green);"></div>
-                        </div>
-                    </div>
-                    <div style="width:150px; text-align:right; font-size:0.7rem; color:#666; margin-right:15px;">
-                        Certificación:<br><strong>${u.fecha_certificacion || '--'}</strong>
+                        <div style="font-size:0.7rem;">Progreso: ${prog}%</div>
+                        <div style="height:6px; background:#eee; border-radius:5px; overflow:hidden;"><div style="width:${prog}%; height:100%; background:var(--green);"></div></div>
                     </div>
                     <div style="display:flex; gap:10px;">
-                        <button class="btn-del" title="Reporte" style="background:var(--blue);" onclick="alert('Generando reporte de habilidades...')"><i class="fas fa-file-export"></i></button>
+                        <button class="btn-del" style="background:var(--blue);" onclick="alert('Reporte listo')"><i class="fas fa-file-export"></i></button>
                         <button class="btn-del" onclick="window.eliminarUser('${u.id}')"><i class="fas fa-trash"></i></button>
                     </div>
                 </div>`;
