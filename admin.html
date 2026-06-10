@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8">window.registrarAlumno
     <title>Master Admin | Objectif Réussite</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -236,45 +236,38 @@
             reader.readAsText(file);
         };
 
-        window.registrarAlumno = async function() {
+window.registrarAlumno = async function() {
             try {
-                const nameInput = document.getElementById('user_name');
-                const idInput = document.getElementById('user_id');
-                const classInput = document.getElementById('user_class');
-                const dateInput = document.getElementById('user_cert_date');
-                const levelInput = document.getElementById('user_level');
-
-                if (!nameInput || !idInput || !classInput || !dateInput || !levelInput) {
-                    return alert("Error interno: Faltan elementos en el formulario HTML.");
-                }
-
-                const name = nameInput.value.trim();
-                const rawId = idInput.value.trim();
+                const name = document.getElementById('user_name').value.trim();
+                const rawId = document.getElementById('user_id').value.trim();
+                const clase = document.getElementById('user_class').value.trim();
+                const fecha_cert = document.getElementById('user_cert_date').value;
+                const nivel = document.getElementById('user_level').value;
 
                 if (!name || !rawId) {
-                    return alert("El Nombre Completo y el ID de Acceso son campos obligatorios.");
+                    return alert("El Nombre Completo y el ID de Acceso son obligatorios.");
                 }
 
                 const id = rawId.toLowerCase().replace(/\s+/g, '_');
 
+                // BLINDAJE DE DATOS: Enviamos solo los campos informativos.
+                // Al quitar 'progreso: 0' y 'minutos_estudio: 0', Firebase no tocará el avance del alumno.
                 await setDoc(doc(db, "Usuarios", id), { 
                     nombre: name, 
                     id: id,
-                    clase: classInput.value.trim() || "General",
-                    nivel: levelInput.value, 
-                    fecha_certificacion: dateInput.value || "--", 
+                    clase: clase || "General",
+                    nivel: nivel, 
+                    fecha_certificacion: fecha_cert || "--", 
                     fecha_alta: new Date().toISOString().split('T')[0],
-                    progreso: 0,
-                    minutos_estudio: 0,
-                    mapa_aciertos: {} 
+                    mapa_aciertos: {} // Mantiene la estructura limpia para alumnos nuevos sin romper existentes
                 }, { merge: true });
 
-                alert(`¡Éxito! Alumno dado de alta correctamente.\nSu dirección es: alumno.html?id=${id}`);
+                alert(`¡Éxito! Alumno procesado correctamente.\nID: ${id}`);
                 
-                nameInput.value = "";
-                idInput.value = "";
-                classInput.value = "";
-                dateInput.value = "";
+                document.getElementById('user_name').value = "";
+                document.getElementById('user_id').value = "";
+                document.getElementById('user_class').value = "";
+                document.getElementById('user_cert_date').value = "";
 
             } catch (error) {
                 console.error("Error al registrar alumno en Firestore:", error);
