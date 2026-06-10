@@ -496,7 +496,6 @@
             border-left: 4px solid var(--green);
         }
 
-        /* DISEÑO EXCLUSIVO PARA EL BOTÓN AVANZAR SIGUIENTE */
         .btn-avanzar-dinamico {
             background: var(--gold);
             color: var(--oxford);
@@ -575,7 +574,7 @@
 
                 <div id="dynamic-workspace-target">
                     <div style="text-align: center; padding: 60px; color: var(--oxford);">
-                        <p style="font-weight: 600;">Veuillez choisir une actividad dans le menu de gauche pour commencer.</p>
+                        <p style="font-weight: 600;">Veuillez choisir une activité dans le menu de gauche pour commencer.</p>
                     </div>
                 </div>
             </div>
@@ -618,7 +617,7 @@
 
         window.convertirTextoInteractivo = function(texto) {
             if (!texto) return '';
-            return texto.split(/(?<=[?.!])\s+/).map(b => {
+            return text.split(/(?<=[?.!])\s+/).map(b => {
                 if (b.trim() === '') return '';
                 let palabrasHtml = b.split(/(\s+)/).map(f => {
                     if (f.trim() === '') return f;
@@ -658,7 +657,6 @@
                 document.getElementById('student-welcome').innerText = `${userData.nombre || 'Étudiant'}`;
                 document.getElementById('level-indicator').innerText = `NIVEAU ${currentLevel}`;
                 
-                // MEJORA VISUAL: Renderizado inmediato del progreso real del alumno en el Sidebar
                 const progInicial = userData.progreso || 0;
                 document.getElementById('progress-text-target').innerText = `${progInicial}%`;
                 document.getElementById('progress-bar-fill').style.width = `${progInicial}%`;
@@ -701,7 +699,6 @@
                 notasHabilidadGlobales[sk] = parseFloat(((totalAciertos / totalReactivos) * 25).toFixed(2));
             });
 
-            // Recalcular barra e indicador dinámico de la interfaz
             if (totalEjerciciosGlobales > 0) {
                 const nuevoPorcentaje = Math.round((totalEjerciciosCompletados / totalEjerciciosGlobales) * 100);
                 document.getElementById('progress-text-target').innerText = `${nuevoPorcentaje}%`;
@@ -717,7 +714,7 @@
                 document.getElementById('parcours-controls-container').style.display = "flex";
                 document.getElementById('dynamic-workspace-target').innerHTML = `
                     <div style="text-align: center; padding: 60px; color: var(--oxford);">
-                        <p style="font-weight: 600;">Veuillez choisir une actividad dans le menu de gauche pour commencer.</p>
+                        <p style="font-weight: 600;">Veuillez choisir une activité dans le menu de gauche pour commencer.</p>
                     </div>`;
             }
             if (tab === 'carnet') document.getElementById('tab-carnet').classList.add('active');
@@ -733,7 +730,7 @@
             if (target) {
                 target.innerHTML = `
                     <div style="text-align: center; padding: 60px; color: var(--oxford);">
-                        <p style="font-weight: 600;">Veuillez choisir une actividad dans le menu de gauche.</p>
+                        <p style="font-weight: 600;">Veuillez choisir une activité dans le menu de gauche.</p>
                     </div>`;
             }
             calcularTodasLasNotasHabilidades();
@@ -764,7 +761,6 @@
 
                 let wrapper = document.createElement('div'); wrapper.className = 'unit-wrapper';
                 
-                // Marcador de check verde si la unidad entera está completada
                 let unidadCompletada = true;
                 ejH.forEach((ej, eIdx) => {
                     if (mapaAciertosAlumno[`${uId}_${currentSkill}_${eIdx}`] !== true) {
@@ -931,7 +927,6 @@
                 });
                 html += `</div>`;
                 
-                // MEJORA: Integración explícita del Botón Avanzar Siguiente Lección de forma nativa al pie
                 html += `
                 <div style="display:flex; justify-content:flex-end; margin-top:15px;" id="contenedor-acciones-ejercicio">
                     <button class="nav-tab-btn" id="btn-submit-exercise" style="width:auto; background:var(--oxford); color:white; padding:10px 22px;">Envoyer</button>
@@ -1053,27 +1048,6 @@
                     // El alumno ve su nota y decide si avanza de lección o si repite usando el menú izquierdo.
                     btnSubmit.style.display = "none";
                     document.getElementById('btn-avanzar-siguiente').style.display = "inline-flex";
-                });
-            }
-                        const finalProgresoCalculado = Math.round((completadasNivel / totalActividadesNivel) * 100);
-
-                        if (urlId !== "admin_preview" && docRefValidado) {
-                            try {
-                                await setDoc(docRefValidado, {
-                                    mapa_aciertos: mapaAciertosAlumno,
-                                    progreso: finalProgresoCalculado
-                                }, { merge: true });
-                            } catch (err) { console.error("Error guardado Firestore:", err); }
-                        }
-
-                        // Actualización reactiva inmediata de la barra lateral
-                        document.getElementById('progress-text-target').innerText = `${finalProgresoCalculado}%`;
-                        document.getElementById('progress-bar-fill').style.width = `${finalProgresoCalculado}%`;
-
-                        // Reemplazar visualmente botón "Envoyer" por el dorado "Activité Suivante"
-                        btnSubmit.style.display = "none";
-                        document.getElementById('btn-avanzar-siguiente').style.display = "inline-flex";
-                    }
                 });
             }
         };
