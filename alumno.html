@@ -918,15 +918,59 @@
                 <div style="margin-bottom:20px; text-align:center; background:#fafbfc; padding:30px; border-radius:8px; border:1px dashed #ccc;">
                     <button id="btn-record-po" class="btn-mic" style="padding:12px 30px; font-size:1rem;"><i class="fas fa-microphone"></i> Commencer</button>
                 </div>`;
-            } else if (ej.preguntas && ej.preguntas.length > 0) {
+           } else if (ej.preguntas && ej.preguntas.length > 0) {
                 html += `<div id="preguntas-wrapper-bloque">`;
-                ej.preguntas.forEach((p, pIdx) => {
-                    html += `<div class="pregunta-block" id="block-preg-${pIdx}"><p style="margin:0 0 12px 0; font-weight:600;"><span id="status-icon-target-${pIdx}"></span><span>${p.pregunta}</span></p>`;
-                    if (p.opciones) p.opciones.forEach((opt) => { html += `<label style="display:flex; align-items:center; gap:10px; margin-bottom:10px; cursor:pointer;"><input type="radio" name="question_${pIdx}" value="${opt}"> ${opt}</label>`; });
-                    html += `</div>`;
-                });
+                
+                // Si el ejercicio es de tipo Matriz (Oui/Non), dibujamos una sola tarjeta con estructura de tabla
+                if (ej.preguntas[0].opciones.includes("Oui") || ej.preguntas[0].opciones.includes("Non")) {
+                    html += `
+                    <div class="card" style="padding: 20px; overflow-x: auto;">
+                        <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem;">
+                            <thead>
+                                <tr style="border-bottom: 2px solid var(--oxford); text-align: left;">
+                                    <th style="padding: 10px; color: var(--oxford); font-weight: 700;">Critères d'évaluation</th>
+                                    <th style="padding: 10px; text-align: center; width: 80px; color: var(--gold); font-weight: 700;">OUI</th>
+                                    <th style="padding: 10px; text-align: center; width: 80px; color: var(--danger); font-weight: 700;">NON</th>
+                                </tr>
+                            </thead>
+                            <tbody>`;
+                    
+                    ej.preguntas.forEach((p, pIdx) => {
+                        html += `
+                                <tr id="block-preg-${pIdx}" style="border-bottom: 1px solid #eef2f5; transition: background 0.2s;">
+                                    <td style="padding: 12px 10px; font-weight: 600; color: #333;">
+                                        <span id="status-icon-target-${pIdx}"></span>
+                                        <span>${p.pregunta}</span>
+                                    </td>
+                                    <td style="padding: 12px 10px; text-align: center;">
+                                        <label style="cursor: pointer; display: inline-block; width: 100%; text-align: center;">
+                                            <input type="radio" name="question_${pIdx}" value="Oui" style="transform: scale(1.2);">
+                                        </label>
+                                    </td>
+                                    <td style="padding: 12px 10px; text-align: center;">
+                                        <label style="cursor: pointer; display: inline-block; width: 100%; text-align: center;">
+                                            <input type="radio" name="question_${pIdx}" value="Non" style="transform: scale(1.2);">
+                                        </label>
+                                    </td>
+                                </tr>`;
+                    });
+                    
+                    html += `
+                            </tbody>
+                        </table>
+                    </div>`;
+                } else {
+                    // Si es un ejercicio normal de opción múltiple, mantiene su formato de bloques apilados
+                    ej.preguntas.forEach((p, pIdx) => {
+                        html += `<div class="pregunta-block" id="block-preg-${pIdx}"><p style="margin:0 0 12px 0; font-weight:600;"><span id="status-icon-target-${pIdx}"></span><span>${p.pregunta}</span></p>`;
+                        if (p.opciones) p.opciones.forEach((opt) => { html += `<label style="display:flex; align-items:center; gap:10px; margin-bottom:10px; cursor:pointer;"><input type="radio" name="question_${pIdx}" value="${opt}"> ${opt}</label>`; });
+                        html += `</div>`;
+                    });
+                }
+                
                 html += `</div>`;
                 
+                // Contenedor de botones de acción
                 html += `
                 <div style="display:flex; justify-content:flex-end; margin-top:15px;" id="contenedor-acciones-ejercicio">
                     <button class="nav-tab-btn" id="btn-submit-exercise" style="width:auto; background:var(--oxford); color:white; padding:10px 22px;">Envoyer</button>
@@ -935,6 +979,7 @@
             }
 
             html += `
+            
                 <div id="sophia-box" style="display:none; background:#f4f7f9; border-left:4px solid var(--gold); padding:20px; border-radius:6px; margin-top:25px;">
                     <div id="sophia-verdict-text"></div>
                     ${ej.transcripcion ? `<div style="border:1px dashed #ccc; border-radius:8px; background:#fff; display:flex; flex-direction:column; overflow:hidden; margin-top:15px;"><div id="interactive-transcription-box" style="padding:15px; max-height:220px; overflow-y:auto;"></div><div class="transcription-control-sticky-panel"><p id="audio-reading-feedback" style="font-size:0.82rem; margin:0; font-weight:600;">Prêt</p><button id="btn-record-transcription" class="btn-mic" style="margin-top:0;"><i class="fas fa-microphone"></i> Commencer l'enregistrement</button></div></div>` : ''}
