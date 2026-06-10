@@ -753,10 +753,19 @@
             const activeBtn = document.getElementById(`skill-${skill}`); 
             if (activeBtn) activeBtn.classList.add('active');
             
+            // LIMPIEZA ABSOLUTA DEL LIENZO PARA QUITAR EL CARNET DE LA PANTALLA
+            const target = document.getElementById('dynamic-workspace-target');
+            if (target) {
+                target.innerHTML = `
+                    <div style="text-align: center; padding: 60px; color: var(--oxford);">
+                        <p style="font-weight: 600;">Veuillez choisir une activité dans le menu de gauche pour commencer.</p>
+                    </div>`;
+            }
+            
             calcularTodasLasNotasHabilidades();
             renderActiveInterface();
-        }; // <-- AQUÍ SE CIERRA CORRECTAMENTE EL FILTRO DE HABILIDADES
-
+        }; // <-- SE CIERRA EL FILTRO DE HABILIDADES
+        
         function renderActiveInterface() {
             const menuContainer = document.getElementById('sidebar-dynamic-menu');
             if (currentActiveTab === "parcours") {
