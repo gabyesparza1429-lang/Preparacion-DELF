@@ -13,6 +13,7 @@
             --cream: #F8F9FA; 
             --green: #28A745; 
             --dark-blue: #001530;
+            --danger: #dc3545;
         }
         
         body { 
@@ -268,6 +269,24 @@
             color: white;
         }
 
+        /* INDICADORES VISUALES DE ZONA DE APRENDIZAJE */
+        .zone-badge {
+            display: inline-block;
+            padding: 6px 12px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            border-radius: 4px;
+            margin-bottom: 15px;
+            letter-spacing: 0.5px;
+        }
+        .zone-entrainement { background: #e3f2fd; color: #0d47a1; border: 1px solid #bbdefb; }
+        .zone-examen-simule { background: #fff3e0; color: #e65100; border: 1px solid #ffe0b2; animation: blink-border 2s infinite; }
+
+        @keyframes blink-border {
+            50% { border-color: var(--gold); }
+        }
+
         .exercise-card {
             background: white; 
             border-left: 4px solid var(--gold); 
@@ -349,7 +368,6 @@
             border-color: var(--oxford);
         }
 
-        /* BARRA DE VIRTUAL ACENTOS FRANCESES */
         .french-accents-bar {
             display: flex;
             gap: 5px;
@@ -376,7 +394,6 @@
             border-color: var(--oxford);
         }
 
-        /* CONTENEDOR FLOTANTE PARA FIJAR LOS CONTROLES DEL MIC EN LA TRANSCRIPCIÓN */
         .transcription-control-sticky-panel {
             background: #fafbfc;
             border-top: 1px solid #ddd;
@@ -397,7 +414,6 @@
             color: #333;
         }
 
-        /* ESTILOS DEL CARNET DE COMPÉTENCES MAQUETA REAL */
         .carnet-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -460,7 +476,6 @@
         .checklist-item i { margin-top: 2px; }
         .checklist-item.checked { color: var(--green); font-weight: 600; }
 
-        /* TABLA DE EVALUACIÓN OFICIAL (LA GRILLE DELF EMULADA) */
         .grille-delf-table {
             width: 100%;
             border-collapse: collapse;
@@ -485,54 +500,19 @@
 </head>
 <body>
 
-    <div id="welcome-guide-modal" class="modal-guide-overlay" style="display:none;">
-        <div class="modal-guide-card">
-            <h2 style="color: var(--oxford); text-align: center; margin-top: 0; margin-bottom: 5px; font-weight: 700;">Bienvenue à ton Espace DELF 🚀</h2>
-            <p style="text-align: center; color: #666; font-style: italic; font-size: 0.85rem; margin-bottom: 25px;">Guide d'utilisation de la plateforme / Guía de uso de la plataforma</p>
-            
-            <div class="guide-section">
-                <div class="guide-lang-fr"><i class="fas fa-chart-line" style="color: var(--gold);"></i> 1. Le Barème de Notations (25 points)</div>
-                <div class="guide-lang-fr" style="font-weight: 400; font-size: 0.88rem; margin-left: 20px; margin-bottom: 6px;">
-                    Chaque compétence (CO, CE, PE, PO) est évaluée sur **25 points**, comme à l'examen réel. Ta note augmentera de manière cumulative au fur et à mesure que tu obtiendras des réponses correctes dans toutes les unités.
-                </div>
-            </div>
-
-            <div class="guide-section">
-                <div class="guide-lang-fr"><i class="fas fa-headphones" style="color: var(--gold);"></i> 2. Limite d'écoutes des audios</div>
-                <div class="guide-lang-fr" style="font-weight: 400; font-size: 0.88rem; margin-left: 20px; margin-bottom: 6px;">
-                    Pour simuler l'examen, tu as un maximum de **2 écoutes** par audio. Après la deuxième écoute, le lecteur sera bloqué. Si tu as besoin de recommencer l'exercice, clique sur le bouton "Réessayer" pour recalculer tes points.
-                </div>
-            </div>
-
-            <div class="guide-section">
-                <div class="guide-lang-fr"><i class="fas fa-book-open" style="color: var(--gold);"></i> 3. Assistant de Dictionnaire Intelligent</div>
-                <div class="guide-lang-fr" style="font-weight: 400; font-size: 0.88rem; margin-left: 20px; margin-bottom: 6px;">
-                    Si tu ne comprends pas un mot, **clique simplement dessus** pour voir sa traduction. Si tu veux analyser une phrase entière, **sélectionne-la avec ta souris** et Sophia IA t'expliquera sa structure.
-                </div>
-            </div>
-
-            <button onclick="document.getElementById('welcome-guide-modal').style.display='none'" class="nav-tab-btn" style="width: 100%; background: var(--oxford); color: white; text-align: center; justify-content: center; font-weight: 700; padding: 15px; margin-top: 15px;">
-                Commencer la préparation / Comenzar preparación
-            </button>
-        </div>
-    </div>
-
     <div class="sidebar">
         <h2>Mon Espace DELF</h2>
         
         <div class="sidebar-student-info">
             <h3 id="student-welcome">Vérification...</h3>
-            
             <div class="sidebar-meta-item">
                 <i class="fas fa-graduation-cap"></i>
                 <span id="level-indicator" style="font-weight: 700; color: var(--gold);">NIVEAU --</span>
             </div>
-            
             <div class="sidebar-meta-item">
                 <i class="fas fa-magic"></i>
                 <span><span id="banner-credits-count">--</span> / 50 Crédits</span>
             </div>
-            
             <div class="sidebar-meta-item">
                 <i class="far fa-clock"></i>
                 <span id="countdown-text-target">Calcul...</span>
@@ -552,9 +532,7 @@
         <button class="nav-tab-btn active" id="tab-parcours">
             <i class="fas fa-route"></i> Mon Parcours
         </button>
-        
         <div id="sidebar-dynamic-menu" style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 15px;"></div>
-
         <button class="nav-tab-btn" id="tab-carnet">
             <i class="fas fa-address-book"></i> Carnet de compétences
         </button>
@@ -575,7 +553,9 @@
                 </div>
 
                 <div id="dynamic-workspace-target">
-                    <p style="text-align:center; color:#666;"><i class="fas fa-spinner fa-spin"></i> Chargement...</p>
+                    <div style="text-align: center; padding: 60px; color: var(--oxford);">
+                        <p style="font-weight: 600;">Veuillez choisir une activité dans le menu de gauche pour commencer.</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -607,24 +587,17 @@
         let currentUnitId = null; 
         let currentExerciseIndex = 0;
         let unidadesCache = {}; 
-        let ejerciciosFiltrados = [];
         let openUnitsState = {}; 
+        let mapaAciertosAlumno = {}; 
+        let docRefValidado = null;
+        let notasHabilidadGlobales = { CO: 0, CE: 0, PE: 0, PO: 0 };
 
         const urlParams = new URLSearchParams(window.location.search);
         let urlId = urlParams.get('id') || 'default_student';
-        const previewLevel = urlParams.get('level');
-
-        let docRefValidado = null; 
-        let mapaAciertosAlumno = {}; 
-        let totalReactivosHabilidadGlobal = 0;
-
-        // Notas simuladas por habilidad para el Carnet
-        let notasHabilidadGlobales = { CO: 0, CE: 0, PE: 0, PO: 0 };
 
         window.convertirTextoInteractivo = function(texto) {
             if (!texto) return '';
-            let bFrases = texto.split(/(?<=[?.!])\s+/);
-            return bFrases.map(b => {
+            return texto.split(/(?<=[?.!])\s+/).map(b => {
                 if (b.trim() === '') return '';
                 let palabrasHtml = b.split(/(\s+)/).map(f => {
                     if (f.trim() === '') return f;
@@ -635,66 +608,33 @@
             }).join('');
         };
 
-        // FUNCIÓN AUXILIAR PARA INYECTAR CARACTERES ESPECIALES AL CURSOR
         window.insertarCaracterEspecial = function(caracter) {
             const textarea = document.getElementById('pe-student-response');
             if (!textarea) return;
             const start = textarea.selectionStart;
             const end = textarea.selectionEnd;
-            const textoActual = textarea.value;
-            textarea.value = textoActual.substring(0, start) + caracter + textoActual.substring(end);
+            textarea.value = textarea.value.substring(0, start) + caracter + textarea.value.substring(end);
             textarea.focus();
             textarea.selectionStart = textarea.selectionEnd = start + caracter.length;
         };
 
-        function calcularDiasRestantes(fechaString) {
-            if (!fechaString) return "Pas de date d'examen";
-            try {
-                let partes = fechaString.includes('-') ? fechaString.split('-') : fechaString.split('/');
-                let fExamen = partes[0].length === 4 ? new Date(partes[0], partes[1] - 1, partes[2]) : new Date(partes[2], partes[1] - 1, partes[0]);
-                const hoy = new Date(); hoy.setHours(0,0,0,0); fExamen.setHours(0,0,0,0);
-                const dias = Math.ceil((fExamen - hoy) / (1000 * 60 * 60 * 24));
-                return dias > 0 ? `${dias} jours restants` : (dias === 0 ? "Examen aujourd'hui" : "Examen terminé");
-            } catch(e) { return "Format date invalide"; }
-        }
-
         async function init() {
             try {
-                if (urlId === 'admin_preview' || previewLevel) {
-                    currentLevel = previewLevel || "B1";
-                    document.getElementById('student-welcome').innerText = `Administrateur`;
-                    document.getElementById('progress-bar-fill').style.width = `100%`;
-                    document.getElementById('progress-text-target').innerText = `100%`;
-                    document.getElementById('countdown-text-target').innerText = "Mode Aperçu";
-                    await descargarColeccionUnidades();
-                    return;
-                }
-
                 let testRef = doc(db, "Usuarios", urlId);
                 let testSnap = await getDoc(testRef);
-                let userData = null;
+                let userData = testSnap.exists() ? testSnap.data() : null;
 
-                if (testSnap.exists()) { docRefValidado = testRef; userData = testSnap.data(); }
-                else {
+                if (!userData) {
                     const q = query(collection(db, "Usuarios"), where("id", "==", urlId));
                     const qSnap = await getDocs(q);
                     if (!qSnap.empty) { docRefValidado = doc(db, "Usuarios", qSnap.docs[0].id); userData = qSnap.docs[0].data(); }
-                }
+                } else { docRefValidado = testRef; }
 
-                if (!userData) {
-                    document.getElementById('dynamic-workspace-target').innerHTML = `<p style='padding:30px;color:red;'>Identifiant non valide.</p>`;
-                    return;
-                }
+                if (!userData) return;
 
                 mapaAciertosAlumno = userData.mapa_aciertos || {};
                 currentLevel = userData.nivel || "A1";
                 document.getElementById('student-welcome').innerText = `${userData.nombre || 'Étudiant'}`;
-                document.getElementById('banner-credits-count').innerText = userData.creditos_glosario !== undefined ? userData.creditos_glosario : 50;
-                
-                const prog = userData.progreso || 0;
-                document.getElementById('progress-bar-fill').style.width = `${prog}%`;
-                document.getElementById('progress-text-target').innerText = `${prog}%`;
-                document.getElementById('countdown-text-target').innerText = calcularDiasRestantes(userData.fecha_certificacion);
                 document.getElementById('level-indicator').innerText = `NIVEAU ${currentLevel}`;
                 window.currentLevel = currentLevel;
 
@@ -703,13 +643,11 @@
         }
 
         async function descargarColeccionUnidades() {
-            try {
-                unidadesCache = {};
-                const querySnapshot = await getDocs(collection(db, "BibliotecaEjercicios", currentLevel, "Unidades"));
-                querySnapshot.forEach((docSnap) => { unidadesCache[docSnap.id] = docSnap.data(); });
-                calcularTodasLasNotasHabilidades();
-                renderActiveInterface();
-            } catch (err) { console.error(err); }
+            unidadesCache = {};
+            const querySnapshot = await getDocs(collection(db, "BibliotecaEjercicios", currentLevel, "Unidades"));
+            querySnapshot.forEach((docSnap) => { unidadesCache[docSnap.id] = docSnap.data(); });
+            calcularTodasLasNotasHabilidades();
+            renderActiveInterface();
         }
 
         function calcularTodasLasNotasHabilidades() {
@@ -725,54 +663,51 @@
                         }
                     });
                 });
-                if (totalReactivos === 0) totalReactivos = 5; // Evitar división por cero
+                if (totalReactivos === 0) totalReactivos = 5;
                 notasHabilidadGlobales[sk] = parseFloat(((totalAciertos / totalReactivos) * 25).toFixed(2));
-            });
-            totalReactivosHabilidadGlobal = 0;
-            Object.keys(unidadesCache).forEach(uId => {
-                const ejercicios = unidadesCache[uId][currentSkill] || unidadesCache[uId][currentSkill.toLowerCase()] || [];
-                ejercicios.forEach(ej => { if (ej.preguntas) totalReactivosHabilidadGlobal += ej.preguntas.length; });
             });
         }
 
         window.switchMainTab = (tab) => {
             currentActiveTab = tab;
             document.querySelectorAll('.sidebar .nav-tab-btn').forEach(btn => btn.classList.remove('active'));
-            if (tab === 'parcours') document.getElementById('tab-parcours').classList.add('active');
+            if (tab === 'parcours') {
+                document.getElementById('tab-parcours').classList.add('active');
+                document.getElementById('parcours-controls-container').style.display = "flex";
+                document.getElementById('dynamic-workspace-target').innerHTML = `
+                    <div style="text-align: center; padding: 60px; color: var(--oxford);">
+                        <p style="font-weight: 600;">Veuillez choisir une activité dans le menu de gauche pour commencer.</p>
+                    </div>`;
+            }
             if (tab === 'carnet') document.getElementById('tab-carnet').classList.add('active');
             renderActiveInterface();
         };
 
         window.setSkillFilter = (skill) => {
-            currentSkill = skill; 
-            window.currentSkill = skill; 
-            currentUnitId = null; 
-            currentExerciseIndex = 0;
-            
+            currentSkill = skill; window.currentSkill = skill; currentUnitId = null; currentExerciseIndex = 0;
             document.querySelectorAll('.skill-tab-btn').forEach(btn => btn.classList.remove('active'));
-            const activeBtn = document.getElementById(`skill-${skill}`); 
-            if (activeBtn) activeBtn.classList.add('active');
+            const activeBtn = document.getElementById(`skill-${skill}`); if (activeBtn) activeBtn.classList.add('active');
             
-            // LIMPIEZA ABSOLUTA DEL LIENZO PARA QUITAR EL CARNET DE LA PANTALLA
             const target = document.getElementById('dynamic-workspace-target');
             if (target) {
                 target.innerHTML = `
                     <div style="text-align: center; padding: 60px; color: var(--oxford);">
-                        <p style="font-weight: 600;">Veuillez choisir une activité dans le menu de gauche pour commencer.</p>
+                        <p style="font-weight: 600;">Veuillez choisir une activité dans le menu de gauche.</p>
                     </div>`;
             }
-            
             calcularTodasLasNotasHabilidades();
             renderActiveInterface();
-        }; // <-- SE CIERRA EL FILTRO DE HABILIDADES
-        
+        };
+
         function renderActiveInterface() {
             const menuContainer = document.getElementById('sidebar-dynamic-menu');
+            const controlsRow = document.getElementById('parcours-controls-container');
+            
             if (currentActiveTab === "parcours") {
-                document.getElementById('parcours-controls-container').style.display = "flex";
+                if (controlsRow) controlsRow.style.display = "flex";
                 menuContainer.style.display = "flex"; generarMenuJerarquico();
             } else {
-                document.getElementById('parcours-controls-container').style.display = "none";
+                if (controlsRow) controlsRow.style.display = "none";
                 menuContainer.style.display = "none"; renderCarnetInterfaceReal();
             }
         }
@@ -780,22 +715,18 @@
         function generarMenuJerarquico() {
             const menuContainer = document.getElementById('sidebar-dynamic-menu');
             menuContainer.innerHTML = "";
-            const keys = Object.keys(unidadesCache).sort((a, b) => a.localeCompare(b, undefined, { numeric: true }));
-            keys.forEach((uId) => {
+            Object.keys(unidadesCache).sort((a, b) => a.localeCompare(b, undefined, { numeric: true })).forEach((uId) => {
                 const u = unidadesCache[uId];
                 let ejH = u[currentSkill] || u[currentSkill.toLowerCase()] || [];
                 if (ejH.length === 0) return;
-                let tema = u[`tema_${currentSkill}`] || u.tema || "Exercice";
                 const isUnitOpen = openUnitsState[uId] === true;
 
                 let wrapper = document.createElement('div'); wrapper.className = 'unit-wrapper';
-                wrapper.innerHTML = `<button class="unit-toggle-btn ${currentUnitId === uId ? 'active' : ''}" onclick="window.toggleUnitMenu('${uId}')"><span><i class="fas fa-book"></i> Unité ${uId.replace(/\D/g, '')} - ${tema}</span><i class="fas ${isUnitOpen ? 'fa-chevron-down' : 'fa-chevron-right'}"></i></button>`;
+                wrapper.innerHTML = `<button class="unit-toggle-btn ${currentUnitId === uId ? 'active' : ''}" onclick="window.toggleUnitMenu('${uId}')"><span><i class="fas fa-book"></i> Unité ${uId.replace(/\D/g, '')}</span><i class="fas ${isUnitOpen ? 'fa-chevron-down' : 'fa-chevron-right'}"></i></button>`;
                 let sub = document.createElement('div'); sub.className = 'submenu-activities'; sub.style.display = isUnitOpen ? 'flex' : 'none';
 
                 ejH.forEach((ej, eIdx) => {
-                    let tit = ej.instruccion ? (ej.instruccion.match(/Activité\s*\d+/i) || [])[0] : "";
-                    if (!tit) tit = `Activité ${eIdx + 1}`;
-                    sub.innerHTML += `<button class="activity-link-btn ${currentUnitId === uId && currentExerciseIndex === eIdx ? 'active' : ''}" onclick="window.cargarActividadDirecta('${uId}', ${eIdx})"><i class="fas fa-play"></i> ${tit}</button>`;
+                    sub.innerHTML += `<button class="activity-link-btn ${currentUnitId === uId && currentExerciseIndex === eIdx ? 'active' : ''}" onclick="window.cargarActividadDirecta('${uId}', ${eIdx})"><i class="fas fa-play"></i> Activité ${eIdx + 1}</button>`;
                 });
                 wrapper.appendChild(sub); menuContainer.appendChild(wrapper);
             });
@@ -804,105 +735,106 @@
         window.toggleUnitMenu = (uId) => { openUnitsState[uId] = !openUnitsState[uId]; generarMenuJerarquico(); };
         window.cargarActividadDirecta = (uId, eIdx) => { currentUnitId = uId; currentExerciseIndex = eIdx; openUnitsState[uId] = true; generarMenuJerarquico(); window.renderExerciseStructure(); };
 
-        // ================================================================= -->
-        // RENDER INTERFAZ REAL DEL CARNET DE COMPÉTENCES (CECRL NATIVO)     -->
-        // ================================================================= -->
         function renderCarnetInterfaceReal() {
             const isBasic = currentLevel.startsWith('A');
-            
-            // Textos de descriptores condicionados al idioma por nivel (A: Bilingüe, B: Francés puro)
-            const descCO = isBasic ? "Comprendre des expressions et un vocabulaire très fréquent. / Comprender expresiones y vocabulario muy frecuente." : "Comprendre les points principaux d'un langage clair sur des sujets familiers.";
-            const descCE = isBasic ? "Lire des textes courts et simples (petites annonces, lettres). / Leer textos cortos y simples." : "Comprendre des textes rédigés d'une langue courante ou relative au travail.";
-            const descPE = isBasic ? "Écrire des notes et messages simples, lettres personnelles courtes. / Escribir notas y mensajes simples." : "Écrire des textes articulés simples sur des sujets familiers ou d'intérêt personnel.";
-            const descPO = isBasic ? "S'exprimer et échanger en situation simple de la vie quotidienne. / Expresarse e intercambiar opiniones en situaciones cotidianas." : "S'exprimer de manière simple et cohérente sur des expériences, événements ou projets.";
+            const descCO = isBasic ? "Comprendre des expressions fréquentes. / Comprender expresiones." : "Peut comprendre les points principaux d'une intervention claire (école, travail).";
+            const descCE = isBasic ? "Lire des textes courts. / Leer textos cortos." : "Peut comprendre des textes rédigés essentiellement dans une langue courante.";
+            const descPE = isBasic ? "Écrire des messages simples. / Escribir mensajes." : "Peut écrire un texte suivi simple et articulé sur des sujets familiers.";
+            const descPO = isBasic ? "S'exprimer en situation simple. / Expresarse en situaciones cotidianas." : "Peut s'exprimer de manière cohérente sur des expériences ou projets.";
 
-            document.getElementById('dynamic-workspace-target').innerHTML = `
-                <h3 style="color:var(--oxford); margin-top:0; font-weight:700;"><i class="fas fa-id-card"></i> Livret de Compétences Officiel (CECRL)</h3>
-                <p style="font-size:0.85rem; color:#666; margin-bottom:20px;">Suivi cumulatif basé sur les grilles d'évaluation du DELF / Monitoreo acumulativo de habilidades oficiales.</p>
-                
+            const check = (clave) => (mapaAciertosAlumno && mapaAciertosAlumno[clave]) ? 'checked' : '';
+            const iconCheck = (clave) => (mapaAciertosAlumno && mapaAciertosAlumno[clave]) ? 'fas fa-check-circle' : 'far fa-circle';
+
+            let checklistHTML = '';
+            if (currentLevel === "B1") {
+                checklistHTML = `
                 <div class="carnet-grid">
                     <div class="carnet-card co">
-                        <div class="carnet-header">
-                            <span class="carnet-title"><i class="fas fa-headphones" style="color:#1a73e8;"></i> Compréhension Orale</span>
-                            <span class="carnet-score">${notasHabilidadGlobales.CO} / 25 pts</span>
-                        </div>
-                        <div class="carnet-descriptor-box"><strong>Objectif :</strong> ${descCO}</div>
+                        <div class="carnet-header"><span class="carnet-title"><i class="fas fa-headphones" style="color:#1a73e8;"></i> Compréhension Orale</span><span class="carnet-score">${notasHabilidadGlobales.CO} / 25 pts</span></div>
+                        <div class="carnet-descriptor-box"><strong>Objectif B1 :</strong> ${descCO}</div>
                         <div class="carnet-checklist">
-                            <div class="checklist-item ${notasHabilidadGlobales.CO >= 5 ? 'checked' : ''}"><i class="fas fa-check-circle"></i> Repérer des détails et données chiffrées</div>
-                            <div class="checklist-item ${notasHabilidadGlobales.CO >= 12 ? 'checked' : ''}"><i class="fas fa-check-circle"></i> Identifier l'intention de communication</div>
-                            <div class="checklist-item ${notasHabilidadGlobales.CO >= 20 ? 'checked' : ''}"><i class="fas fa-check-circle"></i> Suivre le fil d'un dialogue complexe</div>
+                            <div class="checklist-item ${check('B1_CO_FACTUEL')}"><i class="${iconCheck('B1_CO_FACTUEL')}"></i> Comprendre des informations factuelles (travail/études)</div>
+                            <div class="checklist-item ${check('B1_CO_EMISSION')}"><i class="${iconCheck('B1_CO_EMISSION')}"></i> Saisir les points principaux d'émissions de radio/TV</div>
                         </div>
                     </div>
-
                     <div class="carnet-card ce">
-                        <div class="carnet-header">
-                            <span class="carnet-title"><i class="fas fa-file-alt" style="color:#34a853;"></i> Compréhension Écrite</span>
-                            <span class="carnet-score">${notasHabilidadGlobales.CE} / 25 pts</span>
-                        </div>
-                        <div class="carnet-descriptor-box"><strong>Objectif :</strong> ${descCE}</div>
+                        <div class="carnet-header"><span class="carnet-title"><i class="fas fa-file-alt" style="color:#34a853;"></i> Compréhension Écrite</span><span class="carnet-score">${notasHabilidadGlobales.CE} / 25 pts</span></div>
+                        <div class="carnet-descriptor-box"><strong>Objectif B1 :</strong> ${descCE}</div>
                         <div class="carnet-checklist">
-                            <div class="checklist-item ${notasHabilidadGlobales.CE >= 5 ? 'checked' : ''}"><i class="fas fa-check-circle"></i> Trouver des faits importants dans un document</div>
-                            <div class="checklist-item ${notasHabilidadGlobales.CE >= 12 ? 'checked' : ''}"><i class="fas fa-check-circle"></i> Identifier le point de vue de l'auteur</div>
-                            <div class="checklist-item ${notasHabilidadGlobales.CE >= 20 ? 'checked' : ''}"><i class="fas fa-check-circle"></i> Comprendre des instructions longues</div>
+                            <div class="checklist-item ${check('B1_CE_COURANT')}"><i class="${iconCheck('B1_CE_COURANT')}"></i> Identifier des informations significatives (articles)</div>
+                            <div class="checklist-item ${check('B1_CE_SENTIMENTS')}"><i class="${iconCheck('B1_CE_SENTIMENTS')}"></i> Reconnaître sentiments/opinions (lettres)</div>
                         </div>
                     </div>
-
                     <div class="carnet-card pe">
-                        <div class="carnet-header">
-                            <span class="carnet-title"><i class="fas fa-pen-fancy" style="color:#fbbc05;"></i> Production Écrite</span>
-                            <span class="carnet-score">${notasHabilidadGlobales.PE} / 25 pts</span>
-                        </div>
-                        <div class="carnet-descriptor-box"><strong>Objectif :</strong> ${descPE}</div>
+                        <div class="carnet-header"><span class="carnet-title"><i class="fas fa-pen-fancy" style="color:#fbbc05;"></i> Production Écrite</span><span class="carnet-score">${notasHabilidadGlobales.PE} / 25 pts</span></div>
+                        <div class="carnet-descriptor-box"><strong>Objectif B1 :</strong> ${descPE}</div>
                         <div class="carnet-checklist">
-                            <div class="checklist-item"><i class="far fa-circle"></i> Respect des consignes et formats DELF</div>
-                            <div class="checklist-item"><i class="far fa-circle"></i> Utilisation correcte des connecteurs logiques</div>
-                            <div class="checklist-item"><i class="far fa-circle"></i> Richesse lexicale et morphosyntaxe</div>
+                            <div class="checklist-item ${check('B1_PE_RÉCIT')}"><i class="${iconCheck('B1_PE_RÉCIT')}"></i> Relater des experiences vécues et décrire des sentiments</div>
+                            <div class="checklist-item ${check('B1_PE_ARGUMENT')}"><i class="${iconCheck('B1_PE_ARGUMENT')}"></i> Exprimer et justifier un point de vue personnel</div>
                         </div>
                     </div>
-
                     <div class="carnet-card po">
-                        <div class="carnet-header">
-                            <span class="carnet-title"><i class="fas fa-microphone" style="color:#ea4335;"></i> Production Orale</span>
-                            <span class="carnet-score">${notasHabilidadGlobales.PO} / 25 pts</span>
-                        </div>
-                        <div class="carnet-descriptor-box"><strong>Objectif :</strong> ${descPO}</div>
+                        <div class="carnet-header"><span class="carnet-title"><i class="fas fa-microphone" style="color:#ea4335;"></i> Production Orale</span><span class="carnet-score">${notasHabilidadGlobales.PO} / 25 pts</span></div>
+                        <div class="carnet-descriptor-box"><strong>Objectif B1 :</strong> ${descPO}</div>
                         <div class="carnet-checklist">
-                            <div class="checklist-item"><i class="far fa-circle"></i> Monologue suivi clair (Description/Récit)</div>
-                            <div class="checklist-item"><i class="far fa-circle"></i> Gestion fluide de l'interaction DELF</div>
-                            <div class="checklist-item"><i class="far fa-circle"></i> Articulation et régularité du débit</div>
+                            <div class="checklist-item ${check('B1_PO_EXPOSÉ')}"><i class="${iconCheck('B1_PO_EXPOSÉ')}"></i> Présenter un thème ou problème de société</div>
+                            <div class="checklist-item ${check('B1_PO_DÉBAT')}"><i class="${iconCheck('B1_PO_DÉBAT')}"></i> Argumenter lors d'un jeu de rôle ou interaction</div>
                         </div>
                     </div>
                 </div>`;
+            } else {
+                checklistHTML = `
+                <div class="carnet-grid">
+                    <div class="carnet-card co">
+                        <div class="carnet-header"><span class="carnet-title"><i class="fas fa-headphones"></i> Compréhension Orale</span><span>${notasHabilidadGlobales.CO} / 25 pts</span></div>
+                        <div class="carnet-descriptor-box"><strong>Objectif :</strong> ${descCO}</div>
+                        <div class="carnet-checklist">
+                            <div class="checklist-item ${check('A1_CO_DETALLES')}"><i class="${iconCheck('A1_CO_DETALLES')}"></i> Repérer des détails et données chiffrées</div>
+                        </div>
+                    </div>
+                    <div class="carnet-card ce">
+                        <div class="carnet-header"><span class="carnet-title"><i class="fas fa-file-alt"></i> Compréhension Écrite</span><span>${notasHabilidadGlobales.CE} / 25 pts</span></div>
+                        <div class="carnet-descriptor-box"><strong>Objectif :</strong> ${descCE}</div>
+                        <div class="carnet-checklist">
+                            <div class="checklist-item ${check('A1_CE_DOCUMENTS')}"><i class="${iconCheck('A1_CE_DOCUMENTS')}"></i> Trouver des faits importants</div>
+                        </div>
+                    </div>
+                    <div class="carnet-card pe">
+                        <div class="carnet-header"><span class="carnet-title"><i class="fas fa-pen-fancy"></i> Production Écrite</span><span>${notasHabilidadGlobales.PE} / 25 pts</span></div>
+                        <div class="carnet-descriptor-box"><strong>Objectif :</strong> ${descPE}</div>
+                        <div class="carnet-checklist">
+                            <div class="checklist-item ${check('A1_PE_RITUELS')}"><i class="${iconCheck('A1_PE_RITUELS')}"></i> Respect des formats et rituels amicales</div>
+                        </div>
+                    </div>
+                    <div class="carnet-card po">
+                        <div class="carnet-header"><span class="carnet-title"><i class="fas fa-microphone"></i> Production Orale</span><span>${notasHabilidadGlobales.PO} / 25 pts</span></div>
+                        <div class="carnet-descriptor-box"><strong>Objectif :</strong> ${descPO}</div>
+                        <div class="carnet-checklist">
+                            <div class="checklist-item ${check('A1_PO_MONOLOGUE')}"><i class="${iconCheck('A1_PO_MONOLOGUE')}"></i> Monologue suivi (Se présenter)</div>
+                        </div>
+                    </div>
+                </div>`;
+            }
+
+            document.getElementById('dynamic-workspace-target').innerHTML = `
+                <h3 style="color:var(--oxford); margin-top:0; font-weight:700;"><i class="fas fa-id-card"></i> Livret de Compétences Officiel (CECRL)</h3>
+                ${checklistHTML}`;
         }
 
-        window.ejecutarConsultaSophiaConFiltro = async function(frase) {
-            const container = document.getElementById("glosario-flotante-container"); if (!container) return;
-            container.innerHTML = `<div style="background:#fff; padding:15px; border-radius:8px; box-shadow:0 4px 15px rgba(0,0,0,0.15);"><p style="margin:0; font-size:13px;"><i class="fas fa-spinner fa-spin"></i> Sophia...</p></div>`;
-            container.style.display = "block";
-            try {
-                const response = await fetch("http://localhost:5000/api/chat", {
-                    method: "POST", headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ message: `Analiza lingüísticamente la palabra o frase en contexto para un estudiante DELF: "${frase}" en formato HTML limpio.` })
-                });
-                const data = await response.json();
-                container.innerHTML = `<div style="background:#fff; padding:15px; border-radius:8px; box-shadow:0 4px 15px rgba(0,0,0,0.15); max-height:380px; overflow-y:auto;"><h4>"${frase}"</h4><div>${data.reply}</div><button onclick="document.getElementById('glosario-flotante-container').style.display='none'" style="margin-top:10px; width:100%; padding:6px; cursor:pointer;">Fermer</button></div>`;
-            } catch (error) { container.style.display = "none"; }
-        };
-
-        // ================================================================= -->
-        // RENDER ESTRUCTURA DE EXAMEN (PRODUCCIONES CON BLOQUEOS IMPERATIVOS)-->
-        // ================================================================= -->
         window.renderExerciseStructure = function() {
             const target = document.getElementById('dynamic-workspace-target');
             if (currentUnitId === null || !unidadesCache[currentUnitId]) return;
-            ejerciciosFiltrados = unidadesCache[currentUnitId][currentSkill] || unidadesCache[currentUnitId][currentSkill.toLowerCase()] || [];
+            let ejercicios = unidadesCache[currentUnitId][currentSkill] || unidadesCache[currentUnitId][currentSkill.toLowerCase()] || [];
 
-            if (ejerciciosFiltrados.length === 0 || !ejerciciosFiltrados[currentExerciseIndex]) return;
-            const ej = ejerciciosFiltrados[currentExerciseIndex];
+            if (ejercicios.length === 0 || !ejercicios[currentExerciseIndex]) return;
+            const ej = ejercicios[currentExerciseIndex];
             const audioId = `audio-container-${currentExerciseIndex}`;
-            const claveUnicaActividad = `${currentUnitId}_${currentSkill}_${currentExerciseIndex}`;
 
-            let html = `<div class="exercise-card"><h4 style="margin-top:0; color:var(--oxford); font-weight:700;">${ej.instruccion || 'Exercice'}</h4>`;
+            let zoneHTML = (window.currentSkill === "PE" || window.currentSkill === "PO") 
+                ? `<span class="zone-badge zone-examen-simule"><i class="fas fa-exclamation-triangle"></i> Zone d'Examen Réel (Blindé)</span>`
+                : `<span class="zone-badge zone-entrainement"><i class="fas fa-graduation-cap"></i> Zone d'Entraînement</span>`;
+
+            let html = `<div class="exercise-card">${zoneHTML}<h4 style="margin-top:0; color:var(--oxford); font-weight:700;">${ej.instruccion || 'Exercice'}</h4>`;
 
             if ((window.currentSkill === "CE" || window.currentSkill === "PE") && ej.texto_lectura) {
                 html += `<div style="background:#f8f9fa; border-left:4px solid var(--gold); padding:20px; margin-bottom:25px;"><strong>Document :</strong><br><br>${window.convertirTextoInteractivo(ej.texto_lectura)}</div>`;
@@ -912,7 +844,6 @@
                 html += `<div style="background:#f1f3f5; padding:15px; border-radius:8px; margin-bottom:20px; text-align:center;"><div class="audio-counter-badge"><i class="fas fa-headphones"></i><span id="audio-count-label">Écoutes / Escuchas : 0 / 2</span></div><div id="${audioId}">Loading...</div></div>`;
             }
 
-            // MODULO INTEGRADO DE PRODUCCIÓN ESCRITA CON FILTROS IMPERATIVOS DE SEGURIDAD
             if (window.currentSkill === "PE") {
                 html += `
                 <div style="margin-bottom:20px;">
@@ -920,25 +851,12 @@
                         <button type="button" class="accent-btn" onclick="window.insertarCaracterEspecial('é')">é</button>
                         <button type="button" class="accent-btn" onclick="window.insertarCaracterEspecial('è')">è</button>
                         <button type="button" class="accent-btn" onclick="window.insertarCaracterEspecial('à')">à</button>
-                        <button type="button" class="accent-btn" onclick="window.insertarCaracterEspecial('ù')">ù</button>
                         <button type="button" class="accent-btn" onclick="window.insertarCaracterEspecial('ç')">ç</button>
                         <button type="button" class="accent-btn" onclick="window.insertarCaracterEspecial('â')">â</button>
                         <button type="button" class="accent-btn" onclick="window.insertarCaracterEspecial('ê')">ê</button>
-                        <button type="button" class="accent-btn" onclick="window.insertarCaracterEspecial('î')">î</button>
-                        <button type="button" class="accent-btn" onclick="window.insertarCaracterEspecial('ô')">ô</button>
-                        <button type="button" class="accent-btn" onclick="window.insertarCaracterEspecial('û')">û</button>
                         <button type="button" class="accent-btn" onclick="window.insertarCaracterEspecial('œ')">œ</button>
                     </div>
-                    
-                    <textarea id="pe-student-response" 
-                              class="production-textbox" 
-                              placeholder="Rédigez votre texte ici... (Le copier-coller est désactivé / Prohibido copiar y pegar)"
-                              spellcheck="false" 
-                              autocomplete="off" 
-                              autocorrect="off" 
-                              autocapitalize="off"
-                              onpaste="return false;" 
-                              ondrop="return false;"></textarea>
+                    <textarea id="pe-student-response" class="production-textbox" placeholder="Rédigez votre texte ici..." spellcheck="false" autocomplete="off" onpaste="return false;" ondrop="return false;"></textarea>
                 </div>
                 <div style="display:flex; justify-content:flex-end;">
                     <button class="nav-tab-btn" id="btn-submit-pe" style="width:auto; background:var(--oxford); color:white; padding:10px 22px;"><i class="fas fa-paper-plane"></i> Soumettre la production</button>
@@ -947,7 +865,6 @@
                 html += `
                 <div style="margin-bottom:20px; text-align:center; background:#fafbfc; padding:30px; border-radius:8px; border:1px dashed #ccc;">
                     <button id="btn-record-po" class="btn-mic" style="padding:12px 30px; font-size:1rem;"><i class="fas fa-microphone"></i> Commencer</button>
-                    <p id="po-recording-status" style="font-size:0.85rem; margin-top:10px; color:#666;"></p>
                 </div>`;
             } else if (ej.preguntas && ej.preguntas.length > 0) {
                 ej.preguntas.forEach((p, pIdx) => {
@@ -955,29 +872,17 @@
                     if (p.opciones) p.opciones.forEach((opt) => { html += `<label style="display:flex; align-items:center; gap:10px; margin-bottom:10px; cursor:pointer;"><input type="radio" name="question_${pIdx}" value="${opt}"> ${opt}</label>`; });
                     html += `</div>`;
                 });
-                html += `<div style="display:flex; justify-content:flex-end; gap:10px; margin-top:20px;"><button class="nav-tab-btn" id="btn-submit-exercise" style="width:auto; background:var(--oxford); color:white; padding:10px 22px;">Envoyer</button><button class="nav-tab-btn" id="btn-redo-exercise" style="width:auto; background:var(--gold); color:var(--oxford); padding:10px 22px; display:none; font-weight:700;">Réessayer / Rehacer</button></div>`;
+                html += `<div style="display:flex; justify-content:flex-end;"><button class="nav-tab-btn" id="btn-submit-exercise" style="width:auto; background:var(--oxford); color:white; padding:10px 22px;">Envoyer</button></div>`;
             }
 
             html += `
                 <div id="sophia-box" style="display:none; background:#f4f7f9; border-left:4px solid var(--gold); padding:20px; border-radius:6px; margin-top:25px;">
-                    <div style="font-weight:700; color:var(--oxford);"><i class="fas fa-lightbulb" style="color:var(--gold);"></i> EXAMEN DIRECT - SOPHIA DELF</div>
-                    <div id="sophia-score-badge" style="margin-top:12px; background:white; padding:10px; border-radius:6px; border:1px solid #ddd; font-weight:700; display:none;"></div>
-                    <div id="sophia-verdict-text" style="margin:10px 0 0 0; font-size:0.95rem; line-height:1.5; color:#333;"></div>
+                    <div id="sophia-verdict-text"></div>
                     ${ej.transcripcion ? `<div style="border:1px dashed #ccc; border-radius:8px; background:#fff; display:flex; flex-direction:column; overflow:hidden; margin-top:15px;"><div id="interactive-transcription-box" style="padding:15px; max-height:220px; overflow-y:auto;"></div><div class="transcription-control-sticky-panel"><p id="audio-reading-feedback" style="font-size:0.82rem; margin:0; font-weight:600;">Prêt</p><button id="btn-record-transcription" class="btn-mic" style="margin-top:0;"><i class="fas fa-microphone"></i> Commencer l'enregistrement</button></div></div>` : ''}
                 </div>
             </div>`;
-
+            
             target.innerHTML = html;
-
-            // BLOQUEO ABSOLUTO ADICIONAL CON MANIPULADORES JAVASCRIPT DE ANTI-PEGASTASTE
-            if (window.currentSkill === "PE") {
-                const textarea = document.getElementById('pe-student-response');
-                if (textarea) {
-                    ['copy', 'paste', 'cut', 'contextmenu', 'drop'].forEach(evt => {
-                        textarea.addEventListener(evt, (e) => e.preventDefault(), true);
-                    });
-                }
-            }
 
             if (ej.ruta_audio) {
                 let track = (ej.ruta_audio.match(/\d+/) || ["02"])[0].padStart(2, '0');
@@ -993,13 +898,14 @@
                 });
             }
 
-            // EVALUACIÓN DE PRODUCCIÓN ESCRITA VINCULADA A LA GRILLA REAL EMULADA
-            const btnSubmitPE = document.getElementById('btn-submit-pe');
-            if (btnSubmitPE) {
-                btnSubmitPE.addEventListener('click', async () => {
-                    const txtAlumno = document.getElementById('pe-student-response').value.trim();
+            if (window.currentSkill === "PE") {
+                const el = document.getElementById('pe-student-response');
+                if (el) ['copy', 'paste', 'cut', 'contextmenu', 'drop'].forEach(evt => el.addEventListener(evt, e => e.preventDefault(), true));
+                
+                document.getElementById('btn-submit-pe').addEventListener('click', async () => {
+                    const txtAlumno = el.value.trim();
                     if (!txtAlumno) return;
-                    btnSubmitPE.disabled = true; btnSubmitPE.innerText = "Correction...";
+                    document.getElementById('btn-submit-pe').disabled = true;
 
                     try {
                         const response = await fetch("http://localhost:5000/api/chat", {
@@ -1007,30 +913,23 @@
                             body: JSON.stringify({ message: `Actúa como examinadora DELF nativa. Evalúa el texto asignando una nota total estimada sobre 25. Devuelve la respuesta estructurada únicamente en HTML compacto.` })
                         });
                         const data = await response.json();
-                        
-                        notasHabilidadGlobales.PE = 18.50; // Inyección de nota simulada para maquetación
-                        
-                        // DIBUJAR LA GRILLA EMULADA SOLICITADA EN LA COLUMNA DE EVALUACIÓN
                         document.getElementById('sophia-verdict-text').innerHTML = `
                             <strong>Grille d'évaluation DELF (Base 25) :</strong><br><br>
                             <table class="grille-delf-table">
                                 <tr><th>Critères d'évaluation</th><th>SOUS</th><th>ACQUIS</th><th>SUPRA</th></tr>
                                 <tr class="grille-row-active"><td>1. Réalisation des tâches</td><td>☐</td><td>☑ Validé</td><td>☐</td></tr>
                                 <tr><td>2. Morphosyntaxe / Grammaire</td><td>☐</td><td>☐</td><td>☑ Excellent</td></tr>
-                                <tr class="grille-row-active"><td>3. Lexique / Vocabulaire</td><td>☐</td><td>☑ Correct</td><td>☐</td></tr>
-                                <tr><td>4. Cohérence et cohésion</td><td>☐</td><td>☑ Stable</td><td>☐</td></tr>
                             </table>
                             <div style="margin-top:15px; padding:10px; background:white; border-radius:4px;">${data.reply}</div>`;
                         document.getElementById('sophia-box').style.display = "block";
-                    } catch (e) { btnSubmitPE.innerText = "Erreur"; }
+                    } catch (e) { console.error(e); }
                 });
             }
 
             const btnSubmit = document.getElementById('btn-submit-exercise');
-            const btnRedo = document.getElementById('btn-redo-exercise');
             if (btnSubmit) {
-                btnSubmit.addEventListener('click', async () => {
-                    let totalR = ej.preguntas.length; let aciertosN = 0;
+                btnSubmit.addEventListener('click', () => {
+                    let aciertosN = 0;
                     ej.preguntas.forEach((p, pIdx) => {
                         const sel = document.querySelector(`input[name="question_${pIdx}"]:checked`);
                         const icon = document.getElementById(`status-icon-target-${pIdx}`);
@@ -1041,38 +940,13 @@
                     });
 
                     document.querySelectorAll('input[type="radio"]').forEach(r => r.disabled = true);
-                    btnSubmit.style.display = "none"; if (btnRedo) btnRedo.style.display = "inline-block";
-
-                    mapaAciertosAlumno[claveUnicaActividad] = aciertosN;
-                    calcularTodasLasNotasHabilidades();
+                    document.getElementById('sophia-verdict-text').innerHTML = `Tu as obtenu <strong>${aciertosN} / ${ej.preguntas.length}</strong> aciertos.`;
                     
-                    let progCurso = notasHabilidadGlobales[currentSkill] * 4;
-                    if (docRefValidado && urlId !== 'admin_preview') { 
-                        updateDoc(docRefValidado, { mapa_aciertos: mapaAciertosAlumno, progreso: Math.round(progCurso) }).then(() => { 
-                            document.getElementById('progress-bar-fill').style.width = `${Math.round(progCurso)}%`; 
-                            document.getElementById('progress-text-target').innerText = `${Math.round(progCurso)}%`; 
-                        }); 
-                    }
-
-                    const badge = document.getElementById('sophia-score-badge');
-                    if (badge) {
-                        badge.innerHTML = `<div><i class="fas fa-star" style="color:var(--gold);"></i> <strong>Note de la compétence (${currentSkill}) :</strong> <span style="color:var(--green);">${notasHabilidadGlobales[currentSkill]}</span> / 25 pts</div>`;
-                        badge.style.display = "block";
-                    }
-                    document.getElementById('sophia-verdict-text').innerHTML = `Tu as obtenu <strong>${aciertosN} / ${totalR}</strong> aciertos.`;
                     if (ej.transcripcion) {
                         document.getElementById('interactive-transcription-box').innerHTML = window.convertirTextoInteractivo(ej.transcripcion);
                         window.inicializarLectorVozGratuito(ej.transcripcion);
                     }
                     document.getElementById('sophia-box').style.display = "block";
-                });
-            }
-
-            if (btnRedo) {
-                btnRedo.addEventListener('click', () => {
-                    document.querySelectorAll('input[type="radio"]').forEach(r => { r.disabled = false; r.checked = false; });
-                    ej.preguntas.forEach((p, pIdx) => { document.getElementById(`status-icon-target-${pIdx}`).innerHTML = ""; let b = document.getElementById(`block-preg-${pIdx}`); b.style.background = "#fafbfc"; });
-                    btnRedo.style.display = "none"; document.getElementById('sophia-box').style.display = "none"; btnSubmit.style.display = "inline-block";
                 });
             }
         };
@@ -1096,8 +970,7 @@
             });
 
             recognition.onend = () => {
-                if (modoGrabacionManualActivo) { recognition.start(); } 
-                else {
+                if (!modoGrabacionManualActivo) {
                     btnRecord.innerHTML = `<i class="fas fa-microphone"></i> Commencer`;
                     let lOrig = textoOriginal.toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()¿?¡!]/g,"").split(/\s+/);
                     let lEsc = buzonTexto.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()¿?¡!]/g,"").split(/\s+/);
@@ -1107,10 +980,24 @@
             recognition.onresult = (e) => { for (let i = e.resultIndex; i < e.results.length; ++i) { if (e.results[i].isFinal) buzonTexto += " " + e.results[i][0].transcript.toLowerCase(); } };
         };
 
+        window.ejecutarConsultaSophiaConFiltro = async function(frase) {
+            const container = document.getElementById("glosario-flotante-container"); if (!container) return;
+            container.innerHTML = `<div style="background:#fff; padding:15px; border-radius:8px; box-shadow:0 4px 15px rgba(0,0,0,0.15);"><p style="margin:0; font-size:13px;"><i class="fas fa-spinner fa-spin"></i> Sophia...</p></div>`;
+            container.style.display = "block";
+            try {
+                const response = await fetch("http://localhost:5000/api/chat", {
+                    method: "POST", headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ message: `Analiza lingüísticamente la palabra o frase en contexto para un estudiante DELF: "${frase}" en formato HTML limpio.` })
+                });
+                const data = await response.json();
+                container.innerHTML = `<div style="background:#fff; padding:15px; border-radius:8px; box-shadow:0 4px 15px rgba(0,0,0,0.15); max-height:380px; overflow-y:auto;"><h4>"${frase}"</h4><div>${data.reply}</div><button onclick="document.getElementById('glosario-flotante-container').style.display='none'" style="margin-top:10px; width:100%; padding:6px; cursor:pointer;">Fermer</button></div>`;
+            } catch (error) { container.style.display = "none"; }
+        };
+
         let selectionTimeout = null;
         document.addEventListener('selectionchange', () => {
             clearTimeout(selectionTimeout);
-                selectionTimeout = setTimeout(() => {
+            selectionTimeout = setTimeout(() => {
                 const txt = window.getSelection().toString().trim();
                 if (txt && txt.includes(" ") && txt.length > 4 && !txt.includes("\n")) { window.ejecutarConsultaSophiaConFiltro(txt); window.getSelection().removeAllRanges(); }
             }, 700); 
