@@ -269,7 +269,6 @@
             color: white;
         }
 
-        /* INDICADORES VISUALES DE ZONA DE APRENDIZAJE */
         .zone-badge {
             display: inline-block;
             padding: 6px 12px;
@@ -496,6 +495,28 @@
             font-weight: 600;
             border-left: 4px solid var(--green);
         }
+
+        /* DISEÑO EXCLUSIVO PARA EL BOTÓN AVANZAR SIGUIENTE */
+        .btn-avanzar-dinamico {
+            background: var(--gold);
+            color: var(--oxford);
+            border: none;
+            padding: 12px 25px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: bold;
+            font-size: 0.85rem;
+            border-radius: 6px;
+            cursor: pointer;
+            text-transform: uppercase;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.2s;
+            margin-left: 10px;
+        }
+        .btn-avanzar-dinamico:hover {
+            background: #b08d4b;
+        }
     </style>
 </head>
 <body>
@@ -554,7 +575,7 @@
 
                 <div id="dynamic-workspace-target">
                     <div style="text-align: center; padding: 60px; color: var(--oxford);">
-                        <p style="font-weight: 600;">Veuillez choisir une activité dans le menu de gauche pour commencer.</p>
+                        <p style="font-weight: 600;">Veuillez choisir une actividad dans le menu de gauche pour commencer.</p>
                     </div>
                 </div>
             </div>
@@ -565,7 +586,7 @@
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
-        import { getFirestore, doc, getDoc, updateDoc, collection, getDocs, query, where } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js";
+        import { getFirestore, doc, getDoc, setDoc, collection, getDocs, query, where } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js";
         import { getStorage, ref, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-storage.js";
 
         const firebaseConfig = {
@@ -636,6 +657,11 @@
                 currentLevel = userData.nivel || "A1";
                 document.getElementById('student-welcome').innerText = `${userData.nombre || 'Étudiant'}`;
                 document.getElementById('level-indicator').innerText = `NIVEAU ${currentLevel}`;
+                
+                // MEJORA VISUAL: Renderizado inmediato del progreso real del alumno en el Sidebar
+                const progInicial = userData.progreso || 0;
+                document.getElementById('progress-text-target').innerText = `${progInicial}%`;
+                document.getElementById('progress-bar-fill').style.width = `${progInicial}%`;
                 window.currentLevel = currentLevel;
 
                 await descargarColeccionUnidades();
@@ -651,21 +677,36 @@
         }
 
         function calcularTodasLasNotasHabilidades() {
+            let totalEjerciciosGlobales = 0;
+            let totalEjerciciosCompletados = 0;
+
             ['CO', 'CE', 'PE', 'PO'].forEach(sk => {
                 let totalReactivos = 0; let totalAciertos = 0;
                 Object.keys(unidadesCache).forEach(uId => {
                     const ejercicios = unidadesCache[uId][sk] || unidadesCache[uId][sk.toLowerCase()] || [];
                     ejercicios.forEach((ej, eIdx) => {
+                        totalEjerciciosGlobales++;
+                        const clv = `${uId}_${sk}_${eIdx}`;
+                        if (mapaAciertosAlumno[clv] === true) {
+                            totalEjerciciosCompletados++;
+                        }
+
                         if (ej.preguntas && Array.isArray(ej.preguntas)) {
                             totalReactivos += ej.preguntas.length;
-                            const clv = `${uId}_${sk}_${eIdx}`;
-                            if (mapaAciertosAlumno[clv] !== undefined) totalAciertos += mapaAciertosAlumno[clv];
+                            if (mapaAciertosAlumno[clv] !== undefined && typeof mapaAciertosAlumno[clv] === "number") totalAciertos += mapaAciertosAlumno[clv];
                         }
                     });
                 });
                 if (totalReactivos === 0) totalReactivos = 5;
                 notasHabilidadGlobales[sk] = parseFloat(((totalAciertos / totalReactivos) * 25).toFixed(2));
             });
+
+            // Recalcular barra e indicador dinámico de la interfaz
+            if (totalEjerciciosGlobales > 0) {
+                const nuevoPorcentaje = Math.round((totalEjerciciosCompletados / totalEjerciciosGlobales) * 100);
+                document.getElementById('progress-text-target').innerText = `${nuevoPorcentaje}%`;
+                document.getElementById('progress-bar-fill').style.width = `${nuevoPorcentaje}%`;
+            }
         }
 
         window.switchMainTab = (tab) => {
@@ -676,7 +717,7 @@
                 document.getElementById('parcours-controls-container').style.display = "flex";
                 document.getElementById('dynamic-workspace-target').innerHTML = `
                     <div style="text-align: center; padding: 60px; color: var(--oxford);">
-                        <p style="font-weight: 600;">Veuillez choisir une activité dans le menu de gauche pour commencer.</p>
+                        <p style="font-weight: 600;">Veuillez choisir une actividad dans le menu de gauche pour commencer.</p>
                     </div>`;
             }
             if (tab === 'carnet') document.getElementById('tab-carnet').classList.add('active');
@@ -692,7 +733,7 @@
             if (target) {
                 target.innerHTML = `
                     <div style="text-align: center; padding: 60px; color: var(--oxford);">
-                        <p style="font-weight: 600;">Veuillez choisir une activité dans le menu de gauche.</p>
+                        <p style="font-weight: 600;">Veuillez choisir une actividad dans le menu de gauche.</p>
                     </div>`;
             }
             calcularTodasLasNotasHabilidades();
@@ -722,11 +763,26 @@
                 const isUnitOpen = openUnitsState[uId] === true;
 
                 let wrapper = document.createElement('div'); wrapper.className = 'unit-wrapper';
-                wrapper.innerHTML = `<button class="unit-toggle-btn ${currentUnitId === uId ? 'active' : ''}" onclick="window.toggleUnitMenu('${uId}')"><span><i class="fas fa-book"></i> Unité ${uId.replace(/\D/g, '')}</span><i class="fas ${isUnitOpen ? 'fa-chevron-down' : 'fa-chevron-right'}"></i></button>`;
+                
+                // Marcador de check verde si la unidad entera está completada
+                let unidadCompletada = true;
+                ejH.forEach((ej, eIdx) => {
+                    if (mapaAciertosAlumno[`${uId}_${currentSkill}_${eIdx}`] !== true) {
+                        unidadCompletada = false;
+                    }
+                });
+
+                let iconoUnidad = unidadCompletada ? '<i class="fas fa-check-circle" style="color:var(--green)"></i>' : `<i class="fas ${isUnitOpen ? 'fa-chevron-down' : 'fa-chevron-right'}"></i>`;
+
+                wrapper.innerHTML = `<button class="unit-toggle-btn ${currentUnitId === uId ? 'active' : ''}" onclick="window.toggleUnitMenu('${uId}')"><span><i class="fas fa-book"></i> Unité ${uId.replace(/\D/g, '')}</span>${iconoUnidad}</button>`;
                 let sub = document.createElement('div'); sub.className = 'submenu-activities'; sub.style.display = isUnitOpen ? 'flex' : 'none';
 
                 ejH.forEach((ej, eIdx) => {
-                    sub.innerHTML += `<button class="activity-link-btn ${currentUnitId === uId && currentExerciseIndex === eIdx ? 'active' : ''}" onclick="window.cargarActividadDirecta('${uId}', ${eIdx})"><i class="fas fa-play"></i> Activité ${eIdx + 1}</button>`;
+                    const esCompleto = mapaAciertosAlumno[`${uId}_${currentSkill}_${eIdx}`] === true;
+                    sub.innerHTML += `
+                        <button class="activity-link-btn ${currentUnitId === uId && currentExerciseIndex === eIdx ? 'active' : ''}" onclick="window.cargarActividadDirecta('${uId}', ${eIdx})">
+                            <i class="fas ${esCompleto ? 'fa-check' : 'fa-play'}" style="${esCompleto ? 'color:var(--green)' : ''}"></i> Activité ${eIdx + 1}
+                        </button>`;
                 });
                 wrapper.appendChild(sub); menuContainer.appendChild(wrapper);
             });
@@ -867,12 +923,20 @@
                     <button id="btn-record-po" class="btn-mic" style="padding:12px 30px; font-size:1rem;"><i class="fas fa-microphone"></i> Commencer</button>
                 </div>`;
             } else if (ej.preguntas && ej.preguntas.length > 0) {
+                html += `<div id="preguntas-wrapper-bloque">`;
                 ej.preguntas.forEach((p, pIdx) => {
                     html += `<div class="pregunta-block" id="block-preg-${pIdx}"><p style="margin:0 0 12px 0; font-weight:600;"><span id="status-icon-target-${pIdx}"></span><span>${p.pregunta}</span></p>`;
                     if (p.opciones) p.opciones.forEach((opt) => { html += `<label style="display:flex; align-items:center; gap:10px; margin-bottom:10px; cursor:pointer;"><input type="radio" name="question_${pIdx}" value="${opt}"> ${opt}</label>`; });
                     html += `</div>`;
                 });
-                html += `<div style="display:flex; justify-content:flex-end;"><button class="nav-tab-btn" id="btn-submit-exercise" style="width:auto; background:var(--oxford); color:white; padding:10px 22px;">Envoyer</button></div>`;
+                html += `</div>`;
+                
+                // MEJORA: Integración explícita del Botón Avanzar Siguiente Lección de forma nativa al pie
+                html += `
+                <div style="display:flex; justify-content:flex-end; margin-top:15px;" id="contenedor-acciones-ejercicio">
+                    <button class="nav-tab-btn" id="btn-submit-exercise" style="width:auto; background:var(--oxford); color:white; padding:10px 22px;">Envoyer</button>
+                    <button class="btn-avanzar-dinamico" id="btn-avanzar-siguiente" style="display:none;" onclick="window.avanzarSiguienteEjercicio()">Activité Suivante <i class="fas fa-arrow-right"></i></button>
+                </div>`;
             }
 
             html += `
@@ -928,8 +992,10 @@
 
             const btnSubmit = document.getElementById('btn-submit-exercise');
             if (btnSubmit) {
-                btnSubmit.addEventListener('click', () => {
+                btnSubmit.addEventListener('click', async () => {
                     let aciertosN = 0;
+                    let totalPreguntas = ej.preguntas.length;
+
                     ej.preguntas.forEach((p, pIdx) => {
                         const sel = document.querySelector(`input[name="question_${pIdx}"]:checked`);
                         const icon = document.getElementById(`status-icon-target-${pIdx}`);
@@ -939,15 +1005,65 @@
                         else { icon.innerHTML = `<i class="fas fa-times-circle" style="color:red; margin-right:8px;"></i>`; blk.style.background = "#fff5f5"; }
                     });
 
-                    document.querySelectorAll('input[type="radio"]').forEach(r => r.disabled = true);
-                    document.getElementById('sophia-verdict-text').innerHTML = `Tu as obtenu <strong>${aciertosN} / ${ej.preguntas.length}</strong> aciertos.`;
+                    document.querySelectorAll('#preguntas-wrapper-bloque input[type="radio"]').forEach(r => r.disabled = true);
+                    document.getElementById('sophia-verdict-text').innerHTML = `Tu as obtenu <strong>${aciertosN} / ${totalPreguntas}</strong> aciertos.`;
                     
                     if (ej.transcripcion) {
                         document.getElementById('interactive-transcription-box').innerHTML = window.convertirTextoInteractivo(ej.transcripcion);
                         window.inicializarLectorVozGratuito(ej.transcripcion);
                     }
                     document.getElementById('sophia-box').style.display = "block";
+
+                    // DETONANTE: Si el alumno respondió con éxito, guardamos inmediatamente en Firebase y habilitamos el botón Siguiente
+                    if (aciertosN === totalPreguntas) {
+                        const claveUnica = `${currentUnitId}_${currentSkill}_${currentExerciseIndex}`;
+                        mapaAciertosAlumno[claveUnica] = true;
+
+                        // Calcular progreso porcentual seguro basado en el total de ejercicios mapeados de la unidad
+                        let totalActividadesNivel = 0;
+                        let completadasNivel = 0;
+                        Object.keys(unidadesCache).forEach(uKey => {
+                            const arr = unidadesCache[uKey][currentSkill] || unidadesCache[uKey][currentSkill.toLowerCase()] || [];
+                            arr.forEach((_, indices) => {
+                                totalActividadesNivel++;
+                                if (mapaAciertosAlumno[`${uKey}_${currentSkill}_${indices}`] === true) {
+                                    completadasNivel++;
+                                }
+                            });
+                        });
+
+                        const finalProgresoCalculado = Math.round((completadasNivel / totalActividadesNivel) * 100);
+
+                        if (urlId !== "admin_preview" && docRefValidado) {
+                            try {
+                                await setDoc(docRefValidado, {
+                                    mapa_aciertos: mapaAciertosAlumno,
+                                    progreso: finalProgresoCalculado
+                                }, { merge: true });
+                            } catch (err) { console.error("Error guardado Firestore:", err); }
+                        }
+
+                        // Actualización reactiva inmediata de la barra lateral
+                        document.getElementById('progress-text-target').innerText = `${finalProgresoCalculado}%`;
+                        document.getElementById('progress-bar-fill').style.width = `${finalProgresoCalculado}%`;
+
+                        // Reemplazar visualmente botón "Envoyer" por el dorado "Activité Suivante"
+                        btnSubmit.style.display = "none";
+                        document.getElementById('btn-avanzar-siguiente').style.display = "inline-flex";
+                    }
                 });
+            }
+        };
+
+        // ENRUTADOR MANDATORIO: Cambia secuencialmente al siguiente índice sin recargar el DOM completo
+        window.avanzarSiguienteEjercicio = function() {
+            let ejercicios = unidadesCache[currentUnitId][currentSkill] || unidadesCache[currentUnitId][currentSkill.toLowerCase()] || [];
+            if (currentExerciseIndex + 1 < ejercicios.length) {
+                currentExerciseIndex++;
+                window.renderExerciseStructure();
+                generarMenuJerarquico();
+            } else {
+                alert("Félicitations! Vous avez complété toutes les activités de cette Unité.");
             }
         };
 
