@@ -996,6 +996,7 @@
                     let aciertosN = 0;
                     let totalPreguntas = ej.preguntas.length;
 
+                    // 1. Evaluar visualmente cada pregunta (Verde si está bien, Rojo si falló)
                     ej.preguntas.forEach((p, pIdx) => {
                         const sel = document.querySelector(`input[name="question_${pIdx}"]:checked`);
                         const icon = document.getElementById(`status-icon-target-${pIdx}`);
@@ -1005,6 +1006,7 @@
                         else { icon.innerHTML = `<i class="fas fa-times-circle" style="color:red; margin-right:8px;"></i>`; blk.style.background = "#fff5f5"; }
                     });
 
+                    // Deshabilitar las opciones de radio para congelar este intento evaluado
                     document.querySelectorAll('#preguntas-wrapper-bloque input[type="radio"]').forEach(r => r.disabled = true);
                     document.getElementById('sophia-verdict-text').innerHTML = `Tu as obtenu <strong>${aciertosN} / ${totalPreguntas}</strong> aciertos.`;
                     
@@ -1014,24 +1016,45 @@
                     }
                     document.getElementById('sophia-box').style.display = "block";
 
-                    // DETONANTE: Si el alumno respondió con éxito, guardamos inmediatamente en Firebase y habilitamos el botón Siguiente
-                    if (aciertosN === totalPreguntas) {
-                        const claveUnica = `${currentUnitId}_${currentSkill}_${currentExerciseIndex}`;
-                        mapaAciertosAlumno[claveUnica] = true;
+                    // 2. REGISTRO SEGURO: El alumno ya realizó la actividad. Se añade al mapa de Firestore.
+                    const claveUnica = `${currentUnitId}_${currentSkill}_${currentExerciseIndex}`;
+                    mapaAciertosAlumno = mapaAciertosAlumno || {};
+                    mapaAciertosAlumno[claveUnica] = true; 
 
-                        // Calcular progreso porcentual seguro basado en el total de ejercicios mapeados de la unidad
-                        let totalActividadesNivel = 0;
-                        let completadasNivel = 0;
-                        Object.keys(unidadesCache).forEach(uKey => {
-                            const arr = unidadesCache[uKey][currentSkill] || unidadesCache[uKey][currentSkill.toLowerCase()] || [];
-                            arr.forEach((_, indices) => {
-                                totalActividadesNivel++;
-                                if (mapaAciertosAlumno[`${uKey}_${currentSkill}_${indices}`] === true) {
-                                    completadasNivel++;
-                                }
-                            });
+                    // Calcular el progreso global del nivel usando el gran total absoluto de ejercicios publicados
+                    let totalActividadesNivel = 0;
+                    let completadasNivel = 0;
+                    Object.keys(unidadesCache).forEach(uKey => {
+                        const arr = unidadesCache[uKey][currentSkill] || unidadesCache[uKey][currentSkill.toLowerCase()] || [];
+                        arr.forEach((_, indices) => {
+                            totalActividadesNivel++;
+                            if (mapaAciertosAlumno[`${uKey}_${currentSkill}_${indices}`] === true) {
+                                completadasNivel++;
+                            }
                         });
+                    });
 
+                    const finalProgresoCalculado = Math.round((completadasNivel / totalActividadesNivel) * 100);
+
+                    if (urlId !== "admin_preview" && docRefValidado) {
+                        try {
+                            await setDoc(docRefValidado, {
+                                mapa_aciertos: mapaAciertosAlumno,
+                                progreso: finalProgresoCalculado
+                            }, { merge: true });
+                        } catch (err) { console.error("Error al guardar en la base de datos:", err); }
+                    }
+
+                    // Actualizar de forma inmediata los indicadores de progreso del Sidebar
+                    document.getElementById('progress-text-target').innerText = `${finalProgresoCalculado}%`;
+                    document.getElementById('progress-bar-fill').style.width = `${finalProgresoCalculado}%`;
+
+                    // 3. DECISIÓN DE NAVEGACIÓN: Se activa el botón dorado "Activité Suivante".
+                    // El alumno ve su nota y decide si avanza de lección o si repite usando el menú izquierdo.
+                    btnSubmit.style.display = "none";
+                    document.getElementById('btn-avanzar-siguiente').style.display = "inline-flex";
+                });
+            }
                         const finalProgresoCalculado = Math.round((completadasNivel / totalActividadesNivel) * 100);
 
                         if (urlId !== "admin_preview" && docRefValidado) {
