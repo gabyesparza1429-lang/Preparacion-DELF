@@ -617,7 +617,7 @@
 
         window.convertirTextoInteractivo = function(texto) {
             if (!texto) return '';
-            return text.split(/(?<=[?.!])\s+/).map(b => {
+            return texto.split(/(?<=[?.!])\s+/).map(b => {
                 if (b.trim() === '') return '';
                 let palabrasHtml = b.split(/(\s+)/).map(f => {
                     if (f.trim() === '') return f;
