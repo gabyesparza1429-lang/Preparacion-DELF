@@ -918,49 +918,86 @@
                 <div style="margin-bottom:20px; text-align:center; background:#fafbfc; padding:30px; border-radius:8px; border:1px dashed #ccc;">
                     <button id="btn-record-po" class="btn-mic" style="padding:12px 30px; font-size:1rem;"><i class="fas fa-microphone"></i> Commencer</button>
                 </div>`;
-           } else if (ej.preguntas && ej.preguntas.length > 0) {
+          } else if (ej.preguntas && ej.preguntas.length > 0) {
                 html += `<div id="preguntas-wrapper-bloque">`;
                 
-                // Si el ejercicio es de tipo Matriz (Oui/Non), dibujamos una sola tarjeta con estructura de tabla
-                if (ej.preguntas[0].opciones.includes("Oui") || ej.preguntas[0].opciones.includes("Non")) {
-                    html += `
-                    <div class="card" style="padding: 20px; overflow-x: auto;">
-                        <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem;">
-                            <thead>
-                                <tr style="border-bottom: 2px solid var(--oxford); text-align: left;">
-                                    <th style="padding: 10px; color: var(--oxford); font-weight: 700;">Critères d'évaluation</th>
-                                    <th style="padding: 10px; text-align: center; width: 80px; color: var(--gold); font-weight: 700;">OUI</th>
-                                    <th style="padding: 10px; text-align: center; width: 80px; color: var(--danger); font-weight: 700;">NON</th>
-                                </tr>
-                            </thead>
-                            <tbody>`;
+                // Comprobamos si es un ejercicio de matriz Oui/Non de nivel B1
+                const esMatrizB1 = ej.preguntas[0].opciones.includes("Oui") || ej.preguntas[0].opciones.includes("Non");
+                
+                if (esMatrizB1) {
+                    // Estructura para agrupar preguntas por anuncio
+                    let anunciosAgrupados = {};
                     
                     ej.preguntas.forEach((p, pIdx) => {
-                        html += `
-                                <tr id="block-preg-${pIdx}" style="border-bottom: 1px solid #eef2f5; transition: background 0.2s;">
-                                    <td style="padding: 12px 10px; font-weight: 600; color: #333;">
-                                        <span id="status-icon-target-${pIdx}"></span>
-                                        <span>${p.pregunta}</span>
-                                    </td>
-                                    <td style="padding: 12px 10px; text-align: center;">
-                                        <label style="cursor: pointer; display: inline-block; width: 100%; text-align: center;">
-                                            <input type="radio" name="question_${pIdx}" value="Oui" style="transform: scale(1.2);">
-                                        </label>
-                                    </td>
-                                    <td style="padding: 12px 10px; text-align: center;">
-                                        <label style="cursor: pointer; display: inline-block; width: 100%; text-align: center;">
-                                            <input type="radio" name="question_${pIdx}" value="Non" style="transform: scale(1.2);">
-                                        </label>
-                                    </td>
-                                </tr>`;
+                        let nombreAnuncio = "Critères d'évaluation"; // Nombre por defecto si no detecta guion
+                        let textoCriterio = p.pregunta;
+                        
+                        // Separación inteligente de cadenas por guion o dos puntos
+                        if (p.pregunta.includes(" - ")) {
+                            let partes = p.pregunta.split(" - ");
+                            nombreAnuncio = partes[0].trim();
+                            textoCriterio = partes[1].trim();
+                        } else if (p.pregunta.includes(" : ")) {
+                            let partes = p.pregunta.split(" : ");
+                            nombreAnuncio = partes[0].trim();
+                            textoCriterio = partes[1].trim();
+                        }
+                        
+                        if (!anunciosAgrupados[nombreAnuncio]) {
+                            anunciosAgrupados[nombreAnuncio] = [];
+                        }
+                        
+                        anunciosAgrupados[nombreAnuncio].push({
+                            originalIndex: pIdx,
+                            criterio: textoCriterio
+                        });
                     });
                     
-                    html += `
-                            </tbody>
-                        </table>
-                    </div>`;
+                    // Renderizamos una sub-tabla independiente por cada anuncio detectado
+                    Object.keys(anunciosAgrupados).forEach((tituloAnuncio) => {
+                        html += `
+                        <div class="card-anuncio-matriz" style="background: white; border: 1px solid #ddd; border-radius: 8px; padding: 18px; margin-bottom: 25px; box-shadow: 0 2px 6px rgba(0,0,0,0.04);">
+                            <h5 style="margin: 0 0 15px 0; color: var(--oxford); font-size: 1.02rem; font-weight: 700; border-left: 4px solid var(--gold); padding-left: 10px; text-transform: uppercase; font-family: 'Montserrat';">
+                                ${tituloAnuncio}
+                            </h5>
+                            <table style="width: 100%; border-collapse: collapse; font-size: 0.88rem;">
+                                <thead>
+                                    <tr style="border-bottom: 2px solid #eef2f5; text-align: left; background: #fafbfc;">
+                                        <th style="padding: 10px; color: #555; font-weight: 600;">Spécifications / Critères</th>
+                                        <th style="padding: 10px; text-align: center; width: 75px; color: var(--green); font-weight: 700;">OUI</th>
+                                        <th style="padding: 10px; text-align: center; width: 75px; color: var(--danger); font-weight: 700;">NON</th>
+                                    </tr>
+                                </thead>
+                                <tbody>`;
+                        
+                        anunciosAgrupados[tituloAnuncio].forEach((item) => {
+                            html += `
+                                    <tr id="block-preg-${item.originalIndex}" style="border-bottom: 1px solid #eef2f5; transition: background 0.2s;">
+                                        <td style="padding: 11px 10px; color: #333; font-weight: 500; line-height: 1.4;">
+                                            <span id="status-icon-target-${item.originalIndex}"></span>
+                                            <span>${item.criterio}</span>
+                                        </td>
+                                        <td style="padding: 11px 10px; text-align: center;">
+                                            <label style="cursor: pointer; display: block; width: 100%;">
+                                                <input type="radio" name="question_${item.originalIndex}" value="Oui" style="transform: scale(1.15);">
+                                            </label>
+                                        </td>
+                                        <td style="padding: 11px 10px; text-align: center;">
+                                            <label style="cursor: pointer; display: block; width: 100%;">
+                                                <input type="radio" name="question_${item.originalIndex}" value="Non" style="transform: scale(1.15);">
+                                            </label>
+                                        </td>
+                                    </tr>`;
+                        });
+                        
+                        html += `
+                                </tbody>
+                            </table>
+                        </div>`;
+                    });
+                    
                 } else {
-                    // Si es un ejercicio normal de opción múltiple, mantiene su formato de bloques apilados
+                    // Si es A1, A2 o una actividad normal de opción múltiple, mantiene los bloques apilados tradicionales
                     ej.preguntas.forEach((p, pIdx) => {
                         html += `<div class="pregunta-block" id="block-preg-${pIdx}"><p style="margin:0 0 12px 0; font-weight:600;"><span id="status-icon-target-${pIdx}"></span><span>${p.pregunta}</span></p>`;
                         if (p.opciones) p.opciones.forEach((opt) => { html += `<label style="display:flex; align-items:center; gap:10px; margin-bottom:10px; cursor:pointer;"><input type="radio" name="question_${pIdx}" value="${opt}"> ${opt}</label>`; });
@@ -968,6 +1005,15 @@
                     });
                 }
                 
+                html += `</div>`;
+                
+                // Zona unificada de botones de acción al pie de la pantalla
+                html += `
+                <div style="display:flex; justify-content:flex-end; margin-top:15px;" id="contenedor-acciones-ejercicio">
+                    <button class="nav-tab-btn" id="btn-submit-exercise" style="width:auto; background:var(--oxford); color:white; padding:10px 22px;">Envoyer</button>
+                    <button class="btn-avanzar-dinamico" id="btn-avanzar-siguiente" style="display:none;" onclick="window.avanzarSiguienteEjercicio()">Activité Suivante <i class="fas fa-arrow-right"></i></button>
+                </div>`;
+            }                
                 html += `</div>`;
                 
                 // Contenedor de botones de acción
