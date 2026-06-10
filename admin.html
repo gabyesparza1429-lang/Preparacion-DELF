@@ -250,16 +250,16 @@ window.registrarAlumno = async function() {
 
                 const id = rawId.toLowerCase().replace(/\s+/g, '_');
 
-                // BLINDAJE DE DATOS: Enviamos solo los campos informativos.
-                // Al quitar 'progreso: 0' y 'minutos_estudio: 0', Firebase no tocará el avance del alumno.
+                // BLINDAJE ABSOLUTO: Enviamos únicamente datos informativos fijos.
+                // Al NO declarar 'progreso', 'minutos_estudio', 'creditos' ni reescribir 'mapa_aciertos: {}' como objeto vacío de forma obligatoria en cada envío,
+                // Firebase respeta y protege intactos todos los avances y créditos acumulados del alumno.
                 await setDoc(doc(db, "Usuarios", id), { 
                     nombre: name, 
                     id: id,
                     clase: clase || "General",
                     nivel: nivel, 
                     fecha_certificacion: fecha_cert || "--", 
-                    fecha_alta: new Date().toISOString().split('T')[0],
-                    mapa_aciertos: {} // Mantiene la estructura limpia para alumnos nuevos sin romper existentes
+                    fecha_alta: new Date().toISOString().split('T')[0]
                 }, { merge: true });
 
                 alert(`¡Éxito! Alumno procesado correctamente.\nID: ${id}`);
@@ -272,12 +272,6 @@ window.registrarAlumno = async function() {
             } catch (error) {
                 console.error("Error al registrar alumno en Firestore:", error);
                 alert("Hubo un error de conexión con la base de datos de Firebase.");
-            }
-        };
-
-        window.eliminarUser = async (id) => {
-            if(confirm("¿Eliminar alumno definitivamente de la base de datos?")) {
-                await deleteDoc(doc(db, "Usuarios", id));
             }
         };
 
