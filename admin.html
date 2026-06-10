@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">window.registrarAlumno
+    <meta charset="UTF-8">
     <title>Master Admin | Objectif Réussite</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
     <style>
         :root { --oxford: #002147; --gold: #C5A059; --bg: #f4f7f9; --green: #28a745; --red: #dc3545; --blue: #007bff; }
         body { font-family: 'Montserrat', sans-serif; margin: 0; display: flex; height: 100vh; background: var(--bg); overflow: hidden; }
@@ -29,6 +30,7 @@
     </style>
 </head>
 <body>
+
     <nav class="sidebar">
         <h2>Centro de Mando</h2>
         <button class="nav-btn active" onclick="tab('delf', this)"><i class="fas fa-certificate"></i> Réussite DELF</button>
@@ -117,7 +119,7 @@
                 <h3>Nuevo Alumno</h3>
                 <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:10px;">
                     <input type="text" id="user_name" placeholder="Nombre Completo">
-                    <input type="text" id="user_id" placeholder="ID de Acceso (ej: gaby_esparza)">
+                    <input type="text" id="user_id" placeholder="ID de Acceso (ej: constanza2026)">
                     <input type="text" id="user_class" placeholder="Clase / Grupo (ej: Matutino)">
                     <input type="date" id="user_cert_date">
                     <select id="user_level">
@@ -139,6 +141,7 @@
         import { getFirestore, doc, setDoc, onSnapshot, collection, deleteDoc } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js";
         import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-storage.js";
 
+        // Credenciales Oficiales de Producción
         const firebaseConfig = { 
             apiKey: "AIzaSyCgog8tKspHy01ZHE8Dthl9O4W6lw1a_Ec", 
             authDomain: "objectif-reussite-delf.firebaseapp.com", 
@@ -151,19 +154,19 @@
         const db = getFirestore(app);
         const storage = getStorage(app);
 
+        // Vista Previa de Alumnos
         window.previewAlumno = () => {
             const lvl = document.getElementById('preview_level').value;
             const url = "alumno.html?id=admin_preview&level=" + lvl;
             window.open(url, '_blank');
         };
 
+        // Sincronización Directrices IA
         window.subirConfiguracionIA = async function() {
             const nivel = document.getElementById('nivel_ia_config').value;
             const habilidad = document.getElementById('habilidad_ia_config').value;
-            
             const fileRef = document.getElementById('file_referentiel').files[0];
             const fileGrille = document.getElementById('file_grille').files[0];
-            
             const statusRef = document.getElementById('status_referentiel');
             const statusGrille = document.getElementById('status_grille');
             
@@ -190,15 +193,14 @@
                     await setDoc(doc(db, "IA_Directrices", `${nivel}_${habilidad}`), { url_grille: downloadUrl }, { merge: true });
                     statusGrille.style.color = "green"; statusGrille.innerText = "¡Cargado con éxito!  ";
                 }
-
                 alert("Directrices vinculadas correctamente. La IA aplicará estas reglas de inmediato.");
-
             } catch (error) {
-                console.error("Error al cargar archivos de IA:", error);
+                console.error(error);
                 alert("Ocurrió un fallo en la sincronización con Firebase Storage.");
             }
         };
 
+        // Carga e Inyección masiva JSON
         window.subirJSONaFirebase = async function() {
             const input = document.getElementById('archivoJson');
             const mensaje = document.getElementById('mensajeEstado');
@@ -211,32 +213,26 @@
 
             const file = input.files[0];
             const reader = new FileReader();
-
             reader.onload = async function(e) {
                 try {
                     const datosJSON = JSON.parse(e.target.result);
                     const textoParaGuardar = JSON.stringify(datosJSON);
-
-                    mensaje.style.color = "orange";
-                    mensaje.innerText = "Subiendo banco de datos... ⏳";
-
+                    mensaje.style.color = "orange"; mensaje.innerText = "Subiendo banco de datos... ⏳";
                     const docRef = doc(db, "BibliotecaEjercicios", nivelDestino);
                     await setDoc(docRef, { Valor: textoParaGuardar }, { merge: true });
-
-                    mensaje.style.color = "green";
-                    mensaje.innerText = `¡ÉXITO TOTAL! 🎉 Banco de ejercicios publicado para el nivel ${nivelDestino}.`;
-
+                    mensaje.style.color = "green"; mensaje.innerText = `¡ÉXITO TOTAL! 🎉 Banco de ejercicios publicado para el nivel ${nivelDestino}.`;
                 } catch (error) {
                     alert("Error leyendo o subiendo el archivo JSON.");
-                    console.error(error);
-                    mensaje.style.color = "red";
-                    mensaje.innerText = "Hubo un error de conexión con Firebase.";
+                    mensaje.style.color = "red"; mensaje.innerText = "Hubo un error de conexión con Firebase.";
                 }
             };
             reader.readAsText(file);
         };
 
-window.registrarAlumno = async function() {
+        // ==========================================
+        // SECCIÓN BLOQUEADA CONTRA BORRADOS DE AVANCE/PROGRESIÓN/CRÉDITOS
+        // ==========================================
+        window.registrarAlumno = async function() {
             try {
                 const name = document.getElementById('user_name').value.trim();
                 const rawId = document.getElementById('user_id').value.trim();
@@ -250,9 +246,9 @@ window.registrarAlumno = async function() {
 
                 const id = rawId.toLowerCase().replace(/\s+/g, '_');
 
-                // BLINDAJE ABSOLUTO: Enviamos únicamente datos informativos fijos.
-                // Al NO declarar 'progreso', 'minutos_estudio', 'creditos' ni reescribir 'mapa_aciertos: {}' como objeto vacío de forma obligatoria en cada envío,
-                // Firebase respeta y protege intactos todos los avances y créditos acumulados del alumno.
+                // BLINDAJE CRÍTICO: Solo actualiza datos base fijos.
+                // Evita explícitamente enviar 'progreso', 'creditos', 'minutos_estudio' o 'mapa_aciertos'
+                // para que Firestore mantenga intactos los valores en línea sin reiniciar nada a cero.
                 await setDoc(doc(db, "Usuarios", id), { 
                     nombre: name, 
                     id: id,
@@ -275,6 +271,14 @@ window.registrarAlumno = async function() {
             }
         };
 
+        // Eliminación de Alumnos
+        window.eliminarUser = async (id) => {
+            if(confirm("¿Eliminar alumno definitivamente de la base de datos?")) {
+                await deleteDoc(doc(db, "Usuarios", id));
+            }
+        };
+
+        // Control de Pestañas (Tabs)
         window.tab = (id, btn) => {
             document.querySelectorAll('.content').forEach(c => c.classList.remove('active'));
             document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
@@ -283,6 +287,7 @@ window.registrarAlumno = async function() {
             document.getElementById('tab-title').innerText = btn.innerText;
         };
 
+        // Renderizado e Interfaz de Alumnos en Tiempo Real
         onSnapshot(collection(db, "Usuarios"), (snap) => {
             const list = document.getElementById('lista_alumnos'); 
             if (!list) return;
@@ -308,7 +313,7 @@ window.registrarAlumno = async function() {
                         Certificación:<br><strong>${u.fecha_certificacion || '--'}</strong>
                     </div>
                     <div style="display:flex; gap:10px;">
-                        <button class="btn-del" title="Reporte" style="background:var(--blue);" onclick="alert('Generando reporte acumulado de habilidades...')"><i class="fas fa-file-export"></i></button>
+                        <button class="btn-del" title="Reporte" style="background:var(--blue);" onclick="alert('Generando reporte de habilidades...')"><i class="fas fa-file-export"></i></button>
                         <button class="btn-del" onclick="window.eliminarUser('${u.id}')"><i class="fas fa-trash"></i></button>
                     </div>
                 </div>`;
