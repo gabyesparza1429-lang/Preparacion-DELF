@@ -229,7 +229,7 @@
             reader.readAsText(file);
         };
 
-        // ==========================================
+// ==========================================
         // SECCIÓN BLOQUEADA CONTRA BORRADOS DE AVANCE/PROGRESIÓN/CRÉDITOS
         // ==========================================
         window.registrarAlumno = async function() {
@@ -246,9 +246,9 @@
 
                 const id = rawId.toLowerCase().replace(/\s+/g, '_');
 
-                // BLINDAJE CRÍTICO: Solo actualiza datos base fijos.
-                // Evita explícitamente enviar 'progreso', 'creditos', 'minutos_estudio' o 'mapa_aciertos'
-                // para que Firestore mantenga intactos los valores en línea sin reiniciar nada a cero.
+                // BLINDAJE ABSOLUTO: Solo se envían los datos personales base.
+                // Al quitar 'progreso', 'minutos_estudio', 'creditos' y 'mapa_aciertos',
+                // Firestore no tocará los contadores ni el avance que los alumnos ya tengan en línea.
                 await setDoc(doc(db, "Usuarios", id), { 
                     nombre: name, 
                     id: id,
@@ -268,13 +268,6 @@
             } catch (error) {
                 console.error("Error al registrar alumno en Firestore:", error);
                 alert("Hubo un error de conexión con la base de datos de Firebase.");
-            }
-        };
-
-        // Eliminación de Alumnos
-        window.eliminarUser = async (id) => {
-            if(confirm("¿Eliminar alumno definitivamente de la base de datos?")) {
-                await deleteDoc(doc(db, "Usuarios", id));
             }
         };
 
