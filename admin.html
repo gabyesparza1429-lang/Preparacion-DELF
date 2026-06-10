@@ -108,7 +108,7 @@
                 </div>
 
                 <button class="btn-gold" onclick="window.subirJSONaFirebase()">🚀 Publicar Ejercicios en Firebase</button>
-                <p id="mensajeEstado" style="font-weight: bold; margin-top: 15px; text-align:center; font-size:0.9rem Haus;"></p>
+                <p id="mensajeEstado" style="font-weight: bold; margin-top: 15px; text-align:center; font-size:0.9rem;"></p>
             </div>
         </div>
 
@@ -117,7 +117,7 @@
                 <h3>Nuevo Alumno</h3>
                 <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:10px;">
                     <input type="text" id="user_name" placeholder="Nombre Completo">
-                    <input type="text" id="user_id" placeholder="ID de Acceso (ej: juan_perez)">
+                    <input type="text" id="user_id" placeholder="ID de Acceso (ej: gaby_esparza)">
                     <input type="text" id="user_class" placeholder="Clase / Grupo (ej: Matutino)">
                     <input type="date" id="user_cert_date">
                     <select id="user_level">
@@ -237,39 +237,48 @@
         };
 
         window.registrarAlumno = async function() {
-            const rawId = document.getElementById('user_id').value;
-            const name = document.getElementById('user_name').value.trim();
-            
-            if(!rawId || !name) {
-                return alert("El Nombre Completo y el ID de Acceso son obligatorios.");
-            }
-            
-            const id = rawId.toLowerCase().trim().replace(/\s+/g, '_');
-
             try {
-                // Se incluye mapa_aciertos inicializado como objeto vacío para que alumno.html no falle
+                const nameInput = document.getElementById('user_name');
+                const idInput = document.getElementById('user_id');
+                const classInput = document.getElementById('user_class');
+                const dateInput = document.getElementById('user_cert_date');
+                const levelInput = document.getElementById('user_level');
+
+                if (!nameInput || !idInput || !classInput || !dateInput || !levelInput) {
+                    return alert("Error interno: Faltan elementos en el formulario HTML.");
+                }
+
+                const name = nameInput.value.trim();
+                const rawId = idInput.value.trim();
+
+                if (!name || !rawId) {
+                    return alert("El Nombre Completo y el ID de Acceso son campos obligatorios.");
+                }
+
+                const id = rawId.toLowerCase().replace(/\s+/g, '_');
+
                 await setDoc(doc(db, "Usuarios", id), { 
                     nombre: name, 
                     id: id,
-                    clase: document.getElementById('user_class').value.trim() || "General",
-                    nivel: document.getElementById('user_level').value, 
-                    fecha_certificacion: document.getElementById('user_cert_date').value || "--", 
+                    clase: classInput.value.trim() || "General",
+                    nivel: levelInput.value, 
+                    fecha_certificacion: dateInput.value || "--", 
                     fecha_alta: new Date().toISOString().split('T')[0],
                     progreso: 0,
                     minutos_estudio: 0,
                     mapa_aciertos: {} 
                 }, { merge: true });
 
-                alert(`¡Éxito! Alumno dado de alta de forma correcta.\nSu URL de acceso es: alumno.html?id=${id}`);
+                alert(`¡Éxito! Alumno dado de alta correctamente.\nSu dirección es: alumno.html?id=${id}`);
                 
-                document.getElementById('user_id').value = "";
-                document.getElementById('user_name').value = "";
-                document.getElementById('user_class').value = "";
-                document.getElementById('user_cert_date').value = "";
+                nameInput.value = "";
+                idInput.value = "";
+                classInput.value = "";
+                dateInput.value = "";
 
             } catch (error) {
                 console.error("Error al registrar alumno en Firestore:", error);
-                alert("Error de conexión: No se pudo dar de alta al alumno en la base de datos.");
+                alert("Hubo un error de conexión con la base de datos de Firebase.");
             }
         };
 
@@ -288,7 +297,9 @@
         };
 
         onSnapshot(collection(db, "Usuarios"), (snap) => {
-            const list = document.getElementById('lista_alumnos'); list.innerHTML = "";
+            const list = document.getElementById('lista_alumnos'); 
+            if (!list) return;
+            list.innerHTML = "";
             snap.forEach(d => {
                 const u = d.data();
                 const prog = u.progreso || 0;
