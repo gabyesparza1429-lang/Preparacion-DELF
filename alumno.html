@@ -902,9 +902,17 @@
                 html += `<div style="background:#f1f3f5; padding:15px; border-radius:8px; margin-bottom:20px; text-align:center;"><div class="audio-counter-badge"><i class="fas fa-headphones"></i><span id="audio-count-label">Écoutes / Escuchas : 0 / 2</span></div><div id="${audioId}">Loading...</div></div>`;
             }
 
-            if (window.currentSkill === "PE") {
+if (window.currentSkill === "PE") {
                 if (ej.texto_lectura) {
-                    html += `<div style="background:#f8f9fa; border-left:4px solid var(--gold); padding:20px; margin-bottom:25px;"><strong>Document :</strong><br><br>${window.convertirTextoInteractivo(ej.texto_lectura)}</div>`;
+                    html += `
+                    <div style="background: #f8f9fa; border-left: 4px solid var(--gold); padding: 20px; margin-bottom: 25px; border-radius: 4px; box-shadow: 0 2px 5px rgba(0,0,0,0.02);">
+                        <h6 style="margin: 0 0 10px 0; color: var(--oxford); font-size: 0.9rem; font-weight: 700; text-transform: uppercase;">
+                            <i class="fas fa-envelope-open-text"></i> Document de départ / Situation:
+                        </h6>
+                        <div style="color: #222; line-height: 1.6; font-size: 0.95rem;">
+                            ${window.convertirTextoInteractivo(ej.texto_lectura)}
+                        </div>
+                    </div>`;
                 }
                 html += `
                 <div style="margin-bottom:20px;">
