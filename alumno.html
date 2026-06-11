@@ -883,7 +883,7 @@
                 ${checklistHTML}`;
         }
 
-        window.renderExerciseStructure = function() {
+       window.renderExerciseStructure = function() {
             const target = document.getElementById('dynamic-workspace-target');
             if (currentUnitId === null || !unidadesCache[currentUnitId]) return;
             let ejercicios = unidadesCache[currentUnitId][currentSkill] || unidadesCache[currentUnitId][currentSkill.toLowerCase()] || [];
@@ -937,10 +937,8 @@
                 
                 if (esMatrizB1 && ej.texto_lectura) {
                     // =========================================================================
-                    // MODO INTERACTIVO ENTLAZADO (CADA TEXTO CON SUS PREGUNTAS ABAJO)
+                    // MODO COMPACTO B1: ENLAZAR TEXTO ESPECÍFICO CON SU TABLA OUI/NON
                     // =========================================================================
-                    
-                    // 1. Mapear y agrupar las preguntas internamente por el nombre del anuncio
                     let anunciosAgrupados = {};
                     ej.preguntas.forEach((p, pIdx) => {
                         let nombreAnuncio = "Critères d'évaluation"; 
@@ -960,31 +958,44 @@
                         anunciosAgrupados[nombreAnuncio].push({ originalIndex: pIdx, criterio: textoCriterio });
                     });
 
-                    // 2. Fragmentar el bloque completo de "texto_lectura" usando los delimitadores dobles de salto de línea
-                    // Cada bloque representa el cuerpo de un anuncio específico en la base de datos
-                    let bloquesDeTexto = ej.texto_lectura.split(/\n\s*\n/);
+                    let textoRestante = ej.texto_lectura;
+                    let bloquesMapeadosPorAnuncio = {};
                     let llavesAnuncios = Object.keys(anunciosAgrupados);
+
+                    for (let i = 0; i < llavesAnuncios.length; i++) {
+                        let tituloActual = llavesAnuncios[i];
+                        let tituloSiguiente = llavesAnuncios[i + 1];
+                        
+                        let idxInicio = textoRestante.indexOf(tituloActual);
+                        if (idxInicio !== -1) {
+                            let idxFin = tituloSiguiente ? textoRestante.indexOf(tituloSiguiente) : textoRestante.length;
+                            if (idxFin !== -1 && idxFin > idxInicio) {
+                                bloquesMapeadosPorAnuncio[tituloActual] = textoRestante.substring(idxInicio, idxFin).trim();
+                            } else {
+                                bloquesMapeadosPorAnuncio[tituloActual] = textoRestante.substring(idxInicio).trim();
+                            }
+                        } else {
+                            let bloquesAlternativos = ej.texto_lectura.split(/\n\s*\n/);
+                            bloquesMapeadosPorAnuncio[tituloActual] = bloquesAlternativos[i] || ej.texto_lectura;
+                        }
+                    }
 
                     html += `<div id="preguntas-wrapper-bloque">`;
 
-                    // 3. Renderizar de forma secuencial y emparejada: Texto de Anuncio -> Tabla de preguntas de ese Anuncio
-                    llavesAnuncios.forEach((tituloAnuncio, indexAnuncio) => {
-                        let textoDelAnuncioCorrespondiente = bloquesDeTexto[indexAnuncio] || "<em>Document joint sans texte descriptif additionnel.</em>";
+                    llavesAnuncios.forEach((tituloAnuncio) => {
+                        let contenidoTextoFiltrado = bloquesMapeadosPorAnuncio[tituloAnuncio] || "<em>Document joint.</em>";
 
                         html += `
                         <div class="modulo-anuncio-completo" style="margin-bottom: 35px; background: #fff; border: 1px solid #e0e6ed; border-radius: 8px; padding: 20px; box-shadow: 0 3px 9px rgba(0,0,0,0.02);">
                             
-                            <div class="document-anuncio-block">
-                                <h6 style="margin: 0 0 10px 0; color: var(--gold); font-size: 0.9rem; font-weight: 700; text-transform: uppercase; tracking-spacing: 0.5px;">
-                                    <i class="fas fa-file-text"></i> DESCRIPTION DE L'OFFRE / ANNONCE
-                                </h6>
-                                <div style="color: #222; line-height: 1.6;">
-                                    ${window.convertirTextoInteractivo(textoDelAnuncioCorrespondiente)}
+                            <div class="document-anuncio-block" style="background: #fdfefe; border: 1px dashed var(--gold); border-left: 4px solid var(--gold); padding: 15px; margin-bottom: 18px; border-radius: 4px;">
+                                <div style="color: #222; line-height: 1.6; font-size: 0.95rem;">
+                                    ${window.convertirTextoInteractivo(contenidoTextoFiltrado)}
                                 </div>
                             </div>
 
-                            <h5 style="margin: 18px 0 12px 0; color: var(--oxford); font-size: 1rem; font-weight: 700; border-left: 4px solid var(--gold); padding-left: 10px; text-transform: uppercase;">
-                                ${tituloAnuncio}
+                            <h5 style="margin: 20px 0 12px 0; color: var(--oxford); font-size: 1rem; font-weight: 700; border-left: 4px solid var(--gold); padding-left: 10px; text-transform: uppercase; font-family: 'Montserrat';">
+                                VALIDATION : ${tituloAnuncio}
                             </h5>
                             
                             <table style="width: 100%; border-collapse: collapse; font-size: 0.88rem;">
@@ -999,7 +1010,7 @@
                         
                         anunciosAgrupados[tituloAnuncio].forEach((item) => {
                             html += `
-                                    <tr id="block-preg-${item.originalIndex}" style="border-bottom: 1px solid #eef2f5;">
+                                    <tr id="block-preg-${item.originalIndex}" style="border-bottom: 1px solid #eef2f5; transition: background 0.2s;">
                                         <td style="padding: 11px 10px; color: #333; font-weight: 500; line-height: 1.4;">
                                             <span id="status-icon-target-${item.originalIndex}"></span>
                                             <span>${item.criterio}</span>
@@ -1026,7 +1037,6 @@
                     html += `</div>`;
 
                 } else {
-                    // MODO TRADICIONAL (Para actividades A1/A2 o comprensión auditiva normal sin matrices)
                     if (ej.texto_lectura) {
                         html += `<div style="background:#f8f9fa; border-left:4px solid var(--gold); padding:20px; margin-bottom:25px;"><strong>Document :</strong><br><br>${window.convertirTextoInteractivo(ej.texto_lectura)}</div>`;
                     }
@@ -1081,7 +1091,7 @@
                     try {
                         const response = await fetch("http://localhost:5000/api/chat", {
                             method: "POST", headers: { "Content-Type": "application/json" },
-                            body: JSON.stringify({ message: `Actúa como examinadora DELF nativa. Evalúa el texto asignando una nota total estimada sobre 25. Devuelve la respuesta structured únicamente en HTML compacto.` })
+                            body: JSON.stringify({ message: `Actúa como examinadora DELF nativa. Evalúa el texto asignando una nota total estimada sobre 25. Devuelve la respuesta estructurada únicamente en HTML compacto.` })
                         });
                         const data = await response.json();
                         document.getElementById('sophia-verdict-text').innerHTML = `
