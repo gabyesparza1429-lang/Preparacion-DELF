@@ -759,8 +759,7 @@
                 menuContainer.style.display = "none"; renderCarnetInterfaceReal();
             }
         }
-
-        function generarMenuJerarquico() {
+function generarMenuJerarquico() {
             const menuContainer = document.getElementById('sidebar-dynamic-menu');
             menuContainer.innerHTML = "";
             Object.keys(unidadesCache).sort((a, b) => a.localeCompare(b, undefined, { numeric: true })).forEach((uId) => {
@@ -778,7 +777,27 @@
                     }
                 });
 
+                let iconoUnidad = unidadCompletada ? '<i class="fas fa-check-circle" style="color:var(--green)"></i>' : `<i class="fas ${isUnitOpen ? 'fa-chevron-down' : 'fa-chevron-right'}"></i>`;
+
+                // 1. AQUÍ VA EL TEMA DINÁMICO CORREGIDO Y SEGURO
+                let llaveTemaDinamico = `tema_${currentSkill}`;
+                let ID_Limpio = uId ? uId.replace(/\D/g, '') : '';
+                let nombreUnidadReal = (u && u[llaveTemaDinamico]) ? u[llaveTemaDinamico] : `Unité ${ID_Limpio}`;
+
+                wrapper.innerHTML = `<button class="unit-toggle-btn ${currentUnitId === uId ? 'active' : ''}" onclick="window.toggleUnitMenu('${uId}')"><span><i class="fas fa-book"></i> ${nombreUnidadReal}</span>${iconoUnidad}</button>`;
                 
+                let sub = document.createElement('div'); sub.className = 'submenu-activities'; sub.style.display = isUnitOpen ? 'flex' : 'none';
+
+                ejH.forEach((ej, eIdx) => {
+                    const esCompleto = mapaAciertosAlumno[`${uId}_${currentSkill}_${eIdx}`] === true;
+                    sub.innerHTML += `
+                        <button class="activity-link-btn ${currentUnitId === uId && currentExerciseIndex === eIdx ? 'active' : ''}" onclick="window.cargarActividadDirecta('${uId}', ${eIdx})">
+                            <i class="fas ${esCompleto ? 'fa-check' : 'fa-play'}" style="${esCompleto ? 'color:var(--green)' : ''}"></i> Activité ${eIdx + 1}
+                        </button>`;
+                });
+                wrapper.appendChild(sub); menuContainer.appendChild(wrapper);
+            });
+        }
 
         window.toggleUnitMenu = (uId) => { openUnitsState[uId] = !openUnitsState[uId]; generarMenuJerarquico(); };
         window.cargarActividadDirecta = (uId, eIdx) => { currentUnitId = uId; currentExerciseIndex = eIdx; openUnitsState[uId] = true; generarMenuJerarquico(); window.renderExerciseStructure(); };
@@ -792,11 +811,7 @@
 
             const check = (clave) => (mapaAciertosAlumno && mapaAciertosAlumno[clave]) ? 'checked' : '';
             const iconCheck = (clave) => (mapaAciertosAlumno && mapaAciertosAlumno[clave]) ? 'fas fa-check-circle' : 'far fa-circle';
-// CORRECCIÓN: Ir a buscar la llave dinámica 'tema_PE', 'tema_CO', etc., creada por procesar.py
-                let llaveTemaDinamico = `tema_${currentSkill}`;
-                let nombreUnidadReal = u[llaveTemaDinamico] || u["unidad"] || `Unité ${uId.replace(/\D/g, '')}`;
 
-                wrapper.innerHTML = `<button class="unit-toggle-btn ${currentUnitId === uId ? 'active' : ''}" onclick="window.toggleUnitMenu('${uId}')"><span><i class="fas fa-book"></i> ${nombreUnidadReal}</span>${iconoUnidad}</button>`;
             let checklistHTML = '';
             if (currentLevel === "B1") {
                 checklistHTML = `
@@ -872,7 +887,8 @@
                 <h3 style="color:var(--oxford); margin-top:0; font-weight:700;"><i class="fas fa-id-card"></i> Livret de Compétences Officiel (CECRL)</h3>
                 ${checklistHTML}`;
         }
-
+        
+        
         window.renderExerciseStructure = function() {
             const target = document.getElementById('dynamic-workspace-target');
             if (currentUnitId === null || !unidadesCache[currentUnitId]) return;
