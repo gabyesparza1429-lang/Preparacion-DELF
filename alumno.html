@@ -883,299 +883,68 @@
                 ${checklistHTML}`;
         }
 
-       window.renderExerciseStructure = function() {
-            const target = document.getElementById('dynamic-workspace-target');
-            if (currentUnitId === null || !unidadesCache[currentUnitId]) return;
-            let ejercicios = unidadesCache[currentUnitId][currentSkill] || unidadesCache[currentUnitId][currentSkill.toLowerCase()] || [];
+       <!-- DISEÑO DE LA INTERFAZ DE ALUMNO (SECCIÓN PE) -->
+<div id="contenedor-pe" class="dynamic-exercise-zone">
+  
+  <!-- Título dinámico de la actividad -->
+  <h3 class="exercise-title" id="pe-titulo-actividad">Activité 1 : Production Écrite</h3>
+  
+  <!-- INTRODUCCIÓN (Arriba del correo) -->
+  <p class="pe-introduction-text" style="color: #0056b3; font-weight: bold; margin-bottom: 15px;">
+    Votre amie Léa vous envoie ce message.
+  </p>
 
-            if (ejercicios.length === 0 || !ejercicios[currentExerciseIndex]) return;
-            const ej = ejercicios[currentExerciseIndex];
-            const audioId = `audio-container-${currentExerciseIndex}`;
+  <!-- CAJA GRIS: DOCUMENT DE DÉPART (CORREO DE LÉA) -->
+  <div class="pe-mail-box" style="background-color: #f4f6f9; border-left: 4px solid #0056b3; padding: 20px; border-radius: 6px; margin-bottom: 20px;">
+    <div style="font-weight: bold; margin-bottom: 10px; color: #333;" id="pe-headers-correo">
+      <!-- Aquí se inyectan los headers del correo de forma limpia -->
+    </div>
+    <hr style="border: 0; border-top: 1px solid #ddd; margin-bottom: 15px;">
+    <div id="pe-cuerpo-correo" style="white-space: pre-line; color: #444; line-height: 1.6;">
+      <!-- Aquí cae el mensaje de la persona -->
+    </div>
+  </div>
 
-            let zoneHTML = (window.currentSkill === "PE" || window.currentSkill === "PO") 
-                ? `<span class="zone-badge zone-examen-simule"><i class="fas fa-exclamation-triangle"></i> Zone d'Examen Réel (Blindé)</span>`
-                : `<span class="zone-badge zone-entrainement"><i class="fas fa-graduation-cap"></i> Zone d'Entraînement</span>`;
+  <!-- CONSIGNA DE RESPUESTA (Abajo del correo) -->
+  <div class="pe-consigne-box" style="font-weight: bold; font-size: 1.05em; color: #111; margin-top: 20px; margin-bottom: 25px;" id="pe-consigne-final">
+    <!-- Aquí cae la instrucción del PDF limpia -->
+  </div>
 
-            // CORRECCIÓN: Si es PE, forzamos un título de redacción correcto para limpiar instrucciones cruzadas de la base de datos
-            let tituloInstruccion = ej.instruccion || 'Exercice';
-            if (window.currentSkill === "PE") {
-                tituloInstruccion = `Activité ${currentExerciseIndex + 1} : Production Écrite - Sujet de rédaction`;
-            }
+</div>
 
-            let html = `<div class="exercise-card">${zoneHTML}<h4 style="margin-top:0; color:var(--oxford); font-weight:700; margin-bottom: 20px;">${tituloInstruccion}</h4>`;
+<script>
+  // LÓGICA EN JAVASCRIPT PARA RENDERIZAR LA ACTIVIDAD DE PE
+  function cargarEjercicioPE(ejercicio, indiceActual) {
+    // 1. Configurar el título dinámico (Ej: "Activité 1 : Production Écrite - Sujet de rédaction")
+    document.getElementById("pe-titulo-actividad").innerText = `Activité ${indiceActual + 1} : Production Écrite - Sujet de rédaction`;
 
-            if (ej.ruta_audio) {
-                html += `<div style="background:#f1f3f5; padding:15px; border-radius:8px; margin-bottom:20px; text-align:center;"><div class="audio-counter-badge"><i class="fas fa-headphones"></i><span id="audio-count-label">Écoutes / Escuchas : 0 / 2</span></div><div id="${audioId}">Loading...</div></div>`;
-            }
+    // 2. Procesar la instrucción para remover el "Activité X." del inicio
+    let instruccionOriginal = ejercicio.instruccion || "";
+    // Reemplaza "Activité" seguido de números, puntos y espacios por una cadena vacía
+    let consigneLimpia = instruccionOriginal.replace(/^Activité\s*\d+\s*[\.\:]*\s*/i, "");
+    
+    // Inyectar la consigna abajo con negritas automáticas
+    document.getElementById("pe-consigne-final").innerText = consigneLimpia;
 
-            if (window.currentSkill === "PE") {
-                if (ej.texto_lectura) {
-                    html += `
-                    <div style="background: #f8f9fa; border-left: 4px solid var(--gold); padding: 20px; margin-bottom: 25px; border-radius: 4px; box-shadow: 0 2px 5px rgba(0,0,0,0.02);">
-                        <h6 style="margin: 0 0 10px 0; color: var(--oxford); font-size: 0.9rem; font-weight: 700; text-transform: uppercase;">
-                            <i class="fas fa-envelope-open-text"></i> Document de départ / Situation:
-                        </h6>
-                        <div style="color: #222; line-height: 1.6; font-size: 0.95rem;">
-                            ${window.convertirTextoInteractivo(ej.texto_lectura)}
-                        </div>
-                    </div>`;
-                }
-                html += `
-                <div style="margin-bottom:20px;">
-                    <div class="french-accents-bar">
-                        <button type="button" class="accent-btn" onclick="window.insertarCaracterEspecial('é')">é</button>
-                        <button type="button" class="accent-btn" onclick="window.insertarCaracterEspecial('è')">è</button>
-                        <button type="button" class="accent-btn" onclick="window.insertarCaracterEspecial('à')">à</button>
-                        <button type="button" class="accent-btn" onclick="window.insertarCaracterEspecial('ç')">ç</button>
-                        <button type="button" class="accent-btn" onclick="window.insertarCaracterEspecial('â')">â</button>
-                        <button type="button" class="accent-btn" onclick="window.insertarCaracterEspecial('ê')">ê</button>
-                        <button type="button" class="accent-btn" onclick="window.insertarCaracterEspecial('œ')">œ</button>
-                    </div>
-                    <textarea id="pe-student-response" class="production-textbox" placeholder="Rédigez votre texte ici..." spellcheck="false" autocomplete="off" onpaste="return false;" ondrop="return false;"></textarea>
-                </div>
-                <div style="display:flex; justify-content:flex-end;">
-                    <button class="nav-tab-btn" id="btn-submit-pe" style="width:auto; background:var(--oxford); color:white; padding:10px 22px;"><i class="fas fa-paper-plane"></i> Soumettre la production</button>
-                </div>`;
-                
-            } else if (window.currentSkill === "PO") {
-                if (ej.texto_lectura) {
-                    html += `<div style="background:#f8f9fa; border-left:4px solid var(--gold); padding:20px; margin-bottom:25px;"><strong>Document :</strong><br><br>${window.convertirTextoInteractivo(ej.texto_lectura)}</div>`;
-                }
-                html += `
-                <div style="margin-bottom:20px; text-align:center; background:#fafbfc; padding:30px; border-radius:8px; border:1px dashed #ccc;">
-                    <button id="btn-record-po" class="btn-mic" style="padding:12px 30px; font-size:1rem;"><i class="fas fa-microphone"></i> Commencer</button>
-                </div>`;
-                
-            } else if (ej.preguntas && ej.preguntas.length > 0) {
-                const esMatrizB1 = ej.preguntas[0].opciones.includes("Oui") || ej.preguntas[0].opciones.includes("Non");
-                
-                if (esMatrizB1 && ej.texto_lectura) {
-                    let anunciosAgrupados = {};
-                    ej.preguntas.forEach((p, pIdx) => {
-                        let nombreAnuncio = "Critères d'évaluation"; 
-                        let textoCriterio = p.pregunta;
-                        
-                        if (p.pregunta.includes(" - ")) {
-                            let partes = p.pregunta.split(" - ");
-                            nombreAnuncio = partes[0].trim();
-                            textoCriterio = partes[1].trim();
-                        } else if (p.pregunta.includes(" : ")) {
-                            let partes = p.pregunta.split(" : ");
-                            nombreAnuncio = partes[0].trim();
-                            textoCriterio = partes[1].trim();
-                        }
-                        
-                        if (!anunciosAgrupados[nombreAnuncio]) anunciosAgrupados[nombreAnuncio] = [];
-                        anunciosAgrupados[nombreAnuncio].push({ originalIndex: pIdx, criterio: textoCriterio });
-                    });
+    // 3. Formatear y separar los encabezados del cuerpo del correo (texto_lectura)
+    let textoLectura = ejercicio.texto_lectura || "";
+    
+    if (textoLectura.includes("De:") || textoLectura.includes("De :")) {
+      // Intentamos aislar la cabecera del cuerpo buscando el saludo clásico "Bonjour"
+      let partesCorreo = textoLectura.split(/(Bonjour)/i);
+      
+      if (partesCorreo.length >= 3) {
+        let cabecera = partesCorreo[0].trim();
+        let cuerpo = partesCorreo.slice(1).join("").trim(); // Junta "Bonjour" con el resto
+        
+        // Dar formato visual a "De:" y "Objet:" en la cabecera
+        let cabeceraFormateada = cabecera
+          .replace(/(De\s*:\s*[^ ]+)/i, `<span style="color:#555;">De :</span> <strong style="color:#000;">$1</strong>`)
+          .replace(/De\s*:/i, "")
+          .replace(/(Objet\s*:\s*[^ \n]+)/i, `<br><span style="color:#555;">Objet :</span> <strong style="color:#000;">$1</strong>`)
+          .replace(/Objet\s*:/i, "");
 
-                    let textoRestante = ej.texto_lectura;
-                    let bloquesMapeadosPorAnuncio = {};
-                    let llavesAnuncios = Object.keys(anunciosAgrupados);
-
-                    for (let i = 0; i < llavesAnuncios.length; i++) {
-                        let tituloActual = llavesAnuncios[i];
-                        let tituloSiguiente = llavesAnuncios[i + 1];
-                        
-                        let idxInicio = textoRestante.indexOf(tituloActual);
-                        if (idxInicio !== -1) {
-                            let idxFin = tituloSiguiente ? textoRestante.indexOf(tituloSiguiente) : textoRestante.length;
-                            if (idxFin !== -1 && idxFin > idxInicio) {
-                                bloquesMapeadosPorAnuncio[tituloActual] = textoRestante.substring(idxInicio, idxFin).trim();
-                            } else {
-                                bloquesMapeadosPorAnuncio[tituloActual] = textoRestante.substring(idxInicio).trim();
-                            }
-                        } else {
-                            let bloquesAlternativos = ej.texto_lectura.split(/\n\s*\n/);
-                            bloquesMapeadosPorAnuncio[tituloActual] = bloquesAlternativos[i] || ej.texto_lectura;
-                        }
-                    }
-
-                    html += `<div id="preguntas-wrapper-bloque">`;
-
-                    llavesAnuncios.forEach((tituloAnuncio) => {
-                        let contenidoTextoFiltrado = bloquesMapeadosPorAnuncio[tituloAnuncio] || "<em>Document joint.</em>";
-
-                        html += `
-                        <div class="modulo-anuncio-completo" style="margin-bottom: 35px; background: #fff; border: 1px solid #e0e6ed; border-radius: 8px; padding: 20px; box-shadow: 0 3px 9px rgba(0,0,0,0.02);">
-                            
-                            <div class="document-anuncio-block" style="background: #fdfefe; border: 1px dashed var(--gold); border-left: 4px solid var(--gold); padding: 15px; margin-bottom: 18px; border-radius: 4px;">
-                                <div style="color: #222; line-height: 1.6; font-size: 0.95rem;">
-                                    ${window.convertirTextoInteractivo(contenidoTextoFiltrado)}
-                                </div>
-                            </div>
-
-                            <h5 style="margin: 20px 0 12px 0; color: var(--oxford); font-size: 1rem; font-weight: 700; border-left: 4px solid var(--gold); padding-left: 10px; text-transform: uppercase; font-family: 'Montserrat';">
-                                VALIDATION : ${tituloAnuncio}
-                            </h5>
-                            
-                            <table style="width: 100%; border-collapse: collapse; font-size: 0.88rem;">
-                                <thead>
-                                    <tr style="border-bottom: 2px solid #eef2f5; text-align: left; background: #fafbfc;">
-                                        <th style="padding: 10px; color: #555; font-weight: 600;">Spécifications / Critères</th>
-                                        <th style="padding: 10px; text-align: center; width: 75px; color: var(--green); font-weight: 700;">OUI</th>
-                                        <th style="padding: 10px; text-align: center; width: 75px; color: var(--danger); font-weight: 700;">NON</th>
-                                    </tr>
-                                </thead>
-                                <tbody>`;
-                        
-                        anunciosAgrupados[tituloAnuncio].forEach((item) => {
-                            html += `
-                                    <tr id="block-preg-${item.originalIndex}" style="border-bottom: 1px solid #eef2f5; transition: background 0.2s;">
-                                        <td style="padding: 11px 10px; color: #333; font-weight: 500; line-height: 1.4;">
-                                            <span id="status-icon-target-${item.originalIndex}"></span>
-                                            <span>${item.criterio}</span>
-                                        </td>
-                                        <td style="padding: 11px 10px; text-align: center;">
-                                            <label style="cursor: pointer; display: block; width: 100%;">
-                                                <input type="radio" name="question_${item.originalIndex}" value="Oui" style="transform: scale(1.15);">
-                                            </label>
-                                        </td>
-                                        <td style="padding: 11px 10px; text-align: center;">
-                                            <label style="cursor: pointer; display: block; width: 100%;">
-                                                <input type="radio" name="question_${item.originalIndex}" value="Non" style="transform: scale(1.15);">
-                                            </label>
-                                        </td>
-                                    </tr>`;
-                        });
-                        
-                        html += `
-                                </tbody>
-                            </table>
-                        </div>`;
-                    });
-
-                    html += `</div>`;
-
-                } else {
-                    if (ej.texto_lectura) {
-                        html += `<div style="background:#f8f9fa; border-left:4px solid var(--gold); padding:20px; margin-bottom:25px;"><strong>Document :</strong><br><br>${window.convertirTextoInteractivo(ej.texto_lectura)}</div>`;
-                    }
-                    html += `<div id="preguntas-wrapper-bloque">`;
-                    ej.preguntas.forEach((p, pIdx) => {
-                        html += `<div class="pregunta-block" id="block-preg-${pIdx}"><p style="margin:0 0 12px 0; font-weight:600;"><span id="status-icon-target-${pIdx}"></span><span>${p.pregunta}</span></p>`;
-                        if (p.opciones) p.opciones.forEach((opt) => { html += `<label style="display:flex; align-items:center; gap:10px; margin-bottom:10px; cursor:pointer;"><input type="radio" name="question_${pIdx}" value="${opt}"> ${opt}</label>`; });
-                        html += `</div>`;
-                    });
-                    html += `</div>`;
-                }
-                
-                html += `
-                <div style="display:flex; justify-content:flex-end; margin-top:15px;" id="contenedor-acciones-ejercicio">
-                    <button class="nav-tab-btn" id="btn-submit-exercise" style="width:auto; background:var(--oxford); color:white; padding:10px 22px;">Envoyer</button>
-                    <button class="btn-avanzar-dinamico" id="btn-avanzar-siguiente" style="display:none;" onclick="window.avanzarSiguienteEjercicio()">Activité Suivante <i class="fas fa-arrow-right"></i></button>
-                </div>`;
-            }
-
-            html += `
-                <div id="sophia-box" style="display:none; background:#f4f7f9; border-left:4px solid var(--gold); padding:20px; border-radius:6px; margin-top:25px;">
-                    <div id="sophia-verdict-text"></div>
-                    ${ej.transcripcion ? `<div style="border:1px dashed #ccc; border-radius:8px; background:#fff; display:flex; flex-direction:column; overflow:hidden; margin-top:15px;"><div id="interactive-transcription-box" style="padding:15px; max-height:220px; overflow-y:auto;"></div><div class="transcription-control-sticky-panel"><p id="audio-reading-feedback" style="font-size:0.82rem; margin:0; font-weight:600;">Prêt</p><button id="btn-record-transcription" class="btn-mic" style="margin-top:0;"><i class="fas fa-microphone"></i> Commencer l'enregistrement</button></div></div>` : ''}
-                </div>
-            </div>`;
-            
-            target.innerHTML = html;
-
-            if (ej.ruta_audio) {
-                let track = (ej.ruta_audio.match(/\d+/) || ["02"])[0].padStart(2, '0');
-                getDownloadURL(ref(storage, `niveles/${currentLevel}/audios/${track.slice(-2)}.mp3`)).then(url => {
-                    const container = document.getElementById(audioId);
-                    if (container) {
-                        container.innerHTML = `<audio id="native-audio-player" controls style="width:100%;" src="${url}"></audio>`;
-                        const player = document.getElementById("native-audio-player");
-                        let listenCount = 0; let activeListen = false;
-                        player.addEventListener('play', () => { if (!activeListen) { listenCount++; document.getElementById('audio-count-label').innerText = `Écoutes / Escuchas : ${listenCount} / 2`; activeListen = true; } });
-                        player.addEventListener('ended', () => { activeListen = false; if (listenCount >= 2) { player.pause(); player.src = ""; container.innerHTML = `<span style="color:red; font-weight:700;">Limite d'écoutes atteinte (2/2)</span>`; } });
-                    }
-                });
-            }
-
-            if (window.currentSkill === "PE") {
-                const el = document.getElementById('pe-student-response');
-                if (el) ['copy', 'paste', 'cut', 'contextmenu', 'drop'].forEach(evt => el.addEventListener(evt, e => e.preventDefault(), true));
-                
-                document.getElementById('btn-submit-pe').addEventListener('click', async () => {
-                    const txtAlumno = el.value.trim();
-                    if (!txtAlumno) return;
-                    document.getElementById('btn-submit-pe').disabled = true;
-
-                    try {
-                        const response = await fetch("http://localhost:5000/api/chat", {
-                            method: "POST", headers: { "Content-Type": "application/json" },
-                            body: JSON.stringify({ message: `Actúa como examinadora DELF nativa. Evalúa el texto asignando una nota total estimada sobre 25. Devuelve la respuesta estructurada únicamente en HTML compacto.` })
-                        });
-                        const data = await response.json();
-                        document.getElementById('sophia-verdict-text').innerHTML = `
-                            <strong>Grille d'évaluation DELF (Base 25) :</strong><br><br>
-                            <table class="grille-delf-table">
-                                <tr><th>Critères d'évaluation</th><th>SOUS</th><th>ACQUIS</th><th>SUPRA</th></tr>
-                                <tr class="grille-row-active"><td>1. Réalisation des tâches</td><td>☐</td><td>☑ Validé</td><td>☐</td></tr>
-                                <tr><td>2. Morphosyntaxe / Grammaire</td><td>☐</td><td>☐</td><td>☑ Excellent</td></tr>
-                            </table>
-                            <div style="margin-top:15px; padding:10px; background:white; border-radius:4px;">${data.reply}</div>`;
-                        document.getElementById('sophia-box').style.display = "block";
-                    } catch (e) { console.error(e); }
-                });
-            }
-
-            const btnSubmit = document.getElementById('btn-submit-exercise');
-            if (btnSubmit) {
-                btnSubmit.addEventListener('click', async () => {
-                    let aciertosN = 0;
-                    let totalPreguntas = ej.preguntas.length;
-
-                    ej.preguntas.forEach((p, pIdx) => {
-                        const sel = document.querySelector(`input[name="question_${pIdx}"]:checked`);
-                        const icon = document.getElementById(`status-icon-target-${pIdx}`);
-                        const blk = document.getElementById(`block-preg-${pIdx}`);
-                        let ok = sel && sel.value.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()¿?¡!]/g,"").trim().toLowerCase() === (p.respuesta_correcta || "").replace(/[.,\/#!$%\^&\*;:{}=\-_`~()¿?¡!]/g,"").trim().toLowerCase();
-                        if (ok) { aciertosN++; icon.innerHTML = `<i class="fas fa-check-circle" style="color:var(--green); margin-right:8px;"></i>`; blk.style.background = "#f4fff5"; }
-                        else { icon.innerHTML = `<i class="fas fa-times-circle" style="color:red; margin-right:8px;"></i>`; blk.style.background = "#fff5f5"; }
-                    });
-
-                    document.querySelectorAll('#preguntas-wrapper-bloque input[type="radio"]').forEach(r => r.disabled = true);
-                    document.getElementById('sophia-verdict-text').innerHTML = `Tu as obtenu <strong>${aciertosN} / ${totalPreguntas}</strong> aciertos.`;
-                    
-                    if (ej.transcripcion) {
-                        document.getElementById('interactive-transcription-box').innerHTML = window.convertirTextoInteractivo(ej.transcripcion);
-                        window.inicializarLectorVozGratuito(ej.transcripcion);
-                    }
-                    document.getElementById('sophia-box').style.display = "block";
-
-                    const claveUnica = `${currentUnitId}_${currentSkill}_${currentExerciseIndex}`;
-                    mapaAciertosAlumno = mapaAciertosAlumno || {};
-                    mapaAciertosAlumno[claveUnica] = true; 
-
-                    let totalActividadesNivel = 0;
-                    let completadasNivel = 0;
-                    Object.keys(unidadesCache).forEach(uKey => {
-                        const arr = unidadesCache[uKey][currentSkill] || unidadesCache[uKey][currentSkill.toLowerCase()] || [];
-                        arr.forEach((_, indices) => {
-                            totalActividadesNivel++;
-                            if (mapaAciertosAlumno[`${uKey}_${currentSkill}_${indices}`] === true) {
-                                completadasNivel++;
-                            }
-                        });
-                    });
-
-                    const finalProgresoCalculado = Math.round((completadasNivel / totalActividadesNivel) * 100);
-
-                    if (urlId !== "admin_preview" && docRefValidado) {
-                        try {
-                            await setDoc(docRefValidado, {
-                                mapa_aciertos: mapaAciertosAlumno,
-                                progreso: finalProgresoCalculado
-                            }, { merge: true });
-                        } catch (err) { console.error("Error al guardar en la base de datos:", err); }
-                    }
-
-                    document.getElementById('progress-text-target').innerText = `${finalProgresoCalculado}%`;
-                    document.getElementById('progress-bar-fill').style.width = `${finalProgresoCalculado}%`;
-
-                    btnSubmit.style.display = "none";
-                    document.getElementById('btn-avanzar-siguiente').style.display = "inline-flex";
-                });
-            }
+}
         };
         
         window.avanzarSiguienteEjercicio = function() {
