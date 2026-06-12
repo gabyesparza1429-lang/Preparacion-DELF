@@ -896,13 +896,19 @@
                 ? `<span class="zone-badge zone-examen-simule"><i class="fas fa-exclamation-triangle"></i> Zone d'Examen Réel (Blindé)</span>`
                 : `<span class="zone-badge zone-entrainement"><i class="fas fa-graduation-cap"></i> Zone d'Entraînement</span>`;
 
-            let html = `<div class="exercise-card">${zoneHTML}<h4 style="margin-top:0; color:var(--oxford); font-weight:700; margin-bottom: 20px;">${ej.instruccion || 'Exercice'}</h4>`;
+            // CORRECCIÓN: Si es PE, forzamos un título de redacción correcto para limpiar instrucciones cruzadas de la base de datos
+            let tituloInstruccion = ej.instruccion || 'Exercice';
+            if (window.currentSkill === "PE") {
+                tituloInstruccion = `Activité ${currentExerciseIndex + 1} : Production Écrite - Sujet de rédaction`;
+            }
+
+            let html = `<div class="exercise-card">${zoneHTML}<h4 style="margin-top:0; color:var(--oxford); font-weight:700; margin-bottom: 20px;">${tituloInstruccion}</h4>`;
 
             if (ej.ruta_audio) {
                 html += `<div style="background:#f1f3f5; padding:15px; border-radius:8px; margin-bottom:20px; text-align:center;"><div class="audio-counter-badge"><i class="fas fa-headphones"></i><span id="audio-count-label">Écoutes / Escuchas : 0 / 2</span></div><div id="${audioId}">Loading...</div></div>`;
             }
 
-if (window.currentSkill === "PE") {
+            if (window.currentSkill === "PE") {
                 if (ej.texto_lectura) {
                     html += `
                     <div style="background: #f8f9fa; border-left: 4px solid var(--gold); padding: 20px; margin-bottom: 25px; border-radius: 4px; box-shadow: 0 2px 5px rgba(0,0,0,0.02);">
@@ -944,9 +950,6 @@ if (window.currentSkill === "PE") {
                 const esMatrizB1 = ej.preguntas[0].opciones.includes("Oui") || ej.preguntas[0].opciones.includes("Non");
                 
                 if (esMatrizB1 && ej.texto_lectura) {
-                    // =========================================================================
-                    // MODO COMPACTO B1: ENLAZAR TEXTO ESPECÍFICO CON SU TABLA OUI/NON
-                    // =========================================================================
                     let anunciosAgrupados = {};
                     ej.preguntas.forEach((p, pIdx) => {
                         let nombreAnuncio = "Critères d'évaluation"; 
@@ -1174,7 +1177,7 @@ if (window.currentSkill === "PE") {
                 });
             }
         };
-
+        
         window.avanzarSiguienteEjercicio = function() {
             let ejercicios = unidadesCache[currentUnitId][currentSkill] || unidadesCache[currentUnitId][currentSkill.toLowerCase()] || [];
             if (currentExerciseIndex + 1 < ejercicios.length) {
