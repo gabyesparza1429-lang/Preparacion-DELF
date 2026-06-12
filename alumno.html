@@ -903,10 +903,11 @@
 
             let html = `<div class="exercise-card">${zoneHTML}<h4 style="margin-top:0; color:var(--oxford); font-weight:700; margin-bottom: 20px;">${tituloInstruccion}</h4>`;
 
-            if (ej.ruta_audio) {
+      // CORRECCIÓN: Bloqueamos el reproductor de audio si la habilidad es Production Orale (PO)
+            if (ej.ruta_audio && window.currentSkill !== "PO") {
                 html += `<div style="background:#f1f3f5; padding:15px; border-radius:8px; margin-bottom:20px; text-align:center;"><div class="audio-counter-badge"><i class="fas fa-headphones"></i><span id="audio-count-label">Écoutes / Escuchas : 0 / 2</span></div><div id="${audioId}">Loading...</div></div>`;
             }
-
+            
             if (window.currentSkill === "PE") {
                 // 1. Mostrar la introducción oficial requerida del examen antes del documento
                 html += `
