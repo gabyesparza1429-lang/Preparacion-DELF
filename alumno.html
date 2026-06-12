@@ -584,7 +584,7 @@
 
                 <div id="dynamic-workspace-target">
                     <div style="text-align: center; padding: 60px; color: var(--oxford);">
-                        <p style="font-weight: 600;">Veuillez choisir une activité dans le menu de gauche pour commencer.</p>
+                        <p style="font-weight: 600;">Veuillez choisir une activité dans le menu de gauche pourEmmanuel.</p>
                     </div>
                 </div>
             </div>
@@ -759,7 +759,8 @@
                 menuContainer.style.display = "none"; renderCarnetInterfaceReal();
             }
         }
-function generarMenuJerarquico() {
+
+        function generarMenuJerarquico() {
             const menuContainer = document.getElementById('sidebar-dynamic-menu');
             menuContainer.innerHTML = "";
             Object.keys(unidadesCache).sort((a, b) => a.localeCompare(b, undefined, { numeric: true })).forEach((uId) => {
@@ -779,7 +780,7 @@ function generarMenuJerarquico() {
 
                 let iconoUnidad = unidadCompletada ? '<i class="fas fa-check-circle" style="color:var(--green)"></i>' : `<i class="fas ${isUnitOpen ? 'fa-chevron-down' : 'fa-chevron-right'}"></i>`;
 
-                // 1. AQUÍ VA EL TEMA DINÁMICO CORREGIDO Y SEGURO
+                // 1. AQUÍ VA EL TEMA DINÁMICO CORREGIDO Y SEGURO DESDE FIREBASE
                 let llaveTemaDinamico = `tema_${currentSkill}`;
                 let ID_Limpio = uId ? uId.replace(/\D/g, '') : '';
                 let nombreUnidadReal = (u && u[llaveTemaDinamico]) ? u[llaveTemaDinamico] : `Unité ${ID_Limpio}`;
@@ -806,7 +807,7 @@ function generarMenuJerarquico() {
             const isBasic = currentLevel.startsWith('A');
             const descCO = isBasic ? "Comprendre des expressions fréquentes. / Comprender expresiones." : "Peut comprendre les points principaux d'une intervention claire (école, travail).";
             const descCE = isBasic ? "Lire des textes courts. / Leer textos cortos." : "Peut comprendre des textes rédigés essentiellement dans une langue courante.";
-            const descPE = isBasic ? "Écrire des messages simples. / Escribir mensajes." : "Peut écrire un texte suivi simple et articulé sur des sujets familiers.";
+            const descPE = isBasic ? "Écrire des messages simples. / Escribir mensajes." : "Peut écrire un text suivi simple et articulé sur des sujets familiers.";
             const descPO = isBasic ? "S'exprimer en situation simple. / Expresarse en situations cotidianas." : "Peut s'exprimer de manière cohérente sur des expériences ou proyectos.";
 
             const check = (clave) => (mapaAciertosAlumno && mapaAciertosAlumno[clave]) ? 'checked' : '';
@@ -888,7 +889,6 @@ function generarMenuJerarquico() {
                 ${checklistHTML}`;
         }
         
-        
         window.renderExerciseStructure = function() {
             const target = document.getElementById('dynamic-workspace-target');
             if (currentUnitId === null || !unidadesCache[currentUnitId]) return;
@@ -909,19 +909,17 @@ function generarMenuJerarquico() {
 
             let html = `<div class="exercise-card">${zoneHTML}<h4 style="margin-top:0; color:var(--oxford); font-weight:700; margin-bottom: 20px;">${tituloInstruccion}</h4>`;
 
-      // CORRECCIÓN: Bloqueamos el reproductor de audio si la habilidad es Production Orale (PO)
+            // ELIMINACIÓN DEL REPRODUCTOR EN PRODUCCIÓN ORALE (PO)
             if (ej.ruta_audio && window.currentSkill !== "PO") {
                 html += `<div style="background:#f1f3f5; padding:15px; border-radius:8px; margin-bottom:20px; text-align:center;"><div class="audio-counter-badge"><i class="fas fa-headphones"></i><span id="audio-count-label">Écoutes / Escuchas : 0 / 2</span></div><div id="${audioId}">Loading...</div></div>`;
             }
             
             if (window.currentSkill === "PE") {
-                // 1. Mostrar la introducción oficial requerida del examen antes del documento
                 html += `
                 <p style="color: #002147; font-weight: bold; margin-bottom: 15px; font-size: 0.98rem;">
                     Votre amie Léa vous envoie ce message.
                 </p>`;
 
-                // 2. Tarjeta del documento/estímulo base (Correo o texto de partida)
                 if (ej.texto_lectura) {
                     html += `
                     <div style="background: #f4f6f9; border-left: 4px solid var(--gold); padding: 20px; margin-bottom: 20px; border-radius: 6px; box-shadow: 0 2px 5px rgba(0,0,0,0.02);">
@@ -931,7 +929,6 @@ function generarMenuJerarquico() {
                     </div>`;
                 }
 
-                // 3. Limpiar prefijo redundante "Activité X." para imprimir la consigna final limpia abajo
                 let instruccionOriginal = ej.instruccion || "";
                 let consigneLimpia = instruccionOriginal.replace(/^Activité\s*\d+\s*[\.\:]*\s*/i, "");
 
@@ -940,7 +937,6 @@ function generarMenuJerarquico() {
                     ${consigneLimpia}
                 </div>`;
 
-                // 4. Barra de caracteres franceses y área de texto
                 html += `
                 <div style="margin-bottom:20px;">
                     <div class="french-accents-bar">
@@ -1079,15 +1075,18 @@ function generarMenuJerarquico() {
                         if (p.opciones) {
                             p.opciones.forEach((opt) => {
                                 let contenidoOpcion = opt;
-                                // DETECCIÓN AUTOMÁTICA DE IMÁGENES EN LAS RESPUESTAS (A1)
+                                // DETECCIÓN AUTOMÁTICA DE IMÁGENES EN RESPUESTAS (A1)
                                 if (typeof opt === 'string' && (opt.toLowerCase().endsWith('.png') || opt.toLowerCase().endsWith('.jpg') || opt.toLowerCase().endsWith('.jpeg'))) {
-                                    // Limpiamos el nombre de la imagen y construimos su ruta en Storage
                                     let nombreImg = opt.trim();
                                     contenidoOpcion = `<img src="niveles/${currentLevel}/imagenes/${nombreImg}" alt="Option" style="max-width: 150px; max-height: 120px; border: 1px solid #ddd; border-radius: 6px; padding: 4px; background: white; margin-left: 5px; display: inline-block; vertical-align: middle;">`;
                                 }
                                 html += `<label style="display:flex; align-items:center; gap:10px; margin-bottom:12px; cursor:pointer;"><input type="radio" name="question_${pIdx}" value="${opt}"> <span>${contenidoOpcion}</span></label>`;
                             });
                         }
+                        html += `</div>`;
+                    });
+                    html += `</div>`;
+                }
                 
                 html += `
                 <div style="display:flex; justify-content:flex-end; margin-top:15px;" id="contenedor-acciones-ejercicio">
@@ -1105,7 +1104,8 @@ function generarMenuJerarquico() {
             
             target.innerHTML = html;
 
-            if (ej.ruta_audio) {
+            // DISPARADOR DE AUDIO (Reparado para Compréhension Orale)
+            if (ej.ruta_audio && window.currentSkill !== "PO") {
                 let track = (ej.ruta_audio.match(/\d+/) || ["02"])[0].padStart(2, '0');
                 getDownloadURL(ref(storage, `niveles/${currentLevel}/audios/${track.slice(-2)}.mp3`)).then(url => {
                     const container = document.getElementById(audioId);
@@ -1116,6 +1116,10 @@ function generarMenuJerarquico() {
                         player.addEventListener('play', () => { if (!activeListen) { listenCount++; document.getElementById('audio-count-label').innerText = `Écoutes / Escuchas : ${listenCount} / 2`; activeListen = true; } });
                         player.addEventListener('ended', () => { activeListen = false; if (listenCount >= 2) { player.pause(); player.src = ""; container.innerHTML = `<span style="color:red; font-weight:700;">Limite d'écoutes atteinte (2/2)</span>`; } });
                     }
+                }).catch(err => {
+                    console.error("Error al descargar el audio de Storage: ", err);
+                    const container = document.getElementById(audioId);
+                    if (container) container.innerHTML = `<span style="color:red;">Audio no encontrado en Storage</span>`;
                 });
             }
 
