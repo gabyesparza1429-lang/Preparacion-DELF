@@ -778,10 +778,10 @@
                     }
                 });
 
-                let iconoUnidad = unidadCompletada ? '<i class="fas fa-check-circle" style="color:var(--green)"></i>' : `<i class="fas ${isUnitOpen ? 'fa-chevron-down' : 'fa-chevron-right'}"></i>`;
+                // CORRECCIÓN: Usar el nombre real de la base de datos. Si no existe, se usa el número por defecto.
+let nombreUnidadReal = u.nombre || u.titulo || `Unité ${uId.replace(/\D/g, '')}`;
 
-                wrapper.innerHTML = `<button class="unit-toggle-btn ${currentUnitId === uId ? 'active' : ''}" onclick="window.toggleUnitMenu('${uId}')"><span><i class="fas fa-book"></i> Unité ${uId.replace(/\D/g, '')}</span>${iconoUnidad}</button>`;
-                let sub = document.createElement('div'); sub.className = 'submenu-activities'; sub.style.display = isUnitOpen ? 'flex' : 'none';
+wrapper.innerHTML = `<button class="unit-toggle-btn ${currentUnitId === uId ? 'active' : ''}" onclick="window.toggleUnitMenu('${uId}')"><span><i class="fas fa-book"></i> ${nombreUnidadReal}</span>${iconoUnidad}</button>`;;
 
                 ejH.forEach((ej, eIdx) => {
                     const esCompleto = mapaAciertosAlumno[`${uId}_${currentSkill}_${eIdx}`] === true;
