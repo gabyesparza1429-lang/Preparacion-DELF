@@ -1075,11 +1075,19 @@ function generarMenuJerarquico() {
                     html += `<div id="preguntas-wrapper-bloque">`;
                     ej.preguntas.forEach((p, pIdx) => {
                         html += `<div class="pregunta-block" id="block-preg-${pIdx}"><p style="margin:0 0 12px 0; font-weight:600;"><span id="status-icon-target-${pIdx}"></span><span>${p.pregunta}</span></p>`;
-                        if (p.opciones) p.opciones.forEach((opt) => { html += `<label style="display:flex; align-items:center; gap:10px; margin-bottom:10px; cursor:pointer;"><input type="radio" name="question_${pIdx}" value="${opt}"> ${opt}</label>`; });
-                        html += `</div>`;
-                    });
-                    html += `</div>`;
-                }
+
+                        if (p.opciones) {
+                            p.opciones.forEach((opt) => {
+                                let contenidoOpcion = opt;
+                                // DETECCIÓN AUTOMÁTICA DE IMÁGENES EN LAS RESPUESTAS (A1)
+                                if (typeof opt === 'string' && (opt.toLowerCase().endsWith('.png') || opt.toLowerCase().endsWith('.jpg') || opt.toLowerCase().endsWith('.jpeg'))) {
+                                    // Limpiamos el nombre de la imagen y construimos su ruta en Storage
+                                    let nombreImg = opt.trim();
+                                    contenidoOpcion = `<img src="niveles/${currentLevel}/imagenes/${nombreImg}" alt="Option" style="max-width: 150px; max-height: 120px; border: 1px solid #ddd; border-radius: 6px; padding: 4px; background: white; margin-left: 5px; display: inline-block; vertical-align: middle;">`;
+                                }
+                                html += `<label style="display:flex; align-items:center; gap:10px; margin-bottom:12px; cursor:pointer;"><input type="radio" name="question_${pIdx}" value="${opt}"> <span>${contenidoOpcion}</span></label>`;
+                            });
+                        }
                 
                 html += `
                 <div style="display:flex; justify-content:flex-end; margin-top:15px;" id="contenedor-acciones-ejercicio">
