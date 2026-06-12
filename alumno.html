@@ -778,21 +778,7 @@
                     }
                 });
 
-                // CORRECCIÓN: Usar el nombre real de la base de datos. Si no existe, se usa el número por defecto.
-let nombreUnidadReal = u.nombre || u.titulo || `Unité ${uId.replace(/\D/g, '')}`;
-
-wrapper.innerHTML = `<button class="unit-toggle-btn ${currentUnitId === uId ? 'active' : ''}" onclick="window.toggleUnitMenu('${uId}')"><span><i class="fas fa-book"></i> ${nombreUnidadReal}</span>${iconoUnidad}</button>`;;
-
-                ejH.forEach((ej, eIdx) => {
-                    const esCompleto = mapaAciertosAlumno[`${uId}_${currentSkill}_${eIdx}`] === true;
-                    sub.innerHTML += `
-                        <button class="activity-link-btn ${currentUnitId === uId && currentExerciseIndex === eIdx ? 'active' : ''}" onclick="window.cargarActividadDirecta('${uId}', ${eIdx})">
-                            <i class="fas ${esCompleto ? 'fa-check' : 'fa-play'}" style="${esCompleto ? 'color:var(--green)' : ''}"></i> Activité ${eIdx + 1}
-                        </button>`;
-                });
-                wrapper.appendChild(sub); menuContainer.appendChild(wrapper);
-            });
-        }
+                
 
         window.toggleUnitMenu = (uId) => { openUnitsState[uId] = !openUnitsState[uId]; generarMenuJerarquico(); };
         window.cargarActividadDirecta = (uId, eIdx) => { currentUnitId = uId; currentExerciseIndex = eIdx; openUnitsState[uId] = true; generarMenuJerarquico(); window.renderExerciseStructure(); };
@@ -806,7 +792,11 @@ wrapper.innerHTML = `<button class="unit-toggle-btn ${currentUnitId === uId ? 'a
 
             const check = (clave) => (mapaAciertosAlumno && mapaAciertosAlumno[clave]) ? 'checked' : '';
             const iconCheck = (clave) => (mapaAciertosAlumno && mapaAciertosAlumno[clave]) ? 'fas fa-check-circle' : 'far fa-circle';
+// CORRECCIÓN: Ir a buscar la llave dinámica 'tema_PE', 'tema_CO', etc., creada por procesar.py
+                let llaveTemaDinamico = `tema_${currentSkill}`;
+                let nombreUnidadReal = u[llaveTemaDinamico] || u["unidad"] || `Unité ${uId.replace(/\D/g, '')}`;
 
+                wrapper.innerHTML = `<button class="unit-toggle-btn ${currentUnitId === uId ? 'active' : ''}" onclick="window.toggleUnitMenu('${uId}')"><span><i class="fas fa-book"></i> ${nombreUnidadReal}</span>${iconoUnidad}</button>`;
             let checklistHTML = '';
             if (currentLevel === "B1") {
                 checklistHTML = `
