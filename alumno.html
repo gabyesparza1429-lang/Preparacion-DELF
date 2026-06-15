@@ -1072,22 +1072,21 @@
                     ej.preguntas.forEach((p, pIdx) => {
                         html += `<div class="pregunta-block" id="block-preg-${pIdx}"><p style="margin:0 0 12px 0; font-weight:600;"><span id="status-icon-target-${pIdx}"></span><span>${p.pregunta}</span></p>`;
 
-                        if (p.opciones) {
+                    if (p.opciones) {
                             p.opciones.forEach((opt) => {
                                 let contenidoOpcion = opt;
                                 
-                                // CORRECCIÓN EXCLUSIVA PARA IMÁGENES DE NIVEL A1
-                                if (typeof opt === 'string' && (opt.toLowerCase().includes('.png') || opt.toLowerCase().endsWith('.jpg') || opt.toLowerCase().endsWith('.jpeg'))) {
-                                    let nombreImg = opt.trim();
-                                    let descripcionLimpia = nombreImg.replace(/\.(png|jpg|jpeg)$/i, '').replace(/[-_]/g, ' ');
+                                // LIMPIEZA TOTAL PARA MOSTRAR SOLO LA DESCRIPCIÓN EN TEXTO
+                                if (typeof opt === 'string' && opt.includes('|')) {
+                                    let partes = opt.split('|');
+                                    let letraOpcion = partes[0].replace(/\.(png|jpg|jpeg)/i, '').trim(); // Deja solo la A, B o C
+                                    let descripcionTexto = partes[1] ? partes[1].trim() : '';
                                     
-                                    contenidoOpcion = `
-                                        <div style="display: flex; flex-direction: column; align-items: center; gap: 6px; margin-top: 5px;">
-                                            <img src="niveles/${currentLevel}/imagenes/${nombreImg}" alt="${descripcionLimpia}" style="max-width: 150px; max-height: 120px; border: 1px solid #ddd; border-radius: 6px; padding: 4px; background: white;">
-                                            <span style="font-size: 0.8rem; color: #555; font-weight: 500; text-transform: capitalize;">${descripcionLimpia}</span>
-                                        </div>`;
+                                    // Juntamos la letra con su significado de forma elegante
+                                    contenidoOpcion = `<strong>${letraOpcion} :</strong> ${descripcionTexto}`;
                                 }
-                                html += `<label style="display:flex; align-items:center; gap:10px; margin-bottom:15px; cursor:pointer;"><input type="radio" name="question_${pIdx}" value="${opt}"> <span>${contenidoOpcion}</span></label>`;
+                                
+                                html += `<label style="display:flex; align-items:center; gap:12px; margin-bottom:14px; cursor:pointer; font-size:0.95rem; color:#333;"><input type="radio" name="question_${pIdx}" value="${opt}"> <span>${contenidoOpcion}</span></label>`;
                             });
                         }
                         html += `</div>`;
