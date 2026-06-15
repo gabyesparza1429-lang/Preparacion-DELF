@@ -1077,7 +1077,7 @@
                                 let contenidoOpcion = opt;
                                 
                                 // CORRECCIÓN EXCLUSIVA PARA IMÁGENES DE NIVEL A1
-                                if (typeof opt === 'string' && (opt.toLowerCase().endsWith('.png') || opt.toLowerCase().endsWith('.jpg') || opt.toLowerCase().endsWith('.jpeg'))) {
+                                if (typeof opt === 'string' && (opt.toLowerCase().includes('.png') || opt.toLowerCase().endsWith('.jpg') || opt.toLowerCase().endsWith('.jpeg'))) {
                                     let nombreImg = opt.trim();
                                     let descripcionLimpia = nombreImg.replace(/\.(png|jpg|jpeg)$/i, '').replace(/[-_]/g, ' ');
                                     
