@@ -584,7 +584,7 @@
 
                 <div id="dynamic-workspace-target">
                     <div style="text-align: center; padding: 60px; color: var(--oxford);">
-                        <p style="font-weight: 600;">Veuillez choisir une activité dans le menu de gauche pourEmmanuel.</p>
+                        <p style="font-weight: 600;">Veuillez choisir une activité dans le menu de gauche pour commencer.</p>
                     </div>
                 </div>
             </div>
@@ -760,6 +760,9 @@
             }
         }
 
+        // ========================================================
+        // ETIQUETA: MENÚ JERÁRQUICO LATERAL DINÁMICO (PROTEGIDO)
+        // ========================================================
         function generarMenuJerarquico() {
             const menuContainer = document.getElementById('sidebar-dynamic-menu');
             menuContainer.innerHTML = "";
@@ -780,7 +783,6 @@
 
                 let iconoUnidad = unidadCompletada ? '<i class="fas fa-check-circle" style="color:var(--green)"></i>' : `<i class="fas ${isUnitOpen ? 'fa-chevron-down' : 'fa-chevron-right'}"></i>`;
 
-                // 1. AQUÍ VA EL TEMA DINÁMICO CORREGIDO Y SEGURO DESDE FIREBASE
                 let llaveTemaDinamico = `tema_${currentSkill}`;
                 let ID_Limpio = uId ? uId.replace(/\D/g, '') : '';
                 let nombreUnidadReal = (u && u[llaveTemaDinamico]) ? u[llaveTemaDinamico] : `Unité ${ID_Limpio}`;
@@ -803,11 +805,14 @@
         window.toggleUnitMenu = (uId) => { openUnitsState[uId] = !openUnitsState[uId]; generarMenuJerarquico(); };
         window.cargarActividadDirecta = (uId, eIdx) => { currentUnitId = uId; currentExerciseIndex = eIdx; openUnitsState[uId] = true; generarMenuJerarquico(); window.renderExerciseStructure(); };
 
+        // ========================================================
+        // ETIQUETA: INTERFAZ CARNET DE COMPETENCIAS REALES
+        // ========================================================
         function renderCarnetInterfaceReal() {
             const isBasic = currentLevel.startsWith('A');
             const descCO = isBasic ? "Comprendre des expressions fréquentes. / Comprender expresiones." : "Peut comprendre les points principaux d'une intervention claire (école, travail).";
             const descCE = isBasic ? "Lire des textes courts. / Leer textos cortos." : "Peut comprendre des textes rédigés essentiellement dans une langue courante.";
-            const descPE = isBasic ? "Écrire des messages simples. / Escribir mensajes." : "Peut écrire un text suivi simple et articulé sur des sujets familiers.";
+            const descPE = isBasic ? "Écrire des messages simples. / Escribir mensajes." : "Peut écrire un texte suivi simple et articulé sur des sujets familiers.";
             const descPO = isBasic ? "S'exprimer en situation simple. / Expresarse en situations cotidianas." : "Peut s'exprimer de manière cohérente sur des expériences ou proyectos.";
 
             const check = (clave) => (mapaAciertosAlumno && mapaAciertosAlumno[clave]) ? 'checked' : '';
@@ -846,7 +851,7 @@
                         <div class="carnet-descriptor-box"><strong>Objectif B1 :</strong> ${descPO}</div>
                         <div class="carnet-checklist">
                             <div class="checklist-item ${check('B1_PO_EXPOSÉ')}"><i class="${iconCheck('B1_PO_EXPOSÉ')}"></i> Présenter un thème ou problème de société</div>
-                            <div class="checklist-item ${check('B1_PO_DÉBAT')}"><i class="${iconCheck('B1_PO_DÉBAT')}"></i> Argumenter lors d'un jeu de rôle or interaction</div>
+                            <div class="checklist-item ${check('B1_PO_DÉBAT')}"><i class="${iconCheck('B1_PO_DÉBAT')}"></i> Argumenter lors d'un juego de rol or interaction</div>
                         </div>
                     </div>
                 </div>`;
@@ -889,6 +894,9 @@
                 ${checklistHTML}`;
         }
         
+        // ========================================================
+        // ETIQUETA: MOTOR PRINCIPAL DE RENDERIZADO DE EXTRACCIONES
+        // ========================================================
         window.renderExerciseStructure = function() {
             const target = document.getElementById('dynamic-workspace-target');
             if (currentUnitId === null || !unidadesCache[currentUnitId]) return;
@@ -909,7 +917,6 @@
 
             let html = `<div class="exercise-card">${zoneHTML}<h4 style="margin-top:0; color:var(--oxford); font-weight:700; margin-bottom: 20px;">${tituloInstruccion}</h4>`;
 
-            // ELIMINACIÓN DEL REPRODUCTOR EN PRODUCCIÓN ORALE (PO)
             if (ej.ruta_audio && window.currentSkill !== "PO") {
                 html += `<div style="background:#f1f3f5; padding:15px; border-radius:8px; margin-bottom:20px; text-align:center;"><div class="audio-counter-badge"><i class="fas fa-headphones"></i><span id="audio-count-label">Écoutes / Escuchas : 0 / 2</span></div><div id="${audioId}">Loading...</div></div>`;
             }
@@ -964,6 +971,7 @@
                 </div>`;
                 
             } else if (ej.preguntas && ej.preguntas.length > 0) {
+                // SECCIÓN B1: DETECCIÓN DE MATRIZ INTELÍGIBLE (INTACTA Y BLINDADA)
                 const esMatrizB1 = ej.preguntas[0].opciones.includes("Oui") || ej.preguntas[0].opciones.includes("Non");
                 
                 if (esMatrizB1 && ej.texto_lectura) {
@@ -1064,7 +1072,8 @@
 
                     html += `</div>`;
 
-               } else {
+                } else {
+                    // SECCIÓN SEGUNDA: COMPETENCIAS TEXTUALES COMUNES / ESCUDO ACCESIBLE
                     if (ej.texto_lectura) {
                         html += `<div style="background:#f8f9fa; border-left:4px solid var(--gold); padding:20px; margin-bottom:25px;"><strong>Document :</strong><br><br>${window.convertirTextoInteractivo(ej.texto_lectura)}</div>`;
                     }
@@ -1072,18 +1081,34 @@
                     ej.preguntas.forEach((p, pIdx) => {
                         html += `<div class="pregunta-block" id="block-preg-${pIdx}"><p style="margin:0 0 12px 0; font-weight:600;"><span id="status-icon-target-${pIdx}"></span><span>${p.pregunta}</span></p>`;
 
-                    if (p.opciones) {
+                        if (p.opciones) {
                             p.opciones.forEach((opt) => {
                                 let contenidoOpcion = opt;
                                 
-                                // LIMPIEZA TOTAL PARA MOSTRAR SOLO LA DESCRIPCIÓN EN TEXTO
-                                if (typeof opt === 'string' && opt.includes('|')) {
-                                    let partes = opt.split('|');
-                                    let letraOpcion = partes[0].replace(/\.(png|jpg|jpeg)/i, '').trim(); // Deja solo la A, B o C
-                                    let descripcionTexto = partes[1] ? partes[1].trim() : '';
+                                if (typeof opt === 'string') {
+                                    let textoTraducido = opt;
                                     
-                                    // Juntamos la letra con su significado de forma elegante
-                                    contenidoOpcion = `<strong>${letraOpcion} :</strong> ${descripcionTexto}`;
+                                    // 1. Romper por barra vertical si viene acoplada de Python
+                                    if (opt.includes('|')) {
+                                        let partes = opt.split('|');
+                                        textoTraducido = partes[1] ? partes[1].trim() : partes[0].trim();
+                                    }
+                                    
+                                    // 2. ESCUDO: Borrar nombres de archivos, códigos de imágenes y extensiones
+                                    let textoLimpio = textoTraducido
+                                        .replace(/\.(png|jpg|jpeg|gif)/i, '')
+                                        .replace(/activit[eé]\s*\d*_*q\d*_*[a-z]*/i, '')
+                                        .replace(/[-_]/g, ' ')
+                                        .trim();
+                                    
+                                    // 3. ANTI-TRAMPAS: Borrar de tajo la pista soplada por la IA
+                                    textoLimpio = textoLimpio
+                                        .replace(/\(?r[eé]ponse\s+correcte\)?/i, '')
+                                        .replace(/\(?correct\s+answer\)?/i, '')
+                                        .trim();
+                                    
+                                    // Formato estético: Primera letra mayúscula, el resto minúscula
+                                    contenidoOpcion = textoLimpio.charAt(0).toUpperCase() + textoLimpio.slice(1);
                                 }
                                 
                                 html += `<label style="display:flex; align-items:center; gap:12px; margin-bottom:14px; cursor:pointer; font-size:0.95rem; color:#333;"><input type="radio" name="question_${pIdx}" value="${opt}"> <span>${contenidoOpcion}</span></label>`;
@@ -1093,7 +1118,7 @@
                     });
                     html += `</div>`;
                 }
-                                
+                
                 html += `
                 <div style="display:flex; justify-content:flex-end; margin-top:15px;" id="contenedor-acciones-ejercicio">
                     <button class="nav-tab-btn" id="btn-submit-exercise" style="width:auto; background:var(--oxford); color:white; padding:10px 22px;">Envoyer</button>
@@ -1110,7 +1135,7 @@
             
             target.innerHTML = html;
 
-            // DISPARADOR DE AUDIO (Reparado para Compréhension Orale)
+            // ACTIVACIÓN AUTOMÁTICA DEL DISPARADOR DE AUDIO (FIREBASE STORAGE)
             if (ej.ruta_audio && window.currentSkill !== "PO") {
                 let track = (ej.ruta_audio.match(/\d+/) || ["02"])[0].padStart(2, '0');
                 getDownloadURL(ref(storage, `niveles/${currentLevel}/audios/${track.slice(-2)}.mp3`)).then(url => {
