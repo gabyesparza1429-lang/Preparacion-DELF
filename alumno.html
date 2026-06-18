@@ -986,7 +986,23 @@
                     html += `<div style="background:#f8f9fa; border-left:4px solid var(--gold); padding:20px; margin-bottom:25px;"><strong>Document :</strong><br><br>${window.convertirTextoInteractivo(ej.texto_lectura)}</div>`;
                 }
 
-                // DETECCIÓN INTERACTIVA DE TARJETAS (ORAL CARDS)
+                // 1. FORMA DE PO: INTERACTIVA / ENTRETIEN DIRIGÉ (PREGUNTAS EN PANTALLA)
+                if (ej.tipo === "oral_interaction" && ej.preguntas && ej.preguntas.length > 0) {
+                    html += `
+                    <div style="margin-bottom: 25px; background: #fff; border: 1px solid #e0e6ed; border-radius: 8px; padding: 20px;">
+                        <p style="color: var(--oxford); font-weight: 600; font-size: 0.95rem; margin-bottom: 15px; border-bottom: 2px dashed var(--gold); padding-bottom: 8px;">
+                            <i class="fas fa-comments"></i> Questions de l'examinateur (Répondez à l'oral) :
+                        </p>
+                        <ul style="padding-left: 20px; color: #333; line-height: 1.6; font-size: 0.95rem;">`;
+                    
+                    ej.preguntas.forEach((p) => {
+                        html += `<li style="margin-bottom: 10px; font-weight: 500;">${p.pregunta}</li>`;
+                    });
+                    
+                    html += `</ul></div>`;
+                }
+
+                // 2. FORMA DE PO: ÉCHANGE D'INFORMATIONS (TARJETAS VISUALES)
                 if (ej.tipo === "oral_cards" && ej.campos_formulario && ej.campos_formulario.length > 0) {
                     html += `
                     <div style="margin-bottom: 25px;">
@@ -1007,10 +1023,14 @@
                     </div>`;
                 }
 
+                // 3. BOTÓN DE GRABACIÓN COMÚN PARA EL ALUMNO
                 html += `
                 <div style="margin-bottom:20px; text-align:center; background:#fafbfc; padding:30px; border-radius:8px; border:1px dashed #ccc;">
                     <button id="btn-record-po" class="btn-mic" style="padding:12px 30px; font-size:1rem;"><i class="fas fa-microphone"></i> Commencer l'enregistrement</button>
                 </div>`;
+                
+            } else if (ej.preguntas && ej.preguntas.length > 0) {
+                // SECCIÓN B1: DETECCIÓN DE MATRIZ INTELÍGIBLE (INTACTA Y BLINDADA)
                 // SECCIÓN B1: DETECCIÓN DE MATRIZ INTELÍGIBLE (INTACTA Y BLINDADA)
                 const esMatrizB1 = ej.preguntas[0].opciones.includes("Oui") || ej.preguntas[0].opciones.includes("Non");
                 
