@@ -526,6 +526,56 @@
             border-radius: 4px;
             font-size: 0.95rem;
         }
+
+        /* ESTILOS NUEVOS PARA LA INTRODUCCIÓN PEDAGÓGICA */
+        .intro-skill-card {
+            background: white;
+            border-top: 4px solid var(--oxford);
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+            margin-bottom: 20px;
+        }
+        .intro-skill-title {
+            color: var(--oxford);
+            font-weight: 700;
+            font-size: 1.3rem;
+            margin-top: 0;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .intro-grid-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 15px;
+        }
+        .intro-sub-box {
+            background: #fdfefe;
+            border: 1px solid #eef2f5;
+            border-left: 3px solid var(--gold);
+            padding: 15px;
+            border-radius: 4px;
+        }
+        .intro-sub-box h5 {
+            margin: 0 0 10px 0;
+            color: var(--oxford);
+            font-size: 0.9rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+        .intro-sub-box ul {
+            margin: 0;
+            padding-left: 18px;
+            font-size: 0.85rem;
+            color: #444;
+            line-height: 1.5;
+        }
+        .intro-sub-box ul li {
+            margin-bottom: 6px;
+        }
     </style>
 </head>
 <body>
@@ -583,10 +633,7 @@
                 </div>
 
                 <div id="dynamic-workspace-target">
-                    <div style="text-align: center; padding: 60px; color: var(--oxford);">
-                        <p style="font-weight: 600;">Veuillez choisir une activité dans le menu de gauche pour commencer.</p>
                     </div>
-                </div>
             </div>
         </div>
     </div>
@@ -722,29 +769,108 @@
             if (tab === 'parcours') {
                 document.getElementById('tab-parcours').classList.add('active');
                 document.getElementById('parcours-controls-container').style.display = "flex";
-                document.getElementById('dynamic-workspace-target').innerHTML = `
-                    <div style="text-align: center; padding: 60px; color: var(--oxford);">
-                        <p style="font-weight: 600;">Veuillez choisir une activité dans le menu de gauche pour commencer.</p>
-                    </div>`;
+                window.mostrarExplicacionHabilidadInicial(currentSkill);
             }
             if (tab === 'carnet') document.getElementById('tab-carnet').classList.add('active');
             renderActiveInterface();
         };
 
+        // ========================================================
+        // ETIQUETA: CONTROLADOR DE FILTRADO DE HABILIDADES Y MICRO
+        // ========================================================
         window.setSkillFilter = (skill) => {
             currentSkill = skill; window.currentSkill = skill; currentUnitId = null; currentExerciseIndex = 0;
             document.querySelectorAll('.skill-tab-btn').forEach(btn => btn.classList.remove('active'));
             const activeBtn = document.getElementById(`skill-${skill}`); if (activeBtn) activeBtn.classList.add('active');
             
-            const target = document.getElementById('dynamic-workspace-target');
-            if (target) {
-                target.innerHTML = `
-                    <div style="text-align: center; padding: 60px; color: var(--oxford);">
-                        <p style="font-weight: 600;">Veuillez choisir une activité dans le menu de gauche.</p>
-                    </div>`;
+            // DISPARADOR DE INTRODUCCIÓN PEDAGÓGICA AUTOMÁTICA
+            window.mostrarExplicacionHabilidadInicial(skill);
+
+            // PRE-AUTORIZACIÓN DEL MICRÓFONO EN PO PARA EVITAR RETRASOS
+            if (skill === "PO") {
+                navigator.mediaDevices.getUserMedia({ audio: true })
+                    .then((stream) => {
+                        stream.getTracks().forEach(track => track.stop());
+                        console.log("Microphone pré-autorisé avec succès.");
+                    })
+                    .catch((err) => {
+                        console.warn("Le microphone n'a pas été autorisé ou n'est pas connecté :", err);
+                    });
             }
+
             calcularTodasLasNotasHabilidades();
             renderActiveInterface();
+        };
+
+        // ========================================================
+        // ETIQUETA: INTERFAZ DINÁMICA DE BIENVENIDA POR COMPETENCIA
+        // ========================================================
+        window.mostrarExplicacionHabilidadInicial = function(skill) {
+            const target = document.getElementById('dynamic-workspace-target');
+            if (!target) return;
+
+            let datosIntro = {
+                CO: {
+                    titulo: "Compréhension de l'oral (CO)",
+                    icono: "fa-headphones",
+                    color: "#1a73e8",
+                    objetivos: ["Comprendre des messages enregistrés simples de la vie quotidienne.", "Saisir les informations essentielles d'un dialogue court (nombres, heures, lieux, objets)."],
+                    ejercicios: ["Association d'images avec des situations entendues.", "Sélection d'options Oui/Non basées sur des illustrations.", "Questionnaires à choix multiples (QCM)."],
+                    consejos: ["Lisez attentivement les consignes et observez bien les dessins avant l'écoute.", "Concentrez-vous sur les mots transparents et les chiffres."]
+                },
+                CE: {
+                    titulo: "Compréhension des écrits (CE)",
+                    icono: "fa-file-alt",
+                    color: "#34a853",
+                    objetivos: ["Comprendre des documents écrits très courts et simples.", "Repérer des informations spécifiques dans des annonces, prospectus, menus ou lettres."],
+                    ejercicios: ["Analyse de critères avec des grilles de sélection Oui/Non (Matrice).", "Lecture de courts messages conviviaux et panneaux d'orientation."],
+                    consejos: ["Lisez d'abord les questions avant de lire le document textuel complet.", "Ne bloquez pas sur un mot inconnu, déduisez le sens global de la phrase."]
+                },
+                PE: {
+                    titulo: "Production écrite (PE)",
+                    icono: "fa-pen-fancy",
+                    color: "#fbbc05",
+                    objetivos: ["Remplir une fiche de renseignements personnels ou un formulaire d'inscription.", "Rédiger un court message simple (carte postale, courriel) pour inviter, remercier ou s'excuser."],
+                    ejercicios: ["Formulaires d'inscription interactifs rattachés à des fiches réelles.", "Cajas de redacción estructurada con barra integrada de acentos franceses."],
+                    consejos: ["Respectez strictement la consigne et le nombre de mots demandé.", "Utilisez les formules de politesse adaptées (Amicalement, Salut, Bisous)."]
+                },
+                PO: {
+                    titulo: "Production orale (PO)",
+                    icono: "fa-microphone",
+                    color: "#ea4335",
+                    objetivos: ["Se présenter et répondre à des questions sur son identité, sa famille et ses goûts.", "Poser des questions simples à partir de mots-clés ou de cartes stimulantes.", "Mener un jeu de rôle ou une interaction en contexte de service (achat, hôtel)."],
+                    ejercicios: ["Entretien dirigé par l'examinateur virtuel.", "Cartes de vocabulaire interactives (Échange d'informations).", "Dialogues interactifs guidés par l'intelligence artificielle de Sophia."],
+                    consejos: ["N'ayez pas peur de parler! Sophia est là pour vous guider de manière bienveillante.", "Pensez à pré-autoriser votre micro avant de commencer."]
+                }
+            };
+
+            let skInfo = datosIntro[skill];
+            
+            let htmlIntro = `
+            <div class="intro-skill-card" style="border-top-color: ${skInfo.color};">
+                <h4 class="intro-skill-title"><i class="fas ${skInfo.icono}" style="color:${skInfo.color};"></i> ${skInfo.titulo}</h4>
+                <p style="font-size: 0.92rem; color: #555; line-height: 1.5; margin-bottom: 20px;">
+                    Bienvenue dans votre espace d'entraînement. Veuillez lire les détails officiels de cette compétence ci-dessous, puis sélectionnez une activité dans le menu de gauche pour démarrer votre simulation DELF.
+                </p>
+                
+                <div class="intro-grid-section">
+                    <div class="intro-sub-box">
+                        <h5><i class="fas fa-bullseye"></i> Objectifs Officiels</h5>
+                        <ul>${skInfo.objetivos.map(o => `<li>${o}</li>`).join('')}</ul>
+                    </div>
+                    <div class="intro-sub-box">
+                        <h5><i class="fas fa-tasks"></i> Types d'exercices</h5>
+                        <ul>${skInfo.ejercicios.map(e => `<li>${e}</li>`).join('')}</ul>
+                    </div>
+                </div>
+                
+                <div class="intro-sub-box" style="margin-top:20px; border-left-color: var(--oxford);">
+                    <h5><i class="fas fa-lightbulb"></i> Conseils de réussite</h5>
+                    <ul>${skInfo.consejos.map(c => `<li>${c}</li>`).join('')}</ul>
+                </div>
+            </div>`;
+            
+            target.innerHTML = htmlIntro;
         };
 
         function renderActiveInterface() {
@@ -760,9 +886,6 @@
             }
         }
 
-        // ========================================================
-        // ETIQUETA: MENÚ JERÁRQUICO LATERAL DINÁMICO (PROTEGIDO)
-        // ========================================================
         function generarMenuJerarquico() {
             const menuContainer = document.getElementById('sidebar-dynamic-menu');
             menuContainer.innerHTML = "";
@@ -803,11 +926,21 @@
         }
 
         window.toggleUnitMenu = (uId) => { openUnitsState[uId] = !openUnitsState[uId]; generarMenuJerarquico(); };
-        window.cargarActividadDirecta = (uId, eIdx) => { currentUnitId = uId; currentExerciseIndex = eIdx; openUnitsState[uId] = true; generarMenuJerarquico(); window.renderExerciseStructure(); };
+        window.cargarActividadDirecta = (uId, eIdx) => { 
+            currentUnitId = uId; 
+            currentExerciseIndex = eIdx; 
+            openUnitsState[uId] = true; 
+            generarMenuJerarquico(); 
+            window.renderExerciseStructure(); 
 
-        // ========================================================
-        // ETIQUETA: INTERFAZ CARNET DE COMPETENCIAS REALES
-        // ========================================================
+            // Pre-autorización automática al cargar ejercicio directo si es PO
+            if (window.currentSkill === "PO") {
+                navigator.mediaDevices.getUserMedia({ audio: true })
+                    .then((stream) => { stream.getTracks().forEach(track => track.stop()); })
+                    .catch((err) => { console.warn(err); });
+            }
+        };
+
         function renderCarnetInterfaceReal() {
             const isBasic = currentLevel.startsWith('A');
             const descCO = isBasic ? "Comprendre des expressions fréquentes. / Comprender expresiones." : "Peut comprendre les points principaux d'une intervention claire (école, travail).";
@@ -894,9 +1027,6 @@
                 ${checklistHTML}`;
         }
         
-        // ========================================================
-        // ETIQUETA: MOTOR PRINCIPAL DE RENDERIZADO DE EXTRACCIONES
-        // ========================================================
         window.renderExerciseStructure = function() {
             const target = document.getElementById('dynamic-workspace-target');
             if (currentUnitId === null || !unidadesCache[currentUnitId]) return;
@@ -930,7 +1060,6 @@
                     ${consigneLimpia}
                 </div>`;
 
-                // CONDICIONAL INTERACTIVA: ¿FORMULARIO O TEXTO LIBRE?
                 if (ej.tipo === "formulario" && ej.campos_formulario && ej.campos_formulario.length > 0) {
                     html += `
                     <div style="background: white; border: 1px solid #e0e6ed; border-radius: 8px; padding: 25px; box-shadow: 0 4px 10px rgba(0,0,0,0.02); margin-bottom: 20px;">
@@ -951,7 +1080,6 @@
                         </div>
                     </div>`;
                 } else {
-                    // Si no es formulario, dibuja el texto libre tradicional
                     if (ej.texto_lectura) {
                         html += `
                         <div style="background: #f4f6f9; border-left: 4px solid var(--gold); padding: 20px; margin-bottom: 20px; border-radius: 6px; box-shadow: 0 2px 5px rgba(0,0,0,0.02);">
@@ -981,12 +1109,12 @@
                     <button class="nav-tab-btn" id="btn-submit-pe" style="width:auto; background:var(--oxford); color:white; padding:10px 22px;"><i class="fas fa-paper-plane"></i> Soumettre la production</button>
                 </div>`;
                 
-           } else if (window.currentSkill === "PO") {
+            } else if (window.currentSkill === "PO") {
                 if (ej.texto_lectura) {
                     html += `<div style="background:#f8f9fa; border-left:4px solid var(--gold); padding:20px; margin-bottom:25px;"><strong>Document :</strong><br><br>${window.convertirTextoInteractivo(ej.texto_lectura)}</div>`;
                 }
 
-                // 1. FORMA DE PO: INTERACTIVA / ENTRETIEN DIRIGÉ (PREGUNTAS EN PANTALLA)
+                // 1. FORMATO DE PO: INTERACTIVA / ENTRETIEN DIRIGÉ (PREGUNTAS EN PANTALLA)
                 if (ej.tipo === "oral_interaction" && ej.preguntas && ej.preguntas.length > 0) {
                     html += `
                     <div style="margin-bottom: 25px; background: #fff; border: 1px solid #e0e6ed; border-radius: 8px; padding: 20px;">
@@ -1002,7 +1130,7 @@
                     html += `</ul></div>`;
                 }
 
-                // 2. FORMA DE PO: ÉCHANGE D'INFORMATIONS (TARJETAS VISUALES)
+                // 2. FORMATO DE PO: ÉCHANGE D'INFORMATIONS (TARJETAS VISUALES)
                 if (ej.tipo === "oral_cards" && ej.campos_formulario && ej.campos_formulario.length > 0) {
                     html += `
                     <div style="margin-bottom: 25px;">
@@ -1023,15 +1151,12 @@
                     </div>`;
                 }
 
-                // 3. BOTÓN DE GRABACIÓN COMÚN PARA EL ALUMNO
                 html += `
                 <div style="margin-bottom:20px; text-align:center; background:#fafbfc; padding:30px; border-radius:8px; border:1px dashed #ccc;">
                     <button id="btn-record-po" class="btn-mic" style="padding:12px 30px; font-size:1rem;"><i class="fas fa-microphone"></i> Commencer l'enregistrement</button>
                 </div>`;
                 
             } else if (ej.preguntas && ej.preguntas.length > 0) {
-                // SECCIÓN B1: DETECCIÓN DE MATRIZ INTELÍGIBLE (INTACTA Y BLINDADA)
-                // SECCIÓN B1: DETECCIÓN DE MATRIZ INTELÍGIBLE (INTACTA Y BLINDADA)
                 const esMatrizB1 = ej.preguntas[0].opciones.includes("Oui") || ej.preguntas[0].opciones.includes("Non");
                 
                 if (esMatrizB1 && ej.texto_lectura) {
@@ -1133,7 +1258,6 @@
                     html += `</div>`;
 
                 } else {
-                    // SECCIÓN SEGUNDA: COMPETENCIAS TEXTUALES COMUNES / ESCUDO ACCESIBLE
                     if (ej.texto_lectura) {
                         html += `<div style="background:#f8f9fa; border-left:4px solid var(--gold); padding:20px; margin-bottom:25px;"><strong>Document :</strong><br><br>${window.convertirTextoInteractivo(ej.texto_lectura)}</div>`;
                     }
@@ -1148,26 +1272,22 @@
                                 if (typeof opt === 'string') {
                                     let textoTraducido = opt;
                                     
-                                    // 1. Romper por barra vertical si viene acoplada de Python
                                     if (opt.includes('|')) {
                                         let partes = opt.split('|');
                                         textoTraducido = partes[1] ? partes[1].trim() : partes[0].trim();
                                     }
                                     
-                                    // 2. ESCUDO: Borrar nombres de archivos, códigos de imágenes y extensiones
                                     let textoLimpio = textoTraducido
                                         .replace(/\.(png|jpg|jpeg|gif)/i, '')
                                         .replace(/activit[eé]\s*\d*_*q\d*_*[a-z]*/i, '')
                                         .replace(/[-_]/g, ' ')
                                         .trim();
                                     
-                                    // 3. ANTI-TRAMPAS: Borrar de tajo la pista soplada por la IA
                                     textoLimpio = textoLimpio
                                         .replace(/\(?r[eé]ponse\s+correcte\)?/i, '')
                                         .replace(/\(?correct\s+answer\)?/i, '')
                                         .trim();
                                     
-                                    // Formato estético: Primera letra mayúscula, el resto minúscula
                                     contenidoOpcion = textoLimpio.charAt(0).toUpperCase() + textoLimpio.slice(1);
                                 }
                                 
@@ -1195,7 +1315,6 @@
             
             target.innerHTML = html;
 
-            // ACTIVACIÓN AUTOMÁTICA DEL DISPARADOR DE AUDIO (FIREBASE STORAGE)
             if (ej.ruta_audio && window.currentSkill !== "PO") {
                 let track = (ej.ruta_audio.match(/\d+/) || ["02"])[0].padStart(2, '0');
                 getDownloadURL(ref(storage, `niveles/${currentLevel}/audios/${track.slice(-2)}.mp3`)).then(url => {
@@ -1380,6 +1499,8 @@
             if (btn) window.setSkillFilter(btn.id.replace('skill-', ''));
         });
 
+        // Iniciar con la explicación predeterminada de CO
+        window.mostrarExplicacionHabilidadInicial("CO");
         init();
     </script>
 </body>
