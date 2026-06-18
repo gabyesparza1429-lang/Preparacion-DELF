@@ -981,16 +981,36 @@
                     <button class="nav-tab-btn" id="btn-submit-pe" style="width:auto; background:var(--oxford); color:white; padding:10px 22px;"><i class="fas fa-paper-plane"></i> Soumettre la production</button>
                 </div>`;
                 
-            } else if (window.currentSkill === "PO") {
+           } else if (window.currentSkill === "PO") {
                 if (ej.texto_lectura) {
                     html += `<div style="background:#f8f9fa; border-left:4px solid var(--gold); padding:20px; margin-bottom:25px;"><strong>Document :</strong><br><br>${window.convertirTextoInteractivo(ej.texto_lectura)}</div>`;
                 }
+
+                // DETECCIÓN INTERACTIVA DE TARJETAS (ORAL CARDS)
+                if (ej.tipo === "oral_cards" && ej.campos_formulario && ej.campos_formulario.length > 0) {
+                    html += `
+                    <div style="margin-bottom: 25px;">
+                        <p style="color: var(--oxford); font-weight: 600; font-size: 0.92rem; margin-bottom: 15px;">
+                            <i class="fas fa-id-card-alt"></i> Cliquez sur une carte pour vous inspirer et poser votre question :
+                        </p>
+                        <div style="display: flex; flex-wrap: wrap; gap: 15px; justify-content: center;">`;
+                    
+                    ej.campos_formulario.forEach((palabraTarjeta) => {
+                        html += `
+                            <div class="delf-oral-card-item" style="background: white; border: 2px solid var(--oxford); border-radius: 6px; padding: 15px 25px; min-width: 100px; text-align: center; font-family: 'Montserrat', sans-serif; font-weight: 600; font-size: 1rem; color: var(--oxford); box-shadow: 0 4px 6px rgba(0,0,0,0.05); cursor: pointer; transition: transform 0.2s, border-color 0.2s;" onclick="this.style.borderColor='var(--gold)'; this.style.transform='scale(1.03)';">
+                                ${palabraTarjeta}
+                            </div>`;
+                    });
+                    
+                    html += `
+                        </div>
+                    </div>`;
+                }
+
                 html += `
                 <div style="margin-bottom:20px; text-align:center; background:#fafbfc; padding:30px; border-radius:8px; border:1px dashed #ccc;">
-                    <button id="btn-record-po" class="btn-mic" style="padding:12px 30px; font-size:1rem;"><i class="fas fa-microphone"></i> Commencer</button>
+                    <button id="btn-record-po" class="btn-mic" style="padding:12px 30px; font-size:1rem;"><i class="fas fa-microphone"></i> Commencer l'enregistrement</button>
                 </div>`;
-                
-            } else if (ej.preguntas && ej.preguntas.length > 0) {
                 // SECCIÓN B1: DETECCIÓN DE MATRIZ INTELÍGIBLE (INTACTA Y BLINDADA)
                 const esMatrizB1 = ej.preguntas[0].opciones.includes("Oui") || ej.preguntas[0].opciones.includes("Non");
                 
