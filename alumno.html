@@ -527,7 +527,6 @@
             font-size: 0.95rem;
         }
 
-        /* ESTILOS NUEVOS PARA LA INTRODUCCIÓN PEDAGÓGICA */
         .intro-skill-card {
             background: white;
             border-top: 4px solid var(--oxford);
@@ -633,7 +632,8 @@
                 </div>
 
                 <div id="dynamic-workspace-target">
-                    </div>
+                    <!-- El motor inyectará la vista aquí -->
+                </div>
             </div>
         </div>
     </div>
@@ -775,18 +775,13 @@
             renderActiveInterface();
         };
 
-        // ========================================================
-        // ETIQUETA: CONTROLADOR DE FILTRADO DE HABILIDADES Y MICRO
-        // ========================================================
         window.setSkillFilter = (skill) => {
             currentSkill = skill; window.currentSkill = skill; currentUnitId = null; currentExerciseIndex = 0;
             document.querySelectorAll('.skill-tab-btn').forEach(btn => btn.classList.remove('active'));
             const activeBtn = document.getElementById(`skill-${skill}`); if (activeBtn) activeBtn.classList.add('active');
             
-            // DISPARADOR DE INTRODUCCIÓN PEDAGÓGICA AUTOMÁTICA
             window.mostrarExplicacionHabilidadInicial(skill);
 
-            // PRE-AUTORIZACIÓN DEL MICRÓFONO EN PO PARA EVITAR RETRASOS
             if (skill === "PO") {
                 navigator.mediaDevices.getUserMedia({ audio: true })
                     .then((stream) => {
@@ -803,44 +798,170 @@
         };
 
         // ========================================================
-        // ETIQUETA: INTERFAZ DINÁMICA DE BIENVENIDA POR COMPETENCIA
+        // ETIQUETA: MOTOR DE INTRODUCCIÓN PEDAGÓGICA BILINGÜE
         // ========================================================
         window.mostrarExplicacionHabilidadInicial = function(skill) {
             const target = document.getElementById('dynamic-workspace-target');
             if (!target) return;
 
+            const isLevelA = currentLevel.startsWith('A');
+
             let datosIntro = {
                 CO: {
-                    titulo: "Compréhension de l'oral (CO)",
+                    titulo: isLevelA ? "Comprensión Auditiva (CO)" : "Compréhension de l'oral (CO)",
                     icono: "fa-headphones",
                     color: "#1a73e8",
-                    objetivos: ["Comprendre des messages enregistrés simples de la vie quotidienne.", "Saisir les informations essentielles d'un dialogue court (nombres, heures, lieux, objets)."],
-                    ejercicios: ["Association d'images avec des situations entendues.", "Sélection d'options Oui/Non basées sur des illustrations.", "Questionnaires à choix multiples (QCM)."],
-                    consejos: ["Lisez attentivement les consignes et observez bien les dessins avant l'écoute.", "Concentrez-vous sur les mots transparents et les chiffres."]
+                    lblBienvenida: isLevelA ? "Bienvenido a tu espacio de entrenamiento." : "Bienvenue dans votre espace d'entraînement.",
+                    lblInstruccion: isLevelA ? "Por favor lee los detalles oficiales de esta competencia, luego selecciona una actividad en el menú de la izquierda para comenzar." : "Veuillez lire les détails officiels de cette compétence ci-dessous, puis sélectionnez une activité dans le menu de gauche pour démarrer.",
+                    titObjetivos: isLevelA ? "Objetivos Oficiales" : "Objectifs Officiels",
+                    titEjercicios: isLevelA ? "Tipos de Ejercicios en el Sistema" : "Types d'exercices",
+                    titConsejos: isLevelA ? "Consejos de Éxito" : "Conseils de réussite",
+                    titIA: isLevelA ? "Interacción con la IA (Sophia)" : "Interaction avec l'IA",
+                    objetivos: isLevelA ? [
+                        "Comprender mensajes grabados simples de la vida cotidiana.",
+                        "Captar la información esencial de un diálogo corto (números, horas, lugares)."
+                    ] : [
+                        "Comprender des messages enregistrés simples de la vie quotidienne.",
+                        "Saisir les informations essentielles d'un dialogue court (nombres, heures, lieux)."
+                    ],
+                    ejercicios: isLevelA ? [
+                        "Asociación de audios con imágenes representativas.",
+                        "Cuestionarios de opción múltiple basados en las grabaciones nativas.",
+                        "Al enviar tus respuestas, el sistema te mostrará automáticamente la transcripción del audio."
+                    ] : [
+                        "Association d'images avec des situations entendues.",
+                        "Questionnaires à choix multiples (QCM).",
+                        "Une fois envoyé, le système déploiera automatiquement la transcription du document."
+                    ],
+                    consejos: isLevelA ? [
+                        "Lee las preguntas y observa con atención las imágenes antes de reproducir el audio.",
+                        "Concéntrate en captar palabras clave y datos numéricos específicos."
+                    ] : [
+                        "Lisez attentivement les consignes et observez bien les dessins avant l'écoute.",
+                        "Concentrez-vous sur les mots transparents et les chiffres."
+                    ],
+                    iaExplicacion: isLevelA ? [
+                        "**Lector de Voz Interactivo:** Después de enviar el ejercicio, podrás dar clic en cualquier palabra de la transcripción para que Sophia te explique en español su significado lingüístico.",
+                        "**Verificación de Pronunciación:** Puedes activar el micrófono en la transcripción para leer el texto en francés en voz alta; Sophia marcará en rojo las palabras que debas mejorar."
+                    ] : [
+                        "**Lecteur de contexte:** Cliquez sur n'importe quel mot de la transcription pour recevoir une explication linguistique.",
+                        "**Analyse de prononciation:** Activez le micro pour lire à haute voix, les erreurs seront surlignées en rouge."
+                    ]
                 },
                 CE: {
-                    titulo: "Compréhension des écrits (CE)",
+                    titulo: isLevelA ? "Comprensión Lectora (CE)" : "Compréhension des écrits (CE)",
                     icono: "fa-file-alt",
                     color: "#34a853",
-                    objetivos: ["Comprendre des documents écrits très courts et simples.", "Repérer des informations spécifiques dans des annonces, prospectus, menus ou lettres."],
-                    ejercicios: ["Analyse de critères avec des grilles de sélection Oui/Non (Matrice).", "Lecture de courts messages conviviaux et panneaux d'orientation."],
-                    consejos: ["Lisez d'abord les questions avant de lire le document textuel complet.", "Ne bloquez pas sur un mot inconnu, déduisez le sens global de la phrase."]
+                    lblBienvenida: isLevelA ? "Bienvenido a tu espacio de entrenamiento." : "Bienvenue dans votre espace d'entraînement.",
+                    lblInstruccion: isLevelA ? "Por favor lee los detalles oficiales de esta competencia, luego selecciona una actividad en el menú de la izquierda para comenzar." : "Veuillez lire les détails officiels de cette compétence ci-dessous, puis sélectionnez une activité dans le menu de gauche pour démarrer.",
+                    titObjetivos: isLevelA ? "Objetivos Oficiales" : "Objectifs Officiels",
+                    titEjercicios: isLevelA ? "Tipos de Ejercicios en el Sistema" : "Types d'exercices",
+                    titConsejos: isLevelA ? "Consejos de Éxito" : "Conseils de réussite",
+                    titIA: isLevelA ? "Interacción con la IA (Sophia)" : "Interaction avec l'IA",
+                    objetivos: isLevelA ? [
+                        "Comprender documentos escritos muy cortos y sencillos.",
+                        "Localizar información específica en anuncios, menús, correos o folletos."
+                    ] : [
+                        "Comprendre des documents écrits très courts et simples.",
+                        "Repérer des informations spécifiques dans des annonces, prospectus ou lettres."
+                    ],
+                    ejercicios: isLevelA ? [
+                        "Cuestionarios tradicionales de opción múltiple.",
+                        "Matrices de validación Oui/Non (diseñadas especialmente para la simulación de criterios cruzados del DELF)."
+                    ] : [
+                        "Questionnaires traditionnels à choix multiples.",
+                        "Matrices de validation Oui/Non (sélection de critères croisés du DELF)."
+                    ],
+                    consejos: isLevelA ? [
+                        "Lee primero las preguntas antes de sumergirte en el texto completo.",
+                        "No te detengas ante una palabra desconocida, busca entender el contexto general de la oración."
+                    ] : [
+                        "Lisez d'abord les questions avant de lire le document textuel complet.",
+                        "Ne bloquez pas sur un mot inconnu, déduisez le sens global de la phrase."
+                    ],
+                    iaExplicacion: isLevelA ? [
+                        "**Glosario Inteligente:** Al leer el documento, si seleccionas una frase o das doble clic sobre una palabra difícil, Sophia abrirá de inmediato un panel lateral con su traducción y desglose gramatical en español."
+                    ] : [
+                        "**Glossaire Interactif:** Sélectionnez une phrase ou un mot difficile pour ouvrir instantanément l'analyse linguistique de Sophia."
+                    ]
                 },
                 PE: {
-                    titulo: "Production écrite (PE)",
+                    titulo: isLevelA ? "Producción Escrita (PE)" : "Production écrite (PE)",
                     icono: "fa-pen-fancy",
                     color: "#fbbc05",
-                    objetivos: ["Remplir une fiche de renseignements personnels ou un formulaire d'inscription.", "Rédiger un court message simple (carte postale, courriel) pour inviter, remercier ou s'excuser."],
-                    ejercicios: ["Formulaires d'inscription interactifs rattachés à des fiches réelles.", "Cajas de redacción estructurada con barra integrada de acentos franceses."],
-                    consejos: ["Respectez strictement la consigne et le nombre de mots demandé.", "Utilisez les formules de politesse adaptées (Amicalement, Salut, Bisous)."]
+                    lblBienvenida: isLevelA ? "Bienvenido a la Zona de Examen Real (Blindada)." : "Bienvenue dans la Zone d'Examen Réel (Blindé).",
+                    lblInstruccion: isLevelA ? "Esta sección simula las restricciones del examen real. Selecciona una actividad para iniciar tu redacción." : "Cette section simule les restrictions réelles. Sélectionnez une activité pour commencer.",
+                    titObjetivos: isLevelA ? "Objetivos Oficiales" : "Objectifs Officiels",
+                    titEjercicios: isLevelA ? "Tipos de Ejercicios en el Sistema" : "Types d'exercices",
+                    titConsejos: isLevelA ? "Consejos de Éxito" : "Conseils de réussite",
+                    titIA: isLevelA ? "Interacción con la IA (Sophia)" : "Interaction avec l'IA",
+                    objetivos: isLevelA ? [
+                        "Rellenar un formulario de datos personales o fichas de inscripción.",
+                        "Redactar un mensaje corto y simple (correo, postal) para invitar, agradecer o responder a un amigo."
+                    ] : [
+                        "Remplir une fiche de renseignements personnels ou un formulaire d'inscription.",
+                        "Rédiger un court message simple (carte postale, courriel) pour inviter, remercier ou s'excuser."
+                    ],
+                    ejercicios: isLevelA ? [
+                        "**Formularios Interactivos:** Casillas individuales dinámicas que simulan fichas de inscripción (ej. Ficha de adopción, solicitud de matrícula).",
+                        "**Caja de Redacción Libre:** Cuadro interactivo protegido (anti-copiado) equipado con una barra superior de caracteres especiales franceses (`é`, `è`, `à`, `ç`)."
+                    ] : [
+                        "**Formulaires interactifs:** Des champs individuels simulant des fiches d'inscription réelles.",
+                        "**Zone de rédaction libre:** Un éditeur sécurisé équipé d'une barre de caractères spéciaux français."
+                    ],
+                    consejos: isLevelA ? [
+                        "Respeta estrictamente la consigna y el número de palabras solicitado.",
+                        "Utiliza siempre las fórmulas de saludo y despedida requeridas en el formato amistoso."
+                    ] : [
+                        "Respectez la consigne et le nombre de mots demandé.",
+                        "Utilisez les formules de politesse adaptées (Amicalement, Salut, Bisous)."
+                    ],
+                    iaExplicacion: isLevelA ? [
+                        "**Evaluación Nativa Inmediata:** Al enviar tu escrito, Sophia asumirá el rol de examinadora certificada del DELF, analizando tu texto y desplegando en pantalla una rúbrica interactiva con retroalimentación detallada y puntaje estimado."
+                    ] : [
+                        "**Correction instantanée:** Sophia analyse votre texte selon les critères du DELF et affiche une grille d'évaluation complète."
+                    ]
                 },
                 PO: {
-                    titulo: "Production orale (PO)",
+                    titulo: isLevelA ? "Producción Oral (PO)" : "Production orale (PO)",
                     icono: "fa-microphone",
                     color: "#ea4335",
-                    objetivos: ["Se présenter et répondre à des questions sur son identité, sa famille et ses goûts.", "Poser des questions simples à partir de mots-clés ou de cartes stimulantes.", "Mener un jeu de rôle ou une interaction en contexte de service (achat, hôtel)."],
-                    ejercicios: ["Entretien dirigé par l'examinateur virtuel.", "Cartes de vocabulaire interactives (Échange d'informations).", "Dialogues interactifs guidés par l'intelligence artificielle de Sophia."],
-                    consejos: ["N'ayez pas peur de parler! Sophia est là pour vous guider de manière bienveillante.", "Pensez à pré-autoriser votre micro avant de commencer."]
+                    lblBienvenida: isLevelA ? "Bienvenido a la Zona de Examen Real (Blindada)." : "Bienvenue dans la Zone d'Examen Réel (Blindé).",
+                    lblInstruccion: isLevelA ? "Prepara tu micrófono. Selecciona un ejercicio para iniciar la simulación interactiva." : "Préparez votre micro. Sélectionnez une activité pour commencer.",
+                    titObjetivos: isLevelA ? "Objetivos Oficiales" : "Objectifs Officiels",
+                    titEjercicios: isLevelA ? "Tipos de Ejercicios en el Sistema" : "Types d'exercices",
+                    titConsejos: isLevelA ? "Consejos de Éxito" : "Conseils de réussite",
+                    titIA: isLevelA ? "Interacción con la IA (Sophia)" : "Interaction avec l'IA",
+                    objetivos: isLevelA ? [
+                        "Presentarse a sí mismo y responder preguntas sencillas sobre su identidad, familia y gustos.",
+                        "Formular preguntas simples a un examinador basándose en palabras clave.",
+                        "Desenvolverse en un juego de rol básico de la vida diaria (comprar ropa, pedir en un restaurante)."
+                    ] : [
+                        "Se présenter et répondre à des questions sur son identité.",
+                        "Poser des questions simples à partir de mots-clés ou de cartes stimulantes.",
+                        "Mener un jeu de rôle ou une interaction en contexte de service."
+                    ],
+                    ejercicios: isLevelA ? [
+                        "**Entretien Dirigé:** Guías de preguntas organizadas en viñetas en la pantalla.",
+                        "**Échange d'informations:** Tarjetas visuales interactivas en pantalla que emulan los papelitos recortables físicos del examen real.",
+                        "**Juego de Rol Interactivos:** Simulaciones situacionales guiadas."
+                    ] : [
+                        "**Entretien dirigé:** Questions guidées affichées à l'écran.",
+                        "**Échange d'informations:** Cartes visuelles interactives émulant les billets de l'examen physique.",
+                        "**Jeux de rôle:** Simulations de situations quotidiennes."
+                    ],
+                    consejos: isLevelA ? [
+                        "¡No tengas miedo de hablar! El sistema está diseñado para que ganes confianza.",
+                        "Verifica que tu navegador tenga el permiso del micrófono concedido para evitar retrasos."
+                    ] : [
+                        "N'ayez pas peur de parler! Gagnez de la confiance en vous.",
+                        "Vérifiez que l'autorisation de votre microphone est active avant de démarrer."
+                    ],
+                    iaExplicacion: isLevelA ? [
+                        "**Activación Automatizada por Botón:** Al dar clic en el botón rojo de grabación, el sistema inyecta un guion introductorio nativo de fondo. Sophia tomará de inmediato el rol de examinadora o dependienta nativa en Francia y entablará un diálogo fluido basado en lo que hables frente a la pantalla, respondiendo dinámicamente según tus elecciones de palabras o tarjetas."
+                    ] : [
+                        "**Dialogue dynamique:** En cliquant sur le bouton d'enregistrement, Sophia prend le rôle de l'examinateur natif et répond en temps réel à vos interventions orales."
+                    ]
                 }
             };
 
@@ -850,22 +971,27 @@
             <div class="intro-skill-card" style="border-top-color: ${skInfo.color};">
                 <h4 class="intro-skill-title"><i class="fas ${skInfo.icono}" style="color:${skInfo.color};"></i> ${skInfo.titulo}</h4>
                 <p style="font-size: 0.92rem; color: #555; line-height: 1.5; margin-bottom: 20px;">
-                    Bienvenue dans votre espace d'entraînement. Veuillez lire les détails officiels de cette compétence ci-dessous, puis sélectionnez une activité dans le menu de gauche pour démarrer votre simulation DELF.
+                    <strong>${skInfo.lblBienvenida}</strong> ${skInfo.lblInstruccion}
                 </p>
                 
                 <div class="intro-grid-section">
                     <div class="intro-sub-box">
-                        <h5><i class="fas fa-bullseye"></i> Objectifs Officiels</h5>
+                        <h5><i class="fas fa-bullseye"></i> ${skInfo.titObjetivos}</h5>
                         <ul>${skInfo.objetivos.map(o => `<li>${o}</li>`).join('')}</ul>
                     </div>
                     <div class="intro-sub-box">
-                        <h5><i class="fas fa-tasks"></i> Types d'exercices</h5>
+                        <h5><i class="fas fa-tasks"></i> ${skInfo.titEjercicios}</h5>
                         <ul>${skInfo.ejercicios.map(e => `<li>${e}</li>`).join('')}</ul>
                     </div>
                 </div>
+
+                <div class="intro-sub-box" style="margin-top:20px; border-left-color: #7f8c8d; background: #f8f9fa;">
+                    <h5><i class="fas fa-robot"></i> ${skInfo.titIA}</h5>
+                    <ul>${skInfo.iaExplicacion.map(i => `<li>${i}</li>`).join('')}</ul>
+                </div>
                 
                 <div class="intro-sub-box" style="margin-top:20px; border-left-color: var(--oxford);">
-                    <h5><i class="fas fa-lightbulb"></i> Conseils de réussite</h5>
+                    <h5><i class="fas fa-lightbulb"></i> ${skInfo.titConsejos}</h5>
                     <ul>${skInfo.consejos.map(c => `<li>${c}</li>`).join('')}</ul>
                 </div>
             </div>`;
@@ -933,7 +1059,6 @@
             generarMenuJerarquico(); 
             window.renderExerciseStructure(); 
 
-            // Pre-autorización automática al cargar ejercicio directo si es PO
             if (window.currentSkill === "PO") {
                 navigator.mediaDevices.getUserMedia({ audio: true })
                     .then((stream) => { stream.getTracks().forEach(track => track.stop()); })
@@ -1114,7 +1239,6 @@
                     html += `<div style="background:#f8f9fa; border-left:4px solid var(--gold); padding:20px; margin-bottom:25px;"><strong>Document :</strong><br><br>${window.convertirTextoInteractivo(ej.texto_lectura)}</div>`;
                 }
 
-                // 1. FORMATO DE PO: INTERACTIVA / ENTRETIEN DIRIGÉ (PREGUNTAS EN PANTALLA)
                 if (ej.tipo === "oral_interaction" && ej.preguntas && ej.preguntas.length > 0) {
                     html += `
                     <div style="margin-bottom: 25px; background: #fff; border: 1px solid #e0e6ed; border-radius: 8px; padding: 20px;">
@@ -1130,7 +1254,6 @@
                     html += `</ul></div>`;
                 }
 
-                // 2. FORMATO DE PO: ÉCHANGE D'INFORMATIONS (TARJETAS VISUALES)
                 if (ej.tipo === "oral_cards" && ej.campos_formulario && ej.campos_formulario.length > 0) {
                     html += `
                     <div style="margin-bottom: 25px;">
@@ -1499,8 +1622,10 @@
             if (btn) window.setSkillFilter(btn.id.replace('skill-', ''));
         });
 
-        // Iniciar con la explicación predeterminada de CO
-        window.mostrarExplicacionHabilidadInicial("CO");
+        setTimeout(() => {
+            window.mostrarExplicacionHabilidadInicial("CO");
+        }, 500);
+        
         init();
     </script>
 </body>
