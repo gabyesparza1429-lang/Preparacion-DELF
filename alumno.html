@@ -922,41 +922,61 @@
             }
             
             if (window.currentSkill === "PE") {
-                html += `
-                <p style="color: #002147; font-weight: bold; margin-bottom: 15px; font-size: 0.98rem;">
-                    Votre amie Léa vous envoie ce message.
-                </p>`;
-
-                if (ej.texto_lectura) {
-                    html += `
-                    <div style="background: #f4f6f9; border-left: 4px solid var(--gold); padding: 20px; margin-bottom: 20px; border-radius: 6px; box-shadow: 0 2px 5px rgba(0,0,0,0.02);">
-                        <div style="color: #222; line-height: 1.6; font-size: 0.95rem;">
-                            ${window.convertirTextoInteractivo(ej.texto_lectura)}
-                        </div>
-                    </div>`;
-                }
-
                 let instruccionOriginal = ej.instruccion || "";
                 let consigneLimpia = instruccionOriginal.replace(/^Activité\s*\d+\s*[\.\:]*\s*/i, "");
 
                 html += `
-                <div style="font-weight: bold; font-size: 0.95rem; color: #111; margin-top: 20px; margin-bottom: 25px; line-height: 1.5;">
+                <div style="font-weight: bold; font-size: 0.95rem; color: #111; margin-top: 10px; margin-bottom: 25px; line-height: 1.5;">
                     ${consigneLimpia}
                 </div>`;
 
+                // CONDICIONAL INTERACTIVA: ¿FORMULARIO O TEXTO LIBRE?
+                if (ej.tipo === "formulario" && ej.campos_formulario && ej.campos_formulario.length > 0) {
+                    html += `
+                    <div style="background: white; border: 1px solid #e0e6ed; border-radius: 8px; padding: 25px; box-shadow: 0 4px 10px rgba(0,0,0,0.02); margin-bottom: 20px;">
+                        <h5 style="margin: 0 0 20px 0; color: var(--oxford); font-size: 1.1rem; font-weight: 700; text-align: center; border-bottom: 2px dashed var(--gold); padding-bottom: 10px; text-transform: uppercase;">
+                            <i class="fas fa-file-alt"></i> Formulaire à remplir
+                        </h5>
+                        <div style="display: flex; flex-direction: column; gap: 16px;">`;
+                    
+                    ej.campos_formulario.forEach((campo, fIdx) => {
+                        html += `
+                            <div style="display: flex; flex-direction: column; gap: 6px;">
+                                <label style="font-size: 0.88rem; font-weight: 600; color: #444;">${campo}</label>
+                                <input type="text" id="form-field-${fIdx}" class="form-student-input" style="width: 100%; padding: 10px 12px; border: 1px solid #ccc; border-radius: 6px; font-family: 'Montserrat', sans-serif; font-size: 0.95rem; box-sizing: border-box;" autocomplete="off" onpaste="return false;" ondrop="return false;">
+                            </div>`;
+                    });
+                    
+                    html += `
+                        </div>
+                    </div>`;
+                } else {
+                    // Si no es formulario, dibuja el texto libre tradicional
+                    if (ej.texto_lectura) {
+                        html += `
+                        <div style="background: #f4f6f9; border-left: 4px solid var(--gold); padding: 20px; margin-bottom: 20px; border-radius: 6px; box-shadow: 0 2px 5px rgba(0,0,0,0.02);">
+                            <div style="color: #222; line-height: 1.6; font-size: 0.95rem;">
+                                ${window.convertirTextoInteractivo(ej.texto_lectura)}
+                            </div>
+                        </div>`;
+                    }
+
+                    html += `
+                    <div style="margin-bottom:20px;">
+                        <div class="french-accents-bar">
+                            <button type="button" class="accent-btn" onclick="window.insertarCaracterEspecial('é')">é</button>
+                            <button type="button" class="accent-btn" onclick="window.insertarCaracterEspecial('è')">è</button>
+                            <button type="button" class="accent-btn" onclick="window.insertarCaracterEspecial('à')">à</button>
+                            <button type="button" class="accent-btn" onclick="window.insertarCaracterEspecial('ç')">ç</button>
+                            <button type="button" class="accent-btn" onclick="window.insertarCaracterEspecial('â')">â</button>
+                            <button type="button" class="accent-btn" onclick="window.insertarCaracterEspecial('ê')">ê</button>
+                            <button type="button" class="accent-btn" onclick="window.insertarCaracterEspecial('œ')">œ</button>
+                        </div>
+                        <textarea id="pe-student-response" class="production-textbox" placeholder="Rédigez votre texte ici..." spellcheck="false" autocomplete="off" onpaste="return false;" ondrop="return false;"></textarea>
+                    </div>`;
+                }
+
                 html += `
-                <div style="margin-bottom:20px;">
-                    <div class="french-accents-bar">
-                        <button type="button" class="accent-btn" onclick="window.insertarCaracterEspecial('é')">é</button>
-                        <button type="button" class="accent-btn" onclick="window.insertarCaracterEspecial('è')">è</button>
-                        <button type="button" class="accent-btn" onclick="window.insertarCaracterEspecial('à')">à</button>
-                        <button type="button" class="accent-btn" onclick="window.insertarCaracterEspecial('ç')">ç</button>
-                        <button type="button" class="accent-btn" onclick="window.insertarCaracterEspecial('â')">â</button>
-                        <button type="button" class="accent-btn" onclick="window.insertarCaracterEspecial('ê')">ê</button>
-                        <button type="button" class="accent-btn" onclick="window.insertarCaracterEspecial('œ')">œ</button>
-                    </div>
-                    <textarea id="pe-student-response" class="production-textbox" placeholder="Rédigez votre texte ici..." spellcheck="false" autocomplete="off" onpaste="return false;" ondrop="return false;"></textarea>
-                </div>
                 <div style="display:flex; justify-content:flex-end;">
                     <button class="nav-tab-btn" id="btn-submit-pe" style="width:auto; background:var(--oxford); color:white; padding:10px 22px;"><i class="fas fa-paper-plane"></i> Soumettre la production</button>
                 </div>`;
