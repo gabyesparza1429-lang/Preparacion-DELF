@@ -1,6 +1,6 @@
 import os
 import json
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
 from google import genai
 from dotenv import load_dotenv
@@ -8,12 +8,30 @@ from dotenv import load_dotenv
 # Cargar variables de entorno del archivo .env
 load_dotenv()
 
-app = Flask(__name__)
-CORS(app)  # Habilita peticiones cruzadas seguras desde alumno.html
+# Configuramos Flask para que busque tus archivos HTML en la raíz del repositorio
+app = Flask(__name__, static_folder='.', static_url_path='')
+CORS(app)  # Habilita peticiones cruzadas seguras
 
 # Inicialización segura del cliente SDK de Gemini de Google
 api_key = os.getenv("GEMINI_API_KEY")
 client = genai.Client(api_key=api_key)
+
+# =================================================================
+# ENRUTADOR DE PÁGINAS WEB (SERVIDOR DE ARCHIVOS)
+# =================================================================
+
+# 1. Ruta para la página principal (index.html)
+@app.route('/')
+def index():
+    return send_from_directory('.', 'index.html')
+
+# 2. Ruta dinámica para tus archivos HTML (admin.html, alumno.html, etc.)
+@app.route('/<path:filename>')
+def servir_paginas(filename):
+    if filename.endswith('.html') or '.' not in filename:
+        nombre_archivo = filename if filename.endswith('.html') else f"{filename}.html"
+        return send_from_directory('.', nombre_archivo)
+    return send_from_directory('.', filename)
 
 # =================================================================
 # RUTA 1: DICCIONARIO Y ANÁLISIS DE FRASES (SOPHIA IA)
@@ -49,7 +67,6 @@ def chat():
         else:
             respuesta_text = respuesta_text.replace("```html", "").replace("```", "").strip()
 
-        # DEVOLVER ESTRUCTURA JSON PLANA PARA EL NAVEGADOR
         return jsonify({
             "reply": respuesta_text
         }), 200
@@ -99,7 +116,6 @@ def evaluar_pronunciacion():
 
         feedback_text = response.text.strip()
 
-        # Limpieza de marcas de bloque markdown si existen
         if feedback_text.startswith("```"):
             lineas = feedback_text.splitlines()
             if len(lineas) > 2:
@@ -114,6 +130,8 @@ def evaluar_pronunciacion():
         print(f"❌ Error en el servidor Sophia: {e}")
         return jsonify({"error": "Error interno del servidor", "detalles": str(e)}), 500
 
+# Railway usa una variable de entorno llamada PORT asignada dinámicamente
 if __name__ == '__main__':
-    print("🚀 Servidor de Sophia IA Activo en http://localhost:5000")
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    puerto = int(os.environ.get("PORT", 5000))
+    print(f"🚀 Servidor unificado Activo en el puerto {puerto}")
+    app.run(host='0.0.0.0', port=puerto)
