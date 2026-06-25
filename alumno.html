@@ -632,8 +632,7 @@
                 </div>
 
                 <div id="dynamic-workspace-target">
-                    <!-- El motor inyectará la vista aquí -->
-                </div>
+                    </div>
             </div>
         </div>
     </div>
@@ -696,6 +695,11 @@
         };
 
         async function init() {
+            if (!urlId) {
+                console.error("No se detectó ningún ID en la barra de direcciones.");
+                document.getElementById('student-welcome').innerText = "ID de l'élève manquant";
+                return;
+            }
             try {
                 let testRef = doc(db, "Usuarios", urlId);
                 let testSnap = await getDoc(testRef);
@@ -704,10 +708,19 @@
                 if (!userData) {
                     const q = query(collection(db, "Usuarios"), where("id", "==", urlId));
                     const qSnap = await getDocs(q);
-                    if (!qSnap.empty) { docRefValidado = doc(db, "Usuarios", qSnap.docs[0].id); userData = qSnap.docs[0].data(); }
-                } else { docRefValidado = testRef; }
+                    if (!qSnap.empty) { 
+                        docRefValidado = doc(db, "Usuarios", qSnap.docs[0].id); 
+                        userData = qSnap.docs[0].data(); 
+                    }
+                } else { 
+                    docRefValidado = testRef; 
+                }
 
-                if (!userData) return;
+                if (!userData) {
+                    console.warn("El ID consultado no coincide con ningún registro en la base de datos.");
+                    document.getElementById('student-welcome').innerText = "Élève non trouvé";
+                    return;
+                }
 
                 mapaAciertosAlumno = userData.mapa_aciertos || {};
                 currentLevel = userData.nivel || "A1";
@@ -720,7 +733,10 @@
                 window.currentLevel = currentLevel;
 
                 await descargarColeccionUnidades();
-            } catch (error) { console.error(error); }
+            } catch (error) { 
+                console.error("Error crítico durante la carga de Firebase:", error); 
+                document.getElementById('student-welcome').innerText = "Erreur de connexion";
+            }
         }
 
         async function descargarColeccionUnidades() {
@@ -825,13 +841,12 @@
                         "Saisir les informations essentielles d'un dialogue court (nombres, heures, lieux)."
                     ],
                     ejercicios: isLevelA ? [
-                        "Asociación de audios con imágenes representativas.",
                         "Cuestionarios de opción múltiple basados en las grabaciones nativas.",
                         "Al enviar tus respuestas, el sistema te mostrará automáticamente la transcripción del audio."
                     ] : [
                         "Association d'images avec des situations entendues.",
                         "Questionnaires à choix multiples (QCM).",
-                        "Une fois envoyé, le système déploiera automatiquement la transcription du document."
+                        "Une fois envoyé, le sistema déploiera automatiquement la transcription du document."
                     ],
                     consejos: isLevelA ? [
                         "Lee las preguntas y observa con atención las imágenes antes de reproducir el audio.",
@@ -1320,7 +1335,7 @@
                             }
                         } else {
                             let bloquesAlternativos = ej.texto_lectura.split(/\n\s*\n/);
-                            bloquesMapeadosPorAnuncio[tituloActual] = bloquesAlternativos[i] || ej.texto_lectura;
+                            blocksMapeadosPorAnuncio[tituloActual] = bloquesAlternativos[i] || ej.texto_lectura;
                         }
                     }
 
