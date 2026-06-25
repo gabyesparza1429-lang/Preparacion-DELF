@@ -670,7 +670,7 @@
         let notesHabilidadGlobales = { CO: 0, CE: 0, PE: 0, PO: 0 };
 
         const urlParams = new URLSearchParams(window.location.search);
-        let urlId = urlParams.get('id') || 'default_student';
+        let urlId = urlParams.get('id');
 
         window.convertirTextoInteractivo = function(texto) {
             if (!texto) return '';
