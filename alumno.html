@@ -670,7 +670,6 @@
         let docRefValidado = null;
         let notesHabilidadGlobales = { CO: 0, CE: 0, PE: 0, PO: 0 };
 
-        // DETECCIÓN MULTI-FILTRO DEL ID DESDE EL FORMULARIO DE NEUROREUSSIT
         const urlParams = new URLSearchParams(window.location.search);
         let urlId = urlParams.get('id') || urlParams.get('user') || urlParams.get('uid') || window.location.hash.replace('#', '').split('?')[0];
         
@@ -709,6 +708,10 @@
                 document.getElementById('student-welcome').innerText = "ID de l'élève manquant";
                 return;
             }
+            
+            urlId = urlId.trim();
+            alert("ID detectado por el sistema: [" + urlId + "]");
+
             try {
                 let testRef = doc(db, "Usuarios", urlId);
                 let testSnap = await getDoc(testRef);
@@ -728,6 +731,7 @@
                 if (!userData) {
                     console.warn("El ID consultado no coincide con ningún registro en la base de datos.");
                     document.getElementById('student-welcome').innerText = "Élève non trouvé";
+                    alert("Error: El ID [" + urlId + "] no existe en la colección 'Usuarios' de Firestore.");
                     return;
                 }
 
@@ -852,7 +856,7 @@
                     ] : [
                         "Association d'images avec des situations entendues.",
                         "Questionnaires à choix multiples (QCM).",
-                        "Une fois envoyé, le système déploiera automatiquement la transcription du document."
+                        "Une fois envoyé, le système déploiera automatiquement la transcription del documento."
                     ],
                     consejos: isLevelA ? [
                         "Lee las preguntas y observa con atención las imágenes antes de reproducir el audio.",
