@@ -131,7 +131,9 @@ def evaluar_pronunciacion():
         return jsonify({"error": "Error interno del servidor", "detalles": str(e)}), 500
 
 # Railway usa una variable de entorno llamada PORT asignada dinámicamente
-if __name__ == '__main__':
+import os
+
+if __name__ == "__main__":
+    # Esto lee el puerto que Railway necesita en automático, y si no hay, usa el 5000 por defecto
     puerto = int(os.environ.get("PORT", 5000))
-    print(f"🚀 Servidor unificado Activo en el puerto {puerto}")
-    app.run(host='0.0.0.0', port=puerto)
+    app.run(host="0.0.0.0", port=puerto)
