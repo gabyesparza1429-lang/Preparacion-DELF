@@ -1,72 +1,148 @@
 <!DOCTYPE html>
+
 <html lang="fr">
+
 <head>
+
     <meta charset="UTF-8">
+
     <title>Neuroreussit - Inicio</title>
+
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+
     <style>
+
         :root { --oxford: #002147; --gold: #C5A059; --white: #ffffff; }
+
         body { font-family: 'Montserrat', sans-serif; margin: 0; background: #2f3640; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; color: var(--white); position: relative; }
+
         .header { text-align: center; margin-bottom: 60px; }
+
         .header h1 { color: var(--white); margin-bottom: 5px; }
+
         
+
         .container { display: flex; gap: 80px; justify-content: center; padding: 20px; align-items: center; position: relative; }
+
         
+
         /* LOGOS COMO PUERTAS DIRECTAS (SIN RECUADROS) */
+
         .puerta-proyecto { display: flex; flex-direction: column; align-items: center; text-decoration: none; color: inherit; transition: transform 0.3s; cursor: pointer; }
+
         .puerta-proyecto:hover { transform: translateY(-10px); }
+
         
+
         .logo-grande { width: 320px; height: 200px; object-fit: contain; margin-bottom: 20px; }
+
         
+
         /* BOTÓN LIMPIO ABAJO DE CADA LOGO */
+
         .btn-entrar { color: white; padding: 12px 35px; border-radius: 30px; font-weight: bold; font-family: 'Montserrat', sans-serif; font-size: 0.95rem; text-transform: uppercase; letter-spacing: 1px; transition: background 0.2s; box-shadow: 0 4px 15px rgba(0,0,0,0.2); border: none; }
+
         
+
         /* BOTÓN DE ACCESO INVISIBLE PARA ADMINISTRADOR CORREGIDO */
+
         .admin-secret-link { 
+
             position: absolute; 
+
             top: 0; 
+
             left: 0; 
+
             width: 80px; 
+
             height: 80px; 
+
             background: transparent; 
+
             cursor: pointer; 
+
             z-index: 99999; 
+
         }
+
     </style>
+
 </head>
+
 <body>
+
+
 
     <div class="admin-secret-link" onclick="accesoAdminSeguro()" title="Connexion"></div>
 
+
+
     <div class="header">
+
         <h1>NeuroRéussit</h1>
+
         <p style="color: var(--gold); font-weight: bold; margin: 0; letter-spacing: 1px;">ACCESSIBILITÉ ÉDUCATIVE</p>
+
     </div>
+
+
 
     <div class="container">
-        <a href="https://www.neuroreussit.com/levels.html" class="puerta-proyecto">
+
+        <a href="levels.html" class="puerta-proyecto">
+
             <img src="./assets/Logo.png" alt="Logo Réussite DELF" class="logo-grande">
+
             <button class="btn-entrar" style="background: var(--oxford);">Entrar</button>
+
         </a>
 
-        <a href="https://www.neuroreussit.com/neuroclarity.html" class="puerta-proyecto">
+
+
+        <a href="neuroclarity.html" class="puerta-proyecto">
+
             <img src="./assets/NeuroClarity.png" alt="Logo NeuroClarity" class="logo-grande">
+
             <button class="btn-entrar" style="background: #B099CE;">Entrar</button>
+
         </a>
+
     </div>
 
+
+
     <script>
+
         function accesoAdminSeguro() {
+
+            // Ventana emergente que solicita la clave secreta
+
             const clave = prompt("Mot de passe administrateur / Contraseña de administrador:");
+
             
+
             if (clave === "Gaby1429") {
-                // Redirección corregida forzando el www
-                window.location.href = "https://www.neuroreussit.com/admin.html";
+
+                // Si es correcta, te redirige al panel de administración
+
+                window.location.href = "admin.html";
+
             } else if (clave !== null) {
+
+                // Si es incorrecta (y no presionaste cancelar)
+
                 alert("Accès refusé. Contraseña incorrecta.");
+
             }
+
         }
+
     </script>
 
+
+
 </body>
-</html>
+
+</html> 
+
