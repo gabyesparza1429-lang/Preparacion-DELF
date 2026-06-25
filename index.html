@@ -44,12 +44,12 @@
     </div>
 
     <div class="container">
-        <a href="levels.html" class="puerta-proyecto">
+        <a href="https://www.neuroreussit.com/levels.html" class="puerta-proyecto">
             <img src="./assets/Logo.png" alt="Logo Réussite DELF" class="logo-grande">
             <button class="btn-entrar" style="background: var(--oxford);">Entrar</button>
         </a>
 
-        <a href="neuroclarity.html" class="puerta-proyecto">
+        <a href="https://www.neuroreussit.com/neuroclarity.html" class="puerta-proyecto">
             <img src="./assets/NeuroClarity.png" alt="Logo NeuroClarity" class="logo-grande">
             <button class="btn-entrar" style="background: #B099CE;">Entrar</button>
         </a>
@@ -57,14 +57,12 @@
 
     <script>
         function accesoAdminSeguro() {
-            // Ventana emergente que solicita la clave secreta
             const clave = prompt("Mot de passe administrateur / Contraseña de administrador:");
             
             if (clave === "Gaby1429") {
-                // Si es correcta, te redirige al panel de administración
-                window.location.href = "admin.html";
+                // Redirección corregida forzando el www
+                window.location.href = "https://www.neuroreussit.com/admin.html";
             } else if (clave !== null) {
-                // Si es incorrecta (y no presionaste cancelar)
                 alert("Accès refusé. Contraseña incorrecta.");
             }
         }
