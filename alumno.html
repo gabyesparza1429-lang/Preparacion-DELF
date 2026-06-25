@@ -632,8 +632,7 @@
                 </div>
 
                 <div id="dynamic-workspace-target">
-                    <!-- El motor inyectará la vista aquí -->
-                </div>
+                    </div>
             </div>
         </div>
     </div>
@@ -645,13 +644,15 @@
         import { getFirestore, doc, getDoc, setDoc, collection, getDocs, query, where } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js";
         import { getStorage, ref, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-storage.js";
 
+        // Configuración integrada con las credenciales correctas de tu proyecto Firebase
         const firebaseConfig = {
             apiKey: "AIzaSyCgog8tKspHy01ZHE8Dthl9O4W6lw1a_Ec",
             authDomain: "objectif-reussite-delf.firebaseapp.com",
             projectId: "objectif-reussite-delf",
             storageBucket: "objectif-reussite-delf.firebasestorage.app",
             messagingSenderId: "942279633770",
-            appId: "1:942279633770:web:687ba6d819747eb29c1313"
+            appId: "1:942279633770:web:d97b4c7158e37e449c1313",
+            measurementId: "G-HPPBFGV32R"
         };
 
         const app = initializeApp(firebaseConfig);
@@ -669,7 +670,6 @@
         let docRefValidado = null;
         let notesHabilidadGlobales = { CO: 0, CE: 0, PE: 0, PO: 0 };
 
-        // Extracción robusta de ID (soporta query strings clásicos, hashes de ruteo y respaldo local)
         const urlParams = new URLSearchParams(window.location.search);
         let urlId = urlParams.get('id') || window.location.hash.replace('#', '').split('?')[0];
         if (urlId) {
@@ -685,7 +685,7 @@
                 let palabrasHtml = b.split(/(\s+)/).map(f => {
                     if (f.trim() === '') return f;
                     let pLimpia = f.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()¿?¡!]/g,"");
-                    return `<span class="clickable-word" data-word="${pLimpia.toLowerCase()}">${f}</span>`;
+                    return `<span class="clickable-word" data-word="${pLimplia.toLowerCase()}">${f}</span>`;
                 }).join('');
                 return `<p class="text-paragraph-block">${palabrasHtml}</p>`;
             }).join('');
@@ -820,9 +820,6 @@
             renderActiveInterface();
         };
 
-        // ========================================================
-        // ETIQUETA: MOTOR DE INTRODUCCIÓN PEDAGÓGICA BILINGÜE
-        // ========================================================
         window.mostrarExplicacionHabilidadInicial = function(skill) {
             const target = document.getElementById('dynamic-workspace-target');
             if (!target) return;
@@ -921,7 +918,7 @@
                         "Rellenar un formulario de datos personales o fichas de inscripción.",
                         "Redactar un mensaje corto y simple (correo, postal) para invitar, agradecer o responder a un amigo."
                     ] : [
-                        "Remplir une fiche de renseignements personnels ou un formulaire d'inscription.",
+                        "Remplir une fiche de renseignements personnels ou un formulario d'inscription.",
                         "Rédiger un court message simple (carte postale, courriel) pour inviter, remercier ou s'excuser."
                     ],
                     ejercicios: isLevelA ? [
@@ -1525,130 +1522,4 @@
                     document.getElementById('sophia-verdict-text').innerHTML = `Tu as obtenu <strong>${aciertosN} / ${totalPreguntas}</strong> aciertos.`;
                     
                     if (ej.transcripcion) {
-                        document.getElementById('interactive-transcription-box').innerHTML = window.convertirTextoInteractivo(ej.transcripcion);
-                        window.inicializarLectorVozGratuito(ej.transcripcion);
-                    }
-                    document.getElementById('sophia-box').style.display = "block";
-
-                    const claveUnica = `${currentUnitId}_${currentSkill}_${currentExerciseIndex}`;
-                    mapaAciertosAlumno = mapaAciertosAlumno || {};
-                    mapaAciertosAlumno[claveUnica] = true; 
-
-                    let totalActividadesNivel = 0;
-                    let completadasNivel = 0;
-                    Object.keys(unidadesCache).forEach(uKey => {
-                        const arr = unidadesCache[uKey][currentSkill] || unidadesCache[uKey][currentSkill.toLowerCase()] || [];
-                        arr.forEach((_, indices) => {
-                            totalActividadesNivel++;
-                            if (mapaAciertosAlumno[`${uKey}_${currentSkill}_${indices}`] === true) {
-                                completadasNivel++;
-                            }
-                        });
-                    });
-
-                    const finalProgresoCalculado = Math.round((completadasNivel / totalActividadesNivel) * 100);
-
-                    if (urlId !== "admin_preview" && docRefValidado) {
-                        try {
-                            await setDoc(docRefValidado, {
-                                mapa_aciertos: mapaAciertosAlumno,
-                                progreso: finalProgresoCalculado
-                            }, { merge: true });
-                        } catch (err) { console.error("Error al guardar en la base de datos:", err); }
-                    }
-
-                    document.getElementById('progress-text-target').innerText = `${finalProgresoCalculado}%`;
-                    document.getElementById('progress-bar-fill').style.width = `${finalProgresoCalculado}%`;
-
-                    btnSubmit.style.display = "none";
-                    document.getElementById('btn-avanzar-siguiente').style.display = "inline-flex";
-                });
-            }
-        };
-        
-        window.avanzarSiguienteEjercicio = function() {
-            let ejercicios = unidadesCache[currentUnitId][currentSkill] || unidadesCache[currentUnitId][currentSkill.toLowerCase()] || [];
-            if (currentExerciseIndex + 1 < ejercicios.length) {
-                currentExerciseIndex++;
-                window.renderExerciseStructure();
-                generarMenuJerarquico();
-            } else {
-                alert("Félicitations! Vous avez complété toutes les activités de cette Unité.");
-            }
-        };
-
-        window.inicializarLectorVozGratuito = function(textoOriginal) {
-            const btnRecord = document.getElementById('btn-record-transcription');
-            const feedback = document.getElementById('audio-reading-feedback');
-            if (!btnRecord) return;
-            const SpeechRecognition = window.SpeechRecognition || window.webkitRecognition || window.webkitSpeechRecognition; if (!SpeechRecognition) return;
-            const recognition = new SpeechRecognition(); recognition.lang = 'fr-FR'; recognition.continuous = true;
-
-            let modoGrabacionManualActivo = false; let buzonTexto = ""; 
-
-            btnRecord.addEventListener('click', () => {
-                if (!modoGrabacionManualActivo) {
-                    modoGrabacionManualActivo = true; buzonTexto = ""; 
-                    document.querySelectorAll('.clickable-word').forEach(s => s.classList.remove('word-wrong'));
-                    feedback.innerText = "Écoute active... Parlez librement."; feedback.style.color = "var(--green)";
-                    btnRecord.innerHTML = `<i class="fas fa-stop"></i> Terminer`; recognition.start();
-                } else { modoGrabacionManualActivo = false; recognition.stop(); }
-            });
-
-            recognition.onend = () => {
-                if (!modoGrabacionManualActivo) {
-                    btnRecord.innerHTML = `<i class="fas fa-microphone"></i> Commencer`;
-                    let lOrig = textoOriginal.toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()¿?¡!]/g,"").split(/\s+/);
-                    let lEsc = buzonTexto.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()¿?¡!]/g,"").split(/\s+/);
-                    lOrig.forEach(p => { if (p.trim() !== "" && !lEsc.includes(p)) { document.querySelectorAll(`.clickable-word[data-word="${p}"]`).forEach(el => el.classList.add('word-wrong')); } });
-                }
-            };
-            recognition.onresult = (e) => { for (let i = e.resultIndex; i < e.results.length; ++i) { if (e.results[i].isFinal) buzonTexto += " " + e.results[i][0].transcript.toLowerCase(); } };
-        };
-
-        window.ejecutarConsultaSophiaConFiltro = async function(frase) {
-            const container = document.getElementById("glosario-flotante-container"); if (!container) return;
-            container.innerHTML = `<div style="background:#fff; padding:15px; border-radius:8px; box-shadow:0 4px 15px rgba(0,0,0,0.15);"><p style="margin:0; font-size:13px;"><i class="fas fa-spinner fa-spin"></i> Sophia...</p></div>`;
-            container.style.display = "block";
-            try {
-                const response = await fetch("http://localhost:5000/api/chat", {
-                    method: "POST", headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ message: `Analiza lingüísticamente la palabra o frase en contexto para un estudiante DELF: "${frase}" en formato HTML limpio.` })
-                });
-                const data = await response.json();
-                container.innerHTML = `<div style="background:#fff; padding:15px; border-radius:8px; box-shadow:0 4px 15px rgba(0,0,0,0.15); max-height:380px; overflow-y:auto;"><h4>"${frase}"</h4><div>${data.reply}</div><button onclick="document.getElementById('glosario-flotante-container').style.display='none'" style="margin-top:10px; width:100%; padding:6px; cursor:pointer;">Fermer</button></div>`;
-            } catch (error) { container.style.display = "none"; }
-        };
-
-        let selectionTimeout = null;
-        document.addEventListener('selectionchange', () => {
-            clearTimeout(selectionTimeout);
-            selectionTimeout = setTimeout(() => {
-                const txt = window.getSelection().toString().trim();
-                if (txt && txt.includes(" ") && txt.length > 4 && !txt.includes("\n")) { window.ejecutarConsultaSophiaConFiltro(txt); window.getSelection().removeAllRanges(); }
-            }, 700); 
-        });
-
-        document.addEventListener('click', (e) => {
-            if (window.getSelection().toString().trim().includes(" ")) return;
-            if (e.target.classList.contains('clickable-word')) {
-                const pal = e.target.getAttribute('data-word') || e.target.innerText.trim();
-                if (pal.length > 1) window.ejecutarConsultaSophiaConFiltro(pal);
-            }
-        });
-
-        document.getElementById('tab-parcours').addEventListener('click', () => window.switchMainTab('parcours'));
-        document.getElementById('tab-carnet').addEventListener('click', () => window.switchMainTab('carnet'));
-        document.getElementById('parcours-controls-container').addEventListener('click', (e) => {
-            const btn = e.target.closest('.skill-tab-btn');
-            if (btn) window.setSkillFilter(btn.id.replace('skill-', ''));
-        });
-
-        setTimeout(() => {
-            window.mostrarExplicacionHabilidadInicial("CO");
-        }, 500);
-        
-        init();
-    </script>
-</body>
-</html>
+                        document.getElementById('interactive-
