@@ -1,3 +1,4 @@
 Flask
 Flask-Cors
 google-genai
+python-dotenv
