@@ -632,7 +632,8 @@
                 </div>
 
                 <div id="dynamic-workspace-target">
-                    </div>
+                    <!-- El motor inyectará la vista aquí -->
+                </div>
             </div>
         </div>
     </div>
@@ -668,8 +669,14 @@
         let docRefValidado = null;
         let notesHabilidadGlobales = { CO: 0, CE: 0, PE: 0, PO: 0 };
 
+        // Extracción robusta de ID (soporta query strings clásicos, hashes de ruteo y respaldo local)
         const urlParams = new URLSearchParams(window.location.search);
-        let urlId = urlParams.get('id');
+        let urlId = urlParams.get('id') || window.location.hash.replace('#', '').split('?')[0];
+        if (urlId) {
+            localStorage.setItem('active_student_id', urlId);
+        } else {
+            urlId = localStorage.getItem('active_student_id');
+        }
 
         window.convertirTextoInteractivo = function(texto) {
             if (!texto) return '';
@@ -696,7 +703,7 @@
 
         async function init() {
             if (!urlId) {
-                console.error("No se detectó ningún ID en la barra de direcciones.");
+                console.error("No se detectó ningún ID en la barra de direcciones ni en memoria.");
                 document.getElementById('student-welcome').innerText = "ID de l'élève manquant";
                 return;
             }
@@ -846,7 +853,7 @@
                     ] : [
                         "Association d'images avec des situations entendues.",
                         "Questionnaires à choix multiples (QCM).",
-                        "Une fois envoyé, le sistema déploiera automatiquement la transcription du document."
+                        "Une fois envoyé, le système déploiera automatiquement la transcription du document."
                     ],
                     consejos: isLevelA ? [
                         "Lee las preguntas y observa con atención las imágenes antes de reproducir el audio.",
@@ -1300,21 +1307,21 @@
                 if (esMatrizB1 && ej.texto_lectura) {
                     let anunciosAgrupados = {};
                     ej.preguntas.forEach((p, pIdx) => {
+                        let textCriterio = p.pregunta;
                         let nombreAnuncio = "Critères d'évaluation"; 
-                        let textoCriterio = p.pregunta;
                         
                         if (p.pregunta.includes(" - ")) {
                             let partes = p.pregunta.split(" - ");
                             nombreAnuncio = partes[0].trim();
-                            textoCriterio = partes[1].trim();
+                            textCriterio = partes[1].trim();
                         } else if (p.pregunta.includes(" : ")) {
                             let partes = p.pregunta.split(" : ");
                             nombreAnuncio = partes[0].trim();
-                            textoCriterio = partes[1].trim();
+                            textCriterio = partes[1].trim();
                         }
                         
                         if (!anunciosAgrupados[nombreAnuncio]) anunciosAgrupados[nombreAnuncio] = [];
-                        anunciosAgrupados[nombreAnuncio].push({ originalIndex: pIdx, criterio: textoCriterio });
+                        anunciosAgrupados[nombreAnuncio].push({ originalIndex: pIdx, criterio: textCriterio });
                     });
 
                     let textoRestante = ej.texto_lectura;
@@ -1335,7 +1342,7 @@
                             }
                         } else {
                             let bloquesAlternativos = ej.texto_lectura.split(/\n\s*\n/);
-                            blocksMapeadosPorAnuncio[tituloActual] = bloquesAlternativos[i] || ej.texto_lectura;
+                            bloquesMapeadosPorAnuncio[tituloActual] = bloquesAlternativos[i] || ej.texto_lectura;
                         }
                     }
 
