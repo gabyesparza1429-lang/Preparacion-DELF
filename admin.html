@@ -231,7 +231,7 @@
             document.getElementById('tab-title').innerText = btn.innerText;
         };
 
-        onSnapshot(collection(db, "Usuarios"), (snap) => {
+        onSnapshot(collection(db, "usuarios"), (snap) => {
             const list = document.getElementById('lista_alumnos'); if (!list) return;
             list.innerHTML = "";
             snap.forEach(d => {
