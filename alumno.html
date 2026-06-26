@@ -357,6 +357,7 @@
             border-radius: 8px;
             font-family: 'Montserrat', sans-serif;
             font-size: 0.98rem;
+            border-style: solid;
             resize: vertical;
             outline: none;
             box-sizing: border-box;
@@ -632,8 +633,7 @@
                 </div>
 
                 <div id="dynamic-workspace-target">
-                    <!-- El motor inyectará la vista aquí -->
-                </div>
+                    </div>
             </div>
         </div>
     </div>
@@ -659,11 +659,13 @@
         const db = getFirestore(app);
         const storage = getStorage(app);
 
+        // --- DECLARACIÓN DE VARIABLES ---
         let currentActiveTab = "parcours"; 
         let currentLevel = "A1"; 
         let currentSkill = "CO"; 
         let currentUnitId = null; 
         let currentExerciseIndex = 0;
+        let currentStudentId = null; // Faltaba declarar esta variable global
         let unidadesCache = {}; 
         let openUnitsState = {}; 
         let mapaAciertosAlumno = {}; 
@@ -702,65 +704,63 @@
             textarea.selectionStart = textarea.selectionEnd = start + caracter.length;
         };
 
+        // --- FUNCIÓN INIT CORREGIDA ---
         async function init() {
-    if (!urlId) {
-        console.error("No se detectó ningún ID en la barra de direcciones ni en memoria.");
-        document.getElementById('student-welcome').innerText = "ID de l'élève manquant";
-        return;
-    }
-    
-    urlId = urlId.trim();
-
-    try {
-        // CORRECCIÓN: Tu colección real en Firebase se llama "usuarios"
-        docRefValidado = doc(db, "usuarios", urlId);
-        const alumnoSnap = await getDoc(docRefValidado);
-
-        if (alumnoSnap.exists()) {
-            const datosAlumno = alumnoSnap.data();
-            
-            // 1. Cargamos el nivel real del alumno
-            currentLevel = datosAlumno.nivel || 'A1';
-            localStorage.setItem('currentLevel', currentLevel);
-            
-            // Actualizamos el indicador visual de nivel en el sidebar
-            const levelIndicator = document.getElementById('level-indicator');
-            if (levelIndicator) {
-                levelIndicator.innerText = `NIVEAU ${currentLevel}`;
+            if (!urlId) {
+                console.error("No se detectó ningún ID en la barra de direcciones ni en memoria.");
+                document.getElementById('student-welcome').innerText = "ID de l'élève manquant";
+                return;
             }
             
-            // 2. Pintamos los créditos/tokens en tu ID nativo real
-            const tokensDisponibles = datosAlumno.tokens !== undefined ? datosAlumno.tokens : 0;
-            const tokenCounter = document.getElementById('banner-credits-count');
-            if (tokenCounter) {
-                tokenCounter.innerText = tokensDisponibles;
-            }
+            urlId = urlId.trim();
+            currentStudentId = urlId;
 
-            // 3. Recuperamos su progreso histórico si existe
-            if (datosAlumno.mapa_aciertos) {
-                mapaAciertosAlumno = datosAlumno.mapa_aciertos;
-            }
+            try {
+                // Conexión exacta a la colección "usuarios" de tu Firestore
+                docRefValidado = doc(db, "usuarios", urlId);
+                const alumnoSnap = await getDoc(docRefValidado);
 
-            // 4. Mostramos el nombre guardado en Firebase (o el ID si no hay nombre)
-            const nombreMostrar = datosAlumno.nombre || urlId;
-            document.getElementById('student-welcome').innerText = `Élève: ${nombreMostrar}`;
-            
-            // 5. LLAMADA CORRECTA: Usamos el motor que dejó el otro chat para activar las actividades
-            if (typeof cargarProgresoYActividades === "function") {
-                cargarProgresoYActividades(urlId);
-            } else {
-                await descargarColeccionUnidades();
-            }
+                if (alumnoSnap.exists()) {
+                    const datosAlumno = alumnoSnap.data();
+                    
+                    // 1. Cargamos el nivel real
+                    currentLevel = datosAlumno.nivel || 'A1';
+                    localStorage.setItem('currentLevel', currentLevel);
+                    
+                    const levelIndicator = document.getElementById('level-indicator');
+                    if (levelIndicator) {
+                        levelIndicator.innerText = `NIVEAU ${currentLevel}`;
+                    }
+                    
+                    // 2. Pintamos los créditos/tokens
+                    const tokensDisponibles = datosAlumno.tokens !== undefined ? datosAlumno.tokens : 0;
+                    const tokenCounter = document.getElementById('banner-credits-count');
+                    if (tokenCounter) {
+                        tokenCounter.innerText = tokensDisponibles;
+                    }
 
-        } else {
-            console.error("El ID no existe en la colección usuarios de Firestore.");
-            document.getElementById('student-welcome').innerText = "ID non valide. Contactez votre professeur.";
+                    // 3. Recuperamos su progreso histórico
+                    if (datosAlumno.mapa_aciertos) {
+                        mapaAciertosAlumno = datosAlumno.mapa_aciertos;
+                    }
+
+                    // 4. Mostramos el nombre guardado en Firebase
+                    const nombreMostrar = datosAlumno.nombre || urlId;
+                    document.getElementById('student-welcome').innerText = `Élève: ${nombreMostrar}`;
+                    
+                    // 5. Descargamos la biblioteca de ejercicios vinculada
+                    await descargarColeccionUnidades();
+
+                } else {
+                    console.error("El ID no existe en la colección usuarios de Firestore.");
+                    document.getElementById('student-welcome').innerText = "ID non valide. Contactez votre professeur.";
+                }
+            } catch (error) {
+                console.error("Error crítico en init al comunicar con Firestore:", error);
+                document.getElementById('student-welcome').innerText = "Erreur de connexion.";
+            }
         }
-    } catch (error) {
-        console.error("Error crítico en init al comunicar con Firestore:", error);
-        document.getElementById('student-welcome').innerText = "Erreur de connexion.";
-    }
-}
+
         async function descargarColeccionUnidades() {
             unidadesCache = {};
             const querySnapshot = await getDocs(collection(db, "BibliotecaEjercicios", currentLevel, "Unidades"));
@@ -989,7 +989,7 @@
                         "Verifica que tu navegador tenga el permiso del micrófono concedido para evitar retrasos."
                     ] : [
                         "N'ayez pas peur de parler! Gagnez de la confiance en vous.",
-                        "Vérifiez que l'autorisation de votre microphone est active avant de démarrer."
+                        "Vérifiez que l'autorisation de votre microphone is active avant de démarrer."
                     ],
                     iaExplicacion: isLevelA ? [
                         "**Activación Automatizada por Botón:** Al dar clic en el botón rojo de grabación, el sistema inyecta un guion introductorio nativo de fondo. Sophia tomará de inmediato el rol de examinadora o dependienta nativa en Francia y entablará un diálogo fluido basado en lo que hables frente a la pantalla, respondiendo dinámicamente según tus elecciones de palabras o tarjetas."
@@ -1182,7 +1182,7 @@
             }
 
             document.getElementById('dynamic-workspace-target').innerHTML = `
-                <h3 style="color:var(--oxford); margin-top:0; font-weight:700;"><i class="fas fa-id-card"></i> Livret de Compétences Officiel (CECRL)</h3>
+                <h3 style="color:var(--oxford); margin-top:0; font-weight:700;"><i class="fas fa-id-card"></i> Livret de Compétences Officiel (CECECRL)</h3>
                 ${checklistHTML}`;
         }
         
@@ -1364,7 +1364,7 @@
                         let contenidoTextoFiltrado = bloquesMapeadosPorAnuncio[tituloAnuncio] || "<em>Document joint.</em>";
 
                         html += `
-                        <div class="modulo-anuncio-completo" style="margin-bottom: 35px; background: #fff; border: 1px solid #e0e6ed; border-radius: 8px; padding: 20px; box-shadow: 0 3px 9px rgba(0,0,0,0.02);">
+                        <div class="modulo-anuncio-completo" style="margin-bottom: 35px; background: #fff; border: 1px solid #e0e6ed; border-radius: 8px; padding: 20px; box-shadow: 0 3px 99px rgba(0,0,0,0.02);">
                             
                             <div class="document-anuncio-block" style="background: #fdfefe; border: 1px dashed var(--gold); border-left: 4px solid var(--gold); padding: 15px; margin-bottom: 18px; border-radius: 4px;">
                                 <div style="color: #222; line-height: 1.6; font-size: 0.95rem;">
