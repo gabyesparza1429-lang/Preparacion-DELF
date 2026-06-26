@@ -712,44 +712,48 @@
     urlId = urlId.trim();
 
     try {
-        // Usamos la referencia nativa correcta para evitar caídas de variables globales
-        docRefValidado = doc(db, "alumnos", urlId);
+        // CORRECCIÓN: Tu colección real en Firebase se llama "usuarios"
+        docRefValidado = doc(db, "usuarios", urlId);
         const alumnoSnap = await getDoc(docRefValidado);
 
         if (alumnoSnap.exists()) {
             const datosAlumno = alumnoSnap.data();
             
-            // 1. Cargamos y fijamos el nivel real del alumno en el sistema
+            // 1. Cargamos el nivel real del alumno
             currentLevel = datosAlumno.nivel || 'A1';
             localStorage.setItem('currentLevel', currentLevel);
             
-            // Actualizamos el badge visual de nivel en tu sidebar
+            // Actualizamos el indicador visual de nivel en el sidebar
             const levelIndicator = document.getElementById('level-indicator');
             if (levelIndicator) {
                 levelIndicator.innerText = `NIVEAU ${currentLevel}`;
             }
             
-            // 2. Buscamos y pintamos los créditos/tokens en tu ID nativo real
+            // 2. Pintamos los créditos/tokens en tu ID nativo real
             const tokensDisponibles = datosAlumno.tokens !== undefined ? datosAlumno.tokens : 0;
             const tokenCounter = document.getElementById('banner-credits-count');
             if (tokenCounter) {
                 tokenCounter.innerText = tokensDisponibles;
             }
 
-            // 3. Recuperamos su mapa de progreso histórico si ya tiene uno
+            // 3. Recuperamos su progreso histórico si existe
             if (datosAlumno.mapa_aciertos) {
                 mapaAciertosAlumno = datosAlumno.mapa_aciertos;
             }
 
-            // 4. Pintamos el nombre real o su ID en la bienvenida del sidebar
+            // 4. Mostramos el nombre guardado en Firebase (o el ID si no hay nombre)
             const nombreMostrar = datosAlumno.nombre || urlId;
             document.getElementById('student-welcome').innerText = `Élève: ${nombreMostrar}`;
             
-            // 5. Arrancamos de inmediato la descarga de sus actividades específicas
-            await descargarColeccionUnidades();
+            // 5. LLAMADA CORRECTA: Usamos el motor que dejó el otro chat para activar las actividades
+            if (typeof cargarProgresoYActividades === "function") {
+                cargarProgresoYActividades(urlId);
+            } else {
+                await descargarColeccionUnidades();
+            }
 
         } else {
-            console.error("El ID no existe en la colección de Firestore.");
+            console.error("El ID no existe en la colección usuarios de Firestore.");
             document.getElementById('student-welcome').innerText = "ID non valide. Contactez votre professeur.";
         }
     } catch (error) {
