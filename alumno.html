@@ -703,54 +703,49 @@
         };
 
         async function init() {
-            if (!urlId) {
-                console.error("No se detectó ningún ID en la barra de direcciones ni en memoria.");
-                document.getElementById('student-welcome').innerText = "ID de l'élève manquant";
-                return;
-            }
+    if (!urlId) {
+        console.error("No se detectó ningún ID en la barra de direcciones ni en memoria.");
+        document.getElementById('student-welcome').innerText = "ID de l'élève manquant";
+        return;
+    }
+    
+    urlId = urlId.trim();
+    currentStudentId = urlId;
+
+    try {
+        // Consulta directa a tu colección de Firestore sin pasar por Railway
+        const alumnoRef = doc(db, "alumnos", currentStudentId);
+        const alumnoSnap = await getDoc(alumnoRef);
+
+        if (alumnoSnap.exists()) {
+            const datosAlumno = alumnoSnap.data();
             
-            urlId = urlId.trim();
-            alert("ID detectado por el sistema: [" + urlId + "]");
-
-            try {
-                let testRef = doc(db, "Usuarios", urlId);
-                let testSnap = await getDoc(testRef);
-                let userData = testSnap.exists() ? testSnap.data() : null;
-
-                if (!userData) {
-                    const q = query(collection(db, "Usuarios"), where("id", "==", urlId));
-                    const qSnap = await getDocs(q);
-                    if (!qSnap.empty) { 
-                        docRefValidado = doc(db, "Usuarios", qSnap.docs[0].id); 
-                        userData = qSnap.docs[0].data(); 
-                    }
-                } else { 
-                    docRefValidado = testRef; 
-                }
-
-                if (!userData) {
-                    console.warn("El ID consultado no coincide con ningún registro en la base de datos.");
-                    document.getElementById('student-welcome').innerText = "Élève non trouvé";
-                    alert("Error: El ID [" + urlId + "] no existe en la colección 'Usuarios' de Firestore.");
-                    return;
-                }
-
-                mapaAciertosAlumno = userData.mapa_aciertos || {};
-                currentLevel = userData.nivel || "A1";
-                document.getElementById('student-welcome').innerText = `${userData.nombre || 'Étudiant'}`;
-                document.getElementById('level-indicator').innerText = `NIVEAU ${currentLevel}`;
-                
-                const progInicial = userData.progreso || 0;
-                document.getElementById('progress-text-target').innerText = `${progInicial}%`;
-                document.getElementById('progress-bar-fill').style.width = `${progInicial}%`;
-                window.currentLevel = currentLevel;
-
-                await descargarColeccionUnidades();
-            } catch (error) { 
-                console.error("Error crítico durante la carga de Firebase:", error); 
-                document.getElementById('student-welcome').innerText = "Erreur de connexion";
+            // Guardamos el nivel en la memoria del sistema
+            currentLevel = datosAlumno.nivel || 'A1';
+            localStorage.setItem('currentLevel', currentLevel);
+            
+            // Pintamos la bienvenida con su nombre o ID
+            document.getElementById('student-welcome').innerText = `Élève: ${currentStudentId}`;
+            
+            // RECOBRAR TOKENS: Buscamos el campo exacto de tokens y lo pintamos en la pantalla
+            const tokensDisponibles = datosAlumno.tokens !== undefined ? datosAlumno.tokens : 0;
+            const tokenCounter = document.getElementById('token-counter');
+            if (tokenCounter) {
+                tokenCounter.textContent = `Tokens: ${tokensDisponibles}`;
             }
+
+            // Cargamos las actividades asignadas a este alumno
+            cargarProgresoYActividades(currentStudentId);
+
+        } else {
+            console.error("El ID no existe en Firestore");
+            document.getElementById('student-welcome').innerText = "ID non valide. Contactez votre professeur.";
         }
+    } catch (error) {
+        console.error("Error al conectar con Firestore en init:", error);
+        document.getElementById('student-welcome').innerText = "Erreur de connexion.";
+    }
+}
 
         async function descargarColeccionUnidades() {
             unidadesCache = {};
