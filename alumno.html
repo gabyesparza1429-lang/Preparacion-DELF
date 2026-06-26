@@ -710,43 +710,57 @@
     }
     
     urlId = urlId.trim();
-    currentStudentId = urlId;
+    // Validamos y asignamos a la variable global del script
+    window.currentStudentId = urlId;
 
     try {
-        // Consulta directa a tu colección de Firestore sin pasar por Railway
-        const alumnoRef = doc(db, "alumnos", currentStudentId);
-        const alumnoSnap = await getDoc(alumnoRef);
+        // Generamos la referencia directa al documento del alumno en Firestore
+        docRefValidado = doc(db, "alumnos", window.currentStudentId);
+        const alumnoSnap = await getDoc(docRefValidado);
 
         if (alumnoSnap.exists()) {
             const datosAlumno = alumnoSnap.data();
             
-            // Guardamos el nivel en la memoria del sistema
+            // Extraemos y asignamos el nivel real guardado
             currentLevel = datosAlumno.nivel || 'A1';
+            window.currentLevel = currentLevel;
             localStorage.setItem('currentLevel', currentLevel);
             
-            // Pintamos la bienvenida con su nombre o ID
-            document.getElementById('student-welcome').innerText = `Élève: ${currentStudentId}`;
+            // Actualizamos el indicador visual de nivel en el sidebar
+            const levelIndicator = document.getElementById('level-indicator');
+            if (levelIndicator) {
+                levelIndicator.innerText = `NIVEAU ${currentLevel}`;
+            }
             
-            // RECOBRAR TOKENS: Buscamos el campo exacto de tokens y lo pintamos en la pantalla
+            // Extraemos y pintamos los tokens disponibles de inmediato en el contenedor correspondiente
             const tokensDisponibles = datosAlumno.tokens !== undefined ? datosAlumno.tokens : 0;
-            const tokenCounter = document.getElementById('token-counter');
+            const tokenCounter = document.getElementById('banner-credits-count');
             if (tokenCounter) {
-                tokenCounter.textContent = `Tokens: ${tokensDisponibles}`;
+                tokenCounter.innerText = tokensDisponibles;
             }
 
-            // Cargamos las actividades asignadas a este alumno
-            cargarProgresoYActividades(currentStudentId);
+            // Recuperamos el mapa de aciertos históricos del alumno si ya existe en la base de datos
+            if (datosAlumno.mapa_aciertos) {
+                mapaAciertosAlumno = datosAlumno.mapa_aciertos;
+            }
+
+            // Actualizamos la interfaz de bienvenida del estudiante
+            document.getElementById('student-welcome').innerText = datosAlumno.nombre 
+                ? `Élève: ${datosAlumno.nombre}` 
+                : `Élève: ${window.currentStudentId}`;
+            
+            // Descargamos las unidades correspondientes a su nivel e inicializamos la vista
+            await descargarColeccionUnidades();
 
         } else {
-            console.error("El ID no existe en Firestore");
+            console.error("El ID no existe en la colección de Firestore.");
             document.getElementById('student-welcome').innerText = "ID non valide. Contactez votre professeur.";
         }
     } catch (error) {
-        console.error("Error al conectar con Firestore en init:", error);
+        console.error("Error crítico de comunicación con Firestore en init:", error);
         document.getElementById('student-welcome').innerText = "Erreur de connexion.";
     }
 }
-
         async function descargarColeccionUnidades() {
             unidadesCache = {};
             const querySnapshot = await getDocs(collection(db, "BibliotecaEjercicios", currentLevel, "Unidades"));
