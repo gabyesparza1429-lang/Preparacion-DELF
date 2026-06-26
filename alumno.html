@@ -710,46 +710,42 @@
     }
     
     urlId = urlId.trim();
-    // Validamos y asignamos a la variable global del script
-    window.currentStudentId = urlId;
 
     try {
-        // Generamos la referencia directa al documento del alumno en Firestore
-        docRefValidado = doc(db, "alumnos", window.currentStudentId);
+        // Usamos la referencia nativa correcta para evitar caídas de variables globales
+        docRefValidado = doc(db, "alumnos", urlId);
         const alumnoSnap = await getDoc(docRefValidado);
 
         if (alumnoSnap.exists()) {
             const datosAlumno = alumnoSnap.data();
             
-            // Extraemos y asignamos el nivel real guardado
+            // 1. Cargamos y fijamos el nivel real del alumno en el sistema
             currentLevel = datosAlumno.nivel || 'A1';
-            window.currentLevel = currentLevel;
             localStorage.setItem('currentLevel', currentLevel);
             
-            // Actualizamos el indicador visual de nivel en el sidebar
+            // Actualizamos el badge visual de nivel en tu sidebar
             const levelIndicator = document.getElementById('level-indicator');
             if (levelIndicator) {
                 levelIndicator.innerText = `NIVEAU ${currentLevel}`;
             }
             
-            // Extraemos y pintamos los tokens disponibles de inmediato en el contenedor correspondiente
+            // 2. Buscamos y pintamos los créditos/tokens en tu ID nativo real
             const tokensDisponibles = datosAlumno.tokens !== undefined ? datosAlumno.tokens : 0;
             const tokenCounter = document.getElementById('banner-credits-count');
             if (tokenCounter) {
                 tokenCounter.innerText = tokensDisponibles;
             }
 
-            // Recuperamos el mapa de aciertos históricos del alumno si ya existe en la base de datos
+            // 3. Recuperamos su mapa de progreso histórico si ya tiene uno
             if (datosAlumno.mapa_aciertos) {
                 mapaAciertosAlumno = datosAlumno.mapa_aciertos;
             }
 
-            // Actualizamos la interfaz de bienvenida del estudiante
-            document.getElementById('student-welcome').innerText = datosAlumno.nombre 
-                ? `Élève: ${datosAlumno.nombre}` 
-                : `Élève: ${window.currentStudentId}`;
+            // 4. Pintamos el nombre real o su ID en la bienvenida del sidebar
+            const nombreMostrar = datosAlumno.nombre || urlId;
+            document.getElementById('student-welcome').innerText = `Élève: ${nombreMostrar}`;
             
-            // Descargamos las unidades correspondientes a su nivel e inicializamos la vista
+            // 5. Arrancamos de inmediato la descarga de sus actividades específicas
             await descargarColeccionUnidades();
 
         } else {
@@ -757,7 +753,7 @@
             document.getElementById('student-welcome').innerText = "ID non valide. Contactez votre professeur.";
         }
     } catch (error) {
-        console.error("Error crítico de comunicación con Firestore en init:", error);
+        console.error("Error crítico en init al comunicar con Firestore:", error);
         document.getElementById('student-welcome').innerText = "Erreur de connexion.";
     }
 }
