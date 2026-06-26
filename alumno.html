@@ -717,7 +717,7 @@
 
             try {
                 // Conexión exacta a la colección "usuarios" de tu Firestore
-                docRefValidado = doc(db, "usuarios", urlId);
+                docRefValidado = doc(db, "Usuarios", urlId);
                 const alumnoSnap = await getDoc(docRefValidado);
 
                 if (alumnoSnap.exists()) {
