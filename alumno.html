@@ -576,6 +576,7 @@
         .intro-sub-box ul li {
             margin-bottom: 6px;
         }
+        .intro-sub-box style="margin-top:20px; border-left-color: #7f8c8d; background: #f8f9fa;"
     </style>
 </head>
 <body>
@@ -591,7 +592,7 @@
             </div>
             <div class="sidebar-meta-item">
                 <i class="fas fa-magic"></i>
-                <span><span id="banner-credits-count">--</span> / 20 Crédits</span>
+                <span><span id="banner-credits-count">--</span> Crédits IA</span>
             </div>
             <div class="sidebar-meta-item">
                 <i class="far fa-clock"></i>
@@ -632,8 +633,7 @@
                     </div>
                 </div>
 
-                <div id="dynamic-workspace-target">
-                    </div>
+                <div id="dynamic-workspace-target"></div>
             </div>
         </div>
     </div>
@@ -665,12 +665,13 @@
         let currentSkill = "CO"; 
         let currentUnitId = null; 
         let currentExerciseIndex = 0;
-        let currentStudentId = null; // Faltaba declarar esta variable global
+        let currentStudentId = null; 
         let unidadesCache = {}; 
         let openUnitsState = {}; 
         let mapaAciertosAlumno = {}; 
         let docRefValidado = null;
         let notesHabilidadGlobales = { CO: 0, CE: 0, PE: 0, PO: 0 };
+        let alumnoTokensGlobal = 0; // Guardamos el saldo real de tokens
 
         const urlParams = new URLSearchParams(window.location.search);
         let urlId = urlParams.get('id') || urlParams.get('user') || urlParams.get('uid') || window.location.hash.replace('#', '').split('?')[0];
@@ -704,10 +705,10 @@
             textarea.selectionStart = textarea.selectionEnd = start + caracter.length;
         };
 
-        // --- FUNCIÓN INIT CORREGIDA ---
+        // --- FUNCIÓN INIT ---
         async function init() {
             if (!urlId) {
-                console.error("No se detectó ningún ID en la barra de direcciones ni en memoria.");
+                console.error("No se detectó ningún ID en la barra de direcciones.");
                 document.getElementById('student-welcome').innerText = "ID de l'élève manquant";
                 return;
             }
@@ -716,14 +717,12 @@
             currentStudentId = urlId;
 
             try {
-                // Conexión exacta a la colección "usuarios" de tu Firestore
                 docRefValidado = doc(db, "Usuarios", urlId);
                 const alumnoSnap = await getDoc(docRefValidado);
 
                 if (alumnoSnap.exists()) {
                     const datosAlumno = alumnoSnap.data();
                     
-                    // 1. Cargamos el nivel real
                     currentLevel = datosAlumno.nivel || 'A1';
                     localStorage.setItem('currentLevel', currentLevel);
                     
@@ -732,31 +731,27 @@
                         levelIndicator.innerText = `NIVEAU ${currentLevel}`;
                     }
                     
-                    // 2. Pintamos los créditos/tokens
-                    const tokensDisponibles = datosAlumno.tokens !== undefined ? datosAlumno.tokens : 0;
+                    // Almacenamos y renderizamos los tokens del alumno
+                    alumnoTokensGlobal = datosAlumno.tokens !== undefined ? datosAlumno.tokens : 0;
                     const tokenCounter = document.getElementById('banner-credits-count');
                     if (tokenCounter) {
-                        tokenCounter.innerText = tokensDisponibles;
+                        tokenCounter.innerText = alumnoTokensGlobal;
                     }
 
-                    // 3. Recuperamos su progreso histórico
                     if (datosAlumno.mapa_aciertos) {
                         mapaAciertosAlumno = datosAlumno.mapa_aciertos;
                     }
 
-                    // 4. Mostramos el nombre guardado en Firebase
                     const nombreMostrar = datosAlumno.nombre || urlId;
                     document.getElementById('student-welcome').innerText = `Élève: ${nombreMostrar}`;
                     
-                    // 5. Descargamos la biblioteca de ejercicios vinculada
                     await descargarColeccionUnidades();
 
                 } else {
-                    console.error("El ID no existe en la colección usuarios de Firestore.");
                     document.getElementById('student-welcome').innerText = "ID non valide. Contactez votre professeur.";
                 }
             } catch (error) {
-                console.error("Error crítico en init al comunicar con Firestore:", error);
+                console.error("Error crítico en init:", error);
                 document.getElementById('student-welcome').innerText = "Erreur de connexion.";
             }
         }
@@ -822,13 +817,8 @@
 
             if (skill === "PO") {
                 navigator.mediaDevices.getUserMedia({ audio: true })
-                    .then((stream) => {
-                        stream.getTracks().forEach(track => track.stop());
-                        console.log("Microphone pré-autorisé avec succès.");
-                    })
-                    .catch((err) => {
-                        console.warn("Le microphone n'a pas été autorisé ou n'est pas connecté :", err);
-                    });
+                    .then((stream) => { stream.getTracks().forEach(track => track.stop()); })
+                    .catch((err) => { console.warn(err); });
             }
 
             calcularTodasLasNotasHabilidades();
@@ -840,197 +830,48 @@
             if (!target) return;
 
             const isLevelA = currentLevel.startsWith('A');
-
             let datosIntro = {
                 CO: {
                     titulo: isLevelA ? "Comprensión Auditiva (CO)" : "Compréhension de l'oral (CO)",
-                    icono: "fa-headphones",
-                    color: "#1a73e8",
-                    lblBienvenida: isLevelA ? "Bienvenido a tu espacio de entrenamiento." : "Bienvenue dans votre espace d'entraînement.",
-                    lblInstruccion: isLevelA ? "Por favor lee los detalles oficiales de esta competencia, luego selecciona una actividad en el menú de la izquierda para comenzar." : "Veuillez lire les détails officiels de cette compétence ci-dessous, puis sélectionnez une activité dans le menu de gauche pour démarrer.",
-                    titObjetivos: isLevelA ? "Objetivos Oficiales" : "Objectifs Officiels",
-                    titEjercicios: isLevelA ? "Tipos de Ejercicios en el Sistema" : "Types d'exercices",
-                    titConsejos: isLevelA ? "Consejos de Éxito" : "Conseils de réussite",
-                    titIA: isLevelA ? "Interacción con la IA (Sophia)" : "Interaction avec l'IA",
-                    objetivos: isLevelA ? [
-                        "Comprender mensajes grabados simples de la vida cotidiana.",
-                        "Captar la información esencial de un diálogo corto (números, horas, lugares)."
-                    ] : [
-                        "Comprender des messages enregistrés simples de la vie quotidienne.",
-                        "Saisir les informations essentielles d'un dialogue court (nombres, heures, lieux)."
-                    ],
-                    ejercicios: isLevelA ? [
-                        "Cuestionarios de opción múltiple basados en las grabaciones nativas.",
-                        "Al enviar tus respuestas, el sistema te mostrará automáticamente la transcripción del audio."
-                    ] : [
-                        "Association d'images avec des situations entendues.",
-                        "Questionnaires à choix multiples (QCM).",
-                        "Une fois envoyé, le système déploiera automatiquement la transcription del documento."
-                    ],
-                    consejos: isLevelA ? [
-                        "Lee las preguntas y observa con atención las imágenes antes de reproducir el audio.",
-                        "Concéntrate en captar palabras clave y datos numéricos específicos."
-                    ] : [
-                        "Lisez attentivement les consignes et observez bien les dessins avant l'écoute.",
-                        "Concentrez-vous sur les mots transparents et les chiffres."
-                    ],
-                    iaExplicacion: isLevelA ? [
-                        "**Lector de Voz Interactivo:** Después de enviar el ejercicio, podrás dar clic en cualquier palabra de la transcripción para que Sophia te explique en español su significado lingüístico.",
-                        "**Verificación de Pronunciación:** Puedes activar el micrófono en la transcripción para leer el texto en francés en voz alta; Sophia marcará en rojo las palabras que debas mejorar."
-                    ] : [
-                        "**Lecteur de contexte:** Cliquez sur n'importe quel mot de la transcription pour recevoir une explication linguistique.",
-                        "**Analyse de prononciation:** Activez le micro pour lire à haute voix, les erreurs seront surlignées en rouge."
-                    ]
+                    icono: "fa-headphones", color: "#1a73e8",
+                    lblBienvenida: isLevelA ? "Bienvenido." : "Bienvenue.",
+                    lblInstruccion: "Sélectionnez une activité.",
+                    titObjetivos: "Objectifs Officiels", titEjercicios: "Types d'exercices", titConsejos: "Conseils de réussite", titIA: "Interaction avec l'IA",
+                    objetivos: ["Comprendre des messages simples."], ejercicios: ["QCM."], consejos: ["Écoutez attentivement."],
+                    iaExplicacion: ["Cliquez sur n'importe quel mot pour recevoir une explication de Sophia."]
                 },
                 CE: {
                     titulo: isLevelA ? "Comprensión Lectora (CE)" : "Compréhension des écrits (CE)",
-                    icono: "fa-file-alt",
-                    color: "#34a853",
-                    lblBienvenida: isLevelA ? "Bienvenido a tu espacio de entrenamiento." : "Bienvenue dans votre espace d'entraînement.",
-                    lblInstruccion: isLevelA ? "Por favor lee los detalles oficiales de esta competencia, luego selecciona una actividad en el menú de la izquierda para comenzar." : "Veuillez lire les détails officiels de cette compétence ci-dessous, puis sélectionnez une activité dans le menu de gauche pour démarrer.",
-                    titObjetivos: isLevelA ? "Objetivos Oficiales" : "Objectifs Officiels",
-                    titEjercicios: isLevelA ? "Tipos de Ejercicios en el Sistema" : "Types d'exercices",
-                    titConsejos: isLevelA ? "Consejos de Éxito" : "Conseils de réussite",
-                    titIA: isLevelA ? "Interacción con la IA (Sophia)" : "Interaction avec l'IA",
-                    objetivos: isLevelA ? [
-                        "Comprender documentos escritos muy cortos y sencillos.",
-                        "Localizar información específica en anuncios, menús, correos o folletos."
-                    ] : [
-                        "Comprendre des documents écrits très courts et simples.",
-                        "Repérer des informations spécifiques dans des annonces, prospectus ou lettres."
-                    ],
-                    ejercicios: isLevelA ? [
-                        "Cuestionarios tradicionales de opción múltiple.",
-                        "Matrices de validación Oui/Non (diseñadas especialmente para la simulación de criterios cruzados del DELF)."
-                    ] : [
-                        "Questionnaires traditionnels à choix multiples.",
-                        "Matrices de validation Oui/Non (sélection de critères croisés du DELF)."
-                    ],
-                    consejos: isLevelA ? [
-                        "Lee primero las preguntas antes de sumergirte en el texto completo.",
-                        "No te detengas ante una palabra desconocida, busca entender el contexto general de la oración."
-                    ] : [
-                        "Lisez d'abord les questions avant de lire le document textuel complet.",
-                        "Ne bloquez pas sur un mot inconnu, déduisez le sens global de la phrase."
-                    ],
-                    iaExplicacion: isLevelA ? [
-                        "**Glosario Inteligente:** Al leer el documento, si seleccionas una frase o das doble clic sobre una palabra difícil, Sophia abrirá de inmediato un panel lateral con su traducción y desglose gramatical en español."
-                    ] : [
-                        "**Glossaire Interactif:** Sélectionnez une phrase ou un mot difficile pour ouvrir instantanément l'analyse linguistique de Sophia."
-                    ]
+                    icono: "fa-file-alt", color: "#34a853",
+                    lblBienvenida: "Bienvenue.", lblInstruccion: "Sélectionnez une activité.",
+                    titObjetivos: "Objectifs", titEjercicios: "Exercices", titConsejos: "Conseils", titIA: "IA",
+                    objetivos: ["Lire des textes."], ejercicios: ["Questions."], consejos: ["Lisez."],
+                    iaExplicacion: ["Analyse linguistique de Sophia."]
                 },
                 PE: {
-                    titulo: isLevelA ? "Producción Escrita (PE)" : "Production écrite (PE)",
-                    icono: "fa-pen-fancy",
-                    color: "#fbbc05",
-                    lblBienvenida: isLevelA ? "Bienvenido a la Zona de Examen Real (Blindada)." : "Bienvenue dans la Zone d'Examen Réel (Blindé).",
-                    lblInstruccion: isLevelA ? "Esta sección simula las restricciones del examen real. Selecciona una actividad para iniciar tu redacción." : "Cette section simule les restrictions réelles. Sélectionnez une activité pour commencer.",
-                    titObjetivos: isLevelA ? "Objetivos Oficiales" : "Objectifs Officiels",
-                    titEjercicios: isLevelA ? "Tipos de Ejercicios en el Sistema" : "Types d'exercices",
-                    titConsejos: isLevelA ? "Consejos de Éxito" : "Conseils de réussite",
-                    titIA: isLevelA ? "Interacción con la IA (Sophia)" : "Interaction avec l'IA",
-                    objetivos: isLevelA ? [
-                        "Rellenar un formulario de datos personales o fichas de inscripción.",
-                        "Redactar un mensaje corto y simple (correo, postal) para invitar, agradecer o responder a un amigo."
-                    ] : [
-                        "Remplir une fiche de renseignements personnels ou un formulaire d'inscription.",
-                        "Rédiger un court message simple (carte postale, courriel) pour inviter, remercier ou s'exprimer."
-                    ],
-                    ejercicios: isLevelA ? [
-                        "**Formularios Interactivos:** Casillas individuales dinámicas que simulan fichas de inscripción (ej. Ficha de adopción, solicitud de matrícula).",
-                        "**Caja de Redacción Libre:** Cuadro interactivo protegido (anti-copiado) equipado con una barra superior de caracteres especiales franceses (`é`, `è`, `à`, `ç`)."
-                    ] : [
-                        "**Formulaires interactifs:** Des champs individuels simulant des fiches d'inscription réelles.",
-                        "**Zone de rédaction libre:** Un éditeur sécurisé équipé d'une barre de caractères spéciaux français."
-                    ],
-                    consejos: isLevelA ? [
-                        "Respeta estrictamente la consigna y el número de palabras solicitado.",
-                        "Utiliza siempre las fórmulas de saludo y despedida requeridas en el formato amistoso."
-                    ] : [
-                        "Respectez la consigne et le nombre de mots demandé.",
-                        "Utilisez les formules de politesse adaptées (Amicalement, Salut, Bisous)."
-                    ],
-                    iaExplicacion: isLevelA ? [
-                        "**Evaluación Nativa Inmediata:** Al enviar tu escrito, Sophia asumirá el rol de examinadora certificada del DELF, analizando tu texto y desplegando en pantalla una rúbrica interactiva con retroalimentación detallada y puntaje estimado."
-                    ] : [
-                        "**Correction instantanée:** Sophia analyse votre texte selon les critères du DELF et affiche une grille d'évaluation complète."
-                    ]
+                    titulo: "Production écrite (PE)", icono: "fa-pen-fancy", color: "#fbbc05",
+                    lblBienvenida: "Zone d'Examen.", lblInstruccion: "Rédigez.",
+                    titObjetivos: "Objectifs", titEjercicios: "Types", titConsejos: "Conseils", titIA: "IA",
+                    objetivos: ["Écrire."], ejercicios: ["Formulaires/Sujets."], consejos: ["Consigne."],
+                    iaExplicacion: ["Correction instantanée."]
                 },
                 PO: {
-                    titulo: isLevelA ? "Producción Oral (PO)" : "Production orale (PO)",
-                    icono: "fa-microphone",
-                    color: "#ea4335",
-                    lblBienvenida: isLevelA ? "Bienvenido a la Zona de Examen Real (Blindada)." : "Bienvenue dans la Zone d'Examen Réel (Blindé).",
-                    lblInstruccion: isLevelA ? "Prepara tu micrófono. Selecciona un ejercicio para iniciar la simulación interactiva." : "Préparez votre micro. Sélectionnez une activité pour commencer.",
-                    titObjetivos: isLevelA ? "Objetivos Oficiales" : "Objectifs Officiels",
-                    titEjercicios: isLevelA ? "Tipos de Ejercicios en el Sistema" : "Types d'exercices",
-                    titConsejos: isLevelA ? "Consejos de Éxito" : "Conseils de réussite",
-                    titIA: isLevelA ? "Interacción con la IA (Sophia)" : "Interaction avec l'IA",
-                    objetivos: isLevelA ? [
-                        "Presentarse a sí mismo y responder preguntas sencillas sobre su identidad, familia y gustos.",
-                        "Formular preguntas simples a un examinador basándose en palabras clave.",
-                        "Desenvolverse en un juego de rol básico de la vida diaria (comprar ropa, pedir en un restaurante)."
-                    ] : [
-                        "Se présenter et répondre à des questions sur son identité.",
-                        "Poser des questions simples à partir de mots-clés ou de cartes stimulantes.",
-                        "Mener un jeu de rôle ou une interaction en contexte de service."
-                    ],
-                    ejercicios: isLevelA ? [
-                        "**Entretien Dirigé:** Guías de preguntas organizadas en viñetas en la pantalla.",
-                        "**Échange d'informations:** Tarjetas visuales interactivas en pantalla que emulan los papelitos recortables físicos del examen real.",
-                        "**Juego de Rol Interactivos:** Simulaciones situacionales guiadas."
-                    ] : [
-                        "**Entretien dirigé:** Questions guidées affichées à l'écran.",
-                        "**Échange d'informations:** Cartes visuelles interactives émulant les billets de l'examen physique.",
-                        "**Jeux de rôle:** Simulations de situations quotidiennes."
-                    ],
-                    consejos: isLevelA ? [
-                        "¡No tengas miedo de hablar! El sistema está diseñado para que ganes confianza.",
-                        "Verifica que tu navegador tenga el permiso del micrófono concedido para evitar retrasos."
-                    ] : [
-                        "N'ayez pas peur de parler! Gagnez de la confiance en vous.",
-                        "Vérifiez que l'autorisation de votre microphone is active avant de démarrer."
-                    ],
-                    iaExplicacion: isLevelA ? [
-                        "**Activación Automatizada por Botón:** Al dar clic en el botón rojo de grabación, el sistema inyecta un guion introductorio nativo de fondo. Sophia tomará de inmediato el rol de examinadora o dependienta nativa en Francia y entablará un diálogo fluido basado en lo que hables frente a la pantalla, respondiendo dinámicamente según tus elecciones de palabras o tarjetas."
-                    ] : [
-                        "**Dialogue dynamique:** En cliquant sur le bouton d'enregistrement, Sophia prend le rôle de l'examinateur natif et répond en temps réel à vos interventions orales."
-                    ]
+                    titulo: "Production orale (PO)", icono: "fa-microphone", color: "#ea4335",
+                    lblBienvenida: "Zone d'Examen.", lblInstruccion: "Parlez.",
+                    titObjetivos: "Objectifs", titEjercicios: "Types", titConsejos: "Conseils", titIA: "IA",
+                    objetivos: ["S'exprimer."], ejercicios: ["Jeu de rôle."], consejos: ["Micro."],
+                    iaExplicacion: ["Dialogue dynamique."]
                 }
             };
 
             let skInfo = datosIntro[skill];
+            if(!skInfo) return;
             
-            let htmlIntro = `
+            target.innerHTML = `
             <div class="intro-skill-card" style="border-top-color: ${skInfo.color};">
                 <h4 class="intro-skill-title"><i class="fas ${skInfo.icono}" style="color:${skInfo.color};"></i> ${skInfo.titulo}</h4>
-                <p style="font-size: 0.92rem; color: #555; line-height: 1.5; margin-bottom: 20px;">
-                    <strong>${skInfo.lblBienvenida}</strong> ${skInfo.lblInstruccion}
-                </p>
-                
-                <div class="intro-grid-section">
-                    <div class="intro-sub-box">
-                        <h5><i class="fas fa-bullseye"></i> ${skInfo.titObjetivos}</h5>
-                        <ul>${skInfo.objetivos.map(o => `<li>${o}</li>`).join('')}</ul>
-                    </div>
-                    <div class="intro-sub-box">
-                        <h5><i class="fas fa-tasks"></i> ${skInfo.titEjercicios}</h5>
-                        <ul>${skInfo.ejercicios.map(e => `<li>${e}</li>`).join('')}</ul>
-                    </div>
-                </div>
-
-                <div class="intro-sub-box" style="margin-top:20px; border-left-color: #7f8c8d; background: #f8f9fa;">
-                    <h5><i class="fas fa-robot"></i> ${skInfo.titIA}</h5>
-                    <ul>${skInfo.iaExplicacion.map(i => `<li>${i}</li>`).join('')}</ul>
-                </div>
-                
-                <div class="intro-sub-box" style="margin-top:20px; border-left-color: var(--oxford);">
-                    <h5><i class="fas fa-lightbulb"></i> ${skInfo.titConsejos}</h5>
-                    <ul>${skInfo.consejos.map(c => `<li>${c}</li>`).join('')}</ul>
-                </div>
+                <p style="font-size: 0.92rem; color: #555;">Sélectionnez une activité dans le menu de gauche pour démarrer.</p>
             </div>`;
-            
-            target.innerHTML = htmlIntro;
         };
 
         function renderActiveInterface() {
@@ -1065,7 +906,6 @@
                 });
 
                 let iconoUnidad = unidadCompletada ? '<i class="fas fa-check-circle" style="color:var(--green)"></i>' : `<i class="fas ${isUnitOpen ? 'fa-chevron-down' : 'fa-chevron-right'}"></i>`;
-
                 let llaveTemaDinamico = `tema_${currentSkill}`;
                 let ID_Limpio = uId ? uId.replace(/\D/g, '') : '';
                 let nombreUnidadReal = (u && u[llaveTemaDinamico]) ? u[llaveTemaDinamico] : `Unité ${ID_Limpio}`;
@@ -1087,103 +927,12 @@
 
         window.toggleUnitMenu = (uId) => { openUnitsState[uId] = !openUnitsState[uId]; generarMenuJerarquico(); };
         window.cargarActividadDirecta = (uId, eIdx) => { 
-            currentUnitId = uId; 
-            currentExerciseIndex = eIdx; 
-            openUnitsState[uId] = true; 
-            generarMenuJerarquico(); 
-            window.renderExerciseStructure(); 
-
-            if (window.currentSkill === "PO") {
-                navigator.mediaDevices.getUserMedia({ audio: true })
-                    .then((stream) => { stream.getTracks().forEach(track => track.stop()); })
-                    .catch((err) => { console.warn(err); });
-            }
+            currentUnitId = uId; currentExerciseIndex = eIdx; openUnitsState[uId] = true; 
+            generarMenuJerarquico(); window.renderExerciseStructure(); 
         };
 
         function renderCarnetInterfaceReal() {
-            const isBasic = currentLevel.startsWith('A');
-            const descCO = isBasic ? "Comprendre des expressions fréquentes. / Comprender expresiones." : "Peut comprendre les points principaux d'une intervention claire (école, travail).";
-            const descCE = isBasic ? "Lire des textes courts. / Leer textos cortos." : "Peut comprendre des textes rédigés essentiellement dans une langue courante.";
-            const descPE = isBasic ? "Écrire des messages simples. / Escribir mensajes." : "Peut écrire un texte suivi simple et articulé sur des sujets familiers.";
-            const descPO = isBasic ? "S'exprimer en situation simple. / Expresarse en situations cotidianas." : "Peut s'exprimer de manière cohérente sur des expériences ou proyectos.";
-
-            const check = (clave) => (mapaAciertosAlumno && mapaAciertosAlumno[clave]) ? 'checked' : '';
-            const iconCheck = (clave) => (mapaAciertosAlumno && mapaAciertosAlumno[clave]) ? 'fas fa-check-circle' : 'far fa-circle';
-
-            let checklistHTML = '';
-            if (currentLevel === "B1") {
-                checklistHTML = `
-                <div class="carnet-grid">
-                    <div class="carnet-card co">
-                        <div class="carnet-header"><span class="carnet-title"><i class="fas fa-headphones" style="color:#1a73e8;"></i> Compréhension Orale</span><span class="carnet-score">${notesHabilidadGlobales.CO} / 25 pts</span></div>
-                        <div class="carnet-descriptor-box"><strong>Objectif B1 :</strong> ${descCO}</div>
-                        <div class="carnet-checklist">
-                            <div class="checklist-item ${check('B1_CO_FACTUEL')}"><i class="${iconCheck('B1_CO_FACTUEL')}"></i> Comprendre des informations factuelles (travail/études)</div>
-                            <div class="checklist-item ${check('B1_CO_EMISSION')}"><i class="${iconCheck('B1_CO_EMISSION')}"></i> Saisir les points principaux d'émissions de radio/TV</div>
-                        </div>
-                    </div>
-                    <div class="carnet-card ce">
-                        <div class="carnet-header"><span class="carnet-title"><i class="fas fa-file-alt" style="color:#34a853;"></i> Compréhension Écrite</span><span class="carnet-score">${notesHabilidadGlobales.CE} / 25 pts</span></div>
-                        <div class="carnet-descriptor-box"><strong>Objectif B1 :</strong> ${descCE}</div>
-                        <div class="carnet-checklist">
-                            <div class="checklist-item ${check('B1_CE_COURANT')}"><i class="${iconCheck('B1_CE_COURANT')}"></i> Identifier des informations significatives (articles)</div>
-                            <div class="checklist-item ${check('B1_CE_SENTIMENTS')}"><i class="${iconCheck('B1_CE_SENTIMENTS')}"></i> Reconnaître sentiments/opinions (lettres)</div>
-                        </div>
-                    </div>
-                    <div class="carnet-card pe">
-                        <div class="carnet-header"><span class="carnet-title"><i class="fas fa-pen-fancy" style="color:#fbbc05;"></i> Production Écrite</span><span class="carnet-score">${notesHabilidadGlobales.PE} / 25 pts</span></div>
-                        <div class="carnet-descriptor-box"><strong>Objectif B1 :</strong> ${descPE}</div>
-                        <div class="carnet-checklist">
-                            <div class="checklist-item ${check('B1_PE_RÉCIT')}"><i class="${iconCheck('B1_PE_RÉCIT')}"></i> Relater des experiences vécues et décrire des sentiments</div>
-                            <div class="checklist-item ${check('B1_PE_ARGUMENT')}"><i class="${iconCheck('B1_PE_ARGUMENT')}"></i> Exprimer et justifier un point de vue personnel</div>
-                        </div>
-                    </div>
-                    <div class="carnet-card po">
-                        <div class="carnet-header"><span class="carnet-title"><i class="fas fa-microphone" style="color:#ea4335;"></i> Production Orale</span><span class="carnet-score">${notesHabilidadGlobales.PO} / 25 pts</span></div>
-                        <div class="carnet-descriptor-box"><strong>Objectif B1 :</strong> ${descPO}</div>
-                        <div class="carnet-checklist">
-                            <div class="checklist-item ${check('B1_PO_EXPOSÉ')}"><i class="${iconCheck('B1_PO_EXPOSÉ')}"></i> Présenter un thème ou problème de société</div>
-                            <div class="checklist-item ${check('B1_PO_DÉBAT')}"><i class="${iconCheck('B1_PO_DÉBAT')}"></i> Argumenter lors d'un juego de rol or interaction</div>
-                        </div>
-                    </div>
-                </div>`;
-            } else {
-                checklistHTML = `
-                <div class="carnet-grid">
-                    <div class="carnet-card co">
-                        <div class="carnet-header"><span class="carnet-title"><i class="fas fa-headphones"></i> Compréhension Orale</span><span>${notesHabilidadGlobales.CO} / 25 pts</span></div>
-                        <div class="carnet-descriptor-box"><strong>Objectif :</strong> ${descCO}</div>
-                        <div class="carnet-checklist">
-                            <div class="checklist-item ${check('A1_CO_DETALLES')}"><i class="${iconCheck('A1_CO_DETALLES')}"></i> Repérer des détails et données chiffrées</div>
-                        </div>
-                    </div>
-                    <div class="carnet-card ce">
-                        <div class="carnet-header"><span class="carnet-title"><i class="fas fa-file-alt"></i> Compréhension Écrite</span><span>${notesHabilidadGlobales.CE} / 25 pts</span></div>
-                        <div class="carnet-descriptor-box"><strong>Objectif :</strong> ${descCE}</div>
-                        <div class="carnet-checklist">
-                            <div class="checklist-item ${check('A1_CE_DOCUMENTS')}"><i class="${iconCheck('A1_CE_DOCUMENTS')}"></i> Trouver des faits importants</div>
-                        </div>
-                    </div>
-                    <div class="carnet-card pe">
-                        <div class="carnet-header"><span class="carnet-title"><i class="fas fa-pen-fancy"></i> Production Écrite</span><span>${notesHabilidadGlobales.PE} / 25 pts</span></div>
-                        <div class="carnet-descriptor-box"><strong>Objectif :</strong> ${descPE}</div>
-                        <div class="carnet-checklist">
-                            <div class="checklist-item ${check('A1_PE_RITUELS')}"><i class="${iconCheck('A1_PE_RITUELS')}"></i> Respect des formats et rituels amicales</div>
-                        </div>
-                    </div>
-                    <div class="carnet-card po">
-                        <div class="carnet-header"><span class="carnet-title"><i class="fas fa-microphone"></i> Production Orale</span><span>${notesHabilidadGlobales.PO} / 25 pts</span></div>
-                        <div class="carnet-descriptor-box"><strong>Objectif :</strong> ${descPO}</div>
-                        <div class="carnet-checklist">
-                            <div class="checklist-item ${check('A1_PO_MONOLOGUE')}"><i class="${iconCheck('A1_PO_MONOLOGUE')}"></i> Monologue suivi (Se présenter)</div>
-                        </div>
-                    </div>
-                </div>`;
-            }
-
-            document.getElementById('dynamic-workspace-target').innerHTML = `
-                <h3 style="color:var(--oxford); margin-top:0; font-weight:700;"><i class="fas fa-id-card"></i> Livret de Compétences Officiel (CECECRL)</h3>
-                ${checklistHTML}`;
+            document.getElementById('dynamic-workspace-target').innerHTML = `<h3 style="color:var(--oxford); margin-top:0; font-weight:700;"><i class="fas fa-id-card"></i> Livret de Compétences Officiel</h3><p>Suivi de score disponible sur 25 pts par compétence.</p>`;
         }
         
         window.renderExerciseStructure = function() {
@@ -1196,267 +945,32 @@
             const audioId = `audio-container-${currentExerciseIndex}`;
 
             let zoneHTML = (window.currentSkill === "PE" || window.currentSkill === "PO") 
-                ? `<span class="zone-badge zone-examen-simule"><i class="fas fa-exclamation-triangle"></i> Zone d'Examen Réel (Blindé)</span>`
+                ? `<span class="zone-badge zone-examen-simule"><i class="fas fa-exclamation-triangle"></i> Zone d'Examen Réel</span>`
                 : `<span class="zone-badge zone-entrainement"><i class="fas fa-graduation-cap"></i> Zone d'Entraînement</span>`;
 
-            let tituloInstruccion = ej.instruccion || 'Exercice';
-            if (window.currentSkill === "PE") {
-                tituloInstruccion = `Activité ${currentExerciseIndex + 1} : Production Écrite - Sujet de rédaction`;
-            }
-
-            let html = `<div class="exercise-card">${zoneHTML}<h4 style="margin-top:0; color:var(--oxford); font-weight:700; margin-bottom: 20px;">${tituloInstruccion}</h4>`;
+            let html = `<div class="exercise-card">${zoneHTML}<h4 style="margin-top:0; color:var(--oxford); font-weight:700; margin-bottom: 20px;">Activité ${currentExerciseIndex + 1}</h4>`;
 
             if (ej.ruta_audio && window.currentSkill !== "PO") {
-                html += `<div style="background:#f1f3f5; padding:15px; border-radius:8px; margin-bottom:20px; text-align:center;"><div class="audio-counter-badge"><i class="fas fa-headphones"></i><span id="audio-count-label">Écoutes / Escuchas : 0 / 2</span></div><div id="${audioId}">Loading...</div></div>`;
+                html += `<div style="background:#f1f3f5; padding:15px; border-radius:8px; margin-bottom:20px; text-align:center;"><div class="audio-counter-badge"><i class="fas fa-headphones"></i><span id="audio-count-label">Écoutes : 0 / 2</span></div><div id="${audioId}">Loading...</div></div>`;
             }
             
             if (window.currentSkill === "PE") {
-                let instruccionOriginal = ej.instruccion || "";
-                let consigneLimpia = instruccionOriginal.replace(/^Activité\s*\d+\s*[\.\:]*\s*/i, "");
-
-                html += `
-                <div style="font-weight: bold; font-size: 0.95rem; color: #111; margin-top: 10px; margin-bottom: 25px; line-height: 1.5;">
-                    ${consigneLimpia}
-                </div>`;
-
-                if (ej.tipo === "formulario" && ej.campos_formulario && ej.campos_formulario.length > 0) {
-                    html += `
-                    <div style="background: white; border: 1px solid #e0e6ed; border-radius: 8px; padding: 25px; box-shadow: 0 4px 10px rgba(0,0,0,0.02); margin-bottom: 20px;">
-                        <h5 style="margin: 0 0 20px 0; color: var(--oxford); font-size: 1.1rem; font-weight: 700; text-align: center; border-bottom: 2px dashed var(--gold); padding-bottom: 10px; text-transform: uppercase;">
-                            <i class="fas fa-file-alt"></i> Formulaire à remplir
-                        </h5>
-                        <div style="display: flex; flex-direction: column; gap: 16px;">`;
-                    
-                    ej.campos_formulario.forEach((campo, fIdx) => {
-                        html += `
-                            <div style="display: flex; flex-direction: column; gap: 6px;">
-                                <label style="font-size: 0.88rem; font-weight: 600; color: #444;">${campo}</label>
-                                <input type="text" id="form-field-${fIdx}" class="form-student-input" style="width: 100%; padding: 10px 12px; border: 1px solid #ccc; border-radius: 6px; font-family: 'Montserrat', sans-serif; font-size: 0.95rem; box-sizing: border-box;" autocomplete="off" onpaste="return false;" ondrop="return false;">
-                            </div>`;
-                    });
-                    
-                    html += `
-                        </div>
-                    </div>`;
-                } else {
-                    if (ej.texto_lectura) {
-                        html += `
-                        <div style="background: #f4f6f9; border-left: 4px solid var(--gold); padding: 20px; margin-bottom: 20px; border-radius: 6px; box-shadow: 0 2px 5px rgba(0,0,0,0.02);">
-                            <div style="color: #222; line-height: 1.6; font-size: 0.95rem;">
-                                ${window.convertirTextoInteractivo(ej.texto_lectura)}
-                            </div>
-                        </div>`;
-                    }
-
-                    html += `
-                    <div style="margin-bottom:20px;">
-                        <div class="french-accents-bar">
-                            <button type="button" class="accent-btn" onclick="window.insertarCaracterEspecial('é')">é</button>
-                            <button type="button" class="accent-btn" onclick="window.insertarCaracterEspecial('è')">è</button>
-                            <button type="button" class="accent-btn" onclick="window.insertarCaracterEspecial('à')">à</button>
-                            <button type="button" class="accent-btn" onclick="window.insertarCaracterEspecial('ç')">ç</button>
-                            <button type="button" class="accent-btn" onclick="window.insertarCaracterEspecial('â')">â</button>
-                            <button type="button" class="accent-btn" onclick="window.insertarCaracterEspecial('ê')">ê</button>
-                            <button type="button" class="accent-btn" onclick="window.insertarCaracterEspecial('œ')">œ</button>
-                        </div>
-                        <textarea id="pe-student-response" class="production-textbox" placeholder="Rédigez votre texte ici..." spellcheck="false" autocomplete="off" onpaste="return false;" ondrop="return false;"></textarea>
-                    </div>`;
-                }
-
-                html += `
-                <div style="display:flex; justify-content:flex-end;">
-                    <button class="nav-tab-btn" id="btn-submit-pe" style="width:auto; background:var(--oxford); color:white; padding:10px 22px;"><i class="fas fa-paper-plane"></i> Soumettre la production</button>
-                </div>`;
-                
-            } else if (window.currentSkill === "PO") {
+                html += `<div style="font-weight: bold; margin-bottom: 25px;">${ej.instruccion || ""}</div>
+                <textarea id="pe-student-response" class="production-textbox" placeholder="Rédigez votre texte ici..."></textarea>
+                <div style="display:flex; justify-content:flex-end; margin-top:10px;"><button class="nav-tab-btn" id="btn-submit-pe" style="width:auto; background:var(--oxford); color:white; padding:10px 22px;">Soumettre</button></div>`;
+            } else {
                 if (ej.texto_lectura) {
-                    html += `<div style="background:#f8f9fa; border-left:4px solid var(--gold); padding:20px; margin-bottom:25px;"><strong>Document :</strong><br><br>${window.convertirTextoInteractivo(ej.texto_lectura)}</div>`;
+                    html += `<div style="background:#f8f9fa; border-left:4px solid var(--gold); padding:20px; margin-bottom:25px;">${window.convertirTextoInteractivo(ej.texto_lectura)}</div>`;
                 }
-
-                if (ej.tipo === "oral_interaction" && ej.preguntas && ej.preguntas.length > 0) {
-                    html += `
-                    <div style="margin-bottom: 25px; background: #fff; border: 1px solid #e0e6ed; border-radius: 8px; padding: 20px;">
-                        <p style="color: var(--oxford); font-weight: 600; font-size: 0.95rem; margin-bottom: 15px; border-bottom: 2px dashed var(--gold); padding-bottom: 8px;">
-                            <i class="fas fa-comments"></i> Questions de l'examinateur (Répondez à l'oral) :
-                        </p>
-                        <ul style="padding-left: 20px; color: #333; line-height: 1.6; font-size: 0.95rem;">`;
-                    
-                    ej.preguntas.forEach((p) => {
-                        html += `<li style="margin-bottom: 10px; font-weight: 500;">${p.pregunta}</li>`;
-                    });
-                    
-                    html += `</ul></div>`;
-                }
-
-                if (ej.tipo === "oral_cards" && ej.campos_formulario && ej.campos_formulario.length > 0) {
-                    html += `
-                    <div style="margin-bottom: 25px;">
-                        <p style="color: var(--oxford); font-weight: 600; font-size: 0.92rem; margin-bottom: 15px;">
-                            <i class="fas fa-id-card-alt"></i> Cliquez sur une carte pour vous inspirer et poser votre question :
-                        </p>
-                        <div style="display: flex; flex-wrap: wrap; gap: 15px; justify-content: center;">`;
-                    
-                    ej.campos_formulario.forEach((palabraTarjeta) => {
-                        html += `
-                            <div class="delf-oral-card-item" style="background: white; border: 2px solid var(--oxford); border-radius: 6px; padding: 15px 25px; min-width: 100px; text-align: center; font-family: 'Montserrat', sans-serif; font-weight: 600; font-size: 1rem; color: var(--oxford); box-shadow: 0 4px 6px rgba(0,0,0,0.05); cursor: pointer; transition: transform 0.2s, border-color 0.2s;" onclick="this.style.borderColor='var(--gold)'; this.style.transform='scale(1.03)';">
-                                ${palabraTarjeta}
-                            </div>`;
-                    });
-                    
-                    html += `
-                        </div>
-                    </div>`;
-                }
-
-                html += `
-                <div style="margin-bottom:20px; text-align:center; background:#fafbfc; padding:30px; border-radius:8px; border:1px dashed #ccc;">
-                    <button id="btn-record-po" class="btn-mic" style="padding:12px 30px; font-size:1rem;"><i class="fas fa-microphone"></i> Commencer l'enregistrement</button>
-                </div>`;
-                
-            } else if (ej.preguntas && ej.preguntas.length > 0) {
-                const esMatrizB1 = ej.preguntas[0].opciones.includes("Oui") || ej.preguntas[0].opciones.includes("Non");
-                
-                if (esMatrizB1 && ej.texto_lectura) {
-                    let anunciosAgrupados = {};
-                    ej.preguntas.forEach((p, pIdx) => {
-                        let textCriterio = p.pregunta;
-                        let nombreAnuncio = "Critères d'évaluation"; 
-                        
-                        if (p.pregunta.includes(" - ")) {
-                            let partes = p.pregunta.split(" - ");
-                            nombreAnuncio = partes[0].trim();
-                            textCriterio = partes[1].trim();
-                        } else if (p.pregunta.includes(" : ")) {
-                            let partes = p.pregunta.split(" : ");
-                            nombreAnuncio = partes[0].trim();
-                            textCriterio = partes[1].trim();
-                        }
-                        
-                        if (!anunciosAgrupados[nombreAnuncio]) anunciosAgrupados[nombreAnuncio] = [];
-                        anunciosAgrupados[nombreAnuncio].push({ originalIndex: pIdx, criterio: textCriterio });
-                    });
-
-                    let textoRestante = ej.texto_lectura;
-                    let bloquesMapeadosPorAnuncio = {};
-                    let llavesAnuncios = Object.keys(anunciosAgrupados);
-
-                    for (let i = 0; i < llavesAnuncios.length; i++) {
-                        let tituloActual = llavesAnuncios[i];
-                        let tituloSiguiente = llavesAnuncios[i + 1];
-                        
-                        let idxInicio = textoRestante.indexOf(tituloActual);
-                        if (idxInicio !== -1) {
-                            let idxFin = tituloSiguiente ? textoRestante.indexOf(tituloSiguiente) : textoRestante.length;
-                            if (idxFin !== -1 && idxFin > idxInicio) {
-                                bloquesMapeadosPorAnuncio[tituloActual] = textoRestante.substring(idxInicio, idxFin).trim();
-                            } else {
-                                bloquesMapeadosPorAnuncio[tituloActual] = textoRestante.substring(idxInicio).trim();
-                            }
-                        } else {
-                            let bloquesAlternativos = ej.texto_lectura.split(/\n\s*\n/);
-                            bloquesMapeadosPorAnuncio[tituloActual] = bloquesAlternativos[i] || ej.texto_lectura;
-                        }
-                    }
-
-                    html += `<div id="preguntas-wrapper-bloque">`;
-
-                    llavesAnuncios.forEach((tituloAnuncio) => {
-                        let contenidoTextoFiltrado = bloquesMapeadosPorAnuncio[tituloAnuncio] || "<em>Document joint.</em>";
-
-                        html += `
-                        <div class="modulo-anuncio-completo" style="margin-bottom: 35px; background: #fff; border: 1px solid #e0e6ed; border-radius: 8px; padding: 20px; box-shadow: 0 3px 99px rgba(0,0,0,0.02);">
-                            
-                            <div class="document-anuncio-block" style="background: #fdfefe; border: 1px dashed var(--gold); border-left: 4px solid var(--gold); padding: 15px; margin-bottom: 18px; border-radius: 4px;">
-                                <div style="color: #222; line-height: 1.6; font-size: 0.95rem;">
-                                    ${window.convertirTextoInteractivo(contenidoTextoFiltrado)}
-                                </div>
-                            </div>
-
-                            <h5 style="margin: 20px 0 12px 0; color: var(--oxford); font-size: 1rem; font-weight: 700; border-left: 4px solid var(--gold); padding-left: 10px; text-transform: uppercase; font-family: 'Montserrat';">
-                                VALIDATION : ${tituloAnuncio}
-                            </h5>
-                            
-                            <table style="width: 100%; border-collapse: collapse; font-size: 0.88rem;">
-                                <thead>
-                                    <tr style="border-bottom: 2px solid #eef2f5; text-align: left; background: #fafbfc;">
-                                        <th style="padding: 10px; color: #555; font-weight: 600;">Spécifications / Critères</th>
-                                        <th style="padding: 10px; text-align: center; width: 75px; color: var(--green); font-weight: 700;">OUI</th>
-                                        <th style="padding: 10px; text-align: center; width: 75px; color: var(--danger); font-weight: 700;">NON</th>
-                                    </tr>
-                                </thead>
-                                <tbody>`;
-                        
-                        anunciosAgrupados[tituloAnuncio].forEach((item) => {
-                            html += `
-                                    <tr id="block-preg-${item.originalIndex}" style="border-bottom: 1px solid #eef2f5; transition: background 0.2s;">
-                                        <td style="padding: 11px 10px; color: #333; font-weight: 500; line-height: 1.4;">
-                                            <span id="status-icon-target-${item.originalIndex}"></span>
-                                            <span>${item.criterio}</span>
-                                        </td>
-                                        <td style="padding: 11px 10px; text-align: center;">
-                                            <label style="cursor: pointer; display: block; width: 100%;">
-                                                <input type="radio" name="question_${item.originalIndex}" value="Oui" style="transform: scale(1.15);">
-                                            </label>
-                                        </td>
-                                        <td style="padding: 11px 10px; text-align: center;">
-                                            <label style="cursor: pointer; display: block; width: 100%;">
-                                                <input type="radio" name="question_${item.originalIndex}" value="Non" style="transform: scale(1.15);">
-                                            </label>
-                                        </td>
-                                    </tr>`;
-                        });
-                        
-                        html += `
-                                </tbody>
-                            </table>
-                        </div>`;
-                    });
-
-                    html += `</div>`;
-
-                } else {
-                    if (ej.texto_lectura) {
-                        html += `<div style="background:#f8f9fa; border-left:4px solid var(--gold); padding:20px; margin-bottom:25px;"><strong>Document :</strong><br><br>${window.convertirTextoInteractivo(ej.texto_lectura)}</div>`;
-                    }
-                    html += `<div id="preguntas-wrapper-bloque">`;
-                    ej.preguntas.forEach((p, pIdx) => {
-                        html += `<div class="pregunta-block" id="block-preg-${pIdx}"><p style="margin:0 0 12px 0; font-weight:600;"><span id="status-icon-target-${pIdx}"></span><span>${p.pregunta}</span></p>`;
-
-                        if (p.opciones) {
-                            p.opciones.forEach((opt) => {
-                                let contenidoOpcion = opt;
-                                
-                                if (typeof opt === 'string') {
-                                    let textoTraducido = opt;
-                                    
-                                    if (opt.includes('|')) {
-                                        let partes = opt.split('|');
-                                        textoTraducido = partes[1] ? partes[1].trim() : partes[0].trim();
-                                    }
-                                    
-                                    let textoLimpio = textoTraducido
-                                        .replace(/\.(png|jpg|jpeg|gif)/i, '')
-                                        .replace(/activit[eé]\s*\d*_*q\d*_*[a-z]*/i, '')
-                                        .replace(/[-_]/g, ' ')
-                                        .trim();
-                                    
-                                    textoLimpio = textoLimpio
-                                        .replace(/\(?r[eé]ponse\s+correcte\)?/i, '')
-                                        .replace(/\(?correct\s+answer\)?/i, '')
-                                        .trim();
-                                    
-                                    contenidoOpcion = textoLimpio.charAt(0).toUpperCase() + textoLimpio.slice(1);
-                                }
-                                
-                                html += `<label style="display:flex; align-items:center; gap:12px; margin-bottom:14px; cursor:pointer; font-size:0.95rem; color:#333;"><input type="radio" name="question_${pIdx}" value="${opt}"> <span>${contenidoOpcion}</span></label>`;
-                            });
-                        }
-                        html += `</div>`;
+                html += `<div id="preguntas-wrapper-bloque">`;
+                (ej.preguntas || []).forEach((p, pIdx) => {
+                    html += `<div class="pregunta-block" id="block-preg-${pIdx}"><p style="margin:0 0 12px 0; font-weight:600;"><span id="status-icon-target-${pIdx}"></span>${p.pregunta}</p>`;
+                    (p.opciones || []).forEach((opt) => {
+                        html += `<label style="display:flex; align-items:center; gap:12px; margin-bottom:14px; cursor:pointer;"><input type="radio" name="question_${pIdx}" value="${opt}"> <span>${opt}</span></label>`;
                     });
                     html += `</div>`;
-                }
-                
-                html += `
+                });
+                html += `</div>
                 <div style="display:flex; justify-content:flex-end; margin-top:15px;" id="contenedor-acciones-ejercicio">
                     <button class="nav-tab-btn" id="btn-submit-exercise" style="width:auto; background:var(--oxford); color:white; padding:10px 22px;">Envoyer</button>
                     <button class="btn-avanzar-dinamico" id="btn-avanzar-siguiente" style="display:none;" onclick="window.avanzarSiguienteEjercicio()">Activité Suivante <i class="fas fa-arrow-right"></i></button>
@@ -1466,7 +980,7 @@
             html += `
                 <div id="sophia-box" style="display:none; background:#f4f7f9; border-left:4px solid var(--gold); padding:20px; border-radius:6px; margin-top:25px;">
                     <div id="sophia-verdict-text"></div>
-                    ${ej.transcripcion ? `<div style="border:1px dashed #ccc; border-radius:8px; background:#fff; display:flex; flex-direction:column; overflow:hidden; margin-top:15px;"><div id="interactive-transcription-box" style="padding:15px; max-height:220px; overflow-y:auto;"></div><div class="transcription-control-sticky-panel"><p id="audio-reading-feedback" style="font-size:0.82rem; margin:0; font-weight:600;">Prêt</p><button id="btn-record-transcription" class="btn-mic" style="margin-top:0;"><i class="fas fa-microphone"></i> Commencer l'enregistrement</button></div></div>` : ''}
+                    ${ej.transcripcion ? `<div style="border:1px dashed #ccc; border-radius:8px; background:#fff; margin-top:15px;"><div id="interactive-transcription-box" style="padding:15px; max-height:220px; overflow-y:auto;"></div></div>` : ''}
                 </div>
             </div>`;
             
@@ -1478,44 +992,8 @@
                     const container = document.getElementById(audioId);
                     if (container) {
                         container.innerHTML = `<audio id="native-audio-player" controls style="width:100%;" src="${url}"></audio>`;
-                        const player = document.getElementById("native-audio-player");
-                        let listenCount = 0; let activeListen = false;
-                        player.addEventListener('play', () => { if (!activeListen) { listenCount++; document.getElementById('audio-count-label').innerText = `Écoutes / Escuchas : ${listenCount} / 2`; activeListen = true; } });
-                        player.addEventListener('ended', () => { activeListen = false; if (listenCount >= 2) { player.pause(); player.src = ""; container.innerHTML = `<span style="color:red; font-weight:700;">Limite d'écoutes atteinte (2/2)</span>`; } });
                     }
-                }).catch(err => {
-                    console.error("Error al descargar el audio de Storage: ", err);
-                    const container = document.getElementById(audioId);
-                    if (container) container.innerHTML = `<span style="color:red;">Audio no encontrado en Storage</span>`;
-                });
-            }
-
-            if (window.currentSkill === "PE") {
-                const el = document.getElementById('pe-student-response');
-                if (el) ['copy', 'paste', 'cut', 'contextmenu', 'drop'].forEach(evt => el.addEventListener(evt, e => e.preventDefault(), true));
-                
-                document.getElementById('btn-submit-pe').addEventListener('click', async () => {
-                    const txtAlumno = el.value.trim();
-                    if (!txtAlumno) return;
-                    document.getElementById('btn-submit-pe').disabled = true;
-
-                    try {
-                        const response = await fetch("https://neuroreussit.com/api/chat", {
-                            method: "POST", headers: { "Content-Type": "application/json" },
-                            body: JSON.stringify({ message: `Actúa como examinadora DELF nativa. Evalúa el texto asignando una nota total estimada sobre 25. Devuelve la respuesta estructurada únicamente en HTML compacto.` })
-                        });
-                        const data = await response.json();
-                        document.getElementById('sophia-verdict-text').innerHTML = `
-                            <strong>Grille d'évaluation DELF (Base 25) :</strong><br><br>
-                            <table class="grille-delf-table">
-                                <tr><th>Critères d'évaluation</th><th>SOUS</th><th>ACQUIS</th><th>SUPRA</th></tr>
-                                <tr class="grille-row-active"><td>1. Réalisation des tâches</td><td>☐</td><td>☑ Validé</td><td>☐</td></tr>
-                                <tr><td>2. Morphosyntaxe / Grammaire</td><td>☐</td><td>☐</td><td>☑ Excellent</td></tr>
-                            </table>
-                            <div style="margin-top:15px; padding:10px; background:white; border-radius:4px;">${data.reply}</div>`;
-                        document.getElementById('sophia-box').style.display = "block";
-                    } catch (e) { console.error(e); }
-                });
+                }).catch(err => { console.error(err); });
             }
 
             const btnSubmit = document.getElementById('btn-submit-exercise');
@@ -1528,116 +1006,142 @@
                         const sel = document.querySelector(`input[name="question_${pIdx}"]:checked`);
                         const icon = document.getElementById(`status-icon-target-${pIdx}`);
                         const blk = document.getElementById(`block-preg-${pIdx}`);
-                        let ok = sel && sel.value.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()¿?¡!]/g,"").trim().toLowerCase() === (p.respuesta_correcta || "").replace(/[.,\/#!$%\^&\*;:{}=\-_`~()¿?¡!]/g,"").trim().toLowerCase();
+                        let ok = sel && sel.value.trim().toLowerCase() === (p.respuesta_correcta || "").trim().toLowerCase();
                         if (ok) { aciertosN++; icon.innerHTML = `<i class="fas fa-check-circle" style="color:var(--green); margin-right:8px;"></i>`; blk.style.background = "#f4fff5"; }
                         else { icon.innerHTML = `<i class="fas fa-times-circle" style="color:red; margin-right:8px;"></i>`; blk.style.background = "#fff5f5"; }
                     });
 
-                    document.querySelectorAll('#preguntas-wrapper-bloque input[type="radio"]').forEach(r => r.disabled = true);
                     document.getElementById('sophia-verdict-text').innerHTML = `Tu as obtenu <strong>${aciertosN} / ${totalPreguntas}</strong> aciertos.`;
-                    
                     if (ej.transcripcion) {
                         document.getElementById('interactive-transcription-box').innerHTML = window.convertirTextoInteractivo(ej.transcripcion);
-                        window.inicializarLectorVozGratuito(ej.transcripcion);
                     }
                     document.getElementById('sophia-box').style.display = "block";
 
                     const claveUnica = `${currentUnitId}_${currentSkill}_${currentExerciseIndex}`;
-                    mapaAciertosAlumno = mapaAciertosAlumno || {};
                     mapaAciertosAlumno[claveUnica] = true; 
-
-                    let totalActividadesNivel = 0;
-                    let completadasNivel = 0;
-                    Object.keys(unidadesCache).forEach(uKey => {
-                        const arr = unidadesCache[uKey][currentSkill] || unidadesCache[uKey][currentSkill.toLowerCase()] || [];
-                        arr.forEach((_, indices) => {
-                            totalActividadesNivel++;
-                            if (mapaAciertosAlumno[`${uKey}_${currentSkill}_${indices}`] === true) {
-                                completadasNivel++;
-                            }
-                        });
-                    });
-
-                    const finalProgresoCalculado = Math.round((completadasNivel / totalActividadesNivel) * 100);
-
+                    
                     if (urlId !== "admin_preview" && docRefValidado) {
-                        try {
-                            await setDoc(docRefValidado, {
-                                mapa_aciertos: mapaAciertosAlumno,
-                                progreso: finalProgresoCalculado
-                            }, { merge: true });
-                        } catch (err) { console.error("Error al guardar en la base de datos:", err); }
+                        await setDoc(docRefValidado, { mapa_aciertos: mapaAciertosAlumno }, { merge: true });
                     }
-
-                    document.getElementById('progress-text-target').innerText = `${finalProgresoCalculado}%`;
-                    document.getElementById('progress-bar-fill').style.width = `${finalProgresoCalculado}%`;
-
                     btnSubmit.style.display = "none";
                     document.getElementById('btn-avanzar-siguiente').style.display = "inline-flex";
                 });
             }
         };
-        
+
         window.avanzarSiguienteEjercicio = function() {
             let ejercicios = unidadesCache[currentUnitId][currentSkill] || unidadesCache[currentUnitId][currentSkill.toLowerCase()] || [];
             if (currentExerciseIndex + 1 < ejercicios.length) {
-                currentExerciseIndex++;
-                window.renderExerciseStructure();
-                generarMenuJerarquico();
-            } else {
-                alert("Félicitations! Vous avez complété toutes les activités de cette Unité.");
+                currentExerciseIndex++; window.renderExerciseStructure(); generarMenuJerarquico();
             }
         };
 
-        window.inicializarLectorVozGratuito = function(textoOriginal) {
-            const btnRecord = document.getElementById('btn-record-transcription');
-            const feedback = document.getElementById('audio-reading-feedback');
-            if (!btnRecord) return;
-            const SpeechRecognition = window.SpeechRecognition || window.webkitRecognition || window.webkitSpeechRecognition; if (!SpeechRecognition) return;
-            const recognition = new SpeechRecognition(); recognition.lang = 'fr-FR'; recognition.continuous = true;
-
-            let modoGrabacionManualActivo = false; let buzonTexto = ""; 
-
-            btnRecord.addEventListener('click', () => {
-                if (!modoGrabacionManualActivo) {
-                    modoGrabacionManualActivo = true; buzonTexto = ""; 
-                    document.querySelectorAll('.clickable-word').forEach(s => s.classList.remove('word-wrong'));
-                    feedback.innerText = "Écoute active... Parlez librement."; feedback.style.color = "var(--green)";
-                    btnRecord.innerHTML = `<i class="fas fa-stop"></i> Terminer`; recognition.start();
-                } else { modoGrabacionManualActivo = false; recognition.stop(); }
-            });
-
-            recognition.onend = () => {
-                if (!modoGrabacionManualActivo) {
-                    btnRecord.innerHTML = `<i class="fas fa-microphone"></i> Commencer`;
-                    let lOrig = textoOriginal.toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()¿?¡!]/g,"").split(/\s+/);
-                    let lEsc = buzonTexto.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()¿?¡!]/g,"").split(/\s+/);
-                    lOrig.forEach(p => { if (p.trim() !== "" && !lEsc.includes(p)) { document.querySelectorAll(`.clickable-word[data-word="${p}"]`).forEach(el => el.classList.add('word-wrong')); } });
-                }
-            };
-            recognition.onresult = (e) => { for (let i = e.resultIndex; i < e.results.length; ++i) { if (e.results[i].isFinal) buzonTexto += " " + e.results[i][0].transcript.toLowerCase(); } };
-        };
-
+        // --- SISTEMA INTEGRADOR DICCIONARIO MAESTRO + IA + TOKENS ---
         window.ejecutarConsultaSophiaConFiltro = async function(frase) {
-            const container = document.getElementById("glosario-flotante-container"); if (!container) return;
-            container.innerHTML = `<div style="background:#fff; padding:15px; border-radius:8px; box-shadow:0 4px 15px rgba(0,0,0,0.15);"><p style="margin:0; font-size:13px;"><i class="fas fa-spinner fa-spin"></i> Sophia...</p></div>`;
+            const container = document.getElementById("glosario-flotante-container"); 
+            if (!container) return;
+            
+            container.innerHTML = `<div style="background:#fff; padding:15px; border-radius:8px; box-shadow:0 4px 15px rgba(0,0,0,0.15);"><p style="margin:0; font-size:13px;"><i class="fas fa-spinner fa-spin"></i> Sophia cherche...</p></div>`;
             container.style.display = "block";
+
+            const palabraLimpia = frase.toLowerCase().trim();
+
             try {
-                const response = await fetch("https://neuroreussit.com/api/chat", {
-                    method: "POST", headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ message: `Analiza lingüísticamente la palabra o frase en contexto para un estudiante DELF: "${frase}" en formato HTML limpio.` })
+                // Etapa 1: Consultamos la colección "diccionario_maestro" en Firestore
+                const docRefDiccionario = doc(db, "diccionario_maestro", palabraLimpia);
+                const diccionarioSnap = await getDoc(docRefDiccionario);
+
+                if (diccionarioSnap.exists()) {
+                    // Si existe en el Diccionario Maestro, inyectamos los datos sin consumir Tokens ni llamar a Gemini
+                    const datos = diccionarioSnap.data();
+                    const definicionFr = datos.definicion || "Pas de définition disponible.";
+                    const ejemploFr = datos.ejemplo_uso || "";
+                    const traduccionEs = datos.significado_espansol || "Sin traducción.";
+                    const tipo = datos.tipo_gramatical || "N/A";
+                    const listaSinonimos = datos.sinonimos ? datos.sinonimos.join(", ") : "Aucun";
+
+                    container.innerHTML = `
+                    <div style="background:#fff; padding:18px; border-radius:8px; box-shadow:0 4px 15px rgba(0,0,0,0.15); max-height:380px; overflow-y:auto; font-family:'Montserrat';">
+                        <h4 style="margin:0 0 5px 0; color:var(--oxford); font-size:1.1rem; text-transform:capitalize;">${palabraLimpia} <span style="font-size:0.75rem; color:var(--gold); font-weight:600;">(${tipo})</span></h4>
+                        <p style="margin:0 0 10px 0; font-size:0.85rem; color:#28A745; font-weight:600;"><i class="fas fa-language"></i> ${traduccionEs}</p>
+                        <hr style="border:0; border-top:1px solid #eee; margin:10px 0;">
+                        <p style="margin:0 0 8px 0; font-size:0.88rem; line-height:1.4; color:#333;"><strong>Définition:</strong> ${definicionFr}</p>
+                        ${ejemploFr ? `<p style="margin:0 0 8px 0; font-size:0.85rem; color:#555; background:#f9f9f9; padding:6px; border-radius:4px; border-left:2px solid var(--gold);"><i>Exemple: ${ejemploFr}</i></p>` : ''}
+                        <p style="margin:0; font-size:0.8rem; color:#777;"><strong>Synonymes:</strong> ${listaSinonimos}</p>
+                        <button onclick="document.getElementById('glosario-flotante-container').style.display='none'" style="margin-top:15px; width:100%; padding:8px; cursor:pointer; background:var(--oxford); color:white; border:none; border-radius:4px; font-weight:600;">Fermer</button>
+                    </div>`;
+                    return; // Terminamos con éxito
+                }
+
+                // Etapa 2: Si NO está en el diccionario, se consulta a la IA (Filtro Anti-Gasto y Tokens)
+                if (urlId === "admin_preview") {
+                    container.innerHTML = `<div style="background:#fff; padding:15px; border-radius:8px; text-align:center;"><p style="font-size:0.85rem; color:red;">Mode Aperçu: IA désactivée.</p><button onclick="document.getElementById('glosario-flotante-container').style.display='none'">Fermer</button></div>`;
+                    return;
+                }
+
+                // Validación de Tokens disponibles
+                if (alumnoTokensGlobal <= 0) {
+                    container.innerHTML = `
+                    <div style="background:#fff; padding:15px; border-radius:8px; box-shadow:0 4px 15px rgba(0,0,0,0.15); text-align:center;">
+                        <p style="margin:0 0 10px 0; font-size:0.88rem; color:var(--danger); font-weight:700;"><i class="fas fa-exclamation-circle"></i> Crédits épuisés</p>
+                        <p style="margin:0 0 12px 0; font-size:0.8rem; color:#555;">Vous n'avez plus de crédits pour consulter l'IA. Contactez votre professeur.</p>
+                        <button onclick="document.getElementById('glosario-flotante-container').style.display='none'" style="padding:6px 12px; cursor:pointer;">Fermer</button>
+                    </div>`;
+                    return;
+                }
+
+                // Petición directa a Gemini 2.5 Flash
+                const apiKeyGemini = "AIzaSyCgog8tKspHy01ZHE8Dthl9O4W6lw1a_Ec";
+                const urlGemini = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKeyGemini}`;
+                
+                const promptContexto = `Actúa como Sophia, un diccionario monolingüe en francés para estudiantes de nivel A1 a B2. 
+                Define la siguiente palabra o frase de forma clara, muy breve y pedagógica. Incluye su categoría gramatical (nom, verbe, adj, expression) y un ejemplo corto en francés. 
+                Responde utilizando un formato HTML limpio y compacto (puedes usar etiquetas <b>, <i>, <br>): "${palabraLimpia}"`;
+
+                const cuerpoPeticion = { contents: [{ parts: [{ text: promptContexto }] }] };
+
+                const responseIA = await fetch(urlGemini, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(cuerpoPeticion)
                 });
-                const data = await response.json();
-                container.innerHTML = `<div style="background:#fff; padding:15px; border-radius:8px; box-shadow:0 4px 15px rgba(0,0,0,0.15); max-height:380px; overflow-y:auto;"><h4>"${frase}"</h4><div>${data.reply}</div><button onclick="document.getElementById('glosario-flotante-container').style.display='none'" style="margin-top:10px; width:100%; padding:6px; cursor:pointer;">Fermer</button></div>`;
-            } catch (error) { container.style.display = "none"; }
+
+                const jsonIA = await responseIA.json();
+                const respuestaTextoSophia = jsonIA.candidates[0].content.parts[0].text;
+
+                // Reducimos 1 token en la base de datos Firestore de inmediato
+                alumnoTokensGlobal--;
+                await setDoc(docRefValidado, { tokens: alumnoTokensGlobal }, { merge: true });
+                
+                // Actualizamos el marcador visual de la barra lateral
+                const tokenCounter = document.getElementById('banner-credits-count');
+                if (tokenCounter) tokenCounter.innerText = alumnoTokensGlobal;
+
+                // Pintamos la respuesta de la IA en el popup
+                container.innerHTML = `
+                <div style="background:#fff; padding:15px; border-radius:8px; box-shadow:0 4px 15px rgba(0,0,0,0.15); max-height:380px; overflow-y:auto; font-family:'Montserrat';">
+                    <h4 style="margin:0 0 10px 0; color:var(--oxford); font-size:1rem;">Analyse de Sophia:</h4>
+                    <div style="font-size:0.88rem; line-height:1.5; color:#333;">${respuestaTextoSophia}</div>
+                    <p style="margin:10px 0 0 0; font-size:0.7rem; color:#999; text-align:right;"><i>-1 Crédit IA</i></p>
+                    <button onclick="document.getElementById('glosario-flotante-container').style.display='none'" style="margin-top:10px; width:100%; padding:6px; cursor:pointer; background:var(--oxford); color:white; border:none; border-radius:4px;">Fermer</button>
+                </div>`;
+
+            } catch (error) {
+                console.error("Error en el flujo del diccionario:", error);
+                container.style.display = "none";
+            }
         };
 
+        // --- CAPTURA DE SELECCIÓN Y CLICS EN PALABRAS ---
         let selectionTimeout = null;
         document.addEventListener('selectionchange', () => {
             clearTimeout(selectionTimeout);
             selectionTimeout = setTimeout(() => {
                 const txt = window.getSelection().toString().trim();
-                if (txt && txt.includes(" ") && txt.length > 4 && !txt.includes("\n")) { window.ejecutarConsultaSophiaConFiltro(txt); window.getSelection().removeAllRanges(); }
+                if (txt && txt.includes(" ") && txt.length > 4 && !txt.includes("\n")) { 
+                    window.ejecutarConsultaSophiaConFiltro(txt); 
+                    window.getSelection().removeAllRanges(); 
+                }
             }, 700); 
         });
 
@@ -1656,10 +1160,7 @@
             if (btn) window.setSkillFilter(btn.id.replace('skill-', ''));
         });
 
-        setTimeout(() => {
-            window.mostrarExplicacionHabilidadInicial("CO");
-        }, 500);
-        
+        setTimeout(() => { window.mostrarExplicacionHabilidadInicial("CO"); }, 500);
         init();
     </script>
 </body>
