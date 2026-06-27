@@ -945,32 +945,267 @@
             const audioId = `audio-container-${currentExerciseIndex}`;
 
             let zoneHTML = (window.currentSkill === "PE" || window.currentSkill === "PO") 
-                ? `<span class="zone-badge zone-examen-simule"><i class="fas fa-exclamation-triangle"></i> Zone d'Examen Réel</span>`
+                ? `<span class="zone-badge zone-examen-simule"><i class="fas fa-exclamation-triangle"></i> Zone d'Examen Réel (Blindé)</span>`
                 : `<span class="zone-badge zone-entrainement"><i class="fas fa-graduation-cap"></i> Zone d'Entraînement</span>`;
 
-            let html = `<div class="exercise-card">${zoneHTML}<h4 style="margin-top:0; color:var(--oxford); font-weight:700; margin-bottom: 20px;">Activité ${currentExerciseIndex + 1}</h4>`;
+            let tituloInstruccion = ej.instruccion || 'Exercice';
+            if (window.currentSkill === "PE") {
+                tituloInstruccion = `Activité ${currentExerciseIndex + 1} : Production Écrite - Sujet de rédaction`;
+            }
+
+            let html = `<div class="exercise-card">${zoneHTML}<h4 style="margin-top:0; color:var(--oxford); font-weight:700; margin-bottom: 20px;">${tituloInstruccion}</h4>`;
 
             if (ej.ruta_audio && window.currentSkill !== "PO") {
-                html += `<div style="background:#f1f3f5; padding:15px; border-radius:8px; margin-bottom:20px; text-align:center;"><div class="audio-counter-badge"><i class="fas fa-headphones"></i><span id="audio-count-label">Écoutes : 0 / 2</span></div><div id="${audioId}">Loading...</div></div>`;
+                html += `<div style="background:#f1f3f5; padding:15px; border-radius:8px; margin-bottom:20px; text-align:center;"><div class="audio-counter-badge"><i class="fas fa-headphones"></i><span id="audio-count-label">Écoutes / Escuchas : 0 / 2</span></div><div id="${audioId}">Loading...</div></div>`;
             }
             
             if (window.currentSkill === "PE") {
-                html += `<div style="font-weight: bold; margin-bottom: 25px;">${ej.instruccion || ""}</div>
-                <textarea id="pe-student-response" class="production-textbox" placeholder="Rédigez votre texte ici..."></textarea>
-                <div style="display:flex; justify-content:flex-end; margin-top:10px;"><button class="nav-tab-btn" id="btn-submit-pe" style="width:auto; background:var(--oxford); color:white; padding:10px 22px;">Soumettre</button></div>`;
-            } else {
-                if (ej.texto_lectura) {
-                    html += `<div style="background:#f8f9fa; border-left:4px solid var(--gold); padding:20px; margin-bottom:25px;">${window.convertirTextoInteractivo(ej.texto_lectura)}</div>`;
+                let instruccionOriginal = ej.instruccion || "";
+                let consigneLimpia = instruccionOriginal.replace(/^Activité\s*\d+\s*[\.\:]*\s*/i, "");
+
+                html += `
+                <div style="font-weight: bold; font-size: 0.95rem; color: #111; margin-top: 10px; margin-bottom: 25px; line-height: 1.5;">
+                    ${consigneLimpia}
+                </div>`;
+
+                if (ej.tipo === "formulario" && ej.campos_formulario && ej.campos_formulario.length > 0) {
+                    html += `
+                    <div style="background: white; border: 1px solid #e0e6ed; border-radius: 8px; padding: 25px; box-shadow: 0 4px 10px rgba(0,0,0,0.02); margin-bottom: 20px;">
+                        <h5 style="margin: 0 0 20px 0; color: var(--oxford); font-size: 1.1rem; font-weight: 700; text-align: center; border-bottom: 2px dashed var(--gold); padding-bottom: 10px; text-transform: uppercase;">
+                            <i class="fas fa-file-alt"></i> Formulaire à remplir
+                        </h5>
+                        <div style="display: flex; flex-direction: column; gap: 16px;">`;
+                    
+                    ej.campos_formulario.forEach((campo, fIdx) => {
+                        html += `
+                            <div style="display: flex; flex-direction: column; gap: 6px;">
+                                <label style="font-size: 0.88rem; font-weight: 600; color: #444;">${campo}</label>
+                                <input type="text" id="form-field-${fIdx}" class="form-student-input" style="width: 100%; padding: 10px 12px; border: 1px solid #ccc; border-radius: 6px; font-family: 'Montserrat', sans-serif; font-size: 0.95rem; box-sizing: border-box;" autocomplete="off" onpaste="return false;" ondrop="return false;">
+                            </div>`;
+                    });
+                    
+                    html += `
+                        </div>
+                    </div>`;
+                } else {
+                    if (ej.texto_lectura) {
+                        html += `
+                        <div style="background: #f4f6f9; border-left: 4px solid var(--gold); padding: 20px; margin-bottom: 20px; border-radius: 6px; box-shadow: 0 2px 5px rgba(0,0,0,0.02);">
+                            <div style="color: #222; line-height: 1.6; font-size: 0.95rem;">
+                                ${window.convertirTextoInteractivo(ej.texto_lectura)}
+                            </div>
+                        </div>`;
+                    }
+
+                    html += `
+                    <div style="margin-bottom:20px;">
+                        <div class="french-accents-bar">
+                            <button type="button" class="accent-btn" onclick="window.insertarCaracterEspecial('é')">é</button>
+                            <button type="button" class="accent-btn" onclick="window.insertarCaracterEspecial('è')">è</button>
+                            <button type="button" class="accent-btn" onclick="window.insertarCaracterEspecial('à')">à</button>
+                            <button type="button" class="accent-btn" onclick="window.insertarCaracterEspecial('ç')">ç</button>
+                            <button type="button" class="accent-btn" onclick="window.insertarCaracterEspecial('â')">â</button>
+                            <button type="button" class="accent-btn" onclick="window.insertarCaracterEspecial('ê')">ê</button>
+                            <button type="button" class="accent-btn" onclick="window.insertarCaracterEspecial('œ')">œ</button>
+                        </div>
+                        <textarea id="pe-student-response" class="production-textbox" placeholder="Rédigez votre texte ici..." spellcheck="false" autocomplete="off" onpaste="return false;" ondrop="return false;"></textarea>
+                    </div>`;
                 }
-                html += `<div id="preguntas-wrapper-bloque">`;
-                (ej.preguntas || []).forEach((p, pIdx) => {
-                    html += `<div class="pregunta-block" id="block-preg-${pIdx}"><p style="margin:0 0 12px 0; font-weight:600;"><span id="status-icon-target-${pIdx}"></span>${p.pregunta}</p>`;
-                    (p.opciones || []).forEach((opt) => {
-                        html += `<label style="display:flex; align-items:center; gap:12px; margin-bottom:14px; cursor:pointer;"><input type="radio" name="question_${pIdx}" value="${opt}"> <span>${opt}</span></label>`;
+
+                html += `
+                <div style="display:flex; justify-content:flex-end;">
+                    <button class="nav-tab-btn" id="btn-submit-pe" style="width:auto; background:var(--oxford); color:white; padding:10px 22px;"><i class="fas fa-paper-plane"></i> Soumettre la production</button>
+                </div>`;
+                
+            } else if (window.currentSkill === "PO") {
+                if (ej.texto_lectura) {
+                    html += `<div style="background:#f8f9fa; border-left:4px solid var(--gold); padding:20px; margin-bottom:25px;"><strong>Document :</strong><br><br>${window.convertirTextoInteractivo(ej.texto_lectura)}</div>`;
+                }
+
+                if (ej.tipo === "oral_interaction" && ej.preguntas && ej.preguntas.length > 0) {
+                    html += `
+                    <div style="margin-bottom: 25px; background: #fff; border: 1px solid #e0e6ed; border-radius: 8px; padding: 20px;">
+                        <p style="color: var(--oxford); font-weight: 600; font-size: 0.95rem; margin-bottom: 15px; border-bottom: 2px dashed var(--gold); padding-bottom: 8px;">
+                            <i class="fas fa-comments"></i> Questions de l'examinateur (Répondez à l'oral) :
+                        </p>
+                        <ul style="padding-left: 20px; color: #333; line-height: 1.6; font-size: 0.95rem;">`;
+                    
+                    ej.preguntas.forEach((p) => {
+                        html += `<li style="margin-bottom: 10px; font-weight: 500;">${p.pregunta}</li>`;
+                    });
+                    
+                    html += `</ul></div>`;
+                }
+
+                if (ej.tipo === "oral_cards" && ej.campos_formulario && ej.campos_formulario.length > 0) {
+                    html += `
+                    <div style="margin-bottom: 25px;">
+                        <p style="color: var(--oxford); font-weight: 600; font-size: 0.92rem; margin-bottom: 15px;">
+                            <i class="fas fa-id-card-alt"></i> Cliquez sur une carte pour vous inspirer et poser votre question :
+                        </p>
+                        <div style="display: flex; flex-wrap: wrap; gap: 15px; justify-content: center;">`;
+                    
+                    ej.campos_formulario.forEach((palabraTarjeta) => {
+                        html += `
+                            <div class="delf-oral-card-item" style="background: white; border: 2px solid var(--oxford); border-radius: 6px; padding: 15px 25px; min-width: 100px; text-align: center; font-family: 'Montserrat', sans-serif; font-weight: 600; font-size: 1rem; color: var(--oxford); box-shadow: 0 4px 6px rgba(0,0,0,0.05); cursor: pointer; transition: transform 0.2s, border-color 0.2s;" onclick="this.style.borderColor='var(--gold)'; this.style.transform='scale(1.03)';">
+                                ${palabraTarjeta}
+                            </div>`;
+                    });
+                    
+                    html += `
+                        </div>
+                    </div>`;
+                }
+
+                html += `
+                <div style="margin-bottom:20px; text-align:center; background:#fafbfc; padding:30px; border-radius:8px; border:1px dashed #ccc;">
+                    <button id="btn-record-po" class="btn-mic" style="padding:12px 30px; font-size:1rem;"><i class="fas fa-microphone"></i> Commencer l'enregistrement</button>
+                </div>`;
+                
+            } else if (ej.preguntas && ej.preguntas.length > 0) {
+                const esMatrizB1 = ej.preguntas[0].opciones && (ej.preguntas[0].opciones.includes("Oui") || ej.preguntas[0].opciones.includes("Non"));
+                
+                if (esMatrizB1 && ej.texto_lectura) {
+                    let anunciosAgrupados = {};
+                    ej.preguntas.forEach((p, pIdx) => {
+                        let textCriterio = p.pregunta;
+                        let nombreAnuncio = "Critères d'évaluation"; 
+                        
+                        if (p.pregunta.includes(" - ")) {
+                            let partes = p.pregunta.split(" - ");
+                            nombreAnuncio = partes[0].trim();
+                            textCriterio = partes[1].trim();
+                        } else if (p.pregunta.includes(" : ")) {
+                            let partes = p.pregunta.split(" : ");
+                            nombreAnuncio = partes[0].trim();
+                            textCriterio = partes[1].trim();
+                        }
+                        
+                        if (!anunciosAgrupados[nombreAnuncio]) anunciosAgrupados[nombreAnuncio] = [];
+                        anunciosAgrupados[nombreAnuncio].push({ originalIndex: pIdx, criterio: textCriterio });
+                    });
+
+                    let textoRestante = ej.texto_lectura;
+                    let bloquesMapeadosPorAnuncio = {};
+                    let llavesAnuncios = Object.keys(anunciosAgrupados);
+
+                    for (let i = 0; i < llavesAnuncios.length; i++) {
+                        let tituloActual = llavesAnuncios[i];
+                        let tituloSiguiente = llavesAnuncios[i + 1];
+                        
+                        let idxInicio = textoRestante.indexOf(tituloActual);
+                        if (idxInicio !== -1) {
+                            let idxFin = tituloSiguiente ? textoRestante.indexOf(tituloSiguiente) : textoRestante.length;
+                            if (idxFin !== -1 && idxFin > idxInicio) {
+                                  bloquesMapeadosPorAnuncio[tituloActual] = textoRestante.substring(idxInicio, idxFin).trim();
+                            } else {
+                                  bloquesMapeadosPorAnuncio[tituloActual] = textoRestante.substring(idxInicio).trim();
+                            }
+                        } else {
+                            let bloquesAlternativos = ej.texto_lectura.split(/\n\s*\n/);
+                            bloquesMapeadosPorAnuncio[tituloActual] = bloquesAlternativos[i] || ej.texto_lectura;
+                        }
+                    }
+
+                    html += `<div id="preguntas-wrapper-bloque">`;
+
+                    llavesAnuncios.forEach((tituloAnuncio) => {
+                        let contenidoTextoFiltrado = bloquesMapeadosPorAnuncio[tituloAnuncio] || "<em>Document joint.</em>";
+
+                        html += `
+                        <div class="modulo-anuncio-completo" style="margin-bottom: 35px; background: #fff; border: 1px solid #e0e6ed; border-radius: 8px; padding: 20px; box-shadow: 0 3px 99px rgba(0,0,0,0.02);">
+                            
+                            <div class="document-anuncio-block" style="background: #fdfefe; border: 1px dashed var(--gold); border-left: 4px solid var(--gold); padding: 15px; margin-bottom: 18px; border-radius: 4px;">
+                                <div style="color: #222; line-height: 1.6; font-size: 0.95rem;">
+                                    ${window.convertirTextoInteractivo(contenidoTextoFiltrado)}
+                                </div>
+                            </div>
+
+                            <h5 style="margin: 20px 0 12px 0; color: var(--oxford); font-size: 1rem; font-weight: 700; border-left: 4px solid var(--gold); padding-left: 10px; text-transform: uppercase; font-family: 'Montserrat';">
+                                VALIDATION : ${tituloAnuncio}
+                            </h5>
+                            
+                            <table style="width: 100%; border-collapse: collapse; font-size: 0.88rem;">
+                                <thead>
+                                    <tr style="border-bottom: 2px solid #eef2f5; text-align: left; background: #fafbfc;">
+                                        <th style="padding: 10px; color: #555; font-weight: 600;">Spécifications / Critères</th>
+                                        <th style="padding: 10px; text-align: center; width: 75px; color: var(--green); font-weight: 700;">OUI</th>
+                                        <th style="padding: 10px; text-align: center; width: 75px; color: var(--danger); font-weight: 700;">NON</th>
+                                    </tr>
+                                </thead>
+                                <tbody>`;
+                        
+                        anunciosAgrupados[tituloAnuncio].forEach((item) => {
+                            html += `
+                                    <tr id="block-preg-${item.originalIndex}" style="border-bottom: 1px solid #eef2f5; transition: background 0.2s;">
+                                        <td style="padding: 11px 10px; color: #333; font-weight: 500; line-height: 1.4;">
+                                            <span id="status-icon-target-${item.originalIndex}"></span>
+                                            <span>${item.criterio}</span>
+                                        </td>
+                                        <td style="padding: 11px 10px; text-align: center;">
+                                            <label style="cursor: pointer; display: block; width: 100%;">
+                                                <input type="radio" name="question_${item.originalIndex}" value="Oui" style="transform: scale(1.15);">
+                                            </label>
+                                        </td>
+                                        <td style="padding: 11px 10px; text-align: center;">
+                                            <label style="cursor: pointer; display: block; width: 100%;">
+                                                <input type="radio" name="question_${item.originalIndex}" value="Non" style="transform: scale(1.15);">
+                                            </label>
+                                        </td>
+                                    </tr>`;
+                        });
+                        
+                        html += `
+                                </tbody>
+                            </table>
+                        </div>`;
+                    });
+
+                    html += `</div>`;
+
+                } else {
+                    if (ej.texto_lectura) {
+                        html += `<div style="background:#f8f9fa; border-left:4px solid var(--gold); padding:20px; margin-bottom:25px;"><strong>Document :</strong><br><br>${window.convertirTextoInteractivo(ej.texto_lectura)}</div>`;
+                    }
+                    html += `<div id="preguntas-wrapper-bloque">`;
+                    ej.preguntas.forEach((p, pIdx) => {
+                        html += `<div class="pregunta-block" id="block-preg-${pIdx}"><p style="margin:0 0 12px 0; font-weight:600;"><span id="status-icon-target-${pIdx}"></span><span>${p.pregunta}</span></p>`;
+
+                        if (p.opciones) {
+                            p.opciones.forEach((opt) => {
+                                let contenidoOpcion = opt;
+                                
+                                if (typeof opt === 'string') {
+                                    let textoTraducido = opt;
+                                    
+                                    if (opt.includes('|')) {
+                                        let partes = opt.split('|');
+                                        textoTraducido = partes[1] ? partes[1].trim() : partes[0].trim();
+                                    }
+                                    
+                                    let textoLimpio = textoTraducido
+                                        .replace(/\.(png|jpg|jpeg|gif)/i, '')
+                                        .replace(/activit[eé]\s*\d*_*q\d*_*[a-z]*/i, '')
+                                        .replace(/[-_]/g, ' ')
+                                        .trim();
+                                    
+                                    textoLimpio = textoLimpio
+                                        .replace(/\(?r[eé]ponse\s+correcte\)?/i, '')
+                                        .replace(/\(?correct\s+answer\)?/i, '')
+                                        .trim();
+                                    
+                                    contenidoOpcion = textoLimpio.charAt(0).toUpperCase() + textoLimpio.slice(1);
+                                }
+                                
+                                html += `<label style="display:flex; align-items:center; gap:12px; margin-bottom:14px; cursor:pointer; font-size:0.95rem; color:#333;"><input type="radio" name="question_${pIdx}" value="${opt}"> <span>${contenidoOpcion}</span></label>`;
+                            });
+                        }
+                        html += `</div>`;
                     });
                     html += `</div>`;
-                });
-                html += `</div>
+                }
+                
+                html += `
                 <div style="display:flex; justify-content:flex-end; margin-top:15px;" id="contenedor-acciones-ejercicio">
                     <button class="nav-tab-btn" id="btn-submit-exercise" style="width:auto; background:var(--oxford); color:white; padding:10px 22px;">Envoyer</button>
                     <button class="btn-avanzar-dinamico" id="btn-avanzar-siguiente" style="display:none;" onclick="window.avanzarSiguienteEjercicio()">Activité Suivante <i class="fas fa-arrow-right"></i></button>
@@ -980,7 +1215,7 @@
             html += `
                 <div id="sophia-box" style="display:none; background:#f4f7f9; border-left:4px solid var(--gold); padding:20px; border-radius:6px; margin-top:25px;">
                     <div id="sophia-verdict-text"></div>
-                    ${ej.transcripcion ? `<div style="border:1px dashed #ccc; border-radius:8px; background:#fff; margin-top:15px;"><div id="interactive-transcription-box" style="padding:15px; max-height:220px; overflow-y:auto;"></div></div>` : ''}
+                    ${ej.transcripcion ? `<div style="border:1px dashed #ccc; border-radius:8px; background:#fff; display:flex; flex-direction:column; overflow:hidden; margin-top:15px;"><div id="interactive-transcription-box" style="padding:15px; max-height:220px; overflow-y:auto;"></div><div class="transcription-control-sticky-panel"><p id="audio-reading-feedback" style="font-size:0.82rem; margin:0; font-weight:600;">Prêt</p><button id="btn-record-transcription" class="btn-mic" style="margin-top:0;"><i class="fas fa-microphone"></i> Commencer l'enregistrement</button></div></div>` : ''}
                 </div>
             </div>`;
             
@@ -992,8 +1227,44 @@
                     const container = document.getElementById(audioId);
                     if (container) {
                         container.innerHTML = `<audio id="native-audio-player" controls style="width:100%;" src="${url}"></audio>`;
+                        const player = document.getElementById("native-audio-player");
+                        let listenCount = 0; let activeListen = false;
+                        player.addEventListener('play', () => { if (!activeListen) { listenCount++; document.getElementById('audio-count-label').innerText = `Écoutes / Escuchas : ${listenCount} / 2`; activeListen = true; } });
+                        player.addEventListener('ended', () => { activeListen = false; if (listenCount >= 2) { player.pause(); player.src = ""; container.innerHTML = `<span style="color:red; font-weight:700;">Limite d'écoutes atteinte (2/2)</span>`; } });
                     }
-                }).catch(err => { console.error(err); });
+                }).catch(err => {
+                    console.error("Error al descargar el audio de Storage: ", err);
+                    const container = document.getElementById(audioId);
+                    if (container) container.innerHTML = `<span style="color:red;">Audio no encontrado en Storage</span>`;
+                });
+            }
+
+            if (window.currentSkill === "PE") {
+                const el = document.getElementById('pe-student-response');
+                if (el) ['copy', 'paste', 'cut', 'contextmenu', 'drop'].forEach(evt => el.addEventListener(evt, e => e.preventDefault(), true));
+                
+                document.getElementById('btn-submit-pe').addEventListener('click', async () => {
+                    const txtAlumno = el.value.trim();
+                    if (!txtAlumno) return;
+                    document.getElementById('btn-submit-pe').disabled = true;
+
+                    try {
+                        const response = await fetch("https://neuroreussit.com/api/chat", {
+                            method: "POST", headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify({ message: `Actúa como examinadora DELF nativa. Evalúa el texto asignando una nota total estimada sobre 25. Devuelve la respuesta estructurada únicamente en HTML compacto.` })
+                        });
+                        const data = await response.json();
+                        document.getElementById('sophia-verdict-text').innerHTML = `
+                            <strong>Grille d'évaluation DELF (Base 25) :</strong><br><br>
+                            <table class="grille-delf-table">
+                                <tr><th>Critères d'évaluation</th><th>SOUS</th><th>ACQUIS</th><th>SUPRA</th></tr>
+                                <tr class="grille-row-active"><td>1. Réalisation des tâches</td><td>☐</td><td>☑ Validé</td><td>☐</td></tr>
+                                <tr><td>2. Morphosyntaxe / Grammaire</td><td>☐</td><td>☐</td><td>☑ Excellent</td></tr>
+                            </table>
+                            <div style="margin-top:15px; padding:10px; background:white; border-radius:4px;">${data.reply}</div>`;
+                        document.getElementById('sophia-box').style.display = "block";
+                    } catch (e) { console.error(e); }
+                });
             }
 
             const btnSubmit = document.getElementById('btn-submit-exercise');
@@ -1006,23 +1277,52 @@
                         const sel = document.querySelector(`input[name="question_${pIdx}"]:checked`);
                         const icon = document.getElementById(`status-icon-target-${pIdx}`);
                         const blk = document.getElementById(`block-preg-${pIdx}`);
-                        let ok = sel && sel.value.trim().toLowerCase() === (p.respuesta_correcta || "").trim().toLowerCase();
+                        let ok = sel && sel.value.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()¿?¡!]/g,"").trim().toLowerCase() === (p.respuesta_correcta || "").replace(/[.,\/#!$%\^&\*;:{}=\-_`~()¿?¡!]/g,"").trim().toLowerCase();
                         if (ok) { aciertosN++; icon.innerHTML = `<i class="fas fa-check-circle" style="color:var(--green); margin-right:8px;"></i>`; blk.style.background = "#f4fff5"; }
                         else { icon.innerHTML = `<i class="fas fa-times-circle" style="color:red; margin-right:8px;"></i>`; blk.style.background = "#fff5f5"; }
                     });
 
+                    if(document.querySelectorAll('#preguntas-wrapper-bloque input[type="radio"]').length > 0) {
+                        document.querySelectorAll('#preguntas-wrapper-bloque input[type="radio"]').forEach(r => r.disabled = true);
+                    }
                     document.getElementById('sophia-verdict-text').innerHTML = `Tu as obtenu <strong>${aciertosN} / ${totalPreguntas}</strong> aciertos.`;
+                    
                     if (ej.transcripcion) {
                         document.getElementById('interactive-transcription-box').innerHTML = window.convertirTextoInteractivo(ej.transcripcion);
+                        window.inicializarLectorVozGratuito(ej.transcripcion);
                     }
                     document.getElementById('sophia-box').style.display = "block";
 
                     const claveUnica = `${currentUnitId}_${currentSkill}_${currentExerciseIndex}`;
+                    mapaAciertosAlumno = mapaAciertosAlumno || {};
                     mapaAciertosAlumno[claveUnica] = true; 
-                    
+
+                    let totalActividadesNivel = 0;
+                    let completadasNivel = 0;
+                    Object.keys(unidadesCache).forEach(uKey => {
+                        const arr = unidadesCache[uKey][currentSkill] || unidadesCache[uKey][currentSkill.toLowerCase()] || [];
+                        arr.forEach((_, indices) => {
+                            totalActividadesNivel++;
+                            if (mapaAciertosAlumno[`${uKey}_${currentSkill}_${indices}`] === true) {
+                                completadasNivel++;
+                            }
+                        });
+                    });
+
+                    const finalProgresoCalculado = Math.round((completadasNivel / totalActividadesNivel) * 100);
+
                     if (urlId !== "admin_preview" && docRefValidado) {
-                        await setDoc(docRefValidado, { mapa_aciertos: mapaAciertosAlumno }, { merge: true });
+                        try {
+                            await setDoc(docRefValidado, {
+                                mapa_aciertos: mapaAciertosAlumno,
+                                progreso: finalProgresoCalculado
+                            }, { merge: true });
+                        } catch (err) { console.error("Error al guardar en la base de datos:", err); }
                     }
+
+                    document.getElementById('progress-text-target').innerText = `${finalProgresoCalculado}%`;
+                    document.getElementById('progress-bar-fill').style.width = `${finalProgresoCalculado}%`;
+
                     btnSubmit.style.display = "none";
                     document.getElementById('btn-avanzar-siguiente').style.display = "inline-flex";
                 });
