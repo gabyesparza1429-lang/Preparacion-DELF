@@ -2,7 +2,7 @@ name: Deploy to Firebase Hosting
 on:
   push:
     branches:
-      - principal # Tu rama actual según tus capturas
+      - main # Tu rama actual según tus capturas
 jobs:
   deploy:
     runs-on: ubuntu-latest
