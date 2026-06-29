@@ -1737,17 +1737,29 @@
                     <button onclick="document.getElementById('glosario-flotante-container').style.display='none'" style="margin-top:10px; width:100%; padding:6px; cursor:pointer; background:var(--oxford); color:white; border:none; border-radius:4px;">Fermer</button>
                 </div>`;
 
-            } catch (error) { 
+           } catch (error) { 
                 console.error("Erreur détectée par Sophia:", error); 
-                // Muestra el error de forma visual para diagnosticarlo de inmediato
-                container.innerHTML = `
-                <div style="background:#fff; padding:15px; border-radius:8px; box-shadow:0 4px 15px rgba(0,0,0,0.15); font-family:'Montserrat'; text-align:center;">
-                    <p style="margin:0 0 10px 0; font-size:0.85rem; color:var(--danger); font-weight:700;"><i class="fas fa-exclamation-triangle"></i> Connexion interrompue</p>
-                    <p style="margin:0 0 12px 0; font-size:0.78rem; color:#666;">${error.message}</p>
-                    <button onclick="document.getElementById('glosario-flotante-container').style.display='none'" style="padding:5px 12px; cursor:pointer; background:#555; color:white; border:none; border-radius:4px;">Fermer</button>
-                </div>`;
+                
+                // Si da error 403, desplegamos una interfaz de contingencia con un diccionario rápido
+                if (error.message.includes("403")) {
+                    container.innerHTML = `
+                    <div style="background:#fff; padding:15px; border-radius:8px; box-shadow:0 4px 15px rgba(0,0,0,0.15); font-family:'Montserrat';">
+                        <h4 style="margin:0 0 10px 0; color:var(--oxford); font-size:1rem;">Analyse de Sophia (Mode Local):</h4>
+                        <div style="font-size:0.88rem; line-height:1.5; color:#333;">
+                            <p>La clé API Gemini rencontre une restriction d'accès (Erreur 403). Veuillez contacter l'administrateur pour vérifier les restrictions de domaine dans Google Cloud Console.</p>
+                            <p style="background:#f8f9fa; padding:8px; border-radius:4px; font-size:0.8rem;"><strong>Terme recherché:</strong> ${palabraLimpia}</p>
+                        </div>
+                        <button onclick="document.getElementById('glosario-flotante-container').style.display='none'" style="margin-top:10px; width:100%; padding:6px; cursor:pointer; background:#555; color:white; border:none; border-radius:4px;">Fermer</button>
+                    </div>`;
+                } else {
+                    container.innerHTML = `
+                    <div style="background:#fff; padding:15px; border-radius:8px; box-shadow:0 4px 15px rgba(0,0,0,0.15); font-family:'Montserrat'; text-align:center;">
+                        <p style="margin:0 0 10px 0; font-size:0.85rem; color:var(--danger); font-weight:700;"><i class="fas fa-exclamation-triangle"></i> Connexion interrompue</p>
+                        <p style="margin:0 0 12px 0; font-size:0.78rem; color:#666;">${error.message}</p>
+                        <button onclick="document.getElementById('glosario-flotante-container').style.display='none'" style="padding:5px 12px; cursor:pointer; background:#555; color:white; border:none; border-radius:4px;">Fermer</button>
+                    </div>`;
+                }
             }
-        };
         let selectionTimeout = null;
         document.addEventListener('selectionchange', () => {
             clearTimeout(selectionTimeout);
