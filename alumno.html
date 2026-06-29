@@ -1651,9 +1651,9 @@
             recognition.onresult = (e) => { for (let i = e.resultIndex; i < e.results.length; ++i) { if (e.results[i].isFinal) buzonTexto += " " + e.results[i][0].transcript.toLowerCase(); } };
         };
 
-        window.ejecutarConsultaSophiaConFiltro = async function(frase) {
+       window.ejecutarConsultaSophiaConFiltro = async function(frase) {
             const container = document.getElementById("glosario-flotante-container"); if (!container) return;
-            container.innerHTML = `<div style="background:#fff; padding:15px; border-radius:8px; box-shadow:0 4px 15px rgba(0,0,0,0.15);"><p style="margin:0; font-size:13px;"><i class="fas fa-spinner fa-spin"></i> Sophia cherche...</p></div>`;
+            container.innerHTML = `<div style="background:#fff; padding:15px; border-radius:8px; box-shadow:0 4px 15px rgba(0,0,0,0.15); font-family:'Montserrat';"><p style="margin:0; font-size:13px; color:#333;"><i class="fas fa-spinner fa-spin"></i> Sophia cherche...</p></div>`;
             container.style.display = "block";
 
             const palabraLimpia = frase.toLowerCase().trim();
@@ -1685,7 +1685,7 @@
 
                 if (alumnoTokensGlobal <= 0) {
                     container.innerHTML = `
-                    <div style="background:#fff; padding:15px; border-radius:8px; box-shadow:0 4px 15px rgba(0,0,0,0.15); text-align:center;">
+                    <div style="background:#fff; padding:15px; border-radius:8px; box-shadow:0 4px 15px rgba(0,0,0,0.15); text-align:center; font-family:'Montserrat';">
                         <p style="margin:0 0 10px 0; font-size:0.88rem; color:var(--danger); font-weight:700;"><i class="fas fa-exclamation-circle"></i> Crédits épuisés</p>
                         <p style="margin:0 0 12px 0; font-size:0.8rem; color:#555;">Vous n'avez plus de crédits pour consulter l'IA. Contactez votre professeur.</p>
                         <button onclick="document.getElementById('glosario-flotante-container').style.display='none'" style="padding:6px 12px; cursor:pointer;">Fermer</button>
@@ -1700,7 +1700,15 @@
                 const cuerpoPeticion = { contents: [{ parts: [{ text: promptContexto }] }] };
 
                 const responseIA = await fetch(urlGemini, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(cuerpoPeticion) });
+                
+                if (!responseIA.ok) throw new Error(`Erreur HTTP: ${responseIA.status}`);
+                
                 const jsonIA = await responseIA.json();
+                
+                if (!jsonIA.candidates || !jsonIA.candidates[0].content.parts[0].text) {
+                    throw new Error("Structure de réponse Gemini invalide o filtrée.");
+                }
+                
                 const respuestaTextoSophia = jsonIA.candidates[0].content.parts[0].text;
 
                 alumnoTokensGlobal--;
@@ -1729,9 +1737,17 @@
                     <button onclick="document.getElementById('glosario-flotante-container').style.display='none'" style="margin-top:10px; width:100%; padding:6px; cursor:pointer; background:var(--oxford); color:white; border:none; border-radius:4px;">Fermer</button>
                 </div>`;
 
-            } catch (error) { console.error(error); container.style.display = "none"; }
+            } catch (error) { 
+                console.error("Erreur détectée par Sophia:", error); 
+                // Muestra el error de forma visual para diagnosticarlo de inmediato
+                container.innerHTML = `
+                <div style="background:#fff; padding:15px; border-radius:8px; box-shadow:0 4px 15px rgba(0,0,0,0.15); font-family:'Montserrat'; text-align:center;">
+                    <p style="margin:0 0 10px 0; font-size:0.85rem; color:var(--danger); font-weight:700;"><i class="fas fa-exclamation-triangle"></i> Connexion interrompue</p>
+                    <p style="margin:0 0 12px 0; font-size:0.78rem; color:#666;">${error.message}</p>
+                    <button onclick="document.getElementById('glosario-flotante-container').style.display='none'" style="padding:5px 12px; cursor:pointer; background:#555; color:white; border:none; border-radius:4px;">Fermer</button>
+                </div>`;
+            }
         };
-
         let selectionTimeout = null;
         document.addEventListener('selectionchange', () => {
             clearTimeout(selectionTimeout);
