@@ -1693,17 +1693,22 @@
                     return;
                 }
 
-                // CONEXIÓN SEGURA RUTA PLAN B (A través de tu propio servidor)
-                const responseIA = await fetch("https://neuroreussit.com/api/chat", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ message: `Actúa como Sophia, un diccionario monolingüe en francés para estudiantes de nivel A1 a B2. Define la palabra de forma clara y muy breve en francés, y agrega su significado en español. Incluye su categoría gramatical y un ejemplo corto en francés. Responde utilizando un formato HTML limpio y compacto. Palabra: "${palabraLimpia}"` })
-                });
+                // USAMOS LA CLAVE DE API 1 (LIBRE DE RESTRICCIONES DE FIREBASE)
+                const apiKeyGemini = "AIzaSyDE_X_S_E_U_K_I_N_G_C_O_D_E_REUSSITE"; 
+                const urlGemini = `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${apiKeyGemini}`;
                 
-                if (!responseIA.ok) throw new Error(`Erreur HTTP Serveur: ${responseIA.status}`);
+                const promptContexto = `Actúa como Sophia, un diccionario monolingüe en francés para estudiantes de nivel A1 a B2. Define la palabra de forma clara y muy breve en francés, y agrega su significado en español. Incluye su categoría gramatical y un ejemplo corto en francés. Responde utilizando un formato HTML limpio y compacto. Palabra: "${palabraLimpia}"`;
+                const cuerpoPeticion = { contents: [{ parts: [{ text: promptContexto }] }] };
+
+                const responseIA = await fetch(urlGemini, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(cuerpoPeticion) });
                 
-                const data = await responseIA.json();
-                const respuestaTextoSophia = data.reply;
+                if (!responseIA.ok) {
+                    const errorData = await responseIA.json().catch(() => ({}));
+                    throw new Error(`Erreur HTTP: ${responseIA.status} ${errorData.error?.message || ''}`);
+                }
+                
+                const jsonIA = await responseIA.json();
+                const respuestaTextoSophia = jsonIA.candidates[0].content.parts[0].text;
 
                 alumnoTokensGlobal--;
                 await setDoc(docRefValidado, { tokens: alumnoTokensGlobal }, { merge: true });
