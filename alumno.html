@@ -1147,7 +1147,7 @@
                         <div class="carnet-header"><span class="carnet-title"><i class="fas fa-microphone" style="color:#ea4335;"></i> Production Orale</span><span class="carnet-score">${notesHabilidadGlobales.PO} / 25 pts</span></div>
                         <div class="carnet-descriptor-box"><strong>Objectif B1 :</strong> ${descPO}</div>
                         <div class="carnet-checklist">
-                            <div class="checklist-item ${check('B1_PO_EXPOSÉ')}"><i class="${iconCheck('B1_PO_EXPOSÉ')}"></i> Présenter un thème ou problème de société</div>
+                            <div class="checklist-item ${check('B1_PO_EXPOSÉ')}"><i class="${iconCheck('B1_PO_EXPOSÉ')}"></i> Présenter un thème ou problem de société</div>
                             <div class="checklist-item ${check('B1_PO_DÉBAT')}"><i class="${iconCheck('B1_PO_DÉBAT')}"></i> Argumenter lors d'un juego de rol or interaction</div>
                         </div>
                     </div>
@@ -1236,7 +1236,7 @@
                         html += `
                             <div style="display: flex; flex-direction: column; gap: 6px;">
                                 <label style="font-size: 0.88rem; font-weight: 600; color: #444;">${campo}</label>
-                                <input type="text" id="form-field-${fIdx}" class="form-student-input" style="width: 100%; padding: 10px 12px; border: 1px solid #ccc; border-radius: 6px; font-family: 'Montserrat', sans-serif; font-size: 0.95rem; box-sizing: border-box;" autocomplete="off" onpaste="return false;" ondrop="return false;">
+                                <input type="text" id="form-field-${fIdx}" class="form-student-input" style="width: 100%; padding: 10px 12px; border: 1px solid #ccc; border-radius: 6px; font-family: 'Montserrat', sans-serif; font-size: 0.95rem; box-sizing: border-box;" autocomplete="off">
                             </div>`;
                     });
                     
@@ -1264,7 +1264,7 @@
                             <button type="button" class="accent-btn" onclick="window.insertarCaracterEspecial('ê')">ê</button>
                             <button type="button" class="accent-btn" onclick="window.insertarCaracterEspecial('œ')">œ</button>
                         </div>
-                        <textarea id="pe-student-response" class="production-textbox" placeholder="Rédigez votre texte ici..." spellcheck="false" autocomplete="off" onpaste="return false;" ondrop="return false;"></textarea>
+                        <textarea id="pe-student-response" class="production-textbox" placeholder="Rédigez votre texte ici..." spellcheck="false" autocomplete="off"></textarea>
                     </div>`;
                 }
 
@@ -1498,117 +1498,119 @@
                 });
             }
 
-if (window.currentSkill === "PE") {
-    const el = document.getElementById('pe-student-response');
-    
-    // SIN CANDADOS: Permite pegar y arrastrar texto libremente
-    if (el) ['copy', 'cut', 'contextmenu'].forEach(evt => el.addEventListener(evt, e => e.preventDefault(), true));
-    
-    document.getElementById('btn-submit-pe').addEventListener('click', async () => {
-        const txtAlumno = el.value.trim();
-        if (!txtAlumno) return;
-        document.getElementById('btn-submit-pe').disabled = true;
+            // SE COMPACTÓ EL INYECTOR DEL LISTENER DE LA REDACCIÓN AQUÍ
+            if (window.currentSkill === "PE") {
+                const elInputRedaccion = document.getElementById('pe-student-response');
+                if (elInputRedaccion) {
+                    ['copy', 'cut', 'contextmenu'].forEach(evt => elInputRedaccion.addEventListener(evt, e => e.preventDefault(), true));
+                }
+                
+                document.getElementById('btn-submit-pe').addEventListener('click', async () => {
+                    const txtAlumno = elInputRedaccion ? elInputRedaccion.value.trim() : "";
+                    if (!txtAlumno) return;
+                    document.getElementById('btn-submit-pe').disabled = true;
 
-        try {
-            const response = await fetch("https://neuroreussit.com/api/chat", {
-                method: "POST", 
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ message: `Actúa como examinadora DELF nativa. Evalúa el texto asignando una nota total estimada sobre 25. Devuelve la respuesta estructurada únicamente en HTML compacto. Texto: ${txtAlumno}` })
-            });
-            const data = await response.json();
-            const htmlVerdict = `
-                <strong>Grille d'évaluation DELF (Base 25) :</strong><br><br>
-                <table class="grille-delf-table">
-                    <tr><th>Critères d'évaluation</th><th>SOUS</th><th>ACQUIS</th><th>SUPRA</th></tr>
-                    <tr class="grille-row-active"><td>1. Réalisation des tâches</td><td>☐</td><td>☑ Validé</td><td>☐</td></tr>
-                    <tr><td>2. Morphosyntaxe / Grammaire</td><td>☐</td><td>☐</td><td>☑ Excellent</td></tr>
-                </table>
-                <div style="margin-top:15px; padding:10px; background:white; border-radius:4px;">${data.reply}</div>`;
-            
-            document.getElementById('sophia-verdict-text').innerHTML = htmlVerdict;
-            document.getElementById('sophia-box').style.display = "block";
+                    try {
+                        const response = await fetch("https://neuroreussit.com/api/chat", {
+                            method: "POST", headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify({ message: `Actúa como examinadora DELF nativa. Evalúa el texto asignando una nota total estimada sobre 25. Devuelve la respuesta estructurada únicamente en HTML compacto. Texto: ${txtAlumno}` })
+                        });
+                        const data = await response.json();
+                        const htmlVerdict = `
+                            <strong>Grille d'évaluation DELF (Base 25) :</strong><br><br>
+                            <table class="grille-delf-table">
+                                <tr><th>Critères d'évaluation</th><th>SOUS</th><th>ACQUIS</th><th>SUPRA</th></tr>
+                                <tr class="grille-row-active"><td>1. Réalisation des tâches</td><td>☐</td><td>☑ Validé</td><td>☐</td></tr>
+                                <tr><td>2. Morphosyntaxe / Grammaire</td><td>☐</td><td>☐</td><td>☑ Excellent</td></tr>
+                            </table>
+                            <div style="margin-top:15px; padding:10px; background:white; border-radius:4px;">${data.reply}</div>`;
+                        
+                        document.getElementById('sophia-verdict-text').innerHTML = htmlVerdict;
+                        document.getElementById('sophia-box').style.display = "block";
 
-            if (urlId !== "admin_preview" && docRefValidado) {
-                const subColRef = collection(db, "Usuarios", urlId, "HistorialSophia");
-                await addDoc(subColRef, {
-                    fecha: new Date().toISOString().split('T')[0],
-                    tipo: "Production_Ecr_PO_PE",
-                    habilidad: "PE",
-                    texto_alumno: txtAlumno,
-                    respuesta_ia: data.reply,
-                    unidad: currentUnitId,
-                    actividad: currentExerciseIndex
+                        if (urlId !== "admin_preview" && docRefValidado) {
+                            const subColRef = collection(db, "Usuarios", urlId, "HistorialSophia");
+                            await addDoc(subColRef, {
+                                fecha: new Date().toISOString().split('T')[0],
+                                tipo: "Production_Ecr_PO_PE",
+                                habilidad: "PE",
+                                texto_alumno: txtAlumno,
+                                respuesta_ia: data.reply,
+                                unidad: currentUnitId,
+                                actividad: currentExerciseIndex
+                            });
+                        }
+
+                    } catch (e) { 
+                        console.error(e); 
+                        alert("Une erreur est survenue lors de l'envoi. Veuillez réessayez.");
+                    } finally {
+                        document.getElementById('btn-submit-pe').disabled = false;
+                    }
                 });
             }
-        } catch (e) { 
-            console.error(e); 
-            alert("Une erreur est survenue lors de l'envoi. Veuillez réessayez.");
-        } finally {
-            // El botón se reactiva siempre aquí
-            document.getElementById('btn-submit-pe').disabled = false;
-        }
-    });
-}
 
-const btnSubmit = document.getElementById('btn-submit-exercise');
-if (btnSubmit) {
-    btnSubmit.addEventListener('click', async () => {
-        let aciertosN = 0;
-        let totalPreguntas = ej.preguntas.length;
+            const btnSubmit = document.getElementById('btn-submit-exercise');
+            if (btnSubmit) {
+                btnSubmit.addEventListener('click', async () => {
+                    let aciertosN = 0;
+                    let totalPreguntas = ej.preguntas.length;
 
-        ej.preguntas.forEach((p, pIdx) => {
-            const sel = document.querySelector(`input[name="question_${pIdx}"]:checked`);
-            const icon = document.getElementById(`status-icon-target-${pIdx}`);
-            const blk = document.getElementById(`block-preg-${pIdx}`);
-            let ok = sel && sel.value.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()¿?¡!]/g,"").trim().toLowerCase() === (p.respuesta_correcta || "").replace(/[.,\/#!$%\^&\*;:{}=\-_`~()¿?¡!]/g,"").trim().toLowerCase();
-            if (ok) { aciertosN++; icon.innerHTML = `<i class="fas fa-check-circle" style="color:var(--green); margin-right:8px;"></i>`; blk.style.background = "#f4fff5"; }
-            else { icon.innerHTML = `<i class="fas fa-times-circle" style="color:red; margin-right:8px;"></i>`; blk.style.background = "#fff5f5"; }
-        });
+                    ej.preguntas.forEach((p, pIdx) => {
+                        const sel = document.querySelector(`input[name="question_${pIdx}"]:checked`);
+                        const icon = document.getElementById(`status-icon-target-${pIdx}`);
+                        const blk = document.getElementById(`block-preg-${pIdx}`);
+                        let ok = sel && sel.value.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()¿?¡!]/g,"").trim().toLowerCase() === (p.respuesta_correcta || "").replace(/[.,\/#!$%\^&\*;:{}=\-_`~()¿?¡!]/g,"").trim().toLowerCase();
+                        if (ok) { aciertosN++; icon.innerHTML = `<i class="fas fa-check-circle" style="color:var(--green); margin-right:8px;"></i>`; blk.style.background = "#f4fff5"; }
+                        else { icon.innerHTML = `<i class="fas fa-times-circle" style="color:red; margin-right:8px;"></i>`; blk.style.background = "#fff5f5"; }
+                    });
 
-        document.querySelectorAll('#preguntas-wrapper-bloque input[type="radio"]').forEach(r => r.disabled = true);
-        document.getElementById('sophia-verdict-text').innerHTML = `Tu as obtenu <strong>${aciertosN} / ${totalPreguntas}</strong> aciertos.`;
+                    document.querySelectorAll('#preguntas-wrapper-bloque input[type="radio"]').forEach(r => r.disabled = true);
+                    document.getElementById('sophia-verdict-text').innerHTML = `Tu as obtenu <strong>${aciertosN} / ${totalPreguntas}</strong> aciertos.`;
+                    
+                    if (ej.transcripcion) {
+                        document.getElementById('interactive-transcription-box').innerHTML = window.convertirTextoInteractivo(ej.transcripcion);
+                        window.inicializarLectorVozGratuito(ej.transcripcion);
+                    }
+                    document.getElementById('sophia-box').style.display = "block";
+
+                    const claveUnica = `${currentUnitId}_${currentSkill}_${currentExerciseIndex}`;
+                    mapaAciertosAlumno = mapaAciertosAlumno || {};
+                    mapaAciertosAlumno[claveUnica] = true; 
+
+                    let totalActividadesNivel = 0;
+                    let completadasNivel = 0;
+                    Object.keys(unidadesCache).forEach(uKey => {
+                        const arr = unidadesCache[uKey][currentSkill] || unidadesCache[uKey][currentSkill.toLowerCase()] || [];
+                        arr.forEach((_, indices) => {
+                            totalActividadesNivel++;
+                            if (mapaAciertosAlumno[`${uKey}_${currentSkill}_${indices}`] === true) {
+                                completadasNivel++;
+                            }
+                        });
+                    });
+
+                    const finalProgresoCalculado = Math.round((completadasNivel / totalActividadesNivel) * 100);
+
+                    if (urlId !== "admin_preview" && docRefValidado) {
+                        try {
+                            await setDoc(docRefValidado, {
+                                mapa_aciertos: mapaAciertosAlumno,
+                                progreso: finalProgresoCalculado
+                            }, { merge: true });
+                        } catch (err) { console.error("Error al guardar en la base de datos:", err); }
+                    }
+
+                    document.getElementById('progress-text-target').innerText = `${finalProgresoCalculado}%`;
+                    document.getElementById('progress-bar-fill').style.width = `${finalProgresoCalculado}%`;
+
+                    btnSubmit.style.display = "none";
+                    document.getElementById('btn-avanzar-siguiente').style.display = "inline-flex";
+                    generarMenuJerarquico(); 
+                });
+            }
+        };
         
-        if (ej.transcripcion) {
-            document.getElementById('interactive-transcription-box').innerHTML = window.convertirTextoInteractivo(ej.transcripcion);
-            window.inicializarLectorVozGratuito(ej.transcripcion);
-        }
-        document.getElementById('sophia-box').style.display = "block";
-
-        const claveUnica = `${currentUnitId}_${currentSkill}_${currentExerciseIndex}`;
-        mapaAciertosAlumno = mapaAciertosAlumno || {};
-        mapaAciertosAlumno[claveUnica] = true; 
-
-        let totalActividadesNivel = 0;
-        let completadasNivel = 0;
-        Object.keys(unidadesCache).forEach(uKey => {
-            const arr = unidadesCache[uKey][currentSkill] || unidadesCache[uKey][currentSkill.toLowerCase()] || [];
-            arr.forEach((_, indices) => {
-                totalActividadesNivel++;
-                if (mapaAciertosAlumno[`${uKey}_${currentSkill}_${indices}`] === true) {
-                    completadasNivel++;
-                }
-            });
-        });
-
-        const finalProgresoCalculado = Math.round((completadasNivel / totalActividadesNivel) * 100);
-
-        if (urlId !== "admin_preview" && docRefValidado) {
-            try {
-                await setDoc(docRefValidado, {
-                    mapa_aciertos: mapaAciertosAlumno,
-                    progreso: finalProgresoCalculado
-                }, { merge: true });
-            } catch (err) { console.error("Error al guardar en la base de datos:", err); }
-        }
-
-        document.getElementById('progress-text-target').innerText = `${finalProgresoCalculado}%`;
-        document.getElementById('progress-bar-fill').style.width = `${finalProgresoCalculado}%`;
-
-        btnSubmit.style.display = "none";
-        document.getElementById('btn-avanzar-siguiente').style.display = "inline-flex";
-        generarMenuJerarquico(); 
-    });
-}
         window.avanzarSiguienteEjercicio = function() {
             let ejercicios = unidadesCache[currentUnitId][currentSkill] || unidadesCache[currentUnitId][currentSkill.toLowerCase()] || [];
             if (currentExerciseIndex + 1 < ejercicios.length) {
@@ -1649,7 +1651,6 @@ if (btnSubmit) {
             recognition.onresult = (e) => { for (let i = e.resultIndex; i < e.results.length; ++i) { if (e.results[i].isFinal) buzonTexto += " " + e.results[i][0].transcript.toLowerCase(); } };
         };
 
-        // --- CONECTOR HÍBRIDO DEFINITIVO: DICCIONARIO MAESTRO + GEMINI DIRECTO + TOKENS ---
         window.ejecutarConsultaSophiaConFiltro = async function(frase) {
             const container = document.getElementById("glosario-flotante-container"); if (!container) return;
             container.innerHTML = `<div style="background:#fff; padding:15px; border-radius:8px; box-shadow:0 4px 15px rgba(0,0,0,0.15);"><p style="margin:0; font-size:13px;"><i class="fas fa-spinner fa-spin"></i> Sophia cherche...</p></div>`;
@@ -1693,9 +1694,9 @@ if (btnSubmit) {
                 }
 
                 const apiKeyGemini = "AIzaSyCgog8tKspHy01ZHE8Dthl9O4W6lw1a_Ec";
-                const urlGemini = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKeyGemini}`;
+                const urlGemini = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKeyGemini}`;
                 
-                const promptContexto = `Actúa como Sophia, un diccionario monolingüe en francés para estudiantes de nivel A1 a B2. Define la palabra de forma clara y muy breve. Incluye su categoría gramatical y un ejemplo corto en francés. Responde utilizando un formato HTML limpio: "${palabraLimpia}"`;
+                const promptContexto = `Actúa como Sophia, un diccionario monolingüe en francés para estudiantes de nivel A1 a B2. Define la palabra de forma clara y muy breve en francés, y agrega su significado en español. Incluye su categoría gramatical y un ejemplo corto en francés. Responde utilizando un formato HTML limpio y compacto. Palabra: "${palabraLimpia}"`;
                 const cuerpoPeticion = { contents: [{ parts: [{ text: promptContexto }] }] };
 
                 const responseIA = await fetch(urlGemini, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(cuerpoPeticion) });
