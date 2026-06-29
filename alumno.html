@@ -1079,7 +1079,7 @@
 
                 ejH.forEach((ej, eIdx) => {
                     const esCompleto = mapaAciertosAlumno[`${uId}_${currentSkill}_${eIdx}`] === true;
-                    const statusText = esCompleto ? '<span class="activity-status-lbl" style="background:#e8f5e9; color:#2e7d32;">✅ Logrado</span>' : '<span class="activity-status-lbl" style="background:#f5f5f5; color:#757575;">⏳ En curso</span>';
+                   const statusText = esCompleto ? '<span class="activity-status-lbl" style="background:#e8f5e9; color:#2e7d32;">✅ Logrado</span>' : '<span class="activity-status-lbl" style="background:#f5f5f5; color:#757575;">❌ No comenzado</span>';
                     
                     sub.innerHTML += `
                         <button class="activity-link-btn ${currentUnitId === uId && currentExerciseIndex === eIdx ? 'active' : ''}" onclick="window.cargarActividadDirecta('${uId}', ${eIdx})">
