@@ -1505,50 +1505,49 @@
                     ['copy', 'cut', 'contextmenu'].forEach(evt => elInputRedaccion.addEventListener(evt, e => e.preventDefault(), true));
                 }
                 
-                document.getElementById('btn-submit-pe').addEventListener('click', async () => {
-                    const txtAlumno = elInputRedaccion ? elInputRedaccion.value.trim() : "";
-                    if (!txtAlumno) return;
-                    document.getElementById('btn-submit-pe').disabled = true;
+document.getElementById('btn-submit-pe').addEventListener('click', async () => {
+    const elInputRedaccion = document.getElementById('pe-student-response');
+    const txtAlumno = elInputRedaccion ? elInputRedaccion.value.trim() : "";
+    if (!txtAlumno) return;
 
-                    try {
-                        const response = await fetch("https://neuroreussit.com/api/chat", {
-                            method: "POST", headers: { "Content-Type": "application/json" },
-                            body: JSON.stringify({ message: `Actúa como examinadora DELF nativa. Evalúa el texto asignando una nota total estimada sobre 25. Devuelve la respuesta estructurada únicamente en HTML compacto. Texto: ${txtAlumno}` })
-                        });
-                        const data = await response.json();
-                        const htmlVerdict = `
-                            <strong>Grille d'évaluation DELF (Base 25) :</strong><br><br>
-                            <table class="grille-delf-table">
-                                <tr><th>Critères d'évaluation</th><th>SOUS</th><th>ACQUIS</th><th>SUPRA</th></tr>
-                                <tr class="grille-row-active"><td>1. Réalisation des tâches</td><td>☐</td><td>☑ Validé</td><td>☐</td></tr>
-                                <tr><td>2. Morphosyntaxe / Grammaire</td><td>☐</td><td>☐</td><td>☑ Excellent</td></tr>
-                            </table>
-                            <div style="margin-top:15px; padding:10px; background:white; border-radius:4px;">${data.reply}</div>`;
-                        
-                        document.getElementById('sophia-verdict-text').innerHTML = htmlVerdict;
-                        document.getElementById('sophia-box').style.display = "block";
+    document.getElementById('btn-submit-pe').disabled = true;
+    document.getElementById('sophia-verdict-text').innerHTML = "<i>Sophia corrige ta production...</i>";
+    document.getElementById('sophia-box').style.display = "block";
 
-                        if (urlId !== "admin_preview" && docRefValidado) {
-                            const subColRef = collection(db, "Usuarios", urlId, "HistorialSophia");
-                            await addDoc(subColRef, {
-                                fecha: new Date().toISOString().split('T')[0],
-                                tipo: "Production_Ecr_PO_PE",
-                                habilidad: "PE",
-                                texto_alumno: txtAlumno,
-                                respuesta_ia: data.reply,
-                                unidad: currentUnitId,
-                                actividad: currentExerciseIndex
-                            });
-                        }
+    try {
+        // Creamos el documento en 'generate' para que la IA de Firebase responda
+        const extDocRef = await addDoc(collection(db, "generate"), {
+            prompt: `Actúa como examinadora DELF nativa. Evalúa el texto del alumno, asigna una nota sobre 25 y da retroalimentación detallada. Texto: ${txtAlumno}`
+        });
 
-                    } catch (e) { 
-                        console.error(e); 
-                        alert("Une erreur est survenue lors de l'envoi. Veuillez réessayez.");
-                    } finally {
-                        document.getElementById('btn-submit-pe').disabled = false;
-                    }
-                });
+        // Escuchamos la respuesta de la IA
+        const desvincularEscucha = onSnapshot(extDocRef, async (snapshot) => {
+            if (snapshot.exists() && snapshot.data().response) {
+                desvincularEscucha();
+                const respuestaIA = snapshot.data().response;
+                
+                document.getElementById('sophia-verdict-text').innerHTML = respuestaIA;
+
+                // Guardar en el historial del alumno
+                if (urlId !== "admin_preview" && docRefValidado) {
+                    await addDoc(collection(db, "Usuarios", urlId, "HistorialSophia"), {
+                        fecha: new Date().toISOString().split('T')[0],
+                        tipo: "Production_Escrita",
+                        habilidad: "PE",
+                        texto_alumno: txtAlumno,
+                        respuesta_ia: respuestaIA,
+                        unidad: currentUnitId
+                    });
+                }
             }
+        });
+    } catch (e) {
+        console.error(e);
+        alert("Une erreur est survenue. Veuillez réessayer.");
+    } finally {
+        document.getElementById('btn-submit-pe').disabled = false;
+    }
+});
 
             const btnSubmit = document.getElementById('btn-submit-exercise');
             if (btnSubmit) {
