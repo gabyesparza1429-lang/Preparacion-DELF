@@ -1695,7 +1695,7 @@
 
                 // Usamos la Clave nueva sin restricciones de la cuenta
                 const apiKeyGemini = "AIzaSyBBZlg5QVFev8OClkop8UnqCBphF2r4OAs"; 
-                const urlGemini = `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${apiKeyGemini}`;
+                const urlGemini = `https://generativelanguage.googleapis.com/v1/models/gemini-2.5-flash:generateContent?key=${apiKeyGemini}`;
                 
                 const promptContexto = `Actúa como Sophia, un diccionario monolingüe en francés para estudiantes de nivel A1 a B2. Define la palabra de forma clara y muy breve en francés, y agrega su significado en español. Incluye su categoría gramatical y un ejemplo corto en francés. Responde utilizando un formato HTML limpio y compacto. Palabra: "${palabraLimpia}"`;
                 const cuerpoPeticion = { contents: [{ parts: [{ text: promptContexto }] }] };
