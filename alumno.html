@@ -640,8 +640,7 @@
                     </div>
                 </div>
 
-                <div id="dynamic-workspace-target">
-                    </div>
+                <div id="dynamic-workspace-target"></div>
             </div>
         </div>
     </div>
@@ -692,7 +691,7 @@
 
         window.convertirTextoInteractivo = function(texto) {
             if (!texto) return '';
-            return texto.split(/(?<=[?.!])\s+/).map(b => {
+            return text.split(/(?<=[?.!])\s+/).map(b => {
                 if (b.trim() === '') return '';
                 let palabrasHtml = b.split(/(\s+)/).map(f => {
                     if (f.trim() === '') return f;
@@ -1236,7 +1235,7 @@
                         html += `
                             <div style="display: flex; flex-direction: column; gap: 6px;">
                                 <label style="font-size: 0.88rem; font-weight: 600; color: #444;">${campo}</label>
-                                <input type="text" id="form-field-${fIdx}" class="form-student-input" style="width: 100%; padding: 10px 12px; border: 1px solid #ccc; border-radius: 6px; font-family: 'Montserrat', sans-serif; font-size: 0.95rem; box-sizing: border-box;" autocomplete="off">
+                                <input type="text" id="form-field-${fIdx}" class="form-student-input" style="width: 100%; padding: 10px 12px; border: 1px solid #ccc; border-radius: 66px; font-family: 'Montserrat', sans-serif; font-size: 0.95rem; box-sizing: border-box;" autocomplete="off">
                             </div>`;
                     });
                     
@@ -1421,7 +1420,7 @@
 
                 } else {
                     if (ej.texto_lectura) {
-                        html += `<div style="background:#f8f9fa; border-left:4px solid var(--gold); padding:20px; margin-bottom:25px;"><strong>Document :</strong><br><br>${window.convertirTextoInteractivo(ej.texto_lectura)}</div>`;
+                        html += `<div style="background:#f8f9fa; border-left:4px solid var(--gold); padding:20px; margin-bottom:25px;">Mon Document :</strong><br><br>${window.convertirTextoInteractivo(ej.texto_lectura)}</div>`;
                     }
                     html += `<div id="preguntas-wrapper-bloque">`;
                     ej.preguntas.forEach((p, pIdx) => {
@@ -1498,7 +1497,6 @@
                 });
             }
 
-            // SE COMPACTÓ EL INYECTOR DEL LISTENER DE LA REDACCIÓN AQUÍ
             if (window.currentSkill === "PE") {
                 const elInputRedaccion = document.getElementById('pe-student-response');
                 if (elInputRedaccion) {
@@ -1506,78 +1504,71 @@
                 }
                 
                 document.getElementById('btn-submit-pe').addEventListener('click', async () => {
-    const elInputRedaccion = document.getElementById('pe-student-response');
-    const txtAlumno = elInputRedaccion ? elInputRedaccion.value.trim() : "";
-    if (!txtAlumno) return;
+                    const elInputRedaccion = document.getElementById('pe-student-response');
+                    const txtAlumno = elInputRedaccion ? elInputRedaccion.value.trim() : "";
+                    if (!txtAlumno) return;
 
-    document.getElementById('btn-submit-pe').disabled = true;
-    document.getElementById('sophia-verdict-text').innerHTML = "<i>Sophia corrige ta production...</i>";
-    document.getElementById('sophia-box').style.display = "block";
+                    const saludoH3 = document.getElementById('student-welcome')?.innerText || "";
+                    const nombreAlumno = saludoH3.replace("Élève:", "").trim() || "l'élève";
 
-    try {
-        const extDocRef = await addDoc(collection(db, "generate"), {
-            prompt: `Actúa como examinadora certificada DELF para nivel ${currentLevel}. Evalúa la siguiente producción escrita asignando una nota detallada sobre 25 basada en los criterios oficiales. Texto del alumno: ${txtAlumno}`
-        });
+                    document.getElementById('btn-submit-pe').disabled = true;
+                    document.getElementById('sophia-verdict-text').innerHTML = "<i>Sophia corrige ta production...</i>";
+                    document.getElementById('sophia-box').style.display = "block";
 
-        const desvincularEscucha = onSnapshot(extDocRef, async (snapshot) => {
-            if (snapshot.exists() && snapshot.data().response) {
-                desvincularEscucha();
-                const respuestaIA = snapshot.data().response;
-                
-                document.getElementById('sophia-verdict-text').innerHTML = respuestaIA;
+                    try {
+                        const extDocRef = await addDoc(collection(db, "generate"), {
+                            prompt: `Actúa como examinadora certificada DELF para nivel ${currentLevel}. Evalúa la siguiente producción escrita asignando una nota detallada sobre 25 basada en los criterios oficiales. Es MANDATORIO que personalices tu respuesta: dirígete directamente al alumno llamándolo por su nombre (${nombreAlumno}) de forma empática y profesional. Texto del alumno: ${txtAlumno}`
+                        });
 
-                // ========================================================
-                // NUEVO: MARCAR COMO COMPLETADO Y ENVIAR PROGRESO A FIRESTORE
-                // ========================================================
-                const llaveProgreso = `${currentUnitId}_${window.currentSkill}_${currentExerciseIndex}`;
-                
-                // 1. Lo marcamos localmente para que cambie en pantalla de inmediato
-                if (typeof mapaAciertosAlumno !== "undefined") {
-                    mapaAciertosAlumno[llaveProgreso] = true;
-                }
+                        const desvincularEscucha = onSnapshot(extDocRef, async (snapshot) => {
+                            if (snapshot.exists() && snapshot.data().response) {
+                                desvincularEscucha();
+                                const respuestaIA = snapshot.data().response;
+                                
+                                document.getElementById('sophia-verdict-text').innerHTML = respuestaIA;
 
-                // 2. Guardamos el estado "true" en el perfil del alumno en Firestore
-                if (urlId !== "admin_preview" && docRefValidado) {
-                    const perfilUsuarioRef = doc(db, "Usuarios", urlId);
-                    await setDoc(perfilUsuarioRef, {
-                        mapaAciertosAlumno: {
-                            [llaveProgreso]: true
-                        }
-                    }, { merge: true });
-                    
-                    // 3. Forzamos a tu menú lateral a redibujarse con el nuevo estado
-                    if (typeof renderSidebarActividades === "function") {
-                        renderSidebarActividades(currentUnitId); 
-                    } else if (typeof cargarUnidad === "function") {
-                        cargarUnidad(currentUnitId);
+                                const llaveProgreso = `${currentUnitId}_${window.currentSkill}_${currentExerciseIndex}`;
+                                
+                                if (typeof mapaAciertosAlumno !== "undefined") {
+                                    mapaAciertosAlumno[llaveProgreso] = true;
+                                }
+
+                                if (urlId !== "admin_preview" && docRefValidado) {
+                                    const perfilUsuarioRef = doc(db, "Usuarios", urlId);
+                                    await setDoc(perfilUsuarioRef, {
+                                        mapa_aciertos: {
+                                            [llaveProgreso]: true
+                                        }
+                                    }, { merge: true });
+                                    
+                                    generarMenuJerarquico();
+                                }
+
+                                if (urlId !== "admin_preview" && docRefValidado) {
+                                    await addDoc(collection(db, "Usuarios", urlId, "HistorialSophia"), {
+                                        fecha: new Date().toISOString().split('T')[0],
+                                        tipo: "Production_Escrita",
+                                        habilidad: "PE",
+                                        texto_alumno: txtAlumno,
+                                        respuesta_ia: respuestaIA,
+                                        unidad: currentUnitId,
+                                        actividad: currentExerciseIndex
+                                    });
+                                }
+                            } else if (snapshot.exists() && snapshot.data().status?.state === "ERROR") {
+                                desvincularEscucha();
+                                document.getElementById('sophia-verdict-text').innerHTML = "<span style='color:red;'>Erreur d'évaluation par l'IA.</span>";
+                            }
+                        });
+                    } catch (e) {
+                        console.error(e);
+                        alert("Une erreur est survenue con Sophia. Veuillez réessayer.");
+                    } finally {
+                        document.getElementById('btn-submit-pe').disabled = false;
                     }
-                }
-                // ========================================================
-
-                // Guardar en el historial del alumno para tus reportes
-                if (urlId !== "admin_preview" && docRefValidado) {
-                    await addDoc(collection(db, "Usuarios", urlId, "HistorialSophia"), {
-                        fecha: new Date().toISOString().split('T')[0],
-                        tipo: "Production_Escrita",
-                        habilidad: "PE",
-                        texto_alumno: txtAlumno,
-                        respuesta_ia: respuestaIA,
-                        unidad: currentUnitId,
-                        actividad: currentExerciseIndex
-                    });
-                }
-            } else if (snapshot.exists() && snapshot.data().status?.state === "ERROR") {
-                desvincularEscucha();
-                document.getElementById('sophia-verdict-text').innerHTML = "<span style='color:red;'>Erreur d'évaluation par l'IA.</span>";
+                });
             }
-        });
-    } catch (e) {
-        console.error(e);
-        alert("Une erreur est survenue con Sophia. Veuillez réessayer.");
-    } finally {
-        document.getElementById('btn-submit-pe').disabled = false;
-    }
-});
+
             const btnSubmit = document.getElementById('btn-submit-exercise');
             if (btnSubmit) {
                 btnSubmit.addEventListener('click', async () => {
@@ -1678,112 +1669,112 @@
             };
             recognition.onresult = (e) => { for (let i = e.resultIndex; i < e.results.length; ++i) { if (e.results[i].isFinal) buzonTexto += " " + e.results[i][0].transcript.toLowerCase(); } };
         };
-window.ejecutarConsultaSophiaConFiltro = async function(frase) {
-    const container = document.getElementById("glosario-flotante-container"); if (!container) return;
-    container.innerHTML = `<div style="background:#fff; padding:15px; border-radius:8px; box-shadow:0 4px 15px rgba(0,0,0,0.15); font-family:'Montserrat';"><p style="margin:0; font-size:13px; color:#333;"><i class="fas fa-spinner fa-spin"></i> Sophia cherche...</p></div>`;
-    container.style.display = "block";
 
-    const palabraLimpia = frase.toLowerCase().trim();
+        window.ejecutarConsultaSophiaConFiltro = async function(frase) {
+            const container = document.getElementById("glosario-flotante-container"); if (!container) return;
+            container.innerHTML = `<div style="background:#fff; padding:15px; border-radius:8px; box-shadow:0 4px 15px rgba(0,0,0,0.15); font-family:'Montserrat';"><p style="margin:0; font-size:13px; color:#333;"><i class="fas fa-spinner fa-spin"></i> Sophia cherche...</p></div>`;
+            container.style.display = "block";
 
-    try {
-        const docRefDiccionario = doc(db, "diccionario_maestro", palabraLimpia);
-        const diccionarioSnap = await getDoc(docRefDiccionario);
+            const palabraLimpia = frase.toLowerCase().trim();
 
-        if (diccionarioSnap.exists()) {
-            const datos = diccionarioSnap.data();
-            const definicionFr = datos.definicion || "Pas de définition disponible.";
-            const ejemploFr = datos.ejemplo_uso || "";
-            const traduccionEs = datos.significado_espansol || "Sin traducción.";
-            const tipo = datos.tipo_gramatical || "N/A";
-            const listaSinonimos = datos.sinonimos ? datos.sinonimos.join(", ") : "Aucun";
+            try {
+                const docRefDiccionario = doc(db, "diccionario_maestro", palabraLimpia);
+                const diccionarioSnap = await getDoc(docRefDiccionario);
 
-            container.innerHTML = `
-            <div style="background:#fff; padding:18px; border-radius:8px; box-shadow:0 4px 15px rgba(0,0,0,0.15); max-height:380px; overflow-y:auto; font-family:'Montserrat';">
-                <h4 style="margin:0 0 5px 0; color:var(--oxford); font-size:1.1rem; text-transform:capitalize;">${palabraLimpia} <span style="font-size:0.75rem; color:var(--gold); font-weight:600;">(${tipo})</span></h4>
-                <p style="margin:0 0 10px 0; font-size:0.85rem; color:#28A745; font-weight:600;"><i class="fas fa-language"></i> ${traduccionEs}</p>
-                <hr style="border:0; border-top:1px solid #eee; margin:10px 0;">
-                <p style="margin:0 0 8px 0; font-size:0.88rem; line-height:1.4; color:#333;"><strong>Définition:</strong> ${definicionFr}</p>
-                ${ejemploFr ? `<p style="margin:0 0 8px 0; font-size:0.85rem; color:#555; background:#f9f9f9; padding:6px; border-radius:4px;"><i>Exemple: ${ejemploFr}</i></p>` : ''}
-                <p style="margin:0; font-size:0.8rem; color:#777;"><strong>Synonymes:</strong> ${listaSinonimos}</p>
-                <button onclick="document.getElementById('glosario-flotante-container').style.display='none'" style="margin-top:15px; width:100%; padding:8px; cursor:pointer; background:var(--oxford); color:white; border:none; border-radius:4px; font-weight:600;">Fermer</button>
-            </div>`;
-            return;
-        }
-
-        if (alumnoTokensGlobal <= 0) {
-            container.innerHTML = `
-            <div style="background:#fff; padding:15px; border-radius:8px; box-shadow:0 4px 15px rgba(0,0,0,0.15); text-align:center; font-family:'Montserrat';">
-                <p style="margin:0 0 10px 0; font-size:0.88rem; color:var(--danger); font-weight:700;"><i class="fas fa-exclamation-circle"></i> Crédits épuisés</p>
-                <p style="margin:0 0 12px 0; font-size:0.8rem; color:#555;">Vous n'avez plus de crédits pour consulter l'IA. Contactez votre professeur.</p>
-                <button onclick="document.getElementById('glosario-flotante-container').style.display='none'" style="padding:6px 12px; cursor:pointer; background:#555; color:white; border:none; border-radius:4px;">Fermer</button>
-            </div>`;
-            return;
-        }
-
-        const promptContexto = `Actúa como Sophia, un diccionario monolingüe en francés para estudiantes de nivel A1 a B2. Define la palabra de forma clara y muy breve en francés, y agrega su significado en español. Incluye su categoría gramatical y un ejemplo corto en francés. Responde utilizando un formato HTML limpio y compacto. Palabra: "${palabraLimpia}"`;
-
-        const extDocRef = await addDoc(collection(db, "generate"), {
-            prompt: promptContexto
-        });
-
-        let desvincularEscucha = onSnapshot(extDocRef, async (snapshot) => {
-            if (snapshot.exists()) {
-                const datosExt = snapshot.data();
-
-                if (datosExt.response) {
-                    desvincularEscucha();
-                    const respuestaTextoSophia = datosExt.response;
-
-                    // GUARDAR EN DICCIONARIO MAESTRO
-                    await setDoc(doc(db, "diccionario_maestro", palabraLimpia), {
-                        definicion: respuestaTextoSophia,
-                        tipo_gramatical: "IA",
-                        significado_espansol: "Generado por IA",
-                        ejemplo_uso: ""
-                    });
-
-                    alumnoTokensGlobal--;
-                    await setDoc(docRefValidado, { tokens: alumnoTokensGlobal }, { merge: true });
-
-                    const tokenCounter = document.getElementById('banner-credits-count');
-                    if (tokenCounter) tokenCounter.innerText = alumnoTokensGlobal;
-
-                    if (urlId !== "admin_preview" && docRefValidado) {
-                        const subColRef = collection(db, "Usuarios", urlId, "HistorialSophia");
-                        await addDoc(subColRef, {
-                            fecha: new Date().toISOString().split('T')[0],
-                            tipo: "Vocabulaire",
-                            habilidad: currentSkill,
-                            palabra_consultada: palabraLimpia,
-                            respuesta_ia: respuestaTextoSophia,
-                            unidad: currentUnitId || "N/A"
-                        });
-                    }
+                if (diccionarioSnap.exists()) {
+                    const datos = diccionarioSnap.data();
+                    const definicionFr = datos.definicion || "Pas de définition disponible.";
+                    const ejemploFr = datos.ejemplo_uso || "";
+                    const traduccionEs = datos.significado_espansol || "Sin traducción.";
+                    const tipo = datos.tipo_gramatical || "N/A";
+                    const listaSinonimos = datos.sinonimos ? datos.sinonimos.join(", ") : "Aucun";
 
                     container.innerHTML = `
-                    <div style="background:#fff; padding:15px; border-radius:8px; box-shadow:0 4px 15px rgba(0,0,0,0.15); max-height:380px; overflow-y:auto; font-family:'Montserrat';">
-                        <h4 style="margin:0 0 10px 0; color:var(--oxford); font-size:1rem;">Analyse de Sophia:</h4>
-                        <div style="font-size:0.88rem; line-height:1.5; color:#333;">${respuestaTextoSophia}</div>
-                        <p style="margin:10px 0 0 0; font-size:0.7rem; color:#999; text-align:right;"><i>-1 Crédit IA</i></p>
-                        <button onclick="document.getElementById('glosario-flotante-container').style.display='none'" style="margin-top:10px; width:100%; padding:6px; cursor:pointer; background:var(--oxford); color:white; border:none; border-radius:4px;">Fermer</button>
+                    <div style="background:#fff; padding:18px; border-radius:8px; box-shadow:0 4px 15px rgba(0,0,0,0.15); max-height:380px; overflow-y:auto; font-family:'Montserrat';">
+                        <h4 style="margin:0 0 5px 0; color:var(--oxford); font-size:1.1rem; text-transform:capitalize;">${palabraLimpia} <span style="font-size:0.75rem; color:var(--gold); font-weight:600;">(${tipo})</span></h4>
+                        <p style="margin:0 0 10px 0; font-size:0.85rem; color:#28A745; font-weight:600;"><i class="fas fa-language"></i> ${traduccionEs}</p>
+                        <hr style="border:0; border-top:1px solid #eee; margin:10px 0;">
+                        <p style="margin:0 0 8px 0; font-size:0.88rem; line-height:1.4; color:#333;"><strong>Définition:</strong> ${definicionFr}</p>
+                        ${ejemploFr ? `<p style="margin:0 0 8px 0; font-size:0.85rem; color:#555; background:#f9f9f9; padding:6px; border-radius:4px;"><i>Exemple: ${ejemploFr}</i></p>` : ''}
+                        <p style="margin:0; font-size:0.8rem; color:#777;"><strong>Synonymes:</strong> ${listaSinonimos}</p>
+                        <button onclick="document.getElementById('glosario-flotante-container').style.display='none'" style="margin-top:15px; width:100%; padding:8px; cursor:pointer; background:var(--oxford); color:white; border:none; border-radius:4px; font-weight:600;">Fermer</button>
                     </div>`;
-                } else if (datosExt.status?.state === "ERROR") {
-                    desvincularEscucha();
-                    throw new Error(datosExt.status.errorMessage || "Fallo en el motor de la extensión");
+                    return;
                 }
-            }
-        });
 
-    } catch (error) {
-        console.error("Erreur Sophia:", error);
-        container.innerHTML = `
-        <div style="background:#fff; padding:15px; border-radius:8px; box-shadow:0 4px 15px rgba(0,0,0,0.15); font-family:'Montserrat'; text-align:center;">
-            <p style="margin:0 0 10px 0; font-size:0.85rem; color:var(--danger); font-weight:700;"><i class="fas fa-exclamation-triangle"></i> Connexion interrompue</p>
-            <p style="margin:0 0 12px 0; font-size:0.78rem; color:#666;">${error.message}</p>
-            <button onclick="document.getElementById('glosario-flotante-container').style.display='none'" style="padding:5px 12px; cursor:pointer; background:#555; color:white; border:none; border-radius:4px;">Fermer</button>
-        </div>`;
-    }
-};
+                if (alumnoTokensGlobal <= 0) {
+                    container.innerHTML = `
+                    <div style="background:#fff; padding:15px; border-radius:8px; box-shadow:0 4px 15px rgba(0,0,0,0.15); text-align:center; font-family:'Montserrat';">
+                        <p style="margin:0 0 10px 0; font-size:0.88rem; color:var(--danger); font-weight:700;"><i class="fas fa-exclamation-circle"></i> Crédits épuisés</p>
+                        <p style="margin:0 0 12px 0; font-size:0.8rem; color:#555;">Vous n'avez plus de crédits pour consulter l'IA. Contactez votre professeur.</p>
+                        <button onclick="document.getElementById('glosario-flotante-container').style.display='none'" style="padding:6px 12px; cursor:pointer; background:#555; color:white; border:none; border-radius:4px;">Fermer</button>
+                    </div>`;
+                    return;
+                }
+
+                const promptContexto = `Actúa como Sophia, un diccionario monolingüe en francés para estudiantes de nivel A1 a B2. Define la palabra de forma clara y muy breve en francés, y agrega su significado en español. Incluye su categoría gramatical y un ejemplo corto en francés. Responde utilizando un formato HTML limpio y compacto. Palabra: "${palabraLimpia}"`;
+
+                const extDocRef = await addDoc(collection(db, "generate"), {
+                    prompt: promptContexto
+                });
+
+                let desvincularEscucha = onSnapshot(extDocRef, async (snapshot) => {
+                    if (snapshot.exists()) {
+                        const datosExt = snapshot.data();
+
+                        if (datosExt.response) {
+                            desvincularEscucha();
+                            const respuestaTextoSophia = datosExt.response;
+
+                            await setDoc(doc(db, "diccionario_maestro", palabraLimpia), {
+                                definicion: respuestaTextoSophia,
+                                tipo_gramatical: "IA",
+                                significado_espansol: "Generado por IA",
+                                ejemplo_uso: ""
+                            });
+
+                            alumnoTokensGlobal--;
+                            await setDoc(docRefValidado, { tokens: alumnoTokensGlobal }, { merge: true });
+
+                            const tokenCounter = document.getElementById('banner-credits-count');
+                            if (tokenCounter) tokenCounter.innerText = alumnoTokensGlobal;
+
+                            if (urlId !== "admin_preview" && docRefValidado) {
+                                const subColRef = collection(db, "Usuarios", urlId, "HistorialSophia");
+                                await addDoc(subColRef, {
+                                    fecha: new Date().toISOString().split('T')[0],
+                                    tipo: "Vocabulaire",
+                                    habilidad: currentSkill,
+                                    palabra_consultada: palabraLimpia,
+                                    respuesta_ia: respuestaTextoSophia,
+                                    unidad: currentUnitId || "N/A"
+                                });
+                            }
+
+                            container.innerHTML = `
+                            <div style="background:#fff; padding:15px; border-radius:8px; box-shadow:0 4px 15px rgba(0,0,0,0.15); max-height:380px; overflow-y:auto; font-family:'Montserrat';">
+                                <h4 style="margin:0 0 10px 0; color:var(--oxford); font-size:1rem;">Analyse de Sophia:</h4>
+                                <div style="font-size:0.88rem; line-height:1.5; color:#333;">${respuestaTextoSophia}</div>
+                                <p style="margin:10px 0 0 0; font-size:0.7rem; color:#999; text-align:right;"><i>-1 Crédit IA</i></p>
+                                <button onclick="document.getElementById('glosario-flotante-container').style.display='none'" style="margin-top:10px; width:100%; padding:6px; cursor:pointer; background:var(--oxford); color:white; border:none; border-radius:4px;">Fermer</button>
+                            </div>`;
+                        } else if (datosExt.status?.state === "ERROR") {
+                            desvincularEscucha();
+                            throw new Error(datosExt.status.errorMessage || "Fallo en el motor de la extensión");
+                        }
+                    }
+                });
+
+            } catch (error) {
+                console.error("Erreur Sophia:", error);
+                container.innerHTML = `
+                <div style="background:#fff; padding:15px; border-radius:8px; box-shadow:0 4px 15px rgba(0,0,0,0.15); font-family:'Montserrat'; text-align:center;">
+                    <p style="margin:0 0 10px 0; font-size:0.85rem; color:var(--danger); font-weight:700;"><i class="fas fa-exclamation-triangle"></i> Connexion interrompue</p>
+                    <p style="margin:0 0 12px 0; font-size:0.78rem; color:#666;">${error.message}</p>
+                    <button onclick="document.getElementById('glosario-flotante-container').style.display='none'" style="padding:5px 12px; cursor:pointer; background:#555; color:white; border:none; border-radius:4px;">Fermer</button>
+                </div>`;
+            }
+        };
         
         let selectionTimeout = null;
         document.addEventListener('selectionchange', () => {
