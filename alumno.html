@@ -1694,8 +1694,10 @@ window.ejecutarConsultaSophiaConFiltro = async function(frase) {
                     return;
                 }
 
-                // 2. CONEXIÓN SEGURA A TRAVÉS DE TU NUEVA EXTENSIÓN
-                // Creamos una petición en la colección 'generate' que configuramos en tu panel
+                // 2. IMPORTACIÓN DINÁMICA DE FIREBASE (Asegura las herramientas necesarias)
+                const { collection, addDoc, onSnapshot } = await import("https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore.js");
+
+                // 3. CONEXIÓN SEGURA A TRAVÉS DE TU NUEVA EXTENSIÓN
                 const promptContexto = `Actúa como Sophia, un diccionario monolingüe en francés para estudiantes de nivel A1 a B2. Define la palabra de forma clara y muy breve en francés, y agrega su significado en español. Incluye su categoría gramatical y un ejemplo corto en francés. Responde utilizando un formato HTML limpio y compacto. Palabra: "${palabraLimpia}"`;
                 
                 const extDocRef = await addDoc(collection(db, "generate"), {
@@ -1757,9 +1759,7 @@ window.ejecutarConsultaSophiaConFiltro = async function(frase) {
                     <button onclick="document.getElementById('glosario-flotante-container').style.display='none'" style="padding:5px 12px; cursor:pointer; background:#555; color:white; border:none; border-radius:4px;">Fermer</button>
                 </div>`;
             }
-        };     
-
-
+        };
         
         let selectionTimeout = null;
         document.addEventListener('selectionchange', () => {
