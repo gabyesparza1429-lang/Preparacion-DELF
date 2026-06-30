@@ -1693,8 +1693,8 @@
                     return;
                 }
 
-                // USAMOS LA CLAVE DE API 1 (LIBRE DE RESTRICCIONES DE FIREBASE)
-                const apiKeyGemini = "AIzaSyDE_X_S_E_U_K_I_N_G_C_O_D_E_REUSSITE"; 
+                // USA TU CLAVE DE API 1 AQUÍ (REEMPLAZA ESTE TEXTO ENTRE COMILLAS)
+                const apiKeyGemini = "AQ.Ab8RN6JS6I0VcqwVKT37xxAicnUNSZaUKAh5xNl5qL9dMToIeQ"; 
                 const urlGemini = `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${apiKeyGemini}`;
                 
                 const promptContexto = `Actúa como Sophia, un diccionario monolingüe en francés para estudiantes de nivel A1 a B2. Define la palabra de forma clara y muy breve en francés, y agrega su significado en español. Incluye su categoría gramatical y un ejemplo corto en francés. Responde utilizando un formato HTML limpio y compacto. Palabra: "${palabraLimpia}"`;
@@ -1737,7 +1737,7 @@
                 </div>`;
 
             } catch (error) { 
-                console.error("Erreur détectée par Sophia:", error); 
+                console.error("Erreur Sophia:", error); 
                 container.innerHTML = `
                 <div style="background:#fff; padding:15px; border-radius:8px; box-shadow:0 4px 15px rgba(0,0,0,0.15); font-family:'Montserrat'; text-align:center;">
                     <p style="margin:0 0 10px 0; font-size:0.85rem; color:var(--danger); font-weight:700;"><i class="fas fa-exclamation-triangle"></i> Connexion interrompue</p>
@@ -1746,7 +1746,6 @@
                 </div>`;
             }
         };
-
         let selectionTimeout = null;
         document.addEventListener('selectionchange', () => {
             clearTimeout(selectionTimeout);
