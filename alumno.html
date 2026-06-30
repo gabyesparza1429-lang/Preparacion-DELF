@@ -1505,50 +1505,50 @@
                     ['copy', 'cut', 'contextmenu'].forEach(evt => elInputRedaccion.addEventListener(evt, e => e.preventDefault(), true));
                 }
                 
-document.getElementById('btn-submit-pe').addEventListener('click', async () => {
-    const elInputRedaccion = document.getElementById('pe-student-response');
-    const txtAlumno = elInputRedaccion ? elInputRedaccion.value.trim() : "";
-    if (!txtAlumno) return;
+                document.getElementById('btn-submit-pe').addEventListener('click', async () => {
+                    const txtAlumno = elInputRedaccion ? elInputRedaccion.value.trim() : "";
+                    if (!txtAlumno) return;
 
-    document.getElementById('btn-submit-pe').disabled = true;
-    document.getElementById('sophia-verdict-text').innerHTML = "<i>Sophia corrige ta production...</i>";
-    document.getElementById('sophia-box').style.display = "block";
+                    document.getElementById('btn-submit-pe').disabled = true;
+                    document.getElementById('sophia-verdict-text').innerHTML = "<i>Sophia corrige ta production...</i>";
+                    document.getElementById('sophia-box').style.display = "block";
 
-    try {
-        // Creamos el documento en 'generate' para que la IA de Firebase responda
-        const extDocRef = await addDoc(collection(db, "generate"), {
-            prompt: `Actúa como examinadora DELF nativa. Evalúa el texto del alumno, asigna una nota sobre 25 y da retroalimentación detallada. Texto: ${txtAlumno}`
-        });
+                    try {
+                        const extDocRef = await addDoc(collection(db, "generate"), {
+                            prompt: `Actúa como examinadora certificada DELF para nivel ${currentLevel}. Evalúa la siguiente producción escrita asignando una nota detallada sobre 25 basada en los criterios oficiales del examen. Devuelve la respuesta estructurada en formato HTML limpio y elegante con una tabla de criterios. Texto del alumno: ${txtAlumno}`
+                        });
 
-        // Escuchamos la respuesta de la IA
-        const desvincularEscucha = onSnapshot(extDocRef, async (snapshot) => {
-            if (snapshot.exists() && snapshot.data().response) {
-                desvincularEscucha();
-                const respuestaIA = snapshot.data().response;
-                
-                document.getElementById('sophia-verdict-text').innerHTML = respuestaIA;
+                        const desvincularEscucha = onSnapshot(extDocRef, async (snapshot) => {
+                            if (snapshot.exists() && snapshot.data().response) {
+                                desvincularEscucha();
+                                const respuestaIA = snapshot.data().response;
+                                
+                                document.getElementById('sophia-verdict-text').innerHTML = respuestaIA;
 
-                // Guardar en el historial del alumno
-                if (urlId !== "admin_preview" && docRefValidado) {
-                    await addDoc(collection(db, "Usuarios", urlId, "HistorialSophia"), {
-                        fecha: new Date().toISOString().split('T')[0],
-                        tipo: "Production_Escrita",
-                        habilidad: "PE",
-                        texto_alumno: txtAlumno,
-                        respuesta_ia: respuestaIA,
-                        unidad: currentUnitId
-                    });
-                }
+                                if (urlId !== "admin_preview" && docRefValidado) {
+                                    await addDoc(collection(db, "Usuarios", urlId, "HistorialSophia"), {
+                                        fecha: new Date().toISOString().split('T')[0],
+                                        tipo: "Production_Escrita",
+                                        habilidad: "PE",
+                                        texto_alumno: txtAlumno,
+                                        respuesta_ia: respuestaIA,
+                                        unidad: currentUnitId,
+                                        actividad: currentExerciseIndex
+                                    });
+                                }
+                            } else if (snapshot.exists() && snapshot.data().status?.state === "ERROR") {
+                                desvincularEscucha();
+                                document.getElementById('sophia-verdict-text').innerHTML = "<span style='color:red;'>Erreur d'évaluation par l'IA.</span>";
+                            }
+                        });
+                    } catch (e) {
+                        console.error(e);
+                        alert("Une erreur est survenue con Sophia. Veuillez réessayer.");
+                    } finally {
+                        document.getElementById('btn-submit-pe').disabled = false;
+                    }
+                });
             }
-        });
-    } catch (e) {
-        console.error(e);
-        alert("Une erreur est survenue. Veuillez réessayer.");
-    } finally {
-        document.getElementById('btn-submit-pe').disabled = false;
-    }
-});
-
             const btnSubmit = document.getElementById('btn-submit-exercise');
             if (btnSubmit) {
                 btnSubmit.addEventListener('click', async () => {
