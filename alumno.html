@@ -1079,7 +1079,7 @@
 
                 ejH.forEach((ej, eIdx) => {
                     const esCompleto = mapaAciertosAlumno[`${uId}_${currentSkill}_${eIdx}`] === true;
-                   const statusText = esCompleto ? '<span class="activity-status-lbl" style="background:#e8f5e9; color:#2e7d32;">✅ Logrado</span>' : '<span class="activity-status-lbl" style="background:#f5f5f5; color:#757575;">❌ No comenzado</span>';
+                   const statusText = esCompleto ? '<span class="activity-status-lbl" style="background:#e8f5e9; color:#2e7d32;">✅ Hecho</span>' : '<span class="activity-status-lbl" style="background:#f5f5f5; color:#757575;">❌ No comenzado</span>';
                     
                     sub.innerHTML += `
                         <button class="activity-link-btn ${currentUnitId === uId && currentExerciseIndex === eIdx ? 'active' : ''}" onclick="window.cargarActividadDirecta('${uId}', ${eIdx})">
@@ -1506,49 +1506,78 @@
                 }
                 
                 document.getElementById('btn-submit-pe').addEventListener('click', async () => {
-                    const txtAlumno = elInputRedaccion ? elInputRedaccion.value.trim() : "";
-                    if (!txtAlumno) return;
+    const elInputRedaccion = document.getElementById('pe-student-response');
+    const txtAlumno = elInputRedaccion ? elInputRedaccion.value.trim() : "";
+    if (!txtAlumno) return;
 
-                    document.getElementById('btn-submit-pe').disabled = true;
-                    document.getElementById('sophia-verdict-text').innerHTML = "<i>Sophia corrige ta production...</i>";
-                    document.getElementById('sophia-box').style.display = "block";
+    document.getElementById('btn-submit-pe').disabled = true;
+    document.getElementById('sophia-verdict-text').innerHTML = "<i>Sophia corrige ta production...</i>";
+    document.getElementById('sophia-box').style.display = "block";
 
-                    try {
-                        const extDocRef = await addDoc(collection(db, "generate"), {
-                            prompt: `Actúa como examinadora certificada DELF para nivel ${currentLevel}. Evalúa la siguiente producción escrita asignando una nota detallada sobre 25 basada en los criterios oficiales del examen. Devuelve la respuesta estructurada en formato HTML limpio y elegante con una tabla de criterios. Texto del alumno: ${txtAlumno}`
-                        });
+    try {
+        const extDocRef = await addDoc(collection(db, "generate"), {
+            prompt: `Actúa como examinadora certificada DELF para nivel ${currentLevel}. Evalúa la siguiente producción escrita asignando una nota detallada sobre 25 basada en los criterios oficiales. Texto del alumno: ${txtAlumno}`
+        });
 
-                        const desvincularEscucha = onSnapshot(extDocRef, async (snapshot) => {
-                            if (snapshot.exists() && snapshot.data().response) {
-                                desvincularEscucha();
-                                const respuestaIA = snapshot.data().response;
-                                
-                                document.getElementById('sophia-verdict-text').innerHTML = respuestaIA;
+        const desvincularEscucha = onSnapshot(extDocRef, async (snapshot) => {
+            if (snapshot.exists() && snapshot.data().response) {
+                desvincularEscucha();
+                const respuestaIA = snapshot.data().response;
+                
+                document.getElementById('sophia-verdict-text').innerHTML = respuestaIA;
 
-                                if (urlId !== "admin_preview" && docRefValidado) {
-                                    await addDoc(collection(db, "Usuarios", urlId, "HistorialSophia"), {
-                                        fecha: new Date().toISOString().split('T')[0],
-                                        tipo: "Production_Escrita",
-                                        habilidad: "PE",
-                                        texto_alumno: txtAlumno,
-                                        respuesta_ia: respuestaIA,
-                                        unidad: currentUnitId,
-                                        actividad: currentExerciseIndex
-                                    });
-                                }
-                            } else if (snapshot.exists() && snapshot.data().status?.state === "ERROR") {
-                                desvincularEscucha();
-                                document.getElementById('sophia-verdict-text').innerHTML = "<span style='color:red;'>Erreur d'évaluation par l'IA.</span>";
-                            }
-                        });
-                    } catch (e) {
-                        console.error(e);
-                        alert("Une erreur est survenue con Sophia. Veuillez réessayer.");
-                    } finally {
-                        document.getElementById('btn-submit-pe').disabled = false;
+                // ========================================================
+                // NUEVO: MARCAR COMO COMPLETADO Y ENVIAR PROGRESO A FIRESTORE
+                // ========================================================
+                const llaveProgreso = `${currentUnitId}_${window.currentSkill}_${currentExerciseIndex}`;
+                
+                // 1. Lo marcamos localmente para que cambie en pantalla de inmediato
+                if (typeof mapaAciertosAlumno !== "undefined") {
+                    mapaAciertosAlumno[llaveProgreso] = true;
+                }
+
+                // 2. Guardamos el estado "true" en el perfil del alumno en Firestore
+                if (urlId !== "admin_preview" && docRefValidado) {
+                    const perfilUsuarioRef = doc(db, "Usuarios", urlId);
+                    await setDoc(perfilUsuarioRef, {
+                        mapaAciertosAlumno: {
+                            [llaveProgreso]: true
+                        }
+                    }, { merge: true });
+                    
+                    // 3. Forzamos a tu menú lateral a redibujarse con el nuevo estado
+                    if (typeof renderSidebarActividades === "function") {
+                        renderSidebarActividades(currentUnitId); 
+                    } else if (typeof cargarUnidad === "function") {
+                        cargarUnidad(currentUnitId);
                     }
-                });
+                }
+                // ========================================================
+
+                // Guardar en el historial del alumno para tus reportes
+                if (urlId !== "admin_preview" && docRefValidado) {
+                    await addDoc(collection(db, "Usuarios", urlId, "HistorialSophia"), {
+                        fecha: new Date().toISOString().split('T')[0],
+                        tipo: "Production_Escrita",
+                        habilidad: "PE",
+                        texto_alumno: txtAlumno,
+                        respuesta_ia: respuestaIA,
+                        unidad: currentUnitId,
+                        actividad: currentExerciseIndex
+                    });
+                }
+            } else if (snapshot.exists() && snapshot.data().status?.state === "ERROR") {
+                desvincularEscucha();
+                document.getElementById('sophia-verdict-text').innerHTML = "<span style='color:red;'>Erreur d'évaluation par l'IA.</span>";
             }
+        });
+    } catch (e) {
+        console.error(e);
+        alert("Une erreur est survenue con Sophia. Veuillez réessayer.");
+    } finally {
+        document.getElementById('btn-submit-pe').disabled = false;
+    }
+});
             const btnSubmit = document.getElementById('btn-submit-exercise');
             if (btnSubmit) {
                 btnSubmit.addEventListener('click', async () => {
