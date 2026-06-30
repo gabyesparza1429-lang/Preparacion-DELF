@@ -1700,7 +1700,11 @@ window.ejecutarConsultaSophiaConFiltro = async function(frase) {
                 // 3. CONEXIÓN SEGURA A TRAVÉS DE TU NUEVA EXTENSIÓN
                 const promptContexto = `Actúa como Sophia, un diccionario monolingüe en francés para estudiantes de nivel A1 a B2. Define la palabra de forma clara y muy breve en francés, y agrega su significado en español. Incluye su categoría gramatical y un ejemplo corto en francés. Responde utilizando un formato HTML limpio y compacto. Palabra: "${palabraLimpia}"`;
                 
-                const extDocRef = await addDoc(collection(db, "generate"), {
+             // Aseguramos que use el servicio activo de Firestore de tu app
+                const { getFirestore } = await import("https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore.js");
+                const firestoreActive = getFirestore();
+
+                const extDocRef = await addDoc(collection(firestoreActive, "generate"), {
                     prompt: promptContexto
                 });
 
