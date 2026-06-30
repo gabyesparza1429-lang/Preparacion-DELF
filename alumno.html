@@ -1658,6 +1658,7 @@ window.ejecutarConsultaSophiaConFiltro = async function(frase) {
             const palabraLimpia = frase.toLowerCase().trim();
 
             try {
+                // 1. Intentar buscar primero en tu diccionario maestro local
                 const docRefDiccionario = doc(db, "diccionario_maestro", palabraLimpia);
                 const diccionarioSnap = await getDoc(docRefDiccionario);
 
@@ -1682,53 +1683,70 @@ window.ejecutarConsultaSophiaConFiltro = async function(frase) {
                     return;
                 }
 
+                // Verificar tokens del alumno
                 if (alumnoTokensGlobal <= 0) {
                     container.innerHTML = `
                     <div style="background:#fff; padding:15px; border-radius:8px; box-shadow:0 4px 15px rgba(0,0,0,0.15); text-align:center; font-family:'Montserrat';">
                         <p style="margin:0 0 10px 0; font-size:0.88rem; color:var(--danger); font-weight:700;"><i class="fas fa-exclamation-circle"></i> Crédits épuisés</p>
-                        <p style="margin:0 0 12px 0; font-size:0.8rem; color:#555;">Vous n'avez plus de crédits para consulter l'IA. Contactez votre professeur.</p>
+                        <p style="margin:0 0 12px 0; font-size:0.8rem; color:#555;">Vous n'avez plus de crédits pour consulter l'IA. Contactez votre professeur.</p>
                         <button onclick="document.getElementById('glosario-flotante-container').style.display='none'" style="padding:6px 12px; cursor:pointer; background:#555; color:white; border:none; border-radius:4px;">Fermer</button>
                     </div>`;
                     return;
                 }
 
-                // Llamamos a tu nueva ruta segura del servidor
-                const responseIA = await fetch("https://neuroreussit.com/api/sophia", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ palabra: palabraLimpia })
+                // 2. CONEXIÓN SEGURA A TRAVÉS DE TU NUEVA EXTENSIÓN
+                // Creamos una petición en la colección 'generate' que configuramos en tu panel
+                const promptContexto = `Actúa como Sophia, un diccionario monolingüe en francés para estudiantes de nivel A1 a B2. Define la palabra de forma clara y muy breve en francés, y agrega su significado en español. Incluye su categoría gramatical y un ejemplo corto en francés. Responde utilizando un formato HTML limpio y compacto. Palabra: "${palabraLimpia}"`;
+                
+                const extDocRef = await addDoc(collection(db, "generate"), {
+                    prompt: promptContexto
                 });
-                
-                if (!responseIA.ok) throw new Error(`Erreur HTTP Serveur: ${responseIA.status}`);
-                
-                const data = await responseIA.json();
-                const respuestaTextoSophia = data.reply;
 
-                alumnoTokensGlobal--;
-                await setDoc(docRefValidado, { tokens: alumnoTokensGlobal }, { merge: true });
-                
-                const tokenCounter = document.getElementById('banner-credits-count');
-                if (tokenCounter) tokenCounter.innerText = alumnoTokensGlobal;
+                // Escuchamos en tiempo real hasta que la extensión escriba la respuesta de Gemini
+                let desvincularEscucha = onSnapshot(extDocRef, async (snapshot) => {
+                    if (snapshot.exists()) {
+                        const datosExt = snapshot.data();
+                        
+                        // Si la extensión ya generó el campo 'response'
+                        if (datosExt.response) {
+                            desvincularEscucha(); // Apagamos el escuchador
+                            
+                            const respuestaTextoSophia = datosExt.response;
 
-                if (urlId !== "admin_preview" && docRefValidado) {
-                    const subColRef = collection(db, "Usuarios", urlId, "HistorialSophia");
-                    await addDoc(subColRef, {
-                        fecha: new Date().toISOString().split('T')[0],
-                        tipo: "Vocabulaire",
-                        habilidad: currentSkill,
-                        palabra_consultada: palabraLimpia,
-                        respuesta_ia: respuestaTextoSophia,
-                        unidad: currentUnitId || "N/A"
-                    });
-                }
+                            // Descontar el token del alumno
+                            alumnoTokensGlobal--;
+                            await setDoc(docRefValidado, { tokens: alumnoTokensGlobal }, { merge: true });
+                            
+                            const tokenCounter = document.getElementById('banner-credits-count');
+                            if (tokenCounter) tokenCounter.innerText = alumnoTokensGlobal;
 
-                container.innerHTML = `
-                <div style="background:#fff; padding:15px; border-radius:8px; box-shadow:0 4px 15px rgba(0,0,0,0.15); max-height:380px; overflow-y:auto; font-family:'Montserrat';">
-                    <h4 style="margin:0 0 10px 0; color:var(--oxford); font-size:1rem;">Analyse de Sophia:</h4>
-                    <div style="font-size:0.88rem; line-height:1.5; color:#333;">${respuestaTextoSophia}</div>
-                    <p style="margin:10px 0 0 0; font-size:0.7rem; color:#999; text-align:right;"><i>-1 Crédit IA</i></p>
-                    <button onclick="document.getElementById('glosario-flotante-container').style.display='none'" style="margin-top:10px; width:100%; padding:6px; cursor:pointer; background:var(--oxford); color:white; border:none; border-radius:4px;">Fermer</button>
-                </div>`;
+                            // Guardar en el historial del alumno
+                            if (urlId !== "admin_preview" && docRefValidado) {
+                                const subColRef = collection(db, "Usuarios", urlId, "HistorialSophia");
+                                await addDoc(subColRef, {
+                                    fecha: new Date().toISOString().split('T')[0],
+                                    tipo: "Vocabulaire",
+                                    habilidad: currentSkill,
+                                    palabra_consultada: palabraLimpia,
+                                    respuesta_ia: respuestaTextoSophia,
+                                    unidad: currentUnitId || "N/A"
+                                });
+                            }
+
+                            // Renderizar la respuesta final en el contenedor flotante
+                            container.innerHTML = `
+                            <div style="background:#fff; padding:15px; border-radius:8px; box-shadow:0 4px 15px rgba(0,0,0,0.15); max-height:380px; overflow-y:auto; font-family:'Montserrat';">
+                                <h4 style="margin:0 0 10px 0; color:var(--oxford); font-size:1rem;">Analyse de Sophia:</h4>
+                                <div style="font-size:0.88rem; line-height:1.5; color:#333;">${respuestaTextoSophia}</div>
+                                <p style="margin:10px 0 0 0; font-size:0.7rem; color:#999; text-align:right;"><i>-1 Crédit IA</i></p>
+                                <button onclick="document.getElementById('glosario-flotante-container').style.display='none'" style="margin-top:10px; width:100%; padding:6px; cursor:pointer; background:var(--oxford); color:white; border:none; border-radius:4px;">Fermer</button>
+                            </div>`;
+                        } else if (datosExt.status?.state === "ERROR") {
+                            desvincularEscucha();
+                            throw new Error(datosExt.status.errorMessage || "Fallo en el motor de la extensión");
+                        }
+                    }
+                });
 
             } catch (error) { 
                 console.error("Erreur Sophia:", error); 
@@ -1739,8 +1757,7 @@ window.ejecutarConsultaSophiaConFiltro = async function(frase) {
                     <button onclick="document.getElementById('glosario-flotante-container').style.display='none'" style="padding:5px 12px; cursor:pointer; background:#555; color:white; border:none; border-radius:4px;">Fermer</button>
                 </div>`;
             }
-        };
-      
+        };     
 
 
         
