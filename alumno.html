@@ -691,7 +691,7 @@
 
         window.convertirTextoInteractivo = function(texto) {
             if (!texto) return '';
-            return text.split(/(?<=[?.!])\s+/).map(b => {
+            return texto.split(/(?<=[?.!])\s+/).map(b => {
                 if (b.trim() === '') return '';
                 let palabrasHtml = b.split(/(\s+)/).map(f => {
                     if (f.trim() === '') return f;
@@ -871,7 +871,7 @@
                     ],
                     consejos: isLevelA ? [
                         "Lee las preguntas y observa con atención las imágenes antes de reproducir el audio.",
-                        "Concéntrate en captar palabras clave y datos numéricos específicos."
+                        "Concéntrate en captar palabras clave and datos numéricos específicos."
                     ] : [
                         "Lisez attentivement les consignes et observez bien les dessins avant l'écoute.",
                         "Concentrez-vous sur les mots transparents et les chiffres."
@@ -1109,7 +1109,7 @@
             const descCO = isBasic ? "Comprendre des expressions fréquentes. / Comprender expresiones." : "Peut comprendre les points principaux d'une intervention claire (école, travail).";
             const descCE = isBasic ? "Lire des textes courts. / Leer textos cortos." : "Peut comprendre des textes rédigés essentiellement dans une langue courante.";
             const descPE = isBasic ? "Écrire des messages simples. / Escribir mensajes." : "Peut écrire un texte suivi simple et articulé sur des sujets familiers.";
-            const descPO = isBasic ? "S'exprimer en situation simple. / Expresarse en situations cotidianas." : "Peut s'exprimer de manera cohérente sur des expériences ou proyectos.";
+            const descPO = isBasic ? "S'exprimer en situation simple. / Expresarse en situations cotidianas." : "Peut s'exprimer de manière cohérente sur des expériences ou projets.";
 
             const check = (clave) => (mapaAciertosAlumno && mapaAciertosAlumno[clave]) ? 'checked' : '';
             const iconCheck = (clave) => (mapaAciertosAlumno && mapaAciertosAlumno[clave]) ? 'fas fa-check-circle' : 'far fa-circle';
@@ -1146,8 +1146,8 @@
                         <div class="carnet-header"><span class="carnet-title"><i class="fas fa-microphone" style="color:#ea4335;"></i> Production Orale</span><span class="carnet-score">${notesHabilidadGlobales.PO} / 25 pts</span></div>
                         <div class="carnet-descriptor-box"><strong>Objectif B1 :</strong> ${descPO}</div>
                         <div class="carnet-checklist">
-                            <div class="checklist-item ${check('B1_PO_EXPOSÉ')}"><i class="${iconCheck('B1_PO_EXPOSÉ')}"></i> Présenter un thème ou problem de société</div>
-                            <div class="checklist-item ${check('B1_PO_DÉBAT')}"><i class="${iconCheck('B1_PO_DÉBAT')}"></i> Argumenter lors d'un juego de rol or interaction</div>
+                            <div class="checklist-item ${check('B1_PO_EXPOSÉ')}"><i class="${iconCheck('B1_PO_EXPOSÉ')}"></i> Présenter un thème ou problème de société</div>
+                            <div class="checklist-item ${check('B1_PO_DÉBAT')}"><i class="${iconCheck('B1_PO_DÉBAT')}"></i> Argumenter lors d'un jeu de rôle ou interaction</div>
                         </div>
                     </div>
                 </div>`;
@@ -1172,7 +1172,7 @@
                         <div class="carnet-header"><span class="carnet-title"><i class="fas fa-pen-fancy"></i> Production Écrite</span><span>${notesHabilidadGlobales.PE} / 25 pts</span></div>
                         <div class="carnet-descriptor-box"><strong>Objectif :</strong> ${descPE}</div>
                         <div class="carnet-checklist">
-                            <div class="checklist-item ${check('A1_PE_RITUELS')}"><i class="${iconCheck('A1_PE_RITUELS')}"></i> Respect des formats et rituels amicales</div>
+                            <div class="checklist-item ${check('A1_PE_RITUELS')}"><i class="${iconCheck('A1_PE_RITUELS')}"></i> Respect des formats et rituels amicaux</div>
                         </div>
                     </div>
                     <div class="carnet-card po">
@@ -1186,7 +1186,7 @@
             }
 
             document.getElementById('dynamic-workspace-target').innerHTML = `
-                <h3 style="color:var(--oxford); margin-top:0; font-weight:700;"><i class="fas fa-id-card"></i> Livret de Compétences Officiel (CECECRL)</h3>
+                <h3 style="color:var(--oxford); margin-top:0; font-weight:700;"><i class="fas fa-id-card"></i> Livret de Compétences Officiel (CECRL)</h3>
                 ${checklistHTML}`;
         }
         
@@ -1235,7 +1235,7 @@
                         html += `
                             <div style="display: flex; flex-direction: column; gap: 6px;">
                                 <label style="font-size: 0.88rem; font-weight: 600; color: #444;">${campo}</label>
-                                <input type="text" id="form-field-${fIdx}" class="form-student-input" style="width: 100%; padding: 10px 12px; border: 1px solid #ccc; border-radius: 66px; font-family: 'Montserrat', sans-serif; font-size: 0.95rem; box-sizing: border-box;" autocomplete="off">
+                                <input type="text" id="form-field-${fIdx}" class="form-student-input" style="width: 100%; padding: 10px 12px; border: 1px solid #ccc; border-radius: 6px; font-family: 'Montserrat', sans-serif; font-size: 0.95rem; box-sizing: border-box;" autocomplete="off">
                             </div>`;
                     });
                     
@@ -1420,7 +1420,7 @@
 
                 } else {
                     if (ej.texto_lectura) {
-                        html += `<div style="background:#f8f9fa; border-left:4px solid var(--gold); padding:20px; margin-bottom:25px;">Mon Document :</strong><br><br>${window.convertirTextoInteractivo(ej.texto_lectura)}</div>`;
+                        html += `<div style="background:#f8f9fa; border-left:4px solid var(--gold); padding:20px; margin-bottom:25px;"><strong>Document :</strong><br><br>${window.convertirTextoInteractivo(ej.texto_lectura)}</div>`;
                     }
                     html += `<div id="preguntas-wrapper-bloque">`;
                     ej.preguntas.forEach((p, pIdx) => {
