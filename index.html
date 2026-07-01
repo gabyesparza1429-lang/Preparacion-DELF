@@ -1,148 +1,331 @@
 <!DOCTYPE html>
-
 <html lang="fr">
-
 <head>
-
     <meta charset="UTF-8">
-
-    <title>Neuroreussit - Inicio</title>
-
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
-
+    <title>NeuroRéussit - Inicio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-
-        :root { --oxford: #002147; --gold: #C5A059; --white: #ffffff; }
-
-        body { font-family: 'Montserrat', sans-serif; margin: 0; background: #2f3640; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; color: var(--white); position: relative; }
-
-        .header { text-align: center; margin-bottom: 60px; }
-
-        .header h1 { color: var(--white); margin-bottom: 5px; }
-
+        :root { 
+            --oxford: #002147; 
+            --gold: #C5A059; 
+            --white: #ffffff; 
+            --dark-bg: #2f3640;
+            --card-bg: #20262e;
+        }
         
-
-        .container { display: flex; gap: 80px; justify-content: center; padding: 20px; align-items: center; position: relative; }
-
-        
-
-        /* LOGOS COMO PUERTAS DIRECTAS (SIN RECUADROS) */
-
-        .puerta-proyecto { display: flex; flex-direction: column; align-items: center; text-decoration: none; color: inherit; transition: transform 0.3s; cursor: pointer; }
-
-        .puerta-proyecto:hover { transform: translateY(-10px); }
-
-        
-
-        .logo-grande { width: 320px; height: 200px; object-fit: contain; margin-bottom: 20px; }
-
-        
-
-        /* BOTÓN LIMPIO ABAJO DE CADA LOGO */
-
-        .btn-entrar { color: white; padding: 12px 35px; border-radius: 30px; font-weight: bold; font-family: 'Montserrat', sans-serif; font-size: 0.95rem; text-transform: uppercase; letter-spacing: 1px; transition: background 0.2s; box-shadow: 0 4px 15px rgba(0,0,0,0.2); border: none; }
-
-        
-
-        /* BOTÓN DE ACCESO INVISIBLE PARA ADMINISTRADOR CORREGIDO */
-
-        .admin-secret-link { 
-
-            position: absolute; 
-
-            top: 0; 
-
-            left: 0; 
-
-            width: 80px; 
-
-            height: 80px; 
-
-            background: transparent; 
-
-            cursor: pointer; 
-
-            z-index: 99999; 
-
+        html {
+            scroll-behavior: smooth;
         }
 
+        body { 
+            font-family: 'Montserrat', sans-serif; 
+            margin: 0; 
+            background: var(--dark-bg); 
+            color: var(--white); 
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* BARRA DE NAVEGACIÓN COMPACTA */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+            background: rgba(32, 38, 46, 0.95);
+            position: sticky;
+            top: 0;
+            z-index: 999;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        }
+
+        .navbar .brand {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--white);
+            letter-spacing: 1px;
+        }
+
+        .navbar .brand span {
+            color: var(--gold);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 25px;
+        }
+
+        .nav-links a {
+            color: var(--white);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--gold);
+        }
+        
+        /* SECCIÓN HERO (BIENVENIDA) */
+        .hero {
+            text-align: center; 
+            padding: 100px 20px 80px 20px;
+            background: radial-gradient(circle at center, #3d4654 0%, var(--dark-bg) 70%);
+        }
+
+        .hero h1 { 
+            font-size: 3rem;
+            color: var(--white); 
+            margin: 0 0 10px 0; 
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .hero p.tagline {
+            color: var(--gold); 
+            font-weight: bold; 
+            margin: 0 0 30px 0; 
+            letter-spacing: 2px;
+            font-size: 1.1rem;
+        }
+
+        .btn-scroll-down {
+            background: transparent;
+            border: 2px solid var(--gold);
+            color: var(--white);
+            padding: 12px 25px;
+            border-radius: 30px;
+            font-weight: bold;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            cursor: pointer;
+            letter-spacing: 1px;
+            transition: all 0.3s;
+        }
+
+        .btn-scroll-down:hover {
+            background: var(--gold);
+            color: var(--oxford);
+        }
+        
+        /* SECCIÓN GLOBAL DE CONTENIDO */
+        .section-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 60px 20px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 1.8rem;
+            color: var(--white);
+            margin-bottom: 40px;
+            position: relative;
+            font-weight: 700;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 50px;
+            height: 3px;
+            background: var(--gold);
+            margin: 15px auto 0 auto;
+        }
+
+        /* BLOQUES DE PROYECTOS (ACCESO) */
+        .proyectos-wrapper { 
+            display: flex; 
+            gap: 50px; 
+            justify-content: center; 
+            align-items: center; 
+            flex-wrap: wrap;
+        }
+        
+        .puerta-proyecto { 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            text-decoration: none; 
+            color: inherit; 
+            transition: transform 0.3s; 
+            cursor: pointer; 
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            width: 340px;
+            box-sizing: border-box;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .puerta-proyecto:hover { 
+            transform: translateY(-10px); 
+            border-color: rgba(197, 160, 89, 0.4);
+        }
+        
+        .logo-grande { 
+            width: 100%; 
+            height: 150px; 
+            object-fit: contain; 
+            margin-bottom: 25px; 
+        }
+        
+        .btn-entrar { 
+            color: white; 
+            padding: 12px 40px; 
+            border-radius: 30px; 
+            font-weight: bold; 
+            font-family: 'Montserrat', sans-serif; 
+            font-size: 0.9rem; 
+            text-transform: uppercase; 
+            letter-spacing: 1px; 
+            transition: background 0.2s; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2); 
+            border: none; 
+            width: 100%;
+            cursor: pointer;
+        }
+
+        /* SECCIÓN SOBRE NOSOTROS */
+        .about-text {
+            line-height: 1.8;
+            font-size: 1rem;
+            color: #d1d8e0;
+            text-align: justify;
+            background: var(--card-bg);
+            padding: 35px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-left: 4px solid var(--gold);
+        }
+
+        /* SECCIÓN CONTACTO */
+        .contacto-wrapper {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 40px 20px;
+            box-shadow: 0 4px 25px rgba(0,0,0,0.2);
+            max-width: 650px;
+            margin: 0 auto;
+        }
+
+        .contacto-instruction {
+            text-align: center;
+            font-size: 0.95rem;
+            color: #d1d8e0;
+            margin-bottom: 30px;
+            line-height: 1.5;
+            padding: 0 20px;
+        }
+        
+        /* BOTÓN DE ACCESO INVISIBLE PARA ADMINISTRADOR */
+        .admin-secret-link { 
+            position: absolute; 
+            top: 0; 
+            left: 0; 
+            width: 60px; 
+            height: 60px; 
+            background: transparent; 
+            cursor: pointer; 
+            z-index: 99999; 
+        }
+
+        /* FOOTER */
+        .footer {
+            text-align: center;
+            padding: 30px 20px;
+            background: #20262e;
+            font-size: 0.8rem;
+            color: #778ca3;
+            margin-top: auto;
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
     </style>
-
 </head>
-
 <body>
 
-
-
+    <!-- Link secreto para administración -->
     <div class="admin-secret-link" onclick="accesoAdminSeguro()" title="Connexion"></div>
 
+    <!-- Barra de navegación superior -->
+    <nav class="navbar">
+        <div class="brand">Neuro<span>Réussit</span></div>
+        <div class="nav-links">
+            <a href="#proyectos">Projets</a>
+            <a href="#propos">À propos</a>
+            <a href="#contact">Contact</a>
+        </div>
+    </nav>
 
-
-    <div class="header">
-
+    <!-- Cabecera principal (Hero) -->
+    <header class="hero">
         <h1>NeuroRéussit</h1>
+        <p class="tagline">ACCESSIBILITÉ ÉDUCATIVE</p>
+        <button class="btn-scroll-down" onclick="document.getElementById('proyectos').scrollIntoView();">
+            Découvrir nos projets <i class="fas fa-chevron-down" style="margin-left:8px;"></i>
+        </button>
+    </header>
 
-        <p style="color: var(--gold); font-weight: bold; margin: 0; letter-spacing: 1px;">ACCESSIBILITÉ ÉDUCATIVE</p>
+    <!-- Sección 1: Accesos a Proyectos -->
+    <section class="section-container" id="proyectos">
+        <h2 class="section-title">Nos Applications Éducatives</h2>
+        <div class="proyectos-wrapper">
+            <!-- Proyecto DELF -->
+            <a href="levels.html" class="puerta-proyecto">
+                <img src="./assets/Logo.png" alt="Logo Réussite DELF" class="logo-grande">
+                <button class="btn-entrar" style="background: var(--oxford);">Entrar</button>
+            </a>
 
-    </div>
+            <!-- Proyecto NeuroClarity -->
+            <a href="neuroclarity.html" class="puerta-proyecto">
+                <img src="./assets/NeuroClarity.png" alt="Logo NeuroClarity" class="logo-grande">
+                <button class="btn-entrar" style="background: #B099CE;">Entrar</button>
+            </a>
+        </div>
+    </section>
 
+    <!-- Sección 2: Información de la Marca / Qué hacemos -->
+    <section class="section-container" id="propos">
+        <h2 class="section-title">Ce que nous faisons</h2>
+        <div class="about-text">
+            <strong>NeuroRéussit</strong> est un écosystème technologique dédié à l'accessibilité éducative. Notre mission est de développer des solutions numériques avancées qui transforment l'apprentissage et optimisent le travail cognitif. À travers la recherche en pédagogie et l'intégration de technologies interactives, nous construisons des espaces d'apprentissage stimulants, structurés étape par étape et adaptés aux besoins individuels de chaque utilisateur. De la simulation d'examens officiels à l'amélioration de la clarté opérationnelle, nous mettons l'innovation au service du développement des compétences.
+        </div>
+    </section>
 
+    <!-- Sección 3: Contacto e Inscripción (Formulario Brevo) -->
+    <section class="section-container" id="contact">
+        <h2 class="section-title">Contact & Inscription</h2>
+        <div class="contacto-wrapper">
+            <p class="contacto-instruction">
+                Inscrivez-vous pour recevoir les dernières mises à jour, informations sur nos programmes ou ouvrir votre accès étudiant.
+            </p>
+            <!-- Formulario Iframe -->
+            <iframe width="540" height="305" src="https://201ee2fd.sibforms.com/v2/serve/MUIFADHSCjB0UNge7clblPZRNoebgcDGjGaQVPo0DORZtXNRmCJ9Ol2PmruDajE7wGhxSSiSGJzpx9JFAW4boeMmQdRtGIiNi451_Q6KZFkJAYFenBzkbtoXzSfcN5Xgn2jxKqwWgwZvI4Q1wfAlu0VaAVLLOTDLIzVwRmQCzv0zvW5lLxOXiMiqDN2UEAOd6U8UQdDMj1T5f-SzZw==" frameborder="0" scrolling="auto" allowfullscreen style="display: block; margin: 0 auto; max-width: 100%; border-radius: 8px;"></iframe>
+        </div>
+    </section>
 
-    <div class="container">
-
-        <a href="levels.html" class="puerta-proyecto">
-
-            <img src="./assets/Logo.png" alt="Logo Réussite DELF" class="logo-grande">
-
-            <button class="btn-entrar" style="background: var(--oxford);">Entrar</button>
-
-        </a>
-
-
-
-        <a href="neuroclarity.html" class="puerta-proyecto">
-
-            <img src="./assets/NeuroClarity.png" alt="Logo NeuroClarity" class="logo-grande">
-
-            <button class="btn-entrar" style="background: #B099CE;">Entrar</button>
-
-        </a>
-
-    </div>
-
-
+    <!-- Footer -->
+    <footer class="footer">
+        &copy; 2026 NeuroRéussit. Tous droits réservés. | Accessibilité Éducative.
+    </footer>
 
     <script>
-
         function accesoAdminSeguro() {
-
-            // Ventana emergente que solicita la clave secreta
-
             const clave = prompt("Mot de passe administrateur / Contraseña de administrador:");
-
-            
-
             if (clave === "Gaby1429") {
-
-                // Si es correcta, te redirige al panel de administración
-
                 window.location.href = "admin.html";
-
             } else if (clave !== null) {
-
-                // Si es incorrecta (y no presionaste cancelar)
-
                 alert("Accès refusé. Contraseña incorrecta.");
-
             }
-
         }
-
     </script>
 
-
-
 </body>
-
-</html> 
-
+</html>
