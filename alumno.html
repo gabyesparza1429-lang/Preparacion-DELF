@@ -679,6 +679,7 @@
         let docRefValidado = null;
         let notesHabilidadGlobales = { CO: 0, CE: 0, PE: 0, PO: 0 };
         let alumnoTokensGlobal = 0;
+        let peTimerInterval = null;
 
         const urlParams = new URLSearchParams(window.location.search);
         let urlId = urlParams.get('id') || urlParams.get('user') || urlParams.get('uid') || window.location.hash.replace('#', '').split('?')[0];
@@ -775,7 +776,6 @@
             let totalEjerciciosGlobales = 0;
             let totalEjerciciosCompletados = 0;
 
-            // 1. Obtener todas las notas guardadas de Sophia de forma síncrona/directa antes de renderizar
             let mapaNotasSophia = { PE: [], PO: [] };
             if (urlId && urlId !== "admin_preview") {
                 try {
@@ -783,7 +783,6 @@
                     qHistorial.forEach(dHist => {
                         const hData = dHist.data();
                         if (hData.habilidad && hData.respuesta_ia) {
-                            // Intentar extraer la nota [Nota X] / 25 de la respuesta HTML de Sophia
                             let matchNota = hData.respuesta_ia.match(/Note\s*Finale\s*:\s*(\d+(\.\d+)?)\s*\/|\b(\d+(\.\d+)?)\s*\/\s*25\b/i);
                             let notaExtraida = 0;
                             if (matchNota) {
@@ -845,7 +844,7 @@
             }
             if (tab === 'carnet') {
                 document.getElementById('tab-carnet').classList.add('active');
-                await calcularTodasLasNotasHabilidades(); // Forzar recálculo antes de abrir pestaña
+                await calcularTodasLasNotasHabilidades(); 
             }
             renderActiveInterface();
         };
@@ -924,7 +923,7 @@
                     icono: "fa-file-alt",
                     color: "#34a853",
                     lblBienvenida: isLevelA ? "Bienvenido a tu espacio de entrenamiento." : "Bienvenue dans votre espace d'entraînement.",
-                    lblInstruccion: isLevelA ? "Por favor lee los detalles oficiales de esta competencia, luego selecciona una actividad en el menú de la izquierda para comenzar." : "Veuillez lire les détails officiels de cette compétence ci-dessous, puis sélectionnez une actividad dans le menu de gauche pour démarrer.",
+                    lblInstruccion: isLevelA ? "Por favor lee los detalles oficiales de esta competencia, luego selecciona una actividad en el menú de la izquierda para comenzar." : "Veuillez lire les détails officiels de cette compétence ci-dessous, puis sélectionnez une activité dans le menu de gauche pour démarrer.",
                     titObjetivos: isLevelA ? "Objetivos Oficiales" : "Objectifs Officiels",
                     titEjercicios: isLevelA ? "Tipos de Ejercicios en el Sistema" : "Types d'exercices",
                     titConsejos: isLevelA ? "Consejos de Éxito" : "Conseils de réussite",
@@ -968,7 +967,7 @@
                     titIA: isLevelA ? "Interacción con la IA (Sophia)" : "Interaction avec l'IA",
                     objetivos: isLevelA ? [
                         "Rellenar un formulario de datos personales o fichas de inscripción.",
-                        "Redactar un mensaje corto y simple (correo, postal) para invitar, agradecer o responder a un amigo."
+                        "Redactar un message corto y simple (correo, postal) para invitar, agradecer o responder a un amigo."
                     ] : [
                         "Remplir une fiche de renseignements personnels ou un formulaire d'inscription.",
                         "Rédiger un court message simple (carte postale, courriel) pour inviter, remercier ou s'exprimer."
@@ -1146,7 +1145,6 @@
             const descPE = isBasic ? "Écrire des messages simples. / Escribir mensajes." : "Peut écrire un texte suivi simple et articulé sur des sujets familiers.";
             const descPO = isBasic ? "S'exprimer en situation simple. / Expresarse en situations cotidianas." : "Peut s'exprimer de manière cohérente sur des expériences ou projets.";
 
-            // Mapeo dinámico de palomitas verdes si la nota de la habilidad es mayor a cero
             const iconCheckCO = notesHabilidadGlobales.CO > 0 ? 'fas fa-check-circle" style="color:var(--green);"' : 'far fa-circle"';
             const iconCheckCE = notesHabilidadGlobales.CE > 0 ? 'fas fa-check-circle" style="color:var(--green);"' : 'far fa-circle"';
             const iconCheckPE = notesHabilidadGlobales.PE > 0 ? 'fas fa-check-circle" style="color:var(--green);"' : 'far fa-circle"';
@@ -1198,6 +1196,8 @@
             const ej = ejercicios[currentExerciseIndex];
             const audioId = `audio-container-${currentExerciseIndex}`;
 
+            if (peTimerInterval) clearInterval(peTimerInterval);
+
             let zoneHTML = (window.currentSkill === "PE" || window.currentSkill === "PO") 
                 ? `<span class="zone-badge zone-examen-simule"><i class="fas fa-exclamation-triangle"></i> Zone d'Examen Réel (Blindé)</span>`
                 : `<span class="zone-badge zone-entrainement"><i class="fas fa-graduation-cap"></i> Zone d'Entraînement</span>`;
@@ -1216,6 +1216,14 @@
             if (window.currentSkill === "PE") {
                 let instruccionOriginal = ej.instruccion || "";
                 let consigneLimpia = instruccionOriginal.replace(/^Activité\s*\d+\s*[\.\:]*\s*/i, "");
+
+                let minutosAsignados = consigneLimpia.toLowerCase().includes("article") ? 35 : 25;
+
+                html += `
+                <div id="pe-timer-bar" style="background: #fff3e0; border: 1px solid #ffe0b2; padding: 12px 15px; margin-bottom: 20px; border-radius: 6px; display: flex; align-items: center; justify-content: space-between; font-family: 'Montserrat';">
+                    <span style="font-weight: 600; color: #e65100;"><i class="fas fa-hourglass-half"></i> Temps disponible pour l'examen :</span>
+                    <span id="pe-countdown-clock" style="font-size: 1.3rem; font-weight: 700; color: #d63031; background: white; padding: 4px 12px; border-radius: 4px; border: 1px solid #ffe0b2;">${minutosAsignados}:00</span>
+                </div>`;
 
                 html += `
                 <div style="font-weight: bold; font-size: 0.95rem; color: #111; margin-top: 10px; margin-bottom: 25px; line-height: 1.5;">
@@ -1271,6 +1279,34 @@
                     <button class="nav-tab-btn" id="btn-submit-pe" style="width:auto; background:var(--oxford); color:white; padding:10px 22px;"><i class="fas fa-paper-plane"></i> Soumettre la production</button>
                 </div>`;
                 
+                let tiempoTotalSegundos = minutosAsignados * 60;
+                peTimerInterval = setInterval(() => {
+                    tiempoTotalSegundos--;
+                    let min = Math.floor(tiempoTotalSegundos / 60);
+                    let seg = tiempoTotalSegundos % 60;
+                    
+                    const elReloj = document.getElementById('pe-countdown-clock');
+                    if (elReloj) {
+                        elReloj.innerText = `${min.toString().padStart(2, '0')}:${seg.toString().padStart(2, '0')}`;
+                    }
+
+                    if (tiempoTotalSegundos <= 0) {
+                        clearInterval(peTimerInterval);
+                        const elInput = document.getElementById('pe-student-response');
+                        if (elInput) {
+                            elInput.disabled = true; 
+                            elInput.style.background = "#f5f5f5";
+                            elInput.placeholder = "Temps écoulé ! Votre examen est bloqué.";
+                        }
+                        if (elReloj) {
+                            elReloj.innerText = "00:00 - Temps écoulé";
+                            elReloj.style.background = "#d63031";
+                            elReloj.style.color = "white";
+                        }
+                        alert("Le temps est écoulé ! Vous ne pouvez plus modifier votre production.");
+                    }
+                }, 1000);
+
             } else if (window.currentSkill === "PO") {
                 if (ej.texto_lectura) {
                     html += `<div style="background:#f8f9fa; border-left:4px solid var(--gold); padding:20px; margin-bottom:25px;"><strong>Document :</strong><br><br>${window.convertirTextoInteractivo(ej.texto_lectura)}</div>`;
@@ -1475,9 +1511,6 @@
             
             target.innerHTML = html;
 
-            // ========================================================
-            // NUEVO NUEVO NUEVO: CARGAR RESPUESTA Y RETROALIMENTACIÓN DESDE FIRESTORE SI YA EXISTE
-            // ========================================================
             const llaveProgresoVerif = `${currentUnitId}_${window.currentSkill}_${currentExerciseIndex}`;
             if (mapaAciertosAlumno[llaveProgresoVerif] === true && urlId !== "admin_preview") {
                 try {
@@ -1488,24 +1521,22 @@
                     if (!snapFiltro.empty) {
                         const datosHistoricos = snapFiltro.docs[0].data();
                         
-                        // Si es PE o PO, rellenamos el input y mostramos la caja de Sophia guardada
                         if (window.currentSkill === "PE") {
                             const inputPE = document.getElementById('pe-student-response');
                             if (inputPE && datosHistoricos.texto_alumno) inputPE.value = datosHistoricos.texto_alumno;
+                            
+                            if (peTimerInterval) clearInterval(peTimerInterval);
+                            const elRelojBar = document.getElementById('pe-timer-bar');
+                            if (elRelojBar) elRelojBar.innerHTML = `<span style="font-weight:600; color:#2e7d32;"><i class="fas fa-check-double"></i> Statut : Examen complété et sauvegardé.</span>`;
                         }
                         
                         if (datosHistoricos.respuesta_ia) {
                             document.getElementById('sophia-verdict-text').innerHTML = datosHistoricos.respuesta_ia;
                             document.getElementById('sophia-box').style.display = "block";
-                            
-                            // Ocultar botón submit si ya fue enviado para que no duplique
-                            const btnSubmitPE = document.getElementById('btn-submit-pe');
-                            if (btnSubmitPE) btnSubmitPE.style.display = "none";
                         }
                     }
-                } catch(errFetch) { console.error("Error recuperando histórico del ejercicio:", errFetch); }
+                } catch(errFetch) { console.error("Error recuperando histórico:", errFetch); }
             }
-            // ========================================================
 
             if (ej.ruta_audio && window.currentSkill !== "PO") {
                 let extraerNumeros = ej.ruta_audio.match(/\d+/);
@@ -1538,6 +1569,8 @@
                     const elInputRedaccion = document.getElementById('pe-student-response');
                     const txtAlumno = elInputRedaccion ? elInputRedaccion.value.trim() : "";
                     if (!txtAlumno) return;
+
+                    if (peTimerInterval) clearInterval(peTimerInterval);
 
                     const saludoH3 = document.getElementById('student-welcome')?.innerText || "";
                     const nombreAlumno = saludoH3.replace("Élève:", "").trim() || "l'élève";
@@ -1587,7 +1620,6 @@
                                     });
                                 }
                                 
-                                document.getElementById('btn-submit-pe').style.display = "none";
                                 await calcularTodasLasNotasHabilidades();
                             } else if (snapshot.exists() && snapshot.data().status?.state === "ERROR") {
                                 desvincularEscucha();
