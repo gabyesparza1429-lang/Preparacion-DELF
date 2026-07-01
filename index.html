@@ -88,29 +88,25 @@
         /* SECCIÓN HERO */
         .hero {
             text-align: center; 
-            padding: 110px 20px 90px 20px;
+            padding: 80px 20px 90px 20px;
             background: radial-gradient(circle at center, #ffffff 0%, var(--dark-bg) 70%);
         }
 
-        /* CONTENEDOR AJUSTADO PARA EL VIDEO DEL LOGO */
-        .logo-main-container {
-            width: 160px;
-            height: 160px;
-            margin: 0 auto 25px auto;
-            background: var(--card-bg);
-            border-radius: 50%;
+        /* CONTENEDOR OPTIMIZADO PARA VIDEO GRANDE (SIN CÍRCULO NI BORDES) */
+        .video-hero-container {
+            width: 100%;
+            max-width: 500px; /* Tamaño del video expandido */
+            margin: 0 auto 35px auto;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-            border: 2px solid var(--gold);
-            overflow: hidden; /* Corta el video en forma de círculo */
         }
 
-        .logo-main-container video {
+        .video-hero-container video {
             width: 100%;
-            height: 100%;
-            object-fit: cover;
+            height: auto;
+            border-radius: 12px; /* Un ligero toque curvo en las esquinas del video para que luzca limpio */
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08); /* Sutil sombra de profundidad */
         }
 
         .hero h1 { 
@@ -350,10 +346,8 @@
 </head>
 <body>
 
-    <!-- Link secreto para administración -->
     <div class="admin-secret-link" onclick="accesoAdminSeguro()" title="Connexion"></div>
 
-    <!-- Barra de navegación superior trilingüe -->
     <nav class="navbar">
         <div class="brand-wrapper">
             <div class="brand">Neuro<span>Réussit</span></div>
@@ -367,14 +361,12 @@
         </div>
     </nav>
 
-    <!-- Cabecera principal (Hero) -->
     <header class="hero">
-        <div class="logo-main-container">
-            <!-- Reemplazo de IMG por VIDEO con soporte nativo y reproducción automática -->
+        <div class="video-hero-container">
             <video autoplay loop muted playsinline>
-    <source src="https://firebasestorage.googleapis.com/v0/b/objectif-reussite-delf.firebasestorage.app/o/Logovideo.mp4?alt=media&token=adbc6f17-d457-4f53-b7ab-a2f23a3a4cdd" type="video/mp4">
-    Votre navigateur ne prend pas en charge les vidéos HTML5.
-</video>
+                <source src="https://firebasestorage.googleapis.com/v0/b/objectif-reussite-delf.firebasestorage.app/o/Logovideo.mp4?alt=media&token=adbc6f17-d457-4f53-b7ab-a2f23a3a4cdd" type="video/mp4">
+                Votre navigateur ne prend pas en charge les vidéos HTML5.
+            </video>
         </div>
         <h1>NeuroRéussit</h1>
         <p class="tagline">Accessibilité Éducative</p>
@@ -384,7 +376,6 @@
         </button>
     </header>
 
-    <!-- Sección 1: Nuestra Visión -->
     <section class="section-container" id="vision">
         <h2 class="section-title">Nuestra Visión</h2>
         <div class="vision-text">
@@ -392,12 +383,10 @@
         </div>
     </section>
 
-    <!-- Sección 2: Nuestros Pilares (Accesos Directos) -->
     <section class="section-container" id="pilares">
         <h2 class="section-title">Nuestros Pilares</h2>
         <div class="proyectos-wrapper">
             
-            <!-- Proyecto DELF -->
             <a href="levels.html" class="puerta-proyecto">
                 <img src="./assets/Logo.png" alt="Logo Réussite DELF" class="logo-grande">
                 <div class="pilar-title">Objectif Réussite DELF: La Certificación al Alcance de Todos</div>
@@ -407,12 +396,11 @@
                 <button class="btn-entrar" style="background: var(--oxford);">Entrar</button>
             </a>
 
-            <!-- Proyecto NeuroClarity -->
             <a href="neuroclarity.html" class="puerta-proyecto">
                 <img src="./assets/NeuroClarity.png" alt="Logo NeuroClarity" class="logo-grande">
                 <div class="pilar-title">NeuroClarity: Metodología para Mentes Diversas</div>
                 <div class="pilar-description">
-                    Desarrollamos soluciones digitales que reconocen y valoran la neurodivergencia, adaptando la entrega de contenido para reducir la carga cognitiva y optimizar la comprensión. Nuestra tecnología es la herramienta clave para disminuir la brecha educativa, asegurando que ninguna forma de aprender sea un obstáculo para alcanzar la excelencia profesional.
+                    Desarrollamos soluciones digitales que reconen y valoran la neurodivergencia, adaptando la entrega de contenido para reducir la carga cognitiva y optimizar la comprensión. Nuestra tecnología es la herramienta clave para disminuir la brecha educativa, asegurando que ninguna forma de aprender sea un obstáculo para alcanzar la excelencia profesional.
                 </div>
                 <button class="btn-entrar" style="background: #B099CE;">Entrar</button>
             </a>
@@ -420,7 +408,6 @@
         </div>
     </section>
 
-    <!-- Sección 3: Por qué NeuroRéussit -->
     <section class="section-container" id="aliado">
         <h2 class="section-title">Por qué NeuroRéussit es tu mejor aliado</h2>
         <div class="aliados-grid">
@@ -429,25 +416,22 @@
                 <p>Al alojar nuestras soluciones en infraestructuras técnicas de vanguardia (como Railway), garantizamos estabilidad, rapidez y una experiencia de usuario impecable.</p>
             </div>
             <div class="aliado-card">
-                <h3>Autoridad Técnica</h3>
+                <h3>Autoridad Técnico</h3>
                 <p>Fusionamos la experiencia de una examinadora certificada por France Éducation international con herramientas digitales diseñadas para el siglo XXI.</p>
             </div>
         </div>
     </section>
 
-    <!-- Sección 4: Contacto e Inscripción -->
     <section class="section-container" id="contact">
         <h2 class="section-title">Contact & Inscription</h2>
         <div class="contacto-wrapper">
             <p class="contacto-instruction">
                 Inscrivez-vous pour recevoir les últimas actualizaciones, informaciones sobre nuestros programas o abrir tu acceso de estudiante.
             </p>
-            <!-- Formulario Iframe Brevo -->
             <iframe width="540" height="305" src="https://201ee2fd.sibforms.com/v2/serve/MUIFADHSCjB0UNge7clblPZRNoebgcDGjGaQVPo0DORZtXNRmCJ9Ol2PmruDajE7wGhxSSiSGJzpx9JFAW4boeMmQdRtGIiNi451_Q6KZFkJAYFenBzkbtoXzSfcN5Xgn2jxKqwWgwZvI4Q1wfAlu0VaAVLLOTDLIzVwRmQCzv0zvW5lLxOXiMiqDN2UEAOd6U8UQdDMj1T5f-SzZw==" frameborder="0" scrolling="auto" allowfullscreen style="display: block; margin: 0 auto; max-width: 100%; border-radius: 8px;"></iframe>
         </div>
     </section>
 
-    <!-- Footer -->
     <footer class="footer">
         &copy; 2026 NeuroRéussit. Todos los derechos reservados. | Accessibilité Éducative.
     </footer>
