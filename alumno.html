@@ -767,13 +767,34 @@
             unidadesCache = {};
             const querySnapshot = await getDocs(collection(db, "BibliotecaEjercicios", currentLevel, "Unidades"));
             querySnapshot.forEach((docSnap) => { unidadesCache[docSnap.id] = docSnap.data(); });
-            calcularTodasLasNotasHabilidades();
+            await calcularTodasLasNotasHabilidades();
             renderActiveInterface();
         }
 
-        function calcularTodasLasNotasHabilidades() {
+        async function calcularTodasLasNotasHabilidades() {
             let totalEjerciciosGlobales = 0;
             let totalEjerciciosCompletados = 0;
+
+            // 1. Obtener todas las notas guardadas de Sophia de forma síncrona/directa antes de renderizar
+            let mapaNotasSophia = { PE: [], PO: [] };
+            if (urlId && urlId !== "admin_preview") {
+                try {
+                    const qHistorial = await getDocs(collection(db, "Usuarios", urlId, "HistorialSophia"));
+                    qHistorial.forEach(dHist => {
+                        const hData = dHist.data();
+                        if (hData.habilidad && hData.respuesta_ia) {
+                            // Intentar extraer la nota [Nota X] / 25 de la respuesta HTML de Sophia
+                            let matchNota = hData.respuesta_ia.match(/Note\s*Finale\s*:\s*(\d+(\.\d+)?)\s*\/|\b(\d+(\.\d+)?)\s*\/\s*25\b/i);
+                            let notaExtraida = 0;
+                            if (matchNota) {
+                                notaExtraida = parseFloat(matchNota[1] || matchNota[3]);
+                            }
+                            if (hData.habilidad === "PE") mapaNotasSophia.PE.push(notaExtraida);
+                            if (hData.habilidad === "PO") mapaNotasSophia.PO.push(notaExtraida);
+                        }
+                    });
+                } catch(e) { console.error("Error cargando notas del carnet:", e); }
+            }
 
             ['CO', 'CE', 'PE', 'PO'].forEach(sk => {
                 let totalReactivos = 0; let totalAciertos = 0;
@@ -792,8 +813,19 @@
                         }
                     });
                 });
-                if (totalReactivos === 0) totalReactivos = 5;
-                notesHabilidadGlobales[sk] = parseFloat(((totalAciertos / totalReactivos) * 25).toFixed(2));
+
+                if (sk === "PE" || sk === "PO") {
+                    let arrNotas = mapaNotasSophia[sk];
+                    if (arrNotas && arrNotas.length > 0) {
+                        let suma = arrNotas.reduce((a, b) => a + b, 0);
+                        notesHabilidadGlobales[sk] = parseFloat((suma / arrNotas.length).toFixed(2));
+                    } else {
+                        notesHabilidadGlobales[sk] = 0;
+                    }
+                } else {
+                    if (totalReactivos === 0) totalReactivos = 5;
+                    notesHabilidadGlobales[sk] = parseFloat(((totalAciertos / totalReactivos) * 25).toFixed(2));
+                }
             });
 
             if (totalEjerciciosGlobales > 0) {
@@ -803,7 +835,7 @@
             }
         }
 
-        window.switchMainTab = (tab) => {
+        window.switchMainTab = async (tab) => {
             currentActiveTab = tab;
             document.querySelectorAll('.sidebar .nav-tab-btn').forEach(btn => btn.classList.remove('active'));
             if (tab === 'parcours') {
@@ -811,7 +843,10 @@
                 document.getElementById('parcours-controls-container').style.display = "flex";
                 window.mostrarExplicacionHabilidadInicial(currentSkill);
             }
-            if (tab === 'carnet') document.getElementById('tab-carnet').classList.add('active');
+            if (tab === 'carnet') {
+                document.getElementById('tab-carnet').classList.add('active');
+                await calcularTodasLasNotasHabilidades(); // Forzar recálculo antes de abrir pestaña
+            }
             renderActiveInterface();
         };
 
@@ -871,7 +906,7 @@
                     ],
                     consejos: isLevelA ? [
                         "Lee las preguntas y observa con atención las imágenes antes de reproducir el audio.",
-                        "Concéntrate en captar palabras clave and datos numéricos específicos."
+                        "Concéntrate en captar palabras clave y datos numéricos específicos."
                     ] : [
                         "Lisez attentivement les consignes et observez bien les dessins avant l'écoute.",
                         "Concentrez-vous sur les mots transparents et les chiffres."
@@ -889,7 +924,7 @@
                     icono: "fa-file-alt",
                     color: "#34a853",
                     lblBienvenida: isLevelA ? "Bienvenido a tu espacio de entrenamiento." : "Bienvenue dans votre espace d'entraînement.",
-                    lblInstruccion: isLevelA ? "Por favor lee los detalles oficiales de esta competencia, luego selecciona una actividad en el menú de la izquierda para comenzar." : "Veuillez lire les détails officiels de cette compétence ci-dessous, puis sélectionnez une activité dans le menu de gauche pour démarrer.",
+                    lblInstruccion: isLevelA ? "Por favor lee los detalles oficiales de esta competencia, luego selecciona una actividad en el menú de la izquierda para comenzar." : "Veuillez lire les détails officiels de cette compétence ci-dessous, puis sélectionnez une actividad dans le menu de gauche pour démarrer.",
                     titObjetivos: isLevelA ? "Objetivos Oficiales" : "Objectifs Officiels",
                     titEjercicios: isLevelA ? "Tipos de Ejercicios en el Sistema" : "Types d'exercices",
                     titConsejos: isLevelA ? "Consejos de Éxito" : "Conseils de réussite",
@@ -936,7 +971,7 @@
                         "Redactar un mensaje corto y simple (correo, postal) para invitar, agradecer o responder a un amigo."
                     ] : [
                         "Remplir une fiche de renseignements personnels ou un formulaire d'inscription.",
-                        "Régiger un court message simple (carte postale, courriel) pour inviter, remercier ou s'exprimer."
+                        "Rédiger un court message simple (carte postale, courriel) pour inviter, remercier ou s'exprimer."
                     ],
                     ejercicios: isLevelA ? [
                         "**Formularios Interactivos:** Casillas individuales dinámicas que simulan fichas de inscripción (ej. Ficha de adopción, solicitud de matrícula).",
@@ -975,7 +1010,7 @@
                     ] : [
                         "Se présenter et répondre à des questions sur son identité.",
                         "Poser des questions simples à partir de mots-clés ou de cartes stimulantes.",
-                        "Mener un juego de rôle ou une interaction en contexte de service."
+                        "Mener un jeu de rôle ou une interaction en contexte de service."
                     ],
                     ejercicios: isLevelA ? [
                         "**Entretien Dirigé:** Guías de preguntas organizadas en viñetas en la pantalla.",
@@ -991,7 +1026,7 @@
                         "Verifica que tu navegador tenga el permiso del micrófono concedido para evitar retrasos."
                     ] : [
                         "N'ayez pas peur de parler! Gagnez de la confiance en vous.",
-                        "Vérifiez que l'autorisation de votre microphone is active avant de démarrer."
+                        "Vérifiez que l'autorisation de votre microphone est active avant de démarrer."
                     ],
                     iaExplicacion: isLevelA ? [
                         "**Activación Automatizada por Botón:** Al dar clic en el botón rojo de grabación, el sistema inyecta un guion introductorio nativo de fondo. Sophia tomará de inmediato el rol de examinadora o dependienta nativa en Francia y entablará un diálogo fluido basado en lo que hables frente a la pantalla, respondiendo dinámicamente según tus elecciones de palabras o tarjetas."
@@ -1111,86 +1146,50 @@
             const descPE = isBasic ? "Écrire des messages simples. / Escribir mensajes." : "Peut écrire un texte suivi simple et articulé sur des sujets familiers.";
             const descPO = isBasic ? "S'exprimer en situation simple. / Expresarse en situations cotidianas." : "Peut s'exprimer de manière cohérente sur des expériences ou projets.";
 
-            const check = (clave) => (mapaAciertosAlumno && mapaAciertosAlumno[clave]) ? 'checked' : '';
-            const iconCheck = (clave) => (mapaAciertosAlumno && mapaAciertosAlumno[clave]) ? 'fas fa-check-circle' : 'far fa-circle';
+            // Mapeo dinámico de palomitas verdes si la nota de la habilidad es mayor a cero
+            const iconCheckCO = notesHabilidadGlobales.CO > 0 ? 'fas fa-check-circle" style="color:var(--green);"' : 'far fa-circle"';
+            const iconCheckCE = notesHabilidadGlobales.CE > 0 ? 'fas fa-check-circle" style="color:var(--green);"' : 'far fa-circle"';
+            const iconCheckPE = notesHabilidadGlobales.PE > 0 ? 'fas fa-check-circle" style="color:var(--green);"' : 'far fa-circle"';
+            const iconCheckPO = notesHabilidadGlobales.PO > 0 ? 'fas fa-check-circle" style="color:var(--green);"' : 'far fa-circle"';
 
-            let checklistHTML = '';
-            if (currentLevel === "B1") {
-                checklistHTML = `
-                <div class="carnet-grid">
-                    <div class="carnet-card co">
-                        <div class="carnet-header"><span class="carnet-title"><i class="fas fa-headphones" style="color:#1a73e8;"></i> Compréhension Orale</span><span class="carnet-score">${notesHabilidadGlobales.CO} / 25 pts</span></div>
-                        <div class="carnet-descriptor-box"><strong>Objectif B1 :</strong> ${descCO}</div>
-                        <div class="carnet-checklist">
-                            <div class="checklist-item ${check('B1_CO_FACTUEL')}"><i class="${iconCheck('B1_CO_FACTUEL')}"></i> Comprendre des informations factuelles (travail/études)</div>
-                            <div class="checklist-item ${check('B1_CO_EMISSION')}"><i class="${iconCheck('B1_CO_EMISSION')}"></i> Saisir les points principaux d'émissions de radio/TV</div>
-                        </div>
+            let checklistHTML = `
+            <div class="carnet-grid">
+                <div class="carnet-card co">
+                    <div class="carnet-header"><span class="carnet-title"><i class="fas fa-headphones" style="color:#1a73e8;"></i> Compréhension Orale</span><span class="carnet-score">${notesHabilidadGlobales.CO} / 25 pts</span></div>
+                    <div class="carnet-descriptor-box"><strong>Objectif ${currentLevel} :</strong> ${descCO}</div>
+                    <div class="carnet-checklist">
+                        <div class="checklist-item ${notesHabilidadGlobales.CO > 0 ? 'checked':''}"><i class="${iconCheckCO}></i> Repérer des informations factuelles et détails clés</div>
                     </div>
-                    <div class="carnet-card ce">
-                        <div class="carnet-header"><span class="carnet-title"><i class="fas fa-file-alt" style="color:#34a853;"></i> Compréhension Écrite</span><span class="carnet-score">${notesHabilidadGlobales.CE} / 25 pts</span></div>
-                        <div class="carnet-descriptor-box"><strong>Objectif B1 :</strong> ${descCE}</div>
-                        <div class="carnet-checklist">
-                            <div class="checklist-item ${check('B1_CE_COURANT')}"><i class="${iconCheck('B1_CE_COURANT')}"></i> Identifier des informations significatives (articles)</div>
-                            <div class="checklist-item ${check('B1_CE_SENTIMENTS')}"><i class="${iconCheck('B1_CE_SENTIMENTS')}"></i> Reconnaître sentiments/opinions (lettres)</div>
-                        </div>
+                </div>
+                <div class="carnet-card ce">
+                    <div class="carnet-header"><span class="carnet-title"><i class="fas fa-file-alt" style="color:#34a853;"></i> Compréhension Écrite</span><span class="carnet-score">${notesHabilidadGlobales.CE} / 25 pts</span></div>
+                    <div class="carnet-descriptor-box"><strong>Objectif ${currentLevel} :</strong> ${descCE}</div>
+                    <div class="carnet-checklist">
+                        <div class="checklist-item ${notesHabilidadGlobales.CE > 0 ? 'checked':''}"><i class="${iconCheckCE}></i> Identifier des informations significatives dans les textes</div>
                     </div>
-                    <div class="carnet-card pe">
-                        <div class="carnet-header"><span class="carnet-title"><i class="fas fa-pen-fancy" style="color:#fbbc05;"></i> Production Écrite</span><span class="carnet-score">${notesHabilidadGlobales.PE} / 25 pts</span></div>
-                        <div class="carnet-descriptor-box"><strong>Objectif B1 :</strong> ${descPE}</div>
-                        <div class="carnet-checklist">
-                            <div class="checklist-item ${check('B1_PE_RÉCIT')}"><i class="${iconCheck('B1_PE_RÉCIT')}"></i> Relater des experiences vécues et décrire des sentiments</div>
-                            <div class="checklist-item ${check('B1_PE_ARGUMENT')}"><i class="${iconCheck('B1_PE_ARGUMENT')}"></i> Exprimer et justifier un point de vue personnel</div>
-                        </div>
+                </div>
+                <div class="carnet-card pe">
+                    <div class="carnet-header"><span class="carnet-title"><i class="fas fa-pen-fancy" style="color:#fbbc05;"></i> Production Écrite</span><span class="carnet-score">${notesHabilidadGlobales.PE} / 25 pts</span></div>
+                    <div class="carnet-descriptor-box"><strong>Objectif ${currentLevel} :</strong> ${descPE}</div>
+                    <div class="carnet-checklist">
+                        <div class="checklist-item ${notesHabilidadGlobales.PE > 0 ? 'checked':''}"><i class="${iconCheckPE}></i> Rédiger un texte suivi structuré et formules adaptées</div>
                     </div>
-                    <div class="carnet-card po">
-                        <div class="carnet-header"><span class="carnet-title"><i class="fas fa-microphone" style="color:#ea4335;"></i> Production Orale</span><span class="carnet-score">${notesHabilidadGlobales.PO} / 25 pts</span></div>
-                        <div class="carnet-descriptor-box"><strong>Objectif B1 :</strong> ${descPO}</div>
-                        <div class="carnet-checklist">
-                            <div class="checklist-item ${check('B1_PO_EXPOSÉ')}"><i class="${iconCheck('B1_PO_EXPOSÉ')}"></i> Présenter un thème ou problème de société</div>
-                            <div class="checklist-item ${check('B1_PO_DÉBAT')}"><i class="${iconCheck('B1_PO_DÉBAT')}"></i> Argumenter lors d'un jeu de rôle ou interaction</div>
-                        </div>
+                </div>
+                <div class="carnet-card po">
+                    <div class="carnet-header"><span class="carnet-title"><i class="fas fa-microphone" style="color:#ea4335;"></i> Production Orale</span><span class="carnet-score">${notesHabilidadGlobales.PO} / 25 pts</span></div>
+                    <div class="carnet-descriptor-box"><strong>Objectif ${currentLevel} :</strong> ${descPO}</div>
+                    <div class="carnet-checklist">
+                        <div class="checklist-item ${notesHabilidadGlobales.PO > 0 ? 'checked':''}"><i class="${iconCheckPO}></i> S'exprimer de manière fluide lors d'une interaction</div>
                     </div>
-                </div>`;
-            } else {
-                checklistHTML = `
-                <div class="carnet-grid">
-                    <div class="carnet-card co">
-                        <div class="carnet-header"><span class="carnet-title"><i class="fas fa-headphones"></i> Compréhension Orale</span><span>${notesHabilidadGlobales.CO} / 25 pts</span></div>
-                        <div class="carnet-descriptor-box"><strong>Objectif :</strong> ${descCO}</div>
-                        <div class="carnet-checklist">
-                            <div class="checklist-item ${check('A1_CO_DETALLES')}"><i class="${iconCheck('A1_CO_DETALLES')}"></i> Repérer des détails et données chiffrées</div>
-                        </div>
-                    </div>
-                    <div class="carnet-card ce">
-                        <div class="carnet-header"><span class="carnet-title"><i class="fas fa-file-alt"></i> Compréhension Écrite</span><span>${notesHabilidadGlobales.CE} / 25 pts</span></div>
-                        <div class="carnet-descriptor-box"><strong>Objectif :</strong> ${descCE}</div>
-                        <div class="carnet-checklist">
-                            <div class="checklist-item ${check('A1_CE_DOCUMENTS')}"><i class="${iconCheck('A1_CE_DOCUMENTS')}"></i> Trouver des faits importants</div>
-                        </div>
-                    </div>
-                    <div class="carnet-card pe">
-                        <div class="carnet-header"><span class="carnet-title"><i class="fas fa-pen-fancy"></i> Production Écrite</span><span>${notesHabilidadGlobales.PE} / 25 pts</span></div>
-                        <div class="carnet-descriptor-box"><strong>Objectif :</strong> ${descPE}</div>
-                        <div class="carnet-checklist">
-                            <div class="checklist-item ${check('A1_PE_RITUELS')}"><i class="${iconCheck('A1_PE_RITUELS')}"></i> Respect des formats et rituels amicaux</div>
-                        </div>
-                    </div>
-                    <div class="carnet-card po">
-                        <div class="carnet-header"><span class="carnet-title"><i class="fas fa-microphone"></i> Production Orale</span><span>${notesHabilidadGlobales.PO} / 25 pts</span></div>
-                        <div class="carnet-descriptor-box"><strong>Objectif :</strong> ${descPO}</div>
-                        <div class="carnet-checklist">
-                            <div class="checklist-item ${check('A1_PO_MONOLOGUE')}"><i class="${iconCheck('A1_PO_MONOLOGUE')}"></i> Monologue suivi (Se présenter)</div>
-                        </div>
-                    </div>
-                </div>`;
-            }
+                </div>
+            </div>`;
 
             document.getElementById('dynamic-workspace-target').innerHTML = `
                 <h3 style="color:var(--oxford); margin-top:0; font-weight:700;"><i class="fas fa-id-card"></i> Livret de Compétences Officiel (CECRL)</h3>
                 ${checklistHTML}`;
         }
         
-        window.renderExerciseStructure = function() {
+        window.renderExerciseStructure = async function() {
             const target = document.getElementById('dynamic-workspace-target');
             if (currentUnitId === null || !unidadesCache[currentUnitId]) return;
             let ejercicios = unidadesCache[currentUnitId][currentSkill] || unidadesCache[currentUnitId][currentSkill.toLowerCase()] || [];
@@ -1476,6 +1475,38 @@
             
             target.innerHTML = html;
 
+            // ========================================================
+            // NUEVO NUEVO NUEVO: CARGAR RESPUESTA Y RETROALIMENTACIÓN DESDE FIRESTORE SI YA EXISTE
+            // ========================================================
+            const llaveProgresoVerif = `${currentUnitId}_${window.currentSkill}_${currentExerciseIndex}`;
+            if (mapaAciertosAlumno[llaveProgresoVerif] === true && urlId !== "admin_preview") {
+                try {
+                    const qFiltro = query(collection(db, "Usuarios", urlId, "HistorialSophia"), 
+                                          where("unidad", "==", currentUnitId), 
+                                          where("actividad", "==", currentExerciseIndex));
+                    const snapFiltro = await getDocs(qFiltro);
+                    if (!snapFiltro.empty) {
+                        const datosHistoricos = snapFiltro.docs[0].data();
+                        
+                        // Si es PE o PO, rellenamos el input y mostramos la caja de Sophia guardada
+                        if (window.currentSkill === "PE") {
+                            const inputPE = document.getElementById('pe-student-response');
+                            if (inputPE && datosHistoricos.texto_alumno) inputPE.value = datosHistoricos.texto_alumno;
+                        }
+                        
+                        if (datosHistoricos.respuesta_ia) {
+                            document.getElementById('sophia-verdict-text').innerHTML = datosHistoricos.respuesta_ia;
+                            document.getElementById('sophia-box').style.display = "block";
+                            
+                            // Ocultar botón submit si ya fue enviado para que no duplique
+                            const btnSubmitPE = document.getElementById('btn-submit-pe');
+                            if (btnSubmitPE) btnSubmitPE.style.display = "none";
+                        }
+                    }
+                } catch(errFetch) { console.error("Error recuperando histórico del ejercicio:", errFetch); }
+            }
+            // ========================================================
+
             if (ej.ruta_audio && window.currentSkill !== "PO") {
                 let extraerNumeros = ej.ruta_audio.match(/\d+/);
                 let numeroPista = extraerNumeros ? extraerNumeros[0].padStart(2, '0') : "02";
@@ -1555,6 +1586,9 @@
                                         actividad: currentExerciseIndex
                                     });
                                 }
+                                
+                                document.getElementById('btn-submit-pe').style.display = "none";
+                                await calcularTodasLasNotasHabilidades();
                             } else if (snapshot.exists() && snapshot.data().status?.state === "ERROR") {
                                 desvincularEscucha();
                                 document.getElementById('sophia-verdict-text').innerHTML = "<span style='color:red;'>Erreur d'évaluation par l'IA.</span>";
