@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>NeuroRéussit - Inicio</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root { 
@@ -28,7 +28,7 @@
             min-height: 100vh;
         }
 
-        /* BARRA DE NAVEGACIÓN COMPACTA */
+        /* BARRA DE NAVEGACIÓN COMPACTA TRILINGÜE */
         .navbar {
             display: flex;
             justify-content: space-between;
@@ -41,15 +41,30 @@
             box-shadow: 0 4px 10px rgba(0,0,0,0.15);
         }
 
+        .navbar .brand-wrapper {
+            display: flex;
+            flex-direction: column;
+        }
+
         .navbar .brand {
             font-size: 1.4rem;
             font-weight: 700;
             color: var(--white);
             letter-spacing: 1px;
+            line-height: 1.2;
         }
 
         .navbar .brand span {
             color: var(--gold);
+        }
+
+        .navbar .trilingual-tagline {
+            font-size: 0.68rem;
+            color: #778ca3;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            margin-top: 2px;
+            text-transform: uppercase;
         }
 
         .nav-links {
@@ -69,27 +84,55 @@
             color: var(--gold);
         }
         
-        /* SECCIÓN HERO (BIENVENIDA) */
+        /* SECCIÓN HERO */
         .hero {
             text-align: center; 
-            padding: 100px 20px 80px 20px;
+            padding: 110px 20px 90px 20px;
             background: radial-gradient(circle at center, #3d4654 0%, var(--dark-bg) 70%);
         }
 
+        /* CONTENEDOR CONTORNO LOGO DE LA NEURONA MECÁNICA */
+        .logo-main-container {
+            width: 140px;
+            height: 140px;
+            margin: 0 auto 25px auto;
+            background: var(--card-bg);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+            border: 2px solid var(--gold);
+        }
+
+        .logo-main-container img {
+            width: 100px;
+            height: 100px;
+            object-fit: contain;
+        }
+
         .hero h1 { 
-            font-size: 3rem;
+            font-size: 3.2rem;
             color: var(--white); 
-            margin: 0 0 10px 0; 
+            margin: 0 0 5px 0; 
             font-weight: 700;
             letter-spacing: 1px;
         }
 
         .hero p.tagline {
             color: var(--gold); 
-            font-weight: bold; 
-            margin: 0 0 30px 0; 
+            font-weight: 600; 
+            margin: 0 0 15px 0; 
             letter-spacing: 2px;
             font-size: 1.1rem;
+            text-transform: uppercase;
+        }
+
+        .hero p.sub-tagline {
+            color: #d1d8e0;
+            font-size: 0.95rem;
+            margin: 0 0 35px 0;
+            font-style: italic;
         }
 
         .btn-scroll-down {
@@ -114,7 +157,7 @@
         
         /* SECCIÓN GLOBAL DE CONTENIDO */
         .section-container {
-            max-width: 1100px;
+            max-width: 1000px;
             margin: 0 auto;
             padding: 60px 20px;
             width: 100%;
@@ -125,7 +168,7 @@
             text-align: center;
             font-size: 1.8rem;
             color: var(--white);
-            margin-bottom: 40px;
+            margin-bottom: 35px;
             position: relative;
             font-weight: 700;
         }
@@ -139,13 +182,29 @@
             margin: 15px auto 0 auto;
         }
 
+        /* NUEVA SECCIÓN DE NUESTRA VISIÓN */
+        .vision-text {
+            line-height: 1.8;
+            font-size: 1.05rem;
+            color: #d1d8e0;
+            text-align: center;
+            background: var(--card-bg);
+            padding: 35px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-top: 4px solid var(--gold);
+            max-width: 850px;
+            margin: 0 auto;
+        }
+
         /* BLOQUES DE PROYECTOS (ACCESO) */
         .proyectos-wrapper { 
             display: flex; 
-            gap: 50px; 
+            gap: 40px; 
             justify-content: center; 
-            align-items: center; 
+            align-items: stretch; 
             flex-wrap: wrap;
+            margin-top: 20px;
         }
         
         .puerta-proyecto { 
@@ -154,27 +213,45 @@
             align-items: center; 
             text-decoration: none; 
             color: inherit; 
-            transition: transform 0.3s; 
+            transition: transform 0.3s, border-color 0.3s; 
             cursor: pointer; 
             background: var(--card-bg);
-            padding: 30px;
+            padding: 35px 25px;
             border-radius: 15px;
             box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-            width: 340px;
+            width: 440px;
             box-sizing: border-box;
             border: 1px solid rgba(255,255,255,0.05);
         }
 
         .puerta-proyecto:hover { 
-            transform: translateY(-10px); 
+            transform: translateY(-8px); 
             border-color: rgba(197, 160, 89, 0.4);
         }
         
         .logo-grande { 
             width: 100%; 
-            height: 150px; 
+            height: 130px; 
             object-fit: contain; 
-            margin-bottom: 25px; 
+            margin-bottom: 20px; 
+        }
+
+        .pilar-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--gold);
+            margin: 0 0 15px 0;
+            text-align: center;
+            line-height: 1.4;
+        }
+
+        .pilar-description {
+            font-size: 0.88rem;
+            color: #b2bec3;
+            line-height: 1.6;
+            text-align: justify;
+            margin-bottom: 25px;
+            flex-grow: 1;
         }
         
         .btn-entrar { 
@@ -193,17 +270,34 @@
             cursor: pointer;
         }
 
-        /* SECCIÓN SOBRE NOSOTROS */
-        .about-text {
-            line-height: 1.8;
-            font-size: 1rem;
-            color: #d1d8e0;
-            text-align: justify;
+        /* SECCIÓN POR QUÉ NEUROREUSSIT */
+        .aliados-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .aliado-card {
             background: var(--card-bg);
-            padding: 35px;
+            padding: 30px;
             border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
             border-left: 4px solid var(--gold);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .aliado-card h3 {
+            margin: 0 0 12px 0;
+            color: var(--white);
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+
+        .aliado-card p {
+            margin: 0;
+            color: #d1d8e0;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            text-align: justify;
         }
 
         /* SECCIÓN CONTACTO */
@@ -254,59 +348,93 @@
     <!-- Link secreto para administración -->
     <div class="admin-secret-link" onclick="accesoAdminSeguro()" title="Connexion"></div>
 
-    <!-- Barra de navegación superior -->
+    <!-- Barra de navegación superior trilingüe -->
     <nav class="navbar">
-        <div class="brand">Neuro<span>Réussit</span></div>
+        <div class="brand-wrapper">
+            <div class="brand">Neuro<span>Réussit</span></div>
+            <div class="trilingual-tagline">Accessibilité • Accessibility • Accesibilidad</div>
+        </div>
         <div class="nav-links">
-            <a href="#proyectos">Projets</a>
-            <a href="#propos">À propos</a>
+            <a href="#vision">Vision</a>
+            <a href="#pilares">Piliers</a>
+            <a href="#aliado">Alliance</a>
             <a href="#contact">Contact</a>
         </div>
     </nav>
 
     <!-- Cabecera principal (Hero) -->
     <header class="hero">
+        <div class="logo-main-container">
+            <!-- Ruta lista para cargar el nuevo logo de la neurona mecánica -->
+            <img src="./assets/NeuroLogoMecanico.png" alt="NeuroRéussit Neurone Mécanique">
+        </div>
         <h1>NeuroRéussit</h1>
-        <p class="tagline">ACCESSIBILITÉ ÉDUCATIVE</p>
-        <button class="btn-scroll-down" onclick="document.getElementById('proyectos').scrollIntoView();">
-            Découvrir nos projets <i class="fas fa-chevron-down" style="margin-left:8px;"></i>
+        <p class="tagline">Accessibilité Éducative</p>
+        <p class="sub-tagline">La ingeniería pedagógica al servicio de la diversidad cognitiva.</p>
+        <button class="btn-scroll-down" onclick="document.getElementById('vision').scrollIntoView();">
+            En savoir plus <i class="fas fa-chevron-down" style="margin-left:8px;"></i>
         </button>
     </header>
 
-    <!-- Sección 1: Accesos a Proyectos -->
-    <section class="section-container" id="proyectos">
-        <h2 class="section-title">Nos Applications Éducatives</h2>
+    <!-- Sección 1: Nuestra Visión -->
+    <section class="section-container" id="vision">
+        <h2 class="section-title">Nuestra Visión</h2>
+        <div class="vision-text">
+            En NeuroRéussit, eliminamos las barreras que separan el esfuerzo del éxito académico. Utilizamos tecnología educativa diseñada específicamente para mentes diversas, con el objetivo de cerrar la brecha educativa y democratizar el acceso al aprendizaje de alto nivel.
+        </div>
+    </section>
+
+    <!-- Sección 2: Nuestros Pilares (Accesos Directos) -->
+    <section class="section-container" id="pilares">
+        <h2 class="section-title">Nuestros Pilares</h2>
         <div class="proyectos-wrapper">
+            
             <!-- Proyecto DELF -->
             <a href="levels.html" class="puerta-proyecto">
                 <img src="./assets/Logo.png" alt="Logo Réussite DELF" class="logo-grande">
+                <div class="pilar-title">Objectif Réussite DELF: La Certificación al Alcance de Todos</div>
+                <div class="pilar-description">
+                    No es solo un programa de francés; es un sistema de entrenamiento de alto rendimiento que conecta la intención de aprender con el éxito en la certificación oficial. Como examinadora y correctora certificada, he integrado en esta plataforma las rúbricas y criterios oficiales, convirtiendo el examen en un proceso transparente y superable.
+                </div>
                 <button class="btn-entrar" style="background: var(--oxford);">Entrar</button>
             </a>
 
             <!-- Proyecto NeuroClarity -->
             <a href="neuroclarity.html" class="puerta-proyecto">
                 <img src="./assets/NeuroClarity.png" alt="Logo NeuroClarity" class="logo-grande">
+                <div class="pilar-title">NeuroClarity: Metodología para Mentes Diversas</div>
+                <div class="pilar-description">
+                    Desarrollamos soluciones digitales que reconocen y valoran la neurodivergencia, adaptando la entrega de contenido para reducir la carga cognitiva y optimizar la comprensión. Nuestra tecnología es la herramienta clave para disminuir la brecha educativa, asegurando que ninguna forma de aprender sea un obstáculo para alcanzar la excelencia profesional.
+                </div>
                 <button class="btn-entrar" style="background: #B099CE;">Entrar</button>
             </a>
+            
         </div>
     </section>
 
-    <!-- Sección 2: Información de la Marca / Qué hacemos -->
-    <section class="section-container" id="propos">
-        <h2 class="section-title">Ce que nous faisons</h2>
-        <div class="about-text">
-            <strong>NeuroRéussit</strong> est un écosystème technologique dédié à l'accessibilité éducative. Notre mission est de développer des solutions numériques avancées qui transforment l'apprentissage et optimisent le travail cognitif. À travers la recherche en pédagogie et l'intégration de technologies interactives, nous construisons des espaces d'apprentissage stimulants, structurés étape par étape et adaptés aux besoins individuels de chaque utilisateur. De la simulation d'examens officiels à l'amélioration de la clarté opérationnelle, nous mettons l'innovation au service du développement des compétences.
+    <!-- Sección 3: Por qué NeuroRéussit -->
+    <section class="section-container" id="aliado">
+        <h2 class="section-title">Por qué NeuroRéussit es tu mejor aliado</h2>
+        <div class="aliados-grid">
+            <div class="aliado-card">
+                <h3>Innovación EdTech</h3>
+                <p>Al alojar nuestras soluciones en infraestructuras técnicas de vanguardia (como Railway), garantizamos estabilidad, rapidez y una experiencia de usuario impecable.</p>
+            </div>
+            <div class="aliado-card">
+                <h3>Autoridad Técnica</h3>
+                <p>Fusionamos la experiencia de una examinadora certificada por France Éducation international con herramientas digitales diseñadas para el siglo XXI.</p>
+            </div>
         </div>
     </section>
 
-    <!-- Sección 3: Contacto e Inscripción (Formulario Brevo) -->
+    <!-- Sección 4: Contacto e Inscripción -->
     <section class="section-container" id="contact">
         <h2 class="section-title">Contact & Inscription</h2>
         <div class="contacto-wrapper">
             <p class="contacto-instruction">
                 Inscrivez-vous pour recevoir les dernières mises à jour, informations sur nos programmes ou ouvrir votre accès étudiant.
             </p>
-            <!-- Formulario Iframe -->
+            <!-- Formulario Iframe Brevo -->
             <iframe width="540" height="305" src="https://201ee2fd.sibforms.com/v2/serve/MUIFADHSCjB0UNge7clblPZRNoebgcDGjGaQVPo0DORZtXNRmCJ9Ol2PmruDajE7wGhxSSiSGJzpx9JFAW4boeMmQdRtGIiNi451_Q6KZFkJAYFenBzkbtoXzSfcN5Xgn2jxKqwWgwZvI4Q1wfAlu0VaAVLLOTDLIzVwRmQCzv0zvW5lLxOXiMiqDN2UEAOd6U8UQdDMj1T5f-SzZw==" frameborder="0" scrolling="auto" allowfullscreen style="display: block; margin: 0 auto; max-width: 100%; border-radius: 8px;"></iframe>
         </div>
     </section>
