@@ -3,14 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Objectif Réussite - Niveaux</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <title>Objectif Réussite - Niveaux & Certification</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --oxford: #002147;
             --gold: #C5A059;
             --white: #ffffff;
             --light-bg: #f4f7f9;
+            --dark-text: #2c3e50;
         }
 
         body {
@@ -24,7 +25,6 @@
             min-height: 100vh;
         }
 
-        /* BARRA SUPERIOR LIMPIA */
         .navbar {
             width: 100%;
             max-width: 1200px;
@@ -41,12 +41,11 @@
             text-transform: uppercase;
         }
 
-        /* CONTENEDOR DEL BANNER PRINCIPAL */
         .banner-container {
             width: 90%;
             max-width: 1100px;
             margin-top: 10px;
-            margin-bottom: 40px;
+            margin-bottom: 30px;
         }
 
         .banner-img {
@@ -56,25 +55,32 @@
             display: block;
         }
 
-        /* CONTENEDOR DE TARJETAS DE NIVEL */
+        /* SECCIÓN DE TARJETAS REDISEÑADAS (MÁS PEQUEÑAS) */
+        .cards-section-title {
+            text-align: center;
+            font-size: 1.5rem;
+            margin: 20px 0 10px 0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
         .container {
             display: flex;
             gap: 15px;
             justify-content: center;
             flex-wrap: wrap;
-            padding: 20px;
+            padding: 10px 20px 30px 20px;
             width: 100%;
             max-width: 1100px;
             box-sizing: border-box;
         }
 
-        /* LAS TARJETAS YA NO TIENEN ACCESO LIBRE, TE MANDAN AL LOGIN */
         .level-card {
             background: var(--oxford);
-            width: 180px;
-            height: 240px;
-            border-radius: 18px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            width: 140px; /* Más compactas */
+            height: 180px;
+            border-radius: 14px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -85,43 +91,146 @@
         }
 
         .level-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+            transform: translateY(-5px);
+            box-shadow: 0 12px 22px rgba(0, 0, 0, 0.15);
         }
 
-        /* CLASE ESPECIAL EXCLUSIVA PARA EL C1 EN ORO */
         .level-card.c1-gold {
             background: var(--gold);
             color: var(--oxford);
         }
 
         .level-name {
-            font-size: 2.8rem;
+            font-size: 2.2rem;
             font-weight: 700;
             margin: 0;
         }
 
         .level-desc {
-            font-size: 0.75rem;
-            margin-top: 15px;
+            font-size: 0.7rem;
+            margin-top: 8px;
             letter-spacing: 1px;
             text-transform: uppercase;
             opacity: 0.8;
-            font-weight: 400;
+            font-weight: 600;
         }
 
-        .c1-gold .level-desc {
+        /* CONTENIDO PEDAGÓGICO E IMPORTANCIA */
+        .info-section {
+            width: 90%;
+            max-width: 900px;
+            background: var(--white);
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            margin-bottom: 40px;
+            box-sizing: border-box;
+        }
+
+        .info-section h2 {
+            font-size: 1.4rem;
+            border-left: 5px solid var(--gold);
+            padding-left: 12px;
+            margin-top: 0;
+            margin-bottom: 20px;
             color: var(--oxford);
-            opacity: 0.7;
         }
 
-        /* PIE DE PÁGINA */
+        .info-section h3 {
+            font-size: 1.1rem;
+            margin-top: 25px;
+            margin-bottom: 10px;
+            color: var(--oxford);
+        }
+
+        .info-section p, .info-section li {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: var(--dark-text);
+        }
+
+        .info-section ul {
+            padding-left: 20px;
+            margin-top: 5px;
+        }
+
+        .info-section li {
+            margin-bottom: 8px;
+        }
+
+        /* SECCIÓN DE STRIPE (PAGO) */
+        .payment-box {
+            text-align: center;
+            background: linear-gradient(135deg, #002147 0%, #001025 100%);
+            color: var(--white);
+            width: 100%;
+            padding: 35px 20px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .payment-box h2 {
+            font-size: 1.5rem;
+            margin: 0 0 10px 0;
+            color: var(--gold);
+        }
+
+        .payment-box p {
+            font-size: 0.95rem;
+            max-width: 600px;
+            margin: 0 0 25px 0;
+            opacity: 0.9;
+            line-height: 1.5;
+        }
+
+        .stripe-btn {
+            background-color: var(--gold);
+            color: var(--oxford);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 14px 35px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-size: 0.95rem;
+            box-shadow: 0 4px 15px rgba(197, 160, 89, 0.3);
+            transition: transform 0.2s, background-color 0.2s;
+        }
+
+        .stripe-btn:hover {
+            transform: scale(1.05);
+            background-color: #b38f4b;
+        }
+
         .footer-text {
             font-size: 0.85rem;
             color: #7f8c8d;
             font-style: italic;
-            margin-top: 50px;
+            margin-top: 40px;
             margin-bottom: 30px;
+        }
+
+        /* RESPONSIVO COMPLETO (CELULARES) */
+        @media (max-width: 600px) {
+            .container {
+                gap: 10px;
+                padding: 10px;
+            }
+            .level-card {
+                width: 45%; /* Dos columnas en pantallas muy chicas */
+                height: 150px;
+            }
+            .level-name {
+                font-size: 1.8rem;
+            }
+            .info-section {
+                padding: 20px;
+            }
+            .info-section h2 {
+                font-size: 1.2rem;
+            }
         }
     </style>
 </head>
@@ -135,6 +244,7 @@
         <img src="./assets/Banner.png" alt="Objectif Réussite DELF" class="banner-img">
     </div>
 
+    <h2 class="cards-section-title">Espace d'entraînement</h2>
     <div class="container">
         <a href="login.html?level=A1" class="level-card">
             <h2 class="level-name">A1</h2>
@@ -160,6 +270,71 @@
             <h2 class="level-name">C1</h2>
             <span class="level-desc">Autonome</span>
         </a>
+    </div>
+
+    <!-- SECCIÓN PEDAGÓGICA -->
+    <div class="info-section">
+        <h2>Structure des Niveaux CECRL & Attendus</h2>
+        <p>Le Cadre européen commun de référence pour les langues (CECRL) structure l'apprentissage du français en niveaux progressifs, définissant précisément ce que le candidat est capable de réaliser.</p>
+        
+        <h3>Niveau A1 : Découverte</h3>
+        <p>Ce niveau valorise los primeros conocimientos de la lengua[cite: 1]. El candidato es capaz de[cite: 1]:</p>
+        <ul>
+            <li>Comprendre et utiliser des expressions familières et quotidiennes visant à satisfaire des besoins concrets[cite: 1].</li>
+            <li>Se présenter, poser des questions simples sur l'identité (logement, relations, biens) et y répondre[cite: 1].</li>
+            <li>Interagir de façon simple si l'interlocuteur parle lentement et se montre coopératif[cite: 1].</li>
+        </ul>
+
+        <h3>Niveau A2 : Survie</h3>
+        <p>Ce niveau valide la compétence langagière d'un utilisateur élémentaire, capable de s'intégrer dans la vie quotidienne[cite: 1]. Los objetivos clave son[cite: 1]:</p>
+        <ul>
+            <li>Comprendre des phrases isolées et des expressions fréquemment utilisées complexes (relations, achats, emploi, environnement proche)[cite: 1].</li>
+            <li>Communiquer lors de tâches simples et routinières ne demandant qu'un échange d'informations direct[cite: 1].</li>
+            <li>Décrire avec des moyens simples sa formation, son environnement immédiat et des sujets correspondant à des besoins immédiats[cite: 1].</li>
+        </ul>
+
+        <h3>Niveau B1 : Seuil</h3>
+        <p>Ici, l'utilisateur devient indépendant[cite: 1]. Il devient capable de poursuivre une interaction et de faire face à des situations imprévues[cite: 1]:</p>
+        <ul>
+            <li>Comprendre les points essentiels d'un langage clair et standard (travail, école, loisirs)[cite: 1].</li>
+            <li>Se débrouiller dans la majorité des situations rencontrées lors d'un voyage dans la région de la langue cible[cite: 1].</li>
+            <li>Produire un discours simple et cohérent sur des sujets familiers et exprimer brièvement des raisons ou explications pour un projet ou une idée[cite: 1].</li>
+        </ul>
+
+        <h3>Niveau B2 : Indépendant</h3>
+        <p>L'utilisateur acquiert un degré d'indépendance qui lui permet d'argumenter, de défendre son opinion et de mener une négociation fluide[cite: 1]:</p>
+        <ul>
+            <li>Comprendre le contenu essentiel de sujets complexes (textes concrets ou abstraits), y compris des discussions techniques dans sa spécialité[cite: 1].</li>
+            <li>Communiquer avec un degré de spontanéité et d'aisance tel qu'une conversation avec un locuteur natif ne comporte de tension pour personne[cite: 1].</li>
+            <li>Émettre un avis clair et détaillé sur une grande gamme de sujets, et présenter les avantages et inconvénients de diverses options[cite: 1].</li>
+        </ul>
+
+        <h3>Niveau C1 : Autonome</h3>
+        <p>Le niveau d'un utilisateur expérimenté, capable de mener des communications académiques et professionnelles de haut niveau[cite: 1]:</p>
+        <ul>
+            <li>Comprendre une grande gamme de textes longs et exigeants, tout en saisissant les significations implicites y nuances fines[cite: 1].</li>
+            <li>S'exprimer spontanément et couramment sans trop apparemment devoir chercher ses mots[cite: 1].</li>
+            <li>Utiliser la langue de façon souple et efficace dans sa vie sociale, professionnelle ou académique en structurant des discours complexes[cite: 1].</li>
+        </ul>
+    </div>
+
+    <!-- SECCIÓN DE IMPORTANCIA DE LA CERTIFICACIÓN -->
+    <div class="info-section">
+        <h2>L'importance de la Certification DELF</h2>
+        <p>Les diplômes **DELF (Diplôme d'Études en Langue Française)** sont des certifications officielles délivrées par le ministère français de l'Éducation nationale[cite: 1].</p>
+        <ul>
+            <li>**Validité permanente :** Contrairement à d'autres tests, une fois obtenu, le diplôme DELF est valable toute votre vie.</li>
+            <li>**Reconnaissance internationale :** Certifie officiellement vos compétences linguistiques auprès des universités francophones, des institutions et des entreprises partout dans le monde.</li>
+            <li>**Atout professionnel :** Valorise votre CV à l'international et ouvre les portes à des opportunités de mobilité professionnelle en Europe, au Canada et dans toute la francophonie.</li>
+        </ul>
+    </div>
+
+    <!-- SECCIÓN DE PAGO (STRIPE) -->
+    <div class="payment-box">
+        <h2>Accès Premium à la Plateforme</h2>
+        <p>Débloquez des examens blancs complets, des grilles d'évaluation officielles et des feedbacks personnalisés étape par étape pour assurer votre réussite.</p>
+        <!-- Enlace listo para Stripe: Reemplaza el '#' con tu enlace de Stripe cuando lo tengas -->
+        <a href="#" class="stripe-btn" id="stripe-link">Activer mon accès Premium</a>
     </div>
 
     <div class="footer-text">De la intención a la certificación.</div>
