@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -63,7 +63,6 @@
             letter-spacing: 1px;
         }
 
-        /* CONTENEDOR PRINCIPAL FLUJO VERTICAL */
         .levels-wrapper {
             width: 90%;
             max-width: 900px;
@@ -73,7 +72,6 @@
             margin-bottom: 40px;
         }
 
-        /* BLOQUE INDIVIDUAL DE CADA NIVEL */
         .level-block {
             background: var(--white);
             border-radius: 16px;
@@ -88,7 +86,6 @@
             box-shadow: 0 8px 25px rgba(0,0,0,0.08);
         }
 
-        /* ENCABEZADO DE CADA BLOQUE (TARJETA + BOTÓN DE ACCIÓN) */
         .level-header {
             display: flex;
             align-items: center;
@@ -140,7 +137,6 @@
             transition: transform 0.3s;
         }
 
-        /* CONTENIDO DESPLEGABLE OCULTO POR DEFECTO */
         .level-content {
             max-height: 0;
             overflow: hidden;
@@ -149,7 +145,7 @@
         }
 
         .level-content.active {
-            max-height: 800px; /* Suficiente para el texto */
+            max-height: 800px;
             padding: 20px 10px 10px 10px;
             border-top: 1px solid #eee;
             margin-top: 15px;
@@ -190,7 +186,6 @@
             color: var(--oxford);
         }
 
-        /* SECCIÓN DE IMPORTANCIA DE LA CERTIFICACIÓN */
         .info-section {
             width: 90%;
             max-width: 900px;
@@ -217,7 +212,6 @@
             color: var(--dark-text);
         }
 
-        /* SECCIÓN DE PAGO (STRIPE) */
         .payment-box {
             text-align: center;
             background: linear-gradient(135deg, #002147 0%, #001025 100%);
@@ -271,7 +265,6 @@
             margin-bottom: 30px;
         }
 
-        /* AJUSTES CELULARES */
         @media (max-width: 600px) {
             .level-title-text {
                 font-size: 0.95rem;
@@ -300,7 +293,7 @@
         <img src="./assets/Banner.png" alt="Objectif Réussite DELF" class="banner-img">
     </div>
 
-    <h2 class="cards-section-title">Espace d'entraînement</h2>
+    <h2 class="cards-section-title">Espacio de Entrenamiento</h2>
     
     <div class="levels-wrapper">
 
@@ -309,20 +302,20 @@
             <div class="level-header" onclick="toggleLevel('content-a1', this)">
                 <div class="level-badge">
                     <h3 class="level-name">A1</h3>
-                    <span class="level-desc">Découverte</span>
+                    <span class="level-desc">Acceso</span>
                 </div>
-                <div class="level-title-text">Utilisateur Élémentaire - Accès aux bases</div>
+                <div class="level-title-text">Usuario Elemental - Nivel Descubrimiento</div>
                 <span class="toggle-arrow">▼</span>
             </div>
             <div id="content-a1" class="level-content">
-                <h4>Attendus du Niveau A1</h4>
-                <p>Ce niveau valorise los primeros conocimientos de la lengua. El candidato es capaz de:</p>
+                <h4>Aprendizajes Esperados (Attendus) - Nivel A1</h4>
+                <p>Este nivel valora los primeros conocimientos de la lengua[cite: 1]. El candidato es capaz de[cite: 1]:</p>
                 <ul>
-                    <li>Comprendre et utiliser des expressions familières et quotidiennes visant à satisfaire des besoins concrets[cite: 1].</li>
-                    <li>Se présenter, poser des questions simples sur l'identité (logement, relations, biens) et y répondre[cite: 1].</li>
-                    <li>Interagir de façon simple si l'interlocuteur parle lentement et se montre coopératif[cite: 1].</li>
+                    <li>Comprender y utilizar expresiones familiares y cotidianas orientadas a satisfacer necesidades concretas[cite: 1].</li>
+                    <li>Presentarse a sí mismo, formular preguntas sencillas sobre datos personales (vivienda, relaciones, pertenencias) y responder a ellas[cite: 1].</li>
+                    <li>Interactuar de forma sencilla siempre que el interlocutor hable despacio y se muestre cooperativo[cite: 1].</li>
                 </ul>
-                <a href="login.html?level=A1" class="enter-btn">S'entraîner au Niveau A1</a>
+                <a href="login.html?level=A1" class="enter-btn">Entrenar Nivel A1</a>
             </div>
         </div>
 
@@ -331,20 +324,20 @@
             <div class="level-header" onclick="toggleLevel('content-a2', this)">
                 <div class="level-badge">
                     <h3 class="level-name">A2</h3>
-                    <span class="level-desc">Survie</span>
+                    <span class="level-desc">Plataforma</span>
                 </div>
-                <div class="level-title-text">Utilisateur Élémentaire - Intégration quotidienne</div>
+                <div class="level-title-text">Usuario Elemental - Nivel de Supervivencia</div>
                 <span class="toggle-arrow">▼</span>
             </div>
             <div id="content-a2" class="level-content">
-                <h4>Attendus du Niveau A2</h4>
-                <p>Ce niveau valide la compétence langagière d'un utilisateur élémentaire, capable de s'intégrer dans la vie quotidienne[cite: 1]. Los objetivos clave son[cite: 1]:</p>
+                <h4>Aprendizajes Esperados (Attendus) - Nivel A2</h4>
+                <p>Este nivel valida la competencia lingüística de un usuario básico, capaz de desenvolverse en la vida cotidiana[cite: 1]. Los objetivos clave son[cite: 1]:</p>
                 <ul>
-                    <li>Comprendre des phrases isolées et des expressions fréquemment utilisées complexes (relations, achats, emploi, environnement proche)[cite: 1].</li>
-                    <li>Communiquer lors de tâches simples et routinières ne demandant qu'un échange d'informations direct[cite: 1].</li>
-                    <li>Décrire avec des moyens simples sa formation, son environnement immédiat et des sujets correspondant à des besoins immédiats[cite: 1].</li>
+                    <li>Comprender frases aisladas y expresiones de uso frecuente relacionadas con áreas de relevancia inmediata (información personal, compras, empleo, entorno cercano)[cite: 1].</li>
+                    <li>Comunicarse al realizar tareas simples y rutinarias que requieren un intercambio directo de información[cite: 1].</li>
+                    <li>Describir con términos sencillos su formación, su entorno inmediato y temas correspondientes a necesidades inmediatas[cite: 1].</li>
                 </ul>
-                <a href="login.html?level=A2" class="enter-btn">S'entraîner au Niveau A2</a>
+                <a href="login.html?level=A2" class="enter-btn">Entrenar Nivel A2</a>
             </div>
         </div>
 
@@ -353,20 +346,20 @@
             <div class="level-header" onclick="toggleLevel('content-b1', this)">
                 <div class="level-badge">
                     <h3 class="level-name">B1</h3>
-                    <span class="level-desc">Seuil</span>
+                    <span class="level-desc">Umbral</span>
                 </div>
-                <div class="level-title-text">Utilisateur Indépendant - Autonomie en voyage</div>
+                <div class="level-title-text">Usuario Independiente - Autonomía Práctica</div>
                 <span class="toggle-arrow">▼</span>
             </div>
             <div id="content-b1" class="level-content">
-                <h4>Attendus du Niveau B1</h4>
-                <p>Ici, l'utilisateur devient indépendant[cite: 1]. Il devient capable de poursuivre une interaction et de faire face à des situations imprévues[cite: 1]:</p>
+                <h4>Aprendizajes Esperados (Attendus) - Nivel B1</h4>
+                <p>Aquí el usuario se vuelve independiente[cite: 1]. Es capaz de mantener una interacción y hacer frente a situaciones imprevistas[cite: 1]:</p>
                 <ul>
-                    <li>Comprendre les points essentiels d'un langage clair et standard (travail, école, loisirs)[cite: 1].</li>
-                    <li>Se débrouiller dans la majorité des situations rencontrées lors d'un voyage dans la région de la langue cible[cite: 1].</li>
-                    <li>Produire un discours simple et cohérent sur des sujets familiers et exprimer brièvement des raisons ou explications pour un projet ou une idée[cite: 1].</li>
+                    <li>Comprender los puntos principales de un discurso claro y estándar sobre temas familiares (trabajo, escuela, ocio)[cite: 1].</li>
+                    <li>Desenvolverse en la mayoría de las situaciones que pueden surgir durante un viaje por zonas donde se utiliza la lengua meta[cite: 1].</li>
+                    <li>Producir un discurso sencillo y coherente sobre temas familiares y expresar brevemente razones o explicaciones para un proyecto o idea[cite: 1].</li>
                 </ul>
-                <a href="login.html?level=B1" class="enter-btn">S'entraîner au Niveau B1</a>
+                <a href="login.html?level=B1" class="enter-btn">Entrenar Nivel B1</a>
             </div>
         </div>
 
@@ -375,20 +368,20 @@
             <div class="level-header" onclick="toggleLevel('content-b2', this)">
                 <div class="level-badge">
                     <h3 class="level-name">B2</h3>
-                    <span class="level-desc">Indépendant</span>
+                    <span class="level-desc">Avanzado</span>
                 </div>
-                <div class="level-title-text">Utilisateur Indépendant - Argumentation & Fluidité</div>
+                <div class="level-title-text">Usuario Independiente - Argumentación y Fluidez</div>
                 <span class="toggle-arrow">▼</span>
             </div>
             <div id="content-b2" class="level-content">
-                <h4>Attendus du Niveau B2</h4>
-                <p>L'utilisateur acquiert un degré d'indépendance qui lui permet d'argumenter, de défendre son opinion et de mener une négociation fluide[cite: 1]:</p>
+                <h4>Aprendizajes Esperados (Attendus) - Nivel B2</h4>
+                <p>El usuario adquiere un grado de independencia que le permite argumentar, defender su opinión y mantener una negociación fluida[cite: 1]:</p>
                 <ul>
-                    <li>Comprendre le contenu essentiel de sujets complexes (textes concrets ou abstraits), y compris des discussions techniques dans sa spécialité[cite: 1].</li>
-                    <li>Communiquer avec un degré de spontanéité et d'aisance tel qu'une conversation avec un locuteur natif ne comporte de tension pour personne[cite: 1].</li>
-                    <li>Émettre un avis clair et détaillé sur une grande gamme de sujets, et présenter les avantages et inconvénients de diverses options[cite: 1].</li>
+                    <li>Comprender el contenido esencial de textos complejos sobre temas tanto concretos como abstractos, incluyendo discusiones técnicas en su especialidad[cite: 1].</li>
+                    <li>Comunicarse con un grado de espontaneidad y fluidez que hace posible la interacción regular con hablantes nativos sin tensión para ninguna de las partes[cite: 1].</li>
+                    <li>Expresarse de forma clara y detallada sobre una gran variedad de temas, así como defender un punto de vista exponiendo las ventajas e inconvenientes de distintas opciones[cite: 1].</li>
                 </ul>
-                <a href="login.html?level=B2" class="enter-btn">S'entraîner au Niveau B2</a>
+                <a href="login.html?level=B2" class="enter-btn">Entrenar Nivel B2</a>
             </div>
         </div>
 
@@ -397,20 +390,20 @@
             <div class="level-header" onclick="toggleLevel('content-c1', this)">
                 <div class="level-badge c1-gold">
                     <h3 class="level-name">C1</h3>
-                    <span class="level-desc">Autonome</span>
+                    <span class="level-desc">Autónomo</span>
                 </div>
-                <div class="level-title-text">Utilisateur Expérimenté - Niveau Académique</div>
+                <div class="level-title-text">Usuario Experimentado - Nivel Académico</div>
                 <span class="toggle-arrow">▼</span>
             </div>
             <div id="content-c1" class="level-content">
-                <h4>Attendus du Niveau C1</h4>
-                <p>Le niveau d'un utilisateur expérimenté, capable de mener des communications académiques et professionnelles de haut niveau[cite: 1]:</p>
+                <h4>Aprendizajes Esperados (Attendus) - Nivel C1</h4>
+                <p>El nivel de un usuario competente, capaz de mantener una comunicación académica y profesional de alto nivel[cite: 1]:</p>
                 <ul>
-                    <li>Comprendre une grande gamme de textes longs et exigeants, tout en saisissant les significations implicites y nuances fines[cite: 1].</li>
-                    <li>S'exprimer spontanément et couramment sans trop apparemment devoir chercher ses mots[cite: 1].</li>
-                    <li>Utiliser la langue de façon souple et efficace dans sa vie sociale, professionnelle ou académique en structurant des discours complexes[cite: 1].</li>
+                    <li>Comprender una amplia variedad de textos extensos y exigentes, reconociendo sentidos implícitos y matices sutiles[cite: 1].</li>
+                    <li>Expresarse de forma espontánea y fluida sin un esfuerzo evidente para encontrar las palabras adecuadas[cite: 1].</li>
+                    <li>Utilizar el idioma de manera flexible y eficaz para fines sociales, profesionales o académicos, estructurando discursos complejos[cite: 1].</li>
                 </ul>
-                <a href="login.html?level=C1" class="enter-btn">S'entraîner au Niveau C1</a>
+                <a href="login.html?level=C1" class="enter-btn">Entrenar Nivel C1</a>
             </div>
         </div>
 
@@ -418,31 +411,29 @@
 
     <!-- SECCIÓN DE IMPORTANCIA DE LA CERTIFICACIÓN -->
     <div class="info-section">
-        <h2>L'importance de la Certification DELF</h2>
-        <p>Les diplômes **DELF (Diplôme d'Études en Langue Française)** sont des certifications officielles délivrées par le ministère français de l'Éducation nationale[cite: 1].</p>
+        <h2>La Importancia de la Certificación DELF</h2>
+        <p>Los diplomas **DELF (Diplôme d'Études en Langue Française)** son certificaciones oficiales otorgadas por el Ministerio de Educación Nacional de Francia[cite: 1].</p>
         <ul>
-            <li>**Validité permanente :** Contrairement à d'autres tests, une fois obtenu, le diplôme DELF est valable toute votre vie.</li>
-            <li>**Reconnaissance internationale :** Certifie officiellement vos compétences linguistiques auprès des universités francophones, des institutions et des entreprises partout dans le monde.</li>
-            <li>**Atout professionnel :** Valorise votre CV à l'international et ouvre les portes à des opportunités de mobilité professionnelle en Europe, au Canada et dans toute la francophonie.</li>
+            <li>**Validez permanente:** A diferencia de otras evaluaciones, una vez obtenido, el diploma DELF tiene vigencia para toda la vida.</li>
+            <li>**Reconocimiento internacional:** Certifica oficialmente tus competencias lingüísticas ante universidades francófonas, instituciones y empresas en todo el mundo.</li>
+            <li>**Impulso profesional:** Enriquece tu perfil internacional y abre las puertas a oportunidades de movilidad académica y laboral en Europa, Canadá y toda la francofonía.</li>
         </ul>
     </div>
 
     <!-- SECCIÓN DE PAGO (STRIPE) -->
     <div class="payment-box">
-        <h2>Accès Premium à la Plateforme</h2>
-        <p>Débloquez des examens blancs complets, des grilles d'évaluation officielles et des feedbacks personnalisés étape par étape pour assurer votre réussite.</p>
-        <a href="#" class="stripe-btn" id="stripe-link">Activer mon accès Premium</a>
+        <h2>Acceso Premium a la Plataforma</h2>
+        <p>Desbloquea simulacros de examen completos, criterios de evaluación oficiales y retroalimentación personalizada paso a paso para asegurar tu éxito.</p>
+        <a href="#" class="stripe-btn" id="stripe-link">Activar mi acceso Premium</a>
     </div>
 
     <div class="footer-text">De la intención a la certificación.</div>
 
-    <!-- INTERACTIVIDAD DE LOS ACORDEONES -->
     <script>
         function toggleLevel(id, headerElement) {
             const content = document.getElementById(id);
             const arrow = headerElement.querySelector('.toggle-arrow');
             
-            // Cerrar otros si estuvieran abiertos (opcional, para mantener orden)
             document.querySelectorAll('.level-content').forEach(el => {
                 if(el.id !== id && el.classList.contains('active')) {
                     el.classList.remove('active');
@@ -451,7 +442,6 @@
                 }
             });
 
-            // Toggle del actual
             if (content.classList.contains('active')) {
                 content.classList.remove('active');
                 content.style.maxHeight = "0";
