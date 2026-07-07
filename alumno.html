@@ -1598,15 +1598,15 @@
                                 }
 
                                 if (urlId !== "admin_preview" && docRefValidado) {
-                                    const perfilUsuarioRef = doc(db, "Usuarios", urlId);
-                                    await setDoc(perfilUsuarioRef, {
-                                        mapa_aciertos: {
-                                            [llaveProgreso]: true
-                                        }
-                                    }, { merge: true });
-                                    
-                                    generarMenuJerarquico();
-                                }
+    const perfilUsuarioRef = doc(db, "Usuarios", urlId);
+    
+    // SOLUCIÓN: Usar notación de puntos dinámica para actualizar solo esta casilla sin machacar las anteriores
+    await setDoc(perfilUsuarioRef, {
+        [`mapa_aciertos.${llaveProgreso}`]: true
+    }, { merge: true });
+    
+    generarMenuJerarquico();
+}
 
                                 if (urlId !== "admin_preview" && docRefValidado) {
                                     await addDoc(collection(db, "Usuarios", urlId, "HistorialSophia"), {
