@@ -1667,8 +1667,12 @@ await setDoc(extDocRef, {
                                     const snapshotIntentos = await getDocs(qIntentos);
                                     const numeroDeIntento = snapshotIntentos.size + 1;
 
+const ahora = new Date();
+
                                     await addDoc(historialRef, {
-                                        fecha: new Date().toISOString().split('T')[0],
+                                        fecha: ahora.toISOString().split('T')[0],
+                                        hora_registro: ahora.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit', second: '2-digit' }),
+                                        timestamp: ahora.getTime(),
                                         tipo: "Production_Escrita",
                                         habilidad: "PE",
                                         texto_alumno: txtAlumno,
@@ -1677,7 +1681,6 @@ await setDoc(extDocRef, {
                                         actividad: currentExerciseIndex,
                                         intento: numeroDeIntento
                                     });
-                                }
                                 
                                 window.inicializarBotonHistorialIntentos();
                                 await calcularTodasLasNotasHabilidades();
