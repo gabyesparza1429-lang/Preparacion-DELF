@@ -1756,69 +1756,72 @@ await setDoc(extDocRef, {
             }
         };
         
-        // === RENDERIZADO DEL PANEL CRONOLÓGICO DE INTENTOS ===
-        window.inicializarBotonHistorialIntentos = function() {
-            const btnVerIntentos = document.getElementById('btn-ver-intentos');
-            const contenedorHistorial = document.getElementById('historial-intentos-container');
+      // === RENDERIZADO DEL PANEL CRONOLÓGICO DE INTENTOS ===
+window.inicializarBotonHistorialIntentos = function() {
+    const btnVerIntentos = document.getElementById('btn-ver-intentos');
+    const contenedorHistorial = document.getElementById('historial-intentos-container');
+    
+    if (!btnVerIntentos || !contenedorHistorial) return;
+    
+    btnVerIntentos.style.display = "inline-block";
+    
+    btnVerIntentos.onclick = async () => {
+        if (contenedorHistorial.style.display === "block") {
+            contenedorHistorial.style.display = "none";
+            btnVerIntentos.innerHTML = `<i class="fas fa-history"></i> Voir mes essais`;
+            return;
+        }
+        
+        contenedorHistorial.innerHTML = "<i>Chargement de l'historique...</i>";
+        contenedorHistorial.style.display = "block";
+        btnVerIntentos.innerHTML = `<i class="fas fa-times"></i> Masquer l'historique`;
+        
+        try {
+            const qHistorial = query(collection(db, "Usuarios", urlId, "HistorialSophia"), 
+                where("unidad", "==", currentUnitId), 
+                where("actividad", "==", currentExerciseIndex),
+                where("habilidad", "==", "PE")
+            );
+            const snap = await getDocs(qHistorial);
             
-            if (!btnVerIntentos || !contenedorHistorial) return;
+            if (snap.empty) {
+                contenedorHistorial.innerHTML = "<p style='font-size:0.85rem; color:#666;'>Aucun essai précédent trouvé.</p>";
+                return;
+            }
             
-            btnVerIntentos.style.display = "inline-block";
+            let historialHTML = `<h6 style="margin:0 0 12px 0; color:var(--oxford); font-size:0.9rem; border-bottom:2px solid var(--gold); padding-bottom:5px;"><i class="fas fa-chart-line"></i> Évolution de vos tentatives :</h6>`;
             
-            btnVerIntentos.onclick = async () => {
-                if (contenedorHistorial.style.display === "block") {
-                    contenedorHistorial.style.display = "none";
-                    btnVerIntentos.innerHTML = `<i class="fas fa-history"></i> Voir mes essais`;
-                    return;
-                }
+            // Ordenamos los intentos para que el último (el más reciente) aparezca hasta arriba
+            const documentosOrdenados = snap.docs.map(d => {
+                const data = d.data();
+                return { ...data, timestampID: data.timestamp || 0 };
+            }).sort((a, b) => b.timestampID - a.timestampID);
+            
+            documentosOrdenados.forEach((datosIntento) => {
+                let respuestaLimpia = datosIntento.respuesta_ia || "Pas de correction disponible.";
+                let marcaTiempo = datosIntento.hora_registro ? `${datosIntento.fecha} a las ${datosIntento.hora_registro}` : datosIntento.fecha;
                 
-                contenedorHistorial.innerHTML = "<i>Chargement de l'historique...</i>";
-                contenedorHistorial.style.display = "block";
-                btnVerIntentos.innerHTML = `<i class="fas fa-times"></i> Masquer l'historique`;
-                
-                try {
-                    const qHistorial = query(collection(db, "Usuarios", urlId, "HistorialSophia"), 
-                        where("unidad", "==", currentUnitId), 
-                        where("actividad", "==", currentExerciseIndex),
-                        where("habilidad", "==", "PE")
-                    );
-                    const snap = await getDocs(qHistorial);
-                    
-                    if (snap.empty) {
-                        contenedorHistorial.innerHTML = "<p style='font-size:0.85rem; color:#666;'>Aucun essai précédent trouvé.</p>";
-                        return;
-                    }
-                    
-                    let historialHTML = `<h6 style="margin:0 0 12px 0; color:var(--oxford); font-size:0.9rem; border-bottom:2px solid var(--gold); padding-bottom:5px;"><i class="fas fa-chart-line"></i> Évolution de vos tentatives :</h6>`;
-                    
-                    // Ordenamos de forma ascendente (Essai 1, Essai 2...) para marcar la línea del tiempo
-                    const documentosOrdenados = snap.docs.map(d => d.data()).sort((a, b) => (a.intento || 0) - (b.intento || 0));
-                    
-                    documentosOrdenados.forEach((datosIntento) => {
-                        let respuestaLimpia = datosIntento.respuesta_ia || "Pas de correction disponible.";
-                        
-                        historialHTML += `
-                        <div style="border-bottom: 1px dashed #ccc; padding: 15px 0; font-family:'Montserrat';">
-                            <p style="margin: 0 0 6px 0; color: var(--gold); font-weight: 700; font-size:0.9rem;">
-                                <i class="fas fa-bookmark"></i> Essai N° ${datosIntento.intento || 1} — <span style="color:#666; font-weight:500;">${datosIntento.fecha || ''}</span>
-                            </p>
-                            <p style="margin: 0 0 10px 0; background: #f8f9fa; padding: 10px; border-radius: 4px; color:#555; font-size:0.85rem; border-left:3px solid #ccc;">
-                                <strong>Votre production :</strong><br>${datosIntento.texto_alumno || ''}
-                            </p>
-                            <div style="font-size: 0.85rem; color: #333; line-height: 1.5; background:#fff; padding:5px; border-radius:4px;">
-                                ${respuestaLimpia}
-                            </div>
-                        </div>`;
-                    });
-                    
-                    contenedorHistorial.innerHTML = historialHTML;
-                } catch (err) {
-                    console.error("Error al cargar historial de avances:", err);
-                    contenedorHistorial.innerHTML = "<span style='color:red;'>Erreur lors du chargement.</span>";
-                }
-            };
-        };
-
+                historialHTML += `
+                <div style="border-bottom: 1px dashed #ccc; padding: 15px 0; font-family:'Montserrat';">
+                    <p style="margin: 0 0 6px 0; color: var(--gold); font-weight: 700; font-size:0.9rem;">
+                        <i class="fas fa-bookmark"></i> Intentado el: <span style="color:#111; font-weight:600;">${marcaTiempo}</span>
+                    </p>
+                    <p style="margin: 0 0 10px 0; background: #f8f9fa; padding: 10px; border-radius: 4px; color:#555; font-size:0.85rem; border-left:3px solid #ccc;">
+                        <strong>Votre production :</strong><br>${datosIntento.texto_alumno || ''}
+                    </p>
+                    <div style="font-size: 0.85rem; color: #333; line-height: 1.5; background:#fff; padding:5px; border-radius:4px;">
+                        ${respuestaLimpia}
+                    </div>
+                </div>`;
+            });
+            
+            contenedorHistorial.innerHTML = historialHTML;
+        } catch (err) {
+            console.error("Error al cargar historial de avances:", err);
+            contenedorHistorial.innerHTML = "<span style='color:red;'>Erreur lors du chargement.</span>";
+        }
+    };
+};
         window.avanzarSiguienteEjercicio = function() {
             let ejercicios = unidadesCache[currentUnitId][currentSkill] || unidadesCache[currentUnitId][currentSkill.toLowerCase()] || [];
             if (currentExerciseIndex + 1 < ejercicios.length) {
