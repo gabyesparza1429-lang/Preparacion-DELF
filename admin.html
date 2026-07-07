@@ -28,13 +28,17 @@
         .ia-dropzone { border: 2px dashed var(--gold); padding: 20px; border-radius: 8px; background: #fafbfc; text-align: center; }
         .ia-status-msg { font-size: 0.8rem; font-weight: bold; margin-top: 8px; display: block; }
         .token-badge { background: #fff3e0; color: #e65100; font-size: 0.72rem; padding: 2px 6px; border-radius: 4px; font-weight: bold; border: 1px solid #ffe0b2; margin-top: 3px; display: inline-block; }
+        
+        /* Nuevos estilos específicos para KPIs de NeuroClarity */
+        .nc-kpi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 20px; }
+        .nc-kpi-card { background: var(--purple-pale, #f9f6fc); padding: 15px; border-radius: 8px; border: 1px solid #e1d7f2; text-align: center; }
+        .nc-kpi-card h4 { margin: 0; font-size: 0.75rem; color: #555; text-transform: uppercase; }
+        .nc-kpi-card p { margin: 5px 0 0 0; font-size: 1.5rem; font-weight: bold; color: var(--oxford); }
     </style>
 </head>
 <body>
 
-    <!-- ========================================== -->
-    <!-- MENÚ LATERAL: BOTONES DE PROYECTOS         -->
-    <!-- ========================================== -->
+    <!-- MENÚ LATERAL: BOTONES DE PROYECTOS -->
     <nav class="sidebar">
         <h2>Centro de Mando</h2>
         <button class="nav-btn active" onclick="tab('delf', this)"><i class="fas fa-certificate"></i> Réussite DELF</button>
@@ -56,9 +60,7 @@
             </div>
         </div>
 
-        <!-- ========================================== -->
-        <!-- VISTA DE CONTENIDO: RÉUSSITE DELF          -->
-        <!-- ========================================== -->
+        <!-- VISTA DE CONTENIDO: RÉUSSITE DELF -->
         <div id="tab-delf" class="content active">
             <div class="card">
                 <h3 style="color: var(--oxford); margin-top:0;"><i class="fas fa-robot" style="color:var(--gold);"></i> Entrenamiento para Sophia IA</h3>
@@ -111,9 +113,7 @@
             </div>
         </div>
 
-        <!-- ========================================== -->
-        <!-- VISTA DE CONTENIDO: GESTIÓN DE ALUMNOS    -->
-        <!-- ========================================== -->
+        <!-- VISTA DE CONTENIDO: GESTIÓN DE ALUMNOS -->
         <div id="tab-usuarios" class="content">
             <div class="card">
                 <h3>Nuevo Alumno</h3>
@@ -133,19 +133,59 @@
             <div id="lista_alumnos" style="margin-top:20px;"></div>
         </div>
 
-        <!-- ========================================== -->
-        <!-- VISTA DE CONTENIDO: NEUROCLARITY          -->
-        <!-- ========================================== -->
+        <!-- VISTA DE CONTENIDO: NEUROCLARITY (DESARROLLADA CON LA LOGICA DE MEMBRESÍAS) -->
         <div id="tab-clarity" class="content">
+            <!-- 1. BLOQUE DE CONTADORES GLOBALES (KPIs) -->
+            <div class="nc-kpi-grid">
+                <div class="nc-kpi-card">
+                    <h4>Membresías Vendidas</h4>
+                    <p id="nc-kpi-vendidas">0</p>
+                </div>
+                <div class="nc-kpi-card">
+                    <h4>Alumnos Activos</h4>
+                    <p id="nc-kpi-activos">0</p>
+                </div>
+                <div class="nc-kpi-card">
+                    <h4>Cupos Disponibles</h4>
+                    <p id="nc-kpi-disponibles">0</p>
+                </div>
+            </div>
+
+            <!-- 2. ALTA DE ESCUELAS / PAQUETES DE VOLUMEN -->
             <div class="card">
-                <h3>NeuroClarity</h3>
-                <p style="color:#666; font-size:0.9rem;">Módulo reservado para desarrollo del proyecto de Neurodesarrollo.</p>
+                <h3><i class="fas fa-school" style="color:var(--gold);"></i> Alta de Escuela / Licencia Escolar</h3>
+                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-bottom:15px;">
+                    <div>
+                        <label style="font-size:0.75rem; font-weight:700;">Nombre del Colegio / Cliente:</label>
+                        <input type="text" id="nc_school_name" placeholder="Ej. Instituto Querétaro">
+                    </div>
+                    <div>
+                        <label style="font-size:0.75rem; font-weight:700;">Correo Electrónico del Profesor Base:</label>
+                        <input type="email" id="nc_school_email" placeholder="profesor@escuela.com">
+                    </div>
+                    <div>
+                        <label style="font-size:0.75rem; font-weight:700;">Cantidad de Cupos Adquiridos:</label>
+                        <input type="number" id="nc_school_licenses" placeholder="Ej. 30" value="30">
+                    </div>
+                    <div>
+                        <label style="font-size:0.75rem; font-weight:700;">Estatus de Comprobante / SAT:</label>
+                        <select id="nc_school_sat">
+                            <option value="Validado">Factura Validada SAT ✅</option>
+                            <option value="Pendiente">Pendiente de Comprobante ⏳</option>
+                        </select>
+                    </div>
+                </div>
+                <button class="btn-gold" onclick="window.registrarEscuelaNC()">Generar Cuenta Escolar y Cupos</button>
+            </div>
+
+            <!-- 3. LISTADO EN TIEMPO REAL DE LICENCIAS Y ESCUELAS -->
+            <div class="card">
+                <h3><i class="fas fa-list-alt" style="color:var(--gold);"></i> Monitoreo de Licencias</h3>
+                <div id="nc_lista_membresias" style="margin-top:15px;"></div>
             </div>
         </div>
 
-        <!-- ========================================== -->
-        <!-- VISTA DE CONTENIDO: RESICO                -->
-        <!-- ========================================== -->
+        <!-- VISTA DE CONTENIDO: RESICO -->
         <div id="tab-resico" class="content">
             <div class="card">
                 <h3>RESICO / SAT</h3>
@@ -153,9 +193,7 @@
             </div>
         </div>
 
-        <!-- ========================================== -->
-        <!-- VISTA DE CONTENIDO: APP & WEB ON DEMAND    -->
-        <!-- ========================================== -->
+        <!-- VISTA DE CONTENIDO: APP & WEB ON DEMAND -->
         <div id="tab-ondemand" class="content">
             <div class="card">
                 <h3>App & Web On Demand</h3>
@@ -164,9 +202,7 @@
         </div>
     </div>
 
-    <!-- ========================================== -->
-    <!-- LOGICA JAVASCRIPT Y CONEXIÓN FIREBASE      -->
-    <!-- ========================================== -->
+    <!-- LOGICA JAVASCRIPT Y CONEXIÓN FIREBASE -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
         import { getFirestore, doc, setDoc, updateDoc, onSnapshot, collection, deleteDoc } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js";
@@ -267,7 +303,6 @@
             } catch (error) { alert("Error de conexión."); }
         };
 
-        // GESTIÓN ACTIVA DE CRÉDITOS IA DESDE EL PANEL
         window.recargarTokensAlumno = async function(id) {
             const nuevaCantidad = prompt("Introduce el nuevo saldo total de créditos Sophia IA para este alumno:");
             if (nuevaCantidad === null || nuevaCantidad.trim() === "") return;
@@ -276,11 +311,77 @@
 
             try {
                 await updateDoc(doc(db, "Usuarios", id), { tokens: numeroTokens });
-                alert("Créditos actualizados con éxito.");
-            } catch (e) { alert("Error al actualizar créditos."); }
+                alert("Créditos updated.");
+            } catch (e) { alert("Error."); }
         };
 
         window.eliminarUser = async (id) => { if(confirm("¿Eliminar?")) await deleteDoc(doc(db, "Usuarios", id)); };
+
+        // ==========================================
+        // LÓGICA EXCLUSIVA: NEUROCLARITY MEMBRESÍAS
+        // ==========================================
+        window.registrarEscuelaNC = async function() {
+            try {
+                const school = document.getElementById('nc_school_name').value.trim();
+                const email = document.getElementById('nc_school_email').value.trim();
+                const licenses = parseInt(document.getElementById('nc_school_licenses').value) || 0;
+                const satStatus = document.getElementById('nc_school_sat').value;
+
+                if (!school || !email) return alert("Nombre de Escuela y Correo del Profesor son obligatorios.");
+                const docId = email.toLowerCase().replace(/\s+/g, '_');
+
+                await setDoc(doc(db, "NeuroClarity_Membresias", docId), {
+                    cliente: school,
+                    correo_profesor: email,
+                    cupos_totales: licenses,
+                    cupos_usados: 0,
+                    sat: satStatus,
+                    fecha_alta: new Date().toISOString().split('T')[0]
+                }, { merge: true });
+
+                alert("¡Escuela dada de alta de forma exitosa y cupos asignados!");
+                document.getElementById('nc_school_name').value = "";
+                document.getElementById('nc_school_email').value = "";
+                document.getElementById('nc_school_licenses').value = "30";
+            } catch(e) { alert("Error al conectar con Firestore."); }
+        };
+
+        window.eliminarMembresiaNC = async (id) => { if(confirm("¿Eliminar esta licencia escolar?")) await deleteDoc(doc(db, "NeuroClarity_Membresias", id)); };
+
+        // Escucha en tiempo real de Membresías y cálculo de KPIs
+        onSnapshot(collection(db, "NeuroClarity_Membresias"), (snap) => {
+            const list = document.getElementById('nc_lista_membresias'); if (!list) return;
+            list.innerHTML = "";
+            
+            let totalVendidas = 0;
+            let totalActivos = 0;
+
+            snap.forEach(d => {
+                const m = d.data();
+                totalVendidas += m.cupos_totales;
+                totalActivos += m.cupos_usados;
+
+                list.innerHTML += `
+                <div class="user-row">
+                    <div style="flex:1;">
+                        <strong>${m.cliente}</strong> <small style="color:#666;">(${m.correo_profesor})</small>
+                        <div style="font-size:0.65rem; margin-top:3px;">Alta: ${m.fecha_alta} | <span style="color:${m.sat === 'Validado' ? 'var(--green)' : 'var(--red)'}; font-weight:bold;">SAT: ${m.sat}</span></div>
+                    </div>
+                    <div style="width:180px; text-align:right; margin-right:25px;">
+                        <span class="token-badge" style="background:#e8f5e9; color:#2e7d32; border-color:#c8e6c9;">
+                            <i class="fas fa-user-check"></i> Activos: ${m.cupos_usados} / ${m.cupos_totales}
+                        </span>
+                    </div>
+                    <div>
+                        <button class="btn-del" onclick="window.eliminarMembresiaNC('${d.id}')"><i class="fas fa-trash"></i></button>
+                    </div>
+                </div>`;
+            });
+
+            document.getElementById('nc-kpi-vendidas').innerText = totalVendidas;
+            document.getElementById('nc-kpi-activos').innerText = totalActivos;
+            document.getElementById('nc-kpi-disponibles').innerText = (totalVendidas - totalActivos);
+        });
 
         // SISTEMA DE CONTROL DE PESTAÑAS (TABS)
         window.tab = (id, btn) => {
@@ -291,7 +392,7 @@
             document.getElementById('tab-title').innerText = btn.innerText;
         };
 
-        // RENDER DE LA LISTA EN TIEMPO REAL CON COLUMNA DE TOKENS SOPHIA
+        // RENDER DE LA LISTA EN TIEMPO REAL DEL DELF
         onSnapshot(collection(db, "Usuarios"), (snap) => {
             const list = document.getElementById('lista_alumnos'); if (!list) return;
             list.innerHTML = "";
