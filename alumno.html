@@ -1551,51 +1551,16 @@ html += `
                         const docsOrdenados = snapFiltro.docs.map(d => d.data()).sort((a,b) => (b.intento || 0) - (a.intento || 0));
                         const datosHistoricos = docsOrdenados[0];
                         
-                        if (window.currentSkill === "PE") {
-                            const inputPE = document.getElementById('pe-student-response');
-                            if (inputPE && datosHistoricos.texto_alumno) inputPE.value = datosHistoricos.texto_alumno;
-                            
-                            if (peTimerInterval) clearInterval(peTimerInterval);
-                            const elRelojBar = document.getElementById('pe-timer-bar');
-                            if (elRelojBar) elRelojBar.innerHTML = `<span style="font-weight:600; color:#2e7d32;"><i class="fas fa-check-double"></i> Statut : Examen complété et sauvegardé.</span>`;
-                        }
-                        
-                        if (datosHistoricos.respuesta_ia) {
-                            document.getElementById('sophia-verdict-text').innerHTML = datosHistoricos.respuesta_ia;
-                            document.getElementById('sophia-box').style.display = "block";
-                            window.inicializarBotonHistorialIntentos();
-                        }
-                    }
-                } catch(errFetch) { console.error("Error recuperando histórico:", errFetch); }
-            }
-
-            if (ej.ruta_audio && window.currentSkill !== "PO") {
-                let extraerNumeros = ej.ruta_audio.match(/\d+/);
-                let numeroPista = extraerNumeros ? extraerNumeros[0].padStart(2, '0') : "02";
-                let rutaCompletaStorage = `niveles/${currentLevel}/audios/${numeroPista}.mp3`;
-
-                getDownloadURL(ref(storage, rutaCompletaStorage)).then(url => {
-                    const container = document.getElementById(audioId);
-                    if (container) {
-                        container.innerHTML = `<audio id="native-audio-player" controls style="width:100%;" src="${url}"></audio>`;
-                        const player = document.getElementById("native-audio-player");
-                        let listenCount = 0; let activeListen = false;
-                        player.addEventListener('play', () => { if (!activeListen) { listenCount++; document.getElementById('audio-count-label').innerText = `Écoutes / Escuchas : ${listenCount} / 2`; activeListen = true; } });
-                        player.addEventListener('ended', () => { activeListen = false; if (listenCount >= 2) { player.pause(); player.src = ""; container.innerHTML = `<span style="color:red; font-weight:700;">Limite d'écoutes atteinte (2/2)</span>`; } });
-                    }
-                }).catch(err => {
-                    console.error("Error al descargar el audio de Storage: ", err);
-                    const container = document.getElementById(audioId);
-                    if (container) container.innerHTML = `<span style="color:red;">Audio no encontrado en Storage (${rutaCompletaStorage})</span>`;
-                });
-            }
-// === CONTROLADORES DE EVENTOS POST-RENDERIZADO ===
+                       // ==========================================
+            // TEMA: CONTROLADOR DE PRODUCCIÓN ESCRITA (PE)
+            // ==========================================
             if (window.currentSkill === "PE") {
                 const elInputRedaccion = document.getElementById('pe-student-response');
                 if (elInputRedaccion) {
                     ['copy', 'cut', 'contextmenu'].forEach(evt => elInputRedaccion.addEventListener(evt, e => e.preventDefault(), true));
                 }
                 
+                // SUBTEMA: EVENTO DE ENVÍO Y EVALUACIÓN DE LA IA
                 document.getElementById('btn-submit-pe').addEventListener('click', async () => {
                     const elInputRedaccion = document.getElementById('pe-student-response');
                     const txtAlumno = elInputRedaccion ? elInputRedaccion.value.trim() : "";
@@ -1628,7 +1593,7 @@ html += `
 
                         const extDocRef = doc(db, "generate", idDocumentoUnico);
                         await setDoc(extDocRef, {
-                            prompt: `Actúa como examinadora certificada DELF para nivel ${currentLevel}. Evalúa la siguiente producción escrita asignando una nota detallada sobre 25 basada en los criterios oficiales. Es MANDATORIO que personalices tu respuesta: dirígete directamente al alumno llamándolo por su nombre (${nombreAlumno}) de forma empática y profesional. Analiza únicamente el texto actual sin arrastrar contextos anteriores. Texto del alumno: ${txtAlumno}`
+                            prompt: `Actúa como examinadora certificada DELF para nivel ${currentLevel}. Evalúa la siguiente producción escrita asignando una nota detallada sobre 25 basada en los criterios oficiales. Es MANDATORIO que personalices tu response: dirígete directamente al alumno llamándolo por su nombre (${nombreAlumno}) de forma empática y profesional. Analiza únicamente el texto actual sin arrastrar contextos anteriores. Texto del alumno: ${txtAlumno}`
                         });
 
                         const desvincularEscucha = onSnapshot(extDocRef, async (snapshot) => {
@@ -1693,45 +1658,51 @@ html += `
                         document.getElementById('btn-submit-pe').disabled = false;
                     }
                 });
-         // === LOGICA DEL BOTON REINICIAR (REINITIALISER) ===
-            document.getElementById('btn-reset-pe').addEventListener('click', () => {
-                const elInputRedaccion = document.getElementById('pe-student-response');
-                if (elInputRedaccion) {
-                    elInputRedaccion.value = "";
-                    elInputRedaccion.disabled = false;
-                    elInputRedaccion.style.background = "#fff";
-                    elInputRedaccion.placeholder = "Rédigez votre texte ici...";
-                }
 
-                document.getElementById('sophia-box').style.display = "none";
-                document.getElementById('sophia-verdict-text').innerHTML = "";
-                
-                const historialContenedor = document.getElementById('historial-intentos-container');
-                if (historialContenedor) {
-                    historialContenedor.innerHTML = "";
-                    historialContenedor.style.display = "none";
-                }
+                // SUBTEMA: LOGICA DEL BOTÓN REINICIAR (REINITIALISER)
+                document.getElementById('btn-reset-pe').addEventListener('click', () => {
+                    const elInputRedaccion = document.getElementById('pe-student-response');
+                    if (elInputRedaccion) {
+                        elInputRedaccion.value = "";
+                        elInputRedaccion.disabled = false;
+                        elInputRedaccion.style.background = "#fff";
+                        elInputRedaccion.placeholder = "Rédigez votre texte ici...";
+                    }
 
-                if (peTimerInterval) clearInterval(peTimerInterval);
-                let instruccionOriginal = ej.instruccion || "";
-                let consigneLimpia = instruccionOriginal.replace(/^Activité\s*\d+\s*[\.\:]*\s*/i, "");
-                let minutosAsignados = consigneLimpia.toLowerCase().includes("article") ? 35 : 25;
-                
-                const elRelojBar = document.getElementById('pe-timer-bar');
-                if (elRelojBar) {
-                    elRelojBar.innerHTML = `
-                    <div style="display: flex; align-items: center; gap: 10px;">
-                        <button type="button" id="btn-start-timer" style="background: #28A745; color: white; border: none; padding: 6px 14px; border-radius: 4px; cursor: pointer; font-family: 'Montserrat'; font-size: 0.8rem; font-weight: 600;">
-                            <i class="fas fa-play"></i> Démarrer le minuteur
-                        </button>
-                        <span style="font-weight: 600; color: #e65100;"><i class="fas fa-hourglass-half"></i> Temps disponible pour l'examen :</span>
-                    </div>
-                    <span id="pe-countdown-clock" style="font-size: 1.3rem; font-weight: 700; color: #d63031; background: white; padding: 4px 12px; border-radius: 4px; border: 1px solid #ffe0b2;">${minutosAsignados}:00</span>`;
+                    const sophiaBox = document.getElementById('sophia-box');
+                    if (sophiaBox) sophiaBox.style.display = "none";
                     
-                    window.renderExerciseStructure();
-                }
-            });
-        }
+                    const sophiaTexto = document.getElementById('sophia-verdict-text');
+                    if (sophiaTexto) sophiaTexto.innerHTML = "";
+                    
+                    const historialContenedor = document.getElementById('historial-intentos-container');
+                    if (historialContenedor) {
+                        historialContenedor.innerHTML = "";
+                        historialContenedor.style.display = "none";
+                    }
+
+                    if (peTimerInterval) clearInterval(peTimerInterval);
+                    let instruccionOriginal = ej.instruccion || "";
+                    let consigneLimpia = instruccionOriginal.replace(/^Activité\s*\d+\s*[\.\:]*\s*/i, "");
+                    let minutosAsignados = consigneLimpia.toLowerCase().includes("article") ? 35 : 25;
+                    
+                    const elRelojBar = document.getElementById('pe-timer-bar');
+                    if (elRelojBar) {
+                        elRelojBar.innerHTML = `
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <button type="button" id="btn-start-timer" style="background: #28A745; color: white; border: none; padding: 6px 14px; border-radius: 4px; cursor: pointer; font-family: 'Montserrat'; font-size: 0.8rem; font-weight: 600;">
+                                <i class="fas fa-play"></i> Démarrer le minuteur
+                            </button>
+                            <span style="font-weight: 600; color: #e65100;"><i class="fas fa-hourglass-half"></i> Temps disponible pour l'examen :</span>
+                        </div>
+                        <span id="pe-countdown-clock" style="font-size: 1.3rem; font-weight: 700; color: #d63031; background: white; padding: 4px 12px; border-radius: 4px; border: 1px solid #ffe0b2;">${minutosAsignados}:00</span>`;
+                    }
+                });
+            }
+
+            // ==========================================
+            // TEMA: CONTROLADOR DE EJERCICIOS REGULARES (CUESTIONARIOS)
+            // ==========================================
             const btnSubmit = document.getElementById('btn-submit-exercise');
             if (btnSubmit) {
                 btnSubmit.addEventListener('click', async () => {
@@ -1793,7 +1764,9 @@ html += `
             }
         };
 
-        // === RENDERIZADO DEL PANEL CRONOLÓGICO DE INTENTOS ===
+        // ==========================================
+        // TEMA: RENDERIZADO DEL PANEL CRONOLÓGICO DE INTENTOS
+        // ==========================================
         window.inicializarBotonHistorialIntentos = function() {
             const btnVerIntentos = document.getElementById('btn-ver-intentos');
             const contenedorHistorial = document.getElementById('historial-intentos-container');
@@ -1859,6 +1832,9 @@ html += `
             };
         };
 
+        // ==========================================
+        // TEMA: NAVEGACIÓN ENTRE ACTIVIDADES
+        // ==========================================
         window.avanzarSiguienteEjercicio = function() {
             let ejercicios = unidadesCache[currentUnitId][currentSkill] || unidadesCache[currentUnitId][currentSkill.toLowerCase()] || [];
             if (currentExerciseIndex + 1 < ejercicios.length) {
@@ -1870,6 +1846,9 @@ html += `
             }
         };
 
+        // ==========================================
+        // TEMA: RECONOCIMIENTO DE VOZ GRATUITO
+        // ==========================================
         window.inicializarLectorVozGratuito = function(textoOriginal) {
             const btnRecord = document.getElementById('btn-record-transcription');
             const feedback = document.getElementById('audio-reading-feedback');
@@ -1899,6 +1878,9 @@ html += `
             recognition.onresult = (e) => { for (let i = e.resultIndex; i < e.results.length; ++i) { if (e.results[i].isFinal) buzonTexto += " " + e.results[i][0].transcript.toLowerCase(); } };
         };
 
+        // ==========================================
+        // TEMA: DICCIONARIO INTERACTIVO SOPHIA (GLOSARIO)
+        // ==========================================
         window.ejecutarConsultaSophiaConFiltro = async function(frase) {
             const container = document.getElementById("glosario-flotante-container"); if (!container) return;
             container.innerHTML = `<div style="background:#fff; padding:15px; border-radius:8px; box-shadow:0 4px 15px rgba(0,0,0,0.15); font-family:'Montserrat';"><p style="margin:0; font-size:13px; color:#333;"><i class="fas fa-spinner fa-spin"></i> Sophia cherche...</p></div>`;
@@ -2005,6 +1987,9 @@ html += `
             }
         };
         
+        // ==========================================
+        // TEMA: MANEJO DE SELECCIÓN DE PALABRAS Y TABS PRINCIPALES
+        // ==========================================
         let selectionTimeout = null;
         document.addEventListener('selectionchange', () => {
             clearTimeout(selectionTimeout);
@@ -2033,8 +2018,10 @@ html += `
             window.mostrarExplicacionHabilidadInicial("CO");
         }, 500);
         
+        // ==========================================
+        // TEMA: INICIALIZACIÓN DEL SISTEMA
+        // ==========================================
         init();
     </script>
 </body>
 </html>
-  
