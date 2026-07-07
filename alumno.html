@@ -1025,7 +1025,7 @@
                         "Verifica que tu navegador tenga el permiso del micrófono concedido para evitar retrasos."
                     ] : [
                         "N'ayez pas peur de parler! Gagnez de la confiance en vous.",
-                        "Vérifiez que l'autorisation de votre microphone est active avant de démarrer."
+                        "Vérifiez que l'autorisation de votre microphone is active avant de démarrer."
                     ],
                     iaExplicacion: isLevelA ? [
                         "**Activación Automatizada por Botón:** Al dar clic en el botón rojo de grabación, el sistema inyecta un guion introductorio nativo de fondo. Sophia tomará de inmediato el rol de examinadora o dependienta nativa en Francia y entablará un diálogo fluido basado en lo que hables frente a la pantalla, respondiendo dinámicamente según tus elecciones de palabras o tarjetas."
@@ -1307,7 +1307,7 @@
                     html += `
                     <div style="margin-bottom: 25px;">
                         <p style="color: var(--oxford); font-weight: 600; font-size: 0.92rem; margin-bottom: 15px;">
-                            <i class="fas fa-id-card-alt"></i> Cliquez sur une carte pour vous inspirer et poser votre question :
+                            <i class="fas fa-id-card-alt"></i> Cliquez on une carte pour vous inspirer et poser votre question :
                         </p>
                         <div style="display: flex; flex-wrap: wrap; gap: 15px; justify-content: center;">`;
                     
@@ -1548,7 +1548,6 @@
                                           where("habilidad", "==", "PE"));
                     const snapFiltro = await getDocs(qFiltro);
                     if (!snapFiltro.empty) {
-                        // Tomar el último intento guardado para mostrar en pantalla
                         const docsOrdenados = snapFiltro.docs.map(d => d.data()).sort((a,b) => (b.intento || 0) - (a.intento || 0));
                         const datosHistoricos = docsOrdenados[0];
                         
@@ -1607,8 +1606,21 @@
                     const saludoH3 = document.getElementById('student-welcome')?.innerText || "";
                     const nombreAlumno = saludoH3.replace("Élève:", "").trim() || "l'élève";
 
+                    // Limpieza total antes de procesar para evitar duplicados en la vista
                     document.getElementById('btn-submit-pe').disabled = true;
                     document.getElementById('sophia-verdict-text').innerHTML = "<i>Sophia corrige ta production...</i>";
+                    
+                    const historialContenedor = document.getElementById('historial-intentos-container');
+                    if (historialContenedor) {
+                        historialContenedor.innerHTML = "";
+                        historialContenedor.style.display = "none";
+                    }
+                    
+                    const btnVerIntentos = document.getElementById('btn-ver-intentos');
+                    if (btnVerIntentos) {
+                        btnVerIntentos.innerHTML = `<i class="fas fa-history"></i> Voir mes essais`;
+                    }
+
                     document.getElementById('sophia-box').style.display = "block";
 
                     try {
@@ -1632,7 +1644,7 @@
                                 if (urlId !== "admin_preview" && docRefValidado) {
                                     const perfilUsuarioRef = doc(db, "Usuarios", urlId);
                                     
-                                    // Corregido: Notación de puntos para preservar el resto del árbol de aciertos
+                                    // Preserva todos los aciertos anteriores usando notación de puntos
                                     await setDoc(perfilUsuarioRef, {
                                         [`mapa_aciertos.${llaveProgreso}`]: true
                                     }, { merge: true });
@@ -1641,7 +1653,7 @@
                                 }
 
                                 if (urlId !== "admin_preview" && docRefValidado) {
-                                    // Calcular número de intento dinámico consultando la base de datos
+                                    // Consulta de los intentos históricos de este ejercicio específico en Firestore
                                     const historialRef = collection(db, "Usuarios", urlId, "HistorialSophia");
                                     const qIntentos = query(historialRef, 
                                         where("unidad", "==", currentUnitId), 
@@ -1740,7 +1752,7 @@
             }
         };
         
-        // === COMPONENTE INTERACTIVO DE HISTORIAL DE AVANCE ===
+        // === RENDERIZADO DEL PANEL CRONOLÓGICO DE INTENTOS ===
         window.inicializarBotonHistorialIntentos = function() {
             const btnVerIntentos = document.getElementById('btn-ver-intentos');
             const contenedorHistorial = document.getElementById('historial-intentos-container');
@@ -1773,16 +1785,25 @@
                         return;
                     }
                     
-                    let historialHTML = `<h6 style="margin:0 0 10px 0; color:var(--oxford); font-size:0.9rem;">Progression de vos tentatives :</h6>`;
+                    let historialHTML = `<h6 style="margin:0 0 12px 0; color:var(--oxford); font-size:0.9rem; border-bottom:2px solid var(--gold); padding-bottom:5px;"><i class="fas fa-chart-line"></i> Évolution de vos tentatives :</h6>`;
                     
+                    // Ordenamos de forma ascendente (Essai 1, Essai 2...) para marcar la línea del tiempo
                     const documentosOrdenados = snap.docs.map(d => d.data()).sort((a, b) => (a.intento || 0) - (b.intento || 0));
                     
                     documentosOrdenados.forEach((datosIntento) => {
+                        let respuestaLimpia = datosIntento.respuesta_ia || "Pas de correction disponible.";
+                        
                         historialHTML += `
-                        <div style="border-bottom: 1px solid #eee; padding: 12px 0; font-size: 0.85rem;">
-                            <p style="margin: 0 0 5px 0; color: var(--gold); font-weight: 700;">Essai N° ${datosIntento.intento || 1} (${datosIntento.fecha || ''})</p>
-                            <p style="margin: 0 0 8px 0; background: #f8f9fa; padding: 8px; border-radius: 4px; color:#555; font-size:0.82rem;"><strong>Votre texte :</strong> ${datosIntento.texto_alumno || ''}</p>
-                            <div style="font-size: 0.82rem; color: #333; line-height: 1.4;">${datosIntento.respuesta_ia || ''}</div>
+                        <div style="border-bottom: 1px dashed #ccc; padding: 15px 0; font-family:'Montserrat';">
+                            <p style="margin: 0 0 6px 0; color: var(--gold); font-weight: 700; font-size:0.9rem;">
+                                <i class="fas fa-bookmark"></i> Essai N° ${datosIntento.intento || 1} — <span style="color:#666; font-weight:500;">${datosIntento.fecha || ''}</span>
+                            </p>
+                            <p style="margin: 0 0 10px 0; background: #f8f9fa; padding: 10px; border-radius: 4px; color:#555; font-size:0.85rem; border-left:3px solid #ccc;">
+                                <strong>Votre production :</strong><br>${datosIntento.texto_alumno || ''}
+                            </p>
+                            <div style="font-size: 0.85rem; color: #333; line-height: 1.5; background:#fff; padding:5px; border-radius:4px;">
+                                ${respuestaLimpia}
+                            </div>
                         </div>`;
                     });
                     
