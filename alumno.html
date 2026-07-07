@@ -692,7 +692,7 @@
 
         window.convertirTextoInteractivo = function(texto) {
             if (!texto) return '';
-            return texto.split(/(?<=[?.!])\s+/).map(b => {
+            return text.split(/(?<=[?.!])\s+/).map(b => {
                 if (b.trim() === '') return '';
                 let palabrasHtml = b.split(/(\s+)/).map(f => {
                     if (f.trim() === '') return f;
@@ -1216,14 +1216,13 @@
             if (window.currentSkill === "PE") {
                 let instruccionOriginal = ej.instruccion || "";
                 let consigneLimpia = instruccionOriginal.replace(/^Activité\s*\d+\s*[\.\:]*\s*/i, "");
-
                 let minutosAsignados = consigneLimpia.toLowerCase().includes("article") ? 35 : 25;
 
-               html += `
+                html += `
                 <div id="pe-timer-bar" style="background: #fff3e0; border: 1px solid #ffe0b2; padding: 12px 15px; margin-bottom: 20px; border-radius: 6px; display: flex; align-items: center; justify-content: space-between; font-family: 'Montserrat';">
                     <div style="display: flex; align-items: center; gap: 10px;">
-                        <button type="button" id="btn-toggle-timer" style="background: var(--oxford); color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-family: 'Montserrat'; font-size: 0.75rem; font-weight: 600;">
-                            <i class="fas fa-eye-slash"></i> Masquer le temps
+                        <button type="button" id="btn-start-timer" style="background: #28A745; color: white; border: none; padding: 6px 14px; border-radius: 4px; cursor: pointer; font-family: 'Montserrat'; font-size: 0.8rem; font-weight: 600;">
+                            <i class="fas fa-play"></i> Démarrer le minuteur
                         </button>
                         <span style="font-weight: 600; color: #e65100;"><i class="fas fa-hourglass-half"></i> Temps disponible pour l'examen :</span>
                     </div>
@@ -1283,34 +1282,6 @@
                 <div style="display:flex; justify-content:flex-end;">
                     <button class="nav-tab-btn" id="btn-submit-pe" style="width:auto; background:var(--oxford); color:white; padding:10px 22px;"><i class="fas fa-paper-plane"></i> Soumettre la production</button>
                 </div>`;
-                
-                let tiempoTotalSegundos = minutosAsignados * 60;
-                peTimerInterval = setInterval(() => {
-                    tiempoTotalSegundos--;
-                    let min = Math.floor(tiempoTotalSegundos / 60);
-                    let seg = tiempoTotalSegundos % 60;
-                    
-                    const elReloj = document.getElementById('pe-countdown-clock');
-                    if (elReloj) {
-                        elReloj.innerText = `${min.toString().padStart(2, '0')}:${seg.toString().padStart(2, '0')}`;
-                    }
-
-                    if (tiempoTotalSegundos <= 0) {
-                        clearInterval(peTimerInterval);
-                        const elInput = document.getElementById('pe-student-response');
-                        if (elInput) {
-                            elInput.disabled = true; 
-                            elInput.style.background = "#f5f5f5";
-                            elInput.placeholder = "Temps écoulé ! Votre examen est bloqué.";
-                        }
-                        if (elReloj) {
-                            elReloj.innerText = "00:00 - Temps écoulé";
-                            elReloj.style.background = "#d63031";
-                            elReloj.style.color = "white";
-                        }
-                        alert("Le temps est écoulé ! Vous ne pouvez plus modifier votre production.");
-                    }
-                }, 1000);
 
             } else if (window.currentSkill === "PO") {
                 if (ej.texto_lectura) {
@@ -1509,22 +1480,77 @@
 
             html += `
                 <div id="sophia-box" style="display:none; background:#f4f7f9; border-left:4px solid var(--gold); padding:20px; border-radius:6px; margin-top:25px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                        <h5 style="margin:0; color:var(--oxford); font-weight:700;"><i class="fas fa-robot"></i> Correction de Sophia</h5>
+                        <button type="button" id="btn-ver-intentos" style="background: transparent; color: var(--oxford); border: 1px solid var(--oxford); padding: 6px 12px; border-radius: 4px; cursor: pointer; font-family: 'Montserrat'; font-size: 0.8rem; font-weight: 600; display: none;">
+                            <i class="fas fa-history"></i> Voir mes essais
+                        </button>
+                    </div>
                     <div id="sophia-verdict-text"></div>
+                    <div id="historial-intentos-container" style="display: none; margin-top: 15px; background: white; padding: 15px; border-radius: 6px; border: 1px solid #ddd;"></div>
                     ${ej.transcripcion ? `<div style="border:1px dashed #ccc; border-radius:8px; background:#fff; display:flex; flex-direction:column; overflow:hidden; margin-top:15px;"><div id="interactive-transcription-box" style="padding:15px; max-height:220px; overflow-y:auto;"></div><div class="transcription-control-sticky-panel"><p id="audio-reading-feedback" style="font-size:0.82rem; margin:0; font-weight:600;">Prêt</p><button id="btn-record-transcription" class="btn-mic" style="margin-top:0;"><i class="fas fa-microphone"></i> Commencer l'enregistrement</button></div></div>` : ''}
                 </div>
             </div>`;
             
             target.innerHTML = html;
 
+            // === CONTROLADOR DEL TEMPORIZADOR MANUAL ===
+            if (window.currentSkill === "PE") {
+                let instruccionOriginal = ej.instruccion || "";
+                let consigneLimpia = instruccionOriginal.replace(/^Activité\s*\d+\s*[\.\:]*\s*/i, "");
+                let minutosAsignados = consigneLimpia.toLowerCase().includes("article") ? 35 : 25;
+
+                const btnStartTimer = document.getElementById('btn-start-timer');
+                if (btnStartTimer) {
+                    btnStartTimer.addEventListener('click', () => {
+                        btnStartTimer.disabled = true;
+                        btnStartTimer.style.background = "#757575";
+                        btnStartTimer.innerHTML = `<i class="fas fa-stopwatch"></i> En cours...`;
+
+                        let tiempoTotalSegundos = minutosAsignados * 60;
+                        
+                        peTimerInterval = setInterval(() => {
+                            tiempoTotalSegundos--;
+                            let min = Math.floor(tiempoTotalSegundos / 60);
+                            let seg = tiempoTotalSegundos % 60;
+                            
+                            const elReloj = document.getElementById('pe-countdown-clock');
+                            if (elReloj) {
+                                elReloj.innerText = `${min.toString().padStart(2, '0')}:${seg.toString().padStart(2, '0')}`;
+                            }
+
+                            if (tiempoTotalSegundos <= 0) {
+                                clearInterval(peTimerInterval);
+                                const elInput = document.getElementById('pe-student-response');
+                                if (elInput) {
+                                    elInput.disabled = true; 
+                                    elInput.style.background = "#f5f5f5";
+                                    elInput.placeholder = "Temps écoulé ! Votre examen est bloqué.";
+                                }
+                                if (elReloj) {
+                                    elReloj.innerText = "00:00 - Temps écoulé";
+                                    elReloj.style.background = "#d63031";
+                                    elReloj.style.color = "white";
+                                }
+                                alert("Le temps est écoulé ! Vous ne pouvez plus modifier votre production.");
+                            }
+                        }, 1000);
+                    });
+                }
+            }
+
             const llaveProgresoVerif = `${currentUnitId}_${window.currentSkill}_${currentExerciseIndex}`;
             if (mapaAciertosAlumno[llaveProgresoVerif] === true && urlId !== "admin_preview") {
                 try {
                     const qFiltro = query(collection(db, "Usuarios", urlId, "HistorialSophia"), 
                                           where("unidad", "==", currentUnitId), 
-                                          where("actividad", "==", currentExerciseIndex));
+                                          where("actividad", "==", currentExerciseIndex),
+                                          where("habilidad", "==", "PE"));
                     const snapFiltro = await getDocs(qFiltro);
                     if (!snapFiltro.empty) {
-                        const datosHistoricos = snapFiltro.docs[0].data();
+                        // Tomar el último intento guardado para mostrar en pantalla
+                        const docsOrdenados = snapFiltro.docs.map(d => d.data()).sort((a,b) => (b.intento || 0) - (a.intento || 0));
+                        const datosHistoricos = docsOrdenados[0];
                         
                         if (window.currentSkill === "PE") {
                             const inputPE = document.getElementById('pe-student-response');
@@ -1538,6 +1564,7 @@
                         if (datosHistoricos.respuesta_ia) {
                             document.getElementById('sophia-verdict-text').innerHTML = datosHistoricos.respuesta_ia;
                             document.getElementById('sophia-box').style.display = "block";
+                            window.inicializarBotonHistorialIntentos();
                         }
                     }
                 } catch(errFetch) { console.error("Error recuperando histórico:", errFetch); }
@@ -1603,28 +1630,40 @@
                                 }
 
                                 if (urlId !== "admin_preview" && docRefValidado) {
-    const perfilUsuarioRef = doc(db, "Usuarios", urlId);
-    
-    // SOLUCIÓN: Usar notación de puntos dinámica para actualizar solo esta casilla sin machacar las anteriores
-    await setDoc(perfilUsuarioRef, {
-        [`mapa_aciertos.${llaveProgreso}`]: true
-    }, { merge: true });
-    
-    generarMenuJerarquico();
-}
+                                    const perfilUsuarioRef = doc(db, "Usuarios", urlId);
+                                    
+                                    // Corregido: Notación de puntos para preservar el resto del árbol de aciertos
+                                    await setDoc(perfilUsuarioRef, {
+                                        [`mapa_aciertos.${llaveProgreso}`]: true
+                                    }, { merge: true });
+                                    
+                                    generarMenuJerarquico();
+                                }
 
                                 if (urlId !== "admin_preview" && docRefValidado) {
-                                    await addDoc(collection(db, "Usuarios", urlId, "HistorialSophia"), {
+                                    // Calcular número de intento dinámico consultando la base de datos
+                                    const historialRef = collection(db, "Usuarios", urlId, "HistorialSophia");
+                                    const qIntentos = query(historialRef, 
+                                        where("unidad", "==", currentUnitId), 
+                                        where("actividad", "==", currentExerciseIndex),
+                                        where("habilidad", "==", "PE")
+                                    );
+                                    const snapshotIntentos = await getDocs(qIntentos);
+                                    const numeroDeIntento = snapshotIntentos.size + 1;
+
+                                    await addDoc(historialRef, {
                                         fecha: new Date().toISOString().split('T')[0],
                                         tipo: "Production_Escrita",
                                         habilidad: "PE",
                                         texto_alumno: txtAlumno,
                                         respuesta_ia: respuestaIA,
                                         unidad: currentUnitId,
-                                        actividad: currentExerciseIndex
+                                        actividad: currentExerciseIndex,
+                                        intento: numeroDeIntento
                                     });
                                 }
                                 
+                                window.inicializarBotonHistorialIntentos();
                                 await calcularTodasLasNotasHabilidades();
                             } else if (snapshot.exists() && snapshot.data().status?.state === "ERROR") {
                                 desvincularEscucha();
@@ -1701,6 +1740,60 @@
             }
         };
         
+        // === COMPONENTE INTERACTIVO DE HISTORIAL DE AVANCE ===
+        window.inicializarBotonHistorialIntentos = function() {
+            const btnVerIntentos = document.getElementById('btn-ver-intentos');
+            const contenedorHistorial = document.getElementById('historial-intentos-container');
+            
+            if (!btnVerIntentos || !contenedorHistorial) return;
+            
+            btnVerIntentos.style.display = "inline-block";
+            
+            btnVerIntentos.onclick = async () => {
+                if (contenedorHistorial.style.display === "block") {
+                    contenedorHistorial.style.display = "none";
+                    btnVerIntentos.innerHTML = `<i class="fas fa-history"></i> Voir mes essais`;
+                    return;
+                }
+                
+                contenedorHistorial.innerHTML = "<i>Chargement de l'historique...</i>";
+                contenedorHistorial.style.display = "block";
+                btnVerIntentos.innerHTML = `<i class="fas fa-times"></i> Masquer l'historique`;
+                
+                try {
+                    const qHistorial = query(collection(db, "Usuarios", urlId, "HistorialSophia"), 
+                        where("unidad", "==", currentUnitId), 
+                        where("actividad", "==", currentExerciseIndex),
+                        where("habilidad", "==", "PE")
+                    );
+                    const snap = await getDocs(qHistorial);
+                    
+                    if (snap.empty) {
+                        contenedorHistorial.innerHTML = "<p style='font-size:0.85rem; color:#666;'>Aucun essai précédent trouvé.</p>";
+                        return;
+                    }
+                    
+                    let historialHTML = `<h6 style="margin:0 0 10px 0; color:var(--oxford); font-size:0.9rem;">Progression de vos tentatives :</h6>`;
+                    
+                    const documentosOrdenados = snap.docs.map(d => d.data()).sort((a, b) => (a.intento || 0) - (b.intento || 0));
+                    
+                    documentosOrdenados.forEach((datosIntento) => {
+                        historialHTML += `
+                        <div style="border-bottom: 1px solid #eee; padding: 12px 0; font-size: 0.85rem;">
+                            <p style="margin: 0 0 5px 0; color: var(--gold); font-weight: 700;">Essai N° ${datosIntento.intento || 1} (${datosIntento.fecha || ''})</p>
+                            <p style="margin: 0 0 8px 0; background: #f8f9fa; padding: 8px; border-radius: 4px; color:#555; font-size:0.82rem;"><strong>Votre texte :</strong> ${datosIntento.texto_alumno || ''}</p>
+                            <div style="font-size: 0.82rem; color: #333; line-height: 1.4;">${datosIntento.respuesta_ia || ''}</div>
+                        </div>`;
+                    });
+                    
+                    contenedorHistorial.innerHTML = historialHTML;
+                } catch (err) {
+                    console.error("Error al cargar historial de avances:", err);
+                    contenedorHistorial.innerHTML = "<span style='color:red;'>Erreur lors du chargement.</span>";
+                }
+            };
+        };
+
         window.avanzarSiguienteEjercicio = function() {
             let ejercicios = unidadesCache[currentUnitId][currentSkill] || unidadesCache[currentUnitId][currentSkill.toLowerCase()] || [];
             if (currentExerciseIndex + 1 < ejercicios.length) {
