@@ -1624,9 +1624,13 @@
                     document.getElementById('sophia-box').style.display = "block";
 
                     try {
-                        const extDocRef = await addDoc(collection(db, "generate"), {
-                            prompt: `Actúa como examinadora certificada DELF para nivel ${currentLevel}. Evalúa la siguiente producción escrita asignando una nota detallada sobre 25 basada en los criterios oficiales. Es MANDATORIO que personalices tu respuesta: dirígete directamente al alumno llamándolo por su nombre (${nombreAlumno}) de forma empática y profesional. Texto del alumno: ${txtAlumno}`
-                        });
+                     const timestampUnico = Date.now();
+const idDocumentoUnico = `${urlId}_PE_${currentUnitId}_${currentExerciseIndex}_intento_${timestampUnico}`;
+
+const extDocRef = doc(db, "generate", idDocumentoUnico);
+await setDoc(extDocRef, {
+    prompt: `Actúa como examinadora certificada DELF para nivel ${currentLevel}. Evalúa la siguiente producción escrita asignando una nota detallada sobre 25 basada en los criterios oficiales. Es MANDATORIO que personalices tu respuesta: dirígete directamente al alumno llamándolo por su nombre (${nombreAlumno}) de forma empática y profesional. Analiza únicamente el texto actual sin arrastrar contextos anteriores. Texto del alumno: ${txtAlumno}`
+});
 
                         const desvincularEscucha = onSnapshot(extDocRef, async (snapshot) => {
                             if (snapshot.exists() && snapshot.data().response) {
