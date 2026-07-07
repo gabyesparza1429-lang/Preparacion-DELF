@@ -1589,7 +1589,7 @@
                     if (container) container.innerHTML = `<span style="color:red;">Audio no encontrado en Storage (${rutaCompletaStorage})</span>`;
                 });
             }
-
+// === CONTROLADORES DE EVENTOS POST-RENDERIZADO ===
             if (window.currentSkill === "PE") {
                 const elInputRedaccion = document.getElementById('pe-student-response');
                 if (elInputRedaccion) {
@@ -1606,7 +1606,6 @@
                     const saludoH3 = document.getElementById('student-welcome')?.innerText || "";
                     const nombreAlumno = saludoH3.replace("Élève:", "").trim() || "l'élève";
 
-                    // Limpieza total antes de procesar para evitar duplicados en la vista
                     document.getElementById('btn-submit-pe').disabled = true;
                     document.getElementById('sophia-verdict-text').innerHTML = "<i>Sophia corrige ta production...</i>";
                     
@@ -1624,13 +1623,13 @@
                     document.getElementById('sophia-box').style.display = "block";
 
                     try {
-                     const timestampUnico = Date.now();
-const idDocumentoUnico = `${urlId}_PE_${currentUnitId}_${currentExerciseIndex}_intento_${timestampUnico}`;
+                        const timestampUnico = Date.now();
+                        const idDocumentoUnico = `${urlId}_PE_${currentUnitId}_${currentExerciseIndex}_intento_${timestampUnico}`;
 
-const extDocRef = doc(db, "generate", idDocumentoUnico);
-await setDoc(extDocRef, {
-    prompt: `Actúa como examinadora certificada DELF para nivel ${currentLevel}. Evalúa la siguiente producción escrita asignando una nota detallada sobre 25 basada en los criterios oficiales. Es MANDATORIO que personalices tu respuesta: dirígete directamente al alumno llamándolo por su nombre (${nombreAlumno}) de forma empática y profesional. Analiza únicamente el texto actual sin arrastrar contextos anteriores. Texto del alumno: ${txtAlumno}`
-});
+                        const extDocRef = doc(db, "generate", idDocumentoUnico);
+                        await setDoc(extDocRef, {
+                            prompt: `Actúa como examinadora certificada DELF para nivel ${currentLevel}. Evalúa la siguiente producción escrita asignando una nota detallada sobre 25 basada en los criterios oficiales. Es MANDATORIO que personalices tu respuesta: dirígete directamente al alumno llamándolo por su nombre (${nombreAlumno}) de forma empática y profesional. Analiza únicamente el texto actual sin arrastrar contextos anteriores. Texto del alumno: ${txtAlumno}`
+                        });
 
                         const desvincularEscucha = onSnapshot(extDocRef, async (snapshot) => {
                             if (snapshot.exists() && snapshot.data().response) {
@@ -1647,8 +1646,6 @@ await setDoc(extDocRef, {
 
                                 if (urlId !== "admin_preview" && docRefValidado) {
                                     const perfilUsuarioRef = doc(db, "Usuarios", urlId);
-                                    
-                                    // Preserva todos los aciertos anteriores usando notación de puntos
                                     await setDoc(perfilUsuarioRef, {
                                         [`mapa_aciertos.${llaveProgreso}`]: true
                                     }, { merge: true });
@@ -1657,7 +1654,6 @@ await setDoc(extDocRef, {
                                 }
 
                                 if (urlId !== "admin_preview" && docRefValidado) {
-                                    // Consulta de los intentos históricos de este ejercicio específico en Firestore
                                     const historialRef = collection(db, "Usuarios", urlId, "HistorialSophia");
                                     const qIntentos = query(historialRef, 
                                         where("unidad", "==", currentUnitId), 
@@ -1667,7 +1663,7 @@ await setDoc(extDocRef, {
                                     const snapshotIntentos = await getDocs(qIntentos);
                                     const numeroDeIntento = snapshotIntentos.size + 1;
 
-const ahora = new Date();
+                                    const ahora = new Date();
 
                                     await addDoc(historialRef, {
                                         fecha: ahora.toISOString().split('T')[0],
@@ -1681,6 +1677,7 @@ const ahora = new Date();
                                         actividad: currentExerciseIndex,
                                         intento: numeroDeIntento
                                     });
+                                }
                                 
                                 window.inicializarBotonHistorialIntentos();
                                 await calcularTodasLasNotasHabilidades();
@@ -1758,73 +1755,73 @@ const ahora = new Date();
                 });
             }
         };
-        
-      // === RENDERIZADO DEL PANEL CRONOLÓGICO DE INTENTOS ===
-window.inicializarBotonHistorialIntentos = function() {
-    const btnVerIntentos = document.getElementById('btn-ver-intentos');
-    const contenedorHistorial = document.getElementById('historial-intentos-container');
-    
-    if (!btnVerIntentos || !contenedorHistorial) return;
-    
-    btnVerIntentos.style.display = "inline-block";
-    
-    btnVerIntentos.onclick = async () => {
-        if (contenedorHistorial.style.display === "block") {
-            contenedorHistorial.style.display = "none";
-            btnVerIntentos.innerHTML = `<i class="fas fa-history"></i> Voir mes essais`;
-            return;
-        }
-        
-        contenedorHistorial.innerHTML = "<i>Chargement de l'historique...</i>";
-        contenedorHistorial.style.display = "block";
-        btnVerIntentos.innerHTML = `<i class="fas fa-times"></i> Masquer l'historique`;
-        
-        try {
-            const qHistorial = query(collection(db, "Usuarios", urlId, "HistorialSophia"), 
-                where("unidad", "==", currentUnitId), 
-                where("actividad", "==", currentExerciseIndex),
-                where("habilidad", "==", "PE")
-            );
-            const snap = await getDocs(qHistorial);
+
+        // === RENDERIZADO DEL PANEL CRONOLÓGICO DE INTENTOS ===
+        window.inicializarBotonHistorialIntentos = function() {
+            const btnVerIntentos = document.getElementById('btn-ver-intentos');
+            const contenedorHistorial = document.getElementById('historial-intentos-container');
             
-            if (snap.empty) {
-                contenedorHistorial.innerHTML = "<p style='font-size:0.85rem; color:#666;'>Aucun essai précédent trouvé.</p>";
-                return;
-            }
+            if (!btnVerIntentos || !contenedorHistorial) return;
             
-            let historialHTML = `<h6 style="margin:0 0 12px 0; color:var(--oxford); font-size:0.9rem; border-bottom:2px solid var(--gold); padding-bottom:5px;"><i class="fas fa-chart-line"></i> Évolution de vos tentatives :</h6>`;
+            btnVerIntentos.style.display = "inline-block";
             
-            // Ordenamos los intentos para que el último (el más reciente) aparezca hasta arriba
-            const documentosOrdenados = snap.docs.map(d => {
-                const data = d.data();
-                return { ...data, timestampID: data.timestamp || 0 };
-            }).sort((a, b) => b.timestampID - a.timestampID);
-            
-            documentosOrdenados.forEach((datosIntento) => {
-                let respuestaLimpia = datosIntento.respuesta_ia || "Pas de correction disponible.";
-                let marcaTiempo = datosIntento.hora_registro ? `${datosIntento.fecha} a las ${datosIntento.hora_registro}` : datosIntento.fecha;
+            btnVerIntentos.onclick = async () => {
+                if (contenedorHistorial.style.display === "block") {
+                    contenedorHistorial.style.display = "none";
+                    btnVerIntentos.innerHTML = `<i class="fas fa-history"></i> Voir mes essais`;
+                    return;
+                }
                 
-                historialHTML += `
-                <div style="border-bottom: 1px dashed #ccc; padding: 15px 0; font-family:'Montserrat';">
-                    <p style="margin: 0 0 6px 0; color: var(--gold); font-weight: 700; font-size:0.9rem;">
-                        <i class="fas fa-bookmark"></i> Intentado el: <span style="color:#111; font-weight:600;">${marcaTiempo}</span>
-                    </p>
-                    <p style="margin: 0 0 10px 0; background: #f8f9fa; padding: 10px; border-radius: 4px; color:#555; font-size:0.85rem; border-left:3px solid #ccc;">
-                        <strong>Votre production :</strong><br>${datosIntento.texto_alumno || ''}
-                    </p>
-                    <div style="font-size: 0.85rem; color: #333; line-height: 1.5; background:#fff; padding:5px; border-radius:4px;">
-                        ${respuestaLimpia}
-                    </div>
-                </div>`;
-            });
-            
-            contenedorHistorial.innerHTML = historialHTML;
-        } catch (err) {
-            console.error("Error al cargar historial de avances:", err);
-            contenedorHistorial.innerHTML = "<span style='color:red;'>Erreur lors du chargement.</span>";
-        }
-    };
-};
+                contenedorHistorial.innerHTML = "<i>Chargement de l'historique...</i>";
+                contenedorHistorial.style.display = "block";
+                btnVerIntentos.innerHTML = `<i class="fas fa-times"></i> Masquer l'historique`;
+                
+                try {
+                    const qHistorial = query(collection(db, "Usuarios", urlId, "HistorialSophia"), 
+                        where("unidad", "==", currentUnitId), 
+                        where("actividad", "==", currentExerciseIndex),
+                        where("habilidad", "==", "PE")
+                    );
+                    const snap = await getDocs(qHistorial);
+                    
+                    if (snap.empty) {
+                        contenedorHistorial.innerHTML = "<p style='font-size:0.85rem; color:#666;'>Aucun essai précédent trouvé.</p>";
+                        return;
+                    }
+                    
+                    let historialHTML = `<h6 style="margin:0 0 12px 0; color:var(--oxford); font-size:0.9rem; border-bottom:2px solid var(--gold); padding-bottom:5px;"><i class="fas fa-chart-line"></i> Évolution de vos tentatives :</h6>`;
+                    
+                    const documentosOrdenados = snap.docs.map(d => {
+                        const data = d.data();
+                        return { ...data, timestampID: data.timestamp || 0 };
+                    }).sort((a, b) => b.timestampID - a.timestampID);
+                    
+                    documentosOrdenados.forEach((datosIntento) => {
+                        let respuestaLimpia = datosIntento.respuesta_ia || "Pas de correction disponible.";
+                        let marcaTiempo = datosIntento.hora_registro ? `${datosIntento.fecha} à ${datosIntento.hora_registro}` : datosIntento.fecha;
+                        
+                        historialHTML += `
+                        <div style="border-bottom: 1px dashed #ccc; padding: 15px 0; font-family:'Montserrat';">
+                            <p style="margin: 0 0 6px 0; color: var(--gold); font-weight: 700; font-size:0.9rem;">
+                                <i class="fas fa-clock"></i> Tentative — <span style="color:#111; font-weight:600;">${marcaTiempo}</span>
+                            </p>
+                            <p style="margin: 0 0 10px 0; background: #f8f9fa; padding: 10px; border-radius: 4px; color:#555; font-size:0.85rem; border-left:3px solid #ccc;">
+                                <strong>Votre production :</strong><br>${datosIntento.texto_alumno || ''}
+                            </p>
+                            <div style="font-size: 0.85rem; color: #333; line-height: 1.5; background:#fff; padding:5px; border-radius:4px;">
+                                ${respuestaLimpia}
+                            </div>
+                        </div>`;
+                    });
+                    
+                    contenedorHistorial.innerHTML = historialHTML;
+                } catch (err) {
+                    console.error("Error al cargar historial de avances:", err);
+                    contenedorHistorial.innerHTML = "<span style='color:red;'>Erreur lors du chargement.</span>";
+                }
+            };
+        };
+
         window.avanzarSiguienteEjercicio = function() {
             let ejercicios = unidadesCache[currentUnitId][currentSkill] || unidadesCache[currentUnitId][currentSkill.toLowerCase()] || [];
             if (currentExerciseIndex + 1 < ejercicios.length) {
@@ -2003,3 +2000,4 @@ window.inicializarBotonHistorialIntentos = function() {
     </script>
 </body>
 </html>
+  
