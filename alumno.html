@@ -1219,9 +1219,14 @@
 
                 let minutosAsignados = consigneLimpia.toLowerCase().includes("article") ? 35 : 25;
 
-                html += `
+               html += `
                 <div id="pe-timer-bar" style="background: #fff3e0; border: 1px solid #ffe0b2; padding: 12px 15px; margin-bottom: 20px; border-radius: 6px; display: flex; align-items: center; justify-content: space-between; font-family: 'Montserrat';">
-                    <span style="font-weight: 600; color: #e65100;"><i class="fas fa-hourglass-half"></i> Temps disponible pour l'examen :</span>
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <button type="button" id="btn-toggle-timer" style="background: var(--oxford); color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-family: 'Montserrat'; font-size: 0.75rem; font-weight: 600;">
+                            <i class="fas fa-eye-slash"></i> Masquer le temps
+                        </button>
+                        <span style="font-weight: 600; color: #e65100;"><i class="fas fa-hourglass-half"></i> Temps disponible pour l'examen :</span>
+                    </div>
                     <span id="pe-countdown-clock" style="font-size: 1.3rem; font-weight: 700; color: #d63031; background: white; padding: 4px 12px; border-radius: 4px; border: 1px solid #ffe0b2;">${minutosAsignados}:00</span>
                 </div>`;
 
