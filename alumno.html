@@ -858,13 +858,8 @@
 
             if (skill === "PO") {
                 navigator.mediaDevices.getUserMedia({ audio: true })
-                    .then((stream) => {
-                        stream.getTracks().forEach(track => track.stop());
-                        console.log("Microphone pré-autorisé avec succès.");
-                    })
-                    .catch((err) => {
-                        console.warn("Le microphone n'a pas été autorisé ou n'est pas connecté :", err);
-                    });
+                    .then((stream) => { stream.getTracks().forEach(track => track.stop()); console.log("Microphone pré-autorisé avec succès."); })
+                    .catch((err) => { console.warn("Le microphone n'a pas été autorisé ou n'est pas connecté :", err); });
             }
 
             calcularTodasLasNotasHabilidades();
@@ -883,7 +878,7 @@
                     icono: "fa-headphones",
                     color: "#1a73e8",
                     lblBienvenida: isLevelA ? "Bienvenido a tu espacio de entrenamiento." : "Bienvenue dans votre espace d'entraînement.",
-                    lblInstruccion: isLevelA ? "Por favor lee los detalles oficiales de esta competencia, luego selecciona una actividad en el menú de la izquierda para comenzar." : "Veuillez lire les détails officiels de cette compétence ci-dessous, puis sélectionnez une activité dans le menu de gauche pour démarrer.",
+                    lblInstruccion: isLevelA ? "Por favor lee los detalles oficiales de esta competencia, luego selecciona una actividad en el menú de la izquierda para comenzar." : "Veuillez lire les détails officiels de cette compétence ci-dessous, puis sélectionnez une activité dans le menu de gauche para démarrer.",
                     titObjetivos: isLevelA ? "Objetivos Oficiales" : "Objectifs Officiels",
                     titEjercicios: isLevelA ? "Tipos de Ejercicios en el Sistema" : "Types d'exercices",
                     titConsejos: isLevelA ? "Consejos de Éxito" : "Conseils de réussite",
@@ -1112,7 +1107,7 @@
 
                 ejH.forEach((ej, eIdx) => {
                     const esCompleto = mapaAciertosAlumno[`${uId}_${currentSkill}_${eIdx}`] === true;
-                   const statusText = esCompleto ? '<span class="activity-status-lbl" style="background:#e8f5e9; color:#2e7d32;">✅ Hecho</span>' : '<span class="activity-status-lbl" style="background:#f5f5f5; color:#757575;">❌ No comenzado</span>';
+                    const statusText = esCompleto ? '<span class="activity-status-lbl" style="background:#e8f5e9; color:#2e7d32;">✅ Hecho</span>' : '<span class="activity-status-lbl" style="background:#f5f5f5; color:#757575;">❌ No comenzado</span>';
                     
                     sub.innerHTML += `
                         <button class="activity-link-btn ${currentUnitId === uId && currentExerciseIndex === eIdx ? 'active' : ''}" onclick="window.cargarActividadDirecta('${uId}', ${eIdx})">
@@ -1278,11 +1273,11 @@
                     </div>`;
                 }
 
-html += `
-<div style="display:flex; justify-content:flex-end; gap:12px;">
-    <button type="button" id="btn-reset-pe" style="background:#6c757d; color:white; border:none; padding:10px 22px; border-radius:10px; font-family:'Montserrat'; font-size:0.9rem; font-weight:600; cursor:pointer; transition:background 0.2s;"><i class="fas fa-undo"></i> Réinitialiser</button>
-    <button class="nav-tab-btn" id="btn-submit-pe" style="width:auto; background:var(--oxford); color:white; padding:10px 22px; margin-bottom:0;"><i class="fas fa-paper-plane"></i> Soumettre la production</button>
-</div>`;
+                html += `
+                <div style="display:flex; justify-content:flex-end; gap:12px;">
+                    <button type="button" id="btn-reset-pe" style="background:#6c757d; color:white; border:none; padding:10px 22px; border-radius:10px; font-family:'Montserrat'; font-size:0.9rem; font-weight:600; cursor:pointer; transition:background 0.2s;"><i class="fas fa-undo"></i> Réinitialiser</button>
+                    <button class="nav-tab-btn" id="btn-submit-pe" style="width:auto; background:var(--oxford); color:white; padding:10px 22px; margin-bottom:0;"><i class="fas fa-paper-plane"></i> Soumettre la production</button>
+                </div>`;
             } else if (window.currentSkill === "PO") {
                 if (ej.texto_lectura) {
                     html += `<div style="background:#f8f9fa; border-left:4px solid var(--gold); padding:20px; margin-bottom:25px;"><strong>Document :</strong><br><br>${window.convertirTextoInteractivo(ej.texto_lectura)}</div>`;
@@ -1525,7 +1520,7 @@ html += `
                                 if (elInput) {
                                     elInput.disabled = true; 
                                     elInput.style.background = "#f5f5f5";
-                                    elInput.placeholder = "Temps écoulé ! Votre examen est bloqué.";
+                                    elInput.placeholder = "Temps écoulé ! Votre examen este bloqué.";
                                 }
                                 if (elReloj) {
                                     elReloj.innerText = "00:00 - Temps écoulé";
@@ -1551,8 +1546,22 @@ html += `
                         const docsOrdenados = snapFiltro.docs.map(d => d.data()).sort((a,b) => (b.intento || 0) - (a.intento || 0));
                         const datosHistoricos = docsOrdenados[0];
                         
-                       // ==========================================
-            // TEMA: CONTROLADOR DE PRODUCCIÓN ESCRITA (PE)
+                        const elInput = document.getElementById('pe-student-response');
+                        if (elInput && datosHistoricos.texto_alumno) elInput.value = datosHistoricos.texto_alumno;
+                        
+                        const vBox = document.getElementById('sophia-box');
+                        if (vBox) vBox.style.display = "block";
+                        
+                        const vTxt = document.getElementById('sophia-verdict-text');
+                        if (vTxt && datosHistoricos.respuesta_ia) vTxt.innerHTML = datosHistoricos.respuesta_ia;
+                        
+                        window.inicializarBotonHistorialIntentos();
+                    }
+                } catch(e) { console.error(e); }
+            }
+
+            // ==========================================
+            // TEMA: CONTROLADORES DE EVENTOS POST-RENDERIZADO (PE)
             // ==========================================
             if (window.currentSkill === "PE") {
                 const elInputRedaccion = document.getElementById('pe-student-response');
