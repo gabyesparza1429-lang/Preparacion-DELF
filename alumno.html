@@ -1278,11 +1278,11 @@
                     </div>`;
                 }
 
-                html += `
-                <div style="display:flex; justify-content:flex-end;">
-                    <button class="nav-tab-btn" id="btn-submit-pe" style="width:auto; background:var(--oxford); color:white; padding:10px 22px;"><i class="fas fa-paper-plane"></i> Soumettre la production</button>
-                </div>`;
-
+html += `
+<div style="display:flex; justify-content:flex-end; gap:12px;">
+    <button type="button" id="btn-reset-pe" style="background:#6c757d; color:white; border:none; padding:10px 22px; border-radius:10px; font-family:'Montserrat'; font-size:0.9rem; font-weight:600; cursor:pointer; transition:background 0.2s;"><i class="fas fa-undo"></i> Réinitialiser</button>
+    <button class="nav-tab-btn" id="btn-submit-pe" style="width:auto; background:var(--oxford); color:white; padding:10px 22px; margin-bottom:0;"><i class="fas fa-paper-plane"></i> Soumettre la production</button>
+</div>`;
             } else if (window.currentSkill === "PO") {
                 if (ej.texto_lectura) {
                     html += `<div style="background:#f8f9fa; border-left:4px solid var(--gold); padding:20px; margin-bottom:25px;"><strong>Document :</strong><br><br>${window.convertirTextoInteractivo(ej.texto_lectura)}</div>`;
@@ -1693,8 +1693,45 @@
                         document.getElementById('btn-submit-pe').disabled = false;
                     }
                 });
-            }
+         // === LOGICA DEL BOTON REINICIAR (REINITIALISER) ===
+            document.getElementById('btn-reset-pe').addEventListener('click', () => {
+                const elInputRedaccion = document.getElementById('pe-student-response');
+                if (elInputRedaccion) {
+                    elInputRedaccion.value = "";
+                    elInputRedaccion.disabled = false;
+                    elInputRedaccion.style.background = "#fff";
+                    elInputRedaccion.placeholder = "Rédigez votre texte ici...";
+                }
 
+                document.getElementById('sophia-box').style.display = "none";
+                document.getElementById('sophia-verdict-text').innerHTML = "";
+                
+                const historialContenedor = document.getElementById('historial-intentos-container');
+                if (historialContenedor) {
+                    historialContenedor.innerHTML = "";
+                    historialContenedor.style.display = "none";
+                }
+
+                if (peTimerInterval) clearInterval(peTimerInterval);
+                let instruccionOriginal = ej.instruccion || "";
+                let consigneLimpia = instruccionOriginal.replace(/^Activité\s*\d+\s*[\.\:]*\s*/i, "");
+                let minutosAsignados = consigneLimpia.toLowerCase().includes("article") ? 35 : 25;
+                
+                const elRelojBar = document.getElementById('pe-timer-bar');
+                if (elRelojBar) {
+                    elRelojBar.innerHTML = `
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <button type="button" id="btn-start-timer" style="background: #28A745; color: white; border: none; padding: 6px 14px; border-radius: 4px; cursor: pointer; font-family: 'Montserrat'; font-size: 0.8rem; font-weight: 600;">
+                            <i class="fas fa-play"></i> Démarrer le minuteur
+                        </button>
+                        <span style="font-weight: 600; color: #e65100;"><i class="fas fa-hourglass-half"></i> Temps disponible pour l'examen :</span>
+                    </div>
+                    <span id="pe-countdown-clock" style="font-size: 1.3rem; font-weight: 700; color: #d63031; background: white; padding: 4px 12px; border-radius: 4px; border: 1px solid #ffe0b2;">${minutosAsignados}:00</span>`;
+                    
+                    window.renderExerciseStructure();
+                }
+            });
+        }
             const btnSubmit = document.getElementById('btn-submit-exercise');
             if (btnSubmit) {
                 btnSubmit.addEventListener('click', async () => {
