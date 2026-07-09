@@ -365,10 +365,19 @@
             transition: border-color 0.3s;
             background: #fff;
         }
-        .production-textbox:focus {
-            border-color: var(--oxford);
-        }
+.production-textbox:focus {
+    border-color: var(--oxford);
+}
 
+.word-counter-badge {
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-top: 5px;
+    text-align: right;
+    transition: color 0.3s ease;
+}
+.mots-insufficient { color: #dc3545; }
+.mots-ok { color: #28A745; }
         .french-accents-bar {
             display: flex;
             gap: 5px;
@@ -1269,10 +1278,9 @@
                             <button type="button" class="accent-btn" onclick="window.insertarCaracterEspecial('ê')">ê</button>
                             <button type="button" class="accent-btn" onclick="window.insertarCaracterEspecial('œ')">œ</button>
                         </div>
-                        <textarea id="pe-student-response" class="production-textbox" placeholder="Rédigez votre texte ici..." spellcheck="false" autocomplete="off"></textarea>
-                    </div>`;
-                }
-
+                      <textarea id="pe-student-response" class="production-textbox" data-min-mots="${ej.min_mots || 160}" placeholder="Rédigez votre texte ici..." spellcheck="false" autocomplete="off"></textarea>
+  <div id="pe-word-counter" class="word-counter-badge mots-insufficient">0 mots</div>
+</div>`;
                 html += `
                 <div style="display:flex; justify-content:flex-end; gap:12px;">
                     <button type="button" id="btn-reset-pe" style="background:#6c757d; color:white; border:none; padding:10px 22px; border-radius:10px; font-family:'Montserrat'; font-size:0.9rem; font-weight:600; cursor:pointer; transition:background 0.2s;"><i class="fas fa-undo"></i> Réinitialiser</button>
@@ -1568,7 +1576,28 @@
                 if (elInputRedaccion) {
                     ['copy', 'cut', 'contextmenu'].forEach(evt => elInputRedaccion.addEventListener(evt, e => e.preventDefault(), true));
                 }
-                
+                // CONTADOR DE PALABRAS EN TIEMPO REAL (DINÁMICO)
+document.addEventListener('input', function (e) {
+    if (e.target && e.target.id === 'pe-student-response') {
+        const textarea = e.target;
+        const counter = document.getElementById('pe-word-counter');
+        if (!counter) return;
+
+        const texto = textarea.value.trim();
+        const totalPalabras = texto === "" ? 0 : texto.split(/\s+/).length;
+
+        counter.innerText = `${totalPalabras} mots`;
+
+        // Lee el mínimo desde el atributo data-min-mots (si no existe, usa 60 por defecto)
+        const minimoMots = parseInt(textarea.getAttribute('data-min-mots')) || 60; 
+
+        if (totalPalabras < minimoMots) {
+            counter.className = "word-counter-badge mots-insufficient";
+        } else {
+            counter.className = "word-counter-badge mots-ok";
+        }
+    }
+});
                 // SUBTEMA: EVENTO DE ENVÍO Y EVALUACIÓN DE LA IA
                 document.getElementById('btn-submit-pe').addEventListener('click', async () => {
                     const elInputRedaccion = document.getElementById('pe-student-response');
