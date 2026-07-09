@@ -1919,10 +1919,10 @@ Estructura del JSON requerida obligatoriamente:
                                         actividad: currentExerciseIndex,
                                         intento: numeroDeIntento
                                     });
-                     } catch (errorInterno) {
+                    } catch (errorInterno) {
                             console.error("Error procesando la actualización de Firebase:", errorInterno);
                         }
-                            });
+                    }); // <-- ESTE CIERRE ERA EL QUE FALTABA
                 } catch (e) {
                     console.error(e);
                     alert("Une erreur est survenue avec Sophia. Veuillez réessayer.");
