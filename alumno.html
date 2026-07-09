@@ -283,7 +283,7 @@
         .zone-entrainement { background: #e3f2fd; color: #0d47a1; border: 1px solid #bbdefb; }
         .zone-examen-simule { background: #fff3e0; color: #e65100; border: 1px solid #ffe0b2; animation: blink-border 2s infinite; }
 
-        @keyframes blink-border {
+        @pragma blink-border {
             50% { border-color: var(--gold); }
         }
 
@@ -365,19 +365,20 @@
             transition: border-color 0.3s;
             background: #fff;
         }
-.production-textbox:focus {
-    border-color: var(--oxford);
-}
+        .production-textbox:focus {
+            border-color: var(--oxford);
+        }
 
-.word-counter-badge {
-    font-size: 0.85rem;
-    font-weight: 600;
-    margin-top: 5px;
-    text-align: right;
-    transition: color 0.3s ease;
-}
-.mots-insufficient { color: #dc3545; }
-.mots-ok { color: #28A745; }
+        .word-counter-badge {
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-top: 5px;
+            text-align: right;
+            transition: color 0.3s ease;
+        }
+        .mots-insufficient { color: #dc3545; }
+        .mots-ok { color: #28A745; }
+        
         .french-accents-bar {
             display: flex;
             gap: 5px;
@@ -1011,7 +1012,7 @@
                         "Formular preguntas simples a un examinador basándose en palabras clave.",
                         "Desenvolverse en un juego de rol básico de la vida diaria (comprar ropa, pedir en un restaurante)."
                     ] : [
-                        "Se présenter et répondre à des questions sur son identité.",
+                        "Se présenter et répondre à des questions sur son identity.",
                         "Poser des questions simples à partir de mots-clés ou de cartes stimulantes.",
                         "Mener un jeu de rôle ou une interaction en contexte de service."
                     ],
@@ -1149,10 +1150,15 @@
             const descPE = isBasic ? "Écrire des messages simples. / Escribir mensajes." : "Peut écrire un texte suivi simple et articulé sur des sujets familiers.";
             const descPO = isBasic ? "S'exprimer en situation simple. / Expresarse en situations cotidianas." : "Peut s'exprimer de manière cohérente sur des expériences ou projets.";
 
-            const iconCheckCO = notesHabilidadGlobales.CO > 0 ? 'fas fa-check-circle" style="color:var(--green);"' : 'far fa-circle"';
-            const iconCheckCE = notesHabilidadGlobales.CE > 0 ? 'fas fa-check-circle" style="color:var(--green);"' : 'far fa-circle"';
-            const iconCheckPE = notesHabilidadGlobales.PE > 0 ? 'fas fa-check-circle" style="color:var(--green);"' : 'far fa-circle"';
-            const iconCheckPO = notesHabilidadGlobales.PO > 0 ? 'fas fa-check-circle" style="color:var(--green);"' : 'far fa-circle"';
+            const iconCheckCO = notesHabilidadGlobales.CO > 0 ? 'fas fa-check-circle' : 'far fa-circle';
+            const iconCheckCE = notesHabilidadGlobales.CE > 0 ? 'fas fa-check-circle' : 'far fa-circle';
+            const iconCheckPE = notesHabilidadGlobales.PE > 0 ? 'fas fa-check-circle' : 'far fa-circle';
+            const iconCheckPO = notesHabilidadGlobales.PO > 0 ? 'fas fa-check-circle' : 'far fa-circle';
+
+            const styleCheckCO = notesHabilidadGlobales.CO > 0 ? 'style="color:var(--green);"' : '';
+            const styleCheckCE = notesHabilidadGlobales.CE > 0 ? 'style="color:var(--green);"' : '';
+            const styleCheckPE = notesHabilidadGlobales.PE > 0 ? 'style="color:var(--green);"' : '';
+            const styleCheckPO = notesHabilidadGlobales.PO > 0 ? 'style="color:var(--green);"' : '';
 
             let checklistHTML = `
             <div class="carnet-grid">
@@ -1160,28 +1166,28 @@
                     <div class="carnet-header"><span class="carnet-title"><i class="fas fa-headphones" style="color:#1a73e8;"></i> Compréhension Orale</span><span class="carnet-score">${notesHabilidadGlobales.CO} / 25 pts</span></div>
                     <div class="carnet-descriptor-box"><strong>Objectif ${currentLevel} :</strong> ${descCO}</div>
                     <div class="carnet-checklist">
-                        <div class="checklist-item ${notesHabilidadGlobales.CO > 0 ? 'checked':''}"><i class="${iconCheckCO}></i> Repérer des informations factuelles et détails clés</div>
+                        <div class="checklist-item ${notesHabilidadGlobales.CO > 0 ? 'checked':''}"><i class="${iconCheckCO}" ${styleCheckCO}></i> Repérer des informations factuelles et détails clés</div>
                     </div>
                 </div>
                 <div class="carnet-card ce">
                     <div class="carnet-header"><span class="carnet-title"><i class="fas fa-file-alt" style="color:#34a853;"></i> Compréhension Écrite</span><span class="carnet-score">${notesHabilidadGlobales.CE} / 25 pts</span></div>
                     <div class="carnet-descriptor-box"><strong>Objectif ${currentLevel} :</strong> ${descCE}</div>
                     <div class="carnet-checklist">
-                        <div class="checklist-item ${notesHabilidadGlobales.CE > 0 ? 'checked':''}"><i class="${iconCheckCE}></i> Identifier des informations significatives dans les textes</div>
+                        <div class="checklist-item ${notesHabilidadGlobales.CE > 0 ? 'checked':''}"><i class="${iconCheckCE}" ${styleCheckCE}></i> Identifier des informations significatives dans les textes</div>
                     </div>
                 </div>
                 <div class="carnet-card pe">
                     <div class="carnet-header"><span class="carnet-title"><i class="fas fa-pen-fancy" style="color:#fbbc05;"></i> Production Écrite</span><span class="carnet-score">${notesHabilidadGlobales.PE} / 25 pts</span></div>
                     <div class="carnet-descriptor-box"><strong>Objectif ${currentLevel} :</strong> ${descPE}</div>
                     <div class="carnet-checklist">
-                        <div class="checklist-item ${notesHabilidadGlobales.PE > 0 ? 'checked':''}"><i class="${iconCheckPE}></i> Rédiger un texte suivi structuré et formules adaptées</div>
+                        <div class="checklist-item ${notesHabilidadGlobales.PE > 0 ? 'checked':''}"><i class="${iconCheckPE}" ${styleCheckPE}></i> Rédiger un texte suivi structuré et formules adaptées</div>
                     </div>
                 </div>
                 <div class="carnet-card po">
                     <div class="carnet-header"><span class="carnet-title"><i class="fas fa-microphone" style="color:#ea4335;"></i> Production Orale</span><span class="carnet-score">${notesHabilidadGlobales.PO} / 25 pts</span></div>
                     <div class="carnet-descriptor-box"><strong>Objectif ${currentLevel} :</strong> ${descPO}</div>
                     <div class="carnet-checklist">
-                        <div class="checklist-item ${notesHabilidadGlobales.PO > 0 ? 'checked':''}"><i class="${iconCheckPO}></i> S'exprimer de manière fluide lors d'une interaction</div>
+                        <div class="checklist-item ${notesHabilidadGlobales.PO > 0 ? 'checked':''}"><i class="${iconCheckPO}" ${styleCheckPO}></i> S'exprimer de manière fluide lors d'une interaction</div>
                     </div>
                 </div>
             </div>`;
@@ -1335,14 +1341,12 @@
                     </div>`;
                 }
 
-                // INTERFAZ DE GRABACIÓN DE DEBATES E INTERACCIÓN ESPONTÁNEA DELF
                 html += `
                 <div style="margin-top: 30px; background: #fff; border: 1px solid #e0e6ed; border-radius: 8px; padding: 25px; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
                     <p style="color: var(--oxford); font-weight: 700; font-size: 1rem; margin-bottom: 15px; border-bottom: 2px solid var(--gold); padding-bottom: 8px;">
                         <i class="fas fa-microphone-alt"></i> Enregistrement de votre production orale spontanée :
                     </p>
                     
-                    <!-- Consola de Control de Audio -->
                     <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 20px; background: #fdfaf6; padding: 12px; border-radius: 6px; border: 1px solid #ffe0b2;">
                         <button type="button" id="btn-record-po" style="background: #0288d1; color: white; border: none; padding: 12px 24px; border-radius: 6px; cursor: pointer; font-family: 'Montserrat'; font-size: 0.88rem; font-weight: 700; display: inline-flex; align-items: center; gap: 10px; transition: all 0.2s; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
                             <i class="fas fa-microphone"></i> Commencer à parler
@@ -1352,11 +1356,9 @@
                         </span>
                     </div>
 
-                    <!-- Caja Espejo editable de la transcripción fluida -->
                     <label style="display:block; font-size:0.85rem; font-weight:700; color:var(--oxford); margin-bottom:5px;">Texte transcrit (Vous pouvez le modifier si nécessaire avant l'envoi) :</label>
                     <textarea id="po-student-response" class="production-textbox" placeholder="Votre voix sera convertie en texte ici automatiquement..." spellcheck="false" autocomplete="off" style="width: 100%; min-height: 140px; padding: 15px; border-radius: 6px; border: 1px solid #ccc; font-family: 'Montserrat'; font-size: 0.95rem; margin-bottom: 20px; resize: vertical; line-height: 1.5;"></textarea>
 
-                    <!-- Barra de Acciones de PO -->
                     <div style="display:flex; justify-content:flex-end; gap:12px; border-top: 1px solid #eee; padding-top: 15px;">
                         <button type="button" id="btn-reset-po" style="background:#6c757d; color:white; border:none; padding:11px 24px; border-radius:8px; font-family:'Montserrat'; font-size:0.85rem; font-weight:600; cursor:pointer; transition: background 0.2s;">Réinitialiser</button>
                         <button type="button" id="btn-submit-po" style="background:var(--oxford); color:white; padding:11px 28px; font-family:'Montserrat'; font-size:0.85rem; font-weight:700; border:none; border-radius:8px; cursor:pointer; transition: background 0.2s; display: inline-flex; align-items: center; gap: 8px;">
@@ -1393,7 +1395,7 @@
 
                     let textoRestante = ej.texto_lectura;
                     let bloquesMapeadosPorAnuncio = {};
-                    let llavesAnuncios = Object.keys(anunciosAgrupados); // CORREGIDO: anunciosAgrupados
+                    let llavesAnuncios = Object.keys(anunciosAgrupados);
 
                     for (let i = 0; i < llavesAnuncios.length; i++) {
                         let tituloActual = llavesAnuncios[i];
@@ -1675,36 +1677,33 @@
                 }
             }
         });
-window.mostrarEvaluacionSophia = function(jsonRaw) {
-    try {
-        // Limpiamos todo lo que no sea el JSON
-        let cleanJson = jsonRaw.replace(/```json/g, '').replace(/```/g, '').trim();
-        if (!cleanJson.startsWith('{')) {
-            cleanJson = cleanJson.substring(cleanJson.indexOf('{'));
-        }
-        
-        const data = JSON.parse(cleanJson);
-        
-        // Actualizamos los elementos
-        document.getElementById('sophia-global-score').innerText = data.score_global || '--/25';
-        document.getElementById('sophia-global-badge').innerText = data.status || '--';
-        document.getElementById('sophia-verdict-text').dataset.evaluation = JSON.stringify(data.rubriques);
-        
-        // Limpiamos el texto HTML por si viene con basura
-        const mirror = document.getElementById('sophia-text-mirror');
-        if (mirror) {
-            let htmlContent = data.texto_html || '';
-            // Si la IA mandó basura HTML extra, la limpiamos antes de inyectar
-            mirror.innerHTML = htmlContent.replace(/<div class="evaluation-header">[\s\S]*?<\/div>/gi, '');
-        }
-        
-        document.getElementById('sophia-box').style.display = "block";
-    } catch(e) {
-        console.error("Error crítico en JSON:", e);
-        document.getElementById('sophia-text-mirror').innerText = "La IA respondió en formato incorrecto. Intenta de nuevo.";
-    }
-};
-       
+
+        window.mostrarEvaluacionSophia = function(jsonRaw) {
+            try {
+                let cleanJson = jsonRaw.replace(/```json/g, '').replace(/```/g, '').trim();
+                if (!cleanJson.startsWith('{')) {
+                    cleanJson = cleanJson.substring(cleanJson.indexOf('{'));
+                }
+                
+                const data = JSON.parse(cleanJson);
+                
+                document.getElementById('sophia-global-score').innerText = data.score_global || '--/25';
+                document.getElementById('sophia-global-badge').innerText = data.status || '--';
+                document.getElementById('sophia-verdict-text').dataset.evaluation = JSON.stringify(data.rubriques);
+                
+                const mirror = document.getElementById('sophia-text-mirror');
+                if (mirror) {
+                    let htmlContent = data.texto_html || '';
+                    mirror.innerHTML = htmlContent.replace(/<div class="evaluation-header">[\s\S]*?<\/div>/gi, '');
+                }
+                
+                document.getElementById('sophia-box').style.display = "block";
+            } catch(e) {
+                console.error("Error crítico en JSON:", e);
+                document.getElementById('sophia-text-mirror').innerText = "La IA respondió en formato incorrecto. Intenta de nuevo.";
+            }
+        };
+               
         // ==========================================
         // CENTRALIZACIÓN TOTAL DE CLICKS (DELEGACIÓN DE EVENTOS COMPLETA)
         // ==========================================
@@ -1753,11 +1752,11 @@ window.mostrarEvaluacionSophia = function(jsonRaw) {
                 const errBox = document.getElementById('sophia-feedback-errors');
                 const supraBox = document.getElementById('sophia-feedback-supra');
                 
-               if (rubricData) {
-    if (detailsPanel) detailsPanel.style.display = 'flex';
-    if (errBox) errBox.innerHTML = `<strong>[Score: ${rubricData.score || '--'}]</strong><br>${rubricData.error || 'Aucune erreur détectée.'}`;
-    if (supraBox) supraBox.innerHTML = rubricData.supra || 'Votre production est déjà excellente.'; // <--- AQUÍ TAMBIÉN
-}
+                if (rubricData) {
+                    if (detailsPanel) detailsPanel.style.display = 'flex';
+                    if (errBox) errBox.innerHTML = `<strong>[Score: ${rubricData.score || '--'}]</strong><br>${rubricData.error || 'Aucune erreur détectée.'}`;
+                    if (supraBox) supraBox.innerHTML = rubricData.supra || 'Votre production est déjà excellente.';
+                }
                 
                 document.querySelectorAll('#sophia-text-mirror .sophia-error').forEach(span => {
                     if (span.dataset.rubric === rubricKey) {
@@ -1778,28 +1777,6 @@ window.mostrarEvaluacionSophia = function(jsonRaw) {
             }
 
             // 3. SUBTEMA: ENVÍO Y EVALUACIÓN DE LA IA (PE)
-            if (e.target && (e.target.id === 'btn-submit-pe' || e.target.closest('#btn-submit-pe'))) {
-                const elInputRedaccion = document.getElementById('pe-student-response');
-                const txtAlumno = elInputRedaccion ? elInputRedaccion.value.trim() : "";
-                if (!txtAlumno) return;
-
-                if (peTimerInterval) clearInterval(peTimerInterval);
-
-                const saludoH3 = document.getElementById('student-welcome')?.innerText || "";
-                const nombreAlumno = saludoH3.replace("Élève:", "").trim() || "l'élève";
-
-                const btnSubmitPE = document.getElementById('btn-submit-pe');
-                if (btnSubmitPE) btnSubmitPE.disabled = true;
-                
-                const sophiaTextEl = document.getElementById('sophia-verdict-text');
-                if (sophiaTextEl) sophiaTextEl.innerHTML = "<i>Sophia corrige ta production...</i>";
-                
-                const sBox = document.getElementById('sophia-box');
-                if (sBox) sBox.style.display = "block";
-
-                // ==========================================
-            // SUBTEMA: ENVÍO Y EVALUACIÓN DE LA IA (PE)
-            // ==========================================
             if (e.target && (e.target.id === 'btn-submit-pe' || e.target.closest('#btn-submit-pe'))) {
                 const elInputRedaccion = document.getElementById('pe-student-response');
                 const txtAlumno = elInputRedaccion ? elInputRedaccion.value.trim() : "";
@@ -2023,6 +2000,7 @@ Estructura del JSON requerida obligatoriamente:
                 generarMenuJerarquico(); 
                 return;
             }
+            
             // 6. LÓGICA DE CONTROL DE GRABACIÓN DE AUDIO (PO)
             if (e.target && (e.target.id === 'btn-record-po' || e.target.closest('#btn-record-po'))) {
                 const btn = document.getElementById('btn-record-po');
@@ -2528,13 +2506,13 @@ Estructura del JSON esperada:
                 <div style="background:#fff; padding:15px; border-radius:8px; box-shadow:0 4px 15px rgba(0,0,0,0.15); font-family:'Montserrat'; text-align:center;">
                     <p style="margin:0 0 10px 0; font-size:0.85rem; color:var(--danger); font-weight:700;"><i class="fas fa-exclamation-triangle"></i> Connexion interrompue</p>
                     <p style="margin:0 0 12px 0; font-size:0.78rem; color:#666;">${error.message}</p>
-                    <button onclick="document.getElementById('glosario-flotante-container').style.display='none'" style="padding:5px 12px; cursor:pointer; background:#555; color:white; border:none; border-radius:4px;">Fermer</button>
+                    <button onclick="document.getElementById('glosario-flotante-container').style.display='none'" style="padding:6px 12px; cursor:pointer; background:#555; color:white; border:none; border-radius:4px;">Fermer</button>
                 </div>`;
             }
         };
 
         // ==========================================
-        // TEMA: MANEJO DE SELECCIÓN DE PALABRAS Y TABS PRINCIPALES
+        // TEMA: MANEJO DE SELECCIÓN DE PALABRAS AND TABS PRINCIPALES
         // ==========================================
         let selectionTimeout = null;
         document.addEventListener('selectionchange', () => {
