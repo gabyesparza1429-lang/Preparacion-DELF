@@ -2027,7 +2027,7 @@ window.inicializarBotonHistorialIntentos = function() {
             const qHistorial = query(collection(db, "Usuarios", urlId, "HistorialSophia"), 
                 where("unidad", "==", currentUnitId), 
                 where("actividad", "==", currentExerciseIndex),
-                where("habilidad", "==", "PE")
+                where("habilidad", "==", window.currentSkill) // Cambiado a dinámico para PE y PO
             );
             const snap = await getDocs(qHistorial);
             
@@ -2047,7 +2047,6 @@ window.inicializarBotonHistorialIntentos = function() {
                 let respuestaLimpia = datosIntento.respuesta_ia || "Pas de correction disponible.";
                 let marcaTiempo = datosIntento.hora_registro ? `${datosIntento.fecha} à ${datosIntento.hora_registro}` : datosIntento.fecha;
                 
-                // VALIDACIÓN RETROACTIVA: SI ES JSON, CREA LA CARGA INTERACTIVA
                 let renderRespuestaHistory = respuestaLimpia;
                 if (respuestaLimpia.trim().startsWith('{') || respuestaLimpia.includes('score_global')) {
                     try {
