@@ -1940,7 +1940,8 @@ Estructura del JSON requerida obligatoriamente:
                                     window.inicializarBotonHistorialIntentos();
                                     await calcularTodasLasNotasHabilidades();
                               }
-        } else if (snapshot.exists() && snapshot.data().status?.state === "ERROR") {
+                            }
+        else if (snapshot.exists() && snapshot.data().status?.state === "ERROR") {
             desvincularEscucha();
             if (sophiaTextEl) sophiaTextEl.innerHTML = "<span style='color:red;'>Erreur d'évaluation par l'IA.</span>";
         }
