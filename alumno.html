@@ -1691,10 +1691,12 @@
 
         window.mostrarEvaluacionSophia = function(jsonRaw) {
             try {
-                let cleanJson = jsonRaw.replace(/```json/g, '').replace(/```/g, '').trim();
-                if (!cleanJson.startsWith('{')) {
-                    cleanJson = cleanJson.substring(cleanJson.indexOf('{'));
-                }
+                let cleanJson = jsonRaw.trim();
+const inicioJson = cleanJson.indexOf('{');
+const finJson = cleanJson.lastIndexOf('}');
+if (inicioJson !== -1 && finJson !== -1) {
+    cleanJson = cleanJson.substring(inicioJson, finJson + 1);
+}
                 
                 const data = JSON.parse(cleanJson);
                 
