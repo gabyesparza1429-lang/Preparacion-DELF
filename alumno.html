@@ -1678,7 +1678,17 @@
 
         window.mostrarEvaluacionSophia = function(jsonRaw) {
             try {
-                const cleanJson = jsonRaw.replace(/```json/g, '').replace(/```/g, '').trim();
+                // Limpieza de bloques de código Markdown si existen
+                let cleanJson = jsonRaw.replace(/```json/g, '').replace(/```/g, '').trim();
+                
+                // Si la IA metió texto antes del JSON, buscamos donde abre la primera llave
+                if (!cleanJson.startsWith('{')) {
+                    const firstBrace = cleanJson.indexOf('{');
+                    if (firstBrace !== -1) {
+                        cleanJson = cleanJson.substring(firstBrace);
+                    }
+                }
+                
                 const data = JSON.parse(cleanJson);
                 
                 const scoreEl = document.getElementById('sophia-global-score');
@@ -1696,7 +1706,15 @@
                 if (container) container.dataset.evaluation = JSON.stringify(data.rubriques);
                 
                 const mirror = document.getElementById('sophia-text-mirror');
-                if (mirror) mirror.innerHTML = data.texto_html || '';
+                if (mirror) {
+                    // Si el HTML interno contiene código crudo visible, limpiamos etiquetas duplicadas
+                    let textoProcesado = data.texto_html || '';
+                    if (textoProcesado.includes('&lt;') || textoProcesado.includes('<div')) {
+                        // Resguardo por si la respuesta vino dañada estructuralmente
+                        textoProcesado = textoProcesado.replace(/<div[^>]*>([\s\S]*?)<\/div>/gi, '$1');
+                    }
+                    mirror.innerHTML = textoProcesado;
+                }
                 
                 const detailsPanel = document.getElementById('sophia-feedback-details');
                 if (detailsPanel) detailsPanel.style.display = 'none';
@@ -1709,10 +1727,13 @@
             } catch(e) {
                 console.error("Error parsing Sophia JSON:", e);
                 const mirror = document.getElementById('sophia-text-mirror');
-                if (mirror) mirror.innerText = jsonRaw;
+                if (mirror) {
+                    // Si falló el JSON, renderiza el texto limpiando los tags HTML crudos para que sea legible
+                    let textoLimpio = jsonRaw.replace(/<[^>]*>/g, '');
+                    mirror.innerHTML = `<div style="color:#333; font-family:'Montserrat'; padding:10px;">${textoLimpio}</div>`;
+                }
             }
         };
-
         // ==========================================
         // CENTRALIZACIÓN TOTAL DE CLICKS (DELEGACIÓN DE EVENTOS COMPLETA)
         // ==========================================
@@ -1761,10 +1782,10 @@
                 const errBox = document.getElementById('sophia-feedback-errors');
                 const supraBox = document.getElementById('sophia-feedback-supra');
                 
-                if (rubricData) {
+               if (rubricData) {
                     if (detailsPanel) detailsPanel.style.display = 'flex';
                     if (errBox) errBox.innerHTML = `<strong>[Score: ${rubricData.score || '--'}]</strong><br>${rubricData.error || 'Aucune erreur détectée.'}`;
-                    if (supreBox) supraBox.innerHTML = rubricData.supra || 'Votre production est déjà excellente.';
+                    if (supraBox) supraBox.innerHTML = rubricData.supra || 'Votre production est déjà excellente.';
                 }
                 
                 document.querySelectorAll('#sophia-text-mirror .sophia-error').forEach(span => {
