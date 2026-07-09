@@ -1898,12 +1898,11 @@ Estructura del JSON requerida obligatoriamente:
                                 // 1. Mostrar la evaluación en pantalla de inmediato
                                 window.mostrarEvaluacionSophia(respuestaIA);
 
-                                // 2. Guardar PRIMERO en la subcolección HistorialSophia de la base de datos
-                                if (urlId !== "admin_preview" && docRefValidado) {
+                               // 2. Guardar PRIMERO en la subcolección HistorialSophia de la base de datos
                                     const historialRef = collection(db, "Usuarios", urlId, "HistorialSophia");
                                     const qIntentos = query(historialRef, 
                                         where("unidad", "==", currentUnitId), 
-                                        where("actividad", "==", currentExerciseIndex),
+                                        where("actividad", "==", currentExerciseIndex + 1),
                                         where("habilidad", "==", "PE")
                                     );
                                     const snapshotIntentos = await getDocs(qIntentos);
@@ -1919,11 +1918,11 @@ Estructura del JSON requerida obligatoriamente:
                                         texto_alumno: txtAlumno,
                                         respuesta_ia: respuestaIA,
                                         unidad: currentUnitId,
-                                        actividad: currentExerciseIndex,
+                                        actividad: currentExerciseIndex + 1,
                                         intento: numeroDeIntento
                                     });
                                     
-// 3. SOLO SI SE GUARDÓ EL HISTORIAL, marcar actividad como completada en el perfil
+                                    // 3. SOLO SI SE GUARDÓ EL HISTORIAL, marcar actividad como completada en el perfil
                                     const llaveProgreso = `${currentUnitId}_${window.currentSkill}_${currentExerciseIndex}`;
                                     if (typeof mapaAciertosAlumno !== "undefined") {
                                         mapaAciertosAlumno[llaveProgreso] = true;
@@ -1933,30 +1932,6 @@ Estructura del JSON requerida obligatoriamente:
                                     await setDoc(perfilUsuarioRef, {
                                         [`mapa_aciertos.${llaveProgreso}`]: true
                                     }, { merge: true });
-                                    
-                                    // 4. Actualizar menús y contadores visuales
-                                    generarMenuJerarquico();
-                                    window.inicializarBotonHistorialIntentos();
-                                    await calcularTodasLasNotasHabilidades();
-                                }
-                            } else if (snapshot.exists() && snapshot.data().status?.state === "ERROR") {
-                                desvincularEscucha();
-                                if (sophiaTextEl) sophiaTextEl.innerHTML = "<span style='color:red;'>Erreur d'évaluation par l'IA.</span>";
-                            }
-                        } catch (errorInterno) {
-                            console.error("Error procesando la actualización de Firebase o almacenamiento:", errorInterno);
-                            if (sophiaTextEl) sophiaTextEl.innerHTML = "<span style='color:red;'>Erreur de stockage dans la base de données.</span>";
-                        }
-                    });
-                } catch (e) {
-                    console.error(e);
-                    alert("Une erreur est survenue avec Sophia. Veuillez réessayer.");
-                } finally {
-                    if (btnSubmitPE) btnSubmitPE.disabled = false;
-                }
-                return;
-            }
-           
             // 4. LÓGICA DEL BOTÓN REINICIAR (PE)
             if (e.target && e.target.id === 'btn-reset-pe') {
                 const elInputRedaccion = document.getElementById('pe-student-response');
