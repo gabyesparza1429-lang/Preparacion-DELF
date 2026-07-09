@@ -1489,7 +1489,37 @@
                             <i class="fas fa-history"></i> Voir mes essais
                         </button>
                     </div>
-                    <div id="sophia-verdict-text"></div>
+                   <div id="sophia-verdict-text">
+    <!-- Encabezado con Nota Global y Dictamen de Nivel -->
+    <div id="sophia-header-result" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px; background:white; padding:12px; border-radius:6px; border:1px solid #ddd;">
+        <span style="font-weight:700; font-size:1.1rem; color:var(--oxford);">Note globale : <span id="sophia-global-score">--/25</span></span>
+        <span id="sophia-global-badge" style="font-weight:700; padding:6px 12px; border-radius:20px; background:#6c757d; color:white; font-size:0.85rem;">--</span>
+    </div>
+    
+    <!-- Barra interactiva con los 5 Rubros Oficiales DELF -->
+    <div id="sophia-rubrics-bar" style="display:flex; flex-wrap:wrap; gap:8px; margin-bottom:15px;">
+        <button type="button" class="btn-rubric" data-rubric="realisation" style="flex:1; min-width:140px; padding:10px; border-radius:6px; border:1px solid #ccc; background:#fff; font-weight:600; font-size:0.85rem; cursor:pointer; transition:all 0.2s;">Réalisation de la tâche</button>
+        <button type="button" class="btn-rubric" data-rubric="coherence" style="flex:1; min-width:140px; padding:10px; border-radius:6px; border:1px solid #ccc; background:#fff; font-weight:600; font-size:0.85rem; cursor:pointer; transition:all 0.2s;">Cohérence et cohésion</button>
+        <button type="button" class="btn-rubric" data-rubric="adequation" style="flex:1; min-width:140px; padding:10px; border-radius:6px; border:1px solid #ccc; background:#fff; font-weight:600; font-size:0.85rem; cursor:pointer; transition:all 0.2s;">Adéquation socio.</button>
+        <button type="button" class="btn-rubric" data-rubric="lexique" style="flex:1; min-width:140px; padding:10px; border-radius:6px; border:1px solid #ccc; background:#fff; font-weight:600; font-size:0.85rem; cursor:pointer; transition:all 0.2s;">Lexique</button>
+        <button type="button" class="btn-rubric" data-rubric="morphosyntaxe" style="flex:1; min-width:140px; padding:10px; border-radius:6px; border:1px solid #ccc; background:#fff; font-weight:600; font-size:0.85rem; cursor:pointer; transition:all 0.2s;">Morphosyntaxe</button>
+    </div>
+
+    <!-- Caja Espejo para el texto del alumno y resaltado de errores -->
+    <div id="sophia-text-mirror" style="background:#fff; border:1px solid #ddd; padding:15px; border-radius:6px; min-height:100px; margin-bottom:15px; line-height:1.6; font-size:0.95rem; white-space:pre-wrap; color:#333;"></div>
+
+    <!-- Panel de detalles de Retroalimentación y Camino al Supra -->
+    <div id="sophia-feedback-details" style="display:none; flex-direction:column; gap:12px;">
+        <div style="background:#fce8e6; border-left:4px solid #d93025; padding:12px; border-radius:4px;">
+            <strong style="color:#c5221f; display:block; margin-bottom:4px;"><i class="fas fa-exclamation-circle"></i> Ce qui ne va pas :</strong>
+            <div id="sophia-feedback-errors" style="font-size:0.9rem; color:#3c4043; line-height:1.4;"></div>
+        </div>
+        <div style="background:#e6f4ea; border-left:4px solid #137333; padding:12px; border-radius:4px;">
+            <strong style="color:#137333; display:block; margin-bottom:4px;"><i class="fas fa-arrow-alt-circle-up"></i> Objectif Supra :</strong>
+            <div id="sophia-feedback-supra" style="font-size:0.9rem; color:#3c4043; line-height:1.4;"></div>
+        </div>
+    </div>
+</div>
                     <div id="historial-intentos-container" style="display: none; margin-top: 15px; background: white; padding: 15px; border-radius: 6px; border: 1px solid #ddd;"></div>
                     ${ej.transcripcion ? `<div style="border:1px dashed #ccc; border-radius:8px; background:#fff; display:flex; flex-direction:column; overflow:hidden; margin-top:15px;"><div id="interactive-transcription-box" style="padding:15px; max-height:220px; overflow-y:auto;"></div><div class="transcription-control-sticky-panel"><p id="audio-reading-feedback" style="font-size:0.82rem; margin:0; font-weight:600;">Prêt</p><button id="btn-record-transcription" class="btn-mic" style="margin-top:0;"><i class="fas fa-microphone"></i> Commencer l'enregistrement</button></div></div>` : ''}
                 </div>
