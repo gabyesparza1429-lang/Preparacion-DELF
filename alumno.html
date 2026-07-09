@@ -1817,7 +1817,8 @@ window.mostrarEvaluacionSophia = function(jsonRaw) {
                 });
                 return;
             }
-// 3. SUBTEMA: ENVÍO Y EVALUACIÓN DE LA IA (PE)
+            
+            // 3. SUBTEMA: ENVÍO Y EVALUACIÓN DE LA IA (PE)
             if (e.target && (e.target.id === 'btn-submit-pe' || e.target.closest('#btn-submit-pe'))) {
                 const elInputRedaccion = document.getElementById('pe-student-response');
                 const txtAlumno = elInputRedaccion ? elInputRedaccion.value.trim() : "";
@@ -1938,11 +1939,11 @@ Estructura del JSON requerida obligatoriamente:
                                     generarMenuJerarquico();
                                     window.inicializarBotonHistorialIntentos();
                                     await calcularTodasLasNotasHabilidades();
-                                }
-                            } else if (snapshot.exists() && snapshot.data().status?.state === "ERROR") {
-                                desvincularEscucha();
-                                if (sophiaTextEl) sophiaTextEl.innerHTML = "<span style='color:red;'>Erreur d'évaluation par l'IA.</span>";
-                            }
+                              }
+        } else if (snapshot.exists() && snapshot.data().status?.state === "ERROR") {
+            desvincularEscucha();
+            if (sophiaTextEl) sophiaTextEl.innerHTML = "<span style='color:red;'>Erreur d'évaluation par l'IA.</span>";
+        }
                         } catch (errorInterno) {
                             console.error("Error procesando la actualización de Firebase o almacenamiento:", errorInterno);
                             if (sophiaTextEl) sophiaTextEl.innerHTML = "<span style='color:red;'>Erreur de stockage dans la base de données.</span>";
