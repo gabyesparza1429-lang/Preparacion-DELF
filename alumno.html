@@ -1826,11 +1826,33 @@
                 const sBox = document.getElementById('sophia-box');
                 if (sBox) sBox.style.display = "block";
 
+                // ==========================================
+            // SUBTEMA: ENVÍO Y EVALUACIÓN DE LA IA (PE)
+            // ==========================================
+            if (e.target && (e.target.id === 'btn-submit-pe' || e.target.closest('#btn-submit-pe'))) {
+                const elInputRedaccion = document.getElementById('pe-student-response');
+                const txtAlumno = elInputRedaccion ? elInputRedaccion.value.trim() : "";
+                if (!txtAlumno) return;
+
+                if (peTimerInterval) clearInterval(peTimerInterval);
+
+                const saludoH3 = document.getElementById('student-welcome')?.innerText || "";
+                const nombreAlumno = saludoH3.replace("Élève:", "").trim() || "l'élève";
+
+                const btnSubmitPE = document.getElementById('btn-submit-pe');
+                if (btnSubmitPE) btnSubmitPE.disabled = true;
+                
+                const sophiaTextEl = document.getElementById('sophia-verdict-text');
+                if (sophiaTextEl) sophiaTextEl.innerHTML = "<i>Sophia corrige ta production...</i>";
+                
+                const sBox = document.getElementById('sophia-box');
+                if (sBox) sBox.style.display = "block";
+
                 try {
                     const timestampUnico = Date.now();
                     const idDocumentoUnico = `${urlId}_PE_${currentUnitId}_${currentExerciseIndex}_intento_${timestampUnico}`;
 
-                   const extDocRef = doc(db, "generate", idDocumentoUnico);
+                    const extDocRef = doc(db, "generate", idDocumentoUnico);
                     await setDoc(extDocRef, {
                         prompt: `Actúa como una examinadora certificada del DELF para el nivel ${currentLevel}. Evalúa rigurosamente la producción escrita del candidato llamándolo por su nombre (${nombreAlumno}) dentro de los comentarios, basándote estrictamente en las grillas oficiales del CIEP/France Éducation international.
 
@@ -1878,6 +1900,66 @@ Estructura del JSON requerida obligatoriamente:
   "texto_html": "El texto íntegro del alumno convertido a HTML donde CADA palabra o frase con un error de cualquier rubro DEBE ser envuelta exactamente en esta etiqueta: <span class=\\"sophia-error\\" data-rubric=\\"rubrique_key\\">${txtAlumno}</span>. Las llaves válidas para data-rubric son únicamente: 'realisation', 'coherence', 'adequation', 'lexique' o 'morphosyntaxe'."
 }`
                     });
+
+                    const desvincularEscucha = onSnapshot(extDocRef, async (snapshot) => {
+                        if (snapshot.exists() && snapshot.data().response) {
+                            desvincularEscucha();
+                            const respuestaIA = snapshot.data().response;
+                            
+                            window.mostrarEvaluacionSophia(respuestaIA);
+
+                            const llaveProgreso = `${currentUnitId}_${window.currentSkill}_${currentExerciseIndex}`;
+                            if (typeof mapaAciertosAlumno !== "undefined") {
+                                mapaAciertosAlumno[llaveProgreso] = true;
+                            }
+
+                            if (urlId !== "admin_preview" && docRefValidado) {
+                                const perfilUsuarioRef = doc(db, "Usuarios", urlId);
+                                await setDoc(perfilUsuarioRef, {
+                                    [`mapa_aciertos.${llaveProgreso}`]: true
+                                }, { merge: true });
+                                generarMenuJerarquico();
+                            }
+
+                            if (urlId !== "admin_preview" && docRefValidado) {
+                                const historialRef = collection(db, "Usuarios", urlId, "HistorialSophia");
+                                const qIntentos = query(historialRef, 
+                                    where("unidad", "==", currentUnitId), 
+                                    where("actividad", "==", currentExerciseIndex),
+                                    where("habilidad", "==", "PE")
+                                );
+                                const snapshotIntentos = await getDocs(qIntentos);
+                                const numeroDeIntento = snapshotIntentos.size + 1;
+                                const ahora = new Date();
+
+                                await addDoc(historialRef, {
+                                    fecha: ahora.toISOString().split('T')[0],
+                                    hora_registro: ahora.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit', second: '2-digit' }),
+                                    timestamp: ahora.getTime(),
+                                    tipo: "Production_Escrita",
+                                    habilidad: "PE",
+                                    texto_alumno: txtAlumno,
+                                    respuesta_ia: respuestaIA,
+                                    unidad: currentUnitId,
+                                    actividad: currentExerciseIndex,
+                                    intento: numeroDeIntento
+                                });
+                            }
+                            window.inicializarBotonHistorialIntentos();
+                            await calcularTodasLasNotasHabilidades();
+                        } else if (snapshot.exists() && snapshot.data().status?.state === "ERROR") {
+                            desvincularEscucha();
+                            if (sophiaTextEl) sophiaTextEl.innerHTML = "<span style='color:red;'>Erreur d'évaluation par l'IA.</span>";
+                        }
+                    });
+                } catch (e) {
+                    console.error(e);
+                    alert("Une erreur est survenue avec Sophia. Veuillez réessayer.");
+                } finally {
+                    if (btnSubmitPE) btnSubmitPE.disabled = false;
+                }
+                return;
+            }
 
             // 4. LÓGICA DEL BOTÓN REINICIAR (PE)
             if (e.target && e.target.id === 'btn-reset-pe') {
@@ -1970,7 +2052,6 @@ Estructura del JSON requerida obligatoriamente:
                 generarMenuJerarquico(); 
                 return;
             }
-
             // 6. LÓGICA DE CONTROL DE GRABACIÓN DE AUDIO (PO)
             if (e.target && (e.target.id === 'btn-record-po' || e.target.closest('#btn-record-po'))) {
                 const btn = document.getElementById('btn-record-po');
