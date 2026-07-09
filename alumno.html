@@ -1696,34 +1696,42 @@
             }
         });
 
-        window.mostrarEvaluacionSophia = function(jsonRaw) {
-            try {
-                // --- CORRECCIÓN: Parseo robusto del objeto JSON omitiendo texto basura ---
-                let cleanJson = jsonRaw.trim();
-                const inicioJson = cleanJson.indexOf('{');
-                const finJson = cleanJson.lastIndexOf('}');
-                if (inicioJson !== -1 && finJson !== -1) {
-                    cleanJson = cleanJson.substring(inicioJson, finJson + 1);
-                }
-                
-                const data = JSON.parse(cleanJson);
-                
-                document.getElementById('sophia-global-score').innerText = data.score_global || '--/25';
-                document.getElementById('sophia-global-badge').innerText = data.status || '--';
-                document.getElementById('sophia-verdict-text').dataset.evaluation = JSON.stringify(data.rubriques);
-                
-                const mirror = document.getElementById('sophia-text-mirror');
-                if (mirror) {
-                    let htmlContent = data.texto_html || '';
-                    mirror.innerHTML = htmlContent;
-                }
-                
-                document.getElementById('sophia-box').style.display = "block";
-            } catch(e) {
-                console.error("Error crítico en JSON:", e);
-                document.getElementById('sophia-text-mirror').innerText = "La IA respondió en formato incorrecto. Intenta de nuevo.";
-            }
-        };
+window.mostrarEvaluacionSophia = function(jsonRaw) {
+    try {
+        let cleanJson = jsonRaw.trim();
+        
+        // Eliminar bloques de código markdown si la IA los incluyó por error
+        cleanJson = cleanJson.replace(/^```json/i, "").replace(/```$/, "").trim();
+        
+        const inicioJson = cleanJson.indexOf('{');
+        const finJson = cleanJson.lastIndexOf('}');
+        if (inicioJson !== -1 && finJson !== -1) {
+            cleanJson = cleanJson.substring(inicioJson, finJson + 1);
+        }
+        
+        // Sanear saltos de línea internos dentro de los strings del JSON que rompen el parseo nativo
+        cleanJson = cleanJson.replace(/[\u0000-\u0019]+/g, " ");
+        
+        const data = JSON.parse(cleanJson);
+        
+        document.getElementById('sophia-global-score').innerText = data.score_global || '--/25';
+        document.getElementById('sophia-global-badge').innerText = data.status || '--';
+        document.getElementById('sophia-verdict-text').dataset.evaluation = JSON.stringify(data.rubriques);
+        
+        const mirror = document.getElementById('sophia-text-mirror');
+        if (mirror) {
+            mirror.innerHTML = data.texto_html || '';
+        }
+        
+        document.getElementById('sophia-box').style.display = "block";
+    } catch(e) {
+        console.error("Error crítico en JSON:", e);
+        document.getElementById('sophia-text-mirror').innerHTML = `
+            <div style="color:var(--danger); font-weight:600; padding:10px; background:#fff5f5; border:1px solid #ffe0e0; border-radius:6px;">
+                <i class="fas fa-exclamation-circle"></i> Sophia a généré una estructura compleja. Recliquez sur "Soumettre la production" pour réajuster la note.
+            </div>`;
+    }
+};
                
         // ==========================================
         // CENTRALIZACIÓN TOTAL DE CLICKS (DELEGACIÓN DE EVENTOS COMPLETA)
@@ -1867,57 +1875,53 @@ Estructura del JSON requerida obligatoriamente:
 }`
                     });
 
-                    const desvincularEscucha = onSnapshot(extDocRef, async (snapshot) => {
-                        if (snapshot.exists() && snapshot.data().response) {
-                            desvincularEscucha();
-                            const respuestaIA = snapshot.data().response;
-                            
-                            window.mostrarEvaluacionSophia(respuestaIA);
+                   const desvincularEscucha = onSnapshot(extDocRef, async (snapshot) => {
+                        try {
+                            if (snapshot.exists() && snapshot.data().response) {
+                                desvincularEscucha();
+                                const respuestaIA = snapshot.data().response;
+                                
+                                window.mostrarEvaluacionSophia(respuestaIA);
 
-                            const llaveProgreso = `${currentUnitId}_${window.currentSkill}_${currentExerciseIndex}`;
-                            if (typeof mapaAciertosAlumno !== "undefined") {
-                                mapaAciertosAlumno[llaveProgreso] = true;
-                            }
+                                const llaveProgreso = `${currentUnitId}_${window.currentSkill}_${currentExerciseIndex}`;
+                                if (typeof mapaAciertosAlumno !== "undefined") {
+                                    mapaAciertosAlumno[llaveProgreso] = true;
+                                }
 
-                            if (urlId !== "admin_preview" && docRefValidado) {
-                                const perfilUsuarioRef = doc(db, "Usuarios", urlId);
-                                await setDoc(perfilUsuarioRef, {
-                                    [`mapa_aciertos.${llaveProgreso}`]: true
-                                }, { merge: true });
-                                generarMenuJerarquico();
-                            }
+                                if (urlId !== "admin_preview" && docRefValidado) {
+                                    const perfilUsuarioRef = doc(db, "Usuarios", urlId);
+                                    await setDoc(perfilUsuarioRef, {
+                                        [`mapa_aciertos.${llaveProgreso}`]: true
+                                    }, { merge: true });
+                                    generarMenuJerarquico();
+                                }
 
-                            if (urlId !== "admin_preview" && docRefValidado) {
-                                const historialRef = collection(db, "Usuarios", urlId, "HistorialSophia");
-                                const qIntentos = query(historialRef, 
-                                    where("unidad", "==", currentUnitId), 
-                                    where("actividad", "==", currentExerciseIndex),
-                                    where("habilidad", "==", "PE")
-                                );
-                                const snapshotIntentos = await getDocs(qIntentos);
-                                const numeroDeIntento = snapshotIntentos.size + 1;
-                                const ahora = new Date();
+                                if (urlId !== "admin_preview" && docRefValidado) {
+                                    const historialRef = collection(db, "Usuarios", urlId, "HistorialSophia");
+                                    const qIntentos = query(historialRef, 
+                                        where("unidad", "==", currentUnitId), 
+                                        where("actividad", "==", currentExerciseIndex),
+                                        where("habilidad", "==", "PE")
+                                    );
+                                    const snapshotIntentos = await getDocs(qIntentos);
+                                    const numeroDeIntento = snapshotIntentos.size + 1;
+                                    const ahora = new Date();
 
-                                await addDoc(historialRef, {
-                                    fecha: ahora.toISOString().split('T')[0],
-                                    hora_registro: ahora.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit', second: '2-digit' }),
-                                    timestamp: ahora.getTime(),
-                                    tipo: "Production_Escrita",
-                                    habilidad: "PE",
-                                    texto_alumno: txtAlumno,
-                                    respuesta_ia: respuestaIA,
-                                    unidad: currentUnitId,
-                                    actividad: currentExerciseIndex,
-                                    intento: numeroDeIntento
-                                });
-                            }
-                            window.inicializarBotonHistorialIntentos();
-                            await calcularTodasLasNotasHabilidades();
-                        } else if (snapshot.exists() && snapshot.data().status?.state === "ERROR") {
-                            desvincularEscucha();
-                            if (sophiaTextEl) sophiaTextEl.innerHTML = "<span style='color:red;'>Erreur d'évaluation par l'IA.</span>";
+                                    await addDoc(historialRef, {
+                                        fecha: ahora.toISOString().split('T')[0],
+                                        hora_registro: ahora.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit', second: '2-digit' }),
+                                        timestamp: ahora.getTime(),
+                                        tipo: "Production_Escrita",
+                                        habilidad: "PE",
+                                        texto_alumno: txtAlumno,
+                                        respuesta_ia: respuestaIA,
+                                        unidad: currentUnitId,
+                                        actividad: currentExerciseIndex,
+                                        intento: numeroDeIntento
+                                    });
+                     } catch (errorInterno) {
+                            console.error("Error procesando la actualización de Firebase:", errorInterno);
                         }
-                    });
                 } catch (e) {
                     console.error(e);
                     alert("Une erreur est survenue avec Sophia. Veuillez réessayer.");
