@@ -1628,7 +1628,18 @@
                         const datosHistoricos = docsOrdenados[0];
                         
                         const elInput = document.getElementById('pe-student-response');
-                        if (elInput && datosHistoricos.texto_alumno) elInput.value = datosHistoricos.texto_alumno;
+                        if (elInput && datosHistoricos.texto_alumno) {
+    elInput.value = datosHistoricos.texto_alumno;
+    
+    const counter = document.getElementById('pe-word-counter');
+    if (counter) {
+        const textoLimpio = elInput.value.trim();
+        const totalPalabras = textoLimpio === "" ? 0 : textoLimpio.split(/\s+/).length;
+        counter.innerText = `${totalPalabras} mots`;
+        const minimoMots = parseInt(elInput.getAttribute('data-min-mots')) || 160; 
+        counter.className = totalPalabras < minimoMots ? "word-counter-badge mots-insufficient" : "word-counter-badge mots-ok";
+    }
+}
                         
                         const vBox = document.getElementById('sophia-box');
                         if (vBox) vBox.style.display = "block";
@@ -1845,7 +1856,7 @@ Estructura del JSON requerida obligatoriamente:
       "supra": "Estructuras gramaticales complejas sugeridas (uso de subjuntivo, condicional o pronombres relativos donde aplique) para demostrar maestría."
     }
   },
-  "texto_html": "El texto íntegro del alumno convertido a HTML donde CADA palabra o frase con un error de cualquier rubro DEBE ser envuelta exactamente en esta etiqueta: <span class=\\"sophia-error\\" data-rubric=\\"rubrique_key\\">${txtAlumno}</span>. Las llaves válidas para data-rubric son únicamente: 'realisation', 'coherence', 'adequation', 'lexique' o 'morphosyntaxe'."
+ "texto_html": "El texto íntegro del alumno convertido a HTML donde CADA palabra o frase con un error de cualquier rubro DEBE ser envuelta exactamente en esta etiqueta: <span class=\\"sophia-error\\" data-rubric=\\"rubrique_key\\">texto_erroneo_aqui</span>. Las llaves válidas para data-rubric son únicamente: 'realisation', 'coherence', 'adequation', 'lexique' o 'morphosyntaxe'."
 }`
                     });
 
