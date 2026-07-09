@@ -1804,8 +1804,7 @@ window.mostrarEvaluacionSophia = function(jsonRaw) {
                 });
                 return;
             }
-
-            // 3. SUBTEMA: ENVÍO Y EVALUACIÓN DE LA IA (PE)
+// 3. SUBTEMA: ENVÍO Y EVALUACIÓN DE LA IA (PE)
             if (e.target && (e.target.id === 'btn-submit-pe' || e.target.closest('#btn-submit-pe'))) {
                 const elInputRedaccion = document.getElementById('pe-student-response');
                 const txtAlumno = elInputRedaccion ? elInputRedaccion.value.trim() : "";
@@ -1826,7 +1825,6 @@ window.mostrarEvaluacionSophia = function(jsonRaw) {
                 if (sBox) sBox.style.display = "block";
 
                 try {
-                    // --- CORRECCIÓN: Usar addDoc para inicializar de inmediato la extensión de Firebase sin ID manual ---
                     const extDocRef = await addDoc(collection(db, "generate"), {
                         prompt: `Actúa como una examinadora certificada del DELF para el nivel ${currentLevel}. Evalúa rigurosamente la producción escrita del candidato llamándolo por su nombre (${nombreAlumno}) dentro de los comentarios, basándote estrictamente en las grillas oficiales del CIEP/France Éducation international.
 
@@ -1875,7 +1873,7 @@ Estructura del JSON requerida obligatoriamente:
 }`
                     });
 
-                   const desvincularEscucha = onSnapshot(extDocRef, async (snapshot) => {
+                    const desvincularEscucha = onSnapshot(extDocRef, async (snapshot) => {
                         try {
                             if (snapshot.exists() && snapshot.data().response) {
                                 desvincularEscucha();
@@ -1919,10 +1917,17 @@ Estructura del JSON requerida obligatoriamente:
                                         actividad: currentExerciseIndex,
                                         intento: numeroDeIntento
                                     });
-                    } catch (errorInterno) {
+                                }
+                                window.inicializarBotonHistorialIntentos();
+                                await calcularTodasLasNotasHabilidades();
+                            } else if (snapshot.exists() && snapshot.data().status?.state === "ERROR") {
+                                desvincularEscucha();
+                                if (sophiaTextEl) sophiaTextEl.innerHTML = "<span style='color:red;'>Erreur d'évaluation par l'IA.</span>";
+                            }
+                        } catch (errorInterno) {
                             console.error("Error procesando la actualización de Firebase:", errorInterno);
                         }
-                    }); // <-- ESTE CIERRE ERA EL QUE FALTABA
+                    });
                 } catch (e) {
                     console.error(e);
                     alert("Une erreur est survenue avec Sophia. Veuillez réessayer.");
@@ -1931,7 +1936,7 @@ Estructura del JSON requerida obligatoriamente:
                 }
                 return;
             }
-
+           
             // 4. LÓGICA DEL BOTÓN REINICIAR (PE)
             if (e.target && e.target.id === 'btn-reset-pe') {
                 const elInputRedaccion = document.getElementById('pe-student-response');
