@@ -1810,13 +1810,52 @@ if (inicioJson !== -1 && finJson !== -1) {
                 if (sBox) sBox.style.display = "block";
 
                 try {
-                    const timestampUnico = Date.now();
-                    const idDocumentoUnico = `${urlId}_PE_${currentUnitId}_${currentExerciseIndex}_intento_${timestampUnico}`;
+                    const extDocRef = await addDoc(collection(db, "generate"), {
+            prompt: `Actúa como una examinadora certificada del DELF para el nivel ${currentLevel}. Evalúa rigurosamente la producción escrita del candidato llamándolo por su nombre (${nombreAlumno}) dentro de los comentarios, basándote estrictamente en las grillas oficiales del CIEP/France Éducation international.
 
-                    const extDocRef = doc(db, "generate", idDocumentoUnico);
-                    await setDoc(extDocRef, {
-                        prompt: `Actúa como una examinadora certificada del DELF para el nivel ${currentLevel}. Evalúa rigurosamente la producción escrita del candidato llamándolo por su nombre (${nombreAlumno}) dentro de los comentarios, basándote estrictamente en las grillas oficiales del CIEP/France Éducation international.
+Texto del candidato:
+"${txtAlumno}"
 
+CRITICAL INSTRUCTION - SYSTEM OVERRIDE:
+You MUST output ONLY a raw, single JSON object. 
+DO NOT include any greeting text like "Chère Constanza", "Bonjour", or intro chat. 
+DO NOT include any markdown code blocks like \`\`\`json or \`\`\`. 
+Your response must start with '{' and end with '}'. 
+If you violate this, the application crashes.
+
+Estructura del JSON requerida obligatoriamente:
+{
+  "score_global": "Nota final total sobre 25 (ej. '18.5/25')",
+  "status": "Dictamen oficial: 'En dessous du niveau ciblé', 'Au niveau ciblé' o '${currentLevel}+ (Supra)'",
+  "rubriques": {
+    "realisation": {
+      "score": "Nota del rubro (ej. '3/5')",
+      "error": "Explicación concisa en español dirigida a ${nombreAlumno} de los fallos encontrados en la consigna o extensión de palabras.",
+      "supra": "Opciones específicas en francés para enriquecer esta respuesta y alcanzar un nivel superior (Supra)."
+    },
+    "coherence": {
+      "score": "Nota del rubro (ej. '2.5/5')",
+      "error": "Explicación en español dirigida a ${nombreAlumno} sobre problemas de organización, lógica o uso de conectores.",
+      "supra": "Propuestas de reescritura en francés introduciendo conectores lógicos y de transición avanzados (ej. par conséquent, néanmoins) para dar fluidez de nivel superior."
+    },
+    "adequation": {
+      "score": "Nota del rubro",
+      "error": "Explicación en español dirigida a ${nombreAlumno} sobre fórmulas de cortesía, saludos o adecuación del registro.",
+      "supra": "Fórmulas de cortesía francesas alternativas optimizadas para impresionar al examinador."
+    },
+    "lexique": {
+      "score": "Nota del rubro",
+      "error": "Explicación en español dirigida a ${nombreAlumno} sobre repeticiones de palabras, términos imprecisos o faltas de ortografía.",
+      "supra": "Propuestas de vocabulario avanzado, sinónimos precisos y expresiones idiomáticas francesas para sustituir los términos débiles usados."
+    },
+    "morphosyntaxe": {
+      "score": "Nota del rubro",
+      "error": "Explicación en español dirigida a ${nombreAlumno} sobre errores de conjugación, tiempos verbales erróneos o problemas de concordancia de género/número.",
+      "supra": "Estructuras gramaticales complejas sugeridas (uso de subjuntivo, condicional o pronombres relativos donde aplique) para demostrar maestría."
+    }
+  },
+  "texto_html": "El texto íntegro del alumno convertido a HTML donde CADA palabra o frase con un error de cualquier rubro DEBE ser envuelta exactamente en esta etiqueta: <span class=\\"sophia-error\\" data-rubric=\\"rubrique_key\\">texto_erroneo_aqui</span>. Las llaves válidas para data-rubric son únicamente: 'realisation', 'coherence', 'adequation', 'lexique' o 'morphosyntaxe'."
+}
 Texto del candidato:
 "${txtAlumno}"
 
