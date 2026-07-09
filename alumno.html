@@ -928,7 +928,7 @@
                     icono: "fa-file-alt",
                     color: "#34a853",
                     lblBienvenida: isLevelA ? "Bienvenido a tu espacio de entrenamiento." : "Bienvenue dans votre espace d'entraînement.",
-                    lblInstruccion: isLevelA ? "Por favor lee los detalles oficiales de esta competencia, luego selecciona una actividad en el menú de la izquierda para comenzar." : "Veuillez lire les détails officiels de cette compétence ci-dessous, puis sélectionnez une activité dans le menu de gauche pour démarrer.",
+                    lblInstruccion: isLevelA ? "Por favor lee los detalles oficiales de esta competencia, luego selecciona una actividad en el menú de la izquierda para comenzar." : "Veuillez lire les détails officiels de cette competencia ci-dessous, puis sélectionnez une activité dans le menu de gauche pour démarrer.",
                     titObjetivos: isLevelA ? "Objetivos Oficiales" : "Objectifs Officiels",
                     titEjercicios: isLevelA ? "Tipos de Ejercicios en el Sistema" : "Types d'exercices",
                     titConsejos: isLevelA ? "Consejos de Éxito" : "Conseils de réussite",
@@ -1352,7 +1352,7 @@
                             <i class="fas fa-microphone"></i> Commencer à parler
                         </button>
                         <span id="po-audio-feedback" style="font-size: 0.9rem; font-weight: 600; color: #666;">
-                            <i class="fas fa-info-circle"></i> Cliquez sur le bouton pour démarrer l'exercice.
+                            <i class="fas fa-info-circle"></i> Cliquez sur le bouton para démarrer l'exercice.
                         </span>
                     </div>
 
@@ -1629,17 +1629,24 @@
                         
                         const elInput = document.getElementById('pe-student-response');
                         if (elInput && datosHistoricos.texto_alumno) {
-    elInput.value = datosHistoricos.texto_alumno;
-    
-    const counter = document.getElementById('pe-word-counter');
-    if (counter) {
-        const textoLimpio = elInput.value.trim();
-        const totalPalabras = textoLimpio === "" ? 0 : textoLimpio.split(/\s+/).length;
-        counter.innerText = `${totalPalabras} mots`;
-        const minimoMots = parseInt(elInput.getAttribute('data-min-mots')) || 160; 
-        counter.className = totalPalabras < minimoMots ? "word-counter-badge mots-insufficient" : "word-counter-badge mots-ok";
-    }
-}
+                            elInput.value = datosHistoricos.texto_alumno;
+                            
+                            // --- CORRECCIÓN: Sincronizar el contador de palabras de inmediato ---
+                            const counter = document.getElementById('pe-word-counter');
+                            if (counter) {
+                                const textoLimpio = elInput.value.trim();
+                                const totalPalabras = textoLimpio === "" ? 0 : textoLimpio.split(/\s+/).length;
+                                
+                                counter.innerText = `${totalPalabras} mots`;
+                                const minimoMots = parseInt(elInput.getAttribute('data-min-mots')) || 160; 
+                                
+                                if (totalPalabras < minimoMots) {
+                                    counter.className = "word-counter-badge mots-insufficient";
+                                } else {
+                                    counter.className = "word-counter-badge mots-ok";
+                                }
+                            }
+                        }
                         
                         const vBox = document.getElementById('sophia-box');
                         if (vBox) vBox.style.display = "block";
@@ -1691,12 +1698,13 @@
 
         window.mostrarEvaluacionSophia = function(jsonRaw) {
             try {
+                // --- CORRECCIÓN: Parseo robusto del objeto JSON omitiendo texto basura ---
                 let cleanJson = jsonRaw.trim();
-const inicioJson = cleanJson.indexOf('{');
-const finJson = cleanJson.lastIndexOf('}');
-if (inicioJson !== -1 && finJson !== -1) {
-    cleanJson = cleanJson.substring(inicioJson, finJson + 1);
-}
+                const inicioJson = cleanJson.indexOf('{');
+                const finJson = cleanJson.lastIndexOf('}');
+                if (inicioJson !== -1 && finJson !== -1) {
+                    cleanJson = cleanJson.substring(inicioJson, finJson + 1);
+                }
                 
                 const data = JSON.parse(cleanJson);
                 
@@ -1707,7 +1715,7 @@ if (inicioJson !== -1 && finJson !== -1) {
                 const mirror = document.getElementById('sophia-text-mirror');
                 if (mirror) {
                     let htmlContent = data.texto_html || '';
-                    mirror.innerHTML = htmlContent.replace(/<div class="evaluation-header">[\s\S]*?<\/div>/gi, '');
+                    mirror.innerHTML = htmlContent;
                 }
                 
                 document.getElementById('sophia-box').style.display = "block";
@@ -1810,8 +1818,9 @@ if (inicioJson !== -1 && finJson !== -1) {
                 if (sBox) sBox.style.display = "block";
 
                 try {
+                    // --- CORRECCIÓN: Usar addDoc para inicializar de inmediato la extensión de Firebase sin ID manual ---
                     const extDocRef = await addDoc(collection(db, "generate"), {
-            prompt: `Actúa como una examinadora certificada del DELF para el nivel ${currentLevel}. Evalúa rigurosamente la producción escrita del candidato llamándolo por su nombre (${nombreAlumno}) dentro de los comentarios, basándote estrictamente en las grillas oficiales del CIEP/France Éducation international.
+                        prompt: `Actúa como una examinadora certificada del DELF para el nivel ${currentLevel}. Evalúa rigurosamente la producción escrita del candidato llamándolo por su nombre (${nombreAlumno}) dentro de los comentarios, basándote estrictamente en las grillas oficiales del CIEP/France Éducation international.
 
 Texto del candidato:
 "${txtAlumno}"
@@ -1855,49 +1864,6 @@ Estructura del JSON requerida obligatoriamente:
     }
   },
   "texto_html": "El texto íntegro del alumno convertido a HTML donde CADA palabra o frase con un error de cualquier rubro DEBE ser envuelta exactamente en esta etiqueta: <span class=\\"sophia-error\\" data-rubric=\\"rubrique_key\\">texto_erroneo_aqui</span>. Las llaves válidas para data-rubric son únicamente: 'realisation', 'coherence', 'adequation', 'lexique' o 'morphosyntaxe'."
-}
-Texto del candidato:
-"${txtAlumno}"
-
-CRITICAL INSTRUCTION - SYSTEM OVERRIDE:
-You MUST output ONLY a raw, single JSON object. 
-DO NOT include any greeting text like "Chère Constanza", "Bonjour", or intro chat. 
-DO NOT include any markdown code blocks like \`\`\`json or \`\`\`. 
-Your response must start with '{' and end with '}'. 
-If you violate this, the application crashes.
-
-Estructura del JSON requerida obligatoriamente:
-{
-  "score_global": "Nota final total sobre 25 (ej. '18.5/25')",
-  "status": "Dictamen oficial: 'En dessous du niveau ciblé', 'Au niveau ciblé' o '${currentLevel}+ (Supra)'",
-  "rubriques": {
-    "realisation": {
-      "score": "Nota del rubro (ej. '3/5')",
-      "error": "Explicación concisa en español dirigida a ${nombreAlumno} de los fallos encontrados en la consigna o extensión de palabras.",
-      "supra": "Opciones específicas en francés para enriquecer esta respuesta y alcanzar un nivel superior (Supra)."
-    },
-    "coherence": {
-      "score": "Nota del rubro (ej. '2.5/5')",
-      "error": "Explicación en español dirigida a ${nombreAlumno} sobre problemas de organización, lógica o uso de conectores.",
-      "supra": "Propuestas de reescritura en francés introduciendo conectores lógicos y de transición avanzados (ej. par conséquent, néanmoins) para dar fluidez de nivel superior."
-    },
-    "adequation": {
-      "score": "Nota del rubro",
-      "error": "Explicación en español dirigida a ${nombreAlumno} sobre fórmulas de cortesía, saludos o adecuación del registro.",
-      "supra": "Fórmulas de cortesía francesas alternativas optimizadas para impresionar al examinador."
-    },
-    "lexique": {
-      "score": "Nota del rubro",
-      "error": "Explicación en español dirigida a ${nombreAlumno} sobre repeticiones de palabras, términos imprecisos o faltas de ortografía.",
-      "supra": "Propuestas de vocabulario avanzado, sinónimos precisos y expresiones idiomáticas francesas para sustituir los términos débiles usados."
-    },
-    "morphosyntaxe": {
-      "score": "Nota del rubro",
-      "error": "Explicación en español dirigida a ${nombreAlumno} sobre errores de conjugación, tiempos verbales erróneos o problemas de concordancia de género/número.",
-      "supra": "Estructuras gramaticales complejas sugeridas (uso de subjuntivo, condicional o pronombres relativos donde aplique) para demostrar maestría."
-    }
-  },
- "texto_html": "El texto íntegro del alumno convertido a HTML donde CADA palabra o frase con un error de cualquier rubro DEBE ser envuelta exactamente en esta etiqueta: <span class=\\"sophia-error\\" data-rubric=\\"rubrique_key\\">texto_erroneo_aqui</span>. Las llaves válidas para data-rubric son únicamente: 'realisation', 'coherence', 'adequation', 'lexique' o 'morphosyntaxe'."
 }`
                     });
 
@@ -2152,11 +2118,9 @@ Estructura del JSON requerida obligatoriamente:
                 try {
                     const saludoH3 = document.getElementById('student-welcome')?.innerText || "";
                     const nombreAlumno = saludoH3.replace("Élève:", "").trim() || "l'élève";
-                    const timestampUnico = Date.now();
-                    const idDocumentoUnico = `${urlId}_PO_${currentUnitId}_${currentExerciseIndex}_intento_${timestampUnico}`;
-
-                    const extDocRef = doc(db, "generate", idDocumentoUnico);
-                    await setDoc(extDocRef, {
+                    
+                    // --- CORRECCIÓN: Usar addDoc también en PO para evitar bloqueos por ID personalizado ---
+                    const extDocRef = await addDoc(collection(db, "generate"), {
                         prompt: `Actúa como una examinadora certificada del DELF para el nivel ${currentLevel}. Evalúa la producción oral (monólogo o debate) del candidato basándose estrictamente en las grillas oficiales del CIEP/France Éducation international. Dirígete directamente al alumno llamándolo por su nombre (${nombreAlumno}).
 
 Transcripción del audio del alumno:
