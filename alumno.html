@@ -1923,8 +1923,8 @@ Estructura del JSON requerida obligatoriamente:
                                         intento: numeroDeIntento
                                     });
                                     
-                                  // 3. SOLO SI SE GUARDÓ EL HISTORIAL, marcar actividad como completada en el perfil
-                                    const llaveProgreso = `${currentUnitId}_${window.currentSkill}_${currentExerciseIndex + 1}`;
+// 3. SOLO SI SE GUARDÓ EL HISTORIAL, marcar actividad como completada en el perfil
+                                    const llaveProgreso = `${currentUnitId}_${window.currentSkill}_${currentExerciseIndex}`;
                                     if (typeof mapaAciertosAlumno !== "undefined") {
                                         mapaAciertosAlumno[llaveProgreso] = true;
                                     }
