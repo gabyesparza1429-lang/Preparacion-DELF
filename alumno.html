@@ -1649,14 +1649,18 @@
                         }
                         
                         const vBox = document.getElementById('sophia-box');
-                        if (vBox) vBox.style.display = "block";
-                        
-                        if (datosHistoricos.respuesta_ia) {
-                            if (window.currentSkill === "PO") {
-                                window.mostrarEvaluacionOralSophia(datosHistoricos.respuesta_ia);
-                            } else {
-                                window.mostrarEvaluacionSophia(datosHistoricos.respuesta_ia);
-                            }
+                        if (vBox) {
+                            vBox.style.display = "block";
+                            
+                            setTimeout(() => {
+                                if (datosHistoricos.respuesta_ia) {
+                                    if (window.currentSkill === "PO") {
+                                        window.mostrarEvaluacionOralSophia(datosHistoricos.respuesta_ia);
+                                    } else {
+                                        window.mostrarEvaluacionSophia(datosHistoricos.respuesta_ia);
+                                    }
+                                }
+                            }, 50);
                         }
                         
                         window.inicializarBotonHistorialIntentos();
@@ -1700,7 +1704,6 @@ window.mostrarEvaluacionSophia = function(jsonRaw) {
     try {
         let cleanJson = jsonRaw.trim();
         
-        // Eliminar bloques de código markdown si la IA los incluyó por error
         cleanJson = cleanJson.replace(/^```json/i, "").replace(/```$/, "").trim();
         
         const inicioJson = cleanJson.indexOf('{');
@@ -1709,27 +1712,37 @@ window.mostrarEvaluacionSophia = function(jsonRaw) {
             cleanJson = cleanJson.substring(inicioJson, finJson + 1);
         }
         
-        // Sanear saltos de línea internos dentro de los strings del JSON que rompen el parseo nativo
         cleanJson = cleanJson.replace(/[\u0000-\u0019]+/g, " ");
         
         const data = JSON.parse(cleanJson);
         
-        document.getElementById('sophia-global-score').innerText = data.score_global || '--/25';
-        document.getElementById('sophia-global-badge').innerText = data.status || '--';
-        document.getElementById('sophia-verdict-text').dataset.evaluation = JSON.stringify(data.rubriques);
+        const scoreEl = document.getElementById('sophia-global-score');
+        if (scoreEl) scoreEl.innerText = data.score_global || '--/25';
+        
+        const badgeEl = document.getElementById('sophia-global-badge');
+        if (badgeEl) badgeEl.innerText = data.status || '--';
+        
+        const verdictEl = document.getElementById('sophia-verdict-text');
+        if (verdictEl) verdictEl.dataset.evaluation = JSON.stringify(data.rubriques);
         
         const mirror = document.getElementById('sophia-text-mirror');
         if (mirror) {
             mirror.innerHTML = data.texto_html || '';
         }
         
-        document.getElementById('sophia-box').style.display = "block";
+        const sBox = document.getElementById('sophia-box');
+        if (sBox) sBox.style.display = "block";
     } catch(e) {
-        console.error("Error crítico en JSON:", e);
-        document.getElementById('sophia-text-mirror').innerHTML = `
-            <div style="color:var(--danger); font-weight:600; padding:10px; background:#fff5f5; border:1px solid #ffe0e0; border-radius:6px;">
-                <i class="fas fa-exclamation-circle"></i> Sophia a généré una estructura compleja. Recliquez sur "Soumettre la production" pour réajuster la note.
-            </div>`;
+        console.error("Error crítico en JSON al parsear respuesta de Sophia:", e);
+        const mirror = document.getElementById('sophia-text-mirror');
+        if (mirror) {
+            mirror.innerHTML = `
+                <div style="color:var(--danger); font-weight:600; padding:10px; background:#fff5f5; border:1px solid #ffe0e0; border-radius:6px; font-family:'Montserrat'; font-size:0.9rem;">
+                    <i class="fas fa-exclamation-circle"></i> Sophia ha generado una respuesta con texto adicional. Por favor, vuelve a hacer clic en "Soumettre la production" para forzar un formato limpio.
+                </div>`;
+        }
+        const sBox = document.getElementById('sophia-box');
+        if (sBox) sBox.style.display = "block";
     }
 };
                
