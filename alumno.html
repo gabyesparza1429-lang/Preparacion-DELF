@@ -1675,65 +1675,36 @@
                 }
             }
         });
-
-        window.mostrarEvaluacionSophia = function(jsonRaw) {
-            try {
-                // Limpieza de bloques de código Markdown si existen
-                let cleanJson = jsonRaw.replace(/```json/g, '').replace(/```/g, '').trim();
-                
-                // Si la IA metió texto antes del JSON, buscamos donde abre la primera llave
-                if (!cleanJson.startsWith('{')) {
-                    const firstBrace = cleanJson.indexOf('{');
-                    if (firstBrace !== -1) {
-                        cleanJson = cleanJson.substring(firstBrace);
-                    }
-                }
-                
-                const data = JSON.parse(cleanJson);
-                
-                const scoreEl = document.getElementById('sophia-global-score');
-                if (scoreEl) scoreEl.innerText = data.score_global || '--/25';
-                
-                const badge = document.getElementById('sophia-global-badge');
-                if (badge) {
-                    badge.innerText = data.status || '--';
-                    if (data.status.includes('En dessous')) badge.style.background = '#d93025';
-                    else if (data.status.includes('Supra') || data.status.includes('+')) badge.style.background = '#137333';
-                    else badge.style.background = '#1a73e8';
-                }
-                
-                const container = document.getElementById('sophia-verdict-text');
-                if (container) container.dataset.evaluation = JSON.stringify(data.rubriques);
-                
-                const mirror = document.getElementById('sophia-text-mirror');
-                if (mirror) {
-                    // Si el HTML interno contiene código crudo visible, limpiamos etiquetas duplicadas
-                    let textoProcesado = data.texto_html || '';
-                    if (textoProcesado.includes('&lt;') || textoProcesado.includes('<div')) {
-                        // Resguardo por si la respuesta vino dañada estructuralmente
-                        textoProcesado = textoProcesado.replace(/<div[^>]*>([\s\S]*?)<\/div>/gi, '$1');
-                    }
-                    mirror.innerHTML = textoProcesado;
-                }
-                
-                const detailsPanel = document.getElementById('sophia-feedback-details');
-                if (detailsPanel) detailsPanel.style.display = 'none';
-                
-                document.querySelectorAll('.btn-rubric').forEach(b => {
-                    b.style.background = '#fff';
-                    b.style.color = 'var(--oxford)';
-                    b.style.borderColor = '#ccc';
-                });
-            } catch(e) {
-                console.error("Error parsing Sophia JSON:", e);
-                const mirror = document.getElementById('sophia-text-mirror');
-                if (mirror) {
-                    // Si falló el JSON, renderiza el texto limpiando los tags HTML crudos para que sea legible
-                    let textoLimpio = jsonRaw.replace(/<[^>]*>/g, '');
-                    mirror.innerHTML = `<div style="color:#333; font-family:'Montserrat'; padding:10px;">${textoLimpio}</div>`;
-                }
-            }
-        };
+window.mostrarEvaluacionSophia = function(jsonRaw) {
+    try {
+        // Limpiamos todo lo que no sea el JSON
+        let cleanJson = jsonRaw.replace(/```json/g, '').replace(/```/g, '').trim();
+        if (!cleanJson.startsWith('{')) {
+            cleanJson = cleanJson.substring(cleanJson.indexOf('{'));
+        }
+        
+        const data = JSON.parse(cleanJson);
+        
+        // Actualizamos los elementos
+        document.getElementById('sophia-global-score').innerText = data.score_global || '--/25';
+        document.getElementById('sophia-global-badge').innerText = data.status || '--';
+        document.getElementById('sophia-verdict-text').dataset.evaluation = JSON.stringify(data.rubriques);
+        
+        // Limpiamos el texto HTML por si viene con basura
+        const mirror = document.getElementById('sophia-text-mirror');
+        if (mirror) {
+            let htmlContent = data.texto_html || '';
+            // Si la IA mandó basura HTML extra, la limpiamos antes de inyectar
+            mirror.innerHTML = htmlContent.replace(/<div class="evaluation-header">[\s\S]*?<\/div>/gi, '');
+        }
+        
+        document.getElementById('sophia-box').style.display = "block";
+    } catch(e) {
+        console.error("Error crítico en JSON:", e);
+        document.getElementById('sophia-text-mirror').innerText = "La IA respondió en formato incorrecto. Intenta de nuevo.";
+    }
+};
+       
         // ==========================================
         // CENTRALIZACIÓN TOTAL DE CLICKS (DELEGACIÓN DE EVENTOS COMPLETA)
         // ==========================================
@@ -1783,10 +1754,10 @@
                 const supraBox = document.getElementById('sophia-feedback-supra');
                 
                if (rubricData) {
-                    if (detailsPanel) detailsPanel.style.display = 'flex';
-                    if (errBox) errBox.innerHTML = `<strong>[Score: ${rubricData.score || '--'}]</strong><br>${rubricData.error || 'Aucune erreur détectée.'}`;
-                    if (supraBox) supraBox.innerHTML = rubricData.supra || 'Votre production est déjà excellente.';
-                }
+    if (detailsPanel) detailsPanel.style.display = 'flex';
+    if (errBox) errBox.innerHTML = `<strong>[Score: ${rubricData.score || '--'}]</strong><br>${rubricData.error || 'Aucune erreur détectée.'}`;
+    if (supraBox) supraBox.innerHTML = rubricData.supra || 'Votre production est déjà excellente.'; // <--- AQUÍ TAMBIÉN
+}
                 
                 document.querySelectorAll('#sophia-text-mirror .sophia-error').forEach(span => {
                     if (span.dataset.rubric === rubricKey) {
