@@ -1577,46 +1577,41 @@
                     });
                 }
             }
+// === CARGA DE INTENTOS PREVIOS AL ENTRAR AL EJERCICIO ===
+        const llaveProgresoVerif = `${currentUnitId}_${window.currentSkill}_${currentExerciseIndex}`;
+        if (mapaAiertosAlumno[llaveProgresoVerif] === true && urlId !== "admin_preview") {
+            try {
+                const numeroUnidadCargaFiltro = parseInt(currentUnitId.replace(/\D/g, '')) || currentUnitId;
+                const numeroActividadCargaFiltro = currentExerciseIndex + 1;
 
-            // === CARGA DE INTENTOS PREVIOS AL ENTRAR AL EJERCICIO ===
-            const llaveProgresoVerif = `${currentUnitId}_${window.currentSkill}_${currentExerciseIndex}`;
-            if (mapaAciertosAlumno[llaveProgresoVerif] === true && urlId !== "admin_preview") {
-                try {
-        const numeroUnidadCargaFiltro = parseInt(currentUnitId.replace(/\D/g, '')) || currentUnitId;
-        const numeroActividadCargaFiltro = currentExerciseIndex + 1;
+                const qFiltro = query(collection(db, "Usuarios", urlId, "HistorialSophia"),
+                    where("unidad", "==", numeroUnidadCargaFiltro),
+                    where("actividad", "==", numeroActividadCargaFiltro),
+                    where("habilidad", "==", window.currentSkill)
+                );
 
-        const qFiltro = query(collection(db, "Usuarios", urlId, "HistorialSophia"),
-            where("unidad", "==", numeroUnidadCargaFiltro),
-            where("actividad", "==", numeroActividadCargaFiltro),
-            where("habilidad", "==", window.currentSkill));
-                    const snapFiltro = await getDocs(qFiltro);
-                    if (!snapFiltro.empty) {
-                        const docsOrdenados = snapFiltro.docs.map(d => d.data()).sort((a,b) => (b.intento || 0) - (a.intento || 0));
-                        const datosHistoricos = docsOrdenados[0];
+                const snapFiltro = await getDocs(qFiltro);
+                if (!snapFiltro.empty) {
+                    const docsOrdenados = snapFiltro.docs.map(d => d.data()).sort((a,b) => (b.intento || 0) - (a.intento || 0));
+                    const datosHistoricos = docsOrdenados[0];
+
+                    const elInput = document.getElementById('pe-student-response');
+                    if (elInput && datosHistoricos.texto_alumno) {
+                        elInput.value = datosHistoricos.texto_alumno;
                         
-                        const elInput = document.getElementById('pe-student-response');
-                        if (elInput && datosHistoricos.texto_alumno) {
-                            elInput.value = datosHistoricos.texto_alumno;
-                            
-                            const counter = document.getElementById('pe-word-counter');
-                            if (counter) {
-                                const textoLimpio = elInput.value.trim();
-                                const totalPalabras = textoLimpio === "" ? 0 : textoLimpio.split(/\s+/).length;
-                                
-                                counter.innerText = `${totalPalabras} mots`;
-                                const minimoMots = parseInt(elInput.getAttribute('data-min-mots')) || 160; 
-                                
-                                if (totalPalabras < minimoMots) {
-                                    counter.className = "word-counter-badge mots-insufficient";
-                                } else {
-                                    counter.className = "word-counter-badge mots-ok";
-                                }
-                            }
+                        const counter = document.getElementById('pe-word-counter');
+                        if (counter) {
+                            const textoLimpio = elInput.value.trim();
+                            const totalPalabras = textoLimpio === "" ? 0 : textoLimpio.split(/\s+/).length;
+                            counter.innerText = `${totalPalabras} mots`;
+                            const minimoMots = parseInt(elInput.getAttribute('data-min-mots')) || 160;
+                            counter.className = totalPalabras < minimoMots ? "word-counter-badge mots-insufficient" : "word-counter-badge mots-ok";
                         }
-                  const sBox = document.getElementById('sophia-box');
+                    }
+
+                    const sBox = document.getElementById('sophia-box');
                     if (datosHistoricos && datosHistoricos.respuesta_ia) {
                         if (sBox) sBox.style.display = "block";
-                        
                         if (window.currentSkill === "PO") {
                             window.mostrarEvaluacionOralSophia(datosHistoricos.respuesta_ia);
                         } else {
@@ -1626,18 +1621,22 @@
                         if (sBox) sBox.style.display = "none";
                     }
 
-                      window.inicializarBotonHistorialIntentos();
+                    window.inicializarBotonHistorialIntentos();
                 }
+            } catch (e) {
+                console.error("Error cargando historial previo: ", e);
             }
-                        
-            // === MEDIDAS ANTI-COPIADO EN PE ===
-            if (window.currentSkill === "PE") {
-                const elInputRedaccion = document.getElementById('pe-student-response');
-                if (elInputRedaccion) {
-                    ['copy', 'cut', 'contextmenu'].forEach(evt => elInputRedaccion.addEventListener(evt, e => e.preventDefault(), true));
-                }
+        }
+
+        // === MEDIDAS ANTI-COPIADO EN PE ===
+        if (window.currentSkill === "PE") {
+            const elInputRedaccion = document.getElementById('pe-student-response');
+            if (elInputRedaccion) {
+                ['copy', 'cut', 'contextmenu'].forEach(evt => 
+                    elInputRedaccion.addEventListener(evt, e => e.preventDefault(), true)
+                );
             }
-        };
+        }
 
         // ==========================================
         // CONTROLADORES DE EVENTOS DE ENTRADA Y MOTORES VISUALES
