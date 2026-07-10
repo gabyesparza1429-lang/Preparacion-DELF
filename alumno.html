@@ -1939,18 +1939,61 @@ Estructura del JSON requerida obligatoriamente:
                                     window.inicializarBotonHistorialIntentos();
                                     await calcularTodasLasNotasHabilidades();
                                 }
+                            const desvincularEscucha = onSnapshot(extDocRef, async (snapshot) => {
+                        try {
+                            if (snapshot.exists() && snapshot.data().response) {
+                                desvincularEscucha();
+                                const respuestaIA = snapshot.data().response;
+                                window.mostrarEvaluacionSophia(respuestaIA);
+
+                                if (urlId !== "admin_preview" && docRefValidado) {
+                                    const historialRef = collection(db, "Usuarios", urlId, "HistorialSophia");
+                                    const qIntentos = query(historialRef, 
+                                        where("unidad", "==", currentUnitId), 
+                                        where("actividad", "==", currentExerciseIndex),
+                                        where("habilidad", "==", "PE")
+                                    );
+                                    const snapshotIntentos = await getDocs(qIntentos);
+                                    const numeroDeIntento = snapshotIntentos.size + 1;
+                                    const ahora = new Date();
+
+                                    await addDoc(historialRef, {
+                                        fecha: ahora.toISOString().split('T')[0],
+                                        hora_registro: ahora.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit', second: '2-digit' }),
+                                        timestamp: ahora.getTime(),
+                                        tipo: "Production_Escrita",
+                                        habilidad: "PE",
+                                        texto_alumno: txtAlumno,
+                                        respuesta_ia: respuestaIA,
+                                        unidad: currentUnitId,
+                                        actividad: currentExerciseIndex,
+                                        intento: numeroDeIntento
+                                    });
+
+                                    const llaveProgreso = `${currentUnitId}_${window.currentSkill}_${currentExerciseIndex}`;
+                                    if (typeof mapaAciertosAlumno !== "undefined") {
+                                        mapaAciertosAlumno[llaveProgreso] = true;
+                                    }
+
+                                    const perfilUsuarioRef = doc(db, "Usuarios", urlId);
+                                    await setDoc(perfilUsuarioRef, {
+                                        [`mapa_aciertos.${llaveProgreso}`]: true
+                                    }, { merge: true });
+
+                                    generarMenuJerarquico();
+                                    window.inicializarBotonHistorialIntentos();
+                                    await calcularTodasLasNotasHabilidades();
+                                }
                             } else if (snapshot.exists() && snapshot.data().status?.state === "ERROR") {
                                 desvincularEscucha();
                                 if (sophiaTextEl) sophiaTextEl.innerHTML = "<span style='color:red;'>Erreur d'évaluation par l'IA.</span>";
                             }
                         } catch (errorInterno) {
-                            console.error("Error procesando la actualización de Firebase o almacenamiento:", errorInterno);
-                            if (sophiaTextEl) sophiaTextEl.innerHTML = "<span style='color:red;'>Erreur de stockage dans la base de données.</span>";
+                            console.error("Error:", errorInterno);
                         }
-                    });               
+                    });
                 } catch (e) {
                     console.error(e);
-                    alert("Une erreur est survenue avec Sophia. Veuillez réessayer.");
                 } finally {
                     if (btnSubmitPE) btnSubmitPE.disabled = false;
                 }
