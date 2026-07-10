@@ -1618,18 +1618,16 @@
                         if (vBox) {
                             vBox.style.display = "block";
                             
-                            setTimeout(() => {
-                                if (datosHistoricos.respuesta_ia) {
-                                    if (window.currentSkill === "PO") {
-                                        window.mostrarEvaluacionOralSophia(datosHistoricos.respuesta_ia);
-                    } else {
+                          if (datosHistoricos.respuesta_ia) {
                         const sBox = document.getElementById('sophia-box');
                         if (sBox) sBox.style.display = "block";
-                        window.mostrarEvaluacionSophia(datosHistoricos.respuesta_ia);
-                                    }
-                                }
-                            }, 50);
+                        
+                        if (window.currentSkill === "PO") {
+                            window.mostrarEvaluacionOralSophia(datosHistoricos.respuesta_ia);
+                        } else {
+                            window.mostrarEvaluacionSophia(datosHistoricos.respuesta_ia);
                         }
+                    }
                         
                         window.inicializarBotonHistorialIntentos();
                     }
