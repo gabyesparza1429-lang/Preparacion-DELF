@@ -1843,28 +1843,28 @@ Debe ser obligatoriamente un JSON plano sin markdown.`
         const numeroUnidadMenuH = parseInt(currentUnitId.replace(/\D/g, '')) || currentUnitId;
         const numeroActividadMenuH = currentExerciseIndex + 1;
 
-        const q = query(historialRef, 
-            where("unidad", "==", numeroUnidadMenuH), 
-            where("actividad", "==", numeroActividadMenuH),
-            where("habilidad", "==", "PE")
-        );
-                                    const snapshotIntentos = await getDocs(qIntentos);
-                                    const numeroDeIntento = snapshotIntentos.size + 1;
-                                    const ahora = new Date();
+        const qIntentos = query(historialRef,
+                where("unidad", "==", numeroUnidadMenuH),
+                where("actividad", "==", numeroActividadMenuH),
+                where("habilidad", "==", "PE")
+            );
 
-                                    await addDoc(historialRef, {
-                                        fecha: ahora.toISOString().split('T')[0],
-                                        hora_registro: ahora.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit', second: '2-digit' }),
-                                        timestamp: ahora.getTime(),
-                                        tipo: "Production_Escrita",
-                                        habilidad: "PE",
-                                        texto_alumno: txtAlumno,
-                                        respuesta_ia: respuestaIA,
-                                        unidad: numeroUnidadMenu,       // Número real de unidad
-                                        actividad: numeroActividadMenu, // Número real de actividad (1, 2, 3, 4...)
-                                        intento: numeroDeIntento
-                                    });
-                                    
+            const snapshotIntentos = await getDocs(qIntentos);
+            const numeroDeIntento = snapshotIntentos.size + 1;
+            const ahora = new Date();
+
+            await addDoc(historialRef, {
+                fecha: ahora.toISOString().split('T')[0],
+                hora_registro: ahora.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit', second: '2-digit' }),
+                timestamp: ahora.getTime(),
+                tipo: "Production_Escrita",
+                habilidad: "PE",
+                texto_alumno: txtAlumno,
+                respuesta_ia: respuestaIA,
+                unidad: numeroUnidadMenuH,      // Variable corregida con la H
+                actividad: numeroActividadMenuH, // Variable corregida con la H
+                intento: numeroDeIntento
+            });                                    
                                     const llaveProgreso = `${currentUnitId}_${window.currentSkill}_${currentExerciseIndex}`;
                                     if (typeof mapaAciertosAlumno !== "undefined") {
                                         mapaAciertosAlumno[llaveProgreso] = true;
