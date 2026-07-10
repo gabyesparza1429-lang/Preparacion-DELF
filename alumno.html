@@ -1677,42 +1677,54 @@
                 cleanJson = cleanJson.replace(/[\u0000-\u0019]+/g, " ");
                 const data = JSON.parse(cleanJson);
                 
+                // Forzar que se limpie el mensaje "Sophia corrige ta production..."
+                const sophiaTextEl = document.getElementById('sophia-verdict-text');
+                if (sophiaTextEl) sophiaTextEl.innerHTML = ""; 
+
                 const scoreEl = document.getElementById('sophia-global-score');
                 if (scoreEl) scoreEl.innerText = data.score_global || '--/25';
                 
                 const badgeEl = document.getElementById('sophia-global-badge');
                 if (badgeEl) badgeEl.innerText = data.status || '--';
                 
-                const verdictEl = document.getElementById('sophia-verdict-text');
-                if (verdictEl) verdictEl.dataset.evaluation = JSON.stringify(data.rubriques || data.rubrique || {});
+                if (sophiaTextEl) {
+                    sophiaTextEl.dataset.evaluation = JSON.stringify(data.rubriques || data.rubrique || {});
+                }
                 
                 const mirror = document.getElementById('sophia-text-mirror');
                 if (mirror) {
-                    mirror.innerHTML = data.texto_html || data.transcription_html || '<p>Analyse complétée. Cliquez sur les rubriques ci-dessus para inspeccionar los detalles.</p>';
+                    // Si data.texto_html no viene en la respuesta de Firebase, extraemos un formato amigable alternativo
+                    mirror.innerHTML = data.texto_html || data.transcription_html || `
+                        <p style="margin:0; font-weight:600; color:var(--oxford);">Analyse globale générée avec succès.</p>
+                        <p style="margin-top:8px; font-size:0.9rem; color:#555;">Cliquez sur los botones de arriba de cada rúbrica (Réalisation de la tâche, Lexique, etc.) para ver tus errores detallados y el objetivo supra.</p>`;
                 }
                 
                 const sBox = document.getElementById('sophia-box');
                 if (sBox) sBox.style.display = "block";
 
+                // Simular el click automático en la primera pestaña para mostrar el contenido
                 setTimeout(() => {
                     const primerBoton = document.querySelector('.btn-rubric');
                     if (primerBoton) primerBoton.click();
-                }, 100);
+                }, 120);
+
             } catch(e) {
                 console.error("Error crítico en JSON al parsear respuesta de Sophia:", e);
+                const sophiaTextEl = document.getElementById('sophia-verdict-text');
+                if (sophiaTextEl) sophiaTextEl.innerHTML = ""; 
+
                 const mirror = document.getElementById('sophia-text-mirror');
                 if (mirror) {
                     mirror.innerHTML = `
                         <div style="color:var(--danger); font-weight:600; padding:15px; background:#fff5f5; border:1px solid #ffe0e0; border-radius:6px; font-size:0.9rem; margin-bottom:15px;">
-                            <i class="fas fa-exclamation-triangle"></i> Sophia ha devuelto una corrección con texto libre. Aquí tienes la retroalimentación directa:
+                            <i class="fas fa-exclamation-triangle"></i> Sophia ha devuelto una corrección. Aquí tienes la retroalimentación directa:
                         </div>
-                        <div style="white-space:pre-wrap; font-family:inherit;">${jsonRaw}</div>`;
+                        <div style="white-space:pre-wrap; font-family:inherit; font-size:0.92rem; color:#333; line-height:1.5;">${jsonRaw}</div>`;
                 }
                 const sBox = document.getElementById('sophia-box');
                 if (sBox) sBox.style.display = "block";
             }
-        };
-                       
+        };                       
         // ==========================================
         // CENTRALIZACIÓN TOTAL DE CLICKS
         // ==========================================
