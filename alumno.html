@@ -1613,13 +1613,8 @@
                                 }
                             }
                         }
-                        
-                        const vBox = document.getElementById('sophia-box');
-                        if (vBox) {
-                            vBox.style.display = "block";
-                            
-                          if (datosHistoricos.respuesta_ia) {
-                        const sBox = document.getElementById('sophia-box');
+                  const sBox = document.getElementById('sophia-box');
+                    if (datosHistoricos && datosHistoricos.respuesta_ia) {
                         if (sBox) sBox.style.display = "block";
                         
                         if (window.currentSkill === "PO") {
@@ -1627,13 +1622,14 @@
                         } else {
                             window.mostrarEvaluacionSophia(datosHistoricos.respuesta_ia);
                         }
+                    } else {
+                        if (sBox) sBox.style.display = "none";
                     }
-                        
-                        window.inicializarBotonHistorialIntentos();
-                    }
-                } catch(e) { console.error(e); }
-            }
 
+                      window.inicializarBotonHistorialIntentos();
+                }
+            }
+                        
             // === MEDIDAS ANTI-COPIADO EN PE ===
             if (window.currentSkill === "PE") {
                 const elInputRedaccion = document.getElementById('pe-student-response');
