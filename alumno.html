@@ -1620,7 +1620,9 @@
                                     if (window.currentSkill === "PO") {
                                         window.mostrarEvaluacionOralSophia(datosHistoricos.respuesta_ia);
                                     } else {
-                                        window.mostrarEvaluacionSophia(datosHistoricos.respuesta_ia);
+                                 const sBox = document.getElementById('sophia-box');
+                    if (sBox) sBox.style.display = "block";
+                    window.mostrarEvaluacionSophia(datosHistoricos.respuesta_ia);
                                     }
                                 }
                             }, 50);
