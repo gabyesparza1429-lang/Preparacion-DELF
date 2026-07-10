@@ -1579,7 +1579,7 @@
             }
 // === CARGA DE INTENTOS PREVIOS AL ENTRAR AL EJERCICIO ===
         const llaveProgresoVerif = `${currentUnitId}_${window.currentSkill}_${currentExerciseIndex}`;
-        if (mapaAiertosAlumno[llaveProgresoVerif] === true && urlId !== "admin_preview") {
+        if (mapaAciertosAlumno[llaveProgresoVerif] === true && urlId !== "admin_preview") {
             try {
                 const numeroUnidadCargaFiltro = parseInt(currentUnitId.replace(/\D/g, '')) || currentUnitId;
                 const numeroActividadCargaFiltro = currentExerciseIndex + 1;
