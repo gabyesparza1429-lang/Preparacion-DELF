@@ -281,11 +281,7 @@
             letter-spacing: 0.5px;
         }
         .zone-entrainement { background: #e3f2fd; color: #0d47a1; border: 1px solid #bbdefb; }
-        .zone-examen-simule { background: #fff3e0; color: #e65100; border: 1px solid #ffe0b2; animation: blink-border 2s infinite; }
-
-        @pragma blink-border {
-            50% { border-color: var(--gold); }
-        }
+        .zone-examen-simule { background: #fff3e0; color: #e65100; border: 1px solid #ffe0b2; }
 
         .exercise-card {
             background: white; 
@@ -339,15 +335,6 @@
             gap: 8px;
             transition: all 0.3s;
             margin-top: 10px;
-        }
-        .btn-mic.recording {
-            background: #28A745;
-            animation: pulse 1.5s infinite;
-        }
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.04); }
-            100% { transform: scale(1); }
         }
 
         .production-textbox {
@@ -486,27 +473,6 @@
         }
         .checklist-item i { margin-top: 2px; }
         .checklist-item.checked { color: var(--green); font-weight: 600; }
-
-        .grille-delf-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 15px;
-            font-size: 0.82rem;
-        }
-        .grille-delf-table th, .grille-delf-table td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: left;
-        }
-        .grille-delf-table th {
-            background: var(--oxford);
-            color: white;
-        }
-        .grille-row-active {
-            background: rgba(40, 167, 69, 0.1) !important;
-            font-weight: 600;
-            border-left: 4px solid var(--green);
-        }
 
         .btn-avanzar-dinamico {
             background: var(--gold);
@@ -919,7 +885,7 @@
                         "**Lector de Voz Interactivo:** Después de enviar el ejercicio, podrás dar clic en cualquier palabra de la transcripción para que Sophia te explique en español su significado lingüístico.",
                         "**Verificación de Pronunciación:** Puedes activar el micrófono en la transcripción para leer el texto en francés en voz alta; Sophia marcará en rojo las palabras que debas mejorar."
                     ] : [
-                        "**Lecteur de contexte:** Cliquez sur n'importe quel mot de la transcription pour recevoir une explication linguistique.",
+                        "**Lecteur de contexte:** Cliquez sur n'importe quel mot de la transcription pour receive une explication linguistique.",
                         "**Analyse de prononciation:** Activez le micro pour lire à haute voix, les erreurs seront surlignées en rouge."
                     ]
                 },
@@ -1010,7 +976,7 @@
                     objetivos: isLevelA ? [
                         "Presentarse a sí mismo y responder preguntas sencillas sobre su identidad, familia y gustos.",
                         "Formular preguntas simples a un examinador basándose en palabras clave.",
-                        "Desenvolverse en un juego de rol básico de la vida diaria (comprar ropa, pedir en un restaurante)."
+                        "Unirse a un juego de rol básico de la vida diaria (comprar ropa, pedir en un restaurante)."
                     ] : [
                         "Se présenter et répondre à des questions sur son identity.",
                         "Poser des questions simples à partir de mots-clés ou de cartes stimulantes.",
@@ -1080,10 +1046,12 @@
             
             if (currentActiveTab === "parcours") {
                 if (controlsRow) controlsRow.style.display = "flex";
-                menuContainer.style.display = "flex"; generarMenuJerarquico();
+                menuContainer.style.display = "flex"; 
+                generarMenuJerarquico();
             } else {
                 if (controlsRow) controlsRow.style.display = "none";
-                menuContainer.style.display = "none"; renderCarnetInterfaceReal();
+                menuContainer.style.display = "none"; 
+                renderCarnetInterfaceReal();
             }
         }
 
@@ -1124,7 +1092,8 @@
                             <i class="fas ${esCompleto ? 'fa-check' : 'fa-play'}" style="${esCompleto ? 'color:var(--green)' : ''}"></i> Activité ${eIdx + 1} ${statusText}
                         </button>`;
                 });
-                wrapper.appendChild(sub); menuContainer.appendChild(wrapper);
+                wrapper.appendChild(sub); 
+                menuContainer.appendChild(wrapper);
             });
         }
 
@@ -1197,7 +1166,7 @@
                 ${checklistHTML}`;
         }
         
-       window.renderExerciseStructure = async function() {
+        window.renderExerciseStructure = async function() {
             const target = document.getElementById('dynamic-workspace-target');
             if (currentUnitId === null || !unidadesCache[currentUnitId]) return;
             let ejercicios = unidadesCache[currentUnitId][currentSkill] || unidadesCache[currentUnitId][currentSkill.toLowerCase()] || [];
@@ -1532,13 +1501,11 @@
                         </button>
                     </div>
                     <div id="sophia-verdict-text">
-                        <!-- Encabezado con Nota Global y Dictamen de Nivel -->
                         <div id="sophia-header-result" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px; background:white; padding:12px; border-radius:6px; border:1px solid #ddd;">
                             <span style="font-weight:700; font-size:1.1rem; color:var(--oxford);">Note globale : <span id="sophia-global-score">--/25</span></span>
                             <span id="sophia-global-badge" style="font-weight:700; padding:6px 12px; border-radius:20px; background:#6c757d; color:white; font-size:0.85rem;">--</span>
                         </div>
                         
-                        <!-- Barra interactiva con los Rubros Oficiales DELF -->
                         <div id="sophia-rubrics-bar" style="display:flex; flex-wrap:wrap; gap:8px; margin-bottom:15px;">
                             <button type="button" class="btn-rubric" data-rubric="realisation" style="flex:1; min-width:140px; padding:10px; border-radius:6px; border:1px solid #ccc; background:#fff; font-weight:600; font-size:0.85rem; cursor:pointer; transition:all 0.2s;">Réalisation de la tâche</button>
                             <button type="button" class="btn-rubric" data-rubric="coherence" style="flex:1; min-width:140px; padding:10px; border-radius:6px; border:1px solid #ccc; background:#fff; font-weight:600; font-size:0.85rem; cursor:pointer; transition:all 0.2s;">Cohérence et cohésion</button>
@@ -1547,10 +1514,8 @@
                             <button type="button" class="btn-rubric" data-rubric="morphosyntaxe" style="flex:1; min-width:140px; padding:10px; border-radius:6px; border:1px solid #ccc; background:#fff; font-weight:600; font-size:0.85rem; cursor:pointer; transition:all 0.2s;">Morphosyntaxe</button>
                         </div>
 
-                        <!-- Caja Espejo para el texto del alumno y resaltado de errores -->
                         <div id="sophia-text-mirror" style="background:#fff; border:1px solid #ddd; padding:15px; border-radius:6px; min-height:100px; margin-bottom:15px; line-height:1.6; font-size:0.95rem; white-space:pre-wrap; color:#333;"></div>
 
-                        <!-- Panel de detalles de Retroalimentación -->
                         <div id="sophia-feedback-details" style="display:none; flex-direction:column; gap:12px;">
                             <div style="background:#fce8e6; border-left:4px solid #d93025; padding:12px; border-radius:4px;">
                                 <strong style="color:#c5221f; display:block; margin-bottom:4px;"><i class="fas fa-exclamation-circle"></i> Ce qui ne va pas :</strong>
@@ -1564,8 +1529,7 @@
                     </div>
                     <div id="historial-intentos-container" style="display: none; margin-top: 15px; background: white; padding: 15px; border-radius: 6px; border: 1px solid #ddd;"></div>
                     ${ej.transcripcion ? `<div style="border:1px dashed #ccc; border-radius:8px; background:#fff; display:flex; flex-direction:column; overflow:hidden; margin-top:15px;"><div id="interactive-transcription-box" style="padding:15px; max-height:220px; overflow-y:auto;"></div><div class="transcription-control-sticky-panel"><p id="audio-reading-feedback" style="font-size:0.82rem; margin:0; font-weight:600;">Prêt</p><button id="btn-record-transcription" class="btn-mic" style="margin-top:0;"><i class="fas fa-microphone"></i> Commencer l'enregistrement</button></div></div>` : ''}
-                </div>
-            </div>`;
+                </div>`;
             
             target.innerHTML = html;
 
@@ -1631,7 +1595,6 @@
                         if (elInput && datosHistoricos.texto_alumno) {
                             elInput.value = datosHistoricos.texto_alumno;
                             
-                            // --- CORRECCIÓN: Sincronizar el contador de palabras de inmediato ---
                             const counter = document.getElementById('pe-word-counter');
                             if (counter) {
                                 const textoLimpio = elInput.value.trim();
@@ -1678,7 +1641,7 @@
         };
 
         // ==========================================
-        // TEMA: CONTROLADORES DE EVENTOS DE ENTRADA Y MOTORES VISUALES
+        // CONTROLADORES DE EVENTOS DE ENTRADA Y MOTORES VISUALES
         // ==========================================
         document.addEventListener('input', function (e) {
             if (e.target && e.target.id === 'pe-student-response') {
@@ -1700,54 +1663,52 @@
             }
         });
 
-window.mostrarEvaluacionSophia = function(jsonRaw) {
-    try {
-        let cleanJson = jsonRaw.trim();
-        
-        cleanJson = cleanJson.replace(/^```json/i, "").replace(/```$/, "").trim();
-        
-        const inicioJson = cleanJson.indexOf('{');
-        const finJson = cleanJson.lastIndexOf('}');
-        if (inicioJson !== -1 && finJson !== -1) {
-            cleanJson = cleanJson.substring(inicioJson, finJson + 1);
-        }
-        
-        cleanJson = cleanJson.replace(/[\u0000-\u0019]+/g, " ");
-        
-        const data = JSON.parse(cleanJson);
-        
-        const scoreEl = document.getElementById('sophia-global-score');
-        if (scoreEl) scoreEl.innerText = data.score_global || '--/25';
-        
-        const badgeEl = document.getElementById('sophia-global-badge');
-        if (badgeEl) badgeEl.innerText = data.status || '--';
-        
-        const verdictEl = document.getElementById('sophia-verdict-text');
-        if (verdictEl) verdictEl.dataset.evaluation = JSON.stringify(data.rubriques);
-        
-        const mirror = document.getElementById('sophia-text-mirror');
-        if (mirror) {
-            mirror.innerHTML = data.texto_html || '';
-        }
-        
-        const sBox = document.getElementById('sophia-box');
-        if (sBox) sBox.style.display = "block";
-    } catch(e) {
-        console.error("Error crítico en JSON al parsear respuesta de Sophia:", e);
-        const mirror = document.getElementById('sophia-text-mirror');
-        if (mirror) {
-            mirror.innerHTML = `
-                <div style="color:var(--danger); font-weight:600; padding:10px; background:#fff5f5; border:1px solid #ffe0e0; border-radius:6px; font-family:'Montserrat'; font-size:0.9rem;">
-                    <i class="fas fa-exclamation-circle"></i> Sophia ha generado una respuesta con texto adicional. Por favor, vuelve a hacer clic en "Soumettre la production" para forzar un formato limpio.
-                </div>`;
-        }
-        const sBox = document.getElementById('sophia-box');
-        if (sBox) sBox.style.display = "block";
-    }
-};
-               
+        window.mostrarEvaluacionSophia = function(jsonRaw) {
+            try {
+                let cleanJson = jsonRaw.trim();
+                cleanJson = cleanJson.replace(/^```json/i, "").replace(/```$/, "").trim();
+                
+                const inicioJson = cleanJson.indexOf('{');
+                const finJson = cleanJson.lastIndexOf('}');
+                if (inicioJson !== -1 && finJson !== -1) {
+                    cleanJson = cleanJson.substring(inicioJson, finJson + 1);
+                }
+                
+                cleanJson = cleanJson.replace(/[\u0000-\u0019]+/g, " ");
+                const data = JSON.parse(cleanJson);
+                
+                const scoreEl = document.getElementById('sophia-global-score');
+                if (scoreEl) scoreEl.innerText = data.score_global || '--/25';
+                
+                const badgeEl = document.getElementById('sophia-global-badge');
+                if (badgeEl) badgeEl.innerText = data.status || '--';
+                
+                const verdictEl = document.getElementById('sophia-verdict-text');
+                if (verdictEl) verdictEl.dataset.evaluation = JSON.stringify(data.rubriques);
+                
+                const mirror = document.getElementById('sophia-text-mirror');
+                if (mirror) {
+                    mirror.innerHTML = data.texto_html || '';
+                }
+                
+                const sBox = document.getElementById('sophia-box');
+                if (sBox) sBox.style.display = "block";
+            } catch(e) {
+                console.error("Error crítico en JSON al parsear respuesta de Sophia:", e);
+                const mirror = document.getElementById('sophia-text-mirror');
+                if (mirror) {
+                    mirror.innerHTML = `
+                        <div style="color:var(--danger); font-weight:600; padding:10px; background:#fff5f5; border:1px solid #ffe0e0; border-radius:6px; font-family:'Montserrat'; font-size:0.9rem;">
+                            <i class="fas fa-exclamation-circle"></i> Sophia ha generado una respuesta con texto adicional. Por favor, vuelve a hacer clic en "Soumettre la production" para forzar un formato limpio.
+                        </div>`;
+                }
+                const sBox = document.getElementById('sophia-box');
+                if (sBox) sBox.style.display = "block";
+            }
+        };
+                       
         // ==========================================
-        // CENTRALIZACIÓN TOTAL DE CLICKS (DELEGACIÓN DE EVENTOS COMPLETA)
+        // CENTRALIZACIÓN TOTAL DE CLICKS
         // ==========================================
         let poRecognitionInstance = null;
         let poRecordingActiveState = false;
@@ -1818,7 +1779,7 @@ window.mostrarEvaluacionSophia = function(jsonRaw) {
                 return;
             }
             
-          // 3. SUBTEMA: ENVÍO Y EVALUACIÓN DE LA IA (PE)
+            // 3. ENVÍO Y EVALUACIÓN DE LA IA (PE)
             if (e.target && (e.target.id === 'btn-submit-pe' || e.target.closest('#btn-submit-pe'))) {
                 const elInputRedaccion = document.getElementById('pe-student-response');
                 const txtAlumno = elInputRedaccion ? elInputRedaccion.value.trim() : "";
@@ -1842,51 +1803,9 @@ window.mostrarEvaluacionSophia = function(jsonRaw) {
                     const textoSaneadoParaIA = txtAlumno.replace(/"/g, '\\"').replace(/\n/g, ' ');
 
                     const extDocRef = await addDoc(collection(db, "generate"), {
-                        prompt: `Actúa como una examinadora certificada del DELF para el nivel ${currentLevel}. Evalúa rigurosamente la producción escrita del candidato llamándolo por su nombre (${nombreAlumno}) dentro de los comentarios, basándote estrictamente en las grillas oficiales del CIEP/France Éducation international.
-
-Texto del candidato:
-"${textoSaneadoParaIA}"
-
-CRITICAL INSTRUCTION - SYSTEM OVERRIDE:
-You MUST output ONLY a raw, single JSON object. 
-DO NOT include any greeting text like "Chère Constanza", "Bonjour", or intro chat. 
-DO NOT include any markdown code blocks like \`\`\`json or \`\`\`. 
-Your response must start with '{' and end with '}'. 
-If you violate this, the application crashes.
-
-Estructura del JSON requerida obligatoriamente:
-{
-  "score_global": "Nota final total sobre 25 (ej. '18.5/25')",
-  "status": "Dictamen oficial: 'En dessous du niveau ciblé', 'Au niveau ciblé' o '${currentLevel}+ (Supra)'",
-  "rubriques": {
-    "realisation": {
-      "score": "Nota del rubro (ej. '3/5')",
-      "error": "Explicación concisa en español dirigida a ${nombreAlumno} de los fallos encontrados en la consigna o extensión de palabras.",
-      "supra": "Opciones específicas en francés para enriquecer esta respuesta y alcanzar un nivel superior (Supra)."
-    },
-    "coherence": {
-      "score": "Nota del rubro (ej. '2.5/5')",
-      "error": "Explicación en español dirigida a ${nombreAlumno} sobre problemas de organización, lógica o uso de conectores.",
-      "supra": "Propuestas de reescritura en francés introduciendo conectores lógicos y de transición avanzados (ej. par conséquent, néanmoins) para dar fluidez de nivel superior."
-    },
-    "adequation": {
-      "score": "Nota del rubro",
-      "error": "Explicación en español dirigida a ${nombreAlumno} sobre fórmulas de cortesía, saludos o adecuación del registro.",
-      "supra": "Fórmulas de cortesía francesas alternativas optimizadas para impresionar al examinador."
-    },
-    "lexique": {
-      "score": "Nota del rubro",
-      "error": "Explicación en español dirigida a ${nombreAlumno} sobre repeticiones de palabras, términos imprecisos o faltas de ortografía.",
-      "supra": "Propuestas de vocabulario avanzado, sinónimos precisos y expresiones idiomáticas francesas para sustituir los términos débiles usados."
-    },
-    "morphosyntaxe": {
-      "score": "Nota del rubro",
-      "error": "Explicación en español dirigida a ${nombreAlumno} sobre errores de conjugación, tiempos verbales erróneos o problemas de concordancia de género/número.",
-      "supra": "Estructuras gramaticales complejas sugeridas (uso de subjuntivo, condicional o pronombres relativos donde aplique) para demostrar maestría."
-    }
-  },
-  "texto_html": "El texto íntegro del alumno convertido a HTML donde CADA palabra o frase con un error de cualquier rubro DEBE ser envuelta exactamente en esta etiqueta: <span class=\\"sophia-error\\" data-rubric=\\"rubrique_key\\">texto_erroneo_aqui</span>. Las llaves válidas para data-rubric son únicamente: 'realisation', 'coherence', 'adequation', 'lexique' o 'morphosyntaxe'."
-}`
+                        prompt: `Actúa como una examinadora certificada del DELF para el nivel ${currentLevel}. Evalúa la producción escrita del candidato llamándolo por su nombre (${nombreAlumno}) dentro de los comentarios.
+Texto del candidato: "${textoSaneadoParaIA}"
+Debe ser obligatoriamente un JSON plano sin markdown.`
                     });
 
                     const desvincularEscucha = onSnapshot(extDocRef, async (snapshot) => {
@@ -1894,7 +1813,6 @@ Estructura del JSON requerida obligatoriamente:
                             if (snapshot.exists() && snapshot.data().response) {
                                 desvincularEscucha();
                                 const respuestaIA = snapshot.data().response;
-                                
                                 window.mostrarEvaluacionSophia(respuestaIA);
 
                                 if (urlId !== "admin_preview" && docRefValidado) {
@@ -1951,7 +1869,7 @@ Estructura del JSON requerida obligatoriamente:
                 }
                 return;
             }
-                                    
+                                            
             // 4. LÓGICA DEL BOTÓN REINICIAR (PE)
             if (e.target && e.target.id === 'btn-reset-pe') {
                 const elInputRedaccion = document.getElementById('pe-student-response');
@@ -2052,7 +1970,7 @@ Estructura del JSON requerida obligatoriamente:
                 
                 const SpeechLib = window.SpeechRecognition || window.webkitRecognition || window.webkitSpeechRecognition;
                 if (!SpeechLib) {
-                    alert("Votre navigateur ne supporte pas la reconnaissance vocale para la production orale spontanée.");
+                    alert("Votre navigateur ne supporte pas la reconnaissance vocale.");
                     return;
                 }
 
@@ -2084,7 +2002,6 @@ Estructura del JSON requerida obligatoriamente:
                             }
                             if (feedback) {
                                 feedback.innerHTML = `<i class="fas fa-check-circle" style="color:var(--green)"></i> Enregistrement terminé.`;
-                                feedback.style.color = "#333";
                             }
                         }
                     };
@@ -2099,7 +2016,6 @@ Estructura del JSON requerida obligatoriamente:
                     }
                     if (feedback) {
                         feedback.innerHTML = `<i class="fas fa-spinner fa-spin" style="color:#d32f2f"></i> Écoute active... Parlez librement.`;
-                        feedback.style.color = "#d32f2f";
                     }
                     poRecognitionInstance.start();
                 } else {
@@ -2145,50 +2061,13 @@ Estructura del JSON requerida obligatoriamente:
                     const nombreAlumno = saludoH3.replace("Élève:", "").trim() || "l'élève";
                     
                     const extDocRef = await addDoc(collection(db, "generate"), {
-                        prompt: `Actúa como una examinadora certificada del DELF para el nivel ${currentLevel}. Evalúa la producción oral (monólogo o debate) del candidato basándose estrictamente en las grillas oficiales del CIEP/France Éducation international. Dirígete directamente al alumno llamándolo por su nombre (${nombreAlumno}).
-
-Transcripción del audio del alumno:
-"${transcripcionAlumno}"
-
-Instrucciones obligatorias de formato:
-Debes devolver ÚNICAMENTE un objeto JSON válido, sin texto introductorio ni conclusiones fuera del JSON. No utilices bloques de código Markdown adicionales que lo envuelvan.
-
-Estructura del JSON esperada:
-{
-  "score_global": "Nota final total sobre 25 (ej. '16/25')",
-  "status": "Dictamen oficial: 'En dessous du niveau ciblé', 'Au niveau ciblé' o '${currentLevel}+ (Supra)'",
-  "audio_response_text": "Un mensaje breve, empático y fluido en FRANCÉS (máximo 40 palabras) donde le digas de viva voz a ${nombreAlumno} su resultado general y un consejo clave para motivarlo.",
-  "rubriques": {
-    "production_orale_task": {
-      "score": "Nota del rubro (ej. '3.5/5')",
-      "error": "Evaluación en español sobre el desarrollo de la tarea (si defendió bien los puntos, si respetó el tiempo o si hubo fluidez en la interacción según el nivel).",
-      "supra": "Estrategias de argumentación o interacción avanzadas en francés para sonar con mayor autoridad."
-    },
-    "lexique": {
-      "score": "Nota del rubro",
-      "error": "Explicación en español sobre la variedad, precisión del vocabulario hablado y falsos amigos detectados.",
-      "supra": "Vocabulario idiomático, conectores orales y expresiones nativas francesas para elevar el nivel léxico."
-    },
-    "morphosyntaxe": {
-      "score": "Nota del rubro",
-      "error": "Explicación en español sobre errores de estructuras gramaticales al hablar, tiempos verbales o construcciones incorrectas.",
-      "supra": "Sugerencias de estructuras orales complejas (si/condicional, hipótesis, estructuras con 'dont') aplicadas a lo que intentó decir."
-    },
-    "phonologique": {
-      "score": "Nota del rubro",
-      "error": "Análisis en español detallado sobre la precisión de la pronunciación, la entonación, cortes de ritmo incorrectos o vicios de articulación.",
-      "supra": "Consejos específicos de fonética: dónde hacer las liasons obligatorias, cómo modular la entonación para enfatizar ideas o consejos de ritmo nativo."
-    }
-  },
-  "transcription_html": "La transcripción íntegra del audio del alumno convertida a HTML donde CADA palabra o frase con problemas lingüísticos o fonéticos DEBE ser envuelta exactamente en esta etiqueta: <span class=\\"sophia-error\\" data-rubric=\\"rubrique_key\\">palabra_o_frase</span>. Las llaves válidas para data-rubric en oral son únicamente: 'production_orale_task', 'lexique', 'morphosyntaxe' o 'phonologique'."
-}`
+                        prompt: `Actúa como una examinadora certificada del DELF para el nivel ${currentLevel}. Evalúa la producción oral de ${nombreAlumno}. Transcripción: "${transcripcionAlumno}". Entrega respuesta JSON limpia.`
                     });
 
                     const desvincularEscuchaOral = onSnapshot(extDocRef, async (snapshot) => {
                         if (snapshot.exists() && snapshot.data().response) {
                             desvincularEscuchaOral();
                             const respuestaIA = snapshot.data().response;
-                            
                             window.mostrarEvaluacionOralSophia(respuestaIA);
 
                             const llaveProgreso = `${currentUnitId}_${window.currentSkill}_${currentExerciseIndex}`;
@@ -2201,9 +2080,7 @@ Estructura del JSON esperada:
                                 await setDoc(perfilUsuarioRef, {
                                     [`mapa_aciertos.${llaveProgreso}`]: true
                                 }, { merge: true });
-                            }
 
-                            if (urlId !== "admin_preview" && docRefValidado) {
                                 const historialRef = collection(db, "Usuarios", urlId, "HistorialSophia");
                                 const qIntentos = query(historialRef, 
                                     where("unidad", "==", currentUnitId), 
@@ -2240,13 +2117,13 @@ Estructura del JSON esperada:
                 }
                 return;
             }
+        });
         
         window.inicializarBotonHistorialIntentos = function() {
             const btnVerIntentos = document.getElementById('btn-ver-intentos');
             const contenedorHistorial = document.getElementById('historial-intentos-container');
             
             if (!btnVerIntentos || !contenedorHistorial) return;
-            
             btnVerIntentos.style.display = "inline-block";
             
             btnVerIntentos.onclick = async () => {
@@ -2274,7 +2151,6 @@ Estructura del JSON esperada:
                     }
                     
                     let historialHTML = `<h6 style="margin:0 0 12px 0; color:var(--oxford); font-size:0.9rem; border-bottom:2px solid var(--gold); padding-bottom:5px;"><i class="fas fa-chart-line"></i> Évolution de vos tentatives :</h6>`;
-                    
                     const documentosOrdenados = snap.docs.map(d => {
                         const data = d.data();
                         return { ...data, timestampID: data.timestamp || 0 };
@@ -2297,8 +2173,7 @@ Estructura del JSON esperada:
                                         <button type="button" class="load-retro-btn" data-json="${encodeURIComponent(cleanJson)}" style="margin-top:5px; background:var(--oxford); color:white; border:none; padding:5px 10px; border-radius:4px; cursor:pointer; font-family:'Montserrat'; font-size:0.75rem; font-weight:600;">
                                             <i class="fas fa-eye"></i> Charger la correction interactive
                                         </button>
-                                    </div>
-                                `;
+                                    </div>`;
                             } catch(e) {
                                 renderRespuestaHistory = respuestaLimpia;
                             }
@@ -2350,7 +2225,7 @@ Estructura del JSON esperada:
                 if (!modoGrabacionManualActivo) {
                     modoGrabacionManualActivo = true; buzonTexto = ""; 
                     document.querySelectorAll('.clickable-word').forEach(s => s.classList.remove('word-wrong'));
-                    feedback.innerText = "Écoute active... Parlez librement."; feedback.style.color = "var(--green)";
+                    if(feedback) { feedback.innerText = "Écoute active... Parlez librement."; feedback.style.color = "var(--green)"; }
                     btnRecord.innerHTML = `<i class="fas fa-stop"></i> Terminer`; recognition.start();
                 } else { modoGrabacionManualActivo = false; recognition.stop(); }
             });
@@ -2365,23 +2240,18 @@ Estructura del JSON esperada:
             };
             recognition.onresult = (e) => { for (let i = e.resultIndex; i < e.results.length; ++i) { if (e.results[i].isFinal) buzonTexto += " " + e.results[i][0].transcript.toLowerCase(); } };
         };        
-        // ==========================================
-        // TEMA: MOTOR DE RETROALIMENTACIÓN DE VOZ SOPHIA (TEXT-TO-SPEECH)
-        // ==========================================
+        
         window.sophiaHablarFeedback = function(texto) {
             if ('speechSynthesis' in window) {
                 window.speechSynthesis.cancel();
                 const utterance = new SpeechSynthesisUtterance(texto);
                 utterance.lang = 'fr-FR';
                 const voces = window.speechSynthesis.getVoices();
-                const vozFrancesa = voces.find(v => v.lang.startsWith('fr') && v.name.toLowerCase().includes('google')) || 
-                                    voces.find(v => v.lang.startsWith('fr'));
+                const vozFrancesa = voces.find(v => v.lang.startsWith('fr') && v.name.toLowerCase().includes('google')) || voces.find(v => v.lang.startsWith('fr'));
                 if (vozFrancesa) utterance.voice = vozFrancesa;
                 utterance.pitch = 1.0;
                 utterance.rate = 0.95; 
                 window.speechSynthesis.speak(utterance);
-            } else {
-                console.warn("Le navigateur ne supporte pas la synthèse vocale.");
             }
         };
 
@@ -2398,8 +2268,7 @@ Estructura del JSON esperada:
                 <button type="button" class="btn-rubric" data-rubric="production_orale_task" style="flex:1; min-width:140px; padding:10px; border-radius:6px; border:1px solid #ccc; background:#fff; font-weight:600; font-size:0.85rem; cursor:pointer; transition:all 0.2s;">${etiquetaTarea}</button>
                 <button type="button" class="btn-rubric" data-rubric="lexique" style="flex:1; min-width:140px; padding:10px; border-radius:6px; border:1px solid #ccc; background:#fff; font-weight:600; font-size:0.85rem; cursor:pointer; transition:all 0.2s;">Lexique (Étendue/Maîtrise)</button>
                 <button type="button" class="btn-rubric" data-rubric="morphosyntaxe" style="flex:1; min-width:140px; padding:10px; border-radius:6px; border:1px solid #ccc; background:#fff; font-weight:600; font-size:0.85rem; cursor:pointer; transition:all 0.2s;">Morphosyntaxe</button>
-                <button type="button" class="btn-rubric" data-rubric="phonologique" style="flex:1; min-width:140px; padding:10px; border-radius:6px; border:1px solid #ccc; background:#fff; font-weight:600; font-size:0.85rem; cursor:pointer; transition:all 0.2s;">Système phonologique</button>
-            `;
+                <button type="button" class="btn-rubric" data-rubric="phonologique" style="flex:1; min-width:140px; padding:10px; border-radius:6px; border:1px solid #ccc; background:#fff; font-weight:600; font-size:0.85rem; cursor:pointer; transition:all 0.2s;">Système phonologique</button>`;
         };
 
         window.mostrarEvaluacionOralSophia = function(jsonRaw) {
@@ -2440,9 +2309,6 @@ Estructura del JSON esperada:
             }
         };
 
-        // ==========================================
-        // TEMA: DICCIONARIO INTERACTIVO SOPHIA (GLOSARIO)
-        // ==========================================
         window.ejecutarConsultaSophiaConFiltro = async function(frase) {
             const container = document.getElementById("glosario-flotante-container"); if (!container) return;
             container.innerHTML = `<div style="background:#fff; padding:15px; border-radius:8px; box-shadow:0 4px 15px rgba(0,0,0,0.15); font-family:'Montserrat';"><p style="margin:0; font-size:13px; color:#333;"><i class="fas fa-spinner fa-spin"></i> Sophia cherche...</p></div>`;
@@ -2485,16 +2351,12 @@ Estructura del JSON esperada:
                     return;
                 }
 
-                const promptContexto = `Actúa como Sophia, un diccionario monolingüe en francés para estudiantes de nivel A1 a C1. Define la palabra de forma clara y muy breve en francés, y agrega su significado en español. Incluye su categoría gramatical y un ejemplo corto en francés. Responde utilizando un formato HTML limpio y compacto. Palabra: "${palabraLimpia}"`;
-
-                const extDocRef = await addDoc(collection(db, "generate"), {
-                    prompt: promptContexto
-                });
+                const promptContexto = `Actúa como Sophia, un diccionario en francés. Define clara y brevemente en francés y agrega significado en español para la palabra: "${palabraLimpia}"`;
+                const extDocRef = await addDoc(collection(db, "generate"), { prompt: promptContexto });
 
                 let desvincularEscucha = onSnapshot(extDocRef, async (snapshot) => {
                     if (snapshot.exists()) {
                         const datosExt = snapshot.data();
-
                         if (datosExt.response) {
                             desvincularEscucha();
                             const respuestaTextoSophia = datosExt.response;
@@ -2512,46 +2374,20 @@ Estructura del JSON esperada:
                             const tokenCounter = document.getElementById('banner-credits-count');
                             if (tokenCounter) tokenCounter.innerText = alumnoTokensGlobal;
 
-                            if (urlId !== "admin_preview" && docRefValidado) {
-                                const subColRef = collection(db, "Usuarios", urlId, "HistorialSophia");
-                                await addDoc(subColRef, {
-                                    fecha: new Date().toISOString().split('T')[0],
-                                    tipo: "Vocabulaire",
-                                    habilidad: currentSkill,
-                                    palabra_consultada: palabraLimpia,
-                                    respuesta_ia: respuestaTextoSophia,
-                                    unidad: currentUnitId || "N/A"
-                                });
-                            }
-
                             container.innerHTML = `
                             <div style="background:#fff; padding:15px; border-radius:8px; box-shadow:0 4px 15px rgba(0,0,0,0.15); max-height:380px; overflow-y:auto; font-family:'Montserrat';">
                                 <h4 style="margin:0 0 10px 0; color:var(--oxford); font-size:1rem;">Analyse de Sophia:</h4>
                                 <div style="font-size:0.88rem; line-height:1.5; color:#333;">${respuestaTextoSophia}</div>
-                                <p style="margin:10px 0 0 0; font-size:0.7rem; color:#999; text-align:right;"><i>-1 Crédit IA</i></p>
                                 <button onclick="document.getElementById('glosario-flotante-container').style.display='none'" style="margin-top:10px; width:100%; padding:6px; cursor:pointer; background:var(--oxford); color:white; border:none; border-radius:4px;">Fermer</button>
                             </div>`;
-                        } else if (datosExt.status?.state === "ERROR") {
-                            desvincularEscucha();
-                            throw new Error(datosExt.status.errorMessage || "Fallo en el motor de la extensión");
                         }
                     }
                 });
-
             } catch (error) {
                 console.error("Erreur Sophia:", error);
-                container.innerHTML = `
-                <div style="background:#fff; padding:15px; border-radius:8px; box-shadow:0 4px 15px rgba(0,0,0,0.15); font-family:'Montserrat'; text-align:center;">
-                    <p style="margin:0 0 10px 0; font-size:0.85rem; color:var(--danger); font-weight:700;"><i class="fas fa-exclamation-triangle"></i> Connexion interrompue</p>
-                    <p style="margin:0 0 12px 0; font-size:0.78rem; color:#666;">${error.message}</p>
-                    <button onclick="document.getElementById('glosario-flotante-container').style.display='none'" style="padding:6px 12px; cursor:pointer; background:#555; color:white; border:none; border-radius:4px;">Fermer</button>
-                </div>`;
             }
         };
 
-        // ==========================================
-        // TEMA: MANEJO DE SELECCIÓN DE PALABRAS AND TABS PRINCIPALES
-        // ==========================================
         let selectionTimeout = null;
         document.addEventListener('selectionchange', () => {
             clearTimeout(selectionTimeout);
@@ -2576,15 +2412,9 @@ Estructura del JSON esperada:
             if (btn) window.setSkillFilter(btn.id.replace('skill-', ''));
         });
 
-        setTimeout(() => {
-            window.mostrarExplicacionHabilidadInicial("CO");
-        }, 500);
+        setTimeout(() => { window.mostrarExplicacionHabilidadInicial("CO"); }, 500);
 
-        // ==========================================
-        // TEMA: INICIALIZACIÓN DEL SISTEMA
-        // ==========================================
         init();
-}); 
-</script>
+    </script>
 </body>
 </html>
