@@ -1680,16 +1680,24 @@
                 // Forzar que se limpie el mensaje "Sophia corrige ta production..."
                 const sophiaTextEl = document.getElementById('sophia-verdict-text');
                 if (sophiaTextEl) sophiaTextEl.innerHTML = ""; 
+                // --- CORRECCIÓN DE SEGURIDAD PARA MOSTRAR DATOS ---
+                    const scoreEl = document.getElementById('sophia-global-score');
+                    if (scoreEl) scoreEl.innerText = data.score_global || '--/25';
 
-                const scoreEl = document.getElementById('sophia-global-score');
-                if (scoreEl) scoreEl.innerText = data.score_global || '--/25';
-                
-                const badgeEl = document.getElementById('sophia-global-badge');
-                if (badgeEl) badgeEl.innerText = data.status || '--';
-                
-                if (sophiaTextEl) {
-                    sophiaTextEl.dataset.evaluation = JSON.stringify(data.rubriques || data.rubrique || {});
-                }
+                    const badgeEl = document.getElementById('sophia-global-badge');
+                    if (badgeEl) badgeEl.innerText = data.status || '--';
+
+                    const sophiaTextEl = document.getElementById('sophia-verdict-text');
+                    if (sophiaTextEl) {
+                        sophiaTextEl.dataset.evaluation = JSON.stringify(data.rubriques || data.rubrique || {});
+                    }
+
+                    // Forzar siempre la visibilidad del contenedor principal
+                    const sBox = document.getElementById('sophia-box');
+                    if (sBox) {
+                        sBox.style.display = "block";
+                        console.log("Sophia: Contenedor mostrado correctamente.");
+                    }
                 
                 const mirror = document.getElementById('sophia-text-mirror');
                 if (mirror) {
