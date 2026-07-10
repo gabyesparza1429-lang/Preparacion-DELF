@@ -1948,11 +1948,7 @@ Estructura del JSON requerida obligatoriamente:
 
                                 if (urlId !== "admin_preview" && docRefValidado) {
                                     const historialRef = collection(db, "Usuarios", urlId, "HistorialSophia");
-                                    const qIntentos = query(historialRef, 
-                                        where("unidad", "==", currentUnitId), 
-                                        where("actividad", "==", currentExerciseIndex),
-                                        where("habilidad", "==", "PE")
-                                    );
+                                    const qIntentos = query(historialRef, where("unidad", "==", currentUnitId), where("actividad", "==", currentExerciseIndex), where("habilidad", "==", "PE"));
                                     const snapshotIntentos = await getDocs(qIntentos);
                                     const numeroDeIntento = snapshotIntentos.size + 1;
                                     const ahora = new Date();
@@ -1976,9 +1972,7 @@ Estructura del JSON requerida obligatoriamente:
                                     }
 
                                     const perfilUsuarioRef = doc(db, "Usuarios", urlId);
-                                    await setDoc(perfilUsuarioRef, {
-                                        [`mapa_aciertos.${llaveProgreso}`]: true
-                                    }, { merge: true });
+                                    await setDoc(perfilUsuarioRef, { [`mapa_aciertos.${llaveProgreso}`]: true }, { merge: true });
 
                                     generarMenuJerarquico();
                                     window.inicializarBotonHistorialIntentos();
@@ -1992,13 +1986,6 @@ Estructura del JSON requerida obligatoriamente:
                             console.error("Error:", errorInterno);
                         }
                     });
-                } catch (e) {
-                    console.error(e);
-                } finally {
-                    if (btnSubmitPE) btnSubmitPE.disabled = false;
-                }
-                return;
-            }
                                     
             // 4. LÓGICA DEL BOTÓN REINICIAR (PE)
             if (e.target && e.target.id === 'btn-reset-pe') {
