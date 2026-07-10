@@ -1818,7 +1818,7 @@ window.mostrarEvaluacionSophia = function(jsonRaw) {
                 return;
             }
             
-           // 3. SUBTEMA: ENVÍO Y EVALUACIÓN DE LA IA (PE)
+          // 3. SUBTEMA: ENVÍO Y EVALUACIÓN DE LA IA (PE)
             if (e.target && (e.target.id === 'btn-submit-pe' || e.target.closest('#btn-submit-pe'))) {
                 const elInputRedaccion = document.getElementById('pe-student-response');
                 const txtAlumno = elInputRedaccion ? elInputRedaccion.value.trim() : "";
@@ -1839,7 +1839,6 @@ window.mostrarEvaluacionSophia = function(jsonRaw) {
                 if (sBox) sBox.style.display = "block";
 
                 try {
-                    // Saneamos el texto del alumno para evitar que comillas dobles internas rompan la petición de la extensión
                     const textoSaneadoParaIA = txtAlumno.replace(/"/g, '\\"').replace(/\n/g, ' ');
 
                     const extDocRef = await addDoc(collection(db, "generate"), {
@@ -1896,10 +1895,9 @@ Estructura del JSON requerida obligatoriamente:
                                 desvincularEscucha();
                                 const respuestaIA = snapshot.data().response;
                                 
-                                // 1. Mostrar la evaluación en pantalla de inmediato
                                 window.mostrarEvaluacionSophia(respuestaIA);
 
-                                // 2. Guardar PRIMERO en la subcolección HistorialSophia de la base de datos
+                                if (urlId !== "admin_preview" && docRefValidado) {
                                     const historialRef = collection(db, "Usuarios", urlId, "HistorialSophia");
                                     const qIntentos = query(historialRef, 
                                         where("unidad", "==", currentUnitId), 
@@ -1923,7 +1921,6 @@ Estructura del JSON requerida obligatoriamente:
                                         intento: numeroDeIntento
                                     });
                                     
-                                    // 3. SOLO SI SE GUARDÓ EL HISTORIAL, marcar actividad como completada en el perfil nativo
                                     const llaveProgreso = `${currentUnitId}_${window.currentSkill}_${currentExerciseIndex}`;
                                     if (typeof mapaAciertosAlumno !== "undefined") {
                                         mapaAciertosAlumno[llaveProgreso] = true;
@@ -1934,46 +1931,6 @@ Estructura del JSON requerida obligatoriamente:
                                         [`mapa_aciertos.${llaveProgreso}`]: true
                                     }, { merge: true });
 
-                                    // 4. Actualizar menús y contadores visuales
-                                    generarMenuJerarquico();
-                                    window.inicializarBotonHistorialIntentos();
-                                    await calcularTodasLasNotasHabilidades();
-                                }
-                            const desvincularEscucha = onSnapshot(extDocRef, async (snapshot) => {
-                        try {
-                            if (snapshot.exists() && snapshot.data().response) {
-                                desvincularEscucha();
-                                const respuestaIA = snapshot.data().response;
-                                window.mostrarEvaluacionSophia(respuestaIA);
-
-                                if (urlId !== "admin_preview" && docRefValidado) {
-                                    const historialRef = collection(db, "Usuarios", urlId, "HistorialSophia");
-                                    const qIntentos = query(historialRef, where("unidad", "==", currentUnitId), where("actividad", "==", currentExerciseIndex), where("habilidad", "==", "PE"));
-                                    const snapshotIntentos = await getDocs(qIntentos);
-                                    const numeroDeIntento = snapshotIntentos.size + 1;
-                                    const ahora = new Date();
-
-                                    await addDoc(historialRef, {
-                                        fecha: ahora.toISOString().split('T')[0],
-                                        hora_registro: ahora.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit', second: '2-digit' }),
-                                        timestamp: ahora.getTime(),
-                                        tipo: "Production_Escrita",
-                                        habilidad: "PE",
-                                        texto_alumno: txtAlumno,
-                                        respuesta_ia: respuestaIA,
-                                        unidad: currentUnitId,
-                                        actividad: currentExerciseIndex,
-                                        intento: numeroDeIntento
-                                    });
-
-                                    const llaveProgreso = `${currentUnitId}_${window.currentSkill}_${currentExerciseIndex}`;
-                                    if (typeof mapaAciertosAlumno !== "undefined") {
-                                        mapaAciertosAlumno[llaveProgreso] = true;
-                                    }
-
-                                    const perfilUsuarioRef = doc(db, "Usuarios", urlId);
-                                    await setDoc(perfilUsuarioRef, { [`mapa_aciertos.${llaveProgreso}`]: true }, { merge: true });
-
                                     generarMenuJerarquico();
                                     window.inicializarBotonHistorialIntentos();
                                     await calcularTodasLasNotasHabilidades();
@@ -1983,9 +1940,17 @@ Estructura del JSON requerida obligatoriamente:
                                 if (sophiaTextEl) sophiaTextEl.innerHTML = "<span style='color:red;'>Erreur d'évaluation par l'IA.</span>";
                             }
                         } catch (errorInterno) {
-                            console.error("Error:", errorInterno);
+                            console.error("Error en snapshot PE:", errorInterno);
                         }
                     });
+
+                } catch (err) {
+                    console.error("Fallo crítico en envío de PE:", err);
+                } finally {
+                    if (btnSubmitPE) btnSubmitPE.disabled = false;
+                }
+                return;
+            }
                                     
             // 4. LÓGICA DEL BOTÓN REINICIAR (PE)
             if (e.target && e.target.id === 'btn-reset-pe') {
@@ -2087,7 +2052,7 @@ Estructura del JSON requerida obligatoriamente:
                 
                 const SpeechLib = window.SpeechRecognition || window.webkitRecognition || window.webkitSpeechRecognition;
                 if (!SpeechLib) {
-                    alert("Votre navigateur ne supporte pas la reconnaissance vocale pour la production orale spontanée.");
+                    alert("Votre navigateur ne supporte pas la reconnaissance vocale para la production orale spontanée.");
                     return;
                 }
 
@@ -2275,7 +2240,7 @@ Estructura del JSON esperada:
                 }
                 return;
             }
-    
+        
         window.inicializarBotonHistorialIntentos = function() {
             const btnVerIntentos = document.getElementById('btn-ver-intentos');
             const contenedorHistorial = document.getElementById('historial-intentos-container');
@@ -2399,8 +2364,7 @@ Estructura del JSON esperada:
                 }
             };
             recognition.onresult = (e) => { for (let i = e.resultIndex; i < e.results.length; ++i) { if (e.results[i].isFinal) buzonTexto += " " + e.results[i][0].transcript.toLowerCase(); } };
-        };
-
+        };        
         // ==========================================
         // TEMA: MOTOR DE RETROALIMENTACIÓN DE VOZ SOPHIA (TEXT-TO-SPEECH)
         // ==========================================
