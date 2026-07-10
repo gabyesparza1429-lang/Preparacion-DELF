@@ -1663,7 +1663,8 @@
         });
 
         window.mostrarEvaluacionSophia = function(jsonRaw) {
-            try {
+            console.log("Recibiendo JSON en Sophia:", jsonRaw); // AGREGA ESTO
+    try {
                 let cleanJson = jsonRaw.trim();
                 cleanJson = cleanJson.replace(/```json/gi, "").replace(/```/g, "").trim();
                 
