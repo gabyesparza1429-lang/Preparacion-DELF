@@ -1839,11 +1839,16 @@ Debe ser obligatoriamente un JSON plano sin markdown.`
 
                                 if (urlId !== "admin_preview" && docRefValidado) {
                                     const historialRef = collection(db, "Usuarios", urlId, "HistorialSophia");
-                                    const qIntentos = query(historialRef, 
-                                        where("unidad", "==", numeroUnidadMenu), 
-                                        where("actividad", "==", numeroActividadMenu),
-                                        where("habilidad", "==", "PE")
-                                    );
+        
+        // Unificación con el formato real guardado
+        const numeroUnidadMenuH = parseInt(currentUnitId.replace(/\D/g, '')) || currentUnitId;
+        const numeroActividadMenuH = currentExerciseIndex + 1;
+
+        const q = query(historialRef, 
+            where("unidad", "==", numeroUnidadMenuH), 
+            where("actividad", "==", numeroActividadMenuH),
+            where("habilidad", "==", "PE")
+        );
                                     const snapshotIntentos = await getDocs(qIntentos);
                                     const numeroDeIntento = snapshotIntentos.size + 1;
                                     const ahora = new Date();
