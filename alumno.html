@@ -1785,7 +1785,7 @@
                 return;
             }
             
-            // 3. ENVÍO Y EVALUACIÓN DE LA IA (PE)
+           // 3. ENVÍO Y EVALUACIÓN DE LA IA (PE)
             if (e.target && (e.target.id === 'btn-submit-pe' || e.target.closest('#btn-submit-pe'))) {
                 const elInputRedaccion = document.getElementById('pe-student-response');
                 const txtAlumno = elInputRedaccion ? elInputRedaccion.value.trim() : "";
@@ -1804,6 +1804,10 @@
                 
                 const sBox = document.getElementById('sophia-box');
                 if (sBox) sBox.style.display = "block";
+
+                // Conversión de índices internos a números reales del menú visual
+                const numeroUnidadMenu = parseInt(currentUnitId.replace(/\D/g, '')) || currentUnitId;
+                const numeroActividadMenu = currentExerciseIndex + 1;
 
                 try {
                     const textoSaneadoParaIA = txtAlumno.replace(/"/g, '\\"').replace(/\n/g, ' ');
@@ -1824,8 +1828,8 @@ Debe ser obligatoriamente un JSON plano sin markdown.`
                                 if (urlId !== "admin_preview" && docRefValidado) {
                                     const historialRef = collection(db, "Usuarios", urlId, "HistorialSophia");
                                     const qIntentos = query(historialRef, 
-                                        where("unidad", "==", currentUnitId), 
-                                        where("actividad", "==", currentExerciseIndex),
+                                        where("unidad", "==", numeroUnidadMenu), 
+                                        where("actividad", "==", numeroActividadMenu),
                                         where("habilidad", "==", "PE")
                                     );
                                     const snapshotIntentos = await getDocs(qIntentos);
@@ -1840,8 +1844,8 @@ Debe ser obligatoriamente un JSON plano sin markdown.`
                                         habilidad: "PE",
                                         texto_alumno: txtAlumno,
                                         respuesta_ia: respuestaIA,
-                                        unidad: currentUnitId,
-                                        actividad: currentExerciseIndex,
+                                        unidad: numeroUnidadMenu,       // Número real de unidad
+                                        actividad: numeroActividadMenu, // Número real de actividad (1, 2, 3, 4...)
                                         intento: numeroDeIntento
                                     });
                                     
@@ -1865,6 +1869,9 @@ Debe ser obligatoriamente un JSON plano sin markdown.`
                             }
                         } catch (errorInterno) {
                             console.error("Error en snapshot PE:", errorInterno);
+                            desvincularEscucha();
+                            if (sophiaTextEl) sophiaTextEl.innerHTML = "Analyse complétée."; 
+                            generarMenuJerarquico();
                         }
                     });
 
