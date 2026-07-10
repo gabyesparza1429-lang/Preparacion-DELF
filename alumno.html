@@ -1636,7 +1636,7 @@
                     elInputRedaccion.addEventListener(evt, e => e.preventDefault(), true)
                 );
             }
-        }
+        };
 
         // ==========================================
         // CONTROLADORES DE EVENTOS DE ENTRADA Y MOTORES VISUALES
@@ -2427,6 +2427,8 @@ Debe ser obligatoriamente un JSON plano sin markdown.`
 
         document.addEventListener('click', (e) => {
             if (window.getSelection().toString().trim().includes(" ")) return;
+
+            
             if (e.target.classList.contains('clickable-word')) {
                 const pal = e.target.getAttribute('data-word') || e.target.innerText.trim();
                 if (pal.length > 1) window.ejecutarConsultaSophiaConFiltro(pal);
