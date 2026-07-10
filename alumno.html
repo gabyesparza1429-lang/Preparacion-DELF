@@ -2167,11 +2167,14 @@ Debe ser obligatoriamente un JSON plano sin markdown.`
                 btnVerIntentos.innerHTML = `<i class="fas fa-times"></i> Masquer l'historique`;
                 
                 try {
-                    const qHistorial = query(collection(db, "Usuarios", urlId, "HistorialSophia"), 
-                        where("unidad", "==", currentUnitId), 
-                        where("actividad", "==", currentExerciseIndex),
-                        where("habilidad", "==", window.currentSkill)
-                    );
+                    const numeroUnidadHistorial = parseInt(currentUnitId.replace(/\D/g, '')) || currentUnitId;
+                const numeroActividadHistorial = currentExerciseIndex + 1;
+
+                const qHistorial = query(collection(db, "Usuarios", urlId, "HistorialSophia"),
+                    where("unidad", "==", numeroUnidadHistorial),
+                    where("actividad", "==", numeroActividadHistorial),
+                    where("habilidad", "==", window.currentSkill)
+                );
                     const snap = await getDocs(qHistorial);
                     
                     if (snap.empty) {
