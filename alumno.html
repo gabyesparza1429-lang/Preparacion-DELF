@@ -1900,7 +1900,6 @@ Estructura del JSON requerida obligatoriamente:
                                 window.mostrarEvaluacionSophia(respuestaIA);
 
                                 // 2. Guardar PRIMERO en la subcolección HistorialSophia de la base de datos
-                                if (urlId !== "admin_preview" && docRefValidado) {
                                     const historialRef = collection(db, "Usuarios", urlId, "HistorialSophia");
                                     const qIntentos = query(historialRef, 
                                         where("unidad", "==", currentUnitId), 
