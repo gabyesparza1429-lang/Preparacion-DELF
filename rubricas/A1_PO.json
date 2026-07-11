@@ -1,12 +1,47 @@
 {
   "examen": "DELF A1",
   "epreuve": "Production Orale (PO)",
-  "grille_evaluation": {
-    "entretien_dirige": {"note_maximale": 4, "description": "Se présenter, répondre à des questions personnelles simples sur l'âge, l'origine, la profession, le domicile."},
-    "echange_informations": {"note_maximale": 4, "description": "Poser des questions simples à l'examinateur à partir de mots clés ou de cartes proposés."},
-    "dialogue_simule": {"note_maximale": 4, "description": "Demander et obtenir des objets ou des services de la vie quotidienne (quantités, prix, argent, heure)."},
-    "lexique": {"note_maximale": 5, "description": "Possède un répertoire élémentaire de mots isolés et d'expressions relatifs à des situations concrètes."},
-    "morphosyntaxe": {"note_maximale": 4, "description": "Contrôle limité de structures mémorisées simples. Verbes de base: être, avoir, faire, aller, s'appeler."},
-    "phonologique": {"note_maximale": 4, "description": "Prononciation compréhensible avec effort; reproduire correctement un nombre limité de sons de base."}
+  "grille_evaluation_officielle": {
+    "entretien_dirige": {
+      "note_maximale": 4,
+      "description_a_verifier": "Le candidat doit être capable de se présenter et de répondre à des questions personnelles simples posées lentement et clairement (âge, origine, langue, domicile, profession, famille, loisirs)."
+    },
+    "echange_informations": {
+      "note_maximale": 4,
+      "description_a_verifier": "Le candidat doit poser des questions simples à l'examinateur à partir de mots-clés ou de cartes visuelles pour obtenir des informations sur des sujets familiers de la vie quotidienne."
+    },
+    "dialogue_simule": {
+      "note_maximale": 4,
+      "description_a_verifier": "Le candidat doit interagir de façon simple dans une situation de la vie quotidienne (ex. acheter un objet, commander à manger). Doit savoir demander des objets ou des services, gérer l'argent, les prix, les quantités et l'heure."
+    },
+    "lexique": {
+      "note_maximale": 5,
+      "description_a_verifier": "Possède un répertoire élémentaire de mots isolés et d'expressions mémorisées relatifs à des situations concrètes particulières et des besoins immédiats."
+    },
+    "morphosyntaxe": {
+      "note_maximale": 4,
+      "description_a_verifier": "A un contrôle limité de structures syntaxiques et de formes grammaticales simples appartenant à un répertoire mémorisé. Utilisation basique du présent de l'indicatif et de l'impératif."
+    },
+    "phonologique": {
+      "note_maximale": 4,
+      "description_a_verifier": "La prononciation d'un répertoire très limité d'expressions est compréhensible avec quelque effort pour un locuteur natif bienveillant. Peut reproduire correctement un nombre limité de sons de base."
+    }
+  },
+  "referentiel_attendu_A1": {
+    "categories_morphosyntaxiques": [
+      "Le présent de l'indicatif (verbes: être, avoir, faire, s'appeler, venir, aller et verbes réguliers en -er)",
+      "L'impératif positif pour comprendre et exécuter des instructions simples",
+      "Le conditionnel de politesse (je voudrais)",
+      "Les pronoms personnels sujets et pronoms toniques",
+      "Les pronoms interrogatifs (où, quand, combien) et l'adjectif interrogatif (quel)",
+      "La négation simple (ne... pas)",
+      "Les articles définis et indéfinis",
+      "Les adjectifs possessifs et démonstratifs"
+    ],
+    "strategies_interaction": [
+      "Utiliser des expressions élémentaires de salutation et de congé",
+      "Indiquer par des mots, des gestes ou l'intonation qu'on n'a pas compris",
+      "Dire en termes simples qu'on ne comprend pas pour solliciter de la coopération"
+    ]
   }
 }
