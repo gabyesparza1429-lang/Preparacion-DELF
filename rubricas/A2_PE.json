@@ -1,12 +1,58 @@
 {
   "examen": "DELF A2",
   "epreuve": "Production Écrite (PE)",
-  "regle_penalisation_mots": "Si le candidat produit moins de 50% du nombre de mots attendus (soit 29 mots ou moins), attribuez 0 à l'ensemble de cet exercice.",
-  "grille_evaluation": {
-    "realisation_tache": {"note_maximale": 2.5, "description": "Décrire ou raconter un événement, des activités passées, des projets, des habitudes ou exprimer des goûts."},
-    "coherence_cohesion": {"note_maximale": 2.5, "description": "Relier des phrases simples avec les articulations les plus fréquentes: et, mais, parce que, ensuite."},
-    "adequation_sociolinguistique": {"note_maximale": 2.5, "description": "Adapter la production au destinataire, utiliser les formes courantes d'accueil, de politesse et d'excuses."},
-    "lexique": {"note_maximale": 2.5, "description": "Vocabulaire suffisant pour mener des transactions quotidiennes, décrire le logement, les repas, les transports."},
-    "morphosyntaxe": {"note_maximale": 2.5, "description": "Structures simples: présent, passé composé, imparfait descriptif, futur simple, pronoms COD/COI."}
+  "regle_penalisation_mots": "Si le candidat produit moins de 50% du nombre de mots attendus (soit 29 mots ou moins), attribuez automatiquement la note de 0 à l'ensemble des critères de cet exercice.",
+  "grille_evaluation_officielle": {
+    "realisation_tache": {
+      "note_maximale": 2.5,
+      "description_a_verifier": "Peut écrire un texte suivi et court en rapport avec la tâche. Peut faire une description élémentaire d'un événement, d'activités passées, d'expériences personnelles, de ses goûts ou de ses projets."
+    },
+    "coherence_cohesion": {
+      "note_maximale": 2.5,
+      "description_a_verifier": "Peut produire un texte suivi en liant les phrases avec des connecteurs et articulations de base. La mise en page et la ponctuation doivent faciliter la compréhension globale."
+    },
+    "adequation_sociolinguistique": {
+      "note_maximale": 2.5,
+      "description_a_verifier": "Peut adapter sa production écrite au destinataire et au registre de la tâche en utilisant les expressions et les rituels de politesse les plus courants."
+    },
+    "lexique": {
+      "note_maximale": 2.5,
+      "description_a_verifier": "Utilise correctement un vocabulaire suffisant pour traiter de sujets quotidiens et mener des transactions courantes (famille, loisirs, travail, logement, achats)."
+    },
+    "morphosyntaxe": {
+      "note_maximale": 2.5,
+      "description_a_verifier": "Maîtrise les structures syntaxiques et les formes grammaticales simples. Fait preuve d'une relative correction sur les structures courantes, sans fautes menant à des malentendus."
+    }
+  },
+  "referentiel_attendu_A2": {
+    "categories_morphosyntaxiques": [
+      "Le présent de l'indicatif (habitude, état, verbes à 1, 2 et 3 bases)",
+      "Les verbes pronominaux réfléchis (se lever, s'habiller) et réciproques (se rencontrer, se regarder)",
+      "Les verbes usuels d'état, de mouvement et d'actions quotidiennes (venir, aller, mettre, savoir, voir, prendre)",
+      "Les verbes de modalité suivis de l'infinitif (vouloir, pouvoir, devoir) et la structure 'Il faut / il ne faut pas'",
+      "L'impératif positif et négatif (instruction, directive, ordre, conseil)",
+      "Le passé composé pour raconter des événements passés et les formes des participes passés courants",
+      "L'imparfait pour la description dans le passé (il était, il y avait, il faisait)",
+      "Le futur proche et le futur simple (pour la prévision, les intentions et les projets)",
+      "Le passé récent (venir de) et le présent progressif (être en train de)",
+      "Le conditionnel présent appliqué à la politesse (j'aimerais, pourriez-vous) ou à l'invitation (on pourrait)",
+      "La phrase interrogative (adjectifs et pronoms) et la phrase interro-négative (réponses avec si/non, moi aussi/moi non plus)",
+      "La phrase exclamative (Quel, que, comme) et la négation élargie (ne... jamais, ne... plus, ne... rien, ne... personne)",
+      "La comparaison (comparatifs du nom et de l'adjectif: moins de... que, autant de... que)",
+      "Les pronoms COD et COI, les pronoms relatifs simples (qui, que) et les pronoms compléments 'y' et 'en' (lieu, quantité)",
+      "Le pronom 'on' sous ses 3 valeurs (nous, ils, quelqu'un)"
+    ],
+    "articulateurs_du_discours": {
+      "logiques_et_chronologiques": ["mais", "parce que", "et", "ensuite", "et puis", "d'abord", "comme", "par exemple"]
+    },
+    "themes_lexicaux": [
+      "Les personnes, la famille et la description physique",
+      "Les lieux publics (le café, le restaurant, les commerces, la banque, la poste, l'hôtel, la rue)",
+      "Les loisirs (le sport, les sorties, les spectacles, les voyages) et les moyens de transport (métro, bus, train, taxi)",
+      "La vie quotidienne, le travail, les achats, le logement (les pièces de la maison, la décoration) et los objets du quotidien",
+      "Les aliments, los repas, la cuisine et les animaux familiers",
+      "Les pays, les villes, la géographie, les paysages, l'itinéraire et la météo",
+      "Les événements (rencontres, soirées, fêtes de famille, visites, excursions, accidents)"
+    ]
   }
 }
