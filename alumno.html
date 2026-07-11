@@ -1755,7 +1755,7 @@
                 return;
             }
 
-            // 2. Manejo de Clicks en los Botones de Rubros Oficiales DELF
+           // 2. Manejo de Clicks en los Botones de Rubros Oficiales DELF
             const rubricBtn = e.target.closest('.btn-rubric');
             if (rubricBtn) {
                 const rubricKey = rubricBtn.dataset.rubric;
@@ -1763,7 +1763,13 @@
                 if (!container || !container.dataset.evaluation) return;
                 
                 const rubriques = JSON.parse(container.dataset.evaluation);
-                const rubricData = rubriques[rubricKey];
+                
+                // Búsqueda inteligente e insensible a mayúsculas/minúsculas
+                const targetKey = rubricKey ? rubricKey.toLowerCase().trim() : "";
+                const actualKey = Object.keys(rubriques).find(k => k.toLowerCase().trim() === targetKey);
+                const rubricData = actualKey ? rubriques[actualKey] : null;
+                
+                console.log("Botón pulsado:", rubricKey, "-> Clave real en JSON:", actualKey);
                 
                 document.querySelectorAll('.btn-rubric').forEach(b => {
                     b.style.background = '#fff';
@@ -1782,10 +1788,13 @@
                     if (detailsPanel) detailsPanel.style.display = 'flex';
                     if (errBox) errBox.innerHTML = `<strong>[Score: ${rubricData.score || '--'}]</strong><br>${rubricData.error || 'Aucune erreur détectée.'}`;
                     if (supraBox) supraBox.innerHTML = rubricData.supra || 'Votre production est déjà excellente.';
+                } else {
+                    console.warn("No se encontraron datos para la rúbrica:", rubricKey, rubriques);
                 }
                 
                 document.querySelectorAll('#sophia-text-mirror .sophia-error').forEach(span => {
-                    if (span.dataset.rubric === rubricKey) {
+                    const spanKey = span.dataset.rubric ? span.dataset.rubric.toLowerCase().trim() : "";
+                    if (spanKey === targetKey) {
                         span.style.background = '#fce8e6';
                         span.style.color = '#a51d24';
                         span.style.borderBottom = '2px dashed #d93025';
