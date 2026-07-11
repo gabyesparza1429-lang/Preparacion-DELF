@@ -1,0 +1,12 @@
+{
+  "examen": "DELF A2",
+  "epreuve": "Production Écrite (PE)",
+  "regle_penalisation_mots": "Si le candidat produit moins de 50% du nombre de mots attendus (soit 29 mots ou moins), attribuez 0 à l'ensemble de cet exercice.",
+  "grille_evaluation": {
+    "realisation_tache": {"note_maximale": 2.5, "description": "Décrire ou raconter un événement, des activités passées, des projets, des habitudes ou exprimer des goûts."},
+    "coherence_cohesion": {"note_maximale": 2.5, "description": "Relier des phrases simples avec les articulations les plus fréquentes: et, mais, parce que, ensuite."},
+    "adequation_sociolinguistique": {"note_maximale": 2.5, "description": "Adapter la production au destinataire, utiliser les formes courantes d'accueil, de politesse et d'excuses."},
+    "lexique": {"note_maximale": 2.5, "description": "Vocabulaire suffisant pour mener des transactions quotidiennes, décrire le logement, les repas, les transports."},
+    "morphosyntaxe": {"note_maximale": 2.5, "description": "Structures simples: présent, passé composé, imparfait descriptif, futur simple, pronoms COD/COI."}
+  }
+}
