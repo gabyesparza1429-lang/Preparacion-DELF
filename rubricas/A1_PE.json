@@ -1,12 +1,54 @@
 {
   "examen": "DELF A1",
   "epreuve": "Production Écrite (PE)",
-  "regle_penalisation_mots": "Si le candidat produit moins de 50% du nombre de mots attendus (soit 19 mots ou moins), attribuez 0 à l'ensemble des critères.",
-  "grille_evaluation": {
-    "realisation_tache": {"note_maximale": 3, "description": "Respecter la consigne: inviter un ami, proposer une activité, mentionner un lieu, donner une date."},
-    "coherence_cohesion": {"note_maximale": 3, "description": "Texte globalement compréhensible, utilisation de connecteurs élémentaires comme 'et' ou 'ou'."},
-    "adequation_sociolinguistique": {"note_maximale": 3, "description": "Formules de politesse élémentaires, salutations et choix correct du tu ou vous."},
-    "lexique": {"note_maximale": 3, "description": "Répertoire élémentaire de mots isolés et d'expressions liés à l'identité, l'adresse, la famille ou les loisirs."},
-    "morphosyntaxe": {"note_maximale": 3, "description": "Structures syntaxiques et formes grammaticales simples (présent, impératif, conditionnel je voudrais)."}
+  "regle_penalisation_mots": "Si le candidat produit moins de 50% du nombre de mots attendus (soit 19 mots ou moins), attribuez automatiquement la note de 0 à l'ensemble des critères de l'exercice concerné.",
+  "grille_evaluation_officielle": {
+    "realisation_tache": {
+      "note_maximale": 3,
+      "description_a_verifier": "Le candidat doit respecter les consignes de l'exercice (ex. écrire un mail pour inviter un ami dans son pays, proposer une activité, mentionner un autre lieu et donner une date précise)."
+    },
+    "coherence_cohesion": {
+      "note_maximale": 3,
+      "description_a_verifier": "Le texte doit être globalement compréhensible pour le lecteur. L'intention du message doit être claire, en utilisant des connecteurs élémentaires pour relier les groupes de mots."
+    },
+    "adequation_sociolinguistique": {
+      "note_maximale": 3,
+      "description_a_verifier": "Utilisation des formes de politesse les plus élémentaires, rituels de la lettre amicale, de la carte postale ou de l'e-mail. Choix cohérent et adapté entre l'usage du 'tu' ou du 'vous'."
+    },
+    "lexique": {
+      "note_maximale": 3,
+      "description_a_verifier": "Possède un répertoire élémentaire de mots isolés et d'expressions relatifs à des situations concrètes particulières (identité, environnement quotidien)."
+    },
+    "morphosyntaxe": {
+      "note_maximale": 3,
+      "description_a_verifier": "A un contrôle limité de structures syntaxiques et de formes grammaticales simples appartenant à un répertoire mémorisé."
+    }
+  },
+  "referentiel_attendu_A1": {
+    "categories_morphosyntaxiques": [
+      "Le présent de l'indicatif (verbes usuels: être, avoir, faire, s'appeler, venir, aller et verbes en -er comme habiter, travailler, parler)",
+      "Le verbe comprendre au présent",
+      "L'impératif positif (quelques verbes en -er, aller, venir pour l'indication et la directive)",
+      "Le conditionnel de politesse (je voudrais)",
+      "Les pronoms personnels sujets et les pronoms toniques",
+      "La négation simple avec 'ne... pas'",
+      "La phrase interrogative simple sous ses 3 formes, ainsi que l'utilisation de 'est-ce que' et 'qu'est-ce que'",
+      "Les présentateurs de base (c'est / voilà)",
+      "Les articles définis, indéfinis et l'article 'zéro' (être + profession)",
+      "Les adjectifs possessifs, démonstratifs et interrogatifs (quel)",
+      "L'accord en genre (masculin/féminin) et en nombre (singulier/pluriel) des noms et adjectifs de nationalité",
+      "La forme impersonnelle simple (il pour la météo)"
+    ],
+    "articulateurs_du_discours": {
+      "elementaires": ["et", "ou", "alors"]
+    },
+    "themes_lexicaux": [
+      "L'alphabet, les noms et prénoms, l'adresse, les nationalités et les professions",
+      "L'état civil (marié, célibataire) et la famille proche",
+      "Les loisirs, les nombres cardinaux, la date, l'heure et les prix",
+      "Les objets personnels et les objets de la classe",
+      "La description simple (petit, grand, vieux, jeune, beau, sympathique) et les couleurs",
+      "Les jours de la semaine, les saisons, le temps, le climat, les lieux et les noms de pays"
+    ]
   }
 }
