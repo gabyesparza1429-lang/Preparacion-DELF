@@ -1,0 +1,59 @@
+{
+  "examen": "DELF B1",
+  "epreuve": "Production Écrite (PE)",
+  "regle_penalisation_mots": "Si le candidat produit moins de 50% du nombre de mots attendus (soit 79 mots ou moins), attribuez automatiquement la note de 0 à l'ensemble des critères de cet exercice[cite: 7].",
+  "grille_evaluation_officielle": {
+    "realisation_tache": {
+      "note_maximale": 5,
+      "description_a_verifier": "Le candidat doit respecter la consigne (ex. s'adresser à l'interlocuteur demandé, donner des conseils concrets et des exemples en adéquation avec la situation)[cite: 7]. Peut écrire un texte sur un sujet actuel en rapport avec son centre d'intérêt, lister les avantages et les inconvénients, donner et justifier son opinion[cite: 2]."
+    },
+    "coherence_cohesion": {
+      "note_maximale": 5,
+      "description_a_verifier": "Peut relier une série d'éléments courts, simples et distincts en un discours qui s'enchaîne[cite: 2]. Peut indiquer de façon claire la chronologie d'un texte narratif et créer des sauts de paragraphes simples et logiques dans un texte assez long[cite: 2]."
+    },
+    "adequation_sociolinguistique": {
+      "note_maximale": 5,
+      "description_a_verifier": "Peut s'exprimer et répondre à un large éventail de fonctions langagières en utilisant leurs expressions les plus courantes dans un registre neutre[cite: 2]. Est conscient des règles de politesse importantes et se conduit de manière appropriée[cite: 2]."
+    },
+    "lexique": {
+      "note_maximale": 5,
+      "description_a_verifier": "Possède une gamme assez étendue de vocabulaire pour décrire des situations imprévisibles et expliquer les points principaux d'un problème[cite: 2]. Utilise une gamme étendue de vocabulaire simple de façon appropriée[cite: 2]. Des erreurs sérieuses se produisent encore quand il s'agit d'exprimer une pensée plus complexe[cite: 2]."
+    },
+    "morphosyntaxe": {
+      "note_maximale": 5,
+      "description_a_verifier": "Communique avec une correction suffisante dans des contextes familiers; en règle générale, a un bon contrôle grammatical malgré de nettes influences de la langue maternelle[cite: 2]. Des erreurs peuvent se produire, mais le sens général reste clair[cite: 2]."
+    }
+  },
+  "referentiel_attendu_B1": {
+    "categories_morphosyntaxiques": [
+      "Le passé composé et l'imparfait (alternance situation/événement)",
+      "Le plus-que-parfait (action antérieure)",
+      "Le conditionnel présent (souhait, désir, hypothèse, conseil)",
+      "Le conditionnel passé (regret, reproche)",
+      "Le subjonctif présent (possibilité, obligation, verbes de sentiments/opinion/ordre)",
+      "Le passif (description d'une action / mise en valeur du sujet)",
+      "Le gérondif (manière, condition, simultanéité)",
+      "L'expression de l'hypothèse (si + présent/futur, si + imparfait/conditionnel présent, si + plus-que-parfait/conditionnel passé)",
+      "Les doubles pronoms, pronoms possessifs et pronoms démonstratifs",
+      "Les adverbes de manière en -ment"
+    ],
+    "articulateurs_du_discours": {
+      "chronologiques": ["d'abord", "ensuite", "enfin", "premièrement", "deuxièmement"],
+      "logiques": ["donc", "puisque", "comme", "alors", "pourtant", "alors que", "cependant"],
+      "but": ["pour que + subjonctif"]
+    },
+    "themes_lexicaux": [
+      "La vie quotidienne (loisirs, sorties, achats, transports, voyages, hébergement, autorités)",
+      "Les personnes (description physique, corps, santé, vêtements, sentiments, caractère)",
+      "Le monde professionnel (entreprise, emploi)",
+      "L'école, le système scolaire, la formation",
+      "Les médias (programmes télé, journaux, Internet, actualité, faits divers)",
+      "Les arts (cinéma, littérature romanesque, peinture, spectacles)"
+    ],
+    "contexte_socioculturel": [
+      "Structure argumentative du discours",
+      "Sujets de polémique et débat",
+      "Communication écrite dans l'entreprise et domaine administratif"
+    ]
+  }
+}
