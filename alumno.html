@@ -934,7 +934,7 @@
                     ]
                 },
                 PE: {
-                    titulo: isLevelA ? "Producción Escrita (PE)" : "Production écrite (PE)",
+                    titulo: isLevelA ? "Production Écrite (PE)" : "Production écrite (PE)",
                     icono: "fa-pen-fancy",
                     color: "#fbbc05",
                     lblBienvenida: isLevelA ? "Bienvenido a la Zona de Examen Real (Blindada)." : "Bienvenue dans la Zone d'Examen Réel (Blindé).",
@@ -1394,7 +1394,7 @@
                     html += `<div id="preguntas-wrapper-bloque">`;
 
                     llavesAnuncios.forEach((tituloAnuncio) => {
-                        let contenidoTextoFiltrado = bloquesMapeadosPorAnuncio[tituloAnuncio] || "<em>Document joint.</em>";
+                        let contenidoTexto Filtrado = bloquesMapeadosPorAnuncio[tituloAnuncio] || "<em>Document joint.</em>";
 
                         html += `
                         <div class="modulo-anuncio-completo" style="margin-bottom: 35px; background: #fff; border: 1px solid #e0e6ed; border-radius: 8px; padding: 20px; box-shadow: 0 3px 99px rgba(0,0,0,0.02);">
@@ -1679,24 +1679,22 @@
                 cleanJson = cleanJson.replace(/[\u0000-\u0019]+/g, " ");
                 const data = JSON.parse(cleanJson);
                 
-                const sophiaTextEl = document.getElementById('sophia-verdict-text');
-                if (sophiaTextEl) sophiaTextEl.innerHTML = ""; 
-                
                 const scoreEl = document.getElementById('sophia-global-score');
                 if (scoreEl) scoreEl.innerText = data.score_global || '--/25';
 
                 const badgeEl = document.getElementById('sophia-global-badge');
                 if (badgeEl) badgeEl.innerText = data.status || '--';
 
-                if (sophiaTextEl) {
-                    sophiaTextEl.dataset.evaluation = JSON.stringify(data.rubriques || data.rubrique || {});
+                const container = document.getElementById('sophia-verdict-text');
+                if (container) {
+                    container.dataset.evaluation = JSON.stringify(data.rubriques || data.rubrique || {});
                 }
                 
                 const mirror = document.getElementById('sophia-text-mirror');
                 if (mirror) {
                     mirror.innerHTML = data.texto_html || data.transcription_html || `
                         <p style="margin:0; font-weight:600; color:var(--oxford);">Analyse globale générée avec succès.</p>
-                        <p style="margin-top:8px; font-size:0.9rem; color:#555;">Cliquez sur los botones de arriba de cada rúbrica (Réalisation de la tâche, Lexique, etc.) para ver tus errores detallados y el objetivo supra.</p>`;
+                        <p style="margin-top:8px; font-size:0.9rem; color:#555;">Cliquez sur les boutons de chaque rubrique pour voir vos erreurs détaillées.</p>`;
                 }
                 
                 const sBox = document.getElementById('sophia-box');
@@ -1708,9 +1706,6 @@
                 }, 120);
 
             } catch(e) {
-                const sophiaTextEl = document.getElementById('sophia-verdict-text');
-                if (sophiaTextEl) sophiaTextEl.innerHTML = ""; 
-
                 const mirror = document.getElementById('sophia-text-mirror');
                 if (mirror) {
                     mirror.innerHTML = `
@@ -1772,7 +1767,7 @@
                 if (rubricData) {
                     if (detailsPanel) detailsPanel.style.display = 'flex';
                     if (errBox) errBox.innerHTML = `<strong>[Score: ${rubricData.score || '--'}]</strong><br>${rubricData.error || 'Aucune erreur détectée.'}`;
-                    if (supraBox) supraBox.innerHTML = rubricData.supra || 'Votre production est déjà excellente.';
+                    if (supraBox) supraBox.innerHTML = rubricData.supra || 'Votre production is déjà excellente.';
                 }
                 
                 document.querySelectorAll('#sophia-text-mirror .sophia-error').forEach(span => {
@@ -1808,7 +1803,6 @@
                 if (btnSubmitPE) btnSubmitPE.disabled = true;
                 
                 const sophiaTextEl = document.getElementById('sophia-verdict-text');
-                if (sophiaTextEl) sophiaTextEl.innerHTML = "<i>Sophia corrige ta production...</i>";
                 
                 const sBox = document.getElementById('sophia-box');
                 if (sBox) sBox.style.display = "block";
@@ -1872,11 +1866,9 @@ Debe ser obligatoriamente un JSON plano sin markdown.`
                                 }
                             } else if (snapshot.exists() && snapshot.data().status?.state === "ERROR") {
                                 desvincularEscucha();
-                                if (sophiaTextEl) sophiaTextEl.innerHTML = "<span style='color:red;'>Erreur d'évaluation par l'IA.</span>";
                             }
                         } catch (errorInterno) {
                             desvincularEscucha();
-                            if (sophiaTextEl) sophiaTextEl.innerHTML = "Analyse complétée."; 
                             generarMenuJerarquico();
                         }
                     });
@@ -1898,8 +1890,6 @@ Debe ser obligatoriamente un JSON plano sin markdown.`
                 }
                 const sophiaBox = document.getElementById('sophia-box');
                 if (sophiaBox) sophiaBox.style.display = "none";
-                const sophiaTexto = document.getElementById('sophia-verdict-text');
-                if (sophiaTexto) sophiaTexto.innerHTML = "";
                 const historialContenedor = document.getElementById('historial-intentos-container');
                 if (historialContenedor) {
                     historialContenedor.innerHTML = "";
@@ -1928,7 +1918,6 @@ Debe ser obligatoriamente un JSON plano sin markdown.`
 
                 document.querySelectorAll('#preguntas-wrapper-bloque input[type="radio"]').forEach(r => r.disabled = true);
                 const vText = document.getElementById('sophia-verdict-text');
-                if (vText) vText.innerHTML = `Tu as obtenu <strong>${aciertosN} / ${totalPreguntas}</strong> aciertos.`;
                 
                 if (ej.transcripcion) {
                     const iBox = document.getElementById('interactive-transcription-box');
@@ -2064,7 +2053,6 @@ Debe ser obligatoriamente un JSON plano sin markdown.`
                 if (btnSubmitPO) btnSubmitPO.disabled = true;
                 
                 const sophiaTextEl = document.getElementById('sophia-verdict-text');
-                if (sophiaTextEl) sophiaTextEl.innerHTML = "<i>Sophia analyse votre production orale en temps réel...</i>";
                 
                 const sBox = document.getElementById('sophia-box');
                 if (sBox) sBox.style.display = "block";
@@ -2106,7 +2094,7 @@ Debe ser obligatoriamente un JSON plano sin markdown.`
 
                                 await addDoc(historialRef, {
                                     fecha: ahora.toISOString().split('T')[0],
-                                    hora_registro: now.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit', second: '2-digit' }),
+                                    hora_registro: ahora.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit', second: '2-digit' }),
                                     timestamp: ahora.getTime(),
                                     tipo: "Production_Orale",
                                     habilidad: "PO",
@@ -2120,7 +2108,6 @@ Debe ser obligatoriamente un JSON plano sin markdown.`
                             await calcularTodasLasNotasHabilidades();
                         } else if (snapshot.exists() && snapshot.data().status?.state === "ERROR") {
                             desvincularEscuchaOral();
-                            if (sophiaTextEl) sophiaTextEl.innerHTML = "<span style='color:red;'>Erreur d'évaluation orale par l'IA.</span>";
                         }
                     });
                 } catch (err) {
