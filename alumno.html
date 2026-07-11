@@ -905,7 +905,7 @@
                     titObjetivos: isLevelA ? "Objetivos Oficiales" : "Objectifs Officiels",
                     titEjercicios: isLevelA ? "Tipos de Ejercicios en el Sistema" : "Types d'exercices",
                     titConsejos: isLevelA ? "Consejos de Éxito" : "Conseils de réussite",
-                    titIA: isLevelA ? "Interacción con la IA (Sophia)" : "Interaction avec l'IA",
+                    titIA: isLevelA ? "Interaction avec l'IA (Sophia)" : "Interaction avec l'IA",
                     objetivos: isLevelA ? [
                         "Comprender documentos escritos muy cortos y sencillos.",
                         "Localizar información específica en anuncios, menús, correos o folletos."
@@ -1064,6 +1064,7 @@
 
         function generarMenuJerarquico() {
             const menuContainer = document.getElementById('sidebar-dynamic-menu');
+            if (!menuContainer) return;
             menuContainer.innerHTML = "";
             Object.keys(unidadesCache).sort((a, b) => a.localeCompare(b, undefined, { numeric: true })).forEach((uId) => {
                 const u = unidadesCache[uId];
@@ -1394,7 +1395,7 @@
                     html += `<div id="preguntas-wrapper-bloque">`;
 
                     llavesAnuncios.forEach((tituloAnuncio) => {
-                        let contenidoTexto Filtrado = bloquesMapeadosPorAnuncio[tituloAnuncio] || "<em>Document joint.</em>";
+                        let contenidoTextoFiltrado = bloquesMapeadosPorAnuncio[tituloAnuncio] || "<em>Document joint.</em>";
 
                         html += `
                         <div class="modulo-anuncio-completo" style="margin-bottom: 35px; background: #fff; border: 1px solid #e0e6ed; border-radius: 8px; padding: 20px; box-shadow: 0 3px 99px rgba(0,0,0,0.02);">
@@ -1767,7 +1768,7 @@
                 if (rubricData) {
                     if (detailsPanel) detailsPanel.style.display = 'flex';
                     if (errBox) errBox.innerHTML = `<strong>[Score: ${rubricData.score || '--'}]</strong><br>${rubricData.error || 'Aucune erreur détectée.'}`;
-                    if (supraBox) supraBox.innerHTML = rubricData.supra || 'Votre production is déjà excellente.';
+                    if (supraBox) supraBox.innerHTML = rubricData.supra || 'Votre production est déjà excellente.';
                 }
                 
                 document.querySelectorAll('#sophia-text-mirror .sophia-error').forEach(span => {
@@ -1801,8 +1802,6 @@
 
                 const btnSubmitPE = document.getElementById('btn-submit-pe');
                 if (btnSubmitPE) btnSubmitPE.disabled = true;
-                
-                const sophiaTextEl = document.getElementById('sophia-verdict-text');
                 
                 const sBox = document.getElementById('sophia-box');
                 if (sBox) sBox.style.display = "block";
@@ -1917,7 +1916,6 @@ Debe ser obligatoriamente un JSON plano sin markdown.`
                 });
 
                 document.querySelectorAll('#preguntas-wrapper-bloque input[type="radio"]').forEach(r => r.disabled = true);
-                const vText = document.getElementById('sophia-verdict-text');
                 
                 if (ej.transcripcion) {
                     const iBox = document.getElementById('interactive-transcription-box');
@@ -2051,8 +2049,6 @@ Debe ser obligatoriamente un JSON plano sin markdown.`
 
                 const btnSubmitPO = document.getElementById('btn-submit-po');
                 if (btnSubmitPO) btnSubmitPO.disabled = true;
-                
-                const sophiaTextEl = document.getElementById('sophia-verdict-text');
                 
                 const sBox = document.getElementById('sophia-box');
                 if (sBox) sBox.style.display = "block";
