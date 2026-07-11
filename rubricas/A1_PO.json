@@ -1,0 +1,12 @@
+{
+  "examen": "DELF A1",
+  "epreuve": "Production Orale (PO)",
+  "grille_evaluation": {
+    "entretien_dirige": {"note_maximale": 4, "description": "Se présenter, répondre à des questions personnelles simples sur l'âge, l'origine, la profession, le domicile."},
+    "echange_informations": {"note_maximale": 4, "description": "Poser des questions simples à l'examinateur à partir de mots clés ou de cartes proposés."},
+    "dialogue_simule": {"note_maximale": 4, "description": "Demander et obtenir des objets ou des services de la vie quotidienne (quantités, prix, argent, heure)."},
+    "lexique": {"note_maximale": 5, "description": "Possède un répertoire élémentaire de mots isolés et d'expressions relatifs à des situations concrètes."},
+    "morphosyntaxe": {"note_maximale": 4, "description": "Contrôle limité de structures mémorisées simples. Verbes de base: être, avoir, faire, aller, s'appeler."},
+    "phonologique": {"note_maximale": 4, "description": "Prononciation compréhensible avec effort; reproduire correctement un nombre limité de sons de base."}
+  }
+}
