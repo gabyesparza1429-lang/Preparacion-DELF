@@ -1,0 +1,12 @@
+{
+  "examen": "DELF A2",
+  "epreuve": "Production Orale (PO)",
+  "grille_evaluation": {
+    "entretien_dirige": {"note_maximale": 4, "description": "Parler de soi, de sa famille, de sa formation, de son travail actuel ou de ses loisirs avec détails et exemples."},
+    "monologue_suivi": {"note_maximale": 4, "description": "Raconter une histoire, décrire un événement passé, des projets de vacances ou des expériences personnelles de façon cohérente."},
+    "exercice_interaction": {"note_maximale": 4, "description": "Se mettre en rôle, faire ou répondre à des propositions, inviter, accepter, refuser ou commander un repas."},
+    "lexique": {"note_maximale": 5, "description": "Vocabulaire suffisant pour satisfaire les besoins primordiaux et mener des transactions sur des sujets familiers."},
+    "morphosyntaxe": {"note_maximale": 4, "description": "Utiliser des structures simples correctement (passé composé, imparfait, futur proche, verbes pronominaux, il faut)."},
+    "phonologique": {"note_maximale": 4, "description": "La prononciation est en général claire; l'accent ou le rythme peuvent être influencés mais ne coupent pas le sens."}
+  }
+}
