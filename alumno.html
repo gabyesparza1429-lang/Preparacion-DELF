@@ -1768,7 +1768,7 @@
                 if (rubricData) {
                     if (detailsPanel) detailsPanel.style.display = 'flex';
                     if (errBox) errBox.innerHTML = `<strong>[Score: ${rubricData.score || '--'}]</strong><br>${rubricData.error || 'Aucune erreur détectée.'}`;
-                    if (supraBox) supraBox.innerHTML = rubricData.supra || 'Votre production est déjà excellente.';
+                    if (supraBox) supraBox.innerHTML = rubricData.supra || 'Votre production is déjà excellente.';
                 }
                 
                 document.querySelectorAll('#sophia-text-mirror .sophia-error').forEach(span => {
@@ -1832,10 +1832,13 @@
                 try {
                     const textoSaneadoParaIA = txtAlumno.replace(/"/g, '\\"').replace(/\n/g, ' ');
 
+                    // Metadatos agregados quirúrgicamente para el backend sin romper nada
                     const extDocRef = await addDoc(collection(db, "generate"), {
-                        prompt: `Actúa como una examinadora certificada del DELF para el nivel ${currentLevel}. Evalúa la producción escrita del candidato llamándolo por su nombre (${nombreAlumno}) dentro de los comentarios.
-Texto del candidato: "${textoSaneadoParaIA}"
-Debe ser obligatoriamente un JSON plano sin markdown.`
+                        prompt: `Actúa como una examinadora certificada del DELF para el nivel ${currentLevel}. Evalúa la producción escrita del candidato llamándolo por su nombre (${nombreAlumno}) dentro de los comentarios. Texto del candidato: "${textoSaneadoParaIA}" Debe ser obligatoriamente un JSON plano sin markdown.`,
+                        nivel: currentLevel,
+                        tipo_prueba: "PE",
+                        nombre_alumno: nombreAlumno,
+                        texto_alumno: txtAlumno
                     });
 
                     const desvincularEscucha = onSnapshot(extDocRef, async (snapshot) => {
@@ -1866,7 +1869,7 @@ Debe ser obligatoriamente un JSON plano sin markdown.`
                                         fecha: ahora.toISOString().split('T')[0],
                                         hora_registro: ahora.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit', second: '2-digit' }),
                                         timestamp: ahora.getTime(),
-                                        tipo: "Production_Escrita",
+                                        type: "Production_Escrita",
                                         habilidad: "PE",
                                         texto_alumno: txtAlumno,
                                         respuesta_ia: respuestaIA,
@@ -2116,8 +2119,13 @@ Debe ser obligatoriamente un JSON plano sin markdown.`
                     const saludoH3 = document.getElementById('student-welcome')?.innerText || "";
                     const nombreAlumno = saludoH3.replace("Élève:", "").trim() || "l'élève";
                     
+                    // Metadatos agregados quirúrgicamente para el backend oral sin romper nada
                     const extDocRef = await addDoc(collection(db, "generate"), {
-                        prompt: `Actúa como una examinadora certificada del DELF para el nivel ${currentLevel}. Evalúa la producción oral de ${nombreAlumno}. Transcripción: "${transcripcionAlumno}". Entrega respuesta JSON limpia.`
+                        prompt: `Actúa como una examinadora certificada del DELF para el nivel ${currentLevel}. Evalúa la producción oral de ${nombreAlumno}. Transcripción: "${transcripcionAlumno}". Entrega respuesta JSON limpia.`,
+                        nivel: currentLevel,
+                        tipo_prueba: "PO",
+                        nombre_alumno: nombreAlumno,
+                        texto_alumno: transcripcionAlumno
                     });
 
                     const desvincularEscuchaOral = onSnapshot(extDocRef, async (snapshot) => {
@@ -2157,7 +2165,7 @@ Debe ser obligatoriamente un JSON plano sin markdown.`
                                     fecha: ahora.toISOString().split('T')[0],
                                     hora_registro: ahora.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit', second: '2-digit' }),
                                     timestamp: ahora.getTime(),
-                                    tipo: "Production_Orale",
+                                    type: "Production_Orale",
                                     habilidad: "PO",
                                     texto_alumno: transcripcionAlumno,
                                     respuesta_ia: respuestaIA,
