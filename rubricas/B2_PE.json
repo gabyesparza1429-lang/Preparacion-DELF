@@ -1,0 +1,41 @@
+{
+  "examen": "DELF B2",
+  "epreuve": "Production Écrite (PE)",
+  "grille_evaluation_officielle": {
+    "realisation_tache": {
+      "note_maximale": 5,
+      "description_a_verifier": "Peut développer à l'écrit une argumentation en rapport avec la tâche. Apporte des justifications claires pour ou contre un point de vue particulier et explique de manière détaillée les avantages et les inconvénients de différentes options, en illustrant ses arguments par des exemples en adéquation avec la situation."
+    },
+    "coherence_cohesion": {
+      "note_maximale": 5,
+      "description_a_verifier": "Peut produire un texte en général bien organisé, fluide et cohérent. Utilise de façon efficace une gamme de mots de liaison et d'articulateurs variés pour marquer clairement les relations entre les idées. Organise l'ensemble des textes longs en paragraphes logiques."
+    },
+    "adequation_sociolinguistique": {
+      "note_maximale": 5,
+      "description_a_verifier": "Peut adapter sa production écrite au destinataire, au contexte et au registre de la tâche (formel ou informel). Utilise les formalités, codes socioculturels et conventions d'usage de manière appropriée et constante sur toute la production (ex. lettre de réclamation ou demande formelle)."
+    },
+    "lexique": {
+      "note_maximale": 5,
+      "description_a_verifier": "Utilise de façon adéquate une large gamme de vocabulaire relatif à son domaine d'intérêt et aux sujets de société courants. Peut varier sa formulation pour éviter les répétitions fréquentes par l'usage de synonymes ou de périphrases. L'orthographe est juste, malgré de rares erreurs sur un lexique complexe."
+    },
+    "morphosyntaxe": {
+      "note_maximale": 5,
+      "description_a_verifier": "A un bon contrôle grammatical des structures syntaxiques complexes les plus fréquentes. Fait preuve de variété dans ses formulations. Les bévues occasionnelles ou erreurs non systématiques sont rares, ne conduisent pas à des malentendus et peuvent être corrigées rétrospectivement."
+    }
+  },
+  "referentiel_attendu_B2": {
+    "competences_discursives": [
+      "Structuration d'un texte discursif: introduction de la problématique, développement linéaire, présentation d'arguments et contre-arguments, causes et effets, propositions ou conclusions",
+      "Signalisation claire de la différence entre un fait avéré et une opinion personnelle",
+      "Capacité à synthétiser des informations et des arguments issus de sources diverses"
+    ],
+    "structures_argumentatives": [
+      "Formulations pour donner son point de vue, apporter des justifications, nuancer son opinion et concéder",
+      "Uso de estructuras complejas rígidas y flexibles con fines de persuasión o defensa de una postura específica"
+    ],
+    "lexique_et_registre": [
+      "Vocabulaire étendu couvrant les sujets de société courants (travail, écologie, technologies, médias, culture)",
+      "Maîtrise des registres formels et informels selon la situation de communication demandée"
+    ]
+  }
+}
