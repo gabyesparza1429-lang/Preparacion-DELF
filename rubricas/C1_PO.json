@@ -1,0 +1,37 @@
+{
+  "examen": "DALF C1",
+  "epreuve": "Production Orale (PO)",
+  "grille_evaluation_officielle": {
+    "monologue_suivi": {
+      "note_maximale": 5,
+      "description_a_verifier": "Peut faire un exposé clair et bien structuré sur un sujet complexe (durée attendue: 8 à 10 minutes). Structure le long exposé de façon à ce que l'auditeur suive facilement la logique. Intègre des thèmes secondaires, développe des points particuliers avec justifications et exemples pertinents pour parvenir à une conclusion appropriée."
+    },
+    "exercice_interaction": {
+      "note_maximale": 5,
+      "description_a_verifier": "Peut participer activement à un débat et une discussion de groupe complexe (durée attendue: 15 à 20 minutes). Argumente une prise de position formelle de manière convaincante en répondant aux objections, commentaires y contre-arguments avec aisance, spontanéité, tact et pertinence."
+    },
+    "lexique": {
+      "note_maximale": 5,
+      "description_a_verifier": "Possède une excellente maîtrise d'un vaste répertoire lexical. Peut choisir la formulation adéquate entre plusieurs possibilités, utiliser des synonymes, des expressions idiomatiques familières ou le vocabulaire technique propre à son domaine de spécialité sans recherche apparente."
+    },
+    "morphosyntaxe": {
+      "note_maximale": 5,
+      "description_a_verifier": "Utilise une gamme étendue de structures grammaticales complexes de façon appropriée, naturelle et avec beaucoup de souplesse. Maintient constamment un haut degré de correction grammaticale; les erreurs sont extrêmement rares et difficiles à repérer."
+    },
+    "phonologique": {
+      "note_maximale": 5,
+      "description_a_verifier": "Utilise avec une parfaite maîtrise tout l'éventail des traits phonologiques et prosodiques de la langue cible (accentuation, rythme, intonation). L'articulation est toujours intelligible; la présence éventuelle d'un accent n'affecte en rien la transmission des nuances fines."
+    }
+  },
+  "referentiel_attendu_C1": {
+    "competences_pragmatiques": [
+      "Faire remarquer des distinctions très précises entre des idées ou notions qui se ressemblent nettement",
+      "Gérer les objections convenablement, y répondre avec spontanéité et presque sans effort",
+      "Reformuler, faire le point, contester les contributions des autres participants ou exprimer son désaccord de façon hautement diplomatique"
+    ],
+    "strategies_discursives": [
+      "Choisir une expression adéquate dans un répertoire courant de fonctions discursives en préambule à ses propos pour obtenir la parole, la garder ou gagner du temps pendant qu'il réfléchit",
+      "Relier habilement sa propre contribution à celle des autres interlocuteurs pour faire progresser la discussion collective"
+    ]
+  }
+}
