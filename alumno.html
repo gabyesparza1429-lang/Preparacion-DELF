@@ -1687,7 +1687,6 @@
                     const badgeEl = document.getElementById('sophia-global-badge');
                     if (badgeEl) badgeEl.innerText = data.status || '--';
 
-                    const sophiaTextEl = document.getElementById('sophia-verdict-text');
                     if (sophiaTextEl) {
                         sophiaTextEl.dataset.evaluation = JSON.stringify(data.rubriques || data.rubrique || {});
                     }
