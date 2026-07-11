@@ -948,7 +948,7 @@
                         "Redactar un message corto y simple (correo, postal) para invitar, agradecer o responder a un amigo."
                     ] : [
                         "Remplir une fiche de renseignements personnels ou un formulaire d'inscription.",
-                        "Rédiger un court message simple (carte postale, courriel) pour inviter, remercier ou s'exprimer."
+                        "Régiger un court message simple (carte postale, courriel) pour inviter, remercier ou s'exprimer."
                     ],
                     ejercicios: isLevelA ? [
                         "**Formularios Interactivos:** Casillas individuales dinámicas que simulan fichas de inscripción (ej. Ficha de adopción, solicitud de matrícula).",
@@ -974,7 +974,7 @@
                     titulo: isLevelA ? "Producción Oral (PO)" : "Production orale (PO)",
                     icono: "fa-microphone",
                     color: "#ea4335",
-                    lblBienvenida: isLevelA ? "Bienvenido a la Zona de Examen Real (Blindada)." : "Bienvenue dans la Zone d'Examen Réel (Blindé).",
+                    lblBienvenida: isLevelA ? "Bienvenido a la Zona de Examen Real (Blindada)." : "Bienvenue dans la Zone d'Examen Réel (Blindée).",
                     lblInstruccion: isLevelA ? "Prepara tu micrófono. Selecciona un ejercicio para iniciar la simulación interactiva." : "Préparez votre micro. Sélectionnez une activité pour commencer.",
                     titObjetivos: isLevelA ? "Objetivos Oficiales" : "Objectifs Officiels",
                     titEjercicios: isLevelA ? "Tipos de Ejercicios en el Sistema" : "Types d'exercices",
@@ -1801,10 +1801,30 @@
                 const nombreAlumno = saludoH3.replace("Élève:", "").trim() || "l'élève";
 
                 const btnSubmitPE = document.getElementById('btn-submit-pe');
-                if (btnSubmitPE) btnSubmitPE.disabled = true;
+                if (btnSubmitPE) {
+                    btnSubmitPE.disabled = true;
+                    btnSubmitPE.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Analyse en cours...`;
+                    btnSubmitPE.style.background = "#7f8c8d";
+                }
                 
                 const sBox = document.getElementById('sophia-box');
                 if (sBox) sBox.style.display = "block";
+
+                const scoreEl = document.getElementById('sophia-global-score');
+                if (scoreEl) scoreEl.innerText = "--/25";
+                const badgeEl = document.getElementById('sophia-global-badge');
+                if (badgeEl) badgeEl.innerText = "Calcul...";
+
+                const mirror = document.getElementById('sophia-text-mirror');
+                if (mirror) {
+                    mirror.innerHTML = `<div style="text-align:center; padding:25px; color:#555;">
+                        <i class="fas fa-robot fa-spin" style="font-size:2.5rem; color:var(--gold); margin-bottom:15px;"></i>
+                        <br><strong>Sophia examine votre production...</strong><br>Évaluation des critères en cours. Veuillez patienter unos instantes.
+                    </div>`;
+                }
+
+                const detailsPanel = document.getElementById('sophia-feedback-details');
+                if (detailsPanel) detailsPanel.style.display = 'none';
 
                 const numeroUnidadMenuH = parseInt(currentUnitId.replace(/\D/g, '')) || currentUnitId;
                 const numeroActividadMenuH = currentExerciseIndex + 1;
@@ -1825,10 +1845,16 @@ Debe ser obligatoriamente un JSON plano sin markdown.`
                                 const respuestaIA = snapshot.data().response;
                                 window.mostrarEvaluacionSophia(respuestaIA);
 
+                                if (btnSubmitPE) {
+                                    btnSubmitPE.disabled = false;
+                                    btnSubmitPE.innerHTML = `<i class="fas fa-paper-plane"></i> Soumettre la production`;
+                                    btnSubmitPE.style.background = "var(--oxford)";
+                                }
+
                                 if (urlId !== "admin_preview" && docRefValidado) {
                                     const historialRef = collection(db, "Usuarios", urlId, "HistorialSophia");
                                     const qIntentos = query(historialRef, 
-                                        where("unidad", "==", numeroUnidadMenuH), 
+                                        where("decay", "==", numeroUnidadMenuH), 
                                         where("actividad", "==", numeroActividadMenuH),
                                         where("habilidad", "==", "PE")
                                     );
@@ -1865,16 +1891,29 @@ Debe ser obligatoriamente un JSON plano sin markdown.`
                                 }
                             } else if (snapshot.exists() && snapshot.data().status?.state === "ERROR") {
                                 desvincularEscucha();
+                                if (btnSubmitPE) {
+                                    btnSubmitPE.disabled = false;
+                                    btnSubmitPE.innerHTML = `<i class="fas fa-paper-plane"></i> Soumettre la production`;
+                                    btnSubmitPE.style.background = "var(--oxford)";
+                                }
                             }
                         } catch (errorInterno) {
                             desvincularEscucha();
+                            if (btnSubmitPE) {
+                                btnSubmitPE.disabled = false;
+                                btnSubmitPE.innerHTML = `<i class="fas fa-paper-plane"></i> Soumettre la production`;
+                                btnSubmitPE.style.background = "var(--oxford)";
+                            }
                             generarMenuJerarquico();
                         }
                     });
 
                 } catch (err) {
-                } finally {
-                    if (btnSubmitPE) btnSubmitPE.disabled = false;
+                    if (btnSubmitPE) {
+                        btnSubmitPE.disabled = false;
+                        btnSubmitPE.innerHTML = `<i class="fas fa-paper-plane"></i> Soumettre la production`;
+                        btnSubmitPE.style.background = "var(--oxford)";
+                    }
                 }
                 return;
             }
@@ -2048,10 +2087,30 @@ Debe ser obligatoriamente un JSON plano sin markdown.`
                 if (!transcripcionAlumno) return;
 
                 const btnSubmitPO = document.getElementById('btn-submit-po');
-                if (btnSubmitPO) btnSubmitPO.disabled = true;
+                if (btnSubmitPO) {
+                    btnSubmitPO.disabled = true;
+                    btnSubmitPO.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Évaluation en cours...`;
+                    btnSubmitPO.style.background = "#7f8c8d";
+                }
                 
                 const sBox = document.getElementById('sophia-box');
                 if (sBox) sBox.style.display = "block";
+
+                const scoreEl = document.getElementById('sophia-global-score');
+                if (scoreEl) scoreEl.innerText = "--/25";
+                const badgeEl = document.getElementById('sophia-global-badge');
+                if (badgeEl) badgeEl.innerText = "Calcul...";
+
+                const mirror = document.getElementById('sophia-text-mirror');
+                if (mirror) {
+                    mirror.innerHTML = `<div style="text-align:center; padding:25px; color:#555;">
+                        <i class="fas fa-robot fa-spin" style="font-size:2.5rem; color:var(--gold); margin-bottom:15px;"></i>
+                        <br><strong>Sophia analyse votre production orale...</strong><br>Analyse corrective de l'entretien en cours. Veuillez patienter.
+                    </div>`;
+                }
+
+                const detailsPanel = document.getElementById('sophia-feedback-details');
+                if (detailsPanel) detailsPanel.style.display = 'none';
 
                 try {
                     const saludoH3 = document.getElementById('student-welcome')?.innerText || "";
@@ -2066,6 +2125,12 @@ Debe ser obligatoriamente un JSON plano sin markdown.`
                             desvincularEscuchaOral();
                             const respuestaIA = snapshot.data().response;
                             window.mostrarEvaluacionOralSophia(respuestaIA);
+
+                            if (btnSubmitPO) {
+                                btnSubmitPO.disabled = false;
+                                btnSubmitPO.innerHTML = `<i class="fas fa-paper-plane"></i> Évaluer ma production orale`;
+                                btnSubmitPO.style.background = "var(--oxford)";
+                            }
 
                             const llaveProgreso = `${currentUnitId}_${window.currentSkill}_${currentExerciseIndex}`;
                             if (typeof mapaAciertosAlumno !== "undefined") {
@@ -2104,11 +2169,19 @@ Debe ser obligatoriamente un JSON plano sin markdown.`
                             await calcularTodasLasNotasHabilidades();
                         } else if (snapshot.exists() && snapshot.data().status?.state === "ERROR") {
                             desvincularEscuchaOral();
+                            if (btnSubmitPO) {
+                                btnSubmitPO.disabled = false;
+                                btnSubmitPO.innerHTML = `<i class="fas fa-paper-plane"></i> Évaluer ma production orale`;
+                                btnSubmitPO.style.background = "var(--oxford)";
+                            }
                         }
                     });
                 } catch (err) {
-                } finally {
-                    if (btnSubmitPO) btnSubmitPO.disabled = false;
+                    if (btnSubmitPO) {
+                        btnSubmitPO.disabled = false;
+                        btnSubmitPO.innerHTML = `<i class="fas fa-paper-plane"></i> Évaluer ma production orale`;
+                        btnSubmitPO.style.background = "var(--oxford)";
+                    }
                 }
                 return;
             }
