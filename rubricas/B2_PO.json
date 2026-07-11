@@ -1,0 +1,38 @@
+{
+  "examen": "DELF B2",
+  "epreuve": "Production Orale (PO)",
+  "grille_evaluation_officielle": {
+    "monologue_suivi": {
+      "note_maximale": 5,
+      "description_a_verifier": "Peut dégager la problématique soulevée par le document déclencheur et introduire sa présentation au moyen d'une introduction facilitante. Présente son opinion en développant de nombreux arguments étayés d'exemples pertinents dans un discours clair, fluide et méthodique."
+    },
+    "exercice_interaction": {
+      "note_maximale": 5,
+      "description_a_verifier": "Peut participer activement à une discussion informelle ou un débat. Peut exposer son opinion et argumenter avec précision, élargir la discussion avec des idées nouvelles et réagir aux arguments et contre-arguments d'autrui de façon convaincante."
+    },
+    "lexique": {
+      "note_maximale": 5,
+      "description_a_verifier": "Possède un vaste répertoire lexical dans des domaines variés et sur des sujets de société courants. Peut varier sa formulation pour éviter les répétitions. Des maladresses non systématiques peuvent se produire mais ne gênent pas la compréhension."
+    },
+    "morphosyntaxe": {
+      "note_maximale": 5,
+      "description_a_verifier": "A un bon contrôle grammatical dans l'ensemble et fait preuve de variété dans ses formulations. D'éventuelles erreurs non systématiques ou fautes dans les structures les plus élaborées peuvent se produire ponctuellement mais ne conduisent pas à des malentendus."
+    },
+    "phonologique": {
+      "note_maximale": 5,
+      "description_a_verifier": "Maintient une bonne maîtrise de la prononciation et est capable de s'autocorriger. Peut varier l'intonation et l'accentuation pour mieux faire passer son message. L'éventuelle présence d'un accent étranger n'affecte en rien la compréhension."
+    }
+  },
+  "referentiel_attendu_B2": {
+    "competences_argumentatives": [
+      "Développement méthodique d'une présentation (durée attendue: 5 à 7 minutes de monologue suivi)",
+      "Gestion d'un débat interactif complexe (durée attendue: 10 à 13 minutes d'exercice en interaction)",
+      "Capacité à s'écarter spontanément du texte préparé pour suivre les points intéressants soulevés par l'examinateur",
+      "Formuler des hypothèses, spéculer sur les causes et les conséquences, et mesurer les avantages et les inconvénients de différentes options"
+    ],
+    "gestion_du_discours": [
+      "Prendre la parole au bon moment, la garder en utilisant des expressions toutes faites pour gagner du temps et clore la conversation avec naturel",
+      "Utiliser une grande variété de mots de liaison et d'articulateurs pour lier ses énoncés dans un discours cohérent sans sauts logiques brusques"
+    ]
+  }
+}
