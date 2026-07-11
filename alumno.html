@@ -1710,7 +1710,7 @@
                 if (mirror) {
                     mirror.innerHTML = `
                         <div style="color:var(--danger); font-weight:600; padding:15px; background:#fff5f5; border:1px solid #ffe0e0; border-radius:6px; font-size:0.9rem; margin-bottom:15px;">
-                            <i class="fas fa-exclamation-triangle"></i> Sophia a renvoyé une correction textuelle brute :
+                            <i class="fas fa-exclamation-triangle"></i> Erreur de formatage : Sophia a renvoyé une correction textuelle brute.
                         </div>
                         <div style="white-space:pre-wrap; font-family:inherit; font-size:0.92rem; color:#333; line-height:1.5;">${jsonRaw}</div>`;
                 }
@@ -1854,7 +1854,7 @@
                     };
 
                     const promptFinal = `Tu es Sophia, une examinatrice officielle et native du DELF/DALF (France Éducation International). 
-Évalue avec le plus grand professionnalisme la production écrite de l'élève nommé(e) ${nombreAlumno}.
+Évalue la production écrite de l'élève nommé(e) ${nombreAlumno}.
 
 CONSIGNE ET TEXTE SOURCE DE L'EXAMEN :
 - Consigne de travail : "${consignaExamen}"
@@ -1867,8 +1867,9 @@ TEXTE DE L'ÉLÈVE À ÉVALUER :
 "${textoSaneadoParaIA}"
 
 CONSIGNES ABSOLUES DE RÉDACTION :
-1. Tu dois obligatoirement rédiger TOUTES tes analyses, erreurs, critiques et conseils exclusivement en français (Aucun mot en espagnol ne doit apparaître dans les explications).
-2. Retourne uniquement un objet JSON brut, sans blocs de code markdown (\`\`\`json), respectant strictement cette structure :
+1. Rédige TOUTES tes analyses, erreurs, critiques et conseils exclusivement en français (Aucun mot en espagnol).
+2. N'utilise JAMAIS de guillemets doubles (") dans tes explications, utilise uniquement des guillemets simples (') pour ne pas casser le format JSON.
+3. Retourne obligatoirement un objet JSON valide respectant strictement cette structure :
 ${JSON.stringify(estructuraJsonRequerida)}`;
 
                     const extDocRef = await addDoc(collection(db, "generate"), {
@@ -2177,9 +2178,9 @@ ${JSON.stringify(estructuraJsonRequerida)}`;
                     };
 
                     const promptFinal = `Tu es Sophia, une examinatrice officielle et native du DELF/DALF (France Éducation International).
-Évalue avec rigueur l'examen oral de l'élève nommé(e) ${nombreAlumno} selon les critères et le contexte de l'exercice.
+Évalue l'examen oral de l'élève nommé(e) ${nombreAlumno}.
 
-CONTEXTE DE L'ÉVALUATION ORAL :
+CONTEXTE DE L'ÉVALUATION ORALE :
 - Consigne de l'exercice : "${consignaExamenPO}"
 - Document / Cartes de support : "${documentoBasePO}"
 - Questions de l'examinateur : ${preguntasExamenPO}
@@ -2191,8 +2192,9 @@ TRANSCRIPTION DE LA PRODUCTION DE L'ÉLÈVE :
 "${transcripcionAlumno}"
 
 CONSIGNES ABSOLUES DE RÉDACTION :
-1. Tu dois obligatoirement rédiger TOUTES tes analyses, rubriques, commentaires et conseils exclusivement en français (Aucun mot en espagnol ne doit apparaître dans les réponses).
-2. Retourne uniquement un objet JSON brut, sans blocs de code markdown (\`\`\`json), respectant strictement cette structure :
+1. Rédige TOUTES tes analyses, rubriques, commentaires et conseils exclusivement en français (Aucun mot en espagnol).
+2. N'utilise JAMAIS de guillemets doubles (") dans tes explications, utilise uniquement des guillemets simples (') pour ne pas casser le format JSON.
+3. Retourne obligatoirement un objet JSON valide respectant strictement cette structure :
 ${JSON.stringify(estructuraJsonEsperada)}`;
 
                     const extDocRef = await addDoc(collection(db, "generate"), {
@@ -2234,7 +2236,7 @@ ${JSON.stringify(estructuraJsonEsperada)}`;
 
                                 await addDoc(historialRef, {
                                     fecha: ahora.toISOString().split('T')[0],
-                                    hora_registro: automation.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit', second: '2-digit' }),
+                                    hora_registro: ahora.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit', second: '2-digit' }),
                                     timestamp: ahora.getTime(),
                                     tipo: "Production_Orale",
                                     habilidad: "PO",
