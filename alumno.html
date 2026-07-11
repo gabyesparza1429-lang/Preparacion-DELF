@@ -1124,7 +1124,7 @@
             const isBasic = currentLevel.startsWith('A');
             const descCO = isBasic ? "Comprendre des expressions fréquentes. / Comprender expresiones." : "Peut comprendre les points principaux d'une intervention claire (école, travail).";
             const descCE = isBasic ? "Lire des textes courts. / Leer textos cortos." : "Peut comprendre des textes rédigés essentiellement dans une langue courante.";
-            const descPE = isBasic ? "Écrire des messages simples. / Escribir mensajes." : "Peut écrire un texte suivi simple et articulé sur des sujets familiers.";
+            const descPE = isBasic ? "Écrire des messages simples. / Escribir mensajes." : "Peut écrire un text suivi simple et articulé sur des sujets familiers.";
             const descPO = isBasic ? "S'exprimer en situation simple. / Expresarse en situations cotidianas." : "Peut s'exprimer de manière cohérente sur des expériences ou projets.";
 
             const iconCheckCO = notesHabilidadGlobales.CO > 0 ? 'fas fa-check-circle' : 'far fa-circle';
@@ -1768,7 +1768,7 @@
                 if (rubricData) {
                     if (detailsPanel) detailsPanel.style.display = 'flex';
                     if (errBox) errBox.innerHTML = `<strong>[Score: ${rubricData.score || '--'}]</strong><br>${rubricData.error || 'Aucune erreur détectée.'}`;
-                    if (supraBox) supraBox.innerHTML = rubricData.supra || 'Votre production is déjà excellente.';
+                    if (supraBox) supraBox.innerHTML = rubricData.supra || 'Votre production est déjà excellente.';
                 }
                 
                 document.querySelectorAll('#sophia-text-mirror .sophia-error').forEach(span => {
@@ -1832,13 +1832,34 @@
                 try {
                     const textoSaneadoParaIA = txtAlumno.replace(/"/g, '\\"').replace(/\n/g, ' ');
 
-                    // Metadatos agregados quirúrgicamente para el backend sin romper nada
+                    const respuestaRubrica = await fetch(`rubricas/${currentLevel}_PE.json`);
+                    if (!respuestaRubrica.ok) throw new Error("Fichier de rubrique introuvable");
+                    const criteriosDelineados = await respuestaRubrica.json();
+
+                    const estructuraJsonRequerida = {
+                        "score_global": "Nota final (ej. 17.5/25 o la escala correspondiente)",
+                        "status": "Admis / Non admis / Niveau Supra",
+                        "texto_html": "Le texte original en conservant les paragraphes intacts, en enveloppant CHAQUE erreur lexicale, orthographique ou grammaticale dans des balises html: <span class='sophia-error' data-rubric='[realisation, coherence, adequation, lexique o morphosyntaxe]'>mot_erroné</span>.",
+                        "rubriques": {
+                            "realisation": {"score": "Nota obtenida", "error": "Analyse détaillée en français de fallos o aciertos", "supra": "Conseil technique avancé en français"},
+                            "coherence": {"score": "Nota obtenida", "error": "Évaluation en français de connecteurs et logique", "supra": "Consejo técnico avanzado"},
+                            "adequation": {"score": "Nota obtenida", "error": "Erreurs de registre ou formules", "supra": "Consejo técnico avanzado"},
+                            "lexique": {"score": "Nota obtenida", "error": "Desglose en français de barbarismes ou orthographe", "supra": "Sinónimos sugeridos"},
+                            "morphosyntaxe": {"score": "Nota obtenida", "error": "Erreurs de conjugaison ou syntaxe", "supra": "Estructuras sugeridas"}
+                        }
+                    };
+
+                    const promptFinal = `Eres una examinadora nativa y certificada del DELF/DALF (France Éducation International). 
+Evalúa con el máximo rigor la producción escrita de ${nombreAlumno} utilizando las siguientes reglas oficiales del nivel:
+${JSON.stringify(criteriosDelineados)}
+
+Texto del candidato a evaluar: "${textoSaneadoParaIA}"
+
+Devuelve obligatoriamente un objeto JSON plano (sin formato de bloques de código \`\`\`json ni texto introductorio) que cumpla exactamente con esta estructura:
+${JSON.stringify(estructuraJsonRequerida)}`;
+
                     const extDocRef = await addDoc(collection(db, "generate"), {
-                        prompt: `Actúa como una examinadora certificada del DELF para el nivel ${currentLevel}. Evalúa la producción escrita del candidato llamándolo por su nombre (${nombreAlumno}) dentro de los comentarios. Texto del candidato: "${textoSaneadoParaIA}" Debe ser obligatoriamente un JSON plano sin markdown.`,
-                        nivel: currentLevel,
-                        tipo_prueba: "PE",
-                        nombre_alumno: nombreAlumno,
-                        texto_alumno: txtAlumno
+                        prompt: promptFinal
                     });
 
                     const desvincularEscucha = onSnapshot(extDocRef, async (snapshot) => {
@@ -1869,7 +1890,7 @@
                                         fecha: ahora.toISOString().split('T')[0],
                                         hora_registro: ahora.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit', second: '2-digit' }),
                                         timestamp: ahora.getTime(),
-                                        type: "Production_Escrita",
+                                        tipo: "Production_Escrita",
                                         habilidad: "PE",
                                         texto_alumno: txtAlumno,
                                         respuesta_ia: respuestaIA,
@@ -2119,13 +2140,34 @@
                     const saludoH3 = document.getElementById('student-welcome')?.innerText || "";
                     const nombreAlumno = saludoH3.replace("Élève:", "").trim() || "l'élève";
                     
-                    // Metadatos agregados quirúrgicamente para el backend oral sin romper nada
+                    const respuestaRubrica = await fetch(`rubricas/${currentLevel}_PO.json`);
+                    if (!respuestaRubrica.ok) throw new Error("Fichier de rubrique orale introuvable");
+                    const criteriosDelineados = await respuestaRubrica.json();
+
+                    const estructuraJsonEsperada = {
+                        "score_global": "Nota final (ej. 19/25)",
+                        "status": "Admis / Non admis / Niveau Supra",
+                        "transcription_html": "La transcription exacte en enveloppant les erreurs dans des balises: <span class='sophia-error' data-rubric='[production_orale_task, lexique, morphosyntaxe o phonologique]'>phrase_erronée</span>",
+                        "audio_response_text": "Breve comentario oral directo de aliento y corrección en francés (máximo 2 frases) para TTS.",
+                        "rubriques": {
+                            "production_orale_task": {"score": "Nota obtenida", "error": "Évaluation en français du développement du monologue ou interaction", "supra": "Conseil technique"},
+                            "lexique": {"score": "Nota obtenida", "error": "Pauvreté lexicale ou termes erronés dans la transcription", "supra": "Conseil technique"},
+                            "morphosyntaxe": {"score": "Nota obtenida", "error": "Erreurs de syntaxe orale ou concordance", "supra": "Conseil technique"},
+                            "phonologique": {"score": "Nota obtenida", "error": "Problèmes d'intelligibilité déduits", "supra": "Conseil technique"}
+                        }
+                    };
+
+                    const promptFinal = `Eres una examinadora nativa y certificada del DELF/DALF (France Éducation International).
+Evalúa con rigor el examen oral de ${nombreAlumno} basándote en la siguiente transcripción y las rúbricas oficiales del nivel:
+${JSON.stringify(criteriosDelineados)}
+
+Transcripción de audio del candidato: "${transcripcionAlumno}"
+
+Devuelve obligatoriamente un objeto JSON plano (sin formato de bloques de código \`\`\`json ni texto introductorio) que cumpla exactamente con esta estructura:
+${JSON.stringify(estructuraJsonEsperada)}`;
+
                     const extDocRef = await addDoc(collection(db, "generate"), {
-                        prompt: `Actúa como una examinadora certificada del DELF para el nivel ${currentLevel}. Evalúa la producción oral de ${nombreAlumno}. Transcripción: "${transcripcionAlumno}". Entrega respuesta JSON limpia.`,
-                        nivel: currentLevel,
-                        tipo_prueba: "PO",
-                        nombre_alumno: nombreAlumno,
-                        texto_alumno: transcripcionAlumno
+                        prompt: promptFinal
                     });
 
                     const desvincularEscuchaOral = onSnapshot(extDocRef, async (snapshot) => {
@@ -2165,7 +2207,7 @@
                                     fecha: ahora.toISOString().split('T')[0],
                                     hora_registro: ahora.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit', second: '2-digit' }),
                                     timestamp: ahora.getTime(),
-                                    type: "Production_Orale",
+                                    tipo: "Production_Orale",
                                     habilidad: "PO",
                                     texto_alumno: transcripcionAlumno,
                                     respuesta_ia: respuestaIA,
