@@ -1585,7 +1585,6 @@
                 }
             }
 
-            // === CARGA DE INTENTOS PREVIOS AL ENTRAR AL EJERCICIO ===
             const llaveProgresoVerif = `${currentUnitId}_${window.currentSkill}_${currentExerciseIndex}`;
             if (mapaAciertosAlumno[llaveProgresoVerif] === true && urlId !== "admin_preview") {
                 try {
@@ -1768,7 +1767,7 @@
                 if (rubricData) {
                     if (detailsPanel) detailsPanel.style.display = 'flex';
                     if (errBox) errBox.innerHTML = `<strong>[Score: ${rubricData.score || '--'}]</strong><br>${rubricData.error || 'Aucune erreur détectée.'}`;
-                    if (supraBox) supraBox.innerHTML = rubricData.supra || 'Votre production est déjà excellente.';
+                    if (supraBox) supraBox.innerHTML = rubricData.supra || 'Votre production is déjà excellente.';
                 }
                 
                 document.querySelectorAll('#sophia-text-mirror .sophia-error').forEach(span => {
@@ -1832,6 +1831,12 @@
                 try {
                     const textoSaneadoParaIA = txtAlumno.replace(/"/g, '\\"').replace(/\n/g, ' ');
 
+                    // Extracción dinámica del contexto del ejercicio PE
+                    const ejerciciosPE = unidadesCache[currentUnitId]?.PE || unidadesCache[currentUnitId]?.pe || [];
+                    const ejActivoPE = ejerciciosPE[currentExerciseIndex];
+                    const consignaExamen = ejActivoPE?.instruccion || "";
+                    const documentoBaseExamen = ejActivoPE?.texto_lectura || "";
+
                     const respuestaRubrica = await fetch(`rubricas/${currentLevel}_PE.json`);
                     if (!respuestaRubrica.ok) throw new Error("Fichier de rubrique introuvable");
                     const criteriosDelineados = await respuestaRubrica.json();
@@ -1841,7 +1846,7 @@
                         "status": "Admis / Non admis / Niveau Supra",
                         "texto_html": "Le texte original en conservant les paragraphes intacts, en enveloppant CHAQUE erreur lexicale, orthographique ou grammaticale dans des balises html: <span class='sophia-error' data-rubric='[realisation, coherence, adequation, lexique o morphosyntaxe]'>mot_erroné</span>.",
                         "rubriques": {
-                            "realisation": {"score": "Nota obtenida", "error": "Analyse détaillée en français de fallos o aciertos", "supra": "Conseil technique avancé en français"},
+                            "realisation": {"score": "Nota obtenida", "error": "Analyse détaillée en français de si el alumno respondió fielmente a la consigna, al mail base y a todas sus preguntas.", "supra": "Conseil technique avancé en français"},
                             "coherence": {"score": "Nota obtenida", "error": "Évaluation en français de connecteurs et logique", "supra": "Consejo técnico avanzado"},
                             "adequation": {"score": "Nota obtenida", "error": "Erreurs de registre ou formules", "supra": "Consejo técnico avanzado"},
                             "lexique": {"score": "Nota obtenida", "error": "Desglose en français de barbarismes ou orthographe", "supra": "Sinónimos sugeridos"},
@@ -1850,10 +1855,16 @@
                     };
 
                     const promptFinal = `Eres una examinadora nativa y certificada del DELF/DALF (France Éducation International). 
-Evalúa con el máximo rigor la producción escrita de ${nombreAlumno} utilizando las siguientes reglas oficiales del nivel:
+Evalúa con el máximo rigor la producción escrita de ${nombreAlumno}.
+
+CONSIGNA Y TEXTO BASE DEL EXAMEN QUE EL ALUMNO DEBE RESPONDER O SEGUIR:
+- Instrucción general: "${consignaExamen}"
+- Correo/Texto de base enviado al alumno: "${documentoBaseExamen}"
+
+REGLAS OFICIALES DE EVALUACIÓN Y RÚBRICA DEL NIVEL:
 ${JSON.stringify(criteriosDelineados)}
 
-Texto del candidato a evaluar: "${textoSaneadoParaIA}"
+Texto que el candidato ha escrito como respuesta para evaluar: "${textoSaneadoParaIA}"
 
 Devuelve obligatoriamente un objeto JSON plano (sin formato de bloques de código \`\`\`json ni texto introductorio) que cumpla exactamente con esta estructura:
 ${JSON.stringify(estructuraJsonRequerida)}`;
@@ -2140,6 +2151,13 @@ ${JSON.stringify(estructuraJsonRequerida)}`;
                     const saludoH3 = document.getElementById('student-welcome')?.innerText || "";
                     const nombreAlumno = saludoH3.replace("Élève:", "").trim() || "l'élève";
                     
+                    // Extracción dinámica de contexto para la simulación PO
+                    const ejerciciosPO = unidadesCache[currentUnitId]?.PO || unidadesCache[currentUnitId]?.po || [];
+                    const ejActivoPO = ejerciciosPO[currentExerciseIndex];
+                    const consignaExamenPO = ejActivoPO?.instruccion || "";
+                    const documentoBasePO = ejActivoPO?.texto_lectura || "";
+                    const preguntasExamenPO = ejActivoPO?.preguntas ? JSON.stringify(ejActivoPO.preguntas) : "";
+
                     const respuestaRubrica = await fetch(`rubricas/${currentLevel}_PO.json`);
                     if (!respuestaRubrica.ok) throw new Error("Fichier de rubrique orale introuvable");
                     const criteriosDelineados = await respuestaRubrica.json();
@@ -2150,7 +2168,7 @@ ${JSON.stringify(estructuraJsonRequerida)}`;
                         "transcription_html": "La transcription exacte en enveloppant les erreurs dans des balises: <span class='sophia-error' data-rubric='[production_orale_task, lexique, morphosyntaxe o phonologique]'>phrase_erronée</span>",
                         "audio_response_text": "Breve comentario oral directo de aliento y corrección en francés (máximo 2 frases) para TTS.",
                         "rubriques": {
-                            "production_orale_task": {"score": "Nota obtenida", "error": "Évaluation en français du développement du monologue ou interaction", "supra": "Conseil technique"},
+                            "production_orale_task": {"score": "Nota obtenida", "error": "Évaluation en français du développement du monologue ou de la conformité avec les questions posées.", "supra": "Conseil technique"},
                             "lexique": {"score": "Nota obtenida", "error": "Pauvreté lexicale ou termes erronés dans la transcription", "supra": "Conseil technique"},
                             "morphosyntaxe": {"score": "Nota obtenida", "error": "Erreurs de syntaxe orale ou concordance", "supra": "Conseil technique"},
                             "phonologique": {"score": "Nota obtenida", "error": "Problèmes d'intelligibilité déduits", "supra": "Conseil technique"}
@@ -2158,10 +2176,17 @@ ${JSON.stringify(estructuraJsonRequerida)}`;
                     };
 
                     const promptFinal = `Eres una examinadora nativa y certificada del DELF/DALF (France Éducation International).
-Evalúa con rigor el examen oral de ${nombreAlumno} basándote en la siguiente transcripción y las rúbricas oficiales del nivel:
+Evalúa con rigor el examen oral de ${nombreAlumno} basándote en la transcripción y el contexto específico del ejercicio:
+
+CONTEXTO REQUERIDO DE LA EVALUACIÓN ORAL:
+- Consigna del rol/monólogo: "${consignaExamenPO}"
+- Documento/Tarjetas de apoyo proporcionadas al alumno: "${documentoBasePO}"
+- Lista de preguntas asociadas del examinador (si aplica): ${preguntasExamenPO}
+
+RÚBRICA OFICIAL DEL NIVEL:
 ${JSON.stringify(criteriosDelineados)}
 
-Transcripción de audio del candidato: "${transcripcionAlumno}"
+Transcripción de lo que el candidato habló en el micrófono: "${transcripcionAlumno}"
 
 Devuelve obligatoriamente un objeto JSON plano (sin formato de bloques de código \`\`\`json ni texto introductorio) que cumpla exactamente con esta estructura:
 ${JSON.stringify(estructuraJsonEsperada)}`;
