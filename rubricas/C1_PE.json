@@ -1,0 +1,43 @@
+{
+  "examen": "DALF C1",
+  "epreuve": "Production Écrite (PE) - Essai",
+  "regle_penalisation_mots": "Si le candidat produit moins de 50% du nombre de mots attendus (soit 124 mots ou moins), attribuez automatiquement la note de 0 aux critères: Respect de la règle d'objectivité, Réalisation de la tâche (essai) et Cohérence et cohésion.",
+  "grille_evaluation_officielle": {
+    "realisation_tache": {
+      "note_maximale": 2.5,
+      "description_a_verifier": "Peut exposer et prouver son point de vue clairement et de manière bien structurée sur un sujet complexe. Souligne les points marquants pertinents et développe son argumentation assez longuement à l'aide d'arguments secondaires, de justifications et d'exemples pour parvenir à une conclusion appropriée."
+    },
+    "coherence_cohesion": {
+      "note_maximale": 2.5,
+      "description_a_verifier": "Peut produire un texte clair, fluide et parfaitement structuré. Démontre un usage hautement contrôlé de moyens linguistiques de structuration, d'une grande variété d'articulateurs et de schémas d'organisation logiques (introduction, transitions, paragraphes et conclusion facilitants)."
+    },
+    "adequation_sociolinguistique": {
+      "note_maximale": 2.5,
+      "description_a_verifier": "Peut utiliser la structure y les conventions propres au type d'écrit académique ou professionnel demandé. Adapte le ton, le style et le registre de langue au public cible avec souplesse, efficacité et cohérence constante."
+    },
+    "lexique": {
+      "note_maximale": 2.5,
+      "description_a_verifier": "Possède une excellente maîtrise d'un vaste répertoire lexical. Choisit de manière appropriée et idiomatique entre plusieurs possibilités de synonymes ou d'expressions pour surmonter les lacunes. Utilise correctement le vocabulaire technique propre à son domaine de spécialité. Les fautes sont de simples coquilles."
+    },
+    "morphosyntaxe": {
+      "note_maximale": 2.5,
+      "description_a_verifier": "Maintient constamment un haut degré de correction grammaticale. Utilise une gamme étendue de structures grammaticales complexes de façon appropriée, naturelle et avec beaucoup de souplesse. Les erreurs sont extrêmement rares et difficiles à repérer."
+    }
+  },
+  "referentiel_attendu_C1": {
+    "competences_pragmatiques": [
+      "Adoption consciente des conventions académiques et professionnelles de l'essai (règle d'objectivité, neutralité du ton)",
+      "Capacité à structurer un texte long de façon à ce que le lecteur suive facilement la logique interne des idées",
+      "Intégration fluide de thèmes secondaires et d'éléments d'évaluation critique"
+    ],
+    "categories_linguistiques_avancees": [
+      "Gamme complète de structures grammaticales complexes (subjonctif passé, double conditionnel, passif structurel, participiales, gérondif de condition)",
+      "Variété stylistique (longueur des phrases alternée, mise en relief, emphase efficace)",
+      "Maîtrise fine des nuances de sens, modalités de certitude, doute, confiance, méfiance ou restriction"
+    ],
+    "lexique_specialise": [
+      "Vocabulaire de spécialité académique et professionnel",
+      "Expressions idiomatiques courantes, collocations avancées et nuances de sens fines"
+    ]
+  }
+}
