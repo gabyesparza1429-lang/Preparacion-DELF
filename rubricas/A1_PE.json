@@ -1,0 +1,12 @@
+{
+  "examen": "DELF A1",
+  "epreuve": "Production Écrite (PE)",
+  "regle_penalisation_mots": "Si le candidat produit moins de 50% du nombre de mots attendus (soit 19 mots ou moins), attribuez 0 à l'ensemble des critères.",
+  "grille_evaluation": {
+    "realisation_tache": {"note_maximale": 3, "description": "Respecter la consigne: inviter un ami, proposer une activité, mentionner un lieu, donner une date."},
+    "coherence_cohesion": {"note_maximale": 3, "description": "Texte globalement compréhensible, utilisation de connecteurs élémentaires comme 'et' ou 'ou'."},
+    "adequation_sociolinguistique": {"note_maximale": 3, "description": "Formules de politesse élémentaires, salutations et choix correct du tu ou vous."},
+    "lexique": {"note_maximale": 3, "description": "Répertoire élémentaire de mots isolés et d'expressions liés à l'identité, l'adresse, la famille ou les loisirs."},
+    "morphosyntaxe": {"note_maximale": 3, "description": "Structures syntaxiques et formes grammaticales simples (présent, impératif, conditionnel je voudrais)."}
+  }
+}
