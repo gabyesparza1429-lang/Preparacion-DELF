@@ -1603,7 +1603,7 @@
                     
                     const snapFiltro = await getDocs(qFiltro);
                     if (!snapFiltro.empty) {
-                        const docsOrdenados = snapFiltro.docs.map(d => d.data()).sort((a,b) => (b.intento || 0) - (a.intento || 0));
+                        const docsOrdenados = snapFiltro.docs.map(d => d.data()).sort((a,b) => (b.timestamp || 0) - (a.timestamp || 0));
                         const datosHistoricos = docsOrdenados[0];
                         
                         const elInput = document.getElementById(window.currentSkill === "PO" ? 'po-student-response' : 'pe-student-response');
@@ -1710,7 +1710,7 @@
                 if (mirror) {
                     mirror.innerHTML = `
                         <div style="color:var(--danger); font-weight:600; padding:15px; background:#fff5f5; border:1px solid #ffe0e0; border-radius:6px; font-size:0.9rem; margin-bottom:15px;">
-                            <i class="fas fa-exclamation-triangle"></i> Sophia ha devuelto una corrección. Aquí tienes la retroalimentación directa:
+                            <i class="fas fa-exclamation-triangle"></i> Sophia a renvoyé une correction textuelle brute :
                         </div>
                         <div style="white-space:pre-wrap; font-family:inherit; font-size:0.92rem; color:#333; line-height:1.5;">${jsonRaw}</div>`;
                 }
@@ -1767,7 +1767,7 @@
                 if (rubricData) {
                     if (detailsPanel) detailsPanel.style.display = 'flex';
                     if (errBox) errBox.innerHTML = `<strong>[Score: ${rubricData.score || '--'}]</strong><br>${rubricData.error || 'Aucune erreur détectée.'}`;
-                    if (supraBox) supraBox.innerHTML = rubricData.supra || 'Votre production is déjà excellente.';
+                    if (supraBox) supraBox.innerHTML = rubricData.supra || 'Votre production est parfaite.';
                 }
                 
                 document.querySelectorAll('#sophia-text-mirror .sophia-error').forEach(span => {
@@ -1818,7 +1818,7 @@
                 if (mirror) {
                     mirror.innerHTML = `<div style="text-align:center; padding:25px; color:#555;">
                         <i class="fas fa-robot fa-spin" style="font-size:2.5rem; color:var(--gold); margin-bottom:15px;"></i>
-                        <br><strong>Sophia examine votre production...</strong><br>Évaluation des critères en cours. Veuillez patienter unos instantes.
+                        <br><strong>Sophia examine votre production...</strong><br>Évaluation en cours. Veuillez patienter.
                     </div>`;
                 }
 
@@ -1831,7 +1831,6 @@
                 try {
                     const textoSaneadoParaIA = txtAlumno.replace(/"/g, '\\"').replace(/\n/g, ' ');
 
-                    // Extracción dinámica del contexto del ejercicio PE
                     const ejerciciosPE = unidadesCache[currentUnitId]?.PE || unidadesCache[currentUnitId]?.pe || [];
                     const ejActivoPE = ejerciciosPE[currentExerciseIndex];
                     const consignaExamen = ejActivoPE?.instruccion || "";
@@ -1842,31 +1841,34 @@
                     const criteriosDelineados = await respuestaRubrica.json();
 
                     const estructuraJsonRequerida = {
-                        "score_global": "Nota final (ej. 17.5/25 o la escala correspondiente)",
+                        "score_global": "La note globale sur 25 (Ex: 15/25)",
                         "status": "Admis / Non admis / Niveau Supra",
-                        "texto_html": "Le texte original en conservant les paragraphes intacts, en enveloppant CHAQUE erreur lexicale, orthographique ou grammaticale dans des balises html: <span class='sophia-error' data-rubric='[realisation, coherence, adequation, lexique o morphosyntaxe]'>mot_erroné</span>.",
+                        "texto_html": "Le texte original complet de l'élève en enveloppant CHAQUE erreur dans des balises html: <span class='sophia-error' data-rubric='[realisation, coherence, adequation, lexique ou morphosyntaxe]'>mot_erroné</span>.",
                         "rubriques": {
-                            "realisation": {"score": "Nota obtenida", "error": "Analyse détaillée en français de si el alumno respondió fielmente a la consigna, al mail base y a todas sus preguntas.", "supra": "Conseil technique avancé en français"},
-                            "coherence": {"score": "Nota obtenida", "error": "Évaluation en français de connecteurs et logique", "supra": "Consejo técnico avanzado"},
-                            "adequation": {"score": "Nota obtenida", "error": "Erreurs de registre ou formules", "supra": "Consejo técnico avanzado"},
-                            "lexique": {"score": "Nota obtenida", "error": "Desglose en français de barbarismes ou orthographe", "supra": "Sinónimos sugeridos"},
-                            "morphosyntaxe": {"score": "Nota obtenida", "error": "Erreurs de conjugaison ou syntaxe", "supra": "Estructuras sugeridas"}
+                            "realisation": {"score": "Note sur 5", "error": "Analyse détaillée rédigée exclusivement en français", "supra": "Conseil technique rédigé exclusivement en français"},
+                            "coherence": {"score": "Note sur 5", "error": "Analyse détaillée rédigée exclusivement en français", "supra": "Conseil technique rédigé exclusivement en français"},
+                            "adequation": {"score": "Note sur 5", "error": "Analyse détaillée rédigée exclusivement en français", "supra": "Conseil technique rédigé exclusivement en français"},
+                            "lexique": {"score": "Note sur 5", "error": "Analyse détaillée rédigée exclusivement en français", "supra": "Conseil technique rédigé exclusivement en français"},
+                            "morphosyntaxe": {"score": "Note sur 5", "error": "Analyse détaillée rédigée exclusivement en français", "supra": "Conseil technique rédigé exclusivement en français"}
                         }
                     };
 
-                    const promptFinal = `Eres una examinadora nativa y certificada del DELF/DALF (France Éducation International). 
-Evalúa con el máximo rigor la producción escrita de ${nombreAlumno}.
+                    const promptFinal = `Tu es Sophia, une examinatrice officielle et native du DELF/DALF (France Éducation International). 
+Évalue avec le plus grand professionnalisme la production écrite de l'élève nommé(e) ${nombreAlumno}.
 
-CONSIGNA Y TEXTO BASE DEL EXAMEN QUE EL ALUMNO DEBE RESPONDER O SEGUIR:
-- Instrucción general: "${consignaExamen}"
-- Correo/Texto de base enviado al alumno: "${documentoBaseExamen}"
+CONSIGNE ET TEXTE SOURCE DE L'EXAMEN :
+- Consigne de travail : "${consignaExamen}"
+- Document d'appui / Courriel reçu : "${documentoBaseExamen}"
 
-REGLAS OFICIALES DE EVALUACIÓN Y RÚBRICA DEL NIVEL:
+GRILLE D'ÉVALUATION ET CRITÈRES OFFICIELS DU NIVEAU :
 ${JSON.stringify(criteriosDelineados)}
 
-Texto que el candidato ha escrito como respuesta para evaluar: "${textoSaneadoParaIA}"
+TEXTE DE L'ÉLÈVE À ÉVALUER :
+"${textoSaneadoParaIA}"
 
-Devuelve obligatoriamente un objeto JSON plano (sin formato de bloques de código \`\`\`json ni texto introductorio) que cumpla exactamente con esta estructura:
+CONSIGNES ABSOLUES DE RÉDACTION :
+1. Tu dois obligatoirement rédiger TOUTES tes analyses, erreurs, critiques et conseils exclusivement en français (Aucun mot en espagnol ne doit apparaître dans les explications).
+2. Retourne uniquement un objet JSON brut, sans blocs de code markdown (\`\`\`json), respectant strictement cette structure :
 ${JSON.stringify(estructuraJsonRequerida)}`;
 
                     const extDocRef = await addDoc(collection(db, "generate"), {
@@ -1889,7 +1891,7 @@ ${JSON.stringify(estructuraJsonRequerida)}`;
                                 if (urlId !== "admin_preview" && docRefValidado) {
                                     const historialRef = collection(db, "Usuarios", urlId, "HistorialSophia");
                                     const qIntentos = query(historialRef, 
-                                        where("decay", "==", numeroUnidadMenuH), 
+                                        where("unidad", "==", numeroUnidadMenuH), 
                                         where("actividad", "==", numeroActividadMenuH),
                                         where("habilidad", "==", "PE")
                                     );
@@ -2140,7 +2142,7 @@ ${JSON.stringify(estructuraJsonRequerida)}`;
                 if (mirror) {
                     mirror.innerHTML = `<div style="text-align:center; padding:25px; color:#555;">
                         <i class="fas fa-robot fa-spin" style="font-size:2.5rem; color:var(--gold); margin-bottom:15px;"></i>
-                        <br><strong>Sophia analyse votre production orale...</strong><br>Analyse corrective de l'entretien en cours. Veuillez patienter.
+                        <br><strong>Sophia analyse votre production orale...</strong><br>Analyse en cours. Veuillez patienter.
                     </div>`;
                 }
 
@@ -2151,7 +2153,6 @@ ${JSON.stringify(estructuraJsonRequerida)}`;
                     const saludoH3 = document.getElementById('student-welcome')?.innerText || "";
                     const nombreAlumno = saludoH3.replace("Élève:", "").trim() || "l'élève";
                     
-                    // Extracción dinámica de contexto para la simulación PO
                     const ejerciciosPO = unidadesCache[currentUnitId]?.PO || unidadesCache[currentUnitId]?.po || [];
                     const ejActivoPO = ejerciciosPO[currentExerciseIndex];
                     const consignaExamenPO = ejActivoPO?.instruccion || "";
@@ -2163,32 +2164,35 @@ ${JSON.stringify(estructuraJsonRequerida)}`;
                     const criteriosDelineados = await respuestaRubrica.json();
 
                     const estructuraJsonEsperada = {
-                        "score_global": "Nota final (ej. 19/25)",
+                        "score_global": "La note globale sur 25 (Ex: 18/25)",
                         "status": "Admis / Non admis / Niveau Supra",
-                        "transcription_html": "La transcription exacte en enveloppant les erreurs dans des balises: <span class='sophia-error' data-rubric='[production_orale_task, lexique, morphosyntaxe o phonologique]'>phrase_erronée</span>",
-                        "audio_response_text": "Breve comentario oral directo de aliento y corrección en francés (máximo 2 frases) para TTS.",
+                        "transcription_html": "La transcription avec les erreurs entourées par: <span class='sophia-error' data-rubric='[production_orale_task, lexique, morphosyntaxe ou phonologique]'>erreur</span>",
+                        "audio_response_text": "Court commentaire oral en français (max 2 phrases) pour la synthèse vocale.",
                         "rubriques": {
-                            "production_orale_task": {"score": "Nota obtenida", "error": "Évaluation en français du développement du monologue ou de la conformité avec les questions posées.", "supra": "Conseil technique"},
-                            "lexique": {"score": "Nota obtenida", "error": "Pauvreté lexicale ou termes erronés dans la transcription", "supra": "Conseil technique"},
-                            "morphosyntaxe": {"score": "Nota obtenida", "error": "Erreurs de syntaxe orale ou concordance", "supra": "Conseil technique"},
-                            "phonologique": {"score": "Nota obtenida", "error": "Problèmes d'intelligibilité déduits", "supra": "Conseil technique"}
+                            "production_orale_task": {"score": "Note accordée", "error": "Analyse détaillée rédigée exclusivement en français", "supra": "Conseil technique rédigé exclusivement en français"},
+                            "lexique": {"score": "Note accordée", "error": "Analyse détaillée rédigée exclusivement en français", "supra": "Conseil technique rédigé exclusivement en français"},
+                            "morphosyntaxe": {"score": "Note accordée", "error": "Analyse détaillée rédigée exclusivement en français", "supra": "Conseil technique rédigé exclusivement en français"},
+                            "phonologique": {"score": "Note accordée", "error": "Analyse détaillée rédigée exclusivement en français", "supra": "Conseil technique rédigé exclusivement en français"}
                         }
                     };
 
-                    const promptFinal = `Eres una examinadora nativa y certificada del DELF/DALF (France Éducation International).
-Evalúa con rigor el examen oral de ${nombreAlumno} basándote en la transcripción y el contexto específico del ejercicio:
+                    const promptFinal = `Tu es Sophia, une examinatrice officielle et native du DELF/DALF (France Éducation International).
+Évalue avec rigueur l'examen oral de l'élève nommé(e) ${nombreAlumno} selon les critères et le contexte de l'exercice.
 
-CONTEXTO REQUERIDO DE LA EVALUACIÓN ORAL:
-- Consigna del rol/monólogo: "${consignaExamenPO}"
-- Documento/Tarjetas de apoyo proporcionadas al alumno: "${documentoBasePO}"
-- Lista de preguntas asociadas del examinador (si aplica): ${preguntasExamenPO}
+CONTEXTE DE L'ÉVALUATION ORAL :
+- Consigne de l'exercice : "${consignaExamenPO}"
+- Document / Cartes de support : "${documentoBasePO}"
+- Questions de l'examinateur : ${preguntasExamenPO}
 
-RÚBRICA OFICIAL DEL NIVEL:
+GRILLE D'ÉVALUATION OFFICIELLE DU NIVEAU :
 ${JSON.stringify(criteriosDelineados)}
 
-Transcripción de lo que el candidato habló en el micrófono: "${transcripcionAlumno}"
+TRANSCRIPTION DE LA PRODUCTION DE L'ÉLÈVE :
+"${transcripcionAlumno}"
 
-Devuelve obligatoriamente un objeto JSON plano (sin formato de bloques de código \`\`\`json ni texto introductorio) que cumpla exactamente con esta estructura:
+CONSIGNES ABSOLUES DE RÉDACTION :
+1. Tu dois obligatoirement rédiger TOUTES tes analyses, rubriques, commentaires et conseils exclusivement en français (Aucun mot en espagnol ne doit apparaître dans les réponses).
+2. Retourne uniquement un objet JSON brut, sans blocs de code markdown (\`\`\`json), respectant strictement cette structure :
 ${JSON.stringify(estructuraJsonEsperada)}`;
 
                     const extDocRef = await addDoc(collection(db, "generate"), {
@@ -2230,7 +2234,7 @@ ${JSON.stringify(estructuraJsonEsperada)}`;
 
                                 await addDoc(historialRef, {
                                     fecha: ahora.toISOString().split('T')[0],
-                                    hora_registro: ahora.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit', second: '2-digit' }),
+                                    hora_registro: automation.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit', second: '2-digit' }),
                                     timestamp: ahora.getTime(),
                                     tipo: "Production_Orale",
                                     habilidad: "PO",
