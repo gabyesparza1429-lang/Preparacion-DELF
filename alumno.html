@@ -684,7 +684,7 @@
                 let palabrasHtml = b.split(/(\s+)/).map(f => {
                     if (f.trim() === '') return f;
                     let pLimpia = f.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()¿?¡!]/g,"");
-                    return `<span class="clickable-word" data-word="${pLimpia.toLowerCase()}">${f}</span>`;
+                    return `<span class="clickable-word" data-word="${pLopt.toLowerCase()}">${f}</span>`;
                 }).join('');
                 return `<p class="text-paragraph-block">${palabrasHtml}</p>`;
             }).join('');
@@ -879,7 +879,7 @@
                     ] : [
                         "Association d'images avec des situations entendues.",
                         "Questionnaires à choix multiples (QCM).",
-                        "Une fois envoyé, le sistema déploiera automáticamente la transcription del documento."
+                        "Une fois envoyé, le sistema déploiera automatiquement la transcription del documento."
                     ],
                     consejos: isLevelA ? [
                         "Lee las preguntas y observa con atención las imágenes antes de reproducir el audio.",
@@ -1589,13 +1589,8 @@
             if (mapaAciertosAlumno[llaveProgresoVerif] === true && urlId !== "admin_preview") {
                 try {
                     let uFiltro = currentUnitId;
-                    let aFiltro = currentExerciseIndex;
+                    let aFiltro = currentExerciseIndex + 1;
                     
-                    if (window.currentSkill === "PE") {
-                        uFiltro = parseInt(currentUnitId.replace(/\D/g, '')) || currentUnitId;
-                        aFiltro = currentExerciseIndex + 1;
-                    }
-
                     const qFiltro = query(collection(db, "Usuarios", urlId, "HistorialSophia"), 
                                           where("unidad", "==", uFiltro), 
                                           where("actividad", "==", aFiltro),
@@ -1825,12 +1820,10 @@
                 const detailsPanel = document.getElementById('sophia-feedback-details');
                 if (detailsPanel) detailsPanel.style.display = 'none';
 
-                const numeroUnidadMenuH = parseInt(currentUnitId.replace(/\D/g, '')) || currentUnitId;
+                const numeroUnidadMenuH = currentUnitId;
                 const numeroActividadMenuH = currentExerciseIndex + 1;
 
                 try {
-                    const textoSaneadoParaIA = txtAlumno.replace(/"/g, '\\"').replace(/\n/g, ' ');
-
                     const ejerciciosPE = unidadesCache[currentUnitId]?.PE || unidadesCache[currentUnitId]?.pe || [];
                     const ejActivoPE = ejerciciosPE[currentExerciseIndex];
                     const consignaExamen = ejActivoPE?.instruccion || "";
@@ -1856,20 +1849,21 @@
                     const promptFinal = `Tu es Sophia, une examinatrice officielle et native du DELF/DALF (France Éducation International). 
 Évalue la production écrite de l'élève nommé(e) ${nombreAlumno}.
 
-CONSIGNE ET TEXTE SOURCE DE L'EXAMEN :
+CONSIGNE ET TEXTE SOURCE DE L'EXAMEN À RESPECTER STRICTEMENT :
 - Consigne de travail : "${consignaExamen}"
-- Document d'appui / Courriel reçu : "${documentoBaseExamen}"
+- Document d'appui / Courriel reçu de base : "${documentoBaseExamen}"
 
 GRILLE D'ÉVALUATION ET CRITÈRES OFFICIELS DU NIVEAU :
 ${JSON.stringify(criteriosDelineados)}
 
 TEXTE DE L'ÉLÈVE À ÉVALUER :
-"${textoSaneadoParaIA}"
+${JSON.stringify(txtAlumno)}
 
 CONSIGNES ABSOLUES DE RÉDACTION :
 1. Rédige TOUTES tes analyses, erreurs, critiques et conseils exclusivement en français (Aucun mot en espagnol).
 2. N'utilise JAMAIS de guillemets doubles (") dans tes explications, utilise uniquement des guillemets simples (') pour ne pas casser le format JSON.
-3. Retourne obligatoirement un objet JSON valide respectant strictement cette structure :
+3. Ne mets pas de balises markdown de type \`\`\`json, commence directement par le crochet ouvrant.
+4. Retourne obligatoirement un objet JSON valide respectant strictement cette structure :
 ${JSON.stringify(estructuraJsonRequerida)}`;
 
                     const extDocRef = await addDoc(collection(db, "generate"), {
@@ -2189,12 +2183,13 @@ GRILLE D'ÉVALUATION OFFICIELLE DU NIVEAU :
 ${JSON.stringify(criteriosDelineados)}
 
 TRANSCRIPTION DE LA PRODUCTION DE L'ÉLÈVE :
-"${transcripcionAlumno}"
+${JSON.stringify(transcripcionAlumno)}
 
 CONSIGNES ABSOLUES DE RÉDACTION :
 1. Rédige TOUTES tes analyses, rubriques, commentaires et conseils exclusivement en français (Aucun mot en espagnol).
 2. N'utilise JAMAIS de guillemets doubles (") dans tes explications, utilise uniquement des guillemets simples (') pour ne pas casser le format JSON.
-3. Retourne obligatoirement un objet JSON valide respectant strictement cette structure :
+3. Ne mets pas de balises markdown de type \`\`\`json, commence directement par le crochet ouvrant.
+4. Retourne obligatoirement un objet JSON valide respectant strictement cette structure :
 ${JSON.stringify(estructuraJsonEsperada)}`;
 
                     const extDocRef = await addDoc(collection(db, "generate"), {
@@ -2227,7 +2222,7 @@ ${JSON.stringify(estructuraJsonEsperada)}`;
                                 const historialRef = collection(db, "Usuarios", urlId, "HistorialSophia");
                                 const qIntentos = query(historialRef, 
                                     where("unidad", "==", currentUnitId), 
-                                    where("actividad", "==", currentExerciseIndex),
+                                    where("actividad", "==", currentExerciseIndex + 1),
                                     where("habilidad", "==", "PO")
                                 );
                                 const snapshotIntentos = await getDocs(qIntentos);
@@ -2243,7 +2238,7 @@ ${JSON.stringify(estructuraJsonEsperada)}`;
                                     texto_alumno: transcripcionAlumno,
                                     respuesta_ia: respuestaIA,
                                     unidad: currentUnitId,
-                                    actividad: currentExerciseIndex,
+                                    actividad: currentExerciseIndex + 1,
                                     intento: numeroDeIntento
                                 });
                             }
@@ -2287,7 +2282,7 @@ ${JSON.stringify(estructuraJsonEsperada)}`;
                 btnVerIntentos.innerHTML = `<i class="fas fa-times"></i> Masquer l'historique`;
                 
                 try {
-                    const numeroUnidadHistorial = parseInt(currentUnitId.replace(/\D/g, '')) || currentUnitId;
+                    const numeroUnidadHistorial = currentUnitId;
                     const numeroActividadHistorial = currentExerciseIndex + 1;
 
                     const qHistorial = query(collection(db, "Usuarios", urlId, "HistorialSophia"),
