@@ -678,17 +678,17 @@
         }
 
         window.convertirTextoInteractivo = function(texto) {
-            if (!texto) return '';
-            return texto.split(/(?<=[?.!])\s+/).map(b => {
-                if (b.trim() === '') return '';
-                let palabrasHtml = b.split(/(\s+)/).map(f => {
-                    if (f.trim() === '') return f;
-                    let pLimpia = f.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()¿?¡!]/g,"");
-                    return `<span class="clickable-word" data-word="${pLopt.toLowerCase()}">${f}</span>`;
-                }).join('');
-                return `<p class="text-paragraph-block">${palabrasHtml}</p>`;
-            }).join('');
-        };
+    if (!texto) return '';
+    return texto.split(/(?<=[?.!])\s+/).map(b => {
+        if (b.trim() === '') return '';
+        let palabrasHtml = b.split(/(\s+)/).map(f => {
+            if (f.trim() === '') return f;
+            let pLimpia = f.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()¿?¡!]/g,"");
+            return `<span class="clickable-word" data-word="${pLimpia.toLowerCase()}">${f}</span>`;
+        }).join('');
+        return `<p class="text-paragraph-block">${palabrasHtml}</p>`;
+    }).join('');
+};
 
         window.insertarCaracterEspecial = function(caracter) {
             const textarea = document.getElementById('pe-student-response');
