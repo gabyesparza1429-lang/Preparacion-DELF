@@ -1,12 +1,48 @@
 {
   "examen": "DELF A2",
   "epreuve": "Production Orale (PO)",
-  "grille_evaluation": {
-    "entretien_dirige": {"note_maximale": 4, "description": "Parler de soi, de sa famille, de sa formation, de son travail actuel ou de ses loisirs avec détails et exemples."},
-    "monologue_suivi": {"note_maximale": 4, "description": "Raconter une histoire, décrire un événement passé, des projets de vacances ou des expériences personnelles de façon cohérente."},
-    "exercice_interaction": {"note_maximale": 4, "description": "Se mettre en rôle, faire ou répondre à des propositions, inviter, accepter, refuser ou commander un repas."},
-    "lexique": {"note_maximale": 5, "description": "Vocabulaire suffisant pour satisfaire les besoins primordiaux et mener des transactions sur des sujets familiers."},
-    "morphosyntaxe": {"note_maximale": 4, "description": "Utiliser des structures simples correctement (passé composé, imparfait, futur proche, verbes pronominaux, il faut)."},
-    "phonologique": {"note_maximale": 4, "description": "La prononciation est en général claire; l'accent ou le rythme peuvent être influencés mais ne coupent pas le sens."}
+  "grille_evaluation_officielle": {
+    "entretien_dirige": {
+      "note_maximale": 4,
+      "description_a_verifier": "Le candidat peut mener un échange sur lui-même, sa famille, ses conditions de vie, sa formation, son travail actuel ou ses loisirs. Peut répondre à des questions faciles et directes en fournissant des détails et des exemples."
+    },
+    "monologue_suivi": {
+      "note_maximale": 4,
+      "description_a_verifier": "Peut faire une description ou un récit brève et élémentaire d'un événement, d'une activité passée, d'une expérience personnelle, de ses projets de vacances ou d'habitudes journalières sous forme d'une liste de points."
+    },
+    "exercice_interaction": {
+      "note_maximale": 4,
+      "description_a_verifier": "Peut interagir dans des situations prévisibles de la vie quotidienne (poste, gare, magasin, restaurant). Peut faire et accepter une offre, une invitation, des excuses, commander un repas ou demander son chemin."
+    },
+    "lexique": {
+      "note_maximale": 5,
+      "description_a_verifier": "Possède un vocabulaire suffisant pour satisfaire les besoins communicatifs élémentaires et mener des transactions quotidiennes courantes sur des sujets familiers."
+    },
+    "morphosyntaxe": {
+      "note_maximale": 4,
+      "description_a_verifier": "Utilise des structures simples correctement mais commet encore systématiquement des erreurs élémentaires (confusion des temps, oubli d'accords). Le sens général doit rester clair."
+    },
+    "phonologique": {
+      "note_maximale": 4,
+      "description_a_verifier": "La prononciation est en général suffisamment claire pour être comprise. L'accent, le rythme et l'intonation peuvent être influencés par la langue maternelle sans empêcher la communication."
+    }
+  },
+  "referentiel_attendu_A2": {
+    "categories_morphosyntaxiques": [
+      "Le présent de l'indicatif (habitude, description, verbes à 1, 2 et 3 bases)",
+      "Les verbes pronominaux réfléchis et réciproques",
+      "Les verbes de mouvement et de modalité (vouloir, pouvoir, devoir) + infinitif",
+      "La structure impersonnelle 'Il faut / il ne faut pas' + infinitif",
+      "Le passé composé pour les événements du passé et l'imparfait pour la description (il était, il y avait, il faisait)",
+      "Le futur proche et le futur simple (projets et prévisions)",
+      "Le passé récent (venir de) et le présent progressif (être en train de)",
+      "Le conditionnel présent de politesse (j'aimerais, pourriez-vous) ou de proposition (on pourrait)",
+      "Les pronoms COD et COI, les pronoms relatifs simples (qui, que) et les pronoms compléments 'y' et 'en' (lieu, quantité)"
+    ],
+    "tours_de_parole_et_cooperation": [
+      "Utiliser des procédés simples pour commencer, poursuivre et terminer une brève conversation en face à face",
+      "Demander la clarification de mots-clés non compris en utilisant des expressions toutes faites",
+      "Indiquer qu'on suit ce qui se dit ou qu'on ne comprend pas un mot à épeler"
+    ]
   }
 }
