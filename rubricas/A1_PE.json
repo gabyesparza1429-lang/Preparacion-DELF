@@ -4,22 +4,27 @@
   "regle_penalisation_mots": "Si le candidat produit moins de 50% du nombre de mots attendus (soit 19 mots ou moins), attribuez automatiquement la note de 0 à l'ensemble des critères de l'exercice concerné.",
   "grille_evaluation_officielle": {
     "realisation_tache": {
+      "nom_complet": "Réalisation de la tâche",
       "note_maximale": 3,
       "description_a_verifier": "Le candidat doit respecter les consignes de l'exercice (ex. écrire un mail pour inviter un ami dans son pays, proposer une activité, mentionner un autre lieu et donner une date précise)."
     },
     "coherence_cohesion": {
+      "nom_complet": "Cohérence et cohésion",
       "note_maximale": 3,
-      "description_a_verifier": "Le texte doit être globalement compréhensible pour le lecteur. L'intention du message doit être claire, en utilisant des connecteurs élémentaires pour relier les groupes de mots."
+      "description_a_verifier": "Le texte doit être globalement compréhensible pour le lector. L'intention du message doit être claire, en utilisant des connecteurs élémentaires pour relier les groupes de mots."
     },
     "adequation_sociolinguistique": {
+      "nom_complet": "Adéquation sociolinguistique",
       "note_maximale": 3,
       "description_a_verifier": "Utilisation des formes de politesse les plus élémentaires, rituels de la lettre amicale, de la carte postale ou de l'e-mail. Choix cohérent et adapté entre l'usage du 'tu' ou du 'vous'."
     },
     "lexique": {
+      "nom_complet": "Lexique (Vocabulaire)",
       "note_maximale": 3,
       "description_a_verifier": "Possède un répertoire élémentaire de mots isolés et d'expressions relatifs à des situations concrètes particulières (identité, environnement quotidien)."
     },
     "morphosyntaxe": {
+      "nom_complet": "Morphosyntaxe (Grammaire)",
       "note_maximale": 3,
       "description_a_verifier": "A un contrôle limité de structures syntaxiques et de formes grammaticales simples appartenant à un répertoire mémorisé."
     }
@@ -48,7 +53,7 @@
       "Les loisirs, les nombres cardinaux, la date, l'heure et les prix",
       "Les objets personnels et les objets de la classe",
       "La description simple (petit, grand, vieux, jeune, beau, sympathique) et les couleurs",
-      "Les jours de la semaine, les saisons, le temps, le climat, les lieux et les noms de pays"
+      "Les jours de la semana, les saisons, le temps, le climat, les lieux et les noms de pays"
     ]
   }
 }
