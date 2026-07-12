@@ -667,6 +667,8 @@
         let notesHabilidadGlobales = { CO: 0, CE: 0, PE: 0, PO: 0 };
         let alumnoTokensGlobal = 0;
         let peTimerInterval = null;
+        window.currentRubricMaxes = {}; 
+        window.currentRubricNames = {}; 
 
         const urlParams = new URLSearchParams(window.location.search);
         let urlId = urlParams.get('id') || urlParams.get('user') || urlParams.get('uid') || window.location.hash.replace('#', '').split('?')[0];
@@ -766,13 +768,16 @@
                     qHistorial.forEach(dHist => {
                         const hData = dHist.data();
                         if (hData.habilidad && hData.respuesta_ia) {
-                            let matchNota = hData.respuesta_ia.match(/Note\s*Finale\s*:\s*(\d+(\.\d+)?)\s*\/|\b(\d+(\.\d+)?)\s*\/\s*25\b/i);
-                            let notaExtraida = 0;
-                            if (matchNota) {
-                                notaExtraida = parseFloat(matchNota[1] || matchNota[3]);
+                            const parsed = window.parseSophiaJSON(hData.respuesta_ia);
+                            if (parsed && parsed.score_global) {
+                                let partes = parsed.score_global.split('/');
+                                let obtenido = parseFloat(partes[0]) || 0;
+                                let maximo = parseFloat(partes[1]) || 25;
+                                let notaNormalizada = maximo > 0 ? (obtenido / maximo) * 25 : 0;
+                                
+                                if (hData.habilidad === "PE") mapaNotasSophia.PE.push(notaNormalizada);
+                                if (hData.habilidad === "PO") mapaNotasSophia.PO.push(notaNormalizada);
                             }
-                            if (hData.habilidad === "PE") mapaNotasSophia.PE.push(notaExtraida);
-                            if (hData.habilidad === "PO") mapaNotasSophia.PO.push(notaExtraida);
                         }
                     });
                 } catch(e) {}
@@ -900,7 +905,7 @@
                     titulo: isLevelA ? "Comprensión Lectora (CE)" : "Compréhension des écrits (CE)",
                     icono: "fa-file-alt",
                     color: "#34a853",
-                    lblBienvenida: isLevelA ? "Bienvenido a tu espacio de entrenamiento." : "Bienvenue dans votre espacio de entrenamiento.",
+                    lblBienvenida: isLevelA ? "Bienvenido a tu espacio de entrenamiento." : "Bienvenue dans votre espace d'entraînement.",
                     lblInstruccion: isLevelA ? "Por favor lee los detalles oficiales de esta competencia, luego selecciona una actividad en el menú de la izquierda para comenzar." : "Veuillez lire les détails officiels de cette competencia ci-dessous, puis sélectionnez une activité dans le menu de gauche pour démarrer.",
                     titObjetivos: isLevelA ? "Objetivos Oficiales" : "Objectifs Officiels",
                     titEjercicios: isLevelA ? "Tipos de Ejercicios en el Sistema" : "Types d'exercices",
@@ -959,7 +964,7 @@
                     ],
                     consejos: isLevelA ? [
                         "Respeta estrictamente la consigna y el número de palabras solicitado.",
-                        "Utiliza siempre las fórmulas de saludo y despedida requeridas en el formato amistoso."
+                        "Utiliza siempre las fórmulas de saludo y despedida requeridas en el format amistoso."
                     ] : [
                         "Respectez la consigne et le nombre de mots demandé.",
                         "Utilisez les formules de politesse adaptées (Amicalement, Salut, Bisous)."
@@ -1510,27 +1515,21 @@
                     </div>
                     <div id="sophia-verdict-text">
                         <div id="sophia-header-result" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px; background:white; padding:12px; border-radius:6px; border:1px solid #ddd;">
-                            <span style="font-weight:700; font-size:1.1rem; color:var(--oxford);">Note globale : <span id="sophia-global-score">--/25</span></span>
+                            <span style="font-weight:700; font-size:1.1rem; color:var(--oxford);">Note globale : <span id="sophia-global-score">--/--</span></span>
                             <span id="sophia-global-badge" style="font-weight:700; padding:6px 12px; border-radius:20px; background:#6c757d; color:white; font-size:0.85rem;">--</span>
                         </div>
                         
-                        <div id="sophia-rubrics-bar" style="display:flex; flex-wrap:wrap; gap:8px; margin-bottom:15px;">
-                            <button type="button" class="btn-rubric" data-rubric="realisation">Réalisation de la tâche</button>
-                            <button type="button" class="btn-rubric" data-rubric="coherence">Cohérence et cohésion</button>
-                            <button type="button" class="btn-rubric" data-rubric="adequation">Adéquation socio.</button>
-                            <button type="button" class="btn-rubric" data-rubric="lexique">Lexique</button>
-                            <button type="button" class="btn-rubric" data-rubric="morphosyntaxe">Morphosyntaxe</button>
-                        </div>
+                        <div id="sophia-rubrics-bar" style="display:flex; flex-wrap:wrap; gap:8px; margin-bottom:15px;"></div>
 
                         <div id="sophia-text-mirror" style="background:#fff; border:1px solid #ddd; padding:15px; border-radius:6px; min-height:100px; margin-bottom:15px; line-height:1.6; font-size:0.95rem; white-space:pre-wrap; color:#333;"></div>
 
                         <div id="sophia-feedback-details" style="display:none; flex-direction:column; gap:12px;">
                             <div style="background:#fce8e6; border-left:4px solid #d93025; padding:12px; border-radius:4px;">
-                                <strong style="color:#c5221f; display:block; margin-bottom:4px;"><i class="fas fa-exclamation-circle"></i> Ce qui ne va pas :</strong>
+                                <strong id="lbl-title-errors" style="color:#c5221f; display:block; margin-bottom:4px;"><i class="fas fa-exclamation-circle"></i> Ce qui ne va pas :</strong>
                                 <div id="sophia-feedback-errors" style="font-size:0.9rem; color:#3c4043; line-height:1.4;"></div>
                             </div>
                             <div style="background:#e6f4ea; border-left:4px solid #137333; padding:12px; border-radius:4px;">
-                                <strong style="color:#137333; display:block; margin-bottom:4px;"><i class="fas fa-arrow-alt-circle-up"></i> Objectif Supra :</strong>
+                                <strong id="lbl-title-supra" style="color:#137333; display:block; margin-bottom:4px;"><i class="fas fa-arrow-alt-circle-up"></i> Objectif Supra :</strong>
                                 <div id="sophia-feedback-supra" style="font-size:0.9rem; color:#3c4043; line-height:1.4;"></div>
                             </div>
                         </div>
@@ -1617,14 +1616,22 @@
                             }
                         }
                         
+                        // Cargar mapeos de rúbricas previo a renderizar la evaluación
+                        const tipoRubrica = window.currentSkill === "PO" ? "PO" : "PE";
+                        const resRub = await fetch(`rubricas/${currentLevel}_${tipoRubrica}.json`);
+                        if (resRub.ok) {
+                            const criteriosDelineados = await resRub.json();
+                            const grille = criteriosDelineados.grille_evaluation_officielle || criteriosDelineados.rubriques || criteriosDelineados;
+                            Object.keys(grille).forEach(k => {
+                                window.currentRubricMaxes[k] = parseFloat(grille[k].note_maximale) || 5;
+                                window.currentRubricNames[k] = grille[k].nom_complet || k;
+                            });
+                        }
+
                         const sBox = document.getElementById('sophia-box');
                         if (datosHistoricos && datosHistoricos.respuesta_ia) {
                             if (sBox) sBox.style.display = "block";
-                            if (window.currentSkill === "PO") {
-                                window.mostrarEvaluacionOralSophia(datosHistoricos.respuesta_ia);
-                            } else {
-                                window.mostrarEvaluacionSophia(datosHistoricos.respuesta_ia);
-                            }
+                            window.mostrarEvaluacionSophia(datosHistoricos.respuesta_ia);
                         }
                         
                         window.inicializarBotonHistorialIntentos();
@@ -1661,7 +1668,7 @@
         });
 
         // ==========================================
-        // NUEVO MOTOR DE EXTRACORES JSON BLINDADOS (Sophia)
+        // MOTOR JSON BLINDADO & DINÁMICO (Sophia)
         // ==========================================
         window.parseSophiaJSON = function(jsonRaw) {
             let cleanJson = jsonRaw.trim();
@@ -1677,7 +1684,7 @@
                 let sanitized = cleanJson.replace(/[\r\n]+/g, " ").replace(/[\u0000-\u001F\u007F-\u009F]/g, "");
                 return JSON.parse(sanitized);
             } catch(e) {
-                console.warn("JSON.parse estándar falló. Ejecutando extractor RegExp de emergencia.");
+                console.warn("Fallo de JSON nativo. Ejecutando parseador RegExp dinámico.");
                 const flat = cleanJson.replace(/[\r\n]+/g, " ");
                 
                 const extractField = (field) => {
@@ -1690,64 +1697,118 @@
                     return match ? match[1] : "";
                 };
 
-                const extractRubricField = (rubric, field) => {
-                    const rubricRegex = new RegExp(`"${rubric}"\\s*:\\s*\\{([^}]*)\\}`, "i");
+                const obj = {
+                    score_global: extractField("score_global"),
+                    status: extractField("status"),
+                    texto_html: extractField("texto_html") || extractField("transcription_html") || "",
+                    transcription_html: extractField("transcription_html") || extractField("texto_html") || "",
+                    audio_response_text: extractField("audio_response_text") || "",
+                    rubriques: {}
+                };
+
+                // Extrae dinámicamente cualquier rubro configurado en memoria
+                Object.keys(window.currentRubricMaxes).forEach(rKey => {
+                    const rubricRegex = new RegExp(`"${rKey}"\\s*:\\s*\\{([^}]*)\\}`, "i");
                     const rubricMatch = flat.match(rubricRegex);
                     if (rubricMatch) {
                         const subStr = rubricMatch[1];
-                        const fieldRegex = new RegExp(`"${field}"\\s*:\\s*"((?:[^"\\\\]|\\\\.)*?)"`, "i");
-                        let match = subStr.match(fieldRegex);
-                        if (!match) {
-                            const looseFieldRegex = new RegExp(`"${field}"\\s*:\\s*"(.*?)"`, "i");
-                            match = subStr.match(looseFieldRegex);
-                        }
-                        return match ? match[1] : "";
+                        const fieldRegex = (f) => {
+                            const m = subStr.match(new RegExp(`"${f}"\\s*:\\s*"((?:[^"\\\\]|\\\\.)*?)"`, "i")) || subStr.match(new RegExp(`"${f}"\\s*:\\s*"(.*?)"`, "i"));
+                            return m ? m[1] : "";
+                        };
+                        obj.rubriques[rKey] = {
+                            score: fieldRegex("score"),
+                            error: fieldRegex("error"),
+                            supra: fieldRegex("supra")
+                        };
                     }
-                    return "";
-                };
-
-                return {
-                    score_global: extractField("score_global") || "15/25",
-                    status: extractField("status") || "Admis",
-                    texto_html: extractField("texto_html") || extractField("transcription_html") || flat,
-                    transcription_html: extractField("transcription_html") || extractField("texto_html") || flat,
-                    audio_response_text: extractField("audio_response_text") || "",
-                    rubriques: {
-                        realisation: { score: extractRubricField("realisation", "score"), error: extractRubricField("realisation", "error"), supra: extractRubricField("realisation", "supra") },
-                        coherence: { score: extractRubricField("coherence", "score"), error: extractRubricField("coherence", "error"), supra: extractRubricField("coherence", "supra") },
-                        adequation: { score: extractRubricField("adequation", "score"), error: extractRubricField("adequation", "error"), supra: extractRubricField("adequation", "supra") },
-                        lexique: { score: extractRubricField("lexique", "score"), error: extractRubricField("lexique", "error"), supra: extractRubricField("lexique", "supra") },
-                        morphosyntaxe: { score: extractRubricField("morphosyntaxe", "score"), error: extractRubricField("morphosyntaxe", "error"), supra: extractRubricField("morphosyntaxe", "supra") },
-                        production_orale_task: { score: extractRubricField("production_orale_task", "score"), error: extractRubricField("production_orale_task", "error"), supra: extractRubricField("production_orale_task", "supra") },
-                        phonologique: { score: extractRubricField("phonologique", "score"), error: extractRubricField("phonologique", "error"), supra: extractRubricField("phonologique", "supra") }
-                    }
-                };
+                });
+                return obj;
             }
         };
 
         window.mostrarEvaluacionSophia = function(jsonRaw) {
             const data = window.parseSophiaJSON(jsonRaw);
+            const isLevelA = currentLevel.startsWith('A');
+
+            // Traducir etiquetas de la UI según el nivel
+            const titleErrors = document.getElementById('lbl-title-errors');
+            const titleSupra = document.getElementById('lbl-title-supra');
+            if (titleErrors) titleErrors.innerHTML = isLevelA ? `<i class="fas fa-exclamation-circle"></i> Lo que no va:` : `<i class="fas fa-exclamation-circle"></i> Ce qui ne va pas:`;
+            if (titleSupra) titleSupra.innerHTML = isLevelA ? `<i class="fas fa-arrow-alt-circle-up"></i> Objetivo Supra:` : `<i class="fas fa-arrow-alt-circle-up"></i> Objectif Supra:`;
+
+            // Calcular puntajes reales basados en los rubros devueltos
+            let scoreObtenido = 0;
+            let scoreMaximoTotal = 0;
+            let totalEndessous = 0;
+            let totalRubricasContadas = 0;
+
+            const rubricsBar = document.getElementById('sophia-rubrics-bar');
+            if (rubricsBar) rubricsBar.innerHTML = "";
+
+            if (data.rubriques && Object.keys(data.rubriques).length > 0) {
+                Object.keys(data.rubriques).forEach(key => {
+                    let rData = data.rubriques[key];
+                    let s = parseFloat(rData.score) || 0;
+                    let m = window.currentRubricMaxes[key] || 5;
+                    
+                    scoreObtenido += s;
+                    scoreMaximoTotal += m;
+                    totalRubricasContadas++;
+
+                    // Regla de descalificación por bajo rendimiento en rubros
+                    if (rData.error && (rData.error.toLowerCase().includes('en dessous') || s <= (m * 0.4))) {
+                        totalEndessous++;
+                    }
+
+                    // Inyección dinámica de botones con puntaje real (Punto D)
+                    if (rubricsBar) {
+                        const nomBoton = window.currentRubricNames[key] || key;
+                        rubricsBar.innerHTML += `<button type="button" class="btn-rubric" data-rubric="${key}">${nomBoton} • ${s}/${m} pts</button>`;
+                    }
+                });
+            }
+
+            // Umbrales Proporcionales CIEP Basados en Porcentajes (Punto E)
+            let porcentaje = scoreMaximoTotal > 0 ? (scoreObtenido / scoreMaximoTotal) * 100 : 0;
+            let statusCalculado = "Non admis";
             
+            if (totalEndessous === totalRubricasContadas && totalRubricasContadas > 0) {
+                statusCalculado = "Non admis"; // Falla absoluta por criterios mínimos insatisfechos
+            } else if (porcentaje >= 60) {
+                statusCalculado = "Réussi";
+            } else if (porcentaje >= 50) {
+                statusCalculado = "Admis";
+            }
+
+            data.score_global = `${scoreObtenido.toFixed(1)}/${scoreMaximoTotal.toFixed(1)}`;
+            data.status = statusCalculado;
+
             const scoreEl = document.getElementById('sophia-global-score');
-            if (scoreEl) scoreEl.innerText = data.score_global || '--/25';
+            if (scoreEl) scoreEl.innerText = data.score_global;
 
             const badgeEl = document.getElementById('sophia-global-badge');
-            if (badgeEl) badgeEl.innerText = data.status || '--';
+            if (badgeEl) {
+                badgeEl.innerText = data.status;
+                if (data.status === "Non admis") badgeEl.style.background = '#d93025';
+                else if (data.status === "Réussi") badgeEl.style.background = '#137333';
+                else badgeEl.style.background = '#1a73e8';
+            }
 
             const container = document.getElementById('sophia-verdict-text');
-            if (container) {
-                container.dataset.evaluation = JSON.stringify(data.rubriques || {});
-            }
+            if (container) container.dataset.evaluation = JSON.stringify(data.rubriques || {});
             
             const mirror = document.getElementById('sophia-text-mirror');
             if (mirror) {
-                mirror.innerHTML = data.texto_html || data.transcription_html || `
-                    <p style="margin:0; font-weight:600; color:var(--oxford);">Analyse globale générée avec succès.</p>
-                    <p style="margin-top:8px; font-size:0.9rem; color:#555;">Cliquez sur les boutons de chaque rubrique pour voir vos erreurs détaillées.</p>`;
+                mirror.innerHTML = data.texto_html || data.transcription_html || `<p>Analyse générée.</p>`;
             }
             
             const sBox = document.getElementById('sophia-box');
             if (sBox) sBox.style.display = "block";
+
+            if (data.audio_response_text && window.currentSkill === "PO") {
+                window.sophiaHablarFeedback(data.audio_response_text);
+            }
 
             setTimeout(() => {
                 const primerBoton = document.querySelector('.btn-rubric');
@@ -1763,11 +1824,7 @@
             const loadBtn = e.target.closest('.load-retro-btn');
             if (loadBtn) {
                 const rawJson = decodeURIComponent(loadBtn.dataset.json);
-                if (window.currentSkill === "PO") {
-                    window.mostrarEvaluacionOralSophia(rawJson);
-                } else {
-                    window.mostrarEvaluacionSophia(rawJson);
-                }
+                window.mostrarEvaluacionSophia(rawJson);
                 const sBox = document.getElementById('sophia-box');
                 if (sBox) {
                     sBox.style.display = "block";
@@ -1783,9 +1840,7 @@
                 if (!container || !container.dataset.evaluation) return;
                 
                 const rubriques = JSON.parse(container.dataset.evaluation);
-                const targetKey = rubricKey ? rubricKey.toLowerCase().trim() : "";
-                const actualKey = Object.keys(rubriques).find(k => k.toLowerCase().trim() === targetKey);
-                const rubricData = actualKey ? rubriques[actualKey] : null;
+                const rubricData = rubriques[rubricKey] || null;
                 
                 document.querySelectorAll('.btn-rubric').forEach(b => {
                     b.style.background = '#fff';
@@ -1802,13 +1857,13 @@
                 
                 if (rubricData) {
                     if (detailsPanel) detailsPanel.style.display = 'flex';
-                    if (errBox) errBox.innerHTML = `<strong>[Score: ${rubricData.score || '--'}]</strong><br>${rubricData.error || 'Aucune erreur détectée.'}`;
-                    if (supraBox) supraBox.innerHTML = rubricData.supra || 'Votre production est parfaite.';
+                    let maxNota = window.currentRubricMaxes[rubricKey] || 5;
+                    if (errBox) errBox.innerHTML = `<strong>[Score: ${rubricData.score}/${maxNota}]</strong><br>${rubricData.error || 'Aucune erreur détectée.'}`;
+                    if (supraBox) supraBox.innerHTML = rubricData.supra || 'Production adéquate.';
                 }
                 
                 document.querySelectorAll('#sophia-text-mirror .sophia-error').forEach(span => {
-                    const spanKey = span.dataset.rubric ? span.dataset.rubric.toLowerCase().trim() : "";
-                    if (spanKey === targetKey) {
+                    if (span.dataset.rubric === rubricKey) {
                         span.style.background = '#fce8e6';
                         span.style.color = '#a51d24';
                         span.style.borderBottom = '2px dashed #d93025';
@@ -1825,10 +1880,20 @@
                 return;
             }
             
+            // ==========================================
+            // SUBMIT PRODUCTION ÉCRITE (PE)
+            // ==========================================
             if (e.target && (e.target.id === 'btn-submit-pe' || e.target.closest('#btn-submit-pe'))) {
                 const elInputRedaccion = document.getElementById('pe-student-response');
                 const txtAlumno = elInputRedaccion ? elInputRedaccion.value.trim() : "";
                 if (!txtAlumno) return;
+
+                const totalPalabras = txtAlumno.split(/\s+/).length;
+                // REGLA DE PENALIZACIÓN CRÍTICA EN FRONT (Punto 6)
+                if (currentLevel === "A1" && totalPalabras < 19) {
+                    alert("Votre production contient moins de 19 mots. Elle ne respecte pas les critères minimaux requis pour le niveau DELF A1.");
+                    return;
+                }
 
                 if (peTimerInterval) clearInterval(peTimerInterval);
 
@@ -1838,28 +1903,20 @@
                 const btnSubmitPE = document.getElementById('btn-submit-pe');
                 if (btnSubmitPE) {
                     btnSubmitPE.disabled = true;
-                    btnSubmitPE.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Analyse en cours...`;
+                    btnSubmitPE.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Analyse...`;
                     btnSubmitPE.style.background = "#7f8c8d";
                 }
                 
                 const sBox = document.getElementById('sophia-box');
                 if (sBox) sBox.style.display = "block";
 
-                const scoreEl = document.getElementById('sophia-global-score');
-                if (scoreEl) scoreEl.innerText = "--/25";
-                const badgeEl = document.getElementById('sophia-global-badge');
-                if (badgeEl) badgeEl.innerText = "Calcul...";
-
                 const mirror = document.getElementById('sophia-text-mirror');
                 if (mirror) {
                     mirror.innerHTML = `<div style="text-align:center; padding:25px; color:#555;">
                         <i class="fas fa-robot fa-spin" style="font-size:2.5rem; color:var(--gold); margin-bottom:15px;"></i>
-                        <br><strong>Sophia examine votre production...</strong><br>Évaluation en cours. Veuillez patienter.
+                        <br><strong>Sophia examine votre production...</strong>
                     </div>`;
                 }
-
-                const detailsPanel = document.getElementById('sophia-feedback-details');
-                if (detailsPanel) detailsPanel.style.display = 'none';
 
                 const numeroUnidadMenuH = currentUnitId;
                 const numeroActividadMenuH = currentExerciseIndex + 1;
@@ -1874,42 +1931,47 @@
                     if (!respuestaRubrica.ok) throw new Error("Fichier de rubrique introuvable");
                     const criteriosDelineados = await respuestaRubrica.json();
 
-                    const estructuraJsonRequerida = {
-                        "score_global": "La note globale sur 25 (Ex: 15/25)",
-                        "status": "Admis / Non admis / Niveau Supra",
-                        "texto_html": "Le texte original complet de l'élève en enveloppant CHAQUE erreur dans des balises html: <span class='sophia-error' data-rubric='[realisation, coherence, adequation, lexique ou morphosyntaxe]'>mot_erroné</span>.",
-                        "rubriques": {
-                            "realisation": {"score": "Note sur 5", "error": "Analyse détaillée rédigée exclusivement en français", "supra": "Conseil technique rédigé exclusivement en français"},
-                            "coherence": {"score": "Note sur 5", "error": "Analyse détaillée rédigée exclusivement en français", "supra": "Conseil technique rédigé exclusivement en français"},
-                            "adequation": {"score": "Note sur 5", "error": "Analyse détaillée rédigée exclusivement en français", "supra": "Conseil technique rédigé exclusivement en français"},
-                            "lexique": {"score": "Note sur 5", "error": "Analyse détaillée rédigée exclusivement en français", "supra": "Conseil technique rédigé exclusivement en français"},
-                            "morphosyntaxe": {"score": "Note sur 5", "error": "Analyse détaillée rédigée exclusivement en français", "supra": "Conseil technique rédigé exclusivement en français"}
-                        }
-                    };
+                    // Mapear máximos y nombres de rubros en caliente
+                    const grille = criteriosDelineados.grille_evaluation_officielle || criteriosDelineados.rubriques || criteriosDelineados;
+                    let rubricasJsonEstructura = {};
+                    
+                    const isLevelA = currentLevel.startsWith('A');
+                    const idiomaFeedback = isLevelA ? "Español" : "Francés"; // Idioma Automático (Punto 7)
 
-                    const promptFinal = `Tu es Sophia, une examinatrice officielle et native du DELF/DALF (France Éducation International). 
-Évalue la production écrite de l'élève nommé(e) ${nombreAlumno}.
+                    Object.keys(grille).forEach(k => {
+                        window.currentRubricMaxes[k] = parseFloat(grille[k].note_maximale) || 5;
+                        window.currentRubricNames[k] = grille[k].nom_complet || k;
+                        rubricasJsonEstructura[k] = {
+                            "score": `Note numérique entre 0 et ${grille[k].note_maximale} (Ex: 2.5)`,
+                            "error": `Analyse détaillée des erreurs rédigée exclusivement en ${idiomaFeedback}`,
+                            "supra": `Conseils techniques pour s'améliorer rédigés exclusivement en ${idiomaFeedback}`
+                        };
+                    });
 
-CONSIGNE ET TEXTE SOURCE DE L'EXAMEN À RESPECTER STRICTEMENT :
-- Consigne de travail : "${consignaExamen}"
-- Document d'appui / Courriel reçu de base : "${documentoBaseExamen}"
+                    const promptFinal = `Tu es Sophia, examinatrice officielle FEI du DELF. Évalue la copie de ${nombreAlumno}.
+                    
+CONSIGNE DE L'EXAMEN: "${consignaExamen}"
+DOCUMENT D'APPUI: "${documentoBaseExamen}"
 
-GRILLE D'ÉVALUATION ET CRITÈRES OFFICIELS DU NIVEAU :
-${JSON.stringify(criteriosDelineados)}
+RÉFÉRENTIEL ATTENDU DU NIVEAU A RESPECTER ( Injection Directe ):
+${JSON.stringify(criteriosDelineados.referentiel_attendu || {})}
 
-TEXTE DE L'ÉLÈVE À ÉVALUER :
+CRITÈRES D'ÉVALUATION OFFICIELS AVEC POINTAGE RÉEL MAXIMAL:
+${JSON.stringify(grille)}
+
+PRODUCTION DE L'ÉLÈVE CONCERNÉE:
 ${JSON.stringify(txtAlumno)}
 
-CONSIGNES ABSOLUES DE RÉDACTION :
-1. Rédige TOUTES tes analyses, errores, critiques et conseils exclusivement en français (Aucun mot en espagnol).
-2. N'utilise JAMAIS de guillemets doubles (") dans tes explications, utilise uniquement des guillemets simples (') pour ne pas casser le format JSON.
-3. Ne mets pas de balises markdown de type \`\`\`json, commence directement par le crochet ouvrant.
-4. Retourne obligatoirement un objet JSON valide respectant strictement cette structure :
-${JSON.stringify(estructuraJsonRequerida)}`;
+CONSIGNES STRUCTURALES ABSOLUES:
+1. Rédige l'entièreté des rubriques 'error' et 'supra' exclusivement en ${idiomaFeedback}. Aucun mot en dehors de cette langue.
+2. Utilise uniquement des guillemets simples (') dans tes commentaires textuels internes.
+3. Ne mets pas de balises markdown. Retourne exclusivement la structure JSON demandée:
+{
+    "texto_html": "Texte original de l'élève en entourant CHAQUE erreur par: <span class='sophia-error' data-rubric='[Nom exact du rubro clave]'>mot_erroné</span>.",
+    "rubriques": ${JSON.stringify(rubricasJsonEstructura)}
+}`;
 
-                    const extDocRef = await addDoc(collection(db, "generate"), {
-                        prompt: promptFinal
-                    });
+                    const extDocRef = await addDoc(collection(db, "generate"), { prompt: promptFinal });
 
                     const desvincularEscucha = onSnapshot(extDocRef, async (snapshot) => {
                         try {
@@ -1937,7 +1999,7 @@ ${JSON.stringify(estructuraJsonRequerida)}`;
 
                                     await addDoc(historialRef, {
                                         fecha: ahora.toISOString().split('T')[0],
-                                        hora_registro: ahora.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit', second: '2-digit' }),
+                                        hora_registro: ahora.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' }),
                                         timestamp: ahora.getTime(),
                                         tipo: "Production_Escrita",
                                         habilidad: "PE",
@@ -1949,12 +2011,9 @@ ${JSON.stringify(estructuraJsonRequerida)}`;
                                     });                                    
                                     
                                     const llaveProgreso = `${currentUnitId}_${window.currentSkill}_${currentExerciseIndex}`;
-                                    if (typeof mapaAciertosAlumno !== "undefined") {
-                                        mapaAciertosAlumno[llaveProgreso] = true;
-                                    }
+                                    mapaAciertosAlumno[llaveProgreso] = true;
 
-                                    const perfilUsuarioRef = doc(db, "Usuarios", urlId);
-                                    await setDoc(perfilUsuarioRef, {
+                                    await setDoc(doc(db, "Usuarios", urlId), {
                                         [`mapa_aciertos.${llaveProgreso}`]: true
                                     }, { merge: true });
 
@@ -1962,32 +2021,11 @@ ${JSON.stringify(estructuraJsonRequerida)}`;
                                     window.inicializarBotonHistorialIntentos();
                                     await calcularTodasLasNotasHabilidades();
                                 }
-                            } else if (snapshot.exists() && snapshot.data().status?.state === "ERROR") {
-                                desvincularEscucha();
-                                if (btnSubmitPE) {
-                                    btnSubmitPE.disabled = false;
-                                    btnSubmitPE.innerHTML = `<i class="fas fa-paper-plane"></i> Soumettre la production`;
-                                    btnSubmitPE.style.background = "var(--oxford)";
-                                }
                             }
-                        } catch (errorInterno) {
-                            desvincularEscucha();
-                            if (btnSubmitPE) {
-                                btnSubmitPE.disabled = false;
-                                btnSubmitPE.innerHTML = `<i class="fas fa-paper-plane"></i> Soumettre la production`;
-                                btnSubmitPE.style.background = "var(--oxford)";
-                            }
-                            generarMenuJerarquico();
-                        }
+                        } catch (e) { desvincularEscucha(); }
                     });
 
-                } catch (err) {
-                    if (btnSubmitPE) {
-                        btnSubmitPE.disabled = false;
-                        btnSubmitPE.innerHTML = `<i class="fas fa-paper-plane"></i> Soumettre la production`;
-                        btnSubmitPE.style.background = "var(--oxford)";
-                    }
-                }
+                } catch (err) { }
                 return;
             }
                                             
@@ -1997,27 +2035,143 @@ ${JSON.stringify(estructuraJsonRequerida)}`;
                     elInputRedaccion.value = "";
                     elInputRedaccion.disabled = false;
                     elInputRedaccion.style.background = "#fff";
-                    elInputRedaccion.placeholder = "Rédigez votre texte ici...";
                 }
-                const sophiaBox = document.getElementById('sophia-box');
-                if (sophiaBox) sophiaBox.style.display = "none";
-                const historialContenedor = document.getElementById('historial-intentos-container');
-                if (historialContenedor) {
-                    historialContenedor.innerHTML = "";
-                    historialContenedor.style.display = "none";
-                }
+                document.getElementById('sophia-box').style.display = "none";
                 if (peTimerInterval) clearInterval(peTimerInterval);
                 return;
             }
 
+            // ==========================================
+            // SUBMIT PRODUCTION ORALE (PO)
+            // ==========================================
+            if (e.target && (e.target.id === 'btn-submit-po' || e.target.closest('#btn-submit-po'))) {
+                const txtArea = document.getElementById('po-student-response');
+                const transcripcionAlumno = txtArea ? txtArea.value.trim() : "";
+                if (!transcripcionAlumno) return;
+
+                const btnSubmitPO = document.getElementById('btn-submit-po');
+                if (btnSubmitPO) {
+                    btnSubmitPO.disabled = true;
+                    btnSubmitPO.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Analyse...`;
+                    btnSubmitPO.style.background = "#7f8c8d";
+                }
+                
+                document.getElementById('sophia-box').style.display = "block";
+                const mirror = document.getElementById('sophia-text-mirror');
+                if (mirror) {
+                    mirror.innerHTML = `<div style="text-align:center; padding:25px; color:#555;">
+                        <i class="fas fa-robot fa-spin" style="font-size:2.5rem; color:var(--gold); margin-bottom:15px;"></i>
+                        <br><strong>Sophia analyse votre production orale...</strong>
+                    </div>`;
+                }
+
+                try {
+                    const saludoH3 = document.getElementById('student-welcome')?.innerText || "";
+                    const nombreAlumno = saludoH3.replace("Élève:", "").trim() || "l'élève";
+                    
+                    const ejerciciosPO = unidadesCache[currentUnitId]?.PO || unidadesCache[currentUnitId]?.po || [];
+                    const ejActivoPO = ejerciciosPO[currentExerciseIndex];
+                    const consignaExamenPO = ejActivoPO?.instruccion || "";
+                    const documentoBasePO = ejActivoPO?.texto_lectura || "";
+
+                    const respuestaRubrica = await fetch(`rubricas/${currentLevel}_PO.json`);
+                    if (!respuestaRubrica.ok) throw new Error("Fichier de rubrique orale introuvable");
+                    const criteriosDelineados = await respuestaRubrica.json();
+
+                    const grille = criteriosDelineados.grille_evaluation_officielle || criteriosDelineados.rubriques || criteriosDelineados;
+                    let rubricasJsonEstructura = {};
+                    
+                    const isLevelA = currentLevel.startsWith('A');
+                    const idiomaFeedback = isLevelA ? "Español" : "Francés";
+
+                    Object.keys(grille).forEach(k => {
+                        window.currentRubricMaxes[k] = parseFloat(grille[k].note_maximale) || 5;
+                        window.currentRubricNames[k] = grille[k].nom_complet || k;
+                        rubricasJsonEstructura[k] = {
+                            "score": `Note entre 0 et ${grille[k].note_maximale}`,
+                            "error": `Analyse détaillée rédigée exclusivement en ${idiomaFeedback}`,
+                            "supra": `Conseils rédigés exclusivement en ${idiomaFeedback}`
+                        };
+                    });
+
+                    const promptFinal = `Tu es Sophia, examinatrice native FEI du DELF. Évalue la production orale spontanée de ${nombreAlumno}.
+                    
+CONSIGNE ORALE: "${consignaExamenPO}"
+DOCUMENT SUPPORT: "${documentoBasePO}"
+
+RÉFÉRENTIEL ATTENDU DU NIVEAU A RESPECTER COMPLET:
+${JSON.stringify(criteriosDelineados.referentiel_attendu || {})}
+
+CRITÈRES D'ÉVALUATION ORAUX DYNAMIQUES DU NIVEAU:
+${JSON.stringify(grille)}
+
+TRANSCRIPTION AUDIO DE L'ÉLÈVE:
+${JSON.stringify(transcripcionAlumno)}
+
+CONSIGNES STRUCTURALES ABSOLUES:
+1. Rédige l'entièreté des rubriques 'error' et 'supra' exclusivement en ${idiomaFeedback}.
+2. Utilise uniquement des guillemets simples (').
+3. Renvoie un format JSON strict sans blocs markdown:
+{
+    "transcription_html": "Transcription révisée avec balises: <span class='sophia-error' data-rubric='[Clave del rubro exacto]'>faute</span>.",
+    "audio_response_text": "Commentaire oral de synthèse en français pour lecture audio.",
+    "rubriques": ${JSON.stringify(rubricasJsonEstructura)}
+}`;
+
+                    const extDocRef = await addDoc(collection(db, "generate"), { prompt: promptFinal });
+
+                    const desvincularEscuchaOral = onSnapshot(extDocRef, async (snapshot) => {
+                        if (snapshot.exists() && snapshot.data().response) {
+                            desvincularEscuchaOral();
+                            const respuestaIA = snapshot.data().response;
+                            window.mostrarEvaluacionSophia(respuestaIA);
+
+                            if (btnSubmitPO) {
+                                btnSubmitPO.disabled = false;
+                                btnSubmitPO.innerHTML = `<i class="fas fa-paper-plane"></i> Évaluer ma production orale`;
+                                btnSubmitPO.style.background = "var(--oxford)";
+                            }
+
+                            const llaveProgreso = `${currentUnitId}_${window.currentSkill}_${currentExerciseIndex}`;
+                            mapaAciertosAlumno[llaveProgreso] = true;
+
+                            if (urlId !== "admin_preview" && docRefValidado) {
+                                await setDoc(doc(db, "Usuarios", urlId), { [`mapa_aciertos.${llaveProgreso}`]: true }, { merge: true });
+
+                                const historialRef = collection(db, "Usuarios", urlId, "HistorialSophia");
+                                const qIntentos = query(historialRef, where("unidad", "==", currentUnitId), where("actividad", "==", currentExerciseIndex + 1), where("habilidad", "==", "PO"));
+                                const snapshotIntentos = await getDocs(qIntentos);
+                                const numeroDeIntento = snapshotIntentos.size + 1;
+                                
+                                await addDoc(historialRef, {
+                                    fecha: new Date().toISOString().split('T')[0],
+                                    hora_registro: new Date().toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' }),
+                                    timestamp: new Date().getTime(),
+                                    tipo: "Production_Orale",
+                                    habilidad: "PO",
+                                    texto_alumno: transcripcionAlumno,
+                                    respuesta_ia: respuestaIA,
+                                    unidad: currentUnitId,
+                                    actividad: currentExerciseIndex + 1,
+                                    intento: numeroDeIntento
+                                });
+                            }
+                            await calcularTodasLasNotasHabilidades();
+                        }
+                    });
+                } catch (err) { }
+                return;
+            }
+
+            // ==========================================
+            // ACCIONES DE COMPRENSIÓN (CO/CE)
+            // ==========================================
             if (e.target && (e.target.id === 'btn-submit-exercise' || e.target.closest('#btn-submit-exercise'))) {
                 const ejercicios = unidadesCache[currentUnitId]?.[currentSkill] || unidadesCache[currentUnitId]?.[currentSkill.toLowerCase()] || [];
                 const ej = ejercicios[currentExerciseIndex];
                 if (!ej || !ej.preguntas) return;
 
                 let aciertosN = 0;
-                let totalPreguntas = ej.preguntas.length;
-
                 ej.preguntas.forEach((p, pIdx) => {
                     const sel = document.querySelector(`input[name="question_${pIdx}"]:checked`);
                     const icon = document.getElementById(`status-icon-target-${pIdx}`);
@@ -2034,11 +2188,9 @@ ${JSON.stringify(estructuraJsonRequerida)}`;
                     if (iBox) iBox.innerHTML = window.convertirTextoInteractivo(ej.transcripcion);
                     window.inicializarLectorVozGratuito(ej.transcripcion);
                 }
-                const sBox = document.getElementById('sophia-box');
-                if (sBox) sBox.style.display = "block";
+                document.getElementById('sophia-box').style.display = "block";
 
                 const claveUnica = `${currentUnitId}_${currentSkill}_${currentExerciseIndex}`;
-                mapaAciertosAlumno = mapaAciertosAlumno || {};
                 mapaAciertosAlumno[claveUnica] = true; 
 
                 let totalActividadesNivel = 0;
@@ -2047,32 +2199,21 @@ ${JSON.stringify(estructuraJsonRequerida)}`;
                     const arr = unidadesCache[uKey][currentSkill] || unidadesCache[uKey][currentSkill.toLowerCase()] || [];
                     arr.forEach((_, indices) => {
                         totalActividadesNivel++;
-                        if (mapaAciertosAlumno[`${uKey}_${currentSkill}_${indices}`] === true) {
-                            completadasNivel++;
-                        }
+                        if (mapaAciertosAlumno[`${uKey}_${currentSkill}_${indices}`] === true) completadasNivel++;
                     });
                 });
 
                 const finalProgresoCalculado = Math.round((completadasNivel / totalActividadesNivel) * 100);
 
                 if (urlId !== "admin_preview" && docRefValidado) {
-                    try {
-                        await setDoc(docRefValidado, {
-                            mapa_aciertos: mapaAciertosAlumno,
-                            progreso: finalProgresoCalculado
-                        }, { merge: true });
-                    } catch (err) {}
+                    await setDoc(docRefValidado, { mapa_aciertos: mapaAciertosAlumno, progreso: finalProgresoCalculado }, { merge: true });
                 }
 
-                const prText = document.getElementById('progress-text-target');
-                if (prText) prText.innerText = `${finalProgresoCalculado}%`;
-                const prBar = document.getElementById('progress-bar-fill');
-                if (prBar) prBar.style.width = `${finalProgresoCalculado}%`;
+                document.getElementById('progress-text-target').innerText = `${finalProgresoCalculado}%`;
+                document.getElementById('progress-bar-fill').style.width = `${finalProgresoCalculado}%`;
 
-                const btnSub = document.getElementById('btn-submit-exercise');
-                if (btnSub) btnSub.style.display = "none";
-                const btnAv = document.getElementById('btn-avanzar-siguiente');
-                if (btnAv) btnAv.style.display = "inline-flex";
+                document.getElementById('btn-submit-exercise').style.display = "none";
+                document.getElementById('btn-avanzar-siguiente').style.display = "inline-flex";
                 generarMenuJerarquico(); 
                 return;
             }
@@ -2097,26 +2238,17 @@ ${JSON.stringify(estructuraJsonRequerida)}`;
                     poRecognitionInstance.onresult = (event) => {
                         let interimTranscript = '';
                         for (let i = event.resultIndex; i < event.results.length; ++i) {
-                            if (event.results[i].isFinal) {
-                                poBuzonDeTextoAcumulado += event.results[i][0].transcript + ' ';
-                            } else {
-                                interimTranscript += event.results[i][0].transcript;
-                            }
+                            if (event.results[i].isFinal) poBuzonDeTextoAcumulado += event.results[i][0].transcript + ' ';
+                            else interimTranscript += event.results[i][0].transcript;
                         }
                         if (txtArea) txtArea.value = (poBuzonDeTextoAcumulado + interimTranscript).trim();
                     };
 
                     poRecognitionInstance.onend = () => {
-                        if (poRecordingActiveState) {
-                            poRecognitionInstance.start(); 
-                        } else {
-                            if (btn) {
-                                btn.innerHTML = `<i class="fas fa-microphone"></i> Commencer à parler`;
-                                btn.style.background = "#0288d1";
-                            }
-                            if (feedback) {
-                                feedback.innerHTML = `<i class="fas fa-check-circle" style="color:var(--green)"></i> Enregistrement terminé.`;
-                            }
+                        if (poRecordingActiveState) poRecognitionInstance.start(); 
+                        else {
+                            if (btn) { btn.innerHTML = `<i class="fas fa-microphone"></i> Commencer à parler`; btn.style.background = "#0288d1"; }
+                            if (feedback) feedback.innerHTML = `<i class="fas fa-check-circle" style="color:var(--green)"></i> Terminé.`;
                         }
                     };
                 }
@@ -2124,13 +2256,8 @@ ${JSON.stringify(estructuraJsonRequerida)}`;
                 if (!poRecordingActiveState) {
                     poRecordingActiveState = true;
                     poBuzonDeTextoAcumulado = txtArea ? txtArea.value + ' ' : '';
-                    if (btn) {
-                        btn.innerHTML = `<i class="fas fa-stop"></i> Terminer & Transcrire`;
-                        btn.style.background = "#d32f2f";
-                    }
-                    if (feedback) {
-                        feedback.innerHTML = `<i class="fas fa-spinner fa-spin" style="color:#d32f2f"></i> Écoute active... Parlez librement.`;
-                    }
+                    if (btn) { btn.innerHTML = `<i class="fas fa-stop"></i> Terminer & Transcrire`; btn.style.background = "#d32f2f"; }
+                    if (feedback) feedback.innerHTML = `<i class="fas fa-spinner fa-spin" style="color:#d32f2f"></i> Écoute active...`;
                     poRecognitionInstance.start();
                 } else {
                     poRecordingActiveState = false;
@@ -2140,204 +2267,18 @@ ${JSON.stringify(estructuraJsonRequerida)}`;
             }
 
             if (e.target && e.target.id === 'btn-reset-po') {
-                const txtArea = document.getElementById('po-student-response');
-                if (txtArea) txtArea.value = "";
+                document.getElementById('po-student-response').value = "";
                 poBuzonDeTextoAcumulado = "";
-                
-                const feedback = document.getElementById('po-audio-feedback');
-                if (feedback) feedback.innerHTML = `<i class="fas fa-info-circle"></i> Cliquez sur le bouton para démarrer l'exercice.`;
-                
-                const sBox = document.getElementById('sophia-box');
-                if (sBox) sBox.style.display = "none";
-                
+                document.getElementById('po-audio-feedback').innerHTML = `<i class="fas fa-info-circle"></i> Cliquez pour démarrer.`;
+                document.getElementById('sophia-box').style.display = "none";
                 if ('speechSynthesis' in window) window.speechSynthesis.cancel();
                 return;
             }
-
-            if (e.target && (e.target.id === 'btn-submit-po' || e.target.closest('#btn-submit-po'))) {
-                const txtArea = document.getElementById('po-student-response');
-                const transcripcionAlumno = txtArea ? txtArea.value.trim() : "";
-                if (!transcripcionAlumno) return;
-
-                const btnSubmitPO = document.getElementById('btn-submit-po');
-                if (btnSubmitPO) {
-                    btnSubmitPO.disabled = true;
-                    btnSubmitPO.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Évaluation en cours...`;
-                    btnSubmitPO.style.background = "#7f8c8d";
-                }
-                
-                const sBox = document.getElementById('sophia-box');
-                if (sBox) sBox.style.display = "block";
-
-                const scoreEl = document.getElementById('sophia-global-score');
-                if (scoreEl) scoreEl.innerText = "--/25";
-                const badgeEl = document.getElementById('sophia-global-badge');
-                if (badgeEl) badgeEl.innerText = "Calcul...";
-
-                const mirror = document.getElementById('sophia-text-mirror');
-                if (mirror) {
-                    mirror.innerHTML = `<div style="text-align:center; padding:25px; color:#555;">
-                        <i class="fas fa-robot fa-spin" style="font-size:2.5rem; color:var(--gold); margin-bottom:15px;"></i>
-                        <br><strong>Sophia analyse votre production orale...</strong><br>Analyse en cours. Veuillez patienter.
-                    </div>`;
-                }
-
-                const detailsPanel = document.getElementById('sophia-feedback-details');
-                if (detailsPanel) detailsPanel.style.display = 'none';
-
-                try {
-                    const saludoH3 = document.getElementById('student-welcome')?.innerText || "";
-                    const nombreAlumno = saludoH3.replace("Élève:", "").trim() || "l'élève";
-                    
-                    const ejerciciosPO = unidadesCache[currentUnitId]?.PO || unidadesCache[currentUnitId]?.po || [];
-                    const ejActivoPO = ejerciciosPO[currentExerciseIndex];
-                    const consignaExamenPO = ejActivoPO?.instruccion || "";
-                    const documentoBasePO = ejActivoPO?.texto_lectura || "";
-                    const preguntasExamenPO = ejActivoPO?.preguntas ? JSON.stringify(ejActivoPO.preguntas) : "";
-
-                    const respuestaRubrica = await fetch(`rubricas/${currentLevel}_PO.json`);
-                    if (!respuestaRubrica.ok) throw new Error("Fichier de rubrique orale introuvable");
-                    const criteriosDelineados = await respuestaRubrica.json();
-
-                    const estructuraJsonEsperada = {
-                        "score_global": "La note globale sur 25 (Ex: 18/25)",
-                        "status": "Admis / Non admis / Niveau Supra",
-                        "transcription_html": "La transcription avec les erreurs entourées par: <span class='sophia-error' data-rubric='[production_orale_task, lexique, morphosyntaxe ou phonologique]'>erreur</span>",
-                        "audio_response_text": "Court commentaire oral en français (max 2 phrases) pour la synthèse vocale.",
-                        "rubriques": {
-                            "production_orale_task": {"score": "Note accordée", "error": "Analyse détaillée rédigée exclusivement en français", "supra": "Conseil technique rédigé exclusivement en français"},
-                            "lexique": {"score": "Note accordée", "error": "Analyse détaillée rédigée exclusivement en français", "supra": "Conseil technique rédigé exclusivement en français"},
-                            "morphosyntaxe": {"score": "Note accordée", "error": "Analyse détaillée rédigée exclusivement en français", "supra": "Conseil technique rédigé exclusivement en français"},
-                            "phonologique": {"score": "Note accordée", "error": "Analyse détaillée rédigée exclusivement en français", "supra": "Conseil technique rédigé exclusivement en français"}
-                        }
-                    };
-
-                    const promptFinal = `Tu es Sophia, une examinatrice officielle et native du DELF/DALF (France Éducation International).
-Évalue l'examen oral de l'élève nommé(e) ${nombreAlumno}.
-
-CONTEXTE DE L'ÉVALUATION ORALE :
-- Consigne de l'exercice : "${consignaExamenPO}"
-- Document / Cartes de support : "${documentoBasePO}"
-- Questions de l'examinateur : ${preguntasExamenPO}
-
-GRILLE D'ÉVALUATION OFFICIELLE DU NIVEAU :
-${JSON.stringify(criteriosDelineados)}
-
-TRANSCRIPTION DE LA PRODUCTION DE L'ÉLÈVE :
-${JSON.stringify(transcripcionAlumno)}
-
-CONSIGNES ABSOLUES DE RÉDACTION :
-1. Rédige TOUTES tes analyses, rubriques, commentaires et conseils exclusivement en français (Aucun mot en espagnol).
-2. N'utilise JAMAIS de guillemets doubles (") dans tes explications, utilise uniquement des guillemets simples (') pour ne pas casser le format JSON.
-3. Ne mets pas de balises markdown de type \`\`\`json, commence directement par le crochet ouvrant.
-4. Retourne obligatoirement un objet JSON valide respectant strictement cette structure :
-${JSON.stringify(estructuraJsonEsperada)}`;
-
-                    const extDocRef = await addDoc(collection(db, "generate"), {
-                        prompt: promptFinal
-                    });
-
-                    const desvincularEscuchaOral = onSnapshot(extDocRef, async (snapshot) => {
-                        if (snapshot.exists() && snapshot.data().response) {
-                            desvincularEscuchaOral();
-                            const respuestaIA = snapshot.data().response;
-                            window.mostrarEvaluacionOralSophia(respuestaIA);
-
-                            if (btnSubmitPO) {
-                                btnSubmitPO.disabled = false;
-                                btnSubmitPO.innerHTML = `<i class="fas fa-paper-plane"></i> Évaluer ma production orale`;
-                                btnSubmitPO.style.background = "var(--oxford)";
-                            }
-
-                            const llaveProgreso = `${currentUnitId}_${window.currentSkill}_${currentExerciseIndex}`;
-                            if (typeof mapaAciertosAlumno !== "undefined") {
-                                mapaAciertosAlumno[llaveProgreso] = true;
-                            }
-
-                            if (urlId !== "admin_preview" && docRefValidado) {
-                                const perfilUsuarioRef = doc(db, "Usuarios", urlId);
-                                await setDoc(perfilUsuarioRef, {
-                                    [`mapa_aciertos.${llaveProgreso}`]: true
-                                }, { merge: true });
-
-                                const historialRef = collection(db, "Usuarios", urlId, "HistorialSophia");
-                                const qIntentos = query(historialRef, 
-                                    where("unidad", "==", currentUnitId), 
-                                    where("actividad", "==", currentExerciseIndex + 1),
-                                    where("habilidad", "==", "PO")
-                                );
-                                const snapshotIntentos = await getDocs(qIntentos);
-                                const numeroDeIntento = snapshotIntentos.size + 1;
-                                const ahora = new Date();
-
-                                await addDoc(historialRef, {
-                                    fecha: ahora.toISOString().split('T')[0],
-                                    hora_registro: ahora.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit', second: '2-digit' }),
-                                    timestamp: ahora.getTime(),
-                                    tipo: "Production_Orale",
-                                    habilidad: "PO",
-                                    texto_alumno: transcripcionAlumno,
-                                    respuesta_ia: respuestaIA,
-                                    unidad: currentUnitId,
-                                    actividad: currentExerciseIndex + 1,
-                                    intento: numeroDeIntento
-                                });
-                            }
-                            await calcularTodasLasNotasHabilidades();
-                        } else if (snapshot.exists() && snapshot.data().status?.state === "ERROR") {
-                            desvincularEscuchaOral();
-                            if (btnSubmitPO) {
-                                btnSubmitPO.disabled = false;
-                                btnSubmitPO.innerHTML = `<i class="fas fa-paper-plane"></i> Évaluer ma production orale`;
-                                btnSubmitPO.style.background = "var(--oxford)";
-                            }
-                        }
-                    });
-                } catch (err) {
-                    if (btnSubmitPO) {
-                        btnSubmitPO.disabled = false;
-                        btnSubmitPO.innerHTML = `<i class="fas fa-paper-plane"></i> Évaluer ma production orale`;
-                        btnSubmitPO.style.background = "var(--oxford)";
-                    }
-                }
-                return;
-            }
         });
-
-        window.mostrarEvaluacionOralSophia = function(jsonRaw) {
-            const data = window.parseSophiaJSON(jsonRaw);
-            
-            const scoreEl = document.getElementById('sophia-global-score');
-            if (scoreEl) scoreEl.innerText = data.score_global || '--/25';
-            
-            const badge = document.getElementById('sophia-global-badge');
-            if (badge) {
-                badge.innerText = data.status || '--';
-                if (data.status.includes('En dessous')) badge.style.background = '#d93025';
-                else if (data.status.includes('Supra') || data.status.includes('+')) badge.style.background = '#137333';
-                else badge.style.background = '#1a73e8';
-            }
-            
-            window.renderBotonesRubrosOral(window.currentLevel || "B1");
-            
-            const container = document.getElementById('sophia-verdict-text');
-            if (container) container.dataset.evaluation = JSON.stringify(data.rubriques || {});
-            
-            const mirror = document.getElementById('sophia-text-mirror');
-            if (mirror) mirror.innerHTML = data.transcription_html || data.texto_html || '';
-            
-            const detailsPanel = document.getElementById('sophia-feedback-details');
-            if (detailsPanel) detailsPanel.style.display = 'none';
-            
-            if (data.audio_response_text) {
-                window.sophiaHablarFeedback(data.audio_response_text);
-            }
-        };
         
         window.inicializarBotonHistorialIntentos = function() {
             const btnVerIntentos = document.getElementById('btn-ver-intentos');
             const contenedorHistorial = document.getElementById('historial-intentos-container');
-            
             if (!btnVerIntentos || !contenedorHistorial) return;
             btnVerIntentos.style.display = "inline-block";
             
@@ -2353,63 +2294,50 @@ ${JSON.stringify(estructuraJsonEsperada)}`;
                 btnVerIntentos.innerHTML = `<i class="fas fa-times"></i> Masquer l'historique`;
                 
                 try {
-                    const numeroUnidadHistorial = currentUnitId;
-                    const numeroActividadHistorial = currentExerciseIndex + 1;
-
                     const qHistorial = query(collection(db, "Usuarios", urlId, "HistorialSophia"),
-                        where("unidad", "==", numeroUnidadHistorial),
-                        where("actividad", "==", numeroActividadHistorial),
+                        where("unidad", "==", currentUnitId),
+                        where("actividad", "==", currentExerciseIndex + 1),
                         where("habilidad", "==", window.currentSkill)
                     );
                     const snap = await getDocs(qHistorial);
                     
                     if (snap.empty) {
-                        contenedorHistorial.innerHTML = "<p style='font-size:0.85rem; color:#666;'>Aucun essai précédent trouvé.</p>";
+                        contenedorHistorial.innerHTML = "<p style='font-size:0.85rem; color:#666;'>Aucun essai trouvé.</p>";
                         return;
                     }
                     
-                    let historialHTML = `<h6 style="margin:0 0 12px 0; color:var(--oxford); font-size:0.9rem; border-bottom:2px solid var(--gold); padding-bottom:5px;"><i class="fas fa-chart-line"></i> Évolution de vos tentatives :</h6>`;
-                    const documentosOrdenados = snap.docs.map(d => {
-                        const data = d.data();
-                        return { ...data, timestampID: data.timestamp || 0 };
-                    }).sort((a, b) => b.timestampID - a.timestampID);
+                    let historialHTML = `<h6 style="margin:0 0 12px 0; color:var(--oxford); font-size:0.9rem; border-bottom:2px solid var(--gold); padding-bottom:5px;"><i class="fas fa-chart-line"></i> Tentatives précédentes:</h6>`;
+                    const documentosOrdenados = snap.docs.map(d => ({ ...d.data(), timestampID: d.data().timestamp || 0 })).sort((a, b) => b.timestampID - a.timestampID);
                     
                     documentosOrdenados.forEach((datosIntento) => {
-                        let respuestaLimpia = datosIntento.respuesta_ia || "Pas de correction disponible.";
+                        let respuestaLimpia = datosIntento.respuesta_ia || "Pas de correction.";
                         let marcaTiempo = datosIntento.hora_registro ? `${datosIntento.fecha} à ${datosIntento.hora_registro}` : datosIntento.fecha;
+                        let parsed = window.parseSophiaJSON(respuestaLimpia);
                         
-                        let renderRespuestaHistory = respuestaLimpia;
-                        if (respuestaLimpia.trim().startsWith('{') || respuestaLimpia.includes('score_global')) {
-                            const parsed = window.parseSophiaJSON(respuestaLimpia);
-                            renderRespuestaHistory = `
-                                <div style="background:#f8f9fa; padding:10px; border-radius:6px; border:1px solid #e2e8f0;">
-                                    <p style="margin:0 0 5px 0; color:var(--oxford); font-weight:700; font-size:0.85rem;">
-                                        <i class="fas fa-star"></i> <strong>Note :</strong> ${parsed.score_global || 'N/A'} | <strong>Résultat :</strong> ${parsed.status || 'N/A'}
-                                    </p>
-                                    <button type="button" class="load-retro-btn" data-json="${encodeURIComponent(JSON.stringify(parsed))}" style="margin-top:5px; background:var(--oxford); color:white; border:none; padding:5px 10px; border-radius:4px; cursor:pointer; font-family:'Montserrat'; font-size:0.75rem; font-weight:600;">
-                                        <i class="fas fa-eye"></i> Charger la correction interactive
-                                    </button>
-                                </div>`;
-                        }
+                        let renderRespuestaHistory = `
+                            <div style="background:#f8f9fa; padding:10px; border-radius:6px; border:1px solid #e2e8f0;">
+                                <p style="margin:0 0 5px 0; color:var(--oxford); font-weight:700; font-size:0.85rem;">
+                                    <i class="fas fa-star"></i> <strong>Note:</strong> ${parsed.score_global || 'N/A'} | <strong>Statut:</strong> ${parsed.status || 'N/A'}
+                                </p>
+                                <button type="button" class="load-retro-btn" data-json="${encodeURIComponent(respuestaLimpia)}" style="margin-top:5px; background:var(--oxford); color:white; border:none; padding:5px 10px; border-radius:4px; cursor:pointer; font-size:0.75rem; font-weight:600;">
+                                    <i class="fas fa-eye"></i> Charger la correction interactive
+                                </button>
+                            </div>`;
                         
                         historialHTML += `
-                        <div style="border-bottom: 1px dashed #ccc; padding: 15px 0; font-family:'Montserrat';">
+                        <div style="border-bottom: 1px dashed #ccc; padding: 15px 0;">
                             <p style="margin: 0 0 6px 0; color: var(--gold); font-weight: 700; font-size:0.9rem;">
-                                <i class="fas fa-clock"></i> Tentative — <span style="color:#111; font-weight:600;">${marcaTiempo}</span>
+                                <i class="fas fa-clock"></i> Tentative — <span>${marcaTiempo}</span>
                             </p>
-                            <p style="margin: 0 0 10px 0; background: #f8f9fa; padding: 10px; border-radius: 4px; color:#555; font-size:0.85rem; border-left:3px solid #ccc;">
-                                <strong>Votre production :</strong><br>${datosIntento.texto_alumno || ''}
+                            <p style="margin: 0 0 10px 0; background: #f8f9fa; padding: 10px; border-radius: 4px; color:#555; font-size:0.85rem;">
+                                <strong>Votre production:</strong><br>${datosIntento.texto_alumno || ''}
                             </p>
-                            <div style="font-size: 0.85rem; color: #333; line-height: 1.5; background:#fff; padding:5px; border-radius:4px;">
-                                ${renderRespuestaHistory}
-                            </div>
+                            ${renderRespuestaHistory}
                         </div>`;
                     });
                     
                     contenedorHistorial.innerHTML = historialHTML;
-                } catch (err) {
-                    contenedorHistorial.innerHTML = "<span style='color:red;'>Erreur lors du chargement.</span>";
-                }
+                } catch (err) { }
             };
         };
 
@@ -2437,7 +2365,7 @@ ${JSON.stringify(estructuraJsonEsperada)}`;
                 if (!modoGrabacionManualActivo) {
                     modoGrabacionManualActivo = true; buzonTexto = ""; 
                     document.querySelectorAll('.clickable-word').forEach(s => s.classList.remove('word-wrong'));
-                    if(feedback) { feedback.innerText = "Écoute active... Parlez librement."; feedback.style.color = "var(--green)"; }
+                    if(feedback) { feedback.innerText = "Écoute active..."; feedback.style.color = "var(--green)"; }
                     btnRecord.innerHTML = `<i class="fas fa-stop"></i> Terminer`; recognition.start();
                 } else { modoGrabacionManualActivo = false; recognition.stop(); }
             });
@@ -2461,31 +2389,13 @@ ${JSON.stringify(estructuraJsonEsperada)}`;
                 const voces = window.speechSynthesis.getVoices();
                 const vozFrancesa = voces.find(v => v.lang.startsWith('fr') && v.name.toLowerCase().includes('google')) || voces.find(v => v.lang.startsWith('fr'));
                 if (vozFrancesa) utterance.voice = vozFrancesa;
-                utterance.pitch = 1.0;
-                utterance.rate = 0.95; 
                 window.speechSynthesis.speak(utterance);
             }
         };
 
-        window.renderBotonesRubrosOral = function(nivel) {
-            const rubricsBar = document.getElementById('sophia-rubrics-bar');
-            if (!rubricsBar) return;
-
-            let etiquetaTarea = "Réalisation du monologue";
-            if (nivel.startsWith('A')) etiquetaTarea = "Entretien & Échange";
-            else if (nivel.startsWith('B1')) etiquetaTarea = "Expression du point de vue";
-            else if (nivel.startsWith('B2')) etiquetaTarea = "Défense & Débat (Interaction)";
-
-            rubricsBar.innerHTML = `
-                <button type="button" class="btn-rubric" data-rubric="production_orale_task">${etiquetaTarea}</button>
-                <button type="button" class="btn-rubric" data-rubric="lexique">Lexique (Étendue/Maîtrise)</button>
-                <button type="button" class="btn-rubric" data-rubric="morphosyntaxe">Morphosyntaxe</button>
-                <button type="button" class="btn-rubric" data-rubric="phonologique">Système phonologique</button>`;
-        };
-
         window.ejecutarConsultaSophiaConFiltro = async function(frase) {
             const container = document.getElementById("glosario-flotante-container"); if (!container) return;
-            container.innerHTML = `<div style="background:#fff; padding:15px; border-radius:8px; box-shadow:0 4px 15px rgba(0,0,0,0.15); font-family:'Montserrat';"><p style="margin:0; font-size:13px; color:#333;"><i class="fas fa-spinner fa-spin"></i> Sophia cherche...</p></div>`;
+            container.innerHTML = `<div style="background:#fff; padding:15px; border-radius:8px; box-shadow:0 4px 15px rgba(0,0,0,0.15);"><p style="margin:0; font-size:13px; color:#333;"><i class="fas fa-spinner fa-spin"></i> Sophia cherche...</p></div>`;
             container.style.display = "block";
 
             const palabraLimpia = frase.toLowerCase().trim();
@@ -2496,32 +2406,19 @@ ${JSON.stringify(estructuraJsonEsperada)}`;
 
                 if (diccionarioSnap.exists()) {
                     const datos = diccionarioSnap.data();
-                    const definicionFr = datos.definicion || "Pas de définition disponible.";
-                    const ejemploFr = datos.ejemplo_uso || "";
-                    const traduccionEs = datos.significado_espansol || "Sin traducción.";
-                    const tipo = datos.tipo_gramatical || "N/A";
-                    const listaSinonimos = datos.sinonimos ? datos.sinonimos.join(", ") : "Aucun";
-
                     container.innerHTML = `
-                    <div style="background:#fff; padding:18px; border-radius:8px; box-shadow:0 4px 15px rgba(0,0,0,0.15); max-height:380px; overflow-y:auto; font-family:'Montserrat';">
-                        <h4 style="margin:0 0 5px 0; color:var(--oxford); font-size:1.1rem; text-transform:capitalize;">${palabraLimpia} <span style="font-size:0.75rem; color:var(--gold); font-weight:600;">(${tipo})</span></h4>
-                        <p style="margin:0 0 10px 0; font-size:0.85rem; color:#28A745; font-weight:600;"><i class="fas fa-language"></i> ${traduccionEs}</p>
+                    <div style="background:#fff; padding:18px; border-radius:8px; box-shadow:0 4px 15px rgba(0,0,0,0.15); max-height:380px; overflow-y:auto;">
+                        <h4 style="margin:0 0 5px 0; color:var(--oxford); font-size:1.1rem; text-transform:capitalize;">${palabraLimpia} <span style="font-size:0.75rem; color:var(--gold); font-weight:600;">(${datos.tipo_gramatical || 'N/A'})</span></h4>
+                        <p style="margin:0 0 10px 0; font-size:0.85rem; color:#28A745; font-weight:600;"><i class="fas fa-language"></i> ${datos.significado_espansol || 'Sin traducción'}</p>
                         <hr style="border:0; border-top:1px solid #eee; margin:10px 0;">
-                        <p style="margin:0 0 8px 0; font-size:0.88rem; line-height:1.4; color:#333;"><strong>Définition:</strong> ${definicionFr}</p>
-                        ${ejemploFr ? `<p style="margin:0 0 8px 0; font-size:0.85rem; color:#555; background:#f9f9f9; padding:6px; border-radius:4px;"><i>Exemple: ${ejemploFr}</i></p>` : ''}
-                        <p style="margin:0; font-size:0.8rem; color:#777;"><strong>Synonymes:</strong> ${listaSinonimos}</p>
-                        <button onclick="document.getElementById('glosario-flotante-container').style.display='none'" style="margin-top:15px; width:100%; padding:8px; cursor:pointer; background:var(--oxford); color:white; border:none; border-radius:4px; font-weight:600;">Fermer</button>
+                        <p style="margin:0 0 8px 0; font-size:0.88rem; color:#333;"><strong>Définition:</strong> ${datos.definicion || ''}</p>
+                        <button onclick="document.getElementById('glosario-flotante-container').style.display='none'" style="margin-top:15px; width:100%; padding:8px; background:var(--oxford); color:white; border:none; border-radius:4px; font-weight:600; cursor:pointer;">Fermer</button>
                     </div>`;
                     return;
                 }
 
                 if (alumnoTokensGlobal <= 0) {
-                    container.innerHTML = `
-                    <div style="background:#fff; padding:15px; border-radius:8px; box-shadow:0 4px 15px rgba(0,0,0,0.15); text-align:center; font-family:'Montserrat';">
-                        <p style="margin:0 0 10px 0; font-size:0.88rem; color:var(--danger); font-weight:700;"><i class="fas fa-exclamation-circle"></i> Crédits épuisés</p>
-                        <p style="margin:0 0 12px 0; font-size:0.8rem; color:#555;">Vous n'avez plus de crédits pour consulter l'IA. Contactez votre professeur.</p>
-                        <button onclick="document.getElementById('glosario-flotante-container').style.display='none'" style="padding:6px 12px; cursor:pointer; background:#555; color:white; border:none; border-radius:4px;">Fermer</button>
-                    </div>`;
+                    container.innerHTML = `<div style="background:#fff; padding:15px; border-radius:8px; text-align:center;"><p style="color:var(--danger); font-weight:700;">Crédits épuisés</p><button onclick="document.getElementById('glosario-flotante-container').style.display='none'" style="padding:6px 12px; background:#555; color:white; border:none; border-radius:4px; cursor:pointer;">Fermer</button></div>`;
                     return;
                 }
 
@@ -2529,32 +2426,23 @@ ${JSON.stringify(estructuraJsonEsperada)}`;
                 const extDocRef = await addDoc(collection(db, "generate"), { prompt: promptContexto });
 
                 let desvincularEscucha = onSnapshot(extDocRef, async (snapshot) => {
-                    if (snapshot.exists()) {
-                        const datosExt = snapshot.data();
-                        if (datosExt.response) {
-                            desvincularEscucha();
-                            const respuestaTextoSophia = datosExt.response;
+                    if (snapshot.exists() && snapshot.data().response) {
+                        desvincularEscucha();
+                        const respuestaTextoSophia = snapshot.data().response;
 
-                            await setDoc(doc(db, "diccionario_maestro", palabraLimpia), {
-                                definicion: respuestaTextoSophia,
-                                tipo_gramatical: "IA",
-                                significado_espansol: "Generado por IA",
-                                ejemplo_uso: ""
-                            });
+                        await setDoc(doc(db, "diccionario_maestro", palabraLimpia), { definicion: respuestaTextoSophia, tipo_gramatical: "IA", significado_espansol: "Generado por IA", ejemplo_uso: "" });
+                        alumnoTokensGlobal--;
+                        await setDoc(docRefValidado, { tokens: alumnoTokensGlobal }, { merge: true });
 
-                            alumnoTokensGlobal--;
-                            await setDoc(docRefValidado, { tokens: alumnoTokensGlobal }, { merge: true });
+                        const tokenCounter = document.getElementById('banner-credits-count');
+                        if (tokenCounter) tokenCounter.innerText = alumnoTokensGlobal;
 
-                            const tokenCounter = document.getElementById('banner-credits-count');
-                            if (tokenCounter) tokenCounter.innerText = alumnoTokensGlobal;
-
-                            container.innerHTML = `
-                            <div style="background:#fff; padding:15px; border-radius:8px; box-shadow:0 4px 15px rgba(0,0,0,0.15); max-height:380px; overflow-y:auto; font-family:'Montserrat';">
-                                <h4 style="margin:0 0 10px 0; color:var(--oxford); font-size:1rem;">Analyse de Sophia:</h4>
-                                <div style="font-size:0.88rem; line-height:1.5; color:#333;">${respuestaTextoSophia}</div>
-                                <button onclick="document.getElementById('glosario-flotante-container').style.display='none'" style="margin-top:10px; width:100%; padding:6px; cursor:pointer; background:var(--oxford); color:white; border:none; border-radius:4px;">Fermer</button>
-                            </div>`;
-                        }
+                        container.innerHTML = `
+                        <div style="background:#fff; padding:15px; border-radius:8px; box-shadow:0 4px 15px rgba(0,0,0,0.15);">
+                            <h4 style="margin:0 0 10px 0; color:var(--oxford); font-size:1rem;">Analyse de Sophia:</h4>
+                            <div style="font-size:0.88rem; color:#333;">${respuestaTextoSophia}</div>
+                            <button onclick="document.getElementById('glosario-flotante-container').style.display='none'" style="margin-top:10px; width:100%; padding:6px; background:var(--oxford); color:white; border:none; border-radius:4px; cursor:pointer;">Fermer</button>
+                        </div>`;
                     }
                 });
             } catch (error) {}
