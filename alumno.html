@@ -314,12 +314,6 @@
             font-weight: bold;
         }
 
-        .word-wrong {
-            color: #d63031 !important;
-            text-decoration: line-through;
-            font-weight: 600;
-        }
-
         .btn-mic {
             background: #d63031;
             color: white;
@@ -601,11 +595,11 @@
             text-align: left !important;
             font-weight: 700;
             color: var(--oxford);
-            width: 40%;
+            width: 34%;
         }
-        .col-check { width: 20%; font-size: 1.1rem; }
+        .col-check { width: 17%; font-size: 1.1rem; }
         .col-score {
-            width: 20%;
+            width: 15%;
             font-weight: 700;
             background: #fafbfc;
             color: var(--oxford);
@@ -617,7 +611,7 @@
             border-bottom: 2px dashed #ffc107;
             padding: 1px 3px;
             border-radius: 3px;
-            transition: all 0.2s;
+            transition: all 0.3s ease;
         }
         /* Cuando seleccionas un rubro en la tabla, sus errores se vuelven rojos */
         .sophia-error.active-error {
@@ -625,6 +619,14 @@
             border-bottom: 2px solid #d93025;
             color: #a51d24;
             font-weight: 700;
+            opacity: 1;
+        }
+        /* Errores de otros rubros se vuelven opacos/suaves */
+        .sophia-error.inactive-error {
+            background-color: transparent;
+            border-bottom: 2px dotted #ccc;
+            color: #777;
+            opacity: 0.5;
         }
     </style>
 </head>
@@ -1604,7 +1606,7 @@
                             </div>
                             <div style="background:#e6f4ea; border-left:4px solid #137333; padding:12px; border-radius:4px;">
                                 <strong id="lbl-title-supra" style="color:#137333; display:block; margin-bottom:4px;"><i class="fas fa-arrow-alt-circle-up"></i> Objectif Supra :</strong>
-                                <div id="sophia-feedback-supra" style="font-size:0.9rem; color:#3c4043; line-height:1.4;"></div>
+                                <div id="sophia-feedback-supra" style="font-size:0.9rem; color:#3c4043; line-height:1.4; white-space: pre-wrap;"></div>
                             </div>
                         </div>
                     </div>
@@ -1743,7 +1745,7 @@
             }
 
             try {
-                let sanitized = cleanJson.replace(/[\r\n]+/g, " ").replace(/[\u0000-\u001F\u007F-\u009F]/g, "");
+                let sanitized = cleanJson.replace(/[\u0000-\u001F\u007F-\u009F]/g, ""); // Removemos replace de saltos para no romper viñetas
                 return JSON.parse(sanitized);
             } catch(e) {
                 const flat = cleanJson.replace(/[\r\n]+/g, " ");
@@ -1808,11 +1810,12 @@
 
             const rubricsBar = document.getElementById('sophia-rubrics-bar');
             
-            // Construcción de la Grilla Oficial (Tabla)
+            // Construcción de la Grilla Oficial (Tabla 4 columnas)
             let tableHTML = `<table class="delf-official-grid">
                 <thead>
                     <tr>
                         <th class="col-critere">Critère d'évaluation</th>
+                        <th class="col-check">Non répondu (0)</th>
                         <th class="col-check">En dessous du niveau</th>
                         <th class="col-check">Au niveau ciblé</th>
                         <th class="col-score">Note attribuée</th>
@@ -1837,16 +1840,18 @@
 
                     const nomBoton = window.currentRubricNames[key] || key;
                     
-                    // Lógica para marcar en qué nivel cayó el alumno
-                    let markEnDessous = porcentajeRubro < 0.5 ? '<i class="fas fa-times" style="color:#d93025;"></i>' : '';
-                    let markAuNiveau = porcentajeRubro >= 0.5 ? '<i class="fas fa-check" style="color:#137333;"></i>' : '';
+                    // Lógica estricta de cruces (X)
+                    let mark0 = s === 0 ? '<i class="fas fa-times" style="color:#001530; font-size:1.3rem;"></i>' : '';
+                    let markDessous = (s > 0 && porcentajeRubro < 0.5) ? '<i class="fas fa-times" style="color:#001530; font-size:1.3rem;"></i>' : '';
+                    let markAuNiveau = (porcentajeRubro >= 0.5) ? '<i class="fas fa-times" style="color:#001530; font-size:1.3rem;"></i>' : '';
 
                     tableHTML += `
                     <tr class="rubric-row-item" data-rubric="${key}">
                         <td class="col-critere">${nomBoton}</td>
-                        <td class="col-check" style="background:${porcentajeRubro < 0.5 ? '#fce8e6' : 'transparent'};">${markEnDessous}</td>
-                        <td class="col-check" style="background:${porcentajeRubro >= 0.5 ? '#e6f4ea' : 'transparent'};">${markAuNiveau}</td>
-                        <td class="col-score">${s} / ${m} pts</td>
+                        <td class="col-check">${mark0}</td>
+                        <td class="col-check" style="background:${markDessous ? '#fce8e6' : 'transparent'};">${markDessous}</td>
+                        <td class="col-check" style="background:${markAuNiveau ? '#e6f4ea' : 'transparent'};">${markAuNiveau}</td>
+                        <td class="col-score">${s} / ${m}</td>
                     </tr>`;
                 });
             }
@@ -1894,7 +1899,7 @@
                 window.sophiaHablarFeedback(data.audio_response_text);
             }
 
-            // Selecciona la primera fila de la tabla automáticamente
+            // Selecciona la primera fila de la tabla automáticamente para iluminar el primer rubro
             setTimeout(() => {
                 const primeraFila = document.querySelector('.rubric-row-item');
                 if (primeraFila) primeraFila.click();
@@ -1918,7 +1923,7 @@
                 return;
             }
 
-            // Evento para cuando el alumno da clic en una fila de la Grilla
+            // Evento para cuando el alumno da clic en una fila de la Grilla (Resaltado Inteligente)
             const rubricRow = e.target.closest('.rubric-row-item');
             if (rubricRow) {
                 const rubricKey = rubricRow.dataset.rubric;
@@ -1943,12 +1948,14 @@
                     if (supraBox) supraBox.innerHTML = rubricData.supra || 'Production adéquate.';
                 }
                 
-                // Manejo de colores de errores en el texto
+                // Manejo de colores de errores en el texto: Focus vs Faded
                 document.querySelectorAll('#sophia-text-mirror .sophia-error').forEach(span => {
                     if (span.dataset.rubric === rubricKey) {
-                        span.classList.add('active-error'); // Se pone rojo fuerte
+                        span.classList.add('active-error');
+                        span.classList.remove('inactive-error');
                     } else {
-                        span.classList.remove('active-error'); // Regresa al amarillo base
+                        span.classList.remove('active-error');
+                        span.classList.add('inactive-error');
                     }
                 });
                 return;
@@ -2014,9 +2021,9 @@
                         window.currentRubricMaxes[k] = parseFloat(grille[k].note_maximale) || 5;
                         window.currentRubricNames[k] = grille[k].nom_complet || k;
                         rubricasJsonEstructura[k] = {
-                            "score": `Note numérique entre 0 et ${grille[k].note_maximale} (Ex: 2.5)`,
-                            "error": `Analyse détaillée des erreurs rédigée exclusivement en ${idiomaFeedback}`,
-                            "supra": `Conseils techniques pour s'améliorer rédigés exclusivement en ${idiomaFeedback}`
+                            "score": `Note numérique entre 0 et ${grille[k].note_maximale}`,
+                            "error": `Analyse détaillée rédigée exclusivement en ${idiomaFeedback}`,
+                            "supra": `Donne des exemples concrets tirés du référentiel: liste exactement 3 connecteurs, 4 mots de vocabulaire thématique, ou les temps verbaux précis à utiliser pour ce critère. Rédigé en ${idiomaFeedback}`
                         };
                     });
 
@@ -2025,21 +2032,22 @@
 CONSIGNE DE L'EXAMEN: "${consignaExamen}"
 DOCUMENT D'APPUI: "${documentoBaseExamen}"
 
-RÉFÉRENTIEL ATTENDU DU NIVEAU A RESPECTER ( Injection Directe ):
+RÉFÉRENTIEL ATTENDU DU NIVEAU A RESPECTER (Injection Directe):
 ${JSON.stringify(criteriosDelineados.referentiel_attendu || {})}
 
-CRITÈRES D'ÉVALUATION OFFICIELS AVEC POINTAGE RÉEL MAXIMAL:
+CRITÈRES D'ÉVALUATION OFFICIELS:
 ${JSON.stringify(grille)}
 
-PRODUCTION DE L'ÉLÈVE CONCERNÉE:
+PRODUCTION DE L'ÉLÈVE:
 ${JSON.stringify(txtAlumno)}
 
 CONSIGNES STRUCTURALES ABSOLUES:
-1. Rédige l'entièreté des rubriques 'error' et 'supra' exclusivement en ${idiomaFeedback}. Aucun mot en dehors de cette langue.
-2. Utilise uniquement des guillemets simples (') dans tes commentaires textuels internes.
-3. Ne mets pas de balises markdown. Retourne exclusivement la structure JSON demandée:
+1. Rédige l'entièreté des rubriques 'error' et 'supra' exclusivement en ${idiomaFeedback}.
+2. Dans la rubrique 'supra', agis comme un tuteur très direct: utilise des listes à puces (-) pour donner le vocabulaire exact, les conjugaisons et les connecteurs logiques (ex: 'D'abord', 'Néanmoins') que l'élève aurait dû utiliser selon le référentiel de son niveau et le thème du texte.
+3. Utilise uniquement des guillemets simples (').
+4. Ne mets pas de balises markdown globales. Retourne exclusivement la structure JSON demandée:
 {
-    "texto_html": "Texte original de l'élève en entourant CHAQUE erreur par: <span class='sophia-error' data-rubric='[Nom exact du rubro clave]'>mot_erroné</span>.",
+    "texto_html": "Texte original de l'élève avec balises: <span class='sophia-error' data-rubric='[Clave del rubro exacto]'>mot_erroné</span>.",
     "rubriques": ${JSON.stringify(rubricasJsonEstructura)}
 }`;
 
@@ -2160,9 +2168,9 @@ CONSIGNES STRUCTURALES ABSOLUES:
                         window.currentRubricMaxes[k] = parseFloat(grille[k].note_maximale) || 5;
                         window.currentRubricNames[k] = grille[k].nom_complet || k;
                         rubricasJsonEstructura[k] = {
-                            "score": `Note entre 0 et ${grille[k].note_maximale}`,
+                            "score": `Note numérique entre 0 et ${grille[k].note_maximale}`,
                             "error": `Analyse détaillée rédigée exclusivement en ${idiomaFeedback}`,
-                            "supra": `Conseils rédigés exclusivement en ${idiomaFeedback}`
+                            "supra": `Donne des exemples concrets tirés du référentiel: liste exactement 3 connecteurs, 4 mots de vocabulaire thématique, ou les temps verbaux précis à utiliser pour ce critère. Rédigé en ${idiomaFeedback}`
                         };
                     });
 
@@ -2171,10 +2179,10 @@ CONSIGNES STRUCTURALES ABSOLUES:
 CONSIGNE ORALE: "${consignaExamenPO}"
 DOCUMENT SUPPORT: "${documentoBasePO}"
 
-RÉFÉRENTIEL ATTENDU DU NIVEAU A RESPECTER COMPLET:
+RÉFÉRENTIEL ATTENDU DU NIVEAU A RESPECTER (Injection Directe):
 ${JSON.stringify(criteriosDelineados.referentiel_attendu || {})}
 
-CRITÈRES D'ÉVALUATION ORAUX DYNAMIQUES DU NIVEAU:
+CRITÈRES D'ÉVALUATION ORAUX DYNAMIQUES:
 ${JSON.stringify(grille)}
 
 TRANSCRIPTION AUDIO DE L'ÉLÈVE:
@@ -2182,8 +2190,9 @@ ${JSON.stringify(transcripcionAlumno)}
 
 CONSIGNES STRUCTURALES ABSOLUES:
 1. Rédige l'entièreté des rubriques 'error' et 'supra' exclusivement en ${idiomaFeedback}.
-2. Utilise uniquement des guillemets simples (').
-3. Renvoie un format JSON strict sans blocs markdown:
+2. Dans la rubrique 'supra', agis comme un tuteur très direct: utilise des listes à puces (-) pour donner le vocabulaire exact, les conjugaisons et les connecteurs logiques (ex: 'D'abord', 'Néanmoins') que l'élève aurait dû utiliser selon le référentiel de son niveau et le thème de la situation.
+3. Utilise uniquement des guillemets simples (').
+4. Renvoie un format JSON strict sans blocs markdown globaux:
 {
     "transcription_html": "Transcription révisée avec balises: <span class='sophia-error' data-rubric='[Clave del rubro exacto]'>faute</span>.",
     "audio_response_text": "Commentaire oral de synthèse en français pour lecture audio.",
