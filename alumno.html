@@ -560,17 +560,71 @@
             border-radius: 3px;
             margin-left: 5px;
         }
-        .btn-rubric {
-            flex: 1; 
-            min-width: 140px; 
-            padding: 10px; 
-            border-radius: 6px; 
-            border: 1px solid #ccc; 
-            background: #fff; 
-            font-weight: 600; 
-            font-size: 0.85rem; 
-            cursor: pointer; 
+        
+        /* ==========================================
+           ESTILOS DE LA GRILLA OFICIAL Y ERRORES
+           ========================================== */
+        .delf-official-grid {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 15px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.85rem;
+            background: white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        .delf-official-grid th {
+            background: var(--oxford);
+            color: white;
+            padding: 10px;
+            border: 1px solid #001530;
+            text-align: center;
+        }
+        .delf-official-grid td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+            vertical-align: middle;
+        }
+        .delf-official-grid tr.rubric-row-item {
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .delf-official-grid tr.rubric-row-item:hover td {
+            background: #f1f3f5;
+        }
+        .delf-official-grid tr.active-rubric td {
+            background: #fff3e0;
+            border-color: #ffe0b2;
+        }
+        .col-critere {
+            text-align: left !important;
+            font-weight: 700;
+            color: var(--oxford);
+            width: 40%;
+        }
+        .col-check { width: 20%; font-size: 1.1rem; }
+        .col-score {
+            width: 20%;
+            font-weight: 700;
+            background: #fafbfc;
+            color: var(--oxford);
+        }
+        
+        /* Marca TODOS los errores por defecto en amarillo */
+        .sophia-error {
+            background-color: #fff3cd;
+            border-bottom: 2px dashed #ffc107;
+            padding: 1px 3px;
+            border-radius: 3px;
             transition: all 0.2s;
+        }
+        /* Cuando seleccionas un rubro en la tabla, sus errores se vuelven rojos */
+        .sophia-error.active-error {
+            background-color: #fce8e6;
+            border-bottom: 2px solid #d93025;
+            color: #a51d24;
+            font-weight: 700;
         }
     </style>
 </head>
@@ -1129,7 +1183,7 @@
             const isBasic = currentLevel.startsWith('A');
             const descCO = isBasic ? "Comprendre des expressions fréquentes. / Comprender expresiones." : "Peut comprendre les points principaux d'une intervention claire (école, travail).";
             const descCE = isBasic ? "Lire des textes courts. / Leer textos cortos." : "Peut comprendre des textes rédigés essentiellement dans une langue courante.";
-            const descPE = isBasic ? "Écrire des messages simples. / Escribir mensajes." : "Peut écrire un texte suivi simple et articulé sur des sujets familiers.";
+            const descPE = isBasic ? "Écrire des messages simples. / Escribir messages." : "Peut écrire un texte suivi simple et articulé sur des sujets familiers.";
             const descPO = isBasic ? "S'exprimer en situation simple. / Expresarse en situaciones cotidianas." : "Peut s'exprimer de manière cohérente sur des expériences ou projets.";
 
             const iconCheckCO = notesHabilidadGlobales.CO > 0 ? 'fas fa-check-circle' : 'far fa-circle';
@@ -1692,7 +1746,6 @@
                 let sanitized = cleanJson.replace(/[\r\n]+/g, " ").replace(/[\u0000-\u001F\u007F-\u009F]/g, "");
                 return JSON.parse(sanitized);
             } catch(e) {
-                console.warn("Fallo de JSON nativo. Ejecutando parseador RegExp dinámico.");
                 const flat = cleanJson.replace(/[\r\n]+/g, " ");
                 
                 const extractField = (field) => {
@@ -1754,7 +1807,18 @@
             let totalRubricasContadas = 0;
 
             const rubricsBar = document.getElementById('sophia-rubrics-bar');
-            if (rubricsBar) rubricsBar.innerHTML = "";
+            
+            // Construcción de la Grilla Oficial (Tabla)
+            let tableHTML = `<table class="delf-official-grid">
+                <thead>
+                    <tr>
+                        <th class="col-critere">Critère d'évaluation</th>
+                        <th class="col-check">En dessous du niveau</th>
+                        <th class="col-check">Au niveau ciblé</th>
+                        <th class="col-score">Note attribuée</th>
+                    </tr>
+                </thead>
+                <tbody>`;
 
             if (data.rubriques && Object.keys(data.rubriques).length > 0) {
                 Object.keys(data.rubriques).forEach(key => {
@@ -1766,25 +1830,38 @@
                     scoreMaximoTotal += m;
                     totalRubricasContadas++;
 
-                    if (rData.error && (rData.error.toLowerCase().includes('en dessous') || s <= (m * 0.4))) {
+                    let porcentajeRubro = (s / m);
+                    if (rData.error && (rData.error.toLowerCase().includes('en dessous') || porcentajeRubro < 0.5)) {
                         totalEndessous++;
                     }
 
-                    if (rubricsBar) {
-                        const nomBoton = window.currentRubricNames[key] || key;
-                        rubricsBar.innerHTML += `<button type="button" class="btn-rubric" data-rubric="${key}">${nomBoton} • ${s}/${m} pts</button>`;
-                    }
+                    const nomBoton = window.currentRubricNames[key] || key;
+                    
+                    // Lógica para marcar en qué nivel cayó el alumno
+                    let markEnDessous = porcentajeRubro < 0.5 ? '<i class="fas fa-times" style="color:#d93025;"></i>' : '';
+                    let markAuNiveau = porcentajeRubro >= 0.5 ? '<i class="fas fa-check" style="color:#137333;"></i>' : '';
+
+                    tableHTML += `
+                    <tr class="rubric-row-item" data-rubric="${key}">
+                        <td class="col-critere">${nomBoton}</td>
+                        <td class="col-check" style="background:${porcentajeRubro < 0.5 ? '#fce8e6' : 'transparent'};">${markEnDessous}</td>
+                        <td class="col-check" style="background:${porcentajeRubro >= 0.5 ? '#e6f4ea' : 'transparent'};">${markAuNiveau}</td>
+                        <td class="col-score">${s} / ${m} pts</td>
+                    </tr>`;
                 });
             }
+            
+            tableHTML += `</tbody></table>`;
+            if (rubricsBar) rubricsBar.innerHTML = tableHTML;
 
-            let porcentaje = scoreMaximoTotal > 0 ? (scoreObtenido / scoreMaximoTotal) * 100 : 0;
+            let porcentajeGlobal = scoreMaximoTotal > 0 ? (scoreObtenido / scoreMaximoTotal) * 100 : 0;
             let statusCalculado = "Non admis";
             
             if (totalEndessous === totalRubricasContadas && totalRubricasContadas > 0) {
                 statusCalculado = "Non admis"; 
-            } else if (porcentaje >= 60) {
+            } else if (porcentajeGlobal >= 60) {
                 statusCalculado = "Réussi";
-            } else if (porcentaje >= 50) {
+            } else if (porcentajeGlobal >= 50) {
                 statusCalculado = "Admis";
             }
 
@@ -1817,9 +1894,10 @@
                 window.sophiaHablarFeedback(data.audio_response_text);
             }
 
+            // Selecciona la primera fila de la tabla automáticamente
             setTimeout(() => {
-                const primerBoton = document.querySelector('.btn-rubric');
-                if (primerBoton) primerBoton.click();
+                const primeraFila = document.querySelector('.rubric-row-item');
+                if (primeraFila) primeraFila.click();
             }, 120);
         };                       
 
@@ -1840,23 +1918,19 @@
                 return;
             }
 
-            const rubricBtn = e.target.closest('.btn-rubric');
-            if (rubricBtn) {
-                const rubricKey = rubricBtn.dataset.rubric;
+            // Evento para cuando el alumno da clic en una fila de la Grilla
+            const rubricRow = e.target.closest('.rubric-row-item');
+            if (rubricRow) {
+                const rubricKey = rubricRow.dataset.rubric;
                 const container = document.getElementById('sophia-verdict-text');
                 if (!container || !container.dataset.evaluation) return;
                 
                 const rubriques = JSON.parse(container.dataset.evaluation);
                 const rubricData = rubriques[rubricKey] || null;
                 
-                document.querySelectorAll('.btn-rubric').forEach(b => {
-                    b.style.background = '#fff';
-                    b.style.color = 'var(--oxford)';
-                    b.style.borderColor = '#ccc';
-                });
-                rubricBtn.style.background = 'var(--oxford)';
-                rubricBtn.style.color = '#fff';
-                rubricBtn.style.borderColor = 'var(--oxford)';
+                // Limpiar filas activas y resaltar la fila actual
+                document.querySelectorAll('.rubric-row-item').forEach(r => r.classList.remove('active-rubric'));
+                rubricRow.classList.add('active-rubric');
                 
                 const detailsPanel = document.getElementById('sophia-feedback-details');
                 const errBox = document.getElementById('sophia-feedback-errors');
@@ -1869,19 +1943,12 @@
                     if (supraBox) supraBox.innerHTML = rubricData.supra || 'Production adéquate.';
                 }
                 
+                // Manejo de colores de errores en el texto
                 document.querySelectorAll('#sophia-text-mirror .sophia-error').forEach(span => {
                     if (span.dataset.rubric === rubricKey) {
-                        span.style.background = '#fce8e6';
-                        span.style.color = '#a51d24';
-                        span.style.borderBottom = '2px dashed #d93025';
-                        span.style.padding = '2px 4px';
-                        span.style.borderRadius = '4px';
+                        span.classList.add('active-error'); // Se pone rojo fuerte
                     } else {
-                        span.style.background = 'transparent';
-                        span.style.color = 'inherit';
-                        span.style.borderBottom = 'none';
-                        span.style.padding = '0';
-                        span.style.borderRadius = '0';
+                        span.classList.remove('active-error'); // Regresa al amarillo base
                     }
                 });
                 return;
@@ -2414,7 +2481,7 @@ CONSIGNES STRUCTURALES ABSOLUES:
                     container.innerHTML = `
                     <div style="background:#fff; padding:18px; border-radius:8px; box-shadow:0 4px 15px rgba(0,0,0,0.15); max-height:380px; overflow-y:auto;">
                         <h4 style="margin:0 0 5px 0; color:var(--oxford); font-size:1.1rem; text-transform:capitalize;">${palabraLimpia} <span style="font-size:0.75rem; color:var(--gold); font-weight:600;">(${datos.tipo_gramatical || 'N/A'})</span></h4>
-                        <p style="margin:0 0 10px 0; font-size:0.85rem; color:#28A745; font-weight:600;"><i class="fas fa-language"></i> ${datos.significado_espansol || 'Sin traducción'}</p>
+                        <p style="margin:0 0 10px 0; font-size:0.85rem; color:#28A745; font-weight:600;"><i class="fas fa-language"></i> ${datos.significado_espansol || 'Sin traduction'}</p>
                         <hr style="border:0; border-top:1px solid #eee; margin:10px 0;">
                         <p style="margin:0 0 8px 0; font-size:0.88rem; color:#333;"><strong>Définition:</strong> ${datos.definicion || ''}</p>
                         <button onclick="document.getElementById('glosario-flotante-container').style.display='none'" style="margin-top:15px; width:100%; padding:8px; background:var(--oxford); color:white; border:none; border-radius:4px; font-weight:600; cursor:pointer;">Fermer</button>
