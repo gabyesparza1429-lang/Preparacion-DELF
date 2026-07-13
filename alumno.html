@@ -1810,7 +1810,7 @@
 
             const rubricsBar = document.getElementById('sophia-rubrics-bar');
             
-            // Construcción de la Grilla Oficial (Tabla 4 columnas)
+           // Construcción de la Grilla Oficial (Tabla 4 columnas + Recuadro expansible)
             let tableHTML = `<table class="delf-official-grid">
                 <thead>
                     <tr>
@@ -1845,13 +1845,29 @@
                     let markDessous = (s > 0 && porcentajeRubro < 0.5) ? '<i class="fas fa-times" style="color:#001530; font-size:1.3rem;"></i>' : '';
                     let markAuNiveau = (porcentajeRubro >= 0.5) ? '<i class="fas fa-times" style="color:#001530; font-size:1.3rem;"></i>' : '';
 
+                    // Fila principal del criterio
                     tableHTML += `
-                    <tr class="rubric-row-item" data-rubric="${key}">
+                    <tr class="rubric-row-item" data-rubric="${key}" style="border-bottom: none;">
                         <td class="col-critere">${nomBoton}</td>
                         <td class="col-check">${mark0}</td>
                         <td class="col-check" style="background:${markDessous ? '#fce8e6' : 'transparent'};">${markDessous}</td>
                         <td class="col-check" style="background:${markAuNiveau ? '#e6f4ea' : 'transparent'};">${markAuNiveau}</td>
                         <td class="col-score">${s} / ${m}</td>
+                    </tr>`;
+                    
+                    // Recuadro interior oculto para las notas del examinador (Errores y Supra)
+                    tableHTML += `
+                    <tr class="rubric-feedback-row" id="feedback-${key}" style="display: none; background: #fafbfc;">
+                        <td colspan="5" style="padding: 15px 25px; border-top: 1px dashed #ccc; text-align: left;">
+                            <div style="background: white; border-left: 4px solid #d93025; padding: 12px; margin-bottom: 10px; border-radius: 4px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+                                <strong style="color: #c5221f; font-size: 0.9rem;"><i class="fas fa-pen"></i> Ce qui ne va pas :</strong>
+                                <div style="font-size: 0.9rem; color: #333; margin-top: 5px; line-height: 1.5;">${rData.error || 'Aucune erreur majeure.'}</div>
+                            </div>
+                            <div style="background: white; border-left: 4px solid #137333; padding: 12px; border-radius: 4px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+                                <strong style="color: #137333; font-size: 0.9rem;"><i class="fas fa-arrow-up"></i> Objectif Supra :</strong>
+                                <div style="font-size: 0.9rem; color: #333; margin-top: 5px; line-height: 1.5;">${rData.supra || 'Niveau atteint.'}</div>
+                            </div>
+                        </td>
                     </tr>`;
                 });
             }
@@ -1923,34 +1939,29 @@
                 return;
             }
 
-            // Evento para cuando el alumno da clic en una fila de la Grilla (Resaltado Inteligente)
+            // Evento para cuando el alumno da clic en una fila de la Grilla (Resaltado Inteligente y Recuadro)
             const rubricRow = e.target.closest('.rubric-row-item');
             if (rubricRow) {
                 const rubricKey = rubricRow.dataset.rubric;
-                const container = document.getElementById('sophia-verdict-text');
-                if (!container || !container.dataset.evaluation) return;
                 
-                const rubriques = JSON.parse(container.dataset.evaluation);
-                const rubricData = rubriques[rubricKey] || null;
-                
-                // Limpiar filas activas y resaltar la fila actual
+                // 1. Manejo del acordeón (abrir/cerrar el recuadro del examinador)
+                const feedbackRow = document.getElementById(`feedback-${rubricKey}`);
+                const isCurrentlyVisible = feedbackRow.style.display !== 'none';
+
+                // Ocultar todos los recuadros y quitar la clase activa de las filas
+                document.querySelectorAll('.rubric-feedback-row').forEach(row => row.style.display = 'none');
                 document.querySelectorAll('.rubric-row-item').forEach(r => r.classList.remove('active-rubric'));
-                rubricRow.classList.add('active-rubric');
-                
-                const detailsPanel = document.getElementById('sophia-feedback-details');
-                const errBox = document.getElementById('sophia-feedback-errors');
-                const supraBox = document.getElementById('sophia-feedback-supra');
-                
-                if (rubricData) {
-                    if (detailsPanel) detailsPanel.style.display = 'flex';
-                    let maxNota = window.currentRubricMaxes[rubricKey] || 5;
-                    if (errBox) errBox.innerHTML = `<strong>[Score: ${rubricData.score}/${maxNota}]</strong><br>${rubricData.error || 'Aucune erreur détectée.'}`;
-                    if (supraBox) supraBox.innerHTML = rubricData.supra || 'Production adéquate.';
+
+                // Si no estaba visible, lo mostramos
+                if (!isCurrentlyVisible) {
+                    feedbackRow.style.display = 'table-row';
+                    rubricRow.classList.add('active-rubric');
                 }
                 
-                // Manejo de colores de errores en el texto: Focus vs Faded
+                // 2. Manejo de colores de errores en el texto: Focus vs Faded
                 document.querySelectorAll('#sophia-text-mirror .sophia-error').forEach(span => {
-                    if (span.dataset.rubric === rubricKey) {
+                    // Si el recuadro se cerró, volvemos todos inactivos. Si se abrió, iluminamos los de este rubro.
+                    if (!isCurrentlyVisible && span.dataset.rubric === rubricKey) {
                         span.classList.add('active-error');
                         span.classList.remove('inactive-error');
                     } else {
