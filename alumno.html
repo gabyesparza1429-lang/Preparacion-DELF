@@ -1798,7 +1798,7 @@
 
             const rubricsBar = document.getElementById('sophia-rubrics-bar');
             
-            // Construcción de la Grilla Oficial (Niveles: 0, 1, 3, 5)
+// Construcción de la Grilla Oficial (Nombres dinámicos en lugar de fijos)
             let tableHTML = `<table class="delf-official-grid" style="width:100%; border-collapse:collapse;">
                 <thead>
                     <tr>
@@ -1808,9 +1808,9 @@
                     </tr>
                     <tr>
                         <th class="col-check" style="font-size: 0.75rem; font-weight: normal; background:#001530;">Non répondu (0)</th>
-                        <th class="col-check" style="font-size: 0.75rem; font-weight: normal; background:#001530;">En dessous (1)</th>
-                        <th class="col-check" style="font-size: 0.75rem; font-weight: normal; background:#001530;">Au niveau (3)</th>
-                        <th class="col-check" style="font-size: 0.75rem; font-weight: normal; background:#001530;">Au niveau+ (5)</th>
+                        <th class="col-check" style="font-size: 0.75rem; font-weight: normal; background:#001530;">En dessous</th>
+                        <th class="col-check" style="font-size: 0.75rem; font-weight: normal; background:#001530;">Au niveau</th>
+                        <th class="col-check" style="font-size: 0.75rem; font-weight: normal; background:#001530;">Au niveau +</th>
                     </tr>
                 </thead>
                 <tbody>`;
@@ -1833,6 +1833,9 @@
                     let markAuNiveau = (s > (m * 0.4) && s <= (m * 0.8)) ? '<i class="fas fa-times" style="color:#001530; font-size:1.3rem;"></i>' : '';
                     let markPlus = (s > (m * 0.8)) ? '<i class="fas fa-times" style="color:#001530; font-size:1.3rem;"></i>' : '';
 
+                    // Limpieza de saltos de línea literales \n para que se vean como listas reales
+                    let supraLimpio = (rData.supra || 'Niveau atteint.').replace(/\\n/g, '<br>').replace(/\n/g, '<br>');
+
                     tableHTML += `
                     <tr class="rubric-row-item" data-rubric="${key}" style="border-bottom: none; cursor:pointer;">
                         <td class="col-critere">${nomBoton}</td>
@@ -1849,13 +1852,14 @@
                         <td colspan="6" style="padding: 15px 25px; border-top: 1px dashed #ccc; text-align: left;">
                             <div style="background: white; border-left: 4px solid #137333; padding: 12px; border-radius: 4px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
                                 <strong style="color: #137333; font-size: 0.9rem;"><i class="fas fa-arrow-up"></i> Objectif Supra / Explications :</strong>
-                                <div style="font-size: 0.9rem; color: #333; margin-top: 5px; line-height: 1.5; white-space: pre-line;">${rData.supra || 'Niveau atteint.'}</div>
+                                <div style="font-size: 0.9rem; color: #333; margin-top: 5px; line-height: 1.5; white-space: pre-line;">${supraLimpio}</div>
                             </div>
                         </td>
                     </tr>`;
                 });
             }
             tableHTML += `</tbody></table>`;
+            
             if (rubricsBar) rubricsBar.innerHTML = tableHTML;
 
             let porcentajeGlobal = scoreMaximoTotal > 0 ? (scoreObtenido / scoreMaximoTotal) * 100 : 0;
@@ -2016,6 +2020,9 @@ CONSIGNES STRUCTURALES ABSOLUES:
 3. Utilise uniquement des guillemets simples (').
 4. Ne mets pas de balises markdown globales. Retourne exclusivement la structure JSON demandée:
 {
+    "texto_html": "Texte de l'élève. Utilise UNIQUEMENT cette balise pour marquer la phrase ou le mot entier qui pose problème: <span class='sophia-error' data-correction='[Type d\\'erreur] Phrase complète corrigée'>phrase_erronée</span>. (Ex: data-correction='[Morphosyntaxe] J\\'espère que tu améliores'). Laisse le reste normal.",
+    "rubriques": ${JSON.stringify(rubricasJsonEstructura)}
+}
     "texto_html": "Texte de l'élève avec des balises en ligne UNIQUEMENT pour les erreurs: <span class='sophia-error' data-correction='écris la correction exacte ici'>mot_erroné</span>. Laisse le reste du texte normal.",
     "rubriques": ${JSON.stringify(rubricasJsonEstructura)}
 }`;
@@ -2160,10 +2167,10 @@ CONSIGNES STRUCTURALES ABSOLUES:
 3. Utilise uniquement des guillemets simples (').
 4. Renvoie un format JSON strict sans blocs markdown globaux:
 {
-    "transcription_html": "Transcription révisée avec des balises en ligne UNIQUEMENT pour les erreurs: <span class='sophia-error' data-correction='écris la correction exacte ici'>mot_erroné</span>. Laisse le reste du texte normal.",
+    "transcription_html": "Transcription révisée. Utilise UNIQUEMENT cette balise pour marquer la phrase ou le mot entier qui pose problème: <span class='sophia-error' data-correction='[Type d\\'erreur] Phrase complète corrigée'>phrase_erronée</span>. (Ex: data-correction='[Lexique] Avec une autre langue'). Laisse le reste normal.",
     "audio_response_text": "Commentaire oral de synthèse en français pour lecture audio.",
     "rubriques": ${JSON.stringify(rubricasJsonEstructura)}
-}`;
+},
 
                     const extDocRef = await addDoc(collection(db, "generate"), { prompt: promptFinal });
 
