@@ -314,12 +314,6 @@
             font-weight: bold;
         }
 
-        .word-wrong {
-            color: #d63031 !important;
-            text-decoration: line-through;
-            font-weight: 600;
-        }
-
         .btn-mic {
             background: #d63031;
             color: white;
@@ -560,17 +554,79 @@
             border-radius: 3px;
             margin-left: 5px;
         }
-        .btn-rubric {
-            flex:1; 
-            min-width:140px; 
-            padding:10px; 
-            border-radius:6px; 
-            border:1px solid #ccc; 
-            background:#fff; 
-            font-weight:600; 
-            font-size:0.85rem; 
-            cursor:pointer; 
-            transition:all 0.2s;
+        
+        /* ==========================================
+           ESTILOS DE LA GRILLA OFICIAL Y ERRORES
+           ========================================== */
+        .delf-official-grid {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 15px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.85rem;
+            background: white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        .delf-official-grid th {
+            background: var(--oxford);
+            color: white;
+            padding: 10px;
+            border: 1px solid #001530;
+            text-align: center;
+        }
+        .delf-official-grid td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+            vertical-align: middle;
+        }
+        .delf-official-grid tr.rubric-row-item {
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .delf-official-grid tr.rubric-row-item:hover td {
+            background: #f1f3f5;
+        }
+        .delf-official-grid tr.active-rubric td {
+            background: #fff3e0;
+            border-color: #ffe0b2;
+        }
+        .col-critere {
+            text-align: left !important;
+            font-weight: 700;
+            color: var(--oxford);
+            width: 34%;
+        }
+        .col-check { width: 17%; font-size: 1.1rem; }
+        .col-score {
+            width: 15%;
+            font-weight: 700;
+            background: #fafbfc;
+            color: var(--oxford);
+        }
+        
+        /* Marca TODOS los errores por defecto en amarillo */
+        .sophia-error {
+            background-color: #fff3cd;
+            border-bottom: 2px dashed #ffc107;
+            padding: 1px 3px;
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+        /* Cuando seleccionas un rubro en la tabla, sus errores se vuelven rojos */
+        .sophia-error.active-error {
+            background-color: #fce8e6;
+            border-bottom: 2px solid #d93025;
+            color: #a51d24;
+            font-weight: 700;
+            opacity: 1;
+        }
+        /* Errores de otros rubros se vuelven opacos/suaves */
+        .sophia-error.inactive-error {
+            background-color: transparent;
+            border-bottom: 2px dotted #ccc;
+            color: #777;
+            opacity: 0.5;
         }
     </style>
 </head>
@@ -667,175 +723,8 @@
         let notesHabilidadGlobales = { CO: 0, CE: 0, PE: 0, PO: 0 };
         let alumnoTokensGlobal = 0;
         let peTimerInterval = null;
-        let rubricaCachePE = null;
-        let rubricaCachePO = null;
-        let totalMaximoPorNivel = {}; // Cache de {nivel+skill: total}
-
-        // ==========================================
-        // HELPERS PARA RÚBRICAS DINÁMICAS OFICIALES
-        // ==========================================
-        window.esNivelA = function(nivel) {
-            return (nivel || '').toUpperCase().startsWith('A');
-        };
-        window.idiomaSegunNivel = function(nivel) {
-            return window.esNivelA(nivel) ? 'es' : 'fr';
-        };
-        window.etiquetasUI = function(idioma) {
-            if (idioma === 'es') {
-                return {
-                    'lo_que_no_va': 'Lo que no está bien',
-                    'objetivo_supra': 'Para mejorar (Objetivo Supra)',
-                    'corregido_por': 'Corrección de Sophia',
-                    'ver_intentos': 'Ver mis ensayos',
-                    'cargando': 'Sophia está examinando tu producción...',
-                    'cargando_po': 'Sophia está analizando tu producción oral...',
-                    'analisis_listo': 'Análisis completado. Toca cada criterio para ver el detalle.',
-                    'consigne_titre': 'Revisión de las instrucciones de la consigna',
-                    'consigne_explicacion': 'Sophia verifica si cumpliste CADA punto de la consigna y si tomaste en cuenta la información del documento fuente (correo, anuncio, etc.).',
-                    'instruccion_label': 'Instrucción',
-                    'info_label': 'Dato del documento',
-                    'cumple': 'Cumplido',
-                    'no_cumple': 'No cumplido',
-                    'parcial': 'Parcial',
-                    'admis': 'Aprobado',
-                    'non_admis': 'No aprobado',
-                    'supra': 'Nivel Supra',
-                    'calculo': 'Calculando...',
-                    'enviar_pe': 'Enviar la producción',
-                    'enviar_po': 'Evaluar mi producción oral',
-                    'tiempo_agotado': 'Se acabó el tiempo. Tu examen está bloqueado.',
-                    'reiniciar': 'Reiniciar',
-                    'submit_loading': 'Análisis en curso...',
-                    'rubrique_label_es': {
-                        'realisation_tache': 'Realización de la tarea',
-                        'coherence_cohesion': 'Coherencia y cohesión',
-                        'adequation_sociolinguistique': 'Adecuación sociolingüística',
-                        'lexique': 'Léxico',
-                        'morphosyntaxe': 'Morfosintaxis',
-                        'entretien_dirige': 'Entrevista dirigida',
-                        'monologue_suivi': 'Monólogo seguido',
-                        'exercice_interaction': 'Ejercicio de interacción',
-                        'expression_point_vue': 'Expresión del punto de vista',
-                        'echange_informations': 'Intercambio de información',
-                        'dialogue_simule': 'Diálogo simulado',
-                        'production_orale_task': 'Tarea oral',
-                        'phonologique': 'Sistema fonológico'
-                    }
-                };
-            }
-            return {
-                'lo_que_no_va': "Ce qui ne va pas",
-                'objetivo_supra': 'Objectif Supra',
-                'corregido_por': 'Correction de Sophia',
-                'ver_intentos': 'Voir mes essais',
-                'cargando': "Sophia examine votre production...",
-                'cargando_po': "Sophia analyse votre production orale...",
-                'analisis_listo': 'Analyse générée. Cliquez sur chaque rubrique pour voir le détail.',
-                'consigne_titre': 'Vérification de la consigne et du document source',
-                'consigne_explicacion': "Sophia vérifie si vous avez respecté CHAQUE point de la consigne et si vous avez bien pris en compte les informations du document source (courriel, annonce, etc.).",
-                'instruccion_label': 'Instruction',
-                'info_label': 'Information du document',
-                'cumple': 'Respectée',
-                'no_cumple': 'Non respectée',
-                'parcial': 'Partielle',
-                'admis': 'Admis',
-                'non_admis': 'Non admis',
-                'supra': 'Niveau Supra',
-                'calculo': 'Calcul...',
-                'enviar_pe': 'Soumettre la production',
-                'enviar_po': 'Évaluer ma production orale',
-                'tiempo_agotado': "Temps écoulé ! Votre examen est bloqué.",
-                'reiniciar': 'Réinitialiser',
-                'submit_loading': 'Analyse en cours...',
-                'rubrique_label_es': {}
-            };
-        };
-
-        window.cargarRubrica = async function(nivel, skill) {
-            const key = `${nivel}_${skill}`;
-            try {
-                const resp = await fetch(`rubricas/${nivel}_${skill}.json?v=${Date.now()}`);
-                if (!resp.ok) throw new Error(`Rubrique ${nivel}_${skill} introuvable`);
-                const data = await resp.json();
-                if (skill === 'PE') rubricaCachePE = data;
-                else rubricaCachePO = data;
-                // Calcula total máximo para esta combinación nivel+skill
-                let total = 0;
-                if (data && data.grille_evaluation_officielle) {
-                    Object.values(data.grille_evaluation_officielle).forEach(c => {
-                        if (typeof c.note_maximale === 'number') total += c.note_maximale;
-                    });
-                }
-                totalMaximoPorNivel[key] = total;
-                return data;
-            } catch (e) {
-                console.error('Error cargando rúbrica:', e);
-                return null;
-            }
-        };
-
-        window.obtenerTotalMaximo = function(nivel, skill) {
-            const key = `${nivel}_${skill}`;
-            return totalMaximoPorNivel[key] || 25;
-        };
-
-        window.contarPalabras = function(texto) {
-            if (!texto) return 0;
-            const t = texto.trim();
-            return t === '' ? 0 : t.split(/\s+/).length;
-        };
-
-        window.aplicarReglaMots = function(textoAlumno, rubrica) {
-            // Devuelve {skipIA: true, totalMaximo: X, mensaje: '...'} si aplica la regla
-            if (!rubrica || !rubrica.regle_penalisation_mots) return { skipIA: false };
-            const palabras = window.contarPalabras(textoAlumno);
-            const regla = rubrica.regle_penalisation_mots;
-            // Extrae el número del patrón "X mots ou moins" o "moins de X mots"
-            const match = regla.match(/(\d+)\s*mots/);
-            if (!match) return { skipIA: false };
-            const umbral = parseInt(match[1]);
-            if (palabras < umbral) {
-                return {
-                    skipIA: true,
-                    umbral: umbral,
-                    palabras: palabras,
-                    mensaje: `Tu texto tiene ${palabras} palabras, menos de las ${umbral} requeridas. La consigna oficial indica que cuando esto sucede, todos los criterios reciben 0 puntos.`
-                };
-            }
-            return { skipIA: false };
-        };
-
-        window.construirEsquemaRubrica = function(rubrica) {
-            // Construye el objeto que se inyecta al prompt definiendo los criterios con su note_maximale
-            if (!rubrica || !rubrica.grille_evaluation_officielle) return null;
-            const esquema = {};
-            Object.entries(rubrica.grille_evaluation_officielle).forEach(([k, v]) => {
-                esquema[k] = {
-                    note_maximale: v.note_maximale,
-                    description: v.description_a_verifier
-                };
-            });
-            return esquema;
-        };
-
-        window.calcularStatusOficial = function(scoreObtenido, totalMaximo) {
-            if (!totalMaximo || totalMaximo === 0) return { status: '--', pct: 0 };
-            const pct = (scoreObtenido / totalMaximo) * 100;
-            if (pct >= 60) return { status: 'Supra', pct };
-            if (pct >= 50) return { status: 'Admis', pct };
-            return { status: 'Non admis', pct };
-        };
-
-        // Equivalencias español/francés para los términos oficiales en el JSON de la IA
-        window.traducirEtiquetasRubrica = function(objRubriques, idioma) {
-            if (idioma !== 'es' || !objRubriques) return objRubriques;
-            const etiquetas = window.etiquetasUI('es').rubrique_label_es;
-            const traducido = {};
-            Object.keys(objRubriques).forEach(k => {
-                traducido[k] = { ...objRubriques[k] };
-            });
-            return traducido;
-        };
+        window.currentRubricMaxes = {}; 
+        window.currentRubricNames = {}; 
 
         const urlParams = new URLSearchParams(window.location.search);
         let urlId = urlParams.get('id') || urlParams.get('user') || urlParams.get('uid') || window.location.hash.replace('#', '').split('?')[0];
@@ -928,12 +817,30 @@
             let totalEjerciciosGlobales = 0;
             let totalEjerciciosCompletados = 0;
 
-            // Asegurar que las rúbricas del nivel actual estén cargadas (para totales reales)
-            await window.cargarRubrica(currentLevel, 'PE');
-            await window.cargarRubrica(currentLevel, 'PO');
+            let mapaNotasSophia = { PE: [], PO: [] };
+            if (urlId && urlId !== "admin_preview") {
+                try {
+                    const qHistorial = await getDocs(collection(db, "Usuarios", urlId, "HistorialSophia"));
+                    qHistorial.forEach(dHist => {
+                        const hData = dHist.data();
+                        if (hData.habilidad && hData.respuesta_ia) {
+                            const parsed = window.parseSophiaJSON(hData.respuesta_ia);
+                            if (parsed && parsed.score_global) {
+                                let partes = parsed.score_global.split('/');
+                                let obtenido = parseFloat(partes[0]) || 0;
+                                let maximo = parseFloat(partes[1]) || 25;
+                                let notaNormalizada = maximo > 0 ? (obtenido / maximo) * 25 : 0;
+                                
+                                if (hData.habilidad === "PE") mapaNotasSophia.PE.push(notaNormalizada);
+                                if (hData.habilidad === "PO") mapaNotasSophia.PO.push(notaNormalizada);
+                            }
+                        }
+                    });
+                } catch(e) {}
+            }
 
-            // 1) Calcular progreso global: TODAS las habilidades combinadas
             ['CO', 'CE', 'PE', 'PO'].forEach(sk => {
+                let totalReactivos = 0; let totalAciertos = 0;
                 Object.keys(unidadesCache).forEach(uId => {
                     const ejercicios = unidadesCache[uId][sk] || unidadesCache[uId][sk.toLowerCase()] || [];
                     ejercicios.forEach((ej, eIdx) => {
@@ -942,77 +849,26 @@
                         if (mapaAciertosAlumno[clv] === true) {
                             totalEjerciciosCompletados++;
                         }
-                    });
-                });
-            });
 
-            // 2) Calcular notas por habilidad
-            let mapaNotasSophia = { PE: [], PO: [] };
-            let totalMaxPE = window.obtenerTotalMaximo(currentLevel, 'PE');
-            let totalMaxPO = window.obtenerTotalMaximo(currentLevel, 'PO');
-
-            if (urlId && urlId !== "admin_preview") {
-                try {
-                    const qHistorial = await getDocs(collection(db, "Usuarios", urlId, "HistorialSophia"));
-                    qHistorial.forEach(dHist => {
-                        const hData = dHist.data();
-                        if (!hData.habilidad || !hData.respuesta_ia) return;
-                        let notaExtraida = 0;
-                        let matchNumerico = null;
-                        // Intenta extraer 'X/Y' del campo score_global (formato nuevo)
-                        const matchScoreGlobal = hData.respuesta_ia.match(/score_global["']?\s*:\s*["']?\s*(\d+(?:\.\d+)?)\s*\/\s*(\d+(?:\.\d+)?)/i);
-                        if (matchScoreGlobal) {
-                            notaExtraida = parseFloat(matchScoreGlobal[1]);
-                        } else {
-                            // Fallback al formato antiguo
-                            matchNumerico = hData.respuesta_ia.match(/Note\s*Finale\s*:\s*(\d+(\.\d+)?)\s*\/\s*(\d+(\.\d+)?)/i);
-                            if (!matchNumerico) {
-                                matchNumerico = hData.respuesta_ia.match(/\b(\d+(\.\d+)?)\s*\/\s*25\b/);
-                            }
-                            if (matchNumerico) {
-                                notaExtraida = parseFloat(matchNumerico[1]);
-                            }
-                        }
-                        if (hData.habilidad === "PE") mapaNotasSophia.PE.push(notaExtraida);
-                        if (hData.habilidad === "PO") mapaNotasSophia.PO.push(notaExtraida);
-                    });
-                } catch(e) { console.error('Error leyendo historial:', e); }
-            }
-
-            // PE: promedio de notas Sophia (sobre el total real del nivel)
-            if (mapaNotasSophia.PE.length > 0 && totalMaxPE > 0) {
-                const suma = mapaNotasSophia.PE.reduce((a, b) => a + b, 0);
-                // Cada nota histórica ya está en escala /totalMaxPE; se promedian
-                const promedio = suma / mapaNotasSophia.PE.length;
-                notesHabilidadGlobales.PE = parseFloat(promedio.toFixed(2));
-            } else {
-                notesHabilidadGlobales.PE = 0;
-            }
-
-            // PO: promedio de notas Sophia
-            if (mapaNotasSophia.PO.length > 0 && totalMaxPO > 0) {
-                const suma = mapaNotasSophia.PO.reduce((a, b) => a + b, 0);
-                const promedio = suma / mapaNotasSophia.PO.length;
-                notesHabilidadGlobales.PO = parseFloat(promedio.toFixed(2));
-            } else {
-                notesHabilidadGlobales.PO = 0;
-            }
-
-            // CO/CE: porcentaje de aciertos normalizado al /25 tradicional del carnet
-            ['CO', 'CE'].forEach(sk => {
-                let totalReactivos = 0; let totalAciertos = 0;
-                Object.keys(unidadesCache).forEach(uId => {
-                    const ejercicios = unidadesCache[uId][sk] || unidadesCache[uId][sk.toLowerCase()] || [];
-                    ejercicios.forEach((ej, eIdx) => {
-                        const clv = `${uId}_${sk}_${eIdx}`;
                         if (ej.preguntas && Array.isArray(ej.preguntas)) {
                             totalReactivos += ej.preguntas.length;
                             if (mapaAciertosAlumno[clv] !== undefined && typeof mapaAciertosAlumno[clv] === "number") totalAciertos += mapaAciertosAlumno[clv];
                         }
                     });
                 });
-                if (totalReactivos === 0) totalReactivos = 1;
-                notesHabilidadGlobales[sk] = parseFloat(((totalAciertos / totalReactivos) * 25).toFixed(2));
+
+                if (sk === "PE" || sk === "PO") {
+                    let arrNotas = mapaNotasSophia[sk];
+                    if (arrNotas && arrNotas.length > 0) {
+                        let suma = arrNotas.reduce((a, b) => a + b, 0);
+                        notesHabilidadGlobales[sk] = parseFloat((suma / arrNotas.length).toFixed(2));
+                    } else {
+                        notesHabilidadGlobales[sk] = 0;
+                    }
+                } else {
+                    if (totalReactivos === 0) totalReactivos = 5;
+                    notesHabilidadGlobales[sk] = parseFloat(((totalAciertos / totalReactivos) * 25).toFixed(2));
+                }
             });
 
             if (totalEjerciciosGlobales > 0) {
@@ -1066,7 +922,7 @@
                     icono: "fa-headphones",
                     color: "#1a73e8",
                     lblBienvenida: isLevelA ? "Bienvenido a tu espacio de entrenamiento." : "Bienvenue dans votre espace d'entraînement.",
-                    lblInstruccion: isLevelA ? "Por favor lee los detalles oficiales de esta competencia, luego selecciona una actividad en el menú de la izquierda para comenzar." : "Veuillez lire les détails officiels de cette compétence ci-dessous, puis sélectionnez une activité dans le menu de gauche para démarrer.",
+                    lblInstruccion: isLevelA ? "Por favor lee los detalles oficiales de esta competencia, luego selecciona una actividad en el menú de la izquierda para comenzar." : "Veuillez lire les détails officiels de cette compétence ci-dessous, puis sélectionnez une activité dans le menu de gauche pour démarrer.",
                     titObjetivos: isLevelA ? "Objetivos Oficiales" : "Objectifs Officiels",
                     titEjercicios: isLevelA ? "Tipos de Ejercicios en el Sistema" : "Types d'exercices",
                     titConsejos: isLevelA ? "Consejos de Éxito" : "Conseils de réussite",
@@ -1084,7 +940,7 @@
                     ] : [
                         "Association d'images avec des situations entendues.",
                         "Questionnaires à choix multiples (QCM).",
-                        "Une fois envoyé, le sistema déploiera automatiquement la transcription del documento."
+                        "Une fois envoyé, le système déploiera automatiquement la transcription del documento."
                     ],
                     consejos: isLevelA ? [
                         "Lee las preguntas y observa con atención las imágenes antes de reproducir el audio.",
@@ -1097,7 +953,7 @@
                         "**Lector de Voz Interactivo:** Después de enviar el ejercicio, podrás dar clic en cualquier palabra de la transcripción para que Sophia te explique en español su significado lingüístico.",
                         "**Verificación de Pronunciación:** Puedes activar el micrófono en la transcripción para leer el texto en francés en voz alta; Sophia marcará en rojo las palabras que debas mejorar."
                     ] : [
-                        "**Lecteur de contexte:** Cliquez sur n'importe quel mot de la transcription pour receive une explication linguistique.",
+                        "**Lecteur de contexte:** Cliquez sur n'importe quel mot de la transcription pour recevoir une explication linguistique.",
                         "**Analyse de prononciation:** Activez le micro pour lire à haute voix, les erreurs seront surlignées en rouge."
                     ]
                 },
@@ -1105,8 +961,8 @@
                     titulo: isLevelA ? "Comprensión Lectora (CE)" : "Compréhension des écrits (CE)",
                     icono: "fa-file-alt",
                     color: "#34a853",
-                    lblBienvenida: isLevelA ? "Bienvenido a tu espacio de entrenamiento." : "Bienvenue dans votre espacio de entrenamiento.",
-                    lblInstruccion: isLevelA ? "Por favor lee los detalles oficiales de esta competencia, luego selecciona una actividad en el menú de la izquierda para comenzar." : "Veuillez lire les détails officiels de cette competencia ci-dessous, puis sélectionnez une activité dans le menu de gauche pour démarrer.",
+                    lblBienvenida: isLevelA ? "Bienvenido a tu espacio de entrenamiento." : "Bienvenue dans votre espace d'entraînement.",
+                    lblInstruccion: isLevelA ? "Por favor lee los detalles oficiales de esta competencia, luego selecciona una actividad en el menú de la izquierda para comenzar." : "Veuillez lire les détails officiels de cette compétence ci-dessous, puis sélectionnez une activité dans le menu de gauche pour démarrer.",
                     titObjetivos: isLevelA ? "Objetivos Oficiales" : "Objectifs Officiels",
                     titEjercicios: isLevelA ? "Tipos de Ejercicios en el Sistema" : "Types d'exercices",
                     titConsejos: isLevelA ? "Consejos de Éxito" : "Conseils de réussite",
@@ -1153,11 +1009,11 @@
                         "Redactar un message corto y simple (correo, postal) para invitar, agradecer o responder a un amigo."
                     ] : [
                         "Remplir une fiche de renseignements personnels ou un formulaire d'inscription.",
-                        "Régiger un court message simple (carte postale, courriel) pour inviter, remercier ou s'exprimer."
+                        "Rédiger un court message simple (carte postale, courriel) pour inviter, remercier ou s'exprimer."
                     ],
                     ejercicios: isLevelA ? [
                         "**Formularios Interactivos:** Casillas individuales dinámicas que simulan fichas de inscripción (ej. Ficha de adopción, solicitud de matrícula).",
-                        "**Caja de Redacción Libre:** Cuadro interactivo protegido (anti-copiado) equipped con una barra superior de caracteres especiales franceses (`é`, `è`, `à`, `ç`)."
+                        "**Caja de Redacción Libre:** Cuadro interactivo protegido (anti-copiado) equipado con una barra superior de caracteres especiales franceses (`é`, `è`, `à`, `ç`)."
                     ] : [
                         "**Formulaires interactifs:** Des champs individuels simulant des fiches d'inscription réelles.",
                         "**Zone de rédaction libre:** Un éditeur sécurisé équipé d'une barre de caractères spéciaux français."
@@ -1190,7 +1046,7 @@
                         "Formular preguntas simples a un examinador basándose en palabras clave.",
                         "Unirse a un juego de rol básico de la vida diaria (comprar ropa, pedir en un restaurante)."
                     ] : [
-                        "Se présenter et répondre à des questions sur son identity.",
+                        "Se présenter et répondre à des questions sur son identité.",
                         "Poser des questions simples à partir de mots-clés ou de cartes stimulantes.",
                         "Mener un jeu de rôle ou une interaction en contexte de service."
                     ],
@@ -1208,7 +1064,7 @@
                         "Verifica que tu navegador tenga el permiso del micrófono concedido para evitar retrasos."
                     ] : [
                         "N'ayez pas peur de parler! Gagnez de la confiance en vous.",
-                        "Vérifiez que l'autorisation de votre microphone is active avant de démarrer."
+                        "Vérifiez que l'autorisation de votre microphone est active avant de démarrer."
                     ],
                     iaExplicacion: isLevelA ? [
                         "**Activación Automatizada por Botón:** Al dar clic en el botón rojo de grabación, el sistema inyecta un guion introductorio nativo de fondo. Sophia tomará de inmediato el rol de examinadora o dependienta nativa en Francia y entablará un diálogo fluido basado en lo que hables frente a la pantalla, respondiendo dinámicamente según tus elecciones de palabras o tarjetas."
@@ -1327,11 +1183,10 @@
 
         function renderCarnetInterfaceReal() {
             const isBasic = currentLevel.startsWith('A');
-            const idioma = window.idiomaSegunNivel(currentLevel);
             const descCO = isBasic ? "Comprendre des expressions fréquentes. / Comprender expresiones." : "Peut comprendre les points principaux d'une intervention claire (école, travail).";
             const descCE = isBasic ? "Lire des textes courts. / Leer textos cortos." : "Peut comprendre des textes rédigés essentiellement dans une langue courante.";
-            const descPE = isBasic ? "Écrire des messages simples. / Escribir mensajes." : "Peut écrire un text suivi simple et articulé sur des sujets familiers.";
-            const descPO = isBasic ? "S'exprimer en situation simple. / Expresarse en situations cotidianas." : "Peut s'exprimer de manière cohérente sur des expériences ou projets.";
+            const descPE = isBasic ? "Écrire des messages simples. / Escribir messages." : "Peut écrire un texte suivi simple et articulé sur des sujets familiers.";
+            const descPO = isBasic ? "S'exprimer en situation simple. / Expresarse en situaciones cotidianas." : "Peut s'exprimer de manière cohérente sur des expériences ou projets.";
 
             const iconCheckCO = notesHabilidadGlobales.CO > 0 ? 'fas fa-check-circle' : 'far fa-circle';
             const iconCheckCE = notesHabilidadGlobales.CE > 0 ? 'fas fa-check-circle' : 'far fa-circle';
@@ -1342,10 +1197,6 @@
             const styleCheckCE = notesHabilidadGlobales.CE > 0 ? 'style="color:var(--green);"' : '';
             const styleCheckPE = notesHabilidadGlobales.PE > 0 ? 'style="color:var(--green);"' : '';
             const styleCheckPO = notesHabilidadGlobales.PO > 0 ? 'style="color:var(--green);"' : '';
-
-            // Totales reales del nivel actual
-            const totalMaxPE = window.obtenerTotalMaximo(currentLevel, 'PE') || 25;
-            const totalMaxPO = window.obtenerTotalMaximo(currentLevel, 'PO') || 25;
 
             let checklistHTML = `
             <div class="carnet-grid">
@@ -1364,14 +1215,14 @@
                     </div>
                 </div>
                 <div class="carnet-card pe">
-                    <div class="carnet-header"><span class="carnet-title"><i class="fas fa-pen-fancy" style="color:#fbbc05;"></i> Production Écrite</span><span class="carnet-score">${notesHabilidadGlobales.PE} / ${totalMaxPE} pts</span></div>
+                    <div class="carnet-header"><span class="carnet-title"><i class="fas fa-pen-fancy" style="color:#fbbc05;"></i> Production Écrite</span><span class="carnet-score">${notesHabilidadGlobales.PE} / 25 pts</span></div>
                     <div class="carnet-descriptor-box"><strong>Objectif ${currentLevel} :</strong> ${descPE}</div>
                     <div class="carnet-checklist">
                         <div class="checklist-item ${notesHabilidadGlobales.PE > 0 ? 'checked':''}"><i class="${iconCheckPE}" ${styleCheckPE}></i> Rédiger un texte suivi structuré et formules adaptées</div>
                     </div>
                 </div>
                 <div class="carnet-card po">
-                    <div class="carnet-header"><span class="carnet-title"><i class="fas fa-microphone" style="color:#ea4335;"></i> Production Orale</span><span class="carnet-score">${notesHabilidadGlobales.PO} / ${totalMaxPO} pts</span></div>
+                    <div class="carnet-header"><span class="carnet-title"><i class="fas fa-microphone" style="color:#ea4335;"></i> Production Orale</span><span class="carnet-score">${notesHabilidadGlobales.PO} / 25 pts</span></div>
                     <div class="carnet-descriptor-box"><strong>Objectif ${currentLevel} :</strong> ${descPO}</div>
                     <div class="carnet-checklist">
                         <div class="checklist-item ${notesHabilidadGlobales.PO > 0 ? 'checked':''}"><i class="${iconCheckPO}" ${styleCheckPO}></i> S'exprimer de manière fluide lors d'une interaction</div>
@@ -1394,6 +1245,26 @@
             const audioId = `audio-container-${currentExerciseIndex}`;
 
             if (peTimerInterval) clearInterval(peTimerInterval);
+
+            // Carga preventiva del JSON del nivel y habilidad para inicializar variables globales de mapeo de rúbricas
+            if (window.currentSkill === "PE" || window.currentSkill === "PO") {
+                try {
+                    const tipoRubrica = window.currentSkill === "PO" ? "PO" : "PE";
+                    const resRub = await fetch(`rubricas/${currentLevel}_${tipoRubrica}.json`);
+                    if (resRub.ok) {
+                        const criteriosDelineados = await resRub.json();
+                        const grille = criteriosDelineados.grille_evaluation_officielle || criteriosDelineados.rubriques || criteriosDelineados;
+                        window.currentRubricMaxes = {};
+                        window.currentRubricNames = {};
+                        Object.keys(grille).forEach(k => {
+                            window.currentRubricMaxes[k] = parseFloat(grille[k].note_maximale) || 5;
+                            window.currentRubricNames[k] = grille[k].nom_complet || k;
+                        });
+                    }
+                } catch(e) {
+                    console.error("Erreur de chargement préventif du schéma de rubriques JSON", e);
+                }
+            }
 
             let zoneHTML = (window.currentSkill === "PE" || window.currentSkill === "PO") 
                 ? `<span class="zone-badge zone-examen-simule"><i class="fas fa-exclamation-triangle"></i> Zone d'Examen Réel (Blindé)</span>`
@@ -1474,7 +1345,7 @@
                             <button type="button" class="accent-btn" onclick="window.insertarCaracterEspecial('ê')">ê</button>
                             <button type="button" class="accent-btn" onclick="window.insertarCaracterEspecial('œ')">œ</button>
                         </div>
-                        <textarea id="pe-student-response" class="production-textbox" data-min-mots="${ej.min_mots || 160}" placeholder="Rédigez votre texte ici..." spellcheck="false" autocomplete="off"></textarea>
+                        <textarea id="pe-student-response" class="production-textbox" data-min-mots="${ej.min_mots || 60}" placeholder="Rédigez votre texte ici..." spellcheck="false" autocomplete="off"></textarea>
                         <div id="pe-word-counter" class="word-counter-badge mots-insufficient">0 mots</div>
                     </div>`;
                 }
@@ -1539,7 +1410,7 @@
                             <i class="fas fa-microphone"></i> Commencer à parler
                         </button>
                         <span id="po-audio-feedback" style="font-size: 0.9rem; font-weight: 600; color: #666;">
-                            <i class="fas fa-info-circle"></i> Cliquez sur le bouton para démarrer l'exercice.
+                            <i class="fas fa-info-circle"></i> Cliquez sur le bouton pour démarrer l'exercice.
                         </span>
                     </div>
 
@@ -1708,48 +1579,35 @@
             }
 
             // ==========================================
-            // MARCO COMÚN DE RETROALIMENTACIÓN DE SOPHIA (UI DINÁMICA)
+            // MARCO COMÚN DE RETROALIMENTACIÓN DE SOPHIA
             // ==========================================
-            const idioma = window.idiomaSegunNivel(currentLevel);
-            const totalMaxNivel = window.obtenerTotalMaximo(currentLevel, currentSkill);
-            const etiquetas = window.etiquetasUI(idioma);
             html += `
                 <div id="sophia-box" style="display:none; background:#f4f7f9; border-left:4px solid var(--gold); padding:20px; border-radius:6px; margin-top:25px;">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-                        <h5 style="margin:0; color:var(--oxford); font-weight:700;"><i class="fas fa-robot"></i> ${etiquetas.corregido_por}</h5>
+                        <h5 style="margin:0; color:var(--oxford); font-weight:700;"><i class="fas fa-robot"></i> Correction de Sophia</h5>
                         <button type="button" id="btn-ver-intentos" style="background: transparent; color: var(--oxford); border: 1px solid var(--oxford); padding: 6px 12px; border-radius: 4px; cursor: pointer; font-family: 'Montserrat'; font-size: 0.8rem; font-weight: 600; display: none;">
-                            <i class="fas fa-history"></i> ${etiquetas.ver_intentos}
+                            <i class="fas fa-history"></i> Voir mes essais
                         </button>
                     </div>
                     <div id="sophia-verdict-text">
-                        <div id="sophia-header-result" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px; background:white; padding:12px; border-radius:6px; border:1px solid #ddd; flex-wrap:wrap; gap:10px;">
-                            <span style="font-weight:700; font-size:1.1rem; color:var(--oxford);"><span id="sophia-global-label">${idioma === 'es' ? 'Nota global' : 'Note globale'}</span> : <span id="sophia-global-score">--/${totalMaxNivel}</span></span>
+                        <div id="sophia-header-result" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px; background:white; padding:12px; border-radius:6px; border:1px solid #ddd;">
+                            <span style="font-weight:700; font-size:1.1rem; color:var(--oxford);">Note globale : <span id="sophia-global-score">--/--</span></span>
                             <span id="sophia-global-badge" style="font-weight:700; padding:6px 12px; border-radius:20px; background:#6c757d; color:white; font-size:0.85rem;">--</span>
                         </div>
-
-                        <div id="sophia-rubrics-bar" style="display:flex; flex-wrap:wrap; gap:8px; margin-bottom:15px;">
-                            <!-- Los botones de rúbrica se renderizan dinámicamente -->
-                        </div>
+                        
+                        <div id="sophia-rubrics-bar" style="display:flex; flex-wrap:wrap; gap:8px; margin-bottom:15px;"></div>
 
                         <div id="sophia-text-mirror" style="background:#fff; border:1px solid #ddd; padding:15px; border-radius:6px; min-height:100px; margin-bottom:15px; line-height:1.6; font-size:0.95rem; white-space:pre-wrap; color:#333;"></div>
 
                         <div id="sophia-feedback-details" style="display:none; flex-direction:column; gap:12px;">
                             <div style="background:#fce8e6; border-left:4px solid #d93025; padding:12px; border-radius:4px;">
-                                <strong style="color:#c5221f; display:block; margin-bottom:4px;"><i class="fas fa-exclamation-circle"></i> <span id="sophia-errores-titulo">${etiquetas.lo_que_no_va}</span></strong>
+                                <strong id="lbl-title-errors" style="color:#c5221f; display:block; margin-bottom:4px;"><i class="fas fa-exclamation-circle"></i> Ce qui ne va pas :</strong>
                                 <div id="sophia-feedback-errors" style="font-size:0.9rem; color:#3c4043; line-height:1.4;"></div>
                             </div>
                             <div style="background:#e6f4ea; border-left:4px solid #137333; padding:12px; border-radius:4px;">
-                                <strong style="color:#137333; display:block; margin-bottom:4px;"><i class="fas fa-arrow-alt-circle-up"></i> <span id="sophia-supra-titulo">${etiquetas.objetivo_supra}</span></strong>
-                                <div id="sophia-feedback-supra" style="font-size:0.9rem; color:#3c4043; line-height:1.4;"></div>
+                                <strong id="lbl-title-supra" style="color:#137333; display:block; margin-bottom:4px;"><i class="fas fa-arrow-alt-circle-up"></i> Objectif Supra :</strong>
+                                <div id="sophia-feedback-supra" style="font-size:0.9rem; color:#3c4043; line-height:1.4; white-space: pre-wrap;"></div>
                             </div>
-                        </div>
-
-                        <div id="sophia-consigne-check" style="display:none; margin-top:18px; background:white; border:1px solid #ddd; border-radius:6px; padding:15px;">
-                            <h6 style="margin:0 0 6px 0; color:var(--oxford); font-weight:700; font-size:0.95rem;">
-                                <i class="fas fa-tasks"></i> <span id="sophia-consigne-titulo">${etiquetas.consigne_titre}</span>
-                            </h6>
-                            <p style="margin:0 0 12px 0; font-size:0.82rem; color:#666; line-height:1.4;">${etiquetas.consigne_explicacion}</p>
-                            <div id="sophia-consigne-lista"></div>
                         </div>
                     </div>
                     <div id="historial-intentos-container" style="display: none; margin-top: 15px; background: white; padding: 15px; border-radius: 6px; border: 1px solid #ddd;"></div>
@@ -1828,20 +1686,16 @@
                                     const textoLimpio = elInput.value.trim();
                                     const totalPalabras = textoLimpio === "" ? 0 : textoLimpio.split(/\s+/).length;
                                     counter.innerText = `${totalPalabras} mots`;
-                                    const minimoMots = parseInt(elInput.getAttribute('data-min-mots')) || 160; 
+                                    const minimoMots = parseInt(elInput.getAttribute('data-min-mots')) || 60; 
                                     counter.className = totalPalabras < minimoMots ? "word-counter-badge mots-insufficient" : "word-counter-badge mots-ok";
                                 }
                             }
                         }
-                        
+
                         const sBox = document.getElementById('sophia-box');
                         if (datosHistoricos && datosHistoricos.respuesta_ia) {
                             if (sBox) sBox.style.display = "block";
-                            if (window.currentSkill === "PO") {
-                                window.mostrarEvaluacionOralSophia(datosHistoricos.respuesta_ia);
-                            } else {
-                                window.mostrarEvaluacionSophia(datosHistoricos.respuesta_ia);
-                            }
+                            window.mostrarEvaluacionSophia(datosHistoricos.respuesta_ia);
                         }
                         
                         window.inicializarBotonHistorialIntentos();
@@ -1878,9 +1732,9 @@
         });
 
         // ==========================================
-        // NUEVO MOTOR DE EXTRACORES JSON BLINDADOS (Sophia) - DINÁMICO v2
+        // MOTOR JSON ULTRA-BLINDADO (Sophia)
         // ==========================================
-        window.parseSophiaJSON = function(jsonRaw, esquemaRubrica) {
+        window.parseSophiaJSON = function(jsonRaw) {
             let cleanJson = jsonRaw.trim();
             cleanJson = cleanJson.replace(/```json/gi, "").replace(/```/g, "").trim();
             
@@ -1890,32 +1744,10 @@
                 cleanJson = cleanJson.substring(inicioJson, finJson + 1);
             }
 
-            // Determinar las claves de rúbrica dinámicamente
-            const rubricKeys = esquemaRubrica ? Object.keys(esquemaRubrica) : [
-                'realisation_tache', 'coherence_cohesion', 'adequation_sociolinguistique',
-                'lexique', 'morphosyntaxe', 'entretien_dirige', 'monologue_suivi',
-                'exercice_interaction', 'expression_point_vue', 'echange_informations',
-                'dialogue_simule', 'production_orale_task', 'phonologique'
-            ];
-
             try {
-                let sanitized = cleanJson.replace(/[\r\n]+/g, " ").replace(/[\u0000-\u001F\u007F-\u009F]/g, "");
-                const parsed = JSON.parse(sanitized);
-                // Garantizar que las rubriques existan
-                if (!parsed.rubriques || typeof parsed.rubriques !== 'object') {
-                    parsed.rubriques = {};
-                }
-                rubricKeys.forEach(k => {
-                    if (!parsed.rubriques[k]) {
-                        parsed.rubriques[k] = { score: '', error: '', supra: '' };
-                    }
-                });
-                // Garantizar arrays de check
-                if (!Array.isArray(parsed.consigne_check)) parsed.consigne_check = [];
-                if (!Array.isArray(parsed.email_check)) parsed.email_check = [];
-                return parsed;
+                let sanitized = cleanJson.replace(/[\u0000-\u001F\u007F-\u009F]/g, ""); // Removemos replace de saltos para no romper viñetas
+                return JSON.parse(sanitized);
             } catch(e) {
-                console.warn("JSON.parse estándar falló. Ejecutando extractor RegExp de emergencia.");
                 const flat = cleanJson.replace(/[\r\n]+/g, " ");
                 
                 const extractField = (field) => {
@@ -1928,179 +1760,151 @@
                     return match ? match[1] : "";
                 };
 
-                const extractRubricField = (rubric, field) => {
-                    const rubricRegex = new RegExp(`"${rubric}"\\s*:\\s*\\{([^}]*)\\}`, "i");
-                    const rubricMatch = flat.match(rubricRegex);
+                const obj = {
+                    score_global: extractField("score_global"),
+                    status: extractField("status"),
+                    texto_html: extractField("texto_html") || extractField("transcription_html") || "",
+                    transcription_html: extractField("transcription_html") || extractField("texto_html") || "",
+                    audio_response_text: extractField("audio_response_text") || "",
+                    rubriques: {}
+                };
+
+                Object.keys(window.currentRubricMaxes).forEach(rKey => {
+                    const rubricRegex = new RegExp(`"${rKey}"\\s*:\\s*\\{\\s*(.*?)\\s*\\}(?=\\s*\\,|\\s*\\})`, "i");
+                    let rubricMatch = flat.match(rubricRegex);
+                    if (!rubricMatch) {
+                        const looseRubricRegex = new RegExp(`"${rKey}"\\s*:\\s*\\{([^}]*)\\}`, "i");
+                        rubricMatch = flat.match(looseRubricRegex);
+                    }
+                    
                     if (rubricMatch) {
                         const subStr = rubricMatch[1];
-                        const fieldRegex = new RegExp(`"${field}"\\s*:\\s*"((?:[^"\\\\]|\\\\.)*?)"`, "i");
-                        let match = subStr.match(fieldRegex);
-                        if (!match) {
-                            const looseFieldRegex = new RegExp(`"${field}"\\s*:\\s*"(.*?)"`, "i");
-                            match = subStr.match(looseFieldRegex);
-                        }
-                        return match ? match[1] : "";
+                        const fieldRegex = (f) => {
+                            const m = subStr.match(new RegExp(`"${f}"\\s*:\\s*"((?:[^"\\\\]|\\\\.)*?)"`, "i")) || subStr.match(new RegExp(`"${f}"\\s*:\\s*"(.*?)"`, "i"));
+                            return m ? m[1] : "";
+                        };
+                        obj.rubriques[rKey] = {
+                            score: fieldRegex("score"),
+                            error: fieldRegex("error"),
+                            supra: fieldRegex("supra")
+                        };
                     }
-                    return "";
-                };
-
-                // Extraer consigne_check y email_check (heurística con regex de arrays)
-                const extractArray = (field) => {
-                    const arrRegex = new RegExp(`"${field}"\\s*:\\s*\\[(.*?)\\]\\s*[,}]`, "is");
-                    const arrMatch = flat.match(arrRegex);
-                    if (!arrMatch) return [];
-                    const arrBody = arrMatch[1];
-                    const objRegex = /\{([^{}]*)\}/g;
-                    const items = [];
-                    let m;
-                    while ((m = objRegex.exec(arrBody)) !== null) {
-                        const objBody = m[1];
-                        const obj = {};
-                        ['instruction', 'info', 'respectee', 'traitee', 'explication'].forEach(k => {
-                            const r = new RegExp(`"${k}"\\s*:\\s*"?([^",\\}]+)"?`, "i");
-                            const mm = objBody.match(r);
-                            if (mm) obj[k] = mm[1].trim();
-                        });
-                        if (Object.keys(obj).length > 0) items.push(obj);
-                    }
-                    return items;
-                };
-
-                const rubriquesObj = {};
-                rubricKeys.forEach(k => {
-                    rubriquesObj[k] = {
-                        score: extractRubricField(k, "score"),
-                        error: extractRubricField(k, "error"),
-                        supra: extractRubricField(k, "supra")
-                    };
                 });
-
-                return {
-                    score_global: extractField("score_global") || "--/25",
-                    status: extractField("status") || "Admis",
-                    texto_html: extractField("texto_html") || extractField("transcription_html") || flat,
-                    transcription_html: extractField("transcription_html") || extractField("texto_html") || flat,
-                    audio_response_text: extractField("audio_response_text") || "",
-                    consigne_check: extractArray("consigne_check"),
-                    email_check: extractArray("email_check"),
-                    rubriques: rubriquesObj
-                };
+                return obj;
             }
         };
 
-        window.mostrarEvaluacionSophia = async function(jsonRaw) {
-            // Cargar rúbrica para conocer las claves y sus puntajes máximos
-            const rubrica = await window.cargarRubrica(currentLevel, 'PE');
-            const esquema = window.construirEsquemaRubrica(rubrica);
-            const data = window.parseSophiaJSON(jsonRaw, esquema);
-            const idioma = window.idiomaSegunNivel(currentLevel);
-            const etiquetas = window.etiquetasUI(idioma);
-            const totalMaxNivel = window.obtenerTotalMaximo(currentLevel, 'PE');
-            const totalReal = data.score_global && data.score_global.includes('/')
-                ? data.score_global
-                : `${data.score_global || '--'}/${totalMaxNivel}`;
+        window.mostrarEvaluacionSophia = function(jsonRaw) {
+            const data = window.parseSophiaJSON(jsonRaw);
+            const isLevelA = currentLevel.startsWith('A');
+
+            const titleErrors = document.getElementById('lbl-title-errors');
+            const titleSupra = document.getElementById('lbl-title-supra');
+            if (titleErrors) titleErrors.innerHTML = isLevelA ? `<i class="fas fa-exclamation-circle"></i> Lo que no va:` : `<i class="fas fa-exclamation-circle"></i> Ce qui ne va pas:`;
+            if (titleSupra) titleSupra.innerHTML = isLevelA ? `<i class="fas fa-arrow-alt-circle-up"></i> Objetivo Supra:` : `<i class="fas fa-arrow-alt-circle-up"></i> Objectif Supra:`;
+
+            let scoreObtenido = 0;
+            let scoreMaximoTotal = 0;
+            let totalEndessous = 0;
+            let totalRubricasContadas = 0;
+
+            const rubricsBar = document.getElementById('sophia-rubrics-bar');
+            
+            // Construcción de la Grilla Oficial (Tabla 4 columnas)
+            let tableHTML = `<table class="delf-official-grid">
+                <thead>
+                    <tr>
+                        <th class="col-critere">Critère d'évaluation</th>
+                        <th class="col-check">Non répondu (0)</th>
+                        <th class="col-check">En dessous du niveau</th>
+                        <th class="col-check">Au niveau ciblé</th>
+                        <th class="col-score">Note attribuée</th>
+                    </tr>
+                </thead>
+                <tbody>`;
+
+            if (data.rubriques && Object.keys(data.rubriques).length > 0) {
+                Object.keys(data.rubriques).forEach(key => {
+                    let rData = data.rubriques[key];
+                    let s = parseFloat(rData.score) || 0;
+                    let m = window.currentRubricMaxes[key] || 5;
+                    
+                    scoreObtenido += s;
+                    scoreMaximoTotal += m;
+                    totalRubricasContadas++;
+
+                    let porcentajeRubro = (s / m);
+                    if (rData.error && (rData.error.toLowerCase().includes('en dessous') || porcentajeRubro < 0.5)) {
+                        totalEndessous++;
+                    }
+
+                    const nomBoton = window.currentRubricNames[key] || key;
+                    
+                    // Lógica estricta de cruces (X)
+                    let mark0 = s === 0 ? '<i class="fas fa-times" style="color:#001530; font-size:1.3rem;"></i>' : '';
+                    let markDessous = (s > 0 && porcentajeRubro < 0.5) ? '<i class="fas fa-times" style="color:#001530; font-size:1.3rem;"></i>' : '';
+                    let markAuNiveau = (porcentajeRubro >= 0.5) ? '<i class="fas fa-times" style="color:#001530; font-size:1.3rem;"></i>' : '';
+
+                    tableHTML += `
+                    <tr class="rubric-row-item" data-rubric="${key}">
+                        <td class="col-critere">${nomBoton}</td>
+                        <td class="col-check">${mark0}</td>
+                        <td class="col-check" style="background:${markDessous ? '#fce8e6' : 'transparent'};">${markDessous}</td>
+                        <td class="col-check" style="background:${markAuNiveau ? '#e6f4ea' : 'transparent'};">${markAuNiveau}</td>
+                        <td class="col-score">${s} / ${m}</td>
+                    </tr>`;
+                });
+            }
+            
+            tableHTML += `</tbody></table>`;
+            if (rubricsBar) rubricsBar.innerHTML = tableHTML;
+
+            let porcentajeGlobal = scoreMaximoTotal > 0 ? (scoreObtenido / scoreMaximoTotal) * 100 : 0;
+            let statusCalculado = "Non admis";
+            
+            if (totalEndessous === totalRubricasContadas && totalRubricasContadas > 0) {
+                statusCalculado = "Non admis"; 
+            } else if (porcentajeGlobal >= 60) {
+                statusCalculado = "Réussi";
+            } else if (porcentajeGlobal >= 50) {
+                statusCalculado = "Admis";
+            }
+
+            data.score_global = `${scoreObtenido.toFixed(1)}/${scoreMaximoTotal.toFixed(1)}`;
+            data.status = statusCalculado;
 
             const scoreEl = document.getElementById('sophia-global-score');
-            if (scoreEl) scoreEl.innerText = totalReal;
+            if (scoreEl) scoreEl.innerText = data.score_global;
 
             const badgeEl = document.getElementById('sophia-global-badge');
             if (badgeEl) {
-                badgeEl.innerText = (data.status || '--').replace('Admis', etiquetas.admis).replace('Non admis', etiquetas.non_admis).replace('Supra', etiquetas.supra).replace('Niveau Supra', etiquetas.supra);
-                if ((data.status || '').includes('Supra') || (data.status || '').includes('Admis') && totalReal.startsWith('1')) {
-                    badgeEl.style.background = '#137333';
-                } else if ((data.status || '').includes('Admis')) {
-                    badgeEl.style.background = '#1a73e8';
-                } else {
-                    badgeEl.style.background = '#d93025';
-                }
-            }
-
-            // Renderizar botones de rúbrica dinámicamente
-            const rubricsBar = document.getElementById('sophia-rubrics-bar');
-            if (rubricsBar && esquema) {
-                const etiquetasRubriques = etiquetas.rubrique_label_es;
-                let htmlBtns = '';
-                Object.keys(esquema).forEach(k => {
-                    const nombreCriterio = etiquetasRubriques[k] || k.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
-                    const max = esquema[k].note_maximale;
-                    htmlBtns += `<button type="button" class="btn-rubric" data-rubric="${k}">${nombreCriterio} <span style="opacity:0.7; font-size:0.8em;">(${max} pts)</span></button>`;
-                });
-                rubricsBar.innerHTML = htmlBtns;
+                badgeEl.innerText = data.status;
+                if (data.status === "Non admis") badgeEl.style.background = '#d93025';
+                else if (data.status === "Réussi") badgeEl.style.background = '#137333';
+                else badgeEl.style.background = '#1a73e8';
             }
 
             const container = document.getElementById('sophia-verdict-text');
-            if (container) {
-                container.dataset.evaluation = JSON.stringify(data.rubriques || {});
-                container.dataset.esquema = JSON.stringify(esquema || {});
-            }
+            if (container) container.dataset.evaluation = JSON.stringify(data.rubriques || {});
             
             const mirror = document.getElementById('sophia-text-mirror');
             if (mirror) {
-                mirror.innerHTML = data.texto_html || data.transcription_html || `
-                    <p style="margin:0; font-weight:600; color:var(--oxford);">${etiquetas.analisis_listo}</p>`;
-            }
-
-            // Renderizar consigne_check
-            const consigneBox = document.getElementById('sophia-consigne-check');
-            const consigneLista = document.getElementById('sophia-consigne-lista');
-            if (consigneBox && consigneLista) {
-                const checks = [];
-                if (Array.isArray(data.consigne_check) && data.consigne_check.length > 0) {
-                    data.consigne_check.forEach(item => {
-                        const isOk = (item.respectee === true || item.respectee === 'true' || item.respectee === '1');
-                        checks.push({
-                            tipo: 'instruccion',
-                            texto: item.instruction || item.instruccion || '',
-                            cumplido: isOk,
-                            explicacion: item.explication || item.explicacion || ''
-                        });
-                    });
-                }
-                if (Array.isArray(data.email_check) && data.email_check.length > 0) {
-                    data.email_check.forEach(item => {
-                        const isOk = (item.traitee === true || item.traitee === 'true' || item.traitee === '1');
-                        checks.push({
-                            tipo: 'info',
-                            texto: item.info || '',
-                            cumplido: isOk,
-                            explicacion: item.explication || item.explicacion || ''
-                        });
-                    });
-                }
-                if (checks.length > 0) {
-                    consigneBox.style.display = 'block';
-                    let htmlChecks = '';
-                    checks.forEach(c => {
-                        const icon = c.cumplido 
-                            ? '<i class="fas fa-check-circle" style="color:#137333;"></i>' 
-                            : '<i class="fas fa-times-circle" style="color:#d93025;"></i>';
-                        const bg = c.cumplido ? '#f0f9f3' : '#fef5f4';
-                        const borderColor = c.cumplido ? '#137333' : '#d93025';
-                        const label = c.tipo === 'info' ? etiquetas.info_label : etiquetas.instruccion_label;
-                        htmlChecks += `
-                        <div style="background:${bg}; border-left:3px solid ${borderColor}; padding:10px 12px; margin-bottom:8px; border-radius:4px; font-size:0.88rem;">
-                            <div style="display:flex; align-items:flex-start; gap:8px; margin-bottom:4px;">
-                                ${icon}
-                                <strong style="color:#333;">${label}:</strong>
-                                <span style="flex:1; color:#222;">${(c.texto || '').replace(/'/g, '&#39;')}</span>
-                            </div>
-                            ${c.explicacion ? `<div style="margin-left:24px; color:#555; font-style:italic; line-height:1.4;">${c.explicacion.replace(/'/g, '&#39;')}</div>` : ''}
-                        </div>`;
-                    });
-                    consigneLista.innerHTML = htmlChecks;
-                } else {
-                    consigneBox.style.display = 'none';
-                }
+                mirror.innerHTML = data.texto_html || data.transcription_html || `<p>Analyse générée.</p>`;
             }
             
             const sBox = document.getElementById('sophia-box');
             if (sBox) sBox.style.display = "block";
 
+            if (data.audio_response_text && window.currentSkill === "PO") {
+                window.sophiaHablarFeedback(data.audio_response_text);
+            }
+
+            // Selecciona la primera fila de la tabla automáticamente para iluminar el primer rubro
             setTimeout(() => {
-                const primerBoton = document.querySelector('.btn-rubric');
-                if (primerBoton) primerBoton.click();
+                const primeraFila = document.querySelector('.rubric-row-item');
+                if (primeraFila) primeraFila.click();
             }, 120);
-        };
+        };                       
 
         let poRecognitionInstance = null;
         let poRecordingActiveState = false;
@@ -2110,11 +1914,7 @@
             const loadBtn = e.target.closest('.load-retro-btn');
             if (loadBtn) {
                 const rawJson = decodeURIComponent(loadBtn.dataset.json);
-                if (window.currentSkill === "PO") {
-                    window.mostrarEvaluacionOralSophia(rawJson);
-                } else {
-                    window.mostrarEvaluacionSophia(rawJson);
-                }
+                window.mostrarEvaluacionSophia(rawJson);
                 const sBox = document.getElementById('sophia-box');
                 if (sBox) {
                     sBox.style.display = "block";
@@ -2123,72 +1923,57 @@
                 return;
             }
 
-            const rubricBtn = e.target.closest('.btn-rubric');
-            if (rubricBtn) {
-                const rubricKey = rubricBtn.dataset.rubric;
+            // Evento para cuando el alumno da clic en una fila de la Grilla (Resaltado Inteligente)
+            const rubricRow = e.target.closest('.rubric-row-item');
+            if (rubricRow) {
+                const rubricKey = rubricRow.dataset.rubric;
                 const container = document.getElementById('sophia-verdict-text');
                 if (!container || !container.dataset.evaluation) return;
                 
                 const rubriques = JSON.parse(container.dataset.evaluation);
-                const esquema = container.dataset.esquema ? JSON.parse(container.dataset.esquema) : {};
-                const targetKey = rubricKey ? rubricKey.toLowerCase().trim() : "";
-                const actualKey = Object.keys(rubriques).find(k => k.toLowerCase().trim() === targetKey);
-                const rubricData = actualKey ? rubriques[actualKey] : null;
-                const maxPuntos = actualKey && esquema[actualKey] ? esquema[actualKey].note_maximale : '';
-                const idioma = window.idiomaSegunNivel(currentLevel);
-                const etiquetas = window.etiquetasUI(idioma);
+                const rubricData = rubriques[rubricKey] || null;
                 
-                document.querySelectorAll('.btn-rubric').forEach(b => {
-                    b.style.background = '#fff';
-                    b.style.color = 'var(--oxford)';
-                    b.style.borderColor = '#ccc';
-                });
-                rubricBtn.style.background = 'var(--oxford)';
-                rubricBtn.style.color = '#fff';
-                rubricBtn.style.borderColor = 'var(--oxford)';
+                // Limpiar filas activas y resaltar la fila actual
+                document.querySelectorAll('.rubric-row-item').forEach(r => r.classList.remove('active-rubric'));
+                rubricRow.classList.add('active-rubric');
                 
                 const detailsPanel = document.getElementById('sophia-feedback-details');
                 const errBox = document.getElementById('sophia-feedback-errors');
                 const supraBox = document.getElementById('sophia-feedback-supra');
                 
-                // Actualizar títulos según idioma
-                const titErrores = document.getElementById('sophia-errores-titulo');
-                const titSupra = document.getElementById('sophia-supra-titulo');
-                if (titErrores) titErrores.innerText = etiquetas.lo_que_no_va;
-                if (titSupra) titSupra.innerText = etiquetas.objetivo_supra;
-                
                 if (rubricData) {
                     if (detailsPanel) detailsPanel.style.display = 'flex';
-                    const scoreLabel = maxPuntos ? ` (${maxPuntos} pts)` : '';
-                    const textoError = rubricData.error || (idioma === 'es' ? 'Sin errores detectados.' : 'Aucune erreur détectée.');
-                    const textoSupra = rubricData.supra || (idioma === 'es' ? 'Tu producción es perfecta.' : 'Votre production est parfaite.');
-                    if (errBox) errBox.innerHTML = `<strong>${idioma === 'es' ? 'Puntaje' : 'Score'}: ${rubricData.score || '--'}${scoreLabel}</strong><br>${textoError}`;
-                    if (supraBox) supraBox.innerHTML = textoSupra;
+                    let maxNota = window.currentRubricMaxes[rubricKey] || 5;
+                    if (errBox) errBox.innerHTML = `<strong>[Score: ${rubricData.score}/${maxNota}]</strong><br>${rubricData.error || 'Aucune erreur détectée.'}`;
+                    if (supraBox) supraBox.innerHTML = rubricData.supra || 'Production adéquate.';
                 }
                 
+                // Manejo de colores de errores en el texto: Focus vs Faded
                 document.querySelectorAll('#sophia-text-mirror .sophia-error').forEach(span => {
-                    const spanKey = span.dataset.rubric ? span.dataset.rubric.toLowerCase().trim() : "";
-                    if (spanKey === targetKey) {
-                        span.style.background = '#fce8e6';
-                        span.style.color = '#a51d24';
-                        span.style.borderBottom = '2px dashed #d93025';
-                        span.style.padding = '2px 4px';
-                        span.style.borderRadius = '4px';
+                    if (span.dataset.rubric === rubricKey) {
+                        span.classList.add('active-error');
+                        span.classList.remove('inactive-error');
                     } else {
-                        span.style.background = 'transparent';
-                        span.style.color = 'inherit';
-                        span.style.borderBottom = 'none';
-                        span.style.padding = '0';
-                        span.style.borderRadius = '0';
+                        span.classList.remove('active-error');
+                        span.classList.add('inactive-error');
                     }
                 });
                 return;
             }
             
+            // ==========================================
+            // SUBMIT PRODUCTION ÉCRITE (PE)
+            // ==========================================
             if (e.target && (e.target.id === 'btn-submit-pe' || e.target.closest('#btn-submit-pe'))) {
                 const elInputRedaccion = document.getElementById('pe-student-response');
                 const txtAlumno = elInputRedaccion ? elInputRedaccion.value.trim() : "";
                 if (!txtAlumno) return;
+
+                const totalPalabras = txtAlumno.split(/\s+/).length;
+                if (currentLevel === "A1" && totalPalabras < 19) {
+                    alert("Votre production contient moins de 19 mots. Elle ne respecte pas les critères minimaux requis pour le niveau DELF A1.");
+                    return;
+                }
 
                 if (peTimerInterval) clearInterval(peTimerInterval);
 
@@ -2198,28 +1983,20 @@
                 const btnSubmitPE = document.getElementById('btn-submit-pe');
                 if (btnSubmitPE) {
                     btnSubmitPE.disabled = true;
-                    btnSubmitPE.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Analyse en cours...`;
+                    btnSubmitPE.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Analyse...`;
                     btnSubmitPE.style.background = "#7f8c8d";
                 }
                 
                 const sBox = document.getElementById('sophia-box');
                 if (sBox) sBox.style.display = "block";
 
-                const scoreEl = document.getElementById('sophia-global-score');
-                if (scoreEl) scoreEl.innerText = "--/25";
-                const badgeEl = document.getElementById('sophia-global-badge');
-                if (badgeEl) badgeEl.innerText = "Calcul...";
-
                 const mirror = document.getElementById('sophia-text-mirror');
                 if (mirror) {
                     mirror.innerHTML = `<div style="text-align:center; padding:25px; color:#555;">
                         <i class="fas fa-robot fa-spin" style="font-size:2.5rem; color:var(--gold); margin-bottom:15px;"></i>
-                        <br><strong>Sophia examine votre production...</strong><br>Évaluation en cours. Veuillez patienter.
+                        <br><strong>Sophia examine votre production...</strong>
                     </div>`;
                 }
-
-                const detailsPanel = document.getElementById('sophia-feedback-details');
-                if (detailsPanel) detailsPanel.style.display = 'none';
 
                 const numeroUnidadMenuH = currentUnitId;
                 const numeroActividadMenuH = currentExerciseIndex + 1;
@@ -2230,181 +2007,51 @@
                     const consignaExamen = ejActivoPE?.instruccion || "";
                     const documentoBaseExamen = ejActivoPE?.texto_lectura || "";
 
-                    const criteriosDelineados = await window.cargarRubrica(currentLevel, 'PE');
-                    if (!criteriosDelineados) throw new Error("Fichier de rubrique introuvable");
+                    const respuestaRubrica = await fetch(`rubricas/${currentLevel}_PE.json`);
+                    if (!respuestaRubrica.ok) throw new Error("Fichier de rubrique introuvable");
+                    const criteriosDelineados = await respuestaRubrica.json();
 
-                    const totalMaxPE = window.obtenerTotalMaximo(currentLevel, 'PE');
-                    const idioma = window.idiomaSegunNivel(currentLevel);
-                    const esEspanol = idioma === 'es';
+                    const grille = criteriosDelineados.grille_evaluation_officielle || criteriosDelineados.rubriques || criteriosDelineados;
+                    let rubricasJsonEstructura = {};
+                    
+                    const isLevelA = currentLevel.startsWith('A');
+                    const idiomaFeedback = isLevelA ? "Español" : "Francés";
 
-                    // =============================
-                    // APLICAR REGLA DE PENALIZACIÓN DE MOTS
-                    // =============================
-                    const penal = window.aplicarReglaMots(txtAlumno, criteriosDelineados);
-                    if (penal.skipIA) {
-                        // No llamar a la IA: construir respuesta local con score 0
-                        const rubriquesVacias = {};
-                        const esquemaRub = window.construirEsquemaRubrica(criteriosDelineados);
-                        Object.keys(esquemaRub).forEach(k => {
-                            rubriquesVacias[k] = {
-                                score: `0/${esquemaRub[k].note_maximale}`,
-                                error: esEspanol ? `Tu texto tiene ${penal.palabras} palabras, menos de las ${penal.umbral} requeridas. La rúbrica oficial indica que en este caso todos los criterios reciben 0 puntos.` : `Votre texte contient ${penal.palabras} mots, moins que les ${penal.umbral} requis. La règle officielle impose 0 à tous les critères dans ce cas.`,
-                                supra: esEspanol ? 'Para la próxima, asegúrate de alcanzar el número mínimo de palabras antes de enviar.' : 'Pour la prochaine fois, veillez à atteindre le nombre minimum de mots avant de soumettre.'
-                            };
-                        });
-                        const respuestaMaqueta = {
-                            score_global: `0/${totalMaxPE}`,
-                            status: 'Non admis',
-                            texto_html: txtAlumno,
-                            consigne_check: [],
-                            email_check: [],
-                            rubriques: rubriquesVacias
-                        };
-                        const respuestaString = JSON.stringify(respuestaMaqueta);
-                        window.mostrarEvaluacionSophia(respuestaString);
-                        if (btnSubmitPE) {
-                            btnSubmitPE.disabled = false;
-                            btnSubmitPE.innerHTML = `<i class="fas fa-paper-plane"></i> ${window.etiquetasUI(idioma).enviar_pe}`;
-                            btnSubmitPE.style.background = "var(--oxford)";
-                        }
-                        // Marcar como completo y guardar
-                        if (urlId !== "admin_preview" && docRefValidado) {
-                            const llaveProgreso = `${currentUnitId}_${window.currentSkill}_${currentExerciseIndex}`;
-                            mapaAciertosAlumno[llaveProgreso] = true;
-                            await setDoc(docRefValidado, { [`mapa_aciertos.${llaveProgreso}`]: true }, { merge: true });
-                            const historialRef = collection(db, "Usuarios", urlId, "HistorialSophia");
-                            const ahora = new Date();
-                            await addDoc(historialRef, {
-                                fecha: ahora.toISOString().split('T')[0],
-                                hora_registro: ahora.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit', second: '2-digit' }),
-                                timestamp: ahora.getTime(),
-                                tipo: "Production_Escrita",
-                                habilidad: "PE",
-                                texto_alumno: txtAlumno,
-                                respuesta_ia: respuestaString,
-                                unidad: numeroUnidadMenuH,
-                                actividad: numeroActividadMenuH,
-                                intento: 1
-                            });
-                        }
-                        await calcularTodasLasNotasHabilidades();
-                        return;
-                    }
-
-                    // =============================
-                    // CONSTRUIR ESQUEMA JSON DINÁMICO CON PUNTAJES REALES
-                    // =============================
-                    const esquemaRub = window.construirEsquemaRubrica(criteriosDelineados);
-                    const rubriquesEsquema = {};
-                    Object.keys(esquemaRub).forEach(k => {
-                        rubriquesEsquema[k] = {
-                            note_max: esquemaRub[k].note_maximale,
-                            score: `Note /${esquemaRub[k].note_maximale} (par exemple ${Math.round(esquemaRub[k].note_maximale * 0.6 * 10) / 10}/${esquemaRub[k].note_maximale})`,
-                            error: esEspanol ? `Análisis detallado redactado exclusivamente en español (sin mezclar francés), justificando la nota.` : `Analyse détaillée rédigée exclusivement en français, justifiant la note.`,
-                            supra: esEspanol ? `Consejo técnico concreto redactado exclusivamente en español, indicando cómo mejorar.` : `Conseil technique concret rédigé exclusivement en français, indiquant comment progresser.`
+                    Object.keys(grille).forEach(k => {
+                        window.currentRubricMaxes[k] = parseFloat(grille[k].note_maximale) || 5;
+                        window.currentRubricNames[k] = grille[k].nom_complet || k;
+                        rubricasJsonEstructura[k] = {
+                            "score": `Note numérique entre 0 et ${grille[k].note_maximale}`,
+                            "error": `Analyse détaillée rédigée exclusivement en ${idiomaFeedback}`,
+                            "supra": `Donne des exemples concrets tirés du référentiel: liste exactement 3 connecteurs, 4 mots de vocabulaire thématique, ou les temps verbaux précis à utiliser pour ce critère. Rédigé en ${idiomaFeedback}`
                         };
                     });
 
-                    // Extraer instrucciones puntuales de la consigna (heurística: oraciones que empiezan con imperativo o contienen "vous devez", "il faut", "debes", "tienes que")
-                    const consignaParaAnalisis = consignaExamen || '';
-                    const emailCheckNecesario = !!documentoBaseExamen;
+                    const promptFinal = `Tu es Sophia, examinatrice officielle FEI du DELF. Évalue la copie de ${nombreAlumno}.
+                    
+CONSIGNE DE L'EXAMEN: "${consignaExamen}"
+DOCUMENT D'APPUI: "${documentoBaseExamen}"
 
-                    const estructuraJsonRequerida = {
-                        "score_global": `La note globale sur ${totalMaxPE} (Ex: ${Math.round(totalMaxPE * 0.7 * 10) / 10}/${totalMaxPE})`,
-                        "status": esEspanol ? "Admis / No admitido / Nivel Supra (en español)" : "Admis / Non admis / Niveau Supra",
-                        "texto_html": esEspanol
-                            ? `El texto completo original del alumno en español, envolviendo CADA error en una etiqueta html: <span class='sophia-error' data-rubric='[${Object.keys(esquemaRub).join(', ')}]'>error</span>`
-                            : `Le texte original complet de l'élève en enveloppant CHAQUE erreur dans une balise html: <span class='sophia-error' data-rubric='[${Object.keys(esquemaRub).join(', ')}]'>erreur</span>`,
-                        "consigne_check": esEspanol
-                            ? `Array JSON. Para CADA instrucción detectada en la consigna, un objeto con: {instruction: 'texto de la instrucción', respectee: true/false, explication: 'justificación en español'}. Ejemplo: [{instruction:'Mencionar un lugar', respectee: true, explication:'El alumno menciona el parque central'}]`
-                            : `Array JSON. Pour CHAQUE instruction détectée dans la consigne, un objet avec: {instruction: 'texte de l\\'instruction', respectee: true/false, explication: 'justification'}. Exemple: [{instruction:'Mentionner un lieu', respectee: true, explication:'L\\'élève mentionne le parc central'}]`,
-                        "email_check": emailCheckNecesario ? (esEspanol
-                            ? `Array JSON. Para CADA información clave del documento fuente, un objeto con: {info: 'dato del documento', traitee: true/false, explication: 'justificación'}. Ejemplo: [{info:'Fecha de la cita: 15 de junio', traitee: true, explication:'El alumno confirma la fecha'}]`
-                            : `Array JSON. Pour CHAQUE information clé du document source, un objet avec: {info: 'donnée du document', traitee: true/false, explication: 'justification'}. Exemple: [{info:'Date du rendez-vous: 15 juin', traitee: true, explication:'L\\'élève confirme la date'}]`
-                        ) : "Array vacío [] (no hay documento fuente en este ejercicio)",
-                        "rubriques": rubriquesEsquema
-                    };
+RÉFÉRENTIEL ATTENDU DU NIVEAU A RESPECTER (Injection Directe):
+${JSON.stringify(criteriosDelineados.referentiel_attendu || {})}
 
-                    // =============================
-                    // PROMPT IDIOMA-AWARE
-                    // =============================
-                    const instrIdioma = esEspanol
-                        ? `1. Escribe TODOS tus análisis, errores, críticas y consejos EXCLUSIVAMENTE en ESPAÑOL. NO mezcles francés, excepto en los ejemplos del texto del alumno que se citen textualmente.
-2. NO uses comillas dobles (") nunca, solo comillas simples (') para no romper el JSON.
-3. NO uses bloques markdown \`\`\`json; empieza directamente con {.
-4. Devuelve un objeto JSON válido respetando EXACTAMENTE esta estructura:`
-                        : `1. Rédige TOUTES tes analyses, erreurs, critiques et conseils EXCLUSIVEMENT en français.
-2. N'utilise JAMAIS de guillemets doubles ("), uniquement des guillemets simples (') pour ne pas casser le JSON.
-3. N'utilise PAS de balises markdown \`\`\`json, commence directement par {.
-4. Retourne un objet JSON valide respectant EXACTEMENT cette structure :`;
+CRITÈRES D'ÉVALUATION OFFICIELS:
+${JSON.stringify(grille)}
 
-                    const promptFinal = `${esEspanol
-                        ? `Eres Sophia, una examinadora oficial nativa del DELF (France Éducation International). Actúas como profesora bilingüe para evaluar la producción escrita de un alumno hispanohablante del nivel ${currentLevel}. Tu retroalimentación DEBE ser 100% en español para que el alumno comprenda sus errores.
-IDIOOMA DE REDACCIÓN: ESPAÑOL. (Solo el texto del alumno y los descriptores oficiales del nivel permanecen en francés.)`
-                        : `Tu es Sophia, une examinatrice officielle et native du DELF/DALF (France Éducation International).
-Évalue la production écrite de l'élève nommé(e) ${nombreAlumno}.`}
-
-${esEspanol ? 'NOMBRE DEL ALUMNO' : "NOM DE L'ÉLÈVE"} : ${nombreAlumno}
-NIVEAU / NIVEL : ${currentLevel}
-NOTE TOTALE POSSIBLE / NOTA TOTAL POSIBLE : ${totalMaxPE} POINTS
-
-=========================================================
-CONSIGNE / INSTRUCCIONES DEL EJERCICIO (RESPETAR ESTRICTAMENTE) :
-${consignaParaAnalisis}
-=========================================================
-
-${documentoBaseExamen ? `=========================================================
-DOCUMENT SOURCE / DOCUMENTO FUENTE (correo, anuncio, artículo, etc. que el alumno DEBE leer y responder) :
-${documentoBaseExamen}
-=========================================================
-` : ''}
-=========================================================
-GRILLE OFFICIELLE / GRILLA OFICIAL DEL NIVEAU ${currentLevel} :
-${JSON.stringify(criteriosDelineados.grille_evaluation_officielle, null, 2)}
-=========================================================
-
-${criteriosDelineados.referentiel_attendu ? `=========================================================
-RÉFÉRENTIEL ATTENDU ${currentLevel} (lo que el alumno DEBE dominar en este nivel) :
-${JSON.stringify(criteriosDelineados.referentiel_attendu, null, 2)}
-=========================================================
-` : ''}
-${criteriosDelineados.regle_penalisation_mots ? `=========================================================
-RÈGLE DE PÉNALISATION OFFICIELLE / REGLA DE PENALIZACIÓN OFICIAL :
-${criteriosDelineados.regle_penalisation_mots}
-=========================================================
-` : ''}
-TEXTO DEL ALUMNO / TEXTE DE L'ÉLÈVE À ÉVALUER :
+PRODUCTION DE L'ÉLÈVE:
 ${JSON.stringify(txtAlumno)}
 
-=========================================================
-INSTRUCTIONS SPÉCIFIQUES POUR L'ÉVALUATION / INSTRUCCIONES ESPECÍFICAS :
+CONSIGNES STRUCTURALES ABSOLUES:
+1. Rédige l'entièreté des rubriques 'error' et 'supra' exclusivement en ${idiomaFeedback}.
+2. Dans la rubrique 'supra', agis comme un tuteur très direct: utilise des listes à puces (-) pour donner le vocabulaire exact, les conjugaisons et les connecteurs logiques (ex: 'D'abord', 'Néanmoins') que l'élève aurait dû utiliser selon le référentiel de son niveau et le thème du texte.
+3. Utilise uniquement des guillemets simples (').
+4. Ne mets pas de balises markdown globales. Retourne exclusivement la structure JSON demandée:
+{
+    "texto_html": "Texte original de l'élève avec balises: <span class='sophia-error' data-rubric='[Clave del rubro exacto]'>mot_erroné</span>.",
+    "rubriques": ${JSON.stringify(rubricasJsonEstructura)}
+}`;
 
-A) COTE CONSIGNE: Analyse la consigna instrucción por instrucción. Para CADA instrucción de la consigna (ej. "écris un mail à Paul pour...", "mentionne un lieu", "propose une activité", "donne une date précise"), verifica si el alumno la cumplió. Reporta TODAS las instrucciones en consigne_check con respectee=true/false.
-
-${documentoBaseExamen ? `B) COTE DOCUMENT SOURCE: Si hay un correo/anuncio/documento, identifica las 3 a 5 INFORMACIONES CLAVE (nombres, fechas, lugares, peticiones) que el alumno DEBE retomar. Reporta cada una en email_check con traitee=true/false. Esto es CRUCIAL porque muchos alumnos no leen el documento.
-
-C) COTE ERREURS DANS LE TEXTE: Devuelve el texto completo del alumno en texto_html, pero envolviendo CADA error (ortografía, gramática, léxico, coherencia, etc.) en: <span class='sophia-error' data-rubric='${esEspanol ? 'CLAVE_DEL_CRITERIO_AQUI' : 'CLÉ_DE_LA_RUBRIQUE_ICI'}'>palabra o frase errónea</span>. Usa una de las claves: ${Object.keys(esquemaRub).join(', ')}.
-
-D) COTE GRILLE: Para CADA criterio de la grille_evaluation_officielle, asigna un score entre 0 y note_maximale. NO pongas siempre la nota máxima. Sé estricta y justa como una examinadora real del CIEP. Justifica brevemente en el campo "error".
-
-E) COTE SCORE GLOBAL: Suma todos los criterios. El score_global debe ser "X/${totalMaxPE}" (con el total real del nivel, NO /25 si no aplica).
-
-=========================================================
-INSTRUCTIONS DE FORMATAGE / INSTRUCCIONES DE FORMATO:
-${instrIdioma}
-
-${JSON.stringify(estructuraJsonRequerida, null, 2)}
-
-=========================================================
-DERNIER POINT / ÚLTIMO PUNTO:
-- Si el alumno NO cumple con la consigna o produce texto fuera de tema, baja la nota en conséquence.
-- Si el alumno cumple la consigna parcialmente, la nota debe reflejarlo.
-- Sé exigente pero justa, como una verdadera examinadora del DELF. El alumno debe ver claramente sus errores Y QUÉ HACER PARA MEJORAR.
-`;
-
-                    const extDocRef = await addDoc(collection(db, "generate"), {
-                        prompt: promptFinal
-                    });
+                    const extDocRef = await addDoc(collection(db, "generate"), { prompt: promptFinal });
 
                     const desvincularEscucha = onSnapshot(extDocRef, async (snapshot) => {
                         try {
@@ -2432,7 +2079,7 @@ DERNIER POINT / ÚLTIMO PUNTO:
 
                                     await addDoc(historialRef, {
                                         fecha: ahora.toISOString().split('T')[0],
-                                        hora_registro: ahora.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit', second: '2-digit' }),
+                                        hora_registro: ahora.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' }),
                                         timestamp: ahora.getTime(),
                                         tipo: "Production_Escrita",
                                         habilidad: "PE",
@@ -2444,12 +2091,9 @@ DERNIER POINT / ÚLTIMO PUNTO:
                                     });                                    
                                     
                                     const llaveProgreso = `${currentUnitId}_${window.currentSkill}_${currentExerciseIndex}`;
-                                    if (typeof mapaAciertosAlumno !== "undefined") {
-                                        mapaAciertosAlumno[llaveProgreso] = true;
-                                    }
+                                    mapaAciertosAlumno[llaveProgreso] = true;
 
-                                    const perfilUsuarioRef = doc(db, "Usuarios", urlId);
-                                    await setDoc(perfilUsuarioRef, {
+                                    await setDoc(doc(db, "Usuarios", urlId), {
                                         [`mapa_aciertos.${llaveProgreso}`]: true
                                     }, { merge: true });
 
@@ -2457,32 +2101,11 @@ DERNIER POINT / ÚLTIMO PUNTO:
                                     window.inicializarBotonHistorialIntentos();
                                     await calcularTodasLasNotasHabilidades();
                                 }
-                            } else if (snapshot.exists() && snapshot.data().status?.state === "ERROR") {
-                                desvincularEscucha();
-                                if (btnSubmitPE) {
-                                    btnSubmitPE.disabled = false;
-                                    btnSubmitPE.innerHTML = `<i class="fas fa-paper-plane"></i> Soumettre la production`;
-                                    btnSubmitPE.style.background = "var(--oxford)";
-                                }
                             }
-                        } catch (errorInterno) {
-                            desvincularEscucha();
-                            if (btnSubmitPE) {
-                                btnSubmitPE.disabled = false;
-                                btnSubmitPE.innerHTML = `<i class="fas fa-paper-plane"></i> Soumettre la production`;
-                                btnSubmitPE.style.background = "var(--oxford)";
-                            }
-                            generarMenuJerarquico();
-                        }
+                        } catch (e) { desvincularEscucha(); }
                     });
 
-                } catch (err) {
-                    if (btnSubmitPE) {
-                        btnSubmitPE.disabled = false;
-                        btnSubmitPE.innerHTML = `<i class="fas fa-paper-plane"></i> Soumettre la production`;
-                        btnSubmitPE.style.background = "var(--oxford)";
-                    }
-                }
+                } catch (err) { }
                 return;
             }
                                             
@@ -2492,27 +2115,144 @@ DERNIER POINT / ÚLTIMO PUNTO:
                     elInputRedaccion.value = "";
                     elInputRedaccion.disabled = false;
                     elInputRedaccion.style.background = "#fff";
-                    elInputRedaccion.placeholder = "Rédigez votre texte ici...";
                 }
-                const sophiaBox = document.getElementById('sophia-box');
-                if (sophiaBox) sophiaBox.style.display = "none";
-                const historialContenedor = document.getElementById('historial-intentos-container');
-                if (historialContenedor) {
-                    historialContenedor.innerHTML = "";
-                    historialContenedor.style.display = "none";
-                }
+                document.getElementById('sophia-box').style.display = "none";
                 if (peTimerInterval) clearInterval(peTimerInterval);
                 return;
             }
 
+            // ==========================================
+            // SUBMIT PRODUCTION ORALE (PO)
+            // ==========================================
+            if (e.target && (e.target.id === 'btn-submit-po' || e.target.closest('#btn-submit-po'))) {
+                const txtArea = document.getElementById('po-student-response');
+                const transcripcionAlumno = txtArea ? txtArea.value.trim() : "";
+                if (!transcripcionAlumno) return;
+
+                const btnSubmitPO = document.getElementById('btn-submit-po');
+                if (btnSubmitPO) {
+                    btnSubmitPO.disabled = true;
+                    btnSubmitPO.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Analyse...`;
+                    btnSubmitPO.style.background = "#7f8c8d";
+                }
+                
+                document.getElementById('sophia-box').style.display = "block";
+                const mirror = document.getElementById('sophia-text-mirror');
+                if (mirror) {
+                    mirror.innerHTML = `<div style="text-align:center; padding:25px; color:#555;">
+                        <i class="fas fa-robot fa-spin" style="font-size:2.5rem; color:var(--gold); margin-bottom:15px;"></i>
+                        <br><strong>Sophia analyse votre production orale...</strong>
+                    </div>`;
+                }
+
+                try {
+                    const saludoH3 = document.getElementById('student-welcome')?.innerText || "";
+                    const nombreAlumno = saludoH3.replace("Élève:", "").trim() || "l'élève";
+                    
+                    const ejerciciosPO = unidadesCache[currentUnitId]?.PO || unidadesCache[currentUnitId]?.po || [];
+                    const ejActivoPO = ejerciciosPO[currentExerciseIndex];
+                    const consignaExamenPO = ejActivoPO?.instruccion || "";
+                    const documentoBasePO = ejActivoPO?.texto_lectura || "";
+
+                    const respuestaRubrica = await fetch(`rubricas/${currentLevel}_PO.json`);
+                    if (!respuestaRubrica.ok) throw new Error("Fichier de rubrique orale introuvable");
+                    const criteriosDelineados = await respuestaRubrica.json();
+
+                    const grille = criteriosDelineados.grille_evaluation_officielle || criteriosDelineados.rubriques || criteriosDelineados;
+                    let rubricasJsonEstructura = {};
+                    
+                    const isLevelA = currentLevel.startsWith('A');
+                    const idiomaFeedback = isLevelA ? "Español" : "Francés";
+
+                    Object.keys(grille).forEach(k => {
+                        window.currentRubricMaxes[k] = parseFloat(grille[k].note_maximale) || 5;
+                        window.currentRubricNames[k] = grille[k].nom_complet || k;
+                        rubricasJsonEstructura[k] = {
+                            "score": `Note numérique entre 0 et ${grille[k].note_maximale}`,
+                            "error": `Analyse détaillée rédigée exclusivement en ${idiomaFeedback}`,
+                            "supra": `Donne des exemples concrets tirés du référentiel: liste exactement 3 connecteurs, 4 mots de vocabulaire thématique, ou les temps verbaux précis à utiliser pour ce critère. Rédigé en ${idiomaFeedback}`
+                        };
+                    });
+
+                    const promptFinal = `Tu es Sophia, examinatrice native FEI du DELF. Évalue la production orale spontanée de ${nombreAlumno}.
+                    
+CONSIGNE ORALE: "${consignaExamenPO}"
+DOCUMENT SUPPORT: "${documentoBasePO}"
+
+RÉFÉRENTIEL ATTENDU DU NIVEAU A RESPECTER (Injection Directe):
+${JSON.stringify(criteriosDelineados.referentiel_attendu || {})}
+
+CRITÈRES D'ÉVALUATION ORAUX DYNAMIQUES:
+${JSON.stringify(grille)}
+
+TRANSCRIPTION AUDIO DE L'ÉLÈVE:
+${JSON.stringify(transcripcionAlumno)}
+
+CONSIGNES STRUCTURALES ABSOLUES:
+1. Rédige l'entièreté des rubriques 'error' et 'supra' exclusivement en ${idiomaFeedback}.
+2. Dans la rubrique 'supra', agis comme un tuteur très direct: utilise des listes à puces (-) pour donner le vocabulaire exact, les conjugaisons et les connecteurs logiques (ex: 'D'abord', 'Néanmoins') que l'élève aurait dû utiliser selon le référentiel de son niveau et le thème de la situation.
+3. Utilise uniquement des guillemets simples (').
+4. Renvoie un format JSON strict sans blocs markdown globaux:
+{
+    "transcription_html": "Transcription révisée avec balises: <span class='sophia-error' data-rubric='[Clave del rubro exacto]'>faute</span>.",
+    "audio_response_text": "Commentaire oral de synthèse en français pour lecture audio.",
+    "rubriques": ${JSON.stringify(rubricasJsonEstructura)}
+}`;
+
+                    const extDocRef = await addDoc(collection(db, "generate"), { prompt: promptFinal });
+
+                    const desvincularEscuchaOral = onSnapshot(extDocRef, async (snapshot) => {
+                        if (snapshot.exists() && snapshot.data().response) {
+                            desvincularEscuchaOral();
+                            const respuestaIA = snapshot.data().response;
+                            window.mostrarEvaluacionSophia(respuestaIA);
+
+                            if (btnSubmitPO) {
+                                btnSubmitPO.disabled = false;
+                                btnSubmitPO.innerHTML = `<i class="fas fa-paper-plane"></i> Évaluer ma production orale`;
+                                btnSubmitPO.style.background = "var(--oxford)";
+                            }
+
+                            const llaveProgreso = `${currentUnitId}_${window.currentSkill}_${currentExerciseIndex}`;
+                            mapaAciertosAlumno[llaveProgreso] = true;
+
+                            if (urlId !== "admin_preview" && docRefValidado) {
+                                await setDoc(doc(db, "Usuarios", urlId), { [`mapa_aciertos.${llaveProgreso}`]: true }, { merge: true });
+
+                                const historialRef = collection(db, "Usuarios", urlId, "HistorialSophia");
+                                const qIntentos = query(historialRef, where("unidad", "==", currentUnitId), where("actividad", "==", currentExerciseIndex + 1), where("habilidad", "==", "PO"));
+                                const snapshotIntentos = await getDocs(qIntentos);
+                                const numeroDeIntento = snapshotIntentos.size + 1;
+                                
+                                await addDoc(historialRef, {
+                                    fecha: new Date().toISOString().split('T')[0],
+                                    hora_registro: new Date().toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' }),
+                                    timestamp: new Date().getTime(),
+                                    tipo: "Production_Orale",
+                                    habilidad: "PO",
+                                    texto_alumno: transcripcionAlumno,
+                                    respuesta_ia: respuestaIA,
+                                    unidad: currentUnitId,
+                                    actividad: currentExerciseIndex + 1,
+                                    intento: numeroDeIntento
+                                });
+                            }
+                            await calcularTodasLasNotasHabilidades();
+                        }
+                    });
+                } catch (err) { }
+                return;
+            }
+
+            // ==========================================
+            // ACCIONES DE COMPRENSIÓN (CO/CE)
+            // ==========================================
             if (e.target && (e.target.id === 'btn-submit-exercise' || e.target.closest('#btn-submit-exercise'))) {
                 const ejercicios = unidadesCache[currentUnitId]?.[currentSkill] || unidadesCache[currentUnitId]?.[currentSkill.toLowerCase()] || [];
                 const ej = ejercicios[currentExerciseIndex];
                 if (!ej || !ej.preguntas) return;
 
                 let aciertosN = 0;
-                let totalPreguntas = ej.preguntas.length;
-
                 ej.preguntas.forEach((p, pIdx) => {
                     const sel = document.querySelector(`input[name="question_${pIdx}"]:checked`);
                     const icon = document.getElementById(`status-icon-target-${pIdx}`);
@@ -2529,51 +2269,33 @@ DERNIER POINT / ÚLTIMO PUNTO:
                     if (iBox) iBox.innerHTML = window.convertirTextoInteractivo(ej.transcripcion);
                     window.inicializarLectorVozGratuito(ej.transcripcion);
                 }
-                const sBox = document.getElementById('sophia-box');
-                if (sBox) sBox.style.display = "block";
+                document.getElementById('sophia-box').style.display = "block";
 
                 const claveUnica = `${currentUnitId}_${currentSkill}_${currentExerciseIndex}`;
-                mapaAciertosAlumno = mapaAciertosAlumno || {};
                 mapaAciertosAlumno[claveUnica] = true; 
 
-                // PROGRESO GLOBAL: suma de TODAS las habilidades (CO + CE + PE + PO)
-                let totalGlobal = 0;
-                let completadasGlobal = 0;
-                ['CO', 'CE', 'PE', 'PO'].forEach(sk => {
-                    Object.keys(unidadesCache).forEach(uKey => {
-                        const arr = unidadesCache[uKey][sk] || unidadesCache[uKey][sk.toLowerCase()] || [];
-                        arr.forEach((_, indices) => {
-                            totalGlobal++;
-                            if (mapaAciertosAlumno[`${uKey}_${sk}_${indices}`] === true) {
-                                completadasGlobal++;
-                            }
-                        });
+                let totalActividadesNivel = 0;
+                let completadasNivel = 0;
+                Object.keys(unidadesCache).forEach(uKey => {
+                    const arr = unidadesCache[uKey][currentSkill] || unidadesCache[uKey][currentSkill.toLowerCase()] || [];
+                    arr.forEach((_, indices) => {
+                        totalActividadesNivel++;
+                        if (mapaAciertosAlumno[`${uKey}_${currentSkill}_${indices}`] === true) completadasNivel++;
                     });
                 });
 
-                const finalProgresoCalculado = totalGlobal > 0 ? Math.round((completadasGlobal / totalGlobal) * 100) : 0;
+                const finalProgresoCalculado = Math.round((completadasNivel / totalActividadesNivel) * 100);
 
                 if (urlId !== "admin_preview" && docRefValidado) {
-                    try {
-                        await setDoc(docRefValidado, {
-                            mapa_aciertos: mapaAciertosAlumno,
-                            progreso: finalProgresoCalculado
-                        }, { merge: true });
-                    } catch (err) {}
+                    await setDoc(docRefValidado, { mapa_aciertos: mapaAciertosAlumno, progreso: finalProgresoCalculado }, { merge: true });
                 }
 
-                const prText = document.getElementById('progress-text-target');
-                if (prText) prText.innerText = `${finalProgresoCalculado}%`;
-                const prBar = document.getElementById('progress-bar-fill');
-                if (prBar) prBar.style.width = `${finalProgresoCalculado}%`;
+                document.getElementById('progress-text-target').innerText = `${finalProgresoCalculado}%`;
+                document.getElementById('progress-bar-fill').style.width = `${finalProgresoCalculado}%`;
 
-                const btnSub = document.getElementById('btn-submit-exercise');
-                if (btnSub) btnSub.style.display = "none";
-                const btnAv = document.getElementById('btn-avanzar-siguiente');
-                if (btnAv) btnAv.style.display = "inline-flex";
+                document.getElementById('btn-submit-exercise').style.display = "none";
+                document.getElementById('btn-avanzar-siguiente').style.display = "inline-flex";
                 generarMenuJerarquico(); 
-                // Refrescar notas globales después de completar ejercicio CO/CE
-                await calcularTodasLasNotasHabilidades();
                 return;
             }
             
@@ -2597,26 +2319,17 @@ DERNIER POINT / ÚLTIMO PUNTO:
                     poRecognitionInstance.onresult = (event) => {
                         let interimTranscript = '';
                         for (let i = event.resultIndex; i < event.results.length; ++i) {
-                            if (event.results[i].isFinal) {
-                                poBuzonDeTextoAcumulado += event.results[i][0].transcript + ' ';
-                            } else {
-                                interimTranscript += event.results[i][0].transcript;
-                            }
+                            if (event.results[i].isFinal) poBuzonDeTextoAcumulado += event.results[i][0].transcript + ' ';
+                            else interimTranscript += event.results[i][0].transcript;
                         }
                         if (txtArea) txtArea.value = (poBuzonDeTextoAcumulado + interimTranscript).trim();
                     };
 
                     poRecognitionInstance.onend = () => {
-                        if (poRecordingActiveState) {
-                            poRecognitionInstance.start(); 
-                        } else {
-                            if (btn) {
-                                btn.innerHTML = `<i class="fas fa-microphone"></i> Commencer à parler`;
-                                btn.style.background = "#0288d1";
-                            }
-                            if (feedback) {
-                                feedback.innerHTML = `<i class="fas fa-check-circle" style="color:var(--green)"></i> Enregistrement terminé.`;
-                            }
+                        if (poRecordingActiveState) poRecognitionInstance.start(); 
+                        else {
+                            if (btn) { btn.innerHTML = `<i class="fas fa-microphone"></i> Commencer à parler`; btn.style.background = "#0288d1"; }
+                            if (feedback) feedback.innerHTML = `<i class="fas fa-check-circle" style="color:var(--green)"></i> Terminé.`;
                         }
                     };
                 }
@@ -2624,13 +2337,8 @@ DERNIER POINT / ÚLTIMO PUNTO:
                 if (!poRecordingActiveState) {
                     poRecordingActiveState = true;
                     poBuzonDeTextoAcumulado = txtArea ? txtArea.value + ' ' : '';
-                    if (btn) {
-                        btn.innerHTML = `<i class="fas fa-stop"></i> Terminer & Transcrire`;
-                        btn.style.background = "#d32f2f";
-                    }
-                    if (feedback) {
-                        feedback.innerHTML = `<i class="fas fa-spinner fa-spin" style="color:#d32f2f"></i> Écoute active... Parlez librement.`;
-                    }
+                    if (btn) { btn.innerHTML = `<i class="fas fa-stop"></i> Terminer & Transcrire`; btn.style.background = "#d32f2f"; }
+                    if (feedback) feedback.innerHTML = `<i class="fas fa-spinner fa-spin" style="color:#d32f2f"></i> Écoute active...`;
                     poRecognitionInstance.start();
                 } else {
                     poRecordingActiveState = false;
@@ -2640,324 +2348,18 @@ DERNIER POINT / ÚLTIMO PUNTO:
             }
 
             if (e.target && e.target.id === 'btn-reset-po') {
-                const txtArea = document.getElementById('po-student-response');
-                if (txtArea) txtArea.value = "";
+                document.getElementById('po-student-response').value = "";
                 poBuzonDeTextoAcumulado = "";
-                
-                const feedback = document.getElementById('po-audio-feedback');
-                if (feedback) feedback.innerHTML = `<i class="fas fa-info-circle"></i> Cliquez sur le bouton para démarrer l'exercice.`;
-                
-                const sBox = document.getElementById('sophia-box');
-                if (sBox) sBox.style.display = "none";
-                
+                document.getElementById('po-audio-feedback').innerHTML = `<i class="fas fa-info-circle"></i> Cliquez pour démarrer.`;
+                document.getElementById('sophia-box').style.display = "none";
                 if ('speechSynthesis' in window) window.speechSynthesis.cancel();
                 return;
             }
-
-            if (e.target && (e.target.id === 'btn-submit-po' || e.target.closest('#btn-submit-po'))) {
-                const txtArea = document.getElementById('po-student-response');
-                const transcripcionAlumno = txtArea ? txtArea.value.trim() : "";
-                if (!transcripcionAlumno) return;
-
-                const btnSubmitPO = document.getElementById('btn-submit-po');
-                if (btnSubmitPO) {
-                    btnSubmitPO.disabled = true;
-                    btnSubmitPO.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Évaluation en cours...`;
-                    btnSubmitPO.style.background = "#7f8c8d";
-                }
-                
-                const sBox = document.getElementById('sophia-box');
-                if (sBox) sBox.style.display = "block";
-
-                const totalMaxPOInicial = window.obtenerTotalMaximo(currentLevel, 'PO');
-                const scoreEl = document.getElementById('sophia-global-score');
-                if (scoreEl) scoreEl.innerText = `--/${totalMaxPOInicial || 25}`;
-                const badgeEl = document.getElementById('sophia-global-badge');
-                if (badgeEl) badgeEl.innerText = "Calcul...";
-
-                const mirror = document.getElementById('sophia-text-mirror');
-                if (mirror) {
-                    mirror.innerHTML = `<div style="text-align:center; padding:25px; color:#555;">
-                        <i class="fas fa-robot fa-spin" style="font-size:2.5rem; color:var(--gold); margin-bottom:15px;"></i>
-                        <br><strong>Sophia analyse votre production orale...</strong><br>Analyse en cours. Veuillez patienter.
-                    </div>`;
-                }
-
-                const detailsPanel = document.getElementById('sophia-feedback-details');
-                if (detailsPanel) detailsPanel.style.display = 'none';
-
-                try {
-                    const saludoH3 = document.getElementById('student-welcome')?.innerText || "";
-                    const nombreAlumno = saludoH3.replace("Élève:", "").trim() || "l'élève";
-                    
-                    const ejerciciosPO = unidadesCache[currentUnitId]?.PO || unidadesCache[currentUnitId]?.po || [];
-                    const ejActivoPO = ejerciciosPO[currentExerciseIndex];
-                    const consignaExamenPO = ejActivoPO?.instruccion || "";
-                    const documentoBasePO = ejActivoPO?.texto_lectura || "";
-                    const preguntasExamenPO = ejActivoPO?.preguntas ? JSON.stringify(ejActivoPO.preguntas) : "";
-
-                    const criteriosDelineados = await window.cargarRubrica(currentLevel, 'PO');
-                    if (!criteriosDelineados) throw new Error("Fichier de rubrique orale introuvable");
-
-                    const totalMaxPO = window.obtenerTotalMaximo(currentLevel, 'PO');
-                    const idioma = window.idiomaSegunNivel(currentLevel);
-                    const esEspanol = idioma === 'es';
-
-                    const esquemaRub = window.construirEsquemaRubrica(criteriosDelineados);
-                    const rubriquesEsquema = {};
-                    Object.keys(esquemaRub).forEach(k => {
-                        rubriquesEsquema[k] = {
-                            note_max: esquemaRub[k].note_maximale,
-                            score: `Note /${esquemaRub[k].note_maximale} (par exemple ${Math.round(esquemaRub[k].note_maximale * 0.6 * 10) / 10}/${esquemaRub[k].note_maximale})`,
-                            error: esEspanol ? `Análisis detallado redactado exclusivamente en español.` : `Analyse détaillée rédigée exclusivement en français.`,
-                            supra: esEspanol ? `Consejo técnico concreto redactado exclusivamente en español.` : `Conseil technique concret rédigé exclusivement en français.`
-                        };
-                    });
-
-                    const estructuraJsonEsperada = {
-                        "score_global": `La note globale sur ${totalMaxPO} (Ex: ${Math.round(totalMaxPO * 0.7 * 10) / 10}/${totalMaxPO})`,
-                        "status": esEspanol ? "Admis / No admitido / Nivel Supra (en español)" : "Admis / Non admis / Niveau Supra",
-                        "transcription_html": esEspanol
-                            ? `La transcripción con los errores envueltos en: <span class='sophia-error' data-rubric='[${Object.keys(esquemaRub).join(', ')}]'>error</span>`
-                            : `La transcription avec les erreurs entourées par: <span class='sophia-error' data-rubric='[${Object.keys(esquemaRub).join(', ')}]'>erreur</span>`,
-                        "audio_response_text": esEspanol
-                            ? `Breve comentario oral en español (máx. 2 frases) para síntesis de voz.`
-                            : `Court commentaire oral en français (max 2 phrases) pour la synthèse vocale.`,
-                        "consigne_check": esEspanol
-                            ? `Array JSON. Para CADA instrucción de la consigna, un objeto con: {instruction: 'texto', respectee: true/false, explication: 'justificación en español'}.`
-                            : `Array JSON. Pour CHAQUE instruction de la consigne, un objet avec: {instruction: 'texte', respectee: true/false, explication: 'justification'}.`,
-                        "email_check": documentoBasePO ? (esEspanol
-                            ? `Array JSON. Para CADA información clave del documento, un objeto con: {info: 'dato', traitee: true/false, explication: 'justificación'}.`
-                            : `Array JSON. Pour CHAQUE information clé du document, un objet avec: {info: 'donnée', traitee: true/false, explication: 'justification'}.`
-                        ) : "Array vacío []",
-                        "rubriques": rubriquesEsquema
-                    };
-
-                    const instrIdioma = esEspanol
-                        ? `1. Escribe TODOS tus análisis, errores y consejos EXCLUSIVAMENTE en ESPAÑOL.
-2. NO uses comillas dobles ("), solo comillas simples (') para no romper el JSON.
-3. NO uses bloques markdown \`\`\`json; empieza directamente con {.
-4. Devuelve un objeto JSON válido respetando EXACTAMENTE esta estructura:`
-                        : `1. Rédige TOUTES tes analyses, erreurs, critiques et conseils EXCLUSIVEMENT en français.
-2. N'utilise JAMAIS de guillemets doubles ("), uniquement des guillemets simples (') pour ne pas casser le JSON.
-3. N'utilise PAS de balises markdown \`\`\`json, commence directement par {.
-4. Retourne un objet JSON valide respectant EXACTEMENT cette structure :`;
-
-                    const promptFinal = `${esEspanol
-                        ? `Eres Sophia, una examinadora oficial nativa del DELF (France Éducation International). Actúas como profesora bilingüe para evaluar la producción ORAL transcrita de un alumno hispanohablante del nivel ${currentLevel}. Tu retroalimentación DEBE ser 100% en español.
-IDIOOMA DE REDACCIÓN: ESPAÑOL. (Solo el texto del alumno y los descriptores oficiales permanecen en francés.)`
-                        : `Tu es Sophia, une examinatrice officielle et native du DELF/DALF (France Éducation International).`}
-
-NOM / NOMBRE : ${nombreAlumno}
-NIVEAU / NIVEL : ${currentLevel}
-NOTE TOTALE POSSIBLE / NOTA TOTAL POSIBLE : ${totalMaxPO} POINTS
-
-=========================================================
-CONTEXTO DE LA PRUEBA ORAL / CONTEXTE DE L'ÉPREUVE ORALE :
-- Consigne / Consigna : "${consignaExamenPO}"
-- Document / Cartes de support : "${documentoBasePO}"
-- Questions de l'examinateur / Preguntas del examinador : ${preguntasExamenPO}
-=========================================================
-
-=========================================================
-GRILLE OFFICIELLE ORALE / GRILLA OFICIAL ORAL DEL NIVEAU ${currentLevel} :
-${JSON.stringify(criteriosDelineados.grille_evaluation_officielle, null, 2)}
-=========================================================
-
-${criteriosDelineados.referentiel_attendu ? `=========================================================
-RÉFÉRENTIEL ATTENDU ${currentLevel} (lo que el alumno DEBE dominar oralmente) :
-${JSON.stringify(criteriosDelineados.referentiel_attendu, null, 2)}
-=========================================================
-` : ''}
-TRANSCRIPTION DE LA PRODUCTION DE L'ÉLÈVE / TRANSCRIPCIÓN DE LA PRODUCCIÓN DEL ALUMNO :
-${JSON.stringify(transcripcionAlumno)}
-
-=========================================================
-INSTRUCCIONES ESPECÍFICAS / INSTRUCTIONS SPÉCIFIQUES :
-
-A) COTE CONSIGNE: Si la consigna da instrucciones específicas (ej. "présente-toi", "pose des questions sur X", "débat sur Y"), verifica CADA UNA en consigne_check.
-
-B) COTE DOCUMENT SOURCE: Si hay documento, identifica 2-4 INFORMATIONS CLÉS que el alumno debió retomar y verifica si lo hizo en email_check.
-
-C) COTE ERREURS: Devuelve la transcripción completa en transcription_html envolviendo CADA error en: <span class='sophia-error' data-rubric='${esEspanol ? 'CLAVE' : 'CLÉ'}'>erreur</span>. Las claves válidas son: ${Object.keys(esquemaRub).join(', ')}.
-
-D) COTE GRILLE: Para CADA criterio, asigna un score entre 0 y note_maximale. Justifica brevemente en "error".
-
-E) COTE SCORE GLOBAL: Suma todos los criterios. score_global = "X/${totalMaxPO}" (total real).
-
-F) audio_response_text: Breve síntesis oral (2 frases) que Sophia LEERA EN VOZ ALTA al alumno con el resumen de la evaluación.
-
-=========================================================
-INSTRUCTIONS DE FORMAT / INSTRUCCIONES DE FORMATO:
-${instrIdioma}
-
-${JSON.stringify(estructuraJsonEsperada, null, 2)}
-
-=========================================================
-DERNIER POINT / ÚLTIMO PUNTO:
-- Sé estricta pero justa como una verdadera examinadora del DELF. El alumno debe ver claramente sus errores Y QUÉ HACER PARA MEJORAR.
-`;
-
-                    const extDocRef = await addDoc(collection(db, "generate"), {
-                        prompt: promptFinal
-                    });
-
-                    const desvincularEscuchaOral = onSnapshot(extDocRef, async (snapshot) => {
-                        if (snapshot.exists() && snapshot.data().response) {
-                            desvincularEscuchaOral();
-                            const respuestaIA = snapshot.data().response;
-                            window.mostrarEvaluacionOralSophia(respuestaIA);
-
-                            if (btnSubmitPO) {
-                                btnSubmitPO.disabled = false;
-                                btnSubmitPO.innerHTML = `<i class="fas fa-paper-plane"></i> Évaluer ma production orale`;
-                                btnSubmitPO.style.background = "var(--oxford)";
-                            }
-
-                            const llaveProgreso = `${currentUnitId}_${window.currentSkill}_${currentExerciseIndex}`;
-                            if (typeof mapaAciertosAlumno !== "undefined") {
-                                mapaAciertosAlumno[llaveProgreso] = true;
-                            }
-
-                            if (urlId !== "admin_preview" && docRefValidado) {
-                                const perfilUsuarioRef = doc(db, "Usuarios", urlId);
-                                await setDoc(perfilUsuarioRef, {
-                                    [`mapa_aciertos.${llaveProgreso}`]: true
-                                }, { merge: true });
-
-                                const historialRef = collection(db, "Usuarios", urlId, "HistorialSophia");
-                                const qIntentos = query(historialRef, 
-                                    where("unidad", "==", currentUnitId), 
-                                    where("actividad", "==", currentExerciseIndex + 1),
-                                    where("habilidad", "==", "PO")
-                                );
-                                const snapshotIntentos = await getDocs(qIntentos);
-                                const numeroDeIntento = snapshotIntentos.size + 1;
-                                const ahora = new Date();
-
-                                await addDoc(historialRef, {
-                                    fecha: ahora.toISOString().split('T')[0],
-                                    hora_registro: ahora.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit', second: '2-digit' }),
-                                    timestamp: ahora.getTime(),
-                                    tipo: "Production_Orale",
-                                    habilidad: "PO",
-                                    texto_alumno: transcripcionAlumno,
-                                    respuesta_ia: respuestaIA,
-                                    unidad: currentUnitId,
-                                    actividad: currentExerciseIndex + 1,
-                                    intento: numeroDeIntento
-                                });
-                            }
-                            await calcularTodasLasNotasHabilidades();
-                        } else if (snapshot.exists() && snapshot.data().status?.state === "ERROR") {
-                            desvincularEscuchaOral();
-                            if (btnSubmitPO) {
-                                btnSubmitPO.disabled = false;
-                                btnSubmitPO.innerHTML = `<i class="fas fa-paper-plane"></i> Évaluer ma production orale`;
-                                btnSubmitPO.style.background = "var(--oxford)";
-                            }
-                        }
-                    });
-                } catch (err) {
-                    if (btnSubmitPO) {
-                        btnSubmitPO.disabled = false;
-                        btnSubmitPO.innerHTML = `<i class="fas fa-paper-plane"></i> Évaluer ma production orale`;
-                        btnSubmitPO.style.background = "var(--oxford)";
-                    }
-                }
-                return;
-            }
         });
-
-        window.mostrarEvaluacionOralSophia = async function(jsonRaw) {
-            const rubrica = await window.cargarRubrica(currentLevel, 'PO');
-            const esquema = window.construirEsquemaRubrica(rubrica);
-            const data = window.parseSophiaJSON(jsonRaw, esquema);
-            const idioma = window.idiomaSegunNivel(currentLevel);
-            const etiquetas = window.etiquetasUI(idioma);
-            const totalMaxNivel = window.obtenerTotalMaximo(currentLevel, 'PO');
-            const totalReal = data.score_global && data.score_global.includes('/')
-                ? data.score_global
-                : `${data.score_global || '--'}/${totalMaxNivel}`;
-
-            const scoreEl = document.getElementById('sophia-global-score');
-            if (scoreEl) scoreEl.innerText = totalReal;
-            
-            const badge = document.getElementById('sophia-global-badge');
-            if (badge) {
-                badge.innerText = (data.status || '--').replace('Admis', etiquetas.admis).replace('Non admis', etiquetas.non_admis).replace('Supra', etiquetas.supra);
-                if ((data.status || '').includes('Supra')) badge.style.background = '#137333';
-                else if ((data.status || '').includes('Admis')) badge.style.background = '#1a73e8';
-                else badge.style.background = '#d93025';
-            }
-            
-            // Renderizar botones de rúbrica dinámicamente desde la rúbrica cargada
-            const rubricsBar = document.getElementById('sophia-rubrics-bar');
-            if (rubricsBar && esquema) {
-                const etiquetasRubriques = etiquetas.rubrique_label_es;
-                let htmlBtns = '';
-                Object.keys(esquema).forEach(k => {
-                    const nombreCriterio = etiquetasRubriques[k] || k.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
-                    const max = esquema[k].note_maximale;
-                    htmlBtns += `<button type="button" class="btn-rubric" data-rubric="${k}">${nombreCriterio} <span style="opacity:0.7; font-size:0.8em;">(${max} pts)</span></button>`;
-                });
-                rubricsBar.innerHTML = htmlBtns;
-            }
-            
-            const container = document.getElementById('sophia-verdict-text');
-            if (container) {
-                container.dataset.evaluation = JSON.stringify(data.rubriques || {});
-                container.dataset.esquema = JSON.stringify(esquema || {});
-            }
-            
-            const mirror = document.getElementById('sophia-text-mirror');
-            if (mirror) mirror.innerHTML = data.transcription_html || data.texto_html || `<p style="margin:0; font-weight:600; color:var(--oxford);">${etiquetas.analisis_listo}</p>`;
-            
-            // Renderizar consigne_check
-            const consigneBox = document.getElementById('sophia-consigne-check');
-            const consigneLista = document.getElementById('sophia-consigne-lista');
-            if (consigneBox && consigneLista) {
-                const checks = [];
-                if (Array.isArray(data.consigne_check) && data.consigne_check.length > 0) {
-                    data.consigne_check.forEach(item => {
-                        const isOk = (item.respectee === true || item.respectee === 'true' || item.respectee === '1');
-                        checks.push({ tipo: 'instruccion', texto: item.instruction || item.instruccion || '', cumplido: isOk, explicacion: item.explication || '' });
-                    });
-                }
-                if (Array.isArray(data.email_check) && data.email_check.length > 0) {
-                    data.email_check.forEach(item => {
-                        const isOk = (item.traitee === true || item.traitee === 'true' || item.traitee === '1');
-                        checks.push({ tipo: 'info', texto: item.info || '', cumplido: isOk, explicacion: item.explication || '' });
-                    });
-                }
-                if (checks.length > 0) {
-                    consigneBox.style.display = 'block';
-                    let htmlChecks = '';
-                    checks.forEach(c => {
-                        const icon = c.cumplido ? '<i class="fas fa-check-circle" style="color:#137333;"></i>' : '<i class="fas fa-times-circle" style="color:#d93025;"></i>';
-                        const bg = c.cumplido ? '#f0f9f3' : '#fef5f4';
-                        const borderColor = c.cumplido ? '#137333' : '#d93025';
-                        const label = c.tipo === 'info' ? etiquetas.info_label : etiquetas.instruccion_label;
-                        htmlChecks += `<div style="background:${bg}; border-left:3px solid ${borderColor}; padding:10px 12px; margin-bottom:8px; border-radius:4px; font-size:0.88rem;"><div style="display:flex; align-items:flex-start; gap:8px; margin-bottom:4px;">${icon}<strong style="color:#333;">${label}:</strong><span style="flex:1; color:#222;">${(c.texto || '').replace(/'/g, '&#39;')}</span></div>${c.explicacion ? `<div style="margin-left:24px; color:#555; font-style:italic; line-height:1.4;">${c.explicacion.replace(/'/g, '&#39;')}</div>` : ''}</div>`;
-                    });
-                    consigneLista.innerHTML = htmlChecks;
-                } else {
-                    consigneBox.style.display = 'none';
-                }
-            }
-            
-            const detailsPanel = document.getElementById('sophia-feedback-details');
-            if (detailsPanel) detailsPanel.style.display = 'none';
-            
-            if (data.audio_response_text) {
-                window.sophiaHablarFeedback(data.audio_response_text);
-            }
-        };
         
         window.inicializarBotonHistorialIntentos = function() {
             const btnVerIntentos = document.getElementById('btn-ver-intentos');
             const contenedorHistorial = document.getElementById('historial-intentos-container');
-            
             if (!btnVerIntentos || !contenedorHistorial) return;
             btnVerIntentos.style.display = "inline-block";
             
@@ -2973,63 +2375,50 @@ DERNIER POINT / ÚLTIMO PUNTO:
                 btnVerIntentos.innerHTML = `<i class="fas fa-times"></i> Masquer l'historique`;
                 
                 try {
-                    const numeroUnidadHistorial = currentUnitId;
-                    const numeroActividadHistorial = currentExerciseIndex + 1;
-
                     const qHistorial = query(collection(db, "Usuarios", urlId, "HistorialSophia"),
-                        where("unidad", "==", numeroUnidadHistorial),
-                        where("actividad", "==", numeroActividadHistorial),
+                        where("unidad", "==", currentUnitId),
+                        where("actividad", "==", currentExerciseIndex + 1),
                         where("habilidad", "==", window.currentSkill)
                     );
                     const snap = await getDocs(qHistorial);
                     
                     if (snap.empty) {
-                        contenedorHistorial.innerHTML = "<p style='font-size:0.85rem; color:#666;'>Aucun essai précédent trouvé.</p>";
+                        contenedorHistorial.innerHTML = "<p style='font-size:0.85rem; color:#666;'>Aucun essai trouvé.</p>";
                         return;
                     }
                     
-                    let historialHTML = `<h6 style="margin:0 0 12px 0; color:var(--oxford); font-size:0.9rem; border-bottom:2px solid var(--gold); padding-bottom:5px;"><i class="fas fa-chart-line"></i> Évolution de vos tentatives :</h6>`;
-                    const documentosOrdenados = snap.docs.map(d => {
-                        const data = d.data();
-                        return { ...data, timestampID: data.timestamp || 0 };
-                    }).sort((a, b) => b.timestampID - a.timestampID);
+                    let historialHTML = `<h6 style="margin:0 0 12px 0; color:var(--oxford); font-size:0.9rem; border-bottom:2px solid var(--gold); padding-bottom:5px;"><i class="fas fa-chart-line"></i> Tentatives précédentes:</h6>`;
+                    const documentosOrdenados = snap.docs.map(d => ({ ...d.data(), timestampID: d.data().timestamp || 0 })).sort((a, b) => b.timestampID - a.timestampID);
                     
                     documentosOrdenados.forEach((datosIntento) => {
-                        let respuestaLimpia = datosIntento.respuesta_ia || "Pas de correction disponible.";
+                        let respuestaLimpia = datosIntento.respuesta_ia || "Pas de correction.";
                         let marcaTiempo = datosIntento.hora_registro ? `${datosIntento.fecha} à ${datosIntento.hora_registro}` : datosIntento.fecha;
+                        let parsed = window.parseSophiaJSON(respuestaLimpia);
                         
-                        let renderRespuestaHistory = respuestaLimpia;
-                        if (respuestaLimpia.trim().startsWith('{') || respuestaLimpia.includes('score_global')) {
-                            const parsed = window.parseSophiaJSON(respuestaLimpia);
-                            renderRespuestaHistory = `
-                                <div style="background:#f8f9fa; padding:10px; border-radius:6px; border:1px solid #e2e8f0;">
-                                    <p style="margin:0 0 5px 0; color:var(--oxford); font-weight:700; font-size:0.85rem;">
-                                        <i class="fas fa-star"></i> <strong>Note :</strong> ${parsed.score_global || 'N/A'} | <strong>Résultat :</strong> ${parsed.status || 'N/A'}
-                                    </p>
-                                    <button type="button" class="load-retro-btn" data-json="${encodeURIComponent(JSON.stringify(parsed))}" style="margin-top:5px; background:var(--oxford); color:white; border:none; padding:5px 10px; border-radius:4px; cursor:pointer; font-family:'Montserrat'; font-size:0.75rem; font-weight:600;">
-                                        <i class="fas fa-eye"></i> Charger la correction interactive
-                                    </button>
-                                </div>`;
-                        }
+                        let renderRespuestaHistory = `
+                            <div style="background:#f8f9fa; padding:10px; border-radius:6px; border:1px solid #e2e8f0;">
+                                <p style="margin:0 0 5px 0; color:var(--oxford); font-weight:700; font-size:0.85rem;">
+                                    <i class="fas fa star"></i> <strong>Note:</strong> ${parsed.score_global || 'N/A'} | <strong>Statut:</strong> ${parsed.status || 'N/A'}
+                                </p>
+                                <button type="button" class="load-retro-btn" data-json="${encodeURIComponent(respuestaLimpia)}" style="margin-top:5px; background:var(--oxford); color:white; border:none; padding:5px 10px; border-radius:4px; cursor:pointer; font-size:0.75rem; font-weight:600;">
+                                    <i class="fas fa-eye"></i> Charger la correction interactive
+                                </button>
+                            </div>`;
                         
                         historialHTML += `
-                        <div style="border-bottom: 1px dashed #ccc; padding: 15px 0; font-family:'Montserrat';">
+                        <div style="border-bottom: 1px dashed #ccc; padding: 15px 0;">
                             <p style="margin: 0 0 6px 0; color: var(--gold); font-weight: 700; font-size:0.9rem;">
-                                <i class="fas fa-clock"></i> Tentative — <span style="color:#111; font-weight:600;">${marcaTiempo}</span>
+                                <i class="fas fa-clock"></i> Tentative — <span>${marcaTiempo}</span>
                             </p>
-                            <p style="margin: 0 0 10px 0; background: #f8f9fa; padding: 10px; border-radius: 4px; color:#555; font-size:0.85rem; border-left:3px solid #ccc;">
-                                <strong>Votre production :</strong><br>${datosIntento.texto_alumno || ''}
+                            <p style="margin: 0 0 10px 0; background: #f8f9fa; padding: 10px; border-radius: 4px; color:#555; font-size:0.85rem;">
+                                <strong>Votre production:</strong><br>${datosIntento.texto_alumno || ''}
                             </p>
-                            <div style="font-size: 0.85rem; color: #333; line-height: 1.5; background:#fff; padding:5px; border-radius:4px;">
-                                ${renderRespuestaHistory}
-                            </div>
+                            ${renderRespuestaHistory}
                         </div>`;
                     });
                     
                     contenedorHistorial.innerHTML = historialHTML;
-                } catch (err) {
-                    contenedorHistorial.innerHTML = "<span style='color:red;'>Erreur lors du chargement.</span>";
-                }
+                } catch (err) { }
             };
         };
 
@@ -3057,7 +2446,7 @@ DERNIER POINT / ÚLTIMO PUNTO:
                 if (!modoGrabacionManualActivo) {
                     modoGrabacionManualActivo = true; buzonTexto = ""; 
                     document.querySelectorAll('.clickable-word').forEach(s => s.classList.remove('word-wrong'));
-                    if(feedback) { feedback.innerText = "Écoute active... Parlez librement."; feedback.style.color = "var(--green)"; }
+                    if(feedback) { feedback.innerText = "Écoute active..."; feedback.style.color = "var(--green)"; }
                     btnRecord.innerHTML = `<i class="fas fa-stop"></i> Terminer`; recognition.start();
                 } else { modoGrabacionManualActivo = false; recognition.stop(); }
             });
@@ -3081,35 +2470,13 @@ DERNIER POINT / ÚLTIMO PUNTO:
                 const voces = window.speechSynthesis.getVoices();
                 const vozFrancesa = voces.find(v => v.lang.startsWith('fr') && v.name.toLowerCase().includes('google')) || voces.find(v => v.lang.startsWith('fr'));
                 if (vozFrancesa) utterance.voice = vozFrancesa;
-                utterance.pitch = 1.0;
-                utterance.rate = 0.95; 
                 window.speechSynthesis.speak(utterance);
             }
         };
 
-        window.renderBotonesRubrosOral = function(nivel) {
-            const rubricsBar = document.getElementById('sophia-rubrics-bar');
-            if (!rubricsBar) return;
-
-            // Cargar rúbrica del nivel y skill PO
-            window.cargarRubrica(nivel, 'PO').then(rubrica => {
-                if (!rubrica || !rubrica.grille_evaluation_officielle) return;
-                const idioma = window.idiomaSegunNivel(nivel);
-                const etiquetas = window.etiquetasUI(idioma);
-                const etiquetasRubriques = etiquetas.rubrique_label_es;
-                let htmlBtns = '';
-                Object.entries(rubrica.grille_evaluation_officielle).forEach(([key, value]) => {
-                    const nombreCriterio = etiquetasRubriques[key] || key.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
-                    const max = value.note_maximale;
-                    htmlBtns += `<button type="button" class="btn-rubric" data-rubric="${key}">${nombreCriterio} <span style="opacity:0.7; font-size:0.8em;">(${max} pts)</span></button>`;
-                });
-                rubricsBar.innerHTML = htmlBtns;
-            });
-        };
-
         window.ejecutarConsultaSophiaConFiltro = async function(frase) {
             const container = document.getElementById("glosario-flotante-container"); if (!container) return;
-            container.innerHTML = `<div style="background:#fff; padding:15px; border-radius:8px; box-shadow:0 4px 15px rgba(0,0,0,0.15); font-family:'Montserrat';"><p style="margin:0; font-size:13px; color:#333;"><i class="fas fa-spinner fa-spin"></i> Sophia cherche...</p></div>`;
+            container.innerHTML = `<div style="background:#fff; padding:15px; border-radius:8px; box-shadow:0 4px 15px rgba(0,0,0,0.15);"><p style="margin:0; font-size:13px; color:#333;"><i class="fas fa-spinner fa-spin"></i> Sophia cherche...</p></div>`;
             container.style.display = "block";
 
             const palabraLimpia = frase.toLowerCase().trim();
@@ -3120,32 +2487,19 @@ DERNIER POINT / ÚLTIMO PUNTO:
 
                 if (diccionarioSnap.exists()) {
                     const datos = diccionarioSnap.data();
-                    const definicionFr = datos.definicion || "Pas de définition disponible.";
-                    const ejemploFr = datos.ejemplo_uso || "";
-                    const traduccionEs = datos.significado_espansol || "Sin traducción.";
-                    const tipo = datos.tipo_gramatical || "N/A";
-                    const listaSinonimos = datos.sinonimos ? datos.sinonimos.join(", ") : "Aucun";
-
                     container.innerHTML = `
-                    <div style="background:#fff; padding:18px; border-radius:8px; box-shadow:0 4px 15px rgba(0,0,0,0.15); max-height:380px; overflow-y:auto; font-family:'Montserrat';">
-                        <h4 style="margin:0 0 5px 0; color:var(--oxford); font-size:1.1rem; text-transform:capitalize;">${palabraLimpia} <span style="font-size:0.75rem; color:var(--gold); font-weight:600;">(${tipo})</span></h4>
-                        <p style="margin:0 0 10px 0; font-size:0.85rem; color:#28A745; font-weight:600;"><i class="fas fa-language"></i> ${traduccionEs}</p>
+                    <div style="background:#fff; padding:18px; border-radius:8px; box-shadow:0 4px 15px rgba(0,0,0,0.15); max-height:380px; overflow-y:auto;">
+                        <h4 style="margin:0 0 5px 0; color:var(--oxford); font-size:1.1rem; text-transform:capitalize;">${palabraLimpia} <span style="font-size:0.75rem; color:var(--gold); font-weight:600;">(${datos.tipo_gramatical || 'N/A'})</span></h4>
+                        <p style="margin:0 0 10px 0; font-size:0.85rem; color:#28A745; font-weight:600;"><i class="fas fa-language"></i> ${datos.significado_espansol || 'Sin traduction'}</p>
                         <hr style="border:0; border-top:1px solid #eee; margin:10px 0;">
-                        <p style="margin:0 0 8px 0; font-size:0.88rem; line-height:1.4; color:#333;"><strong>Définition:</strong> ${definicionFr}</p>
-                        ${ejemploFr ? `<p style="margin:0 0 8px 0; font-size:0.85rem; color:#555; background:#f9f9f9; padding:6px; border-radius:4px;"><i>Exemple: ${ejemploFr}</i></p>` : ''}
-                        <p style="margin:0; font-size:0.8rem; color:#777;"><strong>Synonymes:</strong> ${listaSinonimos}</p>
-                        <button onclick="document.getElementById('glosario-flotante-container').style.display='none'" style="margin-top:15px; width:100%; padding:8px; cursor:pointer; background:var(--oxford); color:white; border:none; border-radius:4px; font-weight:600;">Fermer</button>
+                        <p style="margin:0 0 8px 0; font-size:0.88rem; color:#333;"><strong>Définition:</strong> ${datos.definicion || ''}</p>
+                        <button onclick="document.getElementById('glosario-flotante-container').style.display='none'" style="margin-top:15px; width:100%; padding:8px; background:var(--oxford); color:white; border:none; border-radius:4px; font-weight:600; cursor:pointer;">Fermer</button>
                     </div>`;
                     return;
                 }
 
                 if (alumnoTokensGlobal <= 0) {
-                    container.innerHTML = `
-                    <div style="background:#fff; padding:15px; border-radius:8px; box-shadow:0 4px 15px rgba(0,0,0,0.15); text-align:center; font-family:'Montserrat';">
-                        <p style="margin:0 0 10px 0; font-size:0.88rem; color:var(--danger); font-weight:700;"><i class="fas fa-exclamation-circle"></i> Crédits épuisés</p>
-                        <p style="margin:0 0 12px 0; font-size:0.8rem; color:#555;">Vous n'avez plus de crédits pour consulter l'IA. Contactez votre professeur.</p>
-                        <button onclick="document.getElementById('glosario-flotante-container').style.display='none'" style="padding:6px 12px; cursor:pointer; background:#555; color:white; border:none; border-radius:4px;">Fermer</button>
-                    </div>`;
+                    container.innerHTML = `<div style="background:#fff; padding:15px; border-radius:8px; text-align:center;"><p style="color:var(--danger); font-weight:700;">Crédits épuisés</p><button onclick="document.getElementById('glosario-flotante-container').style.display='none'" style="padding:6px 12px; background:#555; color:white; border:none; border-radius:4px; cursor:pointer;">Fermer</button></div>`;
                     return;
                 }
 
@@ -3153,32 +2507,23 @@ DERNIER POINT / ÚLTIMO PUNTO:
                 const extDocRef = await addDoc(collection(db, "generate"), { prompt: promptContexto });
 
                 let desvincularEscucha = onSnapshot(extDocRef, async (snapshot) => {
-                    if (snapshot.exists()) {
-                        const datosExt = snapshot.data();
-                        if (datosExt.response) {
-                            desvincularEscucha();
-                            const respuestaTextoSophia = datosExt.response;
+                    if (snapshot.exists() && snapshot.data().response) {
+                        desvincularEscucha();
+                        const respuestaTextoSophia = snapshot.data().response;
 
-                            await setDoc(doc(db, "diccionario_maestro", palabraLimpia), {
-                                definicion: respuestaTextoSophia,
-                                tipo_gramatical: "IA",
-                                significado_espansol: "Generado por IA",
-                                ejemplo_uso: ""
-                            });
+                        await setDoc(doc(db, "diccionario_maestro", palabraLimpia), { definicion: respuestaTextoSophia, tipo_gramatical: "IA", significado_espansol: "Generado por IA", ejemplo_uso: "" });
+                        alumnoTokensGlobal--;
+                        await setDoc(docRefValidado, { tokens: alumnoTokensGlobal }, { merge: true });
 
-                            alumnoTokensGlobal--;
-                            await setDoc(docRefValidado, { tokens: alumnoTokensGlobal }, { merge: true });
+                        const tokenCounter = document.getElementById('banner-credits-count');
+                        if (tokenCounter) tokenCounter.innerText = alumnoTokensGlobal;
 
-                            const tokenCounter = document.getElementById('banner-credits-count');
-                            if (tokenCounter) tokenCounter.innerText = alumnoTokensGlobal;
-
-                            container.innerHTML = `
-                            <div style="background:#fff; padding:15px; border-radius:8px; box-shadow:0 4px 15px rgba(0,0,0,0.15); max-height:380px; overflow-y:auto; font-family:'Montserrat';">
-                                <h4 style="margin:0 0 10px 0; color:var(--oxford); font-size:1rem;">Analyse de Sophia:</h4>
-                                <div style="font-size:0.88rem; line-height:1.5; color:#333;">${respuestaTextoSophia}</div>
-                                <button onclick="document.getElementById('glosario-flotante-container').style.display='none'" style="margin-top:10px; width:100%; padding:6px; cursor:pointer; background:var(--oxford); color:white; border:none; border-radius:4px;">Fermer</button>
-                            </div>`;
-                        }
+                        container.innerHTML = `
+                        <div style="background:#fff; padding:15px; border-radius:8px; box-shadow:0 4px 15px rgba(0,0,0,0.15);">
+                            <h4 style="margin:0 0 10px 0; color:var(--oxford); font-size:1rem;">Analyse de Sophia:</h4>
+                            <div style="font-size:0.88rem; color:#333;">${respuestaTextoSophia}</div>
+                            <button onclick="document.getElementById('glosario-flotante-container').style.display='none'" style="margin-top:10px; width:100%; padding:6px; background:var(--oxford); color:white; border:none; border-radius:4px; cursor:pointer;">Fermer</button>
+                        </div>`;
                     }
                 });
             } catch (error) {}
