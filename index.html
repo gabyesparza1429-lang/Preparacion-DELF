@@ -1,168 +1,154 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Objectif Réussite - Niveaux</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <title>NeuroRéussit - Accessibilité Éducative</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --oxford: #002147;
-            --gold: #C5A059;
-            --white: #ffffff;
-            --light-bg: #f4f7f9;
+            --primary: #002147;
+            --purple: #aa96da;
+            --purple-hover: #957fca;
+            --bg: #f8f9fa;
+            --text: #2c3e50;
         }
-
         body {
             font-family: 'Montserrat', sans-serif;
             margin: 0;
-            background-color: var(--light-bg);
-            color: var(--oxford);
+            background-color: var(--bg);
+            color: var(--text);
+        }
+        header {
             display: flex;
-            flex-direction: column;
+            justify-content: space-between;
             align-items: center;
-            min-height: 100vh;
+            padding: 20px 50px;
+            background: #fff;
         }
-
-        /* BARRA SUPERIOR LIMPIA */
-        .navbar {
-            width: 100%;
-            max-width: 1200px;
-            display: flex;
-            justify-content: flex-start;
-            padding: 20px;
-            box-sizing: border-box;
-        }
-
-        .nav-logo {
+        .logo {
             font-weight: 700;
-            font-size: 1.1rem;
-            letter-spacing: 1px;
-            text-transform: uppercase;
+            font-size: 1.5rem;
+            color: var(--primary);
         }
-
-        /* CONTENEDOR DEL BANNER PRINCIPAL */
-        .banner-container {
-            width: 90%;
-            max-width: 1100px;
-            margin-top: 10px;
-            margin-bottom: 40px;
-        }
-
-        .banner-img {
-            width: 100%;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-            display: block;
-        }
-
-        /* CONTENEDOR DE TARJETAS DE NIVEL */
-        .container {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-            flex-wrap: wrap;
-            padding: 20px;
-            width: 100%;
-            max-width: 1100px;
-            box-sizing: border-box;
-        }
-
-        /* LAS TARJETAS YA NO TIENEN ACCESO LIBRE, TE MANDAN AL LOGIN */
-        .level-card {
-            background: var(--oxford);
-            width: 180px;
-            height: 240px;
-            border-radius: 18px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
+        .logo span { color: #c5a059; }
+        nav a {
+            margin-left: 20px;
             text-decoration: none;
-            color: var(--white);
-            transition: transform 0.3s, box-shadow 0.3s;
+            color: var(--text);
+            font-weight: 600;
         }
-
-        .level-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        .pilares-section {
+            text-align: center;
+            padding: 50px 20px;
         }
-
-        /* CLASE ESPECIAL EXCLUSIVA PARA EL C1 EN ORO */
-        .level-card.c1-gold {
-            background: var(--gold);
-            color: var(--oxford);
-        }
-
-        .level-name {
-            font-size: 2.8rem;
+        .pilares-title {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 40px;
             font-weight: 700;
-            margin: 0;
         }
-
-        .level-desc {
-            font-size: 0.75rem;
-            margin-top: 15px;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            opacity: 0.8;
-            font-weight: 400;
+        .cards-container {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            max-width: 1100px;
+            margin: 0 auto;
         }
-
-        .c1-gold .level-desc {
-            color: var(--oxford);
-            opacity: 0.7;
+        .card {
+            background: #fff;
+            border-radius: 16px;
+            padding: 35px 30px;
+            width: 420px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            text-align: center;
         }
-
-        /* PIE DE PÁGINA */
-        .footer-text {
-            font-size: 0.85rem;
-            color: #7f8c8d;
-            font-style: italic;
-            margin-top: 50px;
+        .card img {
+            max-width: 100%;
+            height: 160px;
+            object-fit: contain;
+            margin-bottom: 20px;
+        }
+        .card h3 {
+            color: var(--primary);
+            font-size: 1.25rem;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+        .card p {
+            font-size: 0.88rem;
+            line-height: 1.6;
+            color: #555;
             margin-bottom: 30px;
+            text-align: justify;
+        }
+        .btn {
+            display: block;
+            padding: 14px 0;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: #fff;
+            transition: background 0.3s;
+            width: 100%;
+        }
+        .btn-delf {
+            background: var(--primary);
+        }
+        .btn-delf:hover {
+            background: #001530;
+        }
+        .btn-nc {
+            background: var(--purple);
+        }
+        .btn-nc:hover {
+            background: var(--purple-hover);
         }
     </style>
 </head>
 <body>
 
-    <div class="navbar">
-        <div class="nav-logo">Objectif Réussite</div>
-    </div>
+    <header>
+        <div class="logo">Neuro<span>Réussit</span></div>
+        <nav>
+            <a href="#vision">Vision</a>
+            <a href="#piliers">Piliers</a>
+            <a href="#alliance">Alliance</a>
+            <a href="#contact">Contact</a>
+        </nav>
+    </header>
 
-    <div class="banner-container">
-        <img src="./assets/Banner.png" alt="Objectif Réussite DELF" class="banner-img">
-    </div>
+    <section class="pilares-section" id="piliers">
+        <h2 class="pilares-title">Nuestros Pilares</h2>
+        <div class="cards-container">
+            
+            <!-- Tarjeta DELF -->
+            <div class="card">
+                <div>
+                    <img src="./assets/Banner.png" alt="DELF">
+                    <h3>Objectif Réussite DELF: La Certificación al Alcance de Todos</h3>
+                    <p>No es solo un programa de francés; es un sistema de entrenamiento de alto rendimiento que conecta la intención de aprender con el éxito en la certificación oficial. Como examinadora y correctora certificada, he integrado en esta plataforma las rúbricas y criterios oficiales, convirtiendo el examen en un proceso transparente y superable.</p>
+                </div>
+                <a href="https://objectif-reussite-delf.neuroreussit.com" class="btn btn-delf">ENTRAR</a>
+            </div>
 
-    <div class="container">
-        <a href="login.html?level=A1" class="level-card">
-            <h2 class="level-name">A1</h2>
-            <span class="level-desc">Découverte</span>
-        </a>
+            <!-- Tarjeta NeuroClarity -->
+            <div class="card">
+                <div>
+                    <img src="./assets/neuroclarity-logo.png" alt="NeuroClarity">
+                    <h3>NeuroClarity: Metodología para Mentes Diversas</h3>
+                    <p>Desarrollamos soluciones digitales que reconocen y valoran la neurodivergencia, adaptando la entrega de contenido para reducir la carga cognitiva y optimizar la comprensión. Nuestra tecnología es la herramienta clave para disminuir la brecha educativa, asegurando que ninguna forma de aprender sea un obstáculo para alcanzar la excelencia profesional.</p>
+                </div>
+                <a href="https://neuroclarity-dcf0e.web.app" class="btn btn-nc">ENTRAR</a>
+            </div>
 
-        <a href="login.html?level=A2" class="level-card">
-            <h2 class="level-name">A2</h2>
-            <span class="level-desc">Survie</span>
-        </a>
-
-        <a href="login.html?level=B1" class="level-card">
-            <h2 class="level-name">B1</h2>
-            <span class="level-desc">Seuil</span>
-        </a>
-
-        <a href="login.html?level=B2" class="level-card">
-            <h2 class="level-name">B2</h2>
-            <span class="level-desc">Indépendant</span>
-        </a>
-
-        <a href="login.html?level=C1" class="level-card c1-gold">
-            <h2 class="level-name">C1</h2>
-            <span class="level-desc">Autonome</span>
-        </a>
-    </div>
-
-    <div class="footer-text">De la intención a la certificación.</div>
+        </div>
+    </section>
 
 </body>
 </html>
