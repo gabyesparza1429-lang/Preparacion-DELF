@@ -3,132 +3,265 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Objectif Réussite DELF / DALF</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <title>Objectif Réussite - Niveaux</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --oxford: #002147;
+            --gold: #C5A059;
+            --white: #ffffff;
+            --light-bg: #f4f7f9;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            background-color: var(--light-bg);
+            color: var(--oxford);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* BARRA SUPERIOR LIMPIA */
+        .navbar {
+            width: 100%;
+            max-width: 1200px;
+            display: flex;
+            justify-content: flex-start;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .nav-logo {
+            font-weight: 700;
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        /* CONTENEDOR DEL BANNER PRINCIPAL */
+        .banner-container {
+            width: 90%;
+            max-width: 1100px;
+            margin-top: 10px;
+            margin-bottom: 40px;
+        }
+
+        .banner-img {
+            width: 100%;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            display: block;
+        }
+
+        /* CONTENEDOR DE TARJETAS DE NIVEL */
+        .container {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            padding: 20px;
+            width: 100%;
+            max-width: 1100px;
+            box-sizing: border-box;
+            align-items: flex-start;
+        }
+
+        /* TARJETAS CON DESPLEGABLE */
+        .level-card {
+            background: var(--oxford);
+            width: 200px;
+            border-radius: 18px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: var(--white);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+            overflow: hidden;
+            padding: 25px 15px;
+            box-sizing: border-box;
+        }
+
+        .level-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        /* CLASE ESPECIAL EXCLUSIVA PARA EL C1 EN ORO */
+        .level-card.c1-gold {
+            background: var(--gold);
+            color: var(--oxford);
+        }
+
+        .level-header {
+            text-align: center;
+            width: 100%;
+        }
+
+        .level-name {
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin: 0;
+        }
+
+        .level-desc {
+            font-size: 0.75rem;
+            margin-top: 10px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            opacity: 0.8;
+            font-weight: 700;
+        }
+
+        .c1-gold .level-desc {
+            color: var(--oxford);
+            opacity: 0.8;
+        }
+
+        /* INFORMACIÓN DESPLEGABLE */
+        .level-details {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, padding 0.4s ease;
+            width: 100%;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .level-card.active .level-details {
+            max-height: 300px;
+            padding-top: 15px;
+        }
+
+        .level-info-text {
+            font-size: 0.8rem;
+            line-height: 1.4;
+            margin-bottom: 15px;
+            opacity: 0.9;
+        }
+
+        .btn-login {
+            background: var(--gold);
+            color: var(--oxford);
+            border: none;
+            padding: 10px 18px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            text-decoration: none;
+            letter-spacing: 1px;
+            display: inline-block;
+            transition: background 0.2s;
+        }
+
+        .c1-gold .btn-login {
+            background: var(--oxford);
+            color: var(--white);
+        }
+
+        .btn-login:hover {
+            opacity: 0.9;
+        }
+
+        /* PIE DE PÁGINA */
+        .footer-text {
+            font-size: 0.85rem;
+            color: #7f8c8d;
+            font-style: italic;
+            margin-top: 50px;
+            margin-bottom: 30px;
+        }
+    </style>
 </head>
-<body class="bg-slate-50 text-slate-800 font-sans min-h-screen flex flex-col">
+<body>
 
-    <header class="bg-slate-900 text-white shadow-md sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-            <div class="flex items-center space-x-3">
-                <i class="fa-solid fa-graduation-cap text-blue-400 text-2xl"></i>
-                <span class="text-xl font-bold tracking-wide">Objectif Réussite DELF</span>
+    <div class="navbar">
+        <div class="nav-logo">Objectif Réussite</div>
+    </div>
+
+    <div class="banner-container">
+        <img src="./assets/Banner.png" alt="Objectif Réussite DELF" class="banner-img">
+    </div>
+
+    <div class="container">
+        <!-- A1 -->
+        <div class="level-card" onclick="toggleCard(this)">
+            <div class="level-header">
+                <h2 class="level-name">A1</h2>
+                <span class="level-desc">Découverte</span>
             </div>
-            <nav class="flex items-center space-x-6">
-                <a href="#niveaux" class="hover:text-blue-400 transition font-medium">Niveles</a>
-                <a href="#contact" class="hover:text-blue-400 transition font-medium">Contacto</a>
-                <button class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-5 py-2 rounded-lg shadow-md transition duration-200 flex items-center space-x-2">
-                    <i class="fa-solid fa-right-to-bracket"></i>
-                    <span>Iniciar Sesión</span>
-                </button>
-            </nav>
+            <div class="level-details">
+                <p class="level-info-text">Comprensión y uso de expresiones cotidianas básicas y frases sencillas.</p>
+                <a href="login.html?level=A1" class="btn-login" onclick="event.stopPropagation();">Iniciar Sesión</a>
+            </div>
         </div>
-    </header>
 
-    <section class="bg-gradient-to-r from-slate-900 via-blue-950 to-slate-900 text-white py-20 px-6 text-center shadow-inner relative overflow-hidden">
-        <div class="max-w-4xl mx-auto relative z-10">
-            <h1 class="text-4xl md:text-5xl font-extrabold mb-4 tracking-tight leading-tight">
-                Preparación Especializada DELF & DALF
-            </h1>
-            <p class="text-lg md:text-xl text-slate-300 mb-8 max-w-2xl mx-auto">
-                Sistema de entrenamiento de alto rendimiento con criterios oficiales, rúbricas y estrategias de examen para asegurar tu certificación.
-            </p>
-            <a href="#niveaux" class="inline-block bg-blue-600 hover:bg-blue-500 text-white font-bold px-8 py-3.5 rounded-xl shadow-lg transition duration-200">
-                Explorar Niveles
-            </a>
+        <!-- A2 -->
+        <div class="level-card" onclick="toggleCard(this)">
+            <div class="level-header">
+                <h2 class="level-name">A2</h2>
+                <span class="level-desc">Survie</span>
+            </div>
+            <div class="level-details">
+                <p class="level-info-text">Comprensión de frases y expresiones frecuentes sobre áreas de relevancia inmediata.</p>
+                <a href="login.html?level=A2" class="btn-login" onclick="event.stopPropagation();">Iniciar Sesión</a>
+            </div>
         </div>
-    </section>
 
-    <main id="niveaux" class="max-w-7xl mx-auto px-6 py-16 flex-grow">
-        <h2 class="text-3xl font-bold text-center text-slate-900 mb-12">Niveles de Certificación</h2>
-        
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            
-            <div class="bg-white rounded-2xl border-2 border-blue-500/30 shadow-lg hover:shadow-xl transition-all duration-300 flex flex-col overflow-hidden">
-                <div class="bg-blue-600 text-white p-6">
-                    <span class="text-xs font-bold tracking-widest uppercase bg-blue-800/60 px-3 py-1 rounded-full">Principiante</span>
-                    <h3 class="text-2xl font-bold mt-2">Nivel A1</h3>
-                </div>
-                <div class="p-6 flex-grow flex flex-col justify-between space-y-4">
-                    <p class="text-slate-600 leading-relaxed">
-                        Comprensión y uso de expresiones cotidianas elementales y frases sencillas dirigidas a satisfacer necesidades de tipo inmediato.
-                    </p>
-                    <a href="./levels/A1/index.html" class="w-full text-center bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-xl transition duration-200 shadow-md">
-                        Entrar a Nivel A1
-                    </a>
-                </div>
+        <!-- B1 -->
+        <div class="level-card" onclick="toggleCard(this)">
+            <div class="level-header">
+                <h2 class="level-name">B1</h2>
+                <span class="level-desc">Seuil</span>
             </div>
-
-            <div class="bg-white rounded-2xl border-2 border-blue-500/30 shadow-lg hover:shadow-xl transition-all duration-300 flex flex-col overflow-hidden">
-                <div class="bg-blue-600 text-white p-6">
-                    <span class="text-xs font-bold tracking-widest uppercase bg-blue-800/60 px-3 py-1 rounded-full">Elemental</span>
-                    <h3 class="text-2xl font-bold mt-2">Nivel A2</h3>
-                </div>
-                <div class="p-6 flex-grow flex flex-col justify-between space-y-4">
-                    <p class="text-slate-600 leading-relaxed">
-                        Comprensión de frases y expresiones de uso frecuente relacionadas con áreas de experiencia especialmente relevantes.
-                    </p>
-                    <a href="./levels/A2/index.html" class="w-full text-center bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-xl transition duration-200 shadow-md">
-                        Entrar a Nivel A2
-                    </a>
-                </div>
+            <div class="level-details">
+                <p class="level-info-text">Comprensión de los puntos principales en textos claros sobre temas conocidos.</p>
+                <a href="login.html?level=B1" class="btn-login" onclick="event.stopPropagation();">Iniciar Sesión</a>
             </div>
-
-            <div class="bg-white rounded-2xl border-2 border-blue-500/30 shadow-lg hover:shadow-xl transition-all duration-300 flex flex-col overflow-hidden">
-                <div class="bg-blue-700 text-white p-6">
-                    <span class="text-xs font-bold tracking-widest uppercase bg-blue-900/60 px-3 py-1 rounded-full">Intermedio</span>
-                    <h3 class="text-2xl font-bold mt-2">Nivel B1</h3>
-                </div>
-                <div class="p-6 flex-grow flex flex-col justify-between space-y-4">
-                    <p class="text-slate-600 leading-relaxed">
-                        Comprensión de los puntos principales de textos claros en lengua estándar. Capacidad para desenvolverse en situaciones de viaje.
-                    </p>
-                    <a href="./levels/B1/index.html" class="w-full text-center bg-blue-700 hover:bg-blue-800 text-white font-semibold py-3 rounded-xl transition duration-200 shadow-md">
-                        Entrar a Nivel B1
-                    </a>
-                </div>
-            </div>
-
-            <div class="bg-white rounded-2xl border-2 border-blue-500/30 shadow-lg hover:shadow-xl transition-all duration-300 flex flex-col overflow-hidden">
-                <div class="bg-blue-800 text-white p-6">
-                    <span class="text-xs font-bold tracking-widest uppercase bg-blue-950/60 px-3 py-1 rounded-full">Intermedio Alto</span>
-                    <h3 class="text-2xl font-bold mt-2">Nivel B2</h3>
-                </div>
-                <div class="p-6 flex-grow flex flex-col justify-between space-y-4">
-                    <p class="text-slate-600 leading-relaxed">
-                        Comprensión de las ideas principales de textos complejos. Fluidez y naturalidad suficiente para comunicarse con hablantes nativos.
-                    </p>
-                    <a href="./levels/B2/index.html" class="w-full text-center bg-blue-800 hover:bg-blue-900 text-white font-semibold py-3 rounded-xl transition duration-200 shadow-md">
-                        Entrar a Nivel B2
-                    </a>
-                </div>
-            </div>
-
-            <div class="bg-amber-50/30 rounded-2xl border-2 border-amber-500 shadow-xl hover:shadow-2xl transition-all duration-300 flex flex-col overflow-hidden md:col-span-2 lg:col-span-1">
-                <div class="bg-gradient-to-r from-amber-600 via-amber-500 to-yellow-600 text-white p-6">
-                    <span class="text-xs font-bold tracking-widest uppercase bg-amber-900/50 px-3 py-1 rounded-full text-amber-100">DALF Autónomo</span>
-                    <h3 class="text-2xl font-bold mt-2 flex items-center justify-between">
-                        <span>Nivel C1</span>
-                        <i class="fa-solid fa-crown text-amber-200"></i>
-                    </h3>
-                </div>
-                <div class="p-6 flex-grow flex flex-col justify-between space-y-4">
-                    <p class="text-slate-700 leading-relaxed">
-                        Comprensión de textos extensos y exigentes con sentidos implícitos. Expresión fluida para fines académicos y profesionales.
-                    </p>
-                    <a href="./levels/C1/index.html" class="w-full text-center bg-gradient-to-r from-amber-600 to-yellow-600 hover:from-amber-700 hover:to-yellow-700 text-white font-bold py-3 rounded-xl transition duration-200 shadow-md">
-                        Entrar a Nivel C1
-                    </a>
-                </div>
-            </div>
-
         </div>
-    </main>
 
-    <footer class="bg-slate-900 text-slate-400 py-8 px-6 text-center text-sm border-t border-slate-800">
-        <p>© Objectif Réussite DELF/DALF. Todos los derechos reservados.</p>
-    </footer>
+        <!-- B2 -->
+        <div class="level-card" onclick="toggleCard(this)">
+            <div class="level-header">
+                <h2 class="level-name">B2</h2>
+                <span class="level-desc">Indépendant</span>
+            </div>
+            <div class="level-details">
+                <p class="level-info-text">Comprensión de ideas principales en textos complejos y comunicación fluida.</p>
+                <a href="login.html?level=B2" class="btn-login" onclick="event.stopPropagation();">Iniciar Sesión</a>
+            </div>
+        </div>
+
+        <!-- C1 -->
+        <div class="level-card c1-gold" onclick="toggleCard(this)">
+            <div class="level-header">
+                <h2 class="level-name">C1</h2>
+                <span class="level-desc">Autonome</span>
+            </div>
+            <div class="level-details">
+                <p class="level-info-text">Comprensión de textos extensos y exigentes con expresión fluida y espontánea.</p>
+                <a href="login.html?level=C1" class="btn-login" onclick="event.stopPropagation();">Iniciar Sesión</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-text">De la intención a la certificación.</div>
+
+    <script>
+        function toggleCard(card) {
+            document.querySelectorAll('.level-card').forEach(c => {
+                if (c !== card) c.classList.remove('active');
+            });
+            card.classList.toggle('active');
+        }
+    </script>
 
 </body>
 </html>
