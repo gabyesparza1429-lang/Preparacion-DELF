@@ -1,6 +1,5 @@
 {
   "hosting": {
-    "target": "objectif-reussite-delf",
     "public": ".",
     "ignore": [
       "firebase.json",
