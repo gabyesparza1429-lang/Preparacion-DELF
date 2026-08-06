@@ -1,0 +1,13 @@
+{
+  "projects": {},
+  "targets": {
+    "objectif-reussite-delf": {
+      "hosting": {
+        "objectif-reussite-delf": [
+          "objectif-reussite-delf"
+        ]
+      }
+    }
+  },
+  "etags": {}
+}

@@ -2,60 +2,449 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Objectif Réussite DELF</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>NeuroRéussit - Inicio</title>
+    <link rel="icon" type="image/png" href="https://objectif-reussite-delf.neuroreussit.com">
+    <link href="https://objectif-reussite-delf.neuroreussit.com" rel="stylesheet">
+    <link rel="stylesheet" href="https://objectif-reussite-delf.neuroreussit.com">
     <style>
-        body {
-            background-color: #f8f9fa;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        :root { 
+            --oxford: #002147; 
+            --gold: #C5A059; 
+            --white: #ffffff; 
+            --dark-bg: #f5f6fa; /* Fondo gris claro principal */
+            --card-bg: #ffffff;  /* Tarjetas en color blanco para contraste */
+            --text-dark: #2f3542; /* Texto principal oscuro */
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body { 
+            font-family: 'Montserrat', sans-serif; 
+            margin: 0; 
+            background: var(--dark-bg); 
+            color: var(--text-dark); 
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* BARRA DE NAVEGACIÓN COMPACTA TRILINGÜE */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+            background: var(--card-bg);
+            position: sticky;
+            top: 0;
+            z-index: 999;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+
+        .navbar .brand-wrapper {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .navbar .brand {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--oxford);
+            letter-spacing: 1px;
+            line-height: 1.2;
+        }
+
+        .navbar .brand span {
+            color: var(--gold);
+        }
+
+        .navbar .trilingual-tagline {
+            font-size: 0.68rem;
+            color: #747d8c;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            margin-top: 2px;
+            text-transform: uppercase;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 25px;
+        }
+
+        .nav-links a {
+            color: var(--text-dark);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--gold);
+        }
+        
+        /* SECCIÓN HERO */
+        .hero {
+            text-align: center; 
+            padding: 80px 20px 90px 20px;
+            background: radial-gradient(circle at center, #ffffff 0%, var(--dark-bg) 70%);
+        }
+
+        /* CONTENEDOR OPTIMIZADO PARA VIDEO GRANDE (SIN CÍRCULO NI BORDES) */
+        .video-hero-container {
+            width: 100%;
+            max-width: 500px; /* Tamaño del video expandido */
+            margin: 0 auto 35px auto;
             display: flex;
             align-items: center;
             justify-content: center;
-            min-height: 100vh;
-            margin: 0;
         }
-        .main-card {
-            max-width: 480px;
+
+        .video-hero-container video {
             width: 100%;
-            border: none;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            background: #ffffff;
-            padding: 2.5rem;
+            height: auto;
+            border-radius: 12px; /* Un ligero toque curvo en las esquinas del video para que luzca limpio */
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08); /* Sutil sombra de profundidad */
         }
-        .btn-portal {
-            padding: 12px;
-            font-weight: 600;
-            border-radius: 8px;
+
+        .hero h1 { 
+            font-size: 3.2rem;
+            color: var(--oxford); 
+            margin: 0 0 5px 0; 
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .hero p.tagline {
+            color: var(--gold); 
+            font-weight: 600; 
+            margin: 0 0 15px 0; 
+            letter-spacing: 2px;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+        }
+
+        .hero p.sub-tagline {
+            color: #57606f;
+            font-size: 0.95rem;
+            margin: 0 0 35px 0;
+            font-style: italic;
+        }
+
+        .btn-scroll-down {
+            background: transparent;
+            border: 2px solid var(--gold);
+            color: var(--oxford);
+            padding: 12px 25px;
+            border-radius: 30px;
+            font-weight: bold;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            cursor: pointer;
+            letter-spacing: 1px;
+            transition: all 0.3s;
+        }
+
+        .btn-scroll-down:hover {
+            background: var(--gold);
+            color: var(--white);
+            border-color: var(--gold);
+        }
+        
+        /* SECCIÓN GLOBAL DE CONTENIDO */
+        .section-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 60px 20px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 1.8rem;
+            color: var(--oxford);
+            margin-bottom: 35px;
+            position: relative;
+            font-weight: 700;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 50px;
+            height: 3px;
+            background: var(--gold);
+            margin: 15px auto 0 auto;
+        }
+
+        /* SECCIÓN DE NUESTRA VISIÓN */
+        .vision-text {
+            line-height: 1.8;
+            font-size: 1.05rem;
+            color: var(--text-dark);
+            text-align: center;
+            background: var(--card-bg);
+            padding: 35px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border-top: 4px solid var(--gold);
+            max-width: 850px;
+            margin: 0 auto;
+        }
+
+        /* BLOQUES DE PROYECTOS (ACCESO) */
+        .proyectos-wrapper { 
+            display: flex; 
+            gap: 40px; 
+            justify-content: center; 
+            align-items: stretch; 
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+        
+        .puerta-proyecto { 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            text-decoration: none; 
+            color: inherit; 
+            transition: transform 0.3s, border-color 0.3s; 
+            cursor: pointer; 
+            background: var(--card-bg);
+            padding: 35px 25px;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            width: 440px;
+            box-sizing: border-box;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .puerta-proyecto:hover { 
+            transform: translateY(-8px); 
+            border-color: rgba(197, 160, 89, 0.4);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+        }
+        
+        .logo-grande { 
+            width: 100%; 
+            height: 130px; 
+            object-fit: contain; 
+            margin-bottom: 20px; 
+        }
+
+        .pilar-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--oxford);
+            margin: 0 0 15px 0;
+            text-align: center;
+            line-height: 1.4;
+        }
+
+        .pilar-description {
+            font-size: 0.88rem;
+            color: #57606f;
+            line-height: 1.6;
+            text-align: justify;
+            margin-bottom: 25px;
+            flex-grow: 1;
+        }
+        
+        .btn-entrar { 
+            color: white; 
+            padding: 12px 40px; 
+            border-radius: 30px; 
+            font-weight: bold; 
+            font-family: 'Montserrat', sans-serif; 
+            font-size: 0.9rem; 
+            text-transform: uppercase; 
+            letter-spacing: 1px; 
+            transition: background 0.2s; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1); 
+            border: none; 
+            width: 100%;
+            cursor: pointer;
+        }
+
+        /* SECCIÓN POR QUÉ NEUROREUSSIT */
+        .aliados-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .aliado-card {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 12px;
+            border-left: 4px solid var(--gold);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        .aliado-card h3 {
+            margin: 0 0 12px 0;
+            color: var(--oxford);
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+
+        .aliado-card p {
+            margin: 0;
+            color: var(--text-dark);
+            font-size: 0.9rem;
+            line-height: 1.6;
+            text-align: justify;
+        }
+
+        /* SECCIÓN CONTACTO */
+        .contacto-wrapper {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 40px 20px;
+            box-shadow: 0 4px 25px rgba(0,0,0,0.05);
+            max-width: 650px;
+            margin: 0 auto;
+            border: 1px solid rgba(0,0,0,0.02);
+        }
+
+        .contacto-instruction {
+            text-align: center;
+            font-size: 0.95rem;
+            color: var(--text-dark);
+            margin-bottom: 30px;
+            line-height: 1.5;
+            padding: 0 20px;
+        }
+        
+        /* BOTÓN DE ACCESO INVISIBLE PARA ADMINISTRADOR */
+        .admin-secret-link { 
+            position: absolute; 
+            top: 0; 
+            left: 0; 
+            width: 60px; 
+            height: 60px; 
+            background: transparent; 
+            cursor: pointer; 
+            z-index: 99999; 
+        }
+
+        /* FOOTER */
+        .footer {
+            text-align: center;
+            padding: 30px 20px;
+            background: var(--card-bg);
+            font-size: 0.8rem;
+            color: #747d8c;
+            margin-top: auto;
+            border-top: 1px solid rgba(0,0,0,0.05);
         }
     </style>
 </head>
 <body>
 
-    <div class="main-card text-center">
-        <h2 class="mb-2 text-primary font-weight-bold">Objectif Réussite DELF</h2>
-        <p class="text-muted mb-4">Plateforme d'apprentissage et d'évaluation</p>
-        
-        <div class="d-grid gap-3">
-            <!-- Botón Acceso Alumnos -->
-            <a href="alumno.html" class="btn btn-primary btn-portal">
-                Accès Élève
+    <div class="admin-secret-link" onclick="window.location.href='https://objectif-reussite-delf.neuroreussit.com'" title="Connexion"></div>
+
+    <nav class="navbar">
+        <div class="brand-wrapper">
+            <div class="brand">Neuro<span>Réussit</span></div>
+            <div class="trilingual-tagline">Accessibilité • Accessibility • Accesibilidad</div>
+        </div>
+        <div class="nav-links">
+            <a href="https://objectif-reussite-delf.neuroreussit.com">Vision</a>
+            <a href="https://objectif-reussite-delf.neuroreussit.com">Piliers</a>
+            <a href="https://objectif-reussite-delf.neuroreussit.com">Alliance</a>
+            <a href="https://objectif-reussite-delf.neuroreussit.com">Contact</a>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="video-hero-container">
+            <video autoplay loop muted playsinline>
+                <source src="https://firebasestorage.googleapis.com/v0/b/objectif-reussite-delf.firebasestorage.app/o/Logovideo.mp4?alt=media&token=adbc6f17-d457-4f53-b7ab-a2f23a3a4cdd" type="video/mp4">
+                Votre navigateur ne prend pas en charge les vidéos HTML5.
+            </video>
+        </div>
+        <p class="sub-tagline">La ingeniería pedagógica al servicio de la diversidad cognitiva.</p>
+        <button class="btn-scroll-down" onclick="window.location.href='https://objectif-reussite-delf.neuroreussit.com'">
+            En savoir plus <i class="fas fa-chevron-down" style="margin-left:8px;"></i>
+        </button>
+    </header>
+
+    <section class="section-container" id="vision">
+        <h2 class="section-title">Nuestra Visión</h2>
+        <div class="vision-text">
+            En NeuroRéussit, eliminamos las barreras que separan el esfuerzo del éxito académico. Utilizamos tecnología educativa diseñada específicamente para mentes diversas, con el objetivo de cerrar la brecha educativa y democratizar el acceso al aprendizaje de alto nivel.
+        </div>
+    </section>
+
+    <section class="section-container" id="pilares">
+        <h2 class="section-title">Nuestros Pilares</h2>
+        <div class="proyectos-wrapper">
+            
+            <a href="https://objectif-reussite-delf.neuroreussit.com" class="puerta-proyecto">
+                <img src="./assets/Logo.png" alt="Logo Réussite DELF" class="logo-grande">
+                <div class="pilar-title">Objectif Réussite DELF: La Certificación al Alcance de Todos</div>
+                <div class="pilar-description">
+                    No es solo un programa de francés; es un sistema de entrenamiento de alto rendimiento que conecta la intención de aprender con el éxito en la certificación oficial. Como examinadora y correctora certificada, he integrado en esta plataforma las rúbricas y criterios oficiales, convirtiendo el examen en un proceso transparente y superable.
+                </div>
+                <button class="btn-entrar" style="background: var(--oxford);">Entrar</button>
+            </a>
+
+            <a href="https://objectif-reussite-delf.neuroreussit.com" class="puerta-proyecto">
+                <img src="./assets/NeuroClarity.png" alt="Logo NeuroClarity" class="logo-grande">
+                <div class="pilar-title">NeuroClarity: Metodología para Mentes Diversas</div>
+                <div class="pilar-description">
+                    Desarrollamos soluciones digitales que reconen y valoran la neurodivergencia, adaptando la entrega de contenido para reducir la carga cognitiva y optimizar la comprensión. Nuestra tecnología es la herramienta clave para disminuir la brecha educativa, asegurando que ninguna forma de aprender sea un obstáculo para alcanzar la excelencia profesional.
+                </div>
+                <button class="btn-entrar" style="background: #B099CE;">Entrar</button>
             </a>
             
-            <!-- Botón Acceso Profesor -->
-            <a href="profesor.html" class="btn btn-outline-secondary btn-portal">
-                Accès Professeur
-            </a>
         </div>
+    </section>
 
-        <div class="mt-4 pt-3 border-top">
-            <small class="text-muted">© NeuroReussit - Tous droits réservés</small>
+    <section class="section-container" id="aliado">
+        <h2 class="section-title">Por qué NeuroRéussit es tu mejor aliado</h2>
+        <div class="aliados-grid">
+            <div class="aliado-card">
+                <h3>Innovación EdTech</h3>
+                <p>Al alojar nuestras soluciones en infraestructuras técnicas de vanguardia, garantizamos estabilidad, rapidez y una experiencia de usuario impecable.</p>
+            </div>
+            <div class="aliado-card">
+                <h3>Autoridad Técnico</h3>
+                <p>Fusionamos la experiencia de una examinadora certificada por France Éducation international con herramientas digitales diseñadas para el siglo XXI.</p>
+            </div>
         </div>
-    </div>
+    </section>
 
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <section class="section-container" id="contact">
+        <h2 class="section-title">Contact & Inscription</h2>
+        <div class="contacto-wrapper">
+            <p class="contacto-instruction">
+                Inscríbase para recibir les últimas actualizaciones, informaciones sobre nuestros programas o abrir tu acceso de estudiante.
+            </p>
+            <iframe width="540" height="305" src="https://201ee2fd.sibforms.com/v2/serve/MUIFADHSCjB0UNge7clblPZRNoebgcDGjGaQVPo0DORZtXNRmCJ9Ol2PmruDajE7wGhxSSiSGJzpx9JFAW4boeMmQdRtGIiNi451_Q6KZFkJAYFenBzkbtoXzSfcN5Xgn2jxKqwWgwZvI4Q1wfAlu0VaAVLLOTDLIzVwRmQCzv0zvW5lLxOXiMiqDN2UEAOd6U8UQdDMj1T5f-SzZw==" frameborder="0" scrolling="auto" allowfullscreen style="display: block; margin: 0 auto; max-width: 100%; border-radius: 8px;"></iframe>
+        </div>
+    </section>
+
+    <footer class="footer">
+        &copy; 2026 NeuroRéussit. Todos los derechos reservados. | Accessibilité Éducative.
+    </footer>
+
+    <script>
+        function accesoAdminSeguro() {
+            const clave = prompt("Mot de passe administrateur / Contraseña de administrador:");
+            if (clave === "Gaby1429") {
+                window.location.href = "admin.html";
+            } else if (clave !== null) {
+                alert("Accès refusé. Contraseña incorrecta.");
+            }
+        }
+    </script>
+
 </body>
 </html>
