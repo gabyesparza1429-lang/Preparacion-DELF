@@ -1,11 +1,17 @@
 {
   "hosting": {
+    "site": "objectif-reussite-delf",
     "public": ".",
     "ignore": [
       "firebase.json",
       "**/.*",
-      "**/*.git*",
       "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "/login",
+        "destination": "/login.html"
+      }
     ]
   }
 }
