@@ -1,13 +1,14 @@
 {
-  "projects": {},
+  "projects": {
+    "default": "neuroreussit"
+  },
   "targets": {
-    "objectif-reussite-delf": {
+    "neuroreussit": {
       "hosting": {
         "objectif-reussite-delf": [
           "objectif-reussite-delf"
         ]
       }
     }
-  },
-  "etags": {}
+  }
 }
