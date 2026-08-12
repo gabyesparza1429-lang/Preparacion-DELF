@@ -1875,3 +1875,36 @@
     </script>
 </body>
 </html>
+<script>
+// Funcion para que Sophia lea las instrucciones del examen oral
+window.hablarSophia = function(texto) {
+    if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(texto);
+        utterance.lang = 'fr-FR';
+        utterance.rate = 0.9;
+        window.speechSynthesis.speak(utterance);
+    }
+};
+
+// Funcion global de grabacion
+window.grabarPO = async function() {
+    const btn = document.getElementById('btn-record-po');
+    if (!window.mediaRecorder || window.mediaRecorder.state === "inactive") {
+        try {
+            const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+            window.mediaRecorder = new MediaRecorder(stream);
+            window.audioChunks = [];
+            window.mediaRecorder.ondataavailable = e => window.audioChunks.push(e.data);
+            window.mediaRecorder.start();
+            if (btn) btn.innerHTML = '<i class="fas fa-stop"></i> Arrêter l\'enregistrement';
+        } catch (err) {
+            alert("No se pudo acceder al micrófono.");
+        }
+    } else {
+        window.mediaRecorder.stop();
+        window.mediaRecorder.stream.getTracks().forEach(track => track.stop());
+        if (btn) btn.innerHTML = '<i class="fas fa-microphone"></i> Commencer l\'enregistrement';
+    }
+};
+</script>
