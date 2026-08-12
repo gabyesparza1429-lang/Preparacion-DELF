@@ -1211,6 +1211,7 @@
             let botonPO = window.currentSkill === "PO" ? `<div style="margin: 20px 0; text-align: center;"></div>` : ""; let html = `<div class="exercise-card">${zoneHTML}<h4 style="margin-top:0; color:var(--oxford); font-weight:700; margin-bottom: 20px;">${tituloInstruccion}</h4>${botonPO}`;
             if (window.currentSkill === "PO") { html += `<div style="margin: 20px 0; text-align: center;"><button id="btn-record-po" class="btn-mic" onclick="window.grabarPO()" style="padding:12px 30px; font-size:1rem; background-color:#d9534f; color:white; border:none; border-radius:5px; cursor:pointer;"><i class="fas fa-microphone"></i> Commencer l'enregistrement</button></div>`; }
 
+            if (window.currentSkill === "PO") { html += `<div style="margin: 20px 0; text-align: center;"><button id="btn-record-po" class="btn-mic" onclick="window.grabarPO()" style="padding:12px 30px; font-size:1rem; background-color:#d9534f; color:white; border:none; border-radius:5px; cursor:pointer;"><i class="fas fa-microphone"></i> Commencer l'enregistrement</button></div>`; }
             if (ej.ruta_audio && window.currentSkill !== "PO") {
                 html += `<div style="background:#f1f3f5; padding:15px; border-radius:8px; margin-bottom:20px; text-align:center;"><div class="audio-counter-badge"><i class="fas fa-headphones"></i><span id="audio-count-label">Écoutes / Escuchas : 0 / 2</span></div><div id="${audioId}">Loading...</div></div>`;
             }
@@ -1539,6 +1540,7 @@
                 } catch(errFetch) { console.error("Error recuperando histórico:", errFetch); }
             }
 
+            if (window.currentSkill === "PO") { html += `<div style="margin: 20px 0; text-align: center;"><button id="btn-record-po" class="btn-mic" onclick="window.grabarPO()" style="padding:12px 30px; font-size:1rem; background-color:#d9534f; color:white; border:none; border-radius:5px; cursor:pointer;"><i class="fas fa-microphone"></i> Commencer l'enregistrement</button></div>`; }
             if (ej.ruta_audio && window.currentSkill !== "PO") {
                 let extraerNumeros = ej.ruta_audio.match(/\d+/);
                 let numeroPista = extraerNumeros ? extraerNumeros[0].padStart(2, '0') : "02";
