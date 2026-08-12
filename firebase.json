@@ -1,8 +1,6 @@
 {
   "hosting": {
-    "target": "objectif-reussite-delf",
     "public": ".",
-    "cleanUrls": true,
     "ignore": [
       "firebase.json",
       "**/.*",
@@ -12,10 +10,6 @@
       {
         "source": "/login",
         "destination": "/login.html"
-      },
-      {
-        "source": "**",
-        "destination": "/index.html"
       }
     ]
   }
