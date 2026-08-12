@@ -1049,7 +1049,7 @@
                     <div class="intro-sub-box">
                         <h5><i class="fas fa-bullseye"></i> ${skInfo.titObjetivos}</h5>
                         <ul>${skInfo.objetivos.map(o => `<li>${o}</li>`).join('')}</ul>
-                    </div>
+                    <div style="margin-top:20px; text-align:center;"><button id="btn-record-po" class="btn-mic" onclick="window.grabarPO()" style="padding:12px 30px; font-size:1rem; background-color:#d9534f; color:white; border:none; border-radius:5px; cursor:pointer;"><i class="fas fa-microphone"></i> Commencer l'enregistrement</button></div></div>
                     <div class="intro-sub-box">
                         <h5><i class="fas fa-tasks"></i> ${skInfo.titEjercicios}</h5>
                         <ul>${skInfo.ejercicios.map(e => `<li>${e}</li>`).join('')}</ul>
