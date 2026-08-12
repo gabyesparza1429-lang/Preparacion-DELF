@@ -1350,7 +1350,6 @@
 
                 html += `
                 <div style="margin-bottom:20px; text-align:center; background:#fafbfc; padding:30px; border-radius:8px; border:1px dashed #ccc;">
-<button id="btn-record-po" class="btn-mic" onclick="window.grabarPO()" style="padding:12px 30px; font-size:1rem;"><i class="fas fa-microphone"></i> Commencer l'enregistrement</button>
                 </div>`;
                 
             } else if (ej.preguntas && ej.preguntas.length > 0) {
@@ -1888,7 +1887,6 @@ window.hablarSophia = function(texto) {
 };
 
 // Funcion global de grabacion
-window.grabarPO = async function() {
     const btn = document.getElementById('btn-record-po');
     if (!window.mediaRecorder || window.mediaRecorder.state === "inactive") {
         try {
@@ -1927,3 +1925,43 @@ window.grabarPO = async function() {
         window.mediaRecorder.stream.getTracks().forEach(track => track.stop());
     }
 };
+
+<script>
+window.grabarPO = async function() {
+    const btn = document.getElementById('btn-record-po');
+    if (!window.mediaRecorder || window.mediaRecorder.state === "inactive") {
+        try {
+            const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+            window.mediaRecorder = new MediaRecorder(stream);
+            window.audioChunks = [];
+            
+            window.mediaRecorder.ondataavailable = e => window.audioChunks.push(e.data);
+            
+            window.mediaRecorder.onstop = async () => {
+                const audioBlob = new Blob(window.audioChunks, { type: 'audio/webm' });
+                console.log("Audio capturado listo para IA:", audioBlob);
+                
+                if (btn) btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Analyse par l\'IA...';
+                
+                if (typeof enviarAudioAIA === 'function') {
+                    await enviarAudioAIA(audioBlob);
+                } else if (typeof enviarGrabacionPO === 'function') {
+                    await enviarGrabacionPO(audioBlob);
+                } else {
+                    console.log("Audio grabado exitosamente. Se requiere enlazar la función de la API de IA.");
+                }
+                
+                if (btn) btn.innerHTML = '<i class="fas fa-microphone"></i> Commencer l\'enregistrement';
+            };
+
+            window.mediaRecorder.start();
+            if (btn) btn.innerHTML = '<i class="fas fa-stop"></i> Arrêter l\'enregistrement';
+        } catch (err) {
+            alert("No se pudo acceder al micrófono.");
+        }
+    } else {
+        window.mediaRecorder.stop();
+        window.mediaRecorder.stream.getTracks().forEach(track => track.stop());
+    }
+};
+</script>
