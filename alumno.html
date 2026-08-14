@@ -1551,10 +1551,17 @@
                         }
                         
                         if (datosHistoricos.respuesta_ia) {
-                            if (window.currentSkill === 'PO') { window.mostrarEvaluacionOralSophia(datosHistoricos.respuesta_ia); } else if (window.currentSkill === 'PE') { window.mostrarEvaluacionSophia(datosHistoricos.respuesta_ia); } else { document.getElementById('sophia-verdict-text').innerHTML = datosHistoricos.respuesta_ia; }
-                            document.getElementById('sophia-box').style.display = "block";
-                        }
-                    }
+    const sBox = document.getElementById("sophia-box");
+    if (sBox) sBox.style.display = "block";
+    if (window.currentSkill === "PO") {
+        window.mostrarEvaluacionOralSophia(datosHistoricos.respuesta_ia);
+    } else if (window.currentSkill === "PE") {
+        window.mostrarEvaluacionSophia(datosHistoricos.respuesta_ia);
+    } else {
+        document.getElementById("sophia-verdict-text").innerHTML = datosHistoricos.respuesta_ia;
+    }
+}
+}
                 } catch(errFetch) { console.error("Error recuperando histórico:", errFetch); }
             }
 
