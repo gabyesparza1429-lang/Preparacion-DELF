@@ -1582,8 +1582,8 @@ window.renderExerciseStructure = async function() {
                         <span id="po-audio-feedback" style="font-size: 0.9rem; font-weight: 600; color: #666;">Cliquez pour démarrer l'écoute.</span>
                     </div>
 
-                    <label style="display:block; font-size:0.85rem; font-weight:700; color:var(--oxford); margin-bottom:5px;">Texte transcrit (votre voix) :</label>
-                    <textarea id="po-student-response" class="production-textbox" placeholder="Votre voix sera convertie en texte ici automatiquement..." style="min-height: 140px;"></textarea>
+                    <label style="display:block; font-size:0.85rem; font-weight:700; color:var(--oxford); margin-bottom:5px;"><span style="display:none;"><span style="display:none;">Texte transcrit</span></span></label>
+                    <textarea id="po-student-response" style="display:none;" class="production-textbox" placeholder="Votre voix sera convertie en texte ici automatiquement..." style="min-height: 140px;"></textarea>
 
                     <div style="display:flex; justify-content:flex-end; gap:12px; border-top: 1px solid #eee; padding-top: 15px; margin-top: 15px;">
                         <button type="button" id="btn-reset-po" style="background:#6c757d; color:white; border:none; padding:10px 20px; border-radius:6px; cursor:pointer;">Réinitialiser</button>
