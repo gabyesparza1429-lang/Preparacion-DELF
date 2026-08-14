@@ -835,6 +835,65 @@ window.subirAudioYEvaluar = async function() {
 
 window.evaluarPO = window.subirAudioYEvaluar;
 </script>
+<script>
+window.enviarAudioAIA = async function(audioBlob) {
+    const verdictText = document.getElementById("sophia-verdict-text");
+    try {
+        const formData = new FormData();
+        const blobFinal = (audioBlob instanceof Blob) ? audioBlob : new Blob([audioBlob], { type: "audio/webm" });
+        
+        // Claves requeridas por la Cloud Function procesarAudioPO
+        formData.append("audio", blobFinal, "audio_alumno.webm");
+        formData.append("audioBlob", blobFinal, "audio_alumno.webm");
+        formData.append("file", blobFinal, "audio_alumno.webm");
+        formData.append("user_id", "constanza2026");
+        formData.append("userId", "constanza2026");
+        formData.append("alumno_id", "constanza2026");
+        formData.append("nivel", "B1");
+        formData.append("actividad", "1");
+        formData.append("habilidad", "PO");
+
+        const response = await fetch("/procesarAudioPO", {
+            method: "POST",
+            body: formData
+        });
+
+        if (!response.ok) {
+            throw new Error(`Error en servidor: ${response.status} ${response.statusText}`);
+        }
+
+        const data = await response.json();
+        console.log("Respuesta de Sophia:", data);
+
+        // Renderizado de la evaluación recibida de Sophia
+        if (verdictText) {
+            let htmlResult = "";
+            if (data.html || data.evaluacionHtml) {
+                htmlResult = data.html || data.evaluacionHtml;
+            } else if (data.feedback || data.evaluacion) {
+                htmlResult = `<div style="padding:15px; text-align:left; font-size:15px; line-height:1.6;">${data.feedback || data.evaluacion}</div>`;
+            } else {
+                htmlResult = `<pre style="white-space:pre-wrap; text-align:left;">${JSON.stringify(data, null, 2)}</pre>`;
+            }
+            
+            // Mantener reproductor de audio si existe
+            const player = verdictText.querySelector("audio");
+            if (player) {
+                const playerContainer = player.closest("div");
+                verdictText.innerHTML = (playerContainer ? playerContainer.outerHTML : "") + htmlResult;
+            } else {
+                verdictText.innerHTML = htmlResult;
+            }
+        }
+
+    } catch(err) {
+        console.error("Error al procesar audio en backend:", err);
+        if (verdictText) {
+            verdictText.innerHTML = `<div style="padding:15px; color:#d32f2f; font-weight:bold;"><i class="fas fa-exclamation-triangle"></i> Erreur lors du traitement : ${err.message}</div>`;
+        }
+    }
+};
+</script>
 </head>
 <body>
 
@@ -2242,103 +2301,10 @@ window.grabarPO = async function() {
 };
 </script>
 
-<script>
-window.enviarAudioAIA = async function(audioBlob) {
-    const feedbackBox = document.getElementById('po-ia-feedback-container');
-    if (feedbackBox) {
-        feedbackBox.innerHTML = '<div style="padding:15px; background:#e8f0fe; border-radius:8px; color:#1a73e8; text-align:center;"><i class="fas fa-spinner fa-spin"></i> Traitement de votre enregistrement par SophiAI...</div>';
-    }
 
-    const ENDPOINT = '/procesarAudioPO';
-    const formData = new FormData();
-    formData.append('audio', audioBlob, 'grabacion.webm');
-    formData.append('level', window.currentLevel || 'B1');
 
-    try {
-        const response = await fetch(ENDPOINT, { method: 'POST', body: formData });
-        const data = await response.json();
 
-        if (feedbackBox) {
-            feedbackBox.innerHTML = `
-                <div style="padding:15px; background:#f8f9fa; border-left:4px solid #1a73e8; border-radius:5px;">
-                    <h4 style="margin-top:0; color:#1a73e8;"><i class="fas fa-robot"></i> Résultat SophiAI</h4>
-                    <p><strong>Transcription:</strong> ${data.transcription || 'Reçue avec succès.'}</p>
-                    <p><strong>Évaluation:</strong> ${data.feedback || 'Analyse terminée.'}</p>
-                </div>`;
-        }
-    } catch (error) {
-        console.error(error);
-        if (feedbackBox) {
-            feedbackBox.innerHTML = '<div style="padding:15px; background:#f8d7da; color:#721c24; border-radius:5px; text-align:center;"><i class="fas fa-exclamation-triangle"></i> Erreur lors du traitement. Vérifiez l\'endpoint backend.</div>';
-        }
-    }
-};
-</script>
 
-<script>
-window.enviarAudioAIA = async function(audioBlob) {
-    const feedbackBox = document.getElementById('po-ia-feedback-container');
-    if (feedbackBox) {
-        feedbackBox.innerHTML = '<div style="padding:15px; background:#e8f0fe; border-radius:8px; color:#1a73e8; text-align:center;"><i class="fas fa-spinner fa-spin"></i> Traitement de votre enregistrement par SophiAI...</div>';
-    }
 
-    const ENDPOINT = '/procesarAudioPO';
-    const formData = new FormData();
-    formData.append('audio', audioBlob, 'grabacion.webm');
-    formData.append('level', window.currentLevel || 'B1');
-
-    try {
-        const response = await fetch(ENDPOINT, { method: 'POST', body: formData });
-        const data = await response.json();
-
-        if (feedbackBox) {
-            feedbackBox.innerHTML = `
-                <div style="padding:15px; background:#f8f9fa; border-left:4px solid #1a73e8; border-radius:5px;">
-                    <h4 style="margin-top:0; color:#1a73e8;"><i class="fas fa-robot"></i> Résultat SophiAI</h4>
-                    <p><strong>Transcription:</strong> ${data.transcription || 'Reçue avec succès.'}</p>
-                    <p><strong>Évaluation:</strong> ${data.feedback || 'Analyse terminée.'}</p>
-                </div>`;
-        }
-    } catch (error) {
-        console.error(error);
-        if (feedbackBox) {
-            feedbackBox.innerHTML = '<div style="padding:15px; background:#f8d7da; color:#721c24; border-radius:5px; text-align:center;"><i class="fas fa-exclamation-triangle"></i> Erreur lors du traitement. Vérifiez l\'endpoint backend.</div>';
-        }
-    }
-};
-</script>
-
-<script>
-window.enviarAudioAIA = async function(audioBlob) {
-    const feedbackBox = document.getElementById('po-ia-feedback-container');
-    if (feedbackBox) {
-        feedbackBox.innerHTML = '<div style="padding:15px; background:#e8f0fe; border-radius:8px; color:#1a73e8; text-align:center;"><i class="fas fa-spinner fa-spin"></i> Traitement de votre enregistrement par SophiAI...</div>';
-    }
-
-    const ENDPOINT = '/procesarAudioPO';
-    const formData = new FormData();
-    formData.append('audio', audioBlob, 'grabacion.webm');
-    formData.append('level', window.currentLevel || 'B1');
-
-    try {
-        const response = await fetch(ENDPOINT, { method: 'POST', body: formData });
-        const data = await response.json();
-
-        if (feedbackBox) {
-            feedbackBox.innerHTML = `
-                <div style="padding:15px; background:#f8f9fa; border-left:4px solid #1a73e8; border-radius:5px;">
-                    <h4 style="margin-top:0; color:#1a73e8;"><i class="fas fa-robot"></i> Résultat SophiAI</h4>
-                    <p><strong>Transcription:</strong> ${data.transcription || 'Reçue avec succès.'}</p>
-                    <p><strong>Évaluation:</strong> ${data.feedback || 'Analyse terminée.'}</p>
-                </div>`;
-        }
-    } catch (error) {
-        console.error(error);
-        if (feedbackBox) {
-            feedbackBox.innerHTML = '<div style="padding:15px; background:#f8d7da; color:#721c24; border-radius:5px; text-align:center;"><i class="fas fa-exclamation-triangle"></i> Erreur lors du traitement. Vérifiez l\'endpoint backend.</div>';
-        }
-    }
-};
-</script>
 </body>
 </html>
