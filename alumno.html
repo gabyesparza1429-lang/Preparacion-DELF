@@ -642,6 +642,7 @@ window.evaluarPO = function() {
     }
 };
 </script>
+
 <script>
 window.audioChunksPO = [];
 window.mediaRecorderPO = null;
@@ -649,7 +650,7 @@ window.recordedAudioBlobPO = null;
 window.isRecordingAudioPO = false;
 
 window.toggleAudioRecordingPO = async function() {
-    const btn = document.getElementById("btn-record-po") || document.querySelector("button[onclick*='Speech']");
+    const btn = document.getElementById("btn-record-po") || document.querySelector("button[onclick*='startSpeech']");
     const feedback = document.getElementById("po-audio-feedback") || document.querySelector(".recording-status");
 
     if (window.isRecordingAudioPO) {
@@ -659,7 +660,7 @@ window.toggleAudioRecordingPO = async function() {
         window.isRecordingAudioPO = false;
         if (btn) {
             btn.style.background = "#28a745";
-            btn.innerHTML = '<i class="fas fa-microphone"></i> Ré-enregistrer l'audio';
+            btn.innerHTML = '<i class="fas fa-microphone"></i> Ré-enregistrer audio';
         }
         return;
     }
@@ -669,14 +670,14 @@ window.toggleAudioRecordingPO = async function() {
         window.audioChunksPO = [];
         window.recordedAudioBlobPO = null;
 
-        let options = {};
-        if (MediaRecorder.isTypeSupported('audio/webm;codecs=opus')) {
-            options = { mimeType: 'audio/webm;codecs=opus' };
-        } else if (MediaRecorder.isTypeSupported('audio/mp4')) {
-            options = { mimeType: 'audio/mp4' };
+        let mimeType = "audio/webm";
+        if (MediaRecorder.isTypeSupported("audio/webm")) {
+            mimeType = "audio/webm";
+        } else if (MediaRecorder.isTypeSupported("audio/mp4")) {
+            mimeType = "audio/mp4";
         }
 
-        window.mediaRecorderPO = new MediaRecorder(stream, options);
+        window.mediaRecorderPO = new MediaRecorder(stream, { mimeType: mimeType });
 
         window.mediaRecorderPO.ondataavailable = function(e) {
             if (e.data && e.data.size > 0) {
@@ -685,11 +686,10 @@ window.toggleAudioRecordingPO = async function() {
         };
 
         window.mediaRecorderPO.onstop = function() {
-            const mimeType = window.mediaRecorderPO.mimeType || "audio/webm";
             window.recordedAudioBlobPO = new Blob(window.audioChunksPO, { type: mimeType });
             stream.getTracks().forEach(track => track.stop());
             if (feedback) {
-                feedback.innerHTML = '<span style="color:#28a745; font-weight:bold;"><i class="fas fa-check-circle"></i> Audio enregistré avec succès !</span>';
+                feedback.innerHTML = '<span style="color:#28a745; font-weight:bold;"><i class="fas fa-check-circle"></i> Audio enregistré</span>';
             }
         };
 
@@ -698,21 +698,24 @@ window.toggleAudioRecordingPO = async function() {
 
         if (btn) {
             btn.style.background = "#d32f2f";
-            btn.innerHTML = '<i class="fas fa-stop"></i> Arrêter l'enregistrement';
+            btn.innerHTML = '<i class="fas fa-stop"></i> Arrêter enregistrement';
         }
         if (feedback) {
-            feedback.innerHTML = '<span style="color:#d32f2f; font-weight:bold;"><i class="fas fa-circle"></i> Enregistrement en cours... Parlez maintenant.</span>';
+            feedback.innerHTML = '<span style="color:#d32f2f; font-weight:bold;"><i class="fas fa-circle"></i> Enregistrement en cours...</span>';
         }
 
     } catch (err) {
-        console.error("Error al acceder al micrófono:", err);
-        alert("Acceso denegado al micrófono. Permite el uso del micrófono en tu navegador.");
+        console.error("Error micro:", err);
+        alert("Acceso denegado al micrófono.");
     }
 };
 
+// Asignar alias para mantener compatibilidad con onclick="window.startSpeechPO()"
+window.startSpeechPO = window.toggleAudioRecordingPO;
+
 window.evaluarPO = function() {
     if (!window.recordedAudioBlobPO) {
-        alert("Veuillez d'abord enregistrer votre réponse orale avant d'évaluer.");
+        alert("Veuillez d'abord enregistrer votre réponse orale.");
         return;
     }
 
@@ -728,22 +731,22 @@ window.evaluarPO = function() {
         try {
             window.enviarAudioAIA(window.recordedAudioBlobPO);
         } catch(e) {
-            console.error("Error al enviar audio:", e);
+            console.error("Error enviando audio:", e);
             if (verdictText) {
-                verdictText.innerHTML = '<p style="color:red; font-weight:bold;">Erreur lors de l'envoi de l'audio.</p>';
+                verdictText.innerHTML = '<p style="color:red; font-weight:bold;">Erreur lors de l envoi de l audio.</p>';
             }
         }
     } else if (typeof window.evaluarProduccionConSophia === "function") {
         window.evaluarProduccionConSophia(window.recordedAudioBlobPO, "PO");
     } else {
-        alert("Motor de evaluación de audio no disponible.");
+        alert("Motor de evaluación no disponible.");
     }
 };
 
 document.addEventListener("click", function(e) {
     const target = e.target.closest("button") || e.target;
     if (target) {
-        if (target.id === "btn-record-po" || (target.textContent && target.textContent.includes("Commencer à parler")) || (target.textContent && target.textContent.includes("Arrêter")) || (target.textContent && target.textContent.includes("Ré-enregistrer"))) {
+        if (target.id === "btn-record-po" || (target.textContent && (target.textContent.includes("Commencer à parler") || target.textContent.includes("Arrêter") || target.textContent.includes("Ré-enregistrer")))) {
             e.preventDefault();
             window.toggleAudioRecordingPO();
         }
@@ -1746,6 +1749,7 @@ window.renderExerciseStructure = async function() {
             html += `
                 <div id="sophia-box" style="display:none; background:#f4f7f9; border-left:4px solid var(--gold); padding:20px; border-radius:6px; margin-top:25px;">
                     <div id="sophia-verdict-text"></div>
+site-delf
                 </div>
             </div>`;
             
