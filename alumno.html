@@ -643,41 +643,57 @@ window.evaluarPO = function() {
 };
 </script>
 
+
 <script>
-window.audioChunksPO = [];
+window.audioStreamPO = null;
 window.mediaRecorderPO = null;
+window.audioChunksPO = [];
 window.recordedAudioBlobPO = null;
 window.isRecordingAudioPO = false;
 
 window.toggleAudioRecordingPO = async function() {
-    const btn = document.getElementById("btn-record-po") || document.querySelector("button[onclick*='startSpeech']");
+    const btn = document.getElementById("btn-record-po") || document.querySelector("button[onclick*='Speech']") || document.querySelector("button[onclick*='Recording']");
     const feedback = document.getElementById("po-audio-feedback") || document.querySelector(".recording-status");
 
+    // DETENER GRABACIÓN
     if (window.isRecordingAudioPO) {
-        if (window.mediaRecorderPO && window.mediaRecorderPO.state !== "inactive") {
-            window.mediaRecorderPO.stop();
-        }
         window.isRecordingAudioPO = false;
+        
+        if (window.mediaRecorderPO && window.mediaRecorderPO.state !== "inactive") {
+            try { window.mediaRecorderPO.stop(); } catch(e){ console.error(e); }
+        }
+        
+        if (window.audioStreamPO) {
+            window.audioStreamPO.getTracks().forEach(track => track.stop());
+            window.audioStreamPO = null;
+        }
+
         if (btn) {
             btn.style.background = "#28a745";
             btn.innerHTML = '<i class="fas fa-microphone"></i> Ré-enregistrer audio';
         }
+        if (feedback) {
+            feedback.innerHTML = '<span style="color:#28a745; font-weight:bold;"><i class="fas fa-check-circle"></i> Audio enregistré avec succès !</span>';
+        }
         return;
     }
 
+    // INICIAR GRABACIÓN
     try {
-        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        window.audioStreamPO = await navigator.mediaDevices.getUserMedia({ audio: true });
         window.audioChunksPO = [];
         window.recordedAudioBlobPO = null;
 
         let mimeType = "audio/webm";
-        if (MediaRecorder.isTypeSupported("audio/webm")) {
+        if (MediaRecorder.isTypeSupported("audio/webm;codecs=opus")) {
+            mimeType = "audio/webm;codecs=opus";
+        } else if (MediaRecorder.isTypeSupported("audio/webm")) {
             mimeType = "audio/webm";
         } else if (MediaRecorder.isTypeSupported("audio/mp4")) {
             mimeType = "audio/mp4";
         }
 
-        window.mediaRecorderPO = new MediaRecorder(stream, { mimeType: mimeType });
+        window.mediaRecorderPO = new MediaRecorder(window.audioStreamPO, { mimeType: mimeType });
 
         window.mediaRecorderPO.ondataavailable = function(e) {
             if (e.data && e.data.size > 0) {
@@ -687,13 +703,10 @@ window.toggleAudioRecordingPO = async function() {
 
         window.mediaRecorderPO.onstop = function() {
             window.recordedAudioBlobPO = new Blob(window.audioChunksPO, { type: mimeType });
-            stream.getTracks().forEach(track => track.stop());
-            if (feedback) {
-                feedback.innerHTML = '<span style="color:#28a745; font-weight:bold;"><i class="fas fa-check-circle"></i> Audio enregistré</span>';
-            }
+            console.log("Audio generado correctamente, tamaño:", window.recordedAudioBlobPO.size, "bytes");
         };
 
-        window.mediaRecorderPO.start();
+        window.mediaRecorderPO.start(200);
         window.isRecordingAudioPO = true;
 
         if (btn) {
@@ -705,16 +718,19 @@ window.toggleAudioRecordingPO = async function() {
         }
 
     } catch (err) {
-        console.error("Error micro:", err);
-        alert("Acceso denegado al micrófono.");
+        console.error("Error al iniciar micrófono:", err);
+        alert("Acceso denegado al micrófono. Verifica los permisos en tu navegador.");
     }
 };
 
-// Asignar alias para mantener compatibilidad con onclick="window.startSpeechPO()"
 window.startSpeechPO = window.toggleAudioRecordingPO;
 
-window.evaluarPO = function() {
-    if (!window.recordedAudioBlobPO) {
+window.evaluarPO = async function() {
+    if (window.isRecordingAudioPO) {
+        await window.toggleAudioRecordingPO();
+    }
+
+    if (!window.recordedAudioBlobPO || window.recordedAudioBlobPO.size === 0) {
         alert("Veuillez d'abord enregistrer votre réponse orale.");
         return;
     }
@@ -727,35 +743,39 @@ window.evaluarPO = function() {
         verdictText.innerHTML = '<div style="padding:20px; text-align:center; color:var(--oxford);"><i class="fas fa-spinner fa-spin fa-2x"></i><p style="margin-top:10px; font-weight:600;">Sophia analyse votre enregistrement audio...</p></div>';
     }
 
-    if (typeof window.enviarAudioAIA === "function") {
-        try {
-            window.enviarAudioAIA(window.recordedAudioBlobPO);
-        } catch(e) {
-            console.error("Error enviando audio:", e);
-            if (verdictText) {
-                verdictText.innerHTML = '<p style="color:red; font-weight:bold;">Erreur lors de l envoi de l audio.</p>';
-            }
+    try {
+        if (typeof window.enviarAudioAIA === "function") {
+            await window.enviarAudioAIA(window.recordedAudioBlobPO);
+        } else if (typeof window.evaluarProduccionConSophia === "function") {
+            await window.evaluarProduccionConSophia(window.recordedAudioBlobPO, "PO");
+        } else {
+            alert("Motor de evaluación no encontrado.");
         }
-    } else if (typeof window.evaluarProduccionConSophia === "function") {
-        window.evaluarProduccionConSophia(window.recordedAudioBlobPO, "PO");
-    } else {
-        alert("Motor de evaluación no disponible.");
+    } catch(err) {
+        console.error("Error al procesar evaluación:", err);
+        if (verdictText) {
+            verdictText.innerHTML = '<p style="color:red; font-weight:bold;">Erreur lors de l envoi de l audio à Sophia.</p>';
+        }
     }
 };
 
 document.addEventListener("click", function(e) {
-    const target = e.target.closest("button") || e.target;
-    if (target) {
-        if (target.id === "btn-record-po" || (target.textContent && (target.textContent.includes("Commencer à parler") || target.textContent.includes("Arrêter") || target.textContent.includes("Ré-enregistrer")))) {
-            e.preventDefault();
-            window.toggleAudioRecordingPO();
-        }
-        if (target.id === "btn-submit-po" || (target.textContent && target.textContent.includes("Évaluer ma production"))) {
-            e.preventDefault();
-            window.evaluarPO();
-        }
+    const btnRecord = e.target.closest("#btn-record-po") || (e.target.closest("button") && e.target.closest("button").textContent && (e.target.closest("button").textContent.includes("Commencer à parler") || e.target.closest("button").textContent.includes("Arrêter") || e.target.closest("button").textContent.includes("Ré-enregistrer")));
+    if (btnRecord) {
+        e.preventDefault();
+        e.stopPropagation();
+        window.toggleAudioRecordingPO();
+        return;
     }
-});
+
+    const btnSubmit = e.target.closest("#btn-submit-po") || (e.target.closest("button") && e.target.closest("button").textContent && e.target.closest("button").textContent.includes("Évaluer ma production"));
+    if (btnSubmit) {
+        e.preventDefault();
+        e.stopPropagation();
+        window.evaluarPO();
+        return;
+    }
+}, true);
 </script>
 </head>
 <body>
