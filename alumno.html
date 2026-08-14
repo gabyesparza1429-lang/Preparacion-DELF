@@ -586,38 +586,12 @@
             margin-left: 5px;
         }
     </style>
-<script>
-window.evaluarPO = function() {
-    const textEl = document.getElementById("po-student-response");
-    const text = textEl ? textEl.value.trim() : "";
-    if (!text) {
-        alert("Veuillez d'abord coller ou enregistrer votre réponse.");
-        return;
-    }
-    
-    const sBox = document.getElementById("sophia-box");
-    if (sBox) sBox.style.display = "block";
-    
-    const verdictText = document.getElementById("sophia-verdict-text");
-    if (verdictText) {
-        verdictText.innerHTML = `<div style="padding:20px; text-align:center; color:var(--oxford);"><i class="fas fa-spinner fa-spin fa-2x"></i><p style="margin-top:10px; font-weight:600;">Sophia analyse votre production orale...</p></div>`;
-    }
-
-    if (typeof window.enviarAudioAIA === "function") {
-        window.enviarAudioAIA(text);
-    } else if (typeof window.evaluarProduccionConSophia === "function") {
-        window.evaluarProduccionConSophia(text, "PO");
-    } else {
-        alert("Erreur: La fonction d'évaluation n'est pas disponible.");
-    }
-};
-</script>
 
 <script>
 window.startSpeechPO = function() {
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     if (!SpeechRecognition) {
-        alert("Votre navigateur ne prend pas en charge la reconnaissance vocale. Veuillez utiliser Google Chrome.");
+        alert("Tu navegador no soporta el micrófono en vivo. Usa Google Chrome en computadora.");
         return;
     }
 
@@ -629,9 +603,7 @@ window.startSpeechPO = function() {
 
         window.recognitionPO.onstart = function() {
             window.isRecordingPO = true;
-            const feedback = document.getElementById("po-audio-feedback");
-            const btn = document.getElementById("btn-record-po");
-            if (feedback) feedback.innerText = "Écoute en cours... Parlez maintenant.";
+            const btn = document.getElementById("btn-record-po") || document.querySelector("button[onclick*='Speech']");
             if (btn) {
                 btn.style.background = "#d32f2f";
                 btn.innerHTML = '<i class="fas fa-stop"></i> Arrêter l'écoute';
@@ -643,21 +615,17 @@ window.startSpeechPO = function() {
             for (let i = 0; i < event.results.length; i++) {
                 transcript += event.results[i][0].transcript;
             }
-            const textarea = document.getElementById("po-student-response");
+            const textarea = document.getElementById("po-student-response") || document.querySelector("textarea");
             if (textarea) textarea.value = transcript;
         };
 
         window.recognitionPO.onerror = function(event) {
-            console.error("Erreur de reconnaissance:", event.error);
-            const feedback = document.getElementById("po-audio-feedback");
-            if (feedback) feedback.innerText = "Erreur micro: " + event.error;
+            alert("Error de micrófono: " + event.error);
         };
 
         window.recognitionPO.onend = function() {
             window.isRecordingPO = false;
-            const feedback = document.getElementById("po-audio-feedback");
-            const btn = document.getElementById("btn-record-po");
-            if (feedback) feedback.innerText = "Transcrit avec succès.";
+            const btn = document.getElementById("btn-record-po") || document.querySelector("button[onclick*='Speech']");
             if (btn) {
                 btn.style.background = "#0288d1";
                 btn.innerHTML = '<i class="fas fa-microphone"></i> Commencer à parler';
@@ -668,10 +636,24 @@ window.startSpeechPO = function() {
     if (window.isRecordingPO) {
         window.recognitionPO.stop();
     } else {
-        window.recognitionPO.start();
+        try {
+            window.recognitionPO.start();
+        } catch(e) {
+            console.error(e);
+        }
     }
 };
+
+// Escucha global de clics para detectar el botón incluso si se re-renderiza
+document.addEventListener("click", function(e) {
+    const target = e.target.closest("button") || e.target;
+    if (target && (target.id === "btn-record-po" || (target.textContent && target.textContent.includes("Commencer à parler")) || (target.textContent && target.textContent.includes("Arrêter l'écoute")))) {
+        e.preventDefault();
+        window.startSpeechPO();
+    }
+});
 </script>
+
 
 </head>
 <body>
