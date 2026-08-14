@@ -1550,16 +1550,7 @@
                             if (elRelojBar) elRelojBar.innerHTML = `<span style="font-weight:600; color:#2e7d32;"><i class="fas fa-check-double"></i> Statut : Examen complété et sauvegardé.</span>`;
                         }
                         
-                        if (datosHistoricos.texto_alumno) {
-    if (window.currentSkill === "PO") {
-        const inputPO = document.getElementById("po-student-response");
-        if (inputPO) inputPO.value = datosHistoricos.texto_alumno;
-    } else if (window.currentSkill === "PE") {
-        const inputPE = document.getElementById("pe-student-response");
-        if (inputPE) inputPE.value = datosHistoricos.texto_alumno;
-    }
-}
-if (datosHistoricos.respuesta_ia) {
+                        if (datosHistoricos.respuesta_ia) {
     const sBox = document.getElementById("sophia-box");
     if (sBox) sBox.style.display = "block";
     if (window.currentSkill === "PO") {
@@ -1569,7 +1560,6 @@ if (datosHistoricos.respuesta_ia) {
     } else {
         document.getElementById("sophia-verdict-text").innerHTML = datosHistoricos.respuesta_ia;
     }
-}
 }
 }
                 } catch(errFetch) { console.error("Error recuperando histórico:", errFetch); }
