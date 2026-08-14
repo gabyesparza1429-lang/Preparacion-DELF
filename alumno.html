@@ -1739,19 +1739,35 @@ window.renderExerciseStructure = async function() {
 
                 html += `
                 <div style="background: #fff; border: 1px solid #e0e6ed; border-radius: 8px; padding: 25px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); margin-bottom: 25px;">
-                    <p style="color: var(--oxford); font-weight: 700; margin-bottom: 15px;"><i class="fas fa-microphone-alt"></i> Enregistrement de votre production orale :</p>
-                    <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 20px; background: #fdfaf6; padding: 12px; border-radius: 6px; border: 1px solid #ffe0b2;">
-                        <button type="button" id="btn-record-po" onclick="window.startSpeechPO()" style="background: #0288d1; color: white; border: none; padding: 12px 24px; border-radius: 6px; cursor: pointer; font-weight: 700; display: inline-flex; align-items: center; gap: 8px;">
-                            <i class="fas fa-microphone"></i> Commencer à parler
-                        </button>
-                        <span id="po-audio-feedback" style="font-size: 0.9rem; font-weight: 600; color: #666;">Cliquez pour démarrer l'écoute.</span>
-                    </div>
+                    <p style="color: var(--oxford); font-weight: 700; margin-bottom: 15px;"><i class="fas fa-microphone-alt">
+<div id="container-po-audio-dual" style="margin: 20px 0; padding: 20px; background: #f8fafc; border: 2px dashed #0288d1; border-radius: 10px; text-align: center;">
+    <h4 style="margin-top:0; color:#0f172a; font-weight:bold;"><i class="fas fa-file-audio"></i> Soumettre votre production orale</h4>
+    
+    <div style="display: flex; flex-wrap: wrap; gap: 15px; justify-content: center; align-items: center; margin-top: 15px;">
+        <!-- OPCION 1: SUBIR ARCHIVO -->
+        <div style="flex: 1; min-width: 240px; background: #ffffff; padding: 15px; border-radius: 8px; border: 1px solid #cbd5e1; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+            <label style="font-weight: bold; display: block; margin-bottom: 8px; color: #1e293b;">
+                <i class="fas fa-upload" style="color:#0288d1;"></i> Option 1 : Importer un fichier audio
+            </label>
+            <input type="file" id="po-file-input" accept="audio/*" style="width: 100%; font-size: 13px; padding: 6px; border: 1px solid #ccc; border-radius: 4px;">
+        </div>
 
-                    <label style="display:block; font-size:0.85rem; font-weight:700; color:var(--oxford); margin-bottom:5px;"><span style="display:none;"><span style="display:none;">Texte transcrit</span></span></label>
-                    <textarea id="po-student-response" style="display:none;" class="production-textbox" placeholder="Votre voix sera convertie en texte ici automatiquement..." style="min-height: 140px;"></textarea>
+        <div style="font-weight: bold; color: #64748b;">OU</div>
 
-                    <div style="display:flex; justify-content:flex-end; gap:12px; border-top: 1px solid #eee; padding-top: 15px; margin-top: 15px;">
-                        <button type="button" id="btn-reset-po" style="background:#6c757d; color:white; border:none; padding:10px 20px; border-radius:6px; cursor:pointer;">Réinitialiser</button>
+        <!-- OPCION 2: GRABAR MICRÓFONO -->
+        <div style="flex: 1; min-width: 240px; background: #ffffff; padding: 15px; border-radius: 8px; border: 1px solid #cbd5e1; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+            <label style="font-weight: bold; display: block; margin-bottom: 8px; color: #1e293b;">
+                <i class="fas fa-microphone" style="color:#d32f2f;"></i> Option 2 : Enregistrer votre voix
+            </label>
+            <button type="button" id="btn-record-po" class="btn btn-primary" style="background: #0288d1; border: none; padding: 10px 16px; border-radius: 6px; color: white; font-weight: bold; cursor: pointer;">
+                <i class="fas fa-microphone"></i> Commencer à parler
+            </button>
+        </div>
+    </div>
+    <div id="po-audio-feedback" style="margin-top: 15px; font-weight: bold;"></div>
+</div>
+
+<button type="button" id="btn-reset-po" style="background:#6c757d; color:white; border:none; padding:10px 20px; border-radius:6px; cursor:pointer;">Réinitialiser</button>
                         <button type="button" id="btn-submit-po" onclick="window.evaluarPO()" style="background:var(--oxford); color:white; padding:10px 22px; border:none; border-radius:6px; cursor:pointer; font-weight:700; display: inline-flex; align-items: center; gap: 8px;">
                             <i class="fas fa-paper-plane"></i> Évaluer ma production orale
                         </button>
