@@ -919,6 +919,109 @@ window.enviarAudioAIA = async function(audioBlob) {
     }
 };
 </script>
+<script>
+window.selectedAudioFilePO = null;
+
+document.addEventListener("change", function(e) {
+    if (e.target && e.target.id === "po-file-input") {
+        const file = e.target.files[0];
+        if (file) {
+            window.selectedAudioFilePO = file;
+            window.recordedAudioBlobPO = file;
+            const feedback = document.getElementById("po-audio-feedback");
+            if (feedback) {
+                feedback.innerHTML = `<span style="color:#16a34a; font-weight:bold;"><i class="fas fa-check-circle"></i> Fichier prêt : ${file.name}</span>`;
+            }
+        }
+    }
+});
+
+window.enviarAudioAIA = function(audioBlob) {
+    const verdictText = document.getElementById("sophia-verdict-text");
+    const sophiaBox = document.getElementById("sophia-box");
+    if (sophiaBox) sophiaBox.style.display = "block";
+
+    let finalBlob = window.selectedAudioFilePO || audioBlob || window.recordedAudioBlobPO;
+
+    if (!finalBlob) {
+        alert("Veuillez d'abord importer ou enregistrer un fichier audio.");
+        return;
+    }
+
+    if (verdictText) {
+        verdictText.innerHTML = '<div style="padding:20px; text-align:center; color:#0f172a;"><i class="fas fa-spinner fa-spin fa-2x"></i><p style="margin-top:10px; font-weight:600;">Sophia analyse votre enregistrement audio...</p></div>';
+    }
+
+    const reader = new FileReader();
+    reader.readAsDataURL(finalBlob);
+    reader.onloadend = async function() {
+        const base64Data = reader.result;
+        const rawBase64 = base64Data.includes(",") ? base64Data.split(",")[1] : base64Data;
+
+        const payloadJSON = {
+            audio: base64Data,
+            audioBase64: rawBase64,
+            audioData: rawBase64,
+            file: base64Data,
+            user_id: "constanza2026",
+            userId: "constanza2026",
+            habilidad: "PO",
+            actividad: "1",
+            nivel: "B1"
+        };
+
+        try {
+            let response = await fetch("/procesarAudioPO", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payloadJSON)
+            });
+
+            if (!response.ok && response.status === 400) {
+                const formData = new FormData();
+                formData.append("audio", finalBlob, finalBlob.name || "audio.webm");
+                formData.append("file", finalBlob, finalBlob.name || "audio.webm");
+                formData.append("audioBase64", rawBase64);
+                formData.append("user_id", "constanza2026");
+                formData.append("habilidad", "PO");
+                formData.append("actividad", "1");
+                formData.append("nivel", "B1");
+
+                response = await fetch("/procesarAudioPO", {
+                    method: "POST",
+                    body: formData
+                });
+            }
+
+            const resText = await response.text();
+            let data;
+            try { data = JSON.parse(resText); } catch(e) { data = { raw: resText }; }
+
+            if (!response.ok) {
+                throw new Error(`Servidor HTTP ${response.status}: ${data.error || data.message || resText}`);
+            }
+
+            let audioUrl = URL.createObjectURL(finalBlob);
+            let playerHTML = `
+                <div style="margin: 15px 0; padding: 12px; background: #f0f4f8; border-radius: 8px; border: 1px solid #cbd5e1; text-align: center;">
+                    <p style="margin-bottom: 8px; font-weight: bold; color: #1e293b;"><i class="fas fa-volume-up"></i> Écouter l'enregistrement :</p>
+                    <audio controls src="${audioUrl}" style="width: 100%; max-width: 450px;"></audio>
+                </div>`;
+
+            let evalHTML = data.html || data.feedback || data.evaluacion || `<div style="padding:15px; text-align:left;">${JSON.stringify(data, null, 2)}</div>`;
+            verdictText.innerHTML = playerHTML + evalHTML;
+
+        } catch(err) {
+            console.error("Error Sophia:", err);
+            if (verdictText) {
+                verdictText.innerHTML = `<div style="padding:15px; color:#d32f2f; font-weight:bold; background:#fee2e2; border-radius:6px; margin-top:10px;">
+                    <i class="fas fa-exclamation-circle"></i> Error de backend en Sophia: ${err.message}
+                </div>`;
+            }
+        }
+    };
+};
+</script>
 </head>
 <body>
 
