@@ -591,6 +591,7 @@
 
 
 
+
 <script>
 window.finalTranscriptPO = "";
 window.isRecordingPO = false;
@@ -598,7 +599,7 @@ window.isRecordingPO = false;
 window.startSpeechPO = function() {
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     if (!SpeechRecognition) {
-        alert("Tu navegador no soporta reconocimiento de voz. Usa Google Chrome en computadora.");
+        alert("Navegador no compatible con reconocimiento de voz. Usa Google Chrome.");
         return;
     }
 
@@ -613,7 +614,7 @@ window.startSpeechPO = function() {
             const btn = document.getElementById("btn-record-po") || document.querySelector("button[onclick*='startSpeech']");
             if (btn) {
                 btn.style.background = "#d32f2f";
-                btn.innerHTML = '<i class="fas fa-stop"></i> Arrêter écoute';
+                btn.innerHTML = '<i class="fas fa-stop"></i> Arrêter';
             }
         };
 
@@ -634,7 +635,7 @@ window.startSpeechPO = function() {
 
         window.recognitionPO.onerror = function(event) {
             console.warn("Error micro:", event.error);
-            if (event.error === 'no-speech') return;
+            if (event.error === "no-speech") return;
             window.isRecordingPO = false;
         };
 
@@ -657,7 +658,7 @@ window.startSpeechPO = function() {
         try {
             window.recognitionPO.start();
         } catch(e) {
-            console.warn("El micrófono ya estaba iniciado:", e);
+            console.warn("Micrófono activo:", e);
         }
     }
 };
@@ -666,7 +667,7 @@ window.evaluarPO = function() {
     const textEl = document.getElementById("po-student-response") || document.querySelector("textarea");
     const text = textEl ? textEl.value.trim() : "";
     if (!text) {
-        alert("Veuillez d'abord coller ou enregistrer votre réponse.");
+        alert("Escribe o graba una respuesta antes de evaluar.");
         return;
     }
     
@@ -675,25 +676,24 @@ window.evaluarPO = function() {
     
     const verdictText = document.getElementById("sophia-verdict-text");
     if (verdictText) {
-        verdictText.innerHTML = '<div style="padding:20px; text-align:center; color:var(--oxford);"><i class="fas fa-spinner fa-spin fa-2x"></i><p style="margin-top:10px; font-weight:600;">Sophia analyse votre production orale...</p></div>';
+        verdictText.innerHTML = '<div style="padding:20px; text-align:center; color:var(--oxford);"><i class="fas fa-spinner fa-spin fa-2x"></i><p style="margin-top:10px; font-weight:600;">Analyse en cours...</p></div>';
     }
 
-    // Detener micrófono si sigue activo
     if (window.isRecordingPO && window.recognitionPO) {
         try { window.recognitionPO.stop(); } catch(e){}
     }
 
     if (typeof window.evaluarProduccionConSophia === "function") {
         window.evaluarProduccionConSophia(text, "PO").catch(err => {
-            console.error("Error evaluando con Sophia:", err);
+            console.error("Error Sophia:", err);
             if (verdictText) {
-                verdictText.innerHTML = '<p style="color:red; font-weight:bold;">Erreur lors de l'évaluation. Veuillez réessayer.</p>';
+                verdictText.innerHTML = '<p style="color:red; font-weight:bold;">Erreur lors de la evaluation.</p>';
             }
         });
     } else if (typeof window.enviarTextoAIA === "function") {
         window.enviarTextoAIA(text, "PO");
     } else {
-        alert("El motor de evaluación de Sophia no está disponible en este momento.");
+        alert("Motor de evaluación no disponible.");
     }
 };
 
