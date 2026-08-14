@@ -593,119 +593,7 @@
 
 
 
-<script>
-window.isRecordingPO = false;
 
-window.startSpeechPO = function() {
-    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-    if (!SpeechRecognition) {
-        alert("Navegador no compatible. Usa Google Chrome.");
-        return;
-    }
-
-    if (!window.recognitionPO) {
-        window.recognitionPO = new SpeechRecognition();
-        window.recognitionPO.lang = "fr-FR";
-        window.recognitionPO.continuous = true;
-        window.recognitionPO.interimResults = false; // Solo acepta resultados finales para evitar autocorrección dinámica
-
-        window.recognitionPO.onstart = function() {
-            window.isRecordingPO = true;
-            const btn = document.getElementById("btn-record-po") || document.querySelector("button[onclick*='startSpeech']");
-            if (btn) {
-                btn.style.background = "#d32f2f";
-                btn.innerHTML = '<i class="fas fa-stop"></i> Arrêter';
-            }
-        };
-
-        window.recognitionPO.onresult = function(event) {
-            const textarea = document.getElementById("po-student-response") || document.querySelector("textarea");
-            if (!textarea) return;
-
-            for (let i = event.resultIndex; i < event.results.length; ++i) {
-                if (event.results[i].isFinal) {
-                    const nuevoTexto = event.results[i][0].transcript.trim();
-                    textarea.value = (textarea.value + " " + nuevoTexto).trim();
-                }
-            }
-        };
-
-        window.recognitionPO.onerror = function(event) {
-            console.warn("Error micro:", event.error);
-            if (event.error === "no-speech") return;
-            window.isRecordingPO = false;
-        };
-
-        window.recognitionPO.onend = function() {
-            window.isRecordingPO = false;
-            const btn = document.getElementById("btn-record-po") || document.querySelector("button[onclick*='startSpeech']");
-            if (btn) {
-                btn.style.background = "#0288d1";
-                btn.innerHTML = '<i class="fas fa-microphone"></i> Commencer à parler';
-            }
-        };
-    }
-
-    if (window.isRecordingPO) {
-        try { window.recognitionPO.stop(); } catch(e){}
-        window.isRecordingPO = false;
-    } else {
-        try {
-            window.recognitionPO.start();
-        } catch(e) {
-            console.warn("Micrófono activo:", e);
-        }
-    }
-};
-
-window.evaluarPO = function() {
-    const textEl = document.getElementById("po-student-response") || document.querySelector("textarea");
-    const text = textEl ? textEl.value.trim() : "";
-    if (!text) {
-        alert("Escribe o graba una respuesta antes de evaluar.");
-        return;
-    }
-    
-    const sBox = document.getElementById("sophia-box");
-    if (sBox) sBox.style.display = "block";
-    
-    const verdictText = document.getElementById("sophia-verdict-text");
-    if (verdictText) {
-        verdictText.innerHTML = '<div style="padding:20px; text-align:center; color:var(--oxford);"><i class="fas fa-spinner fa-spin fa-2x"></i><p style="margin-top:10px; font-weight:600;">Sophia analyse votre production orale...</p></div>';
-    }
-
-    if (window.isRecordingPO && window.recognitionPO) {
-        try { window.recognitionPO.stop(); } catch(e){}
-    }
-
-    if (typeof window.evaluarProduccionConSophia === "function") {
-        window.evaluarProduccionConSophia(text, "PO").catch(err => {
-            console.error("Error Sophia:", err);
-            if (verdictText) {
-                verdictText.innerHTML = '<p style="color:red; font-weight:bold;">Erreur lors de la evaluation.</p>';
-            }
-        });
-    } else if (typeof window.enviarTextoAIA === "function") {
-        window.enviarTextoAIA(text, "PO");
-    } else {
-        alert("Motor de evaluación no disponible.");
-    }
-};
-
-document.addEventListener("click", function(e) {
-    const target = e.target.closest("button") || e.target;
-    if (target) {
-        if (target.id === "btn-record-po" || (target.textContent && target.textContent.includes("Commencer à parler")) || (target.textContent && target.textContent.includes("Arrêter"))) {
-            e.preventDefault();
-            window.startSpeechPO();
-        }
-        if (target.id === "btn-submit-po" || (target.textContent && target.textContent.includes("Évaluer ma production"))) {
-            e.preventDefault();
-            window.evaluarPO();
-        }
-    }
-});
-</script>
 <script>
 // Mapeo automático al motor de evaluación de la plataforma
 window.evaluarProduccionConSophia = async function(texto, habilidad) {
@@ -753,6 +641,118 @@ window.evaluarPO = function() {
         window.evaluarProduccionConSophia(text, "PO");
     }
 };
+</script>
+<script>
+window.audioChunksPO = [];
+window.mediaRecorderPO = null;
+window.recordedAudioBlobPO = null;
+window.isRecordingAudioPO = false;
+
+window.toggleAudioRecordingPO = async function() {
+    const btn = document.getElementById("btn-record-po") || document.querySelector("button[onclick*='Speech']");
+    const feedback = document.getElementById("po-audio-feedback") || document.querySelector(".recording-status");
+
+    if (window.isRecordingAudioPO) {
+        if (window.mediaRecorderPO && window.mediaRecorderPO.state !== "inactive") {
+            window.mediaRecorderPO.stop();
+        }
+        window.isRecordingAudioPO = false;
+        if (btn) {
+            btn.style.background = "#28a745";
+            btn.innerHTML = '<i class="fas fa-microphone"></i> Ré-enregistrer l'audio';
+        }
+        return;
+    }
+
+    try {
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        window.audioChunksPO = [];
+        window.recordedAudioBlobPO = null;
+
+        let options = {};
+        if (MediaRecorder.isTypeSupported('audio/webm;codecs=opus')) {
+            options = { mimeType: 'audio/webm;codecs=opus' };
+        } else if (MediaRecorder.isTypeSupported('audio/mp4')) {
+            options = { mimeType: 'audio/mp4' };
+        }
+
+        window.mediaRecorderPO = new MediaRecorder(stream, options);
+
+        window.mediaRecorderPO.ondataavailable = function(e) {
+            if (e.data && e.data.size > 0) {
+                window.audioChunksPO.push(e.data);
+            }
+        };
+
+        window.mediaRecorderPO.onstop = function() {
+            const mimeType = window.mediaRecorderPO.mimeType || "audio/webm";
+            window.recordedAudioBlobPO = new Blob(window.audioChunksPO, { type: mimeType });
+            stream.getTracks().forEach(track => track.stop());
+            if (feedback) {
+                feedback.innerHTML = '<span style="color:#28a745; font-weight:bold;"><i class="fas fa-check-circle"></i> Audio enregistré avec succès !</span>';
+            }
+        };
+
+        window.mediaRecorderPO.start();
+        window.isRecordingAudioPO = true;
+
+        if (btn) {
+            btn.style.background = "#d32f2f";
+            btn.innerHTML = '<i class="fas fa-stop"></i> Arrêter l'enregistrement';
+        }
+        if (feedback) {
+            feedback.innerHTML = '<span style="color:#d32f2f; font-weight:bold;"><i class="fas fa-circle"></i> Enregistrement en cours... Parlez maintenant.</span>';
+        }
+
+    } catch (err) {
+        console.error("Error al acceder al micrófono:", err);
+        alert("Acceso denegado al micrófono. Permite el uso del micrófono en tu navegador.");
+    }
+};
+
+window.evaluarPO = function() {
+    if (!window.recordedAudioBlobPO) {
+        alert("Veuillez d'abord enregistrer votre réponse orale avant d'évaluer.");
+        return;
+    }
+
+    const sBox = document.getElementById("sophia-box");
+    if (sBox) sBox.style.display = "block";
+
+    const verdictText = document.getElementById("sophia-verdict-text");
+    if (verdictText) {
+        verdictText.innerHTML = '<div style="padding:20px; text-align:center; color:var(--oxford);"><i class="fas fa-spinner fa-spin fa-2x"></i><p style="margin-top:10px; font-weight:600;">Sophia analyse votre enregistrement audio...</p></div>';
+    }
+
+    if (typeof window.enviarAudioAIA === "function") {
+        try {
+            window.enviarAudioAIA(window.recordedAudioBlobPO);
+        } catch(e) {
+            console.error("Error al enviar audio:", e);
+            if (verdictText) {
+                verdictText.innerHTML = '<p style="color:red; font-weight:bold;">Erreur lors de l'envoi de l'audio.</p>';
+            }
+        }
+    } else if (typeof window.evaluarProduccionConSophia === "function") {
+        window.evaluarProduccionConSophia(window.recordedAudioBlobPO, "PO");
+    } else {
+        alert("Motor de evaluación de audio no disponible.");
+    }
+};
+
+document.addEventListener("click", function(e) {
+    const target = e.target.closest("button") || e.target;
+    if (target) {
+        if (target.id === "btn-record-po" || (target.textContent && target.textContent.includes("Commencer à parler")) || (target.textContent && target.textContent.includes("Arrêter")) || (target.textContent && target.textContent.includes("Ré-enregistrer"))) {
+            e.preventDefault();
+            window.toggleAudioRecordingPO();
+        }
+        if (target.id === "btn-submit-po" || (target.textContent && target.textContent.includes("Évaluer ma production"))) {
+            e.preventDefault();
+            window.evaluarPO();
+        }
+    }
+});
 </script>
 </head>
 <body>
