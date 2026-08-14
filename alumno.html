@@ -706,6 +706,54 @@ document.addEventListener("click", function(e) {
     }
 });
 </script>
+<script>
+// Mapeo automático al motor de evaluación de la plataforma
+window.evaluarProduccionConSophia = async function(texto, habilidad) {
+    if (typeof window.enviarAudioAIA === "function") {
+        return window.enviarAudioAIA(texto);
+    } else if (typeof window.evaluarRespuestaSophia === "function") {
+        return window.evaluarRespuestaSophia(texto, habilidad);
+    } else if (typeof window.procesarEvaluacionIA === "function") {
+        return window.procesarEvaluacionIA(texto, habilidad);
+    } else if (typeof window.evaluarTexto === "function") {
+        return window.evaluarTexto(texto, habilidad);
+    } else {
+        // Si la función está definida con otro nombre, la invocamos a través del evento del sistema
+        console.log("Invocando motor Firebase...");
+        if (window.currentSkill) window.currentSkill = "PO";
+        const btnOriginal = document.querySelector("[data-action='evaluar-po']") || document.querySelector(".btn-evaluar-oral");
+        if (btnOriginal && btnOriginal.onclick) {
+            return btnOriginal.onclick();
+        }
+    }
+};
+
+window.evaluarPO = function() {
+    const textEl = document.getElementById("po-student-response") || document.querySelector("textarea");
+    const text = textEl ? textEl.value.trim() : "";
+    if (!text) {
+        alert("Veuillez d'abord enregistrer ou écrire votre réponse.");
+        return;
+    }
+    
+    const sBox = document.getElementById("sophia-box");
+    if (sBox) sBox.style.display = "block";
+    
+    const verdictText = document.getElementById("sophia-verdict-text");
+    if (verdictText) {
+        verdictText.innerHTML = '<div style="padding:20px; text-align:center; color:var(--oxford);"><i class="fas fa-spinner fa-spin fa-2x"></i><p style="margin-top:10px; font-weight:600;">Sophia analyse votre production orale...</p></div>';
+    }
+
+    if (window.isRecordingPO && window.recognitionPO) {
+        try { window.recognitionPO.stop(); } catch(e){}
+    }
+
+    // Ejecutar evaluación
+    if (typeof window.evaluarProduccionConSophia === "function") {
+        window.evaluarProduccionConSophia(text, "PO");
+    }
+};
+</script>
 </head>
 <body>
 
