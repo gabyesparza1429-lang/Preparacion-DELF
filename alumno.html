@@ -612,6 +612,67 @@ window.evaluarPO = function() {
     }
 };
 </script>
+
+<script>
+window.startSpeechPO = function() {
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SpeechRecognition) {
+        alert("Votre navigateur ne prend pas en charge la reconnaissance vocale. Veuillez utiliser Google Chrome.");
+        return;
+    }
+
+    if (!window.recognitionPO) {
+        window.recognitionPO = new SpeechRecognition();
+        window.recognitionPO.lang = "fr-FR";
+        window.recognitionPO.continuous = true;
+        window.recognitionPO.interimResults = true;
+
+        window.recognitionPO.onstart = function() {
+            window.isRecordingPO = true;
+            const feedback = document.getElementById("po-audio-feedback");
+            const btn = document.getElementById("btn-record-po");
+            if (feedback) feedback.innerText = "Écoute en cours... Parlez maintenant.";
+            if (btn) {
+                btn.style.background = "#d32f2f";
+                btn.innerHTML = '<i class="fas fa-stop"></i> Arrêter l'écoute';
+            }
+        };
+
+        window.recognitionPO.onresult = function(event) {
+            let transcript = "";
+            for (let i = 0; i < event.results.length; i++) {
+                transcript += event.results[i][0].transcript;
+            }
+            const textarea = document.getElementById("po-student-response");
+            if (textarea) textarea.value = transcript;
+        };
+
+        window.recognitionPO.onerror = function(event) {
+            console.error("Erreur de reconnaissance:", event.error);
+            const feedback = document.getElementById("po-audio-feedback");
+            if (feedback) feedback.innerText = "Erreur micro: " + event.error;
+        };
+
+        window.recognitionPO.onend = function() {
+            window.isRecordingPO = false;
+            const feedback = document.getElementById("po-audio-feedback");
+            const btn = document.getElementById("btn-record-po");
+            if (feedback) feedback.innerText = "Transcrit avec succès.";
+            if (btn) {
+                btn.style.background = "#0288d1";
+                btn.innerHTML = '<i class="fas fa-microphone"></i> Commencer à parler';
+            }
+        };
+    }
+
+    if (window.isRecordingPO) {
+        window.recognitionPO.stop();
+    } else {
+        window.recognitionPO.start();
+    }
+};
+</script>
+
 </head>
 <body>
 
@@ -1434,7 +1495,7 @@ window.renderExerciseStructure = async function() {
                 <div style="background: #fff; border: 1px solid #e0e6ed; border-radius: 8px; padding: 25px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); margin-bottom: 25px;">
                     <p style="color: var(--oxford); font-weight: 700; margin-bottom: 15px;"><i class="fas fa-microphone-alt"></i> Enregistrement de votre production orale :</p>
                     <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 20px; background: #fdfaf6; padding: 12px; border-radius: 6px; border: 1px solid #ffe0b2;">
-                        <button type="button" id="btn-record-po" style="background: #0288d1; color: white; border: none; padding: 12px 24px; border-radius: 6px; cursor: pointer; font-weight: 700; display: inline-flex; align-items: center; gap: 8px;">
+                        <button type="button" id="btn-record-po" onclick="window.startSpeechPO()" style="background: #0288d1; color: white; border: none; padding: 12px 24px; border-radius: 6px; cursor: pointer; font-weight: 700; display: inline-flex; align-items: center; gap: 8px;">
                             <i class="fas fa-microphone"></i> Commencer à parler
                         </button>
                         <span id="po-audio-feedback" style="font-size: 0.9rem; font-weight: 600; color: #666;">Cliquez pour démarrer l'écoute.</span>
