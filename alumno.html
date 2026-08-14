@@ -835,61 +835,60 @@ window.subirAudioYEvaluar = async function() {
 
 window.evaluarPO = window.subirAudioYEvaluar;
 </script>
+
 <script>
 window.enviarAudioAIA = async function(audioBlob) {
     const verdictText = document.getElementById("sophia-verdict-text");
+    const sophiaBox = document.getElementById("sophia-box");
+    if (sophiaBox) sophiaBox.style.display = "block";
+
+    const blobFinal = (audioBlob instanceof Blob) ? audioBlob : new Blob([audioBlob], { type: "audio/webm" });
+
+    if (verdictText) {
+        verdictText.innerHTML = '<div style="padding:20px; text-align:center; color:#0f172a;"><i class="fas fa-spinner fa-spin fa-2x"></i><p style="margin-top:10px; font-weight:600;">Sophia analyse votre enregistrement audio...</p></div>';
+    }
+
     try {
         const formData = new FormData();
-        const blobFinal = (audioBlob instanceof Blob) ? audioBlob : new Blob([audioBlob], { type: "audio/webm" });
-        
-        // Claves requeridas por la Cloud Function procesarAudioPO
         formData.append("audio", blobFinal, "audio_alumno.webm");
-        formData.append("audioBlob", blobFinal, "audio_alumno.webm");
-        formData.append("file", blobFinal, "audio_alumno.webm");
         formData.append("user_id", "constanza2026");
-        formData.append("userId", "constanza2026");
-        formData.append("alumno_id", "constanza2026");
-        formData.append("nivel", "B1");
-        formData.append("actividad", "1");
         formData.append("habilidad", "PO");
+        formData.append("actividad", "1");
+        formData.append("nivel", "B1");
 
         const response = await fetch("/procesarAudioPO", {
             method: "POST",
             body: formData
         });
 
+        const resText = await response.text();
+        let data;
+        try {
+            data = JSON.parse(resText);
+        } catch(e) {
+            data = { raw: resText };
+        }
+
         if (!response.ok) {
-            throw new Error(`Error en servidor: ${response.status} ${response.statusText}`);
+            throw new Error(`Servidor HTTP ${response.status}: ${data.error || data.message || resText}`);
         }
 
-        const data = await response.json();
-        console.log("Respuesta de Sophia:", data);
+        let audioUrl = URL.createObjectURL(blobFinal);
+        let playerHTML = `
+            <div style="margin: 15px 0; padding: 12px; background: #f0f4f8; border-radius: 8px; border: 1px solid #cbd5e1; text-align: center;">
+                <p style="margin-bottom: 8px; font-weight: bold; color: #1e293b;"><i class="fas fa-volume-up"></i> Écouter votre enregistrement :</p>
+                <audio controls src="${audioUrl}" style="width: 100%; max-width: 450px;"></audio>
+            </div>`;
 
-        // Renderizado de la evaluación recibida de Sophia
-        if (verdictText) {
-            let htmlResult = "";
-            if (data.html || data.evaluacionHtml) {
-                htmlResult = data.html || data.evaluacionHtml;
-            } else if (data.feedback || data.evaluacion) {
-                htmlResult = `<div style="padding:15px; text-align:left; font-size:15px; line-height:1.6;">${data.feedback || data.evaluacion}</div>`;
-            } else {
-                htmlResult = `<pre style="white-space:pre-wrap; text-align:left;">${JSON.stringify(data, null, 2)}</pre>`;
-            }
-            
-            // Mantener reproductor de audio si existe
-            const player = verdictText.querySelector("audio");
-            if (player) {
-                const playerContainer = player.closest("div");
-                verdictText.innerHTML = (playerContainer ? playerContainer.outerHTML : "") + htmlResult;
-            } else {
-                verdictText.innerHTML = htmlResult;
-            }
-        }
+        let evalHTML = data.html || data.feedback || data.evaluacion || `<div style="padding:15px; text-align:left;">${JSON.stringify(data, null, 2)}</div>`;
+        verdictText.innerHTML = playerHTML + evalHTML;
 
     } catch(err) {
-        console.error("Error al procesar audio en backend:", err);
+        console.error("Error real de Sophia:", err);
         if (verdictText) {
-            verdictText.innerHTML = `<div style="padding:15px; color:#d32f2f; font-weight:bold;"><i class="fas fa-exclamation-triangle"></i> Erreur lors du traitement : ${err.message}</div>`;
+            verdictText.innerHTML = `<div style="padding:15px; color:#d32f2f; font-weight:bold; background:#fee2e2; border-radius:6px; margin-top:10px;">
+                <i class="fas fa-exclamation-circle"></i> Error de backend en Sophia: ${err.message}
+            </div>`;
         }
     }
 };
