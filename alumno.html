@@ -587,11 +587,14 @@
         }
     </style>
 
+
+
+
 <script>
 window.startSpeechPO = function() {
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     if (!SpeechRecognition) {
-        alert("Tu navegador no soporta el micrófono en vivo. Usa Google Chrome en computadora.");
+        alert("Tu navegador no soporta reconocimiento de voz. Usa Google Chrome.");
         return;
     }
 
@@ -606,7 +609,7 @@ window.startSpeechPO = function() {
             const btn = document.getElementById("btn-record-po") || document.querySelector("button[onclick*='Speech']");
             if (btn) {
                 btn.style.background = "#d32f2f";
-                btn.innerHTML = '<i class="fas fa-stop"></i> Arrêter l'écoute';
+                btn.innerHTML = '<i class="fas fa-stop"></i> Arrêter écoute';
             }
         };
 
@@ -620,7 +623,7 @@ window.startSpeechPO = function() {
         };
 
         window.recognitionPO.onerror = function(event) {
-            alert("Error de micrófono: " + event.error);
+            console.error("Error micro:", event.error);
         };
 
         window.recognitionPO.onend = function() {
@@ -636,25 +639,47 @@ window.startSpeechPO = function() {
     if (window.isRecordingPO) {
         window.recognitionPO.stop();
     } else {
-        try {
-            window.recognitionPO.start();
-        } catch(e) {
-            console.error(e);
-        }
+        window.recognitionPO.start();
     }
 };
 
-// Escucha global de clics para detectar el botón incluso si se re-renderiza
+window.evaluarPO = function() {
+    const textEl = document.getElementById("po-student-response");
+    const text = textEl ? textEl.value.trim() : "";
+    if (!text) {
+        alert("Veuillez d'abord coller ou enregistrer votre réponse.");
+        return;
+    }
+    
+    const sBox = document.getElementById("sophia-box");
+    if (sBox) sBox.style.display = "block";
+    
+    const verdictText = document.getElementById("sophia-verdict-text");
+    if (verdictText) {
+        verdictText.innerHTML = '<div style="padding:20px; text-align:center; color:var(--oxford);"><i class="fas fa-spinner fa-spin fa-2x"></i><p style="margin-top:10px; font-weight:600;">Sophia analyse votre production orale...</p></div>';
+    }
+
+    if (typeof window.evaluarProduccionConSophia === "function") {
+        window.evaluarProduccionConSophia(text, "PO");
+    } else if (typeof window.enviarTextoAIA === "function") {
+        window.enviarTextoAIA(text, "PO");
+    }
+};
+
 document.addEventListener("click", function(e) {
     const target = e.target.closest("button") || e.target;
-    if (target && (target.id === "btn-record-po" || (target.textContent && target.textContent.includes("Commencer à parler")) || (target.textContent && target.textContent.includes("Arrêter l'écoute")))) {
-        e.preventDefault();
-        window.startSpeechPO();
+    if (target) {
+        if (target.id === "btn-record-po" || (target.textContent && target.textContent.includes("Commencer à parler")) || (target.textContent && target.textContent.includes("Arrêter"))) {
+            e.preventDefault();
+            window.startSpeechPO();
+        }
+        if (target.id === "btn-submit-po" || (target.textContent && target.textContent.includes("Évaluer ma production"))) {
+            e.preventDefault();
+            window.evaluarPO();
+        }
     }
 });
 </script>
-
-
 </head>
 <body>
 
