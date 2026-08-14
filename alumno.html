@@ -836,13 +836,36 @@ window.subirAudioYEvaluar = async function() {
 window.evaluarPO = window.subirAudioYEvaluar;
 </script>
 
+
 <script>
+window.selectedAudioFilePO = null;
+
+document.addEventListener("change", function(e) {
+    if (e.target && e.target.id === "po-file-input") {
+        const file = e.target.files[0];
+        if (file) {
+            window.selectedAudioFilePO = file;
+            window.recordedAudioBlobPO = file;
+            const feedback = document.getElementById("po-audio-feedback");
+            if (feedback) {
+                feedback.innerHTML = `<span style="color:#16a34a; font-weight:bold;"><i class="fas fa-check-circle"></i> Fichier audio prêt : ${file.name}</span>`;
+            }
+        }
+    }
+});
+
 window.enviarAudioAIA = async function(audioBlob) {
     const verdictText = document.getElementById("sophia-verdict-text");
     const sophiaBox = document.getElementById("sophia-box");
     if (sophiaBox) sophiaBox.style.display = "block";
 
-    const blobFinal = (audioBlob instanceof Blob) ? audioBlob : new Blob([audioBlob], { type: "audio/webm" });
+    // Prioridad: 1. Archivo subido, 2. Grabación de micrófono
+    let finalBlob = window.selectedAudioFilePO || audioBlob || window.recordedAudioBlobPO;
+
+    if (!finalBlob) {
+        alert("Veuillez d'abord importer ou enregistrer un fichier audio.");
+        return;
+    }
 
     if (verdictText) {
         verdictText.innerHTML = '<div style="padding:20px; text-align:center; color:#0f172a;"><i class="fas fa-spinner fa-spin fa-2x"></i><p style="margin-top:10px; font-weight:600;">Sophia analyse votre enregistrement audio...</p></div>';
@@ -850,7 +873,14 @@ window.enviarAudioAIA = async function(audioBlob) {
 
     try {
         const formData = new FormData();
-        formData.append("audio", blobFinal, "audio_alumno.webm");
+        const fileName = finalBlob.name || "audio_alumno.webm";
+
+        // Mapeo exhaustivo de claves para garantizar que el backend encuentre el archivo
+        formData.append("audio", finalBlob, fileName);
+        formData.append("audioFile", finalBlob, fileName);
+        formData.append("file", finalBlob, fileName);
+        formData.append("audio_file", finalBlob, fileName);
+
         formData.append("user_id", "constanza2026");
         formData.append("habilidad", "PO");
         formData.append("actividad", "1");
@@ -863,20 +893,16 @@ window.enviarAudioAIA = async function(audioBlob) {
 
         const resText = await response.text();
         let data;
-        try {
-            data = JSON.parse(resText);
-        } catch(e) {
-            data = { raw: resText };
-        }
+        try { data = JSON.parse(resText); } catch(e) { data = { raw: resText }; }
 
         if (!response.ok) {
             throw new Error(`Servidor HTTP ${response.status}: ${data.error || data.message || resText}`);
         }
 
-        let audioUrl = URL.createObjectURL(blobFinal);
+        let audioUrl = URL.createObjectURL(finalBlob);
         let playerHTML = `
             <div style="margin: 15px 0; padding: 12px; background: #f0f4f8; border-radius: 8px; border: 1px solid #cbd5e1; text-align: center;">
-                <p style="margin-bottom: 8px; font-weight: bold; color: #1e293b;"><i class="fas fa-volume-up"></i> Écouter votre enregistrement :</p>
+                <p style="margin-bottom: 8px; font-weight: bold; color: #1e293b;"><i class="fas fa-volume-up"></i> Écouter l'enregistrement :</p>
                 <audio controls src="${audioUrl}" style="width: 100%; max-width: 450px;"></audio>
             </div>`;
 
@@ -884,7 +910,7 @@ window.enviarAudioAIA = async function(audioBlob) {
         verdictText.innerHTML = playerHTML + evalHTML;
 
     } catch(err) {
-        console.error("Error real de Sophia:", err);
+        console.error("Error backend Sophia:", err);
         if (verdictText) {
             verdictText.innerHTML = `<div style="padding:15px; color:#d32f2f; font-weight:bold; background:#fee2e2; border-radius:6px; margin-top:10px;">
                 <i class="fas fa-exclamation-circle"></i> Error de backend en Sophia: ${err.message}
