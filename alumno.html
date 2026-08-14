@@ -777,6 +777,64 @@ document.addEventListener("click", function(e) {
     }
 }, true);
 </script>
+<script>
+window.subirAudioYEvaluar = async function() {
+    if (!window.recordedAudioBlobPO || window.recordedAudioBlobPO.size === 0) {
+        alert("Veuillez d'abord enregistrer votre réponse orale.");
+        return;
+    }
+
+    const sBox = document.getElementById("sophia-box");
+    if (sBox) sBox.style.display = "block";
+
+    const verdictText = document.getElementById("sophia-verdict-text");
+    if (verdictText) {
+        verdictText.innerHTML = '<div style="padding:20px; text-align:center; color:var(--oxford);"><i class="fas fa-spinner fa-spin fa-2x"></i><p style="margin-top:10px; font-weight:600;">Sauvegarde de votre audio sur Firebase et analyse par Sophia...</p></div>';
+    }
+
+    let audioUrl = "";
+    const userId = "constanza2026";
+    const filename = `audios_po/${userId}/po_${Date.now()}.webm`;
+
+    try {
+        // Subida directa a Firebase Storage
+        if (typeof firebase !== "undefined" && firebase.storage) {
+            const storageRef = firebase.storage().ref().child(filename);
+            const snapshot = await storageRef.put(window.recordedAudioBlobPO);
+            audioUrl = await snapshot.ref.getDownloadURL();
+            console.log("✅ Audio guardado en Firebase Storage:", audioUrl);
+        }
+    } catch (e) {
+        console.warn("No se pudo subir a Storage, usando URL local temporal:", e);
+        audioUrl = URL.createObjectURL(window.recordedAudioBlobPO);
+    }
+
+    // HTML del reproductor para el alumno
+    const playerHTML = `
+        <div style="margin: 15px 0; padding: 12px; background: #f0f4f8; border-radius: 8px; border: 1px solid #cbd5e1; text-align: center;">
+            <p style="margin-bottom: 8px; font-weight: bold; color: var(--oxford);"><i class="fas fa-volume-up"></i> Écouter votre enregistrement :</p>
+            <audio controls src="${audioUrl}" style="width: 100%; max-width: 450px;"></audio>
+        </div>
+    `;
+
+    try {
+        if (typeof window.enviarAudioAIA === "function") {
+            await window.enviarAudioAIA(window.recordedAudioBlobPO);
+        } else if (typeof window.evaluarProduccionConSophia === "function") {
+            await window.evaluarProduccionConSophia(window.recordedAudioBlobPO, "PO");
+        }
+
+        // Insertar el reproductor en la tarjeta de evaluación
+        if (verdictText && !verdictText.innerHTML.includes("<audio")) {
+            verdictText.innerHTML = playerHTML + verdictText.innerHTML;
+        }
+    } catch(err) {
+        console.error("Error evaluando audio:", err);
+    }
+};
+
+window.evaluarPO = window.subirAudioYEvaluar;
+</script>
 </head>
 <body>
 
