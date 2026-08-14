@@ -1214,10 +1214,6 @@
             if (window.currentSkill === "PO" && !html.includes("btn-record-po")) { html += `<div style="margin: 20px 0; text-align: center;"></div>`; }
 
             if (window.currentSkill === "PO") { html += `<div style="margin: 20px 0; text-align: center;"></div>`; }
-            if (window.currentSkill === "PO" && !html.includes("btn-record-po")) { html += `<div style="margin: 20px 0; text-align: center;"><button id="btn-record-po" class="btn-mic" onclick="window.grabarPO()" style="padding:12px 30px; font-size:1rem; background-color:#d9534f; color:white; border:none; border-radius:5px; cursor:pointer;"><i class="fas fa-microphone"></i> Commencer l'enregistrement</button></div>`; }
-            if (window.currentSkill === "PO" && !html.includes("btn-record-po")) { html += `<div style="margin: 20px 0; text-align: center;"><button id="btn-record-po" class="btn-mic" onclick="window.grabarPO()" style="padding:12px 30px; font-size:1rem; background-color:#d9534f; color:white; border:none; border-radius:5px; cursor:pointer;"><i class="fas fa-microphone"></i> Commencer l'enregistrement</button></div><div id="po-ia-feedback-container" style="margin-top:15px;"></div>`; }
-            if (window.currentSkill === "PO" && !html.includes("btn-record-po")) { html += `<div style="margin: 20px 0; text-align: center;"><button id="btn-record-po" class="btn-mic" onclick="window.grabarPO()" style="padding:12px 30px; font-size:1rem; background-color:#d9534f; color:white; border:none; border-radius:5px; cursor:pointer;"><i class="fas fa-microphone"></i> Commencer l'enregistrement</button></div><div id="po-ia-feedback-container" style="margin-top:15px;"></div>`; }
-            if (window.currentSkill === "PO" && !html.includes("btn-record-po")) { html += `<div style="margin: 20px 0; text-align: center;"><button id="btn-record-po" class="btn-mic" onclick="window.grabarPO()" style="padding:12px 30px; font-size:1rem; background-color:#d9534f; color:white; border:none; border-radius:5px; cursor:pointer;"><i class="fas fa-microphone"></i> Commencer l'enregistrement</button></div><div id="po-ia-feedback-container" style="margin-top:15px;"></div>`; }
             if (ej.ruta_audio && window.currentSkill !== "PO") {
                 html += `<div style="background:#f1f3f5; padding:15px; border-radius:8px; margin-bottom:20px; text-align:center;"><div class="audio-counter-badge"><i class="fas fa-headphones"></i><span id="audio-count-label">Écoutes / Escuchas : 0 / 2</span></div><div id="${audioId}">Loading...</div></div>`;
             }
@@ -1530,7 +1526,6 @@
             html += `
                 <div id="sophia-box" style="display:none; background:#f4f7f9; border-left:4px solid var(--gold); padding:20px; border-radius:6px; margin-top:25px;">
                     <div id="sophia-verdict-text"></div>
-                    ${ej.transcripcion ? `<div style="border:1px dashed #ccc; border-radius:8px; background:#fff; display:flex; flex-direction:column; overflow:hidden; margin-top:15px;"><div id="interactive-transcription-box" style="padding:15px; max-height:220px; overflow-y:auto;"></div><div class="transcription-control-sticky-panel"><p id="audio-reading-feedback" style="font-size:0.82rem; margin:0; font-weight:600;">Prêt</p><button id="btn-record-transcription" class="btn-mic" style="margin-top:0;"><i class="fas fa-microphone"></i> Commencer l'enregistrement</button></div></div>` : ''}
                 </div>
             </div>`;
             
