@@ -586,6 +586,32 @@
             margin-left: 5px;
         }
     </style>
+<script>
+window.evaluarPO = function() {
+    const textEl = document.getElementById("po-student-response");
+    const text = textEl ? textEl.value.trim() : "";
+    if (!text) {
+        alert("Veuillez d'abord coller ou enregistrer votre réponse.");
+        return;
+    }
+    
+    const sBox = document.getElementById("sophia-box");
+    if (sBox) sBox.style.display = "block";
+    
+    const verdictText = document.getElementById("sophia-verdict-text");
+    if (verdictText) {
+        verdictText.innerHTML = `<div style="padding:20px; text-align:center; color:var(--oxford);"><i class="fas fa-spinner fa-spin fa-2x"></i><p style="margin-top:10px; font-weight:600;">Sophia analyse votre production orale...</p></div>`;
+    }
+
+    if (typeof window.enviarAudioAIA === "function") {
+        window.enviarAudioAIA(text);
+    } else if (typeof window.evaluarProduccionConSophia === "function") {
+        window.evaluarProduccionConSophia(text, "PO");
+    } else {
+        alert("Erreur: La fonction d'évaluation n'est pas disponible.");
+    }
+};
+</script>
 </head>
 <body>
 
@@ -1419,7 +1445,7 @@ window.renderExerciseStructure = async function() {
 
                     <div style="display:flex; justify-content:flex-end; gap:12px; border-top: 1px solid #eee; padding-top: 15px; margin-top: 15px;">
                         <button type="button" id="btn-reset-po" style="background:#6c757d; color:white; border:none; padding:10px 20px; border-radius:6px; cursor:pointer;">Réinitialiser</button>
-                        <button type="button" id="btn-submit-po" style="background:var(--oxford); color:white; padding:10px 22px; border:none; border-radius:6px; cursor:pointer; font-weight:700; display: inline-flex; align-items: center; gap: 8px;">
+                        <button type="button" id="btn-submit-po" onclick="window.evaluarPO()" style="background:var(--oxford); color:white; padding:10px 22px; border:none; border-radius:6px; cursor:pointer; font-weight:700; display: inline-flex; align-items: center; gap: 8px;">
                             <i class="fas fa-paper-plane"></i> Évaluer ma production orale
                         </button>
                     </div>
