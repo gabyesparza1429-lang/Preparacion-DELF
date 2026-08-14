@@ -592,14 +592,14 @@
 
 
 
+
 <script>
-window.finalTranscriptPO = "";
 window.isRecordingPO = false;
 
 window.startSpeechPO = function() {
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     if (!SpeechRecognition) {
-        alert("Navegador no compatible con reconocimiento de voz. Usa Google Chrome.");
+        alert("Navegador no compatible. Usa Google Chrome.");
         return;
     }
 
@@ -607,7 +607,7 @@ window.startSpeechPO = function() {
         window.recognitionPO = new SpeechRecognition();
         window.recognitionPO.lang = "fr-FR";
         window.recognitionPO.continuous = true;
-        window.recognitionPO.interimResults = true;
+        window.recognitionPO.interimResults = false; // Solo acepta resultados finales para evitar autocorrección dinámica
 
         window.recognitionPO.onstart = function() {
             window.isRecordingPO = true;
@@ -619,17 +619,14 @@ window.startSpeechPO = function() {
         };
 
         window.recognitionPO.onresult = function(event) {
-            let interimTranscript = "";
+            const textarea = document.getElementById("po-student-response") || document.querySelector("textarea");
+            if (!textarea) return;
+
             for (let i = event.resultIndex; i < event.results.length; ++i) {
                 if (event.results[i].isFinal) {
-                    window.finalTranscriptPO += event.results[i][0].transcript + " ";
-                } else {
-                    interimTranscript += event.results[i][0].transcript;
+                    const nuevoTexto = event.results[i][0].transcript.trim();
+                    textarea.value = (textarea.value + " " + nuevoTexto).trim();
                 }
-            }
-            const textarea = document.getElementById("po-student-response") || document.querySelector("textarea");
-            if (textarea) {
-                textarea.value = (window.finalTranscriptPO + interimTranscript).trim();
             }
         };
 
@@ -653,8 +650,6 @@ window.startSpeechPO = function() {
         try { window.recognitionPO.stop(); } catch(e){}
         window.isRecordingPO = false;
     } else {
-        const textarea = document.getElementById("po-student-response") || document.querySelector("textarea");
-        window.finalTranscriptPO = textarea && textarea.value ? textarea.value + " " : "";
         try {
             window.recognitionPO.start();
         } catch(e) {
@@ -676,7 +671,7 @@ window.evaluarPO = function() {
     
     const verdictText = document.getElementById("sophia-verdict-text");
     if (verdictText) {
-        verdictText.innerHTML = '<div style="padding:20px; text-align:center; color:var(--oxford);"><i class="fas fa-spinner fa-spin fa-2x"></i><p style="margin-top:10px; font-weight:600;">Analyse en cours...</p></div>';
+        verdictText.innerHTML = '<div style="padding:20px; text-align:center; color:var(--oxford);"><i class="fas fa-spinner fa-spin fa-2x"></i><p style="margin-top:10px; font-weight:600;">Sophia analyse votre production orale...</p></div>';
     }
 
     if (window.isRecordingPO && window.recognitionPO) {
