@@ -1316,7 +1316,7 @@
                     }
                 }, 1000);
 
-            } else if (window.currentSkill === "PO") {
+           } else if (window.currentSkill === "PO") {
                 if (ej.texto_lectura) {
                     html += `<div style="background:#f8f9fa; border-left:4px solid var(--gold); padding:20px; margin-bottom:25px;"><strong>Document :</strong><br><br>${window.convertirTextoInteractivo(ej.texto_lectura)}</div>`;
                 }
@@ -1330,7 +1330,7 @@
                         <ul style="padding-left: 20px; color: #333; line-height: 1.6; font-size: 0.95rem;">`;
                     
                     ej.preguntas.forEach((p) => {
-                        html += `<li style="margin-bottom: 10px; font-weight: 500;">${p.pregunta}</li>`;
+                        html += `<li style="margin-bottom: 10px; font-weight: 500;">${p.pregunta || p}</li>`;
                     });
                     
                     html += `</ul></div>`;
@@ -1357,7 +1357,24 @@
                 }
 
                 html += `
-                <div style="margin-bottom:20px; text-align:center; background:#fafbfc; padding:30px; border-radius:8px; border:1px dashed #ccc;">
+                <div style="background: #fff; border: 1px solid #e0e6ed; border-radius: 8px; padding: 25px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); margin-bottom: 25px;">
+                    <p style="color: var(--oxford); font-weight: 700; margin-bottom: 15px;"><i class="fas fa-microphone-alt"></i> Enregistrement de votre production orale :</p>
+                    <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 20px; background: #fdfaf6; padding: 12px; border-radius: 6px; border: 1px solid #ffe0b2;">
+                        <button type="button" id="btn-record-po" style="background: #0288d1; color: white; border: none; padding: 12px 24px; border-radius: 6px; cursor: pointer; font-weight: 700; display: inline-flex; align-items: center; gap: 8px;">
+                            <i class="fas fa-microphone"></i> Commencer à parler
+                        </button>
+                        <span id="po-audio-feedback" style="font-size: 0.9rem; font-weight: 600; color: #666;">Cliquez pour démarrer l'écoute.</span>
+                    </div>
+
+                    <label style="display:block; font-size:0.85rem; font-weight:700; color:var(--oxford); margin-bottom:5px;">Texte transcrit (votre voix) :</label>
+                    <textarea id="po-student-response" class="production-textbox" placeholder="Votre voix sera convertie en texte ici automatiquement..." style="min-height: 140px;"></textarea>
+
+                    <div style="display:flex; justify-content:flex-end; gap:12px; border-top: 1px solid #eee; padding-top: 15px; margin-top: 15px;">
+                        <button type="button" id="btn-reset-po" style="background:#6c757d; color:white; border:none; padding:10px 20px; border-radius:6px; cursor:pointer;">Réinitialiser</button>
+                        <button type="button" id="btn-submit-po" style="background:var(--oxford); color:white; padding:10px 22px; border:none; border-radius:6px; cursor:pointer; font-weight:700; display: inline-flex; align-items: center; gap: 8px;">
+                            <i class="fas fa-paper-plane"></i> Évaluer ma production orale
+                        </button>
+                    </div>
                 </div>`;
                 
             } else if (ej.preguntas && ej.preguntas.length > 0) {
@@ -1546,11 +1563,6 @@
                 } catch(errFetch) { console.error("Error recuperando histórico:", errFetch); }
             }
 
-            if (window.currentSkill === "PO") { html += `<div style="margin: 20px 0; text-align: center;"></div>`; }
-            if (window.currentSkill === "PO" && !html.includes("btn-record-po")) { html += `<div style="margin: 20px 0; text-align: center;"><button id="btn-record-po" class="btn-mic" onclick="window.grabarPO()" style="padding:12px 30px; font-size:1rem; background-color:#d9534f; color:white; border:none; border-radius:5px; cursor:pointer;"><i class="fas fa-microphone"></i> Commencer l'enregistrement</button></div>`; }
-            if (window.currentSkill === "PO" && !html.includes("btn-record-po")) { html += `<div style="margin: 20px 0; text-align: center;"><button id="btn-record-po" class="btn-mic" onclick="window.grabarPO()" style="padding:12px 30px; font-size:1rem; background-color:#d9534f; color:white; border:none; border-radius:5px; cursor:pointer;"><i class="fas fa-microphone"></i> Commencer l'enregistrement</button></div><div id="po-ia-feedback-container" style="margin-top:15px;"></div>`; }
-            if (window.currentSkill === "PO" && !html.includes("btn-record-po")) { html += `<div style="margin: 20px 0; text-align: center;"><button id="btn-record-po" class="btn-mic" onclick="window.grabarPO()" style="padding:12px 30px; font-size:1rem; background-color:#d9534f; color:white; border:none; border-radius:5px; cursor:pointer;"><i class="fas fa-microphone"></i> Commencer l'enregistrement</button></div><div id="po-ia-feedback-container" style="margin-top:15px;"></div>`; }
-            if (window.currentSkill === "PO" && !html.includes("btn-record-po")) { html += `<div style="margin: 20px 0; text-align: center;"><button id="btn-record-po" class="btn-mic" onclick="window.grabarPO()" style="padding:12px 30px; font-size:1rem; background-color:#d9534f; color:white; border:none; border-radius:5px; cursor:pointer;"><i class="fas fa-microphone"></i> Commencer l'enregistrement</button></div><div id="po-ia-feedback-container" style="margin-top:15px;"></div>`; }
             if (ej.ruta_audio && window.currentSkill !== "PO") {
                 let extraerNumeros = ej.ruta_audio.match(/\d+/);
                 let numeroPista = extraerNumeros ? extraerNumeros[0].padStart(2, '0') : "02";
@@ -1933,7 +1945,7 @@ window.enviarAudioAIA = async function(audioBlob) {
         feedbackBox.innerHTML = '<div style="padding:15px; background:#e8f0fe; border-radius:8px; color:#1a73e8; text-align:center;"><i class="fas fa-spinner fa-spin"></i> Traitement de votre enregistrement par SophiAI...</div>';
     }
 
-    const ENDPOINT = 'https://us-central1-objectif-reussite-delf.cloudfunctions.net/procesarAudioPO';
+    const ENDPOINT = '/procesarAudioPO';
     const formData = new FormData();
     formData.append('audio', audioBlob, 'grabacion.webm');
     formData.append('level', window.currentLevel || 'B1');
@@ -1966,7 +1978,7 @@ window.enviarAudioAIA = async function(audioBlob) {
         feedbackBox.innerHTML = '<div style="padding:15px; background:#e8f0fe; border-radius:8px; color:#1a73e8; text-align:center;"><i class="fas fa-spinner fa-spin"></i> Traitement de votre enregistrement par SophiAI...</div>';
     }
 
-    const ENDPOINT = 'https://us-central1-objectif-reussite-delf.cloudfunctions.net/procesarAudioPO';
+    const ENDPOINT = '/procesarAudioPO';
     const formData = new FormData();
     formData.append('audio', audioBlob, 'grabacion.webm');
     formData.append('level', window.currentLevel || 'B1');
@@ -1999,7 +2011,7 @@ window.enviarAudioAIA = async function(audioBlob) {
         feedbackBox.innerHTML = '<div style="padding:15px; background:#e8f0fe; border-radius:8px; color:#1a73e8; text-align:center;"><i class="fas fa-spinner fa-spin"></i> Traitement de votre enregistrement par SophiAI...</div>';
     }
 
-    const ENDPOINT = 'https://us-central1-objectif-reussite-delf.cloudfunctions.net/procesarAudioPO';
+    const ENDPOINT = '/procesarAudioPO';
     const formData = new FormData();
     formData.append('audio', audioBlob, 'grabacion.webm');
     formData.append('level', window.currentLevel || 'B1');
@@ -2024,3 +2036,5 @@ window.enviarAudioAIA = async function(audioBlob) {
     }
 };
 </script>
+</body>
+</html>
