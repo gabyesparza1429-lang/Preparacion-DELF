@@ -882,22 +882,26 @@ window.enviarAudioAIA = async function(audioBlob) {
     }
 
     try {
-        const formData = new FormData();
-        const fileName = finalBlob.name || "audio_alumno.webm";
-
-        formData.append("audio", finalBlob, fileName);
-        formData.append("audioFile", finalBlob, fileName);
-        formData.append("file", finalBlob, fileName);
-        formData.append("audio_file", finalBlob, fileName);
-
-        formData.append("user_id", "constanza2026");
-        formData.append("habilidad", "PO");
-        formData.append("actividad", "1");
-        formData.append("nivel", "B1");
+        const base64Data = await new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onloadend = () => resolve(reader.result);
+            reader.onerror = reject;
+            reader.readAsDataURL(finalBlob);
+        });
 
         let response = await fetch("/procesarAudioPO", {
             method: "POST",
-            body: formData
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                audioBase64: base64Data,
+                mimeType: finalBlob.type || "audio/webm",
+                user_id: window.currentStudentId || "constanza2026",
+                habilidad: "PO",
+                actividad: (typeof window.currentExerciseIndex !== "undefined" ? (window.currentExerciseIndex + 1).toString() : "1"),
+                nivel: window.currentLevel || "B1"
+            })
         });
 
         const resText = await response.text();
