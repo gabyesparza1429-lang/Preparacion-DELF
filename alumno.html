@@ -859,9 +859,9 @@ window.enviarAudioAIA = async function(audioBlob) {
             reader.readAsDataURL(finalBlob);
         });
 
-        const clientApiKey = localStorage.getItem('gemini_api_key') || localStorage.getItem('GEMINI_API_KEY') || "";
+const clientApiKey = localStorage.getItem('gemini_api_key') || localStorage.getItem('GEMINI_API_KEY') || "";
 
-        let response = await fetch("/procesarAudioPO", {
+        let response = await fetch("https://us-central1-objectif-reussite-delf.cloudfunctions.net/procesarAudioPO", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
