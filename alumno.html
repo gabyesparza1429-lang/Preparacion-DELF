@@ -672,9 +672,6 @@ window.toggleAudioRecordingPO = async function() {
             btn.style.background = "#28a745";
             btn.innerHTML = '<i class="fas fa-microphone"></i> Ré-enregistrer audio';
         }
-        if (feedback) {
-            feedback.innerHTML = '<span style="color:#28a745; font-weight:bold;"><i class="fas fa-check-circle"></i> Audio enregistré avec succès !</span>';
-        }
         return;
     }
 
@@ -704,6 +701,15 @@ window.toggleAudioRecordingPO = async function() {
         window.mediaRecorderPO.onstop = function() {
             window.recordedAudioBlobPO = new Blob(window.audioChunksPO, { type: mimeType });
             console.log("Audio generado correctamente, tamaño:", window.recordedAudioBlobPO.size, "bytes");
+            const feedback = document.getElementById("po-audio-feedback");
+            if (feedback) {
+                const audioUrl = URL.createObjectURL(window.recordedAudioBlobPO);
+                feedback.innerHTML = `
+                    <div style="margin-top:10px; padding:10px; background:#e8f5e9; border:1px solid #c8e6c9; border-radius:8px;">
+                        <span style="color:#2e7d32; font-weight:bold; display:block; margin-bottom:8px;"><i class="fas fa-check-circle"></i> Audio enregistré avec succès !</span>
+                        <audio controls src="${audioUrl}" style="width:100%; max-width:400px;"></audio>
+                    </div>`;
+            }
         };
 
         window.mediaRecorderPO.start(200);
@@ -848,7 +854,12 @@ document.addEventListener("change", function(e) {
             window.recordedAudioBlobPO = file;
             const feedback = document.getElementById("po-audio-feedback");
             if (feedback) {
-                feedback.innerHTML = `<span style="color:#16a34a; font-weight:bold;"><i class="fas fa-check-circle"></i> Fichier audio prêt : ${file.name}</span>`;
+                const audioUrl = URL.createObjectURL(file);
+                feedback.innerHTML = `
+                    <div style="margin-top:10px; padding:10px; background:#e8f5e9; border:1px solid #c8e6c9; border-radius:8px;">
+                        <span style="color:#2e7d32; font-weight:bold; display:block; margin-bottom:8px;"><i class="fas fa-check-circle"></i> Fichier audio prêt : ${file.name}</span>
+                        <audio controls src="${audioUrl}" style="width:100%; max-width:400px;"></audio>
+                    </div>`;
             }
         }
     }
@@ -1675,6 +1686,36 @@ window.renderBotonesRubrosOral = function() {
         <button type="button" class="btn-rubric" data-rubric="lexique" style="flex:1; min-width:130px; padding:10px; border-radius:6px; border:1px solid #ccc; background:#fff; font-weight:600; cursor:pointer;">Lexique</button>
         <button type="button" class="btn-rubric" data-rubric="morphosyntaxe" style="flex:1; min-width:130px; padding:10px; border-radius:6px; border:1px solid #ccc; background:#fff; font-weight:600; cursor:pointer;">Morphosyntaxe</button>
         <button type="button" class="btn-rubric" data-rubric="phonologique" style="flex:1; min-width:130px; padding:10px; border-radius:6px; border:1px solid #ccc; background:#fff; font-weight:600; cursor:pointer;">Phonologie</button>`;
+
+    bar.querySelectorAll('.btn-rubric').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            bar.querySelectorAll('.btn-rubric').forEach(b => {
+                b.style.background = '#fff';
+                b.style.color = '#333';
+            });
+            btn.style.background = 'var(--oxford)';
+            btn.style.color = 'white';
+
+            const rKey = btn.getAttribute('data-rubric');
+            const vText = document.getElementById("sophia-verdict-text");
+            const details = document.getElementById("sophia-feedback-details");
+            const errDiv = document.getElementById("sophia-feedback-errors");
+            const supraDiv = document.getElementById("sophia-feedback-supra");
+
+            if (!vText || !vText.dataset.evaluation || !details) return;
+
+            try {
+                const rubricas = JSON.parse(vText.dataset.evaluation);
+                const itemData = rubricas[rKey] || rubricas[rKey.toLowerCase()] || {};
+
+                errDiv.innerText = itemData.ce_qui_ne_va_pas || itemData.erreurs || "Aucune remarque particulière.";
+                supraDiv.innerText = itemData.objectif_supra || itemData.supra || "Poursuivez ainsi.";
+                details.style.display = "flex";
+            } catch(err) {
+                console.error("Error mostrando rúbrica:", err);
+            }
+        });
+    });
 };
 
 window.mostrarEvaluacionOralSophia = function(jsonRaw) {
@@ -1738,12 +1779,7 @@ window.renderExerciseStructure = async function() {
                 tituloInstruccion = `Activité ${currentExerciseIndex + 1} : Production Écrite - Sujet de rédaction`;
             }
 
-            let botonPO = window.currentSkill === "PO" ? `<div style="margin: 20px 0; text-align: center;"></div>` : ""; let html = `<div class="exercise-card">${zoneHTML}<h4 style="margin-top:0; color:var(--oxford); font-weight:700; margin-bottom: 20px;">${tituloInstruccion}</h4>${botonPO}`;
-            if (window.currentSkill === "PO") { html += `<div style="margin: 20px 0; text-align: center;"></div>`; }
-            if (window.currentSkill === "PO") { const prevBtn = document.getElementById("btn-record-po"); if (prevBtn) prevBtn.remove(); html += `<div style="margin: 20px 0; text-align: center;"></div>`; }
-            if (window.currentSkill === "PO" && !html.includes("btn-record-po")) { html += `<div style="margin: 20px 0; text-align: center;"></div>`; }
-
-            if (window.currentSkill === "PO") { html += `<div style="margin: 20px 0; text-align: center;"></div>`; }
+            let html = `<div class="exercise-card">${zoneHTML}<h4 style="margin-top:0; color:var(--oxford); font-weight:700; margin-bottom: 20px;">${tituloInstruccion}</h4>`;
             if (ej.ruta_audio && window.currentSkill !== "PO") {
                 html += `<div style="background:#f1f3f5; padding:15px; border-radius:8px; margin-bottom:20px; text-align:center;"><div class="audio-counter-badge"><i class="fas fa-headphones"></i><span id="audio-count-label">Écoutes / Escuchas : 0 / 2</span></div><div id="${audioId}">Loading...</div></div>`;
             }
@@ -1884,7 +1920,6 @@ window.renderExerciseStructure = async function() {
 
                 html += `
                 <div style="background: #fff; border: 1px solid #e0e6ed; border-radius: 8px; padding: 25px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); margin-bottom: 25px;">
-                    <p style="color: var(--oxford); font-weight: 700; margin-bottom: 15px;"><i class="fas fa-microphone-alt">
 <div id="container-po-audio-dual" style="margin: 20px 0; padding: 20px; background: #f8fafc; border: 2px dashed #0288d1; border-radius: 10px; text-align: center;">
     <h4 style="margin-top:0; color:#0f172a; font-weight:bold;"><i class="fas fa-file-audio"></i> Soumettre votre production orale</h4>
     
@@ -2070,9 +2105,8 @@ window.renderExerciseStructure = async function() {
             }
 
             html += `
-                <div id="sophia-box" style="display:none; background:#f4f7f9; border-left:4px solid var(--gold); padding:20px; border-radius:6px; margin-top:25px;">
+                <div id="sophia-box" style="display:none; background:white; border:1px solid #e0e6ed; border-left:4px solid var(--gold); padding:25px; border-radius:6px; margin-top:25px; box-shadow:0 4px 12px rgba(0,0,0,0.02); box-sizing:border-box; width:100%;">
                     <div id="sophia-verdict-text"></div>
-site-delf
                 </div>
             </div>`;
             
