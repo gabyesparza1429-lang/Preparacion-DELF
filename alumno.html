@@ -784,66 +784,6 @@ document.addEventListener("click", function(e) {
 }, true);
 </script>
 <script>
-window.subirAudioYEvaluar = async function() {
-    if (!window.recordedAudioBlobPO || window.recordedAudioBlobPO.size === 0) {
-        alert("Veuillez d'abord enregistrer votre réponse orale.");
-        return;
-    }
-
-    const sBox = document.getElementById("sophia-box");
-    if (sBox) sBox.style.display = "block";
-
-    const verdictText = document.getElementById("sophia-verdict-text");
-    if (verdictText) {
-        verdictText.innerHTML = '<div style="padding:20px; text-align:center; color:var(--oxford);"><i class="fas fa-spinner fa-spin fa-2x"></i><p style="margin-top:10px; font-weight:600;">Sauvegarde de votre audio sur Firebase et analyse par Sophia...</p></div>';
-    }
-
-    let audioUrl = "";
-    const userId = "constanza2026";
-    const filename = `audios_po/${userId}/po_${Date.now()}.webm`;
-
-    try {
-        // Subida directa a Firebase Storage
-        if (typeof firebase !== "undefined" && firebase.storage) {
-            const storageRef = firebase.storage().ref().child(filename);
-            const snapshot = await storageRef.put(window.recordedAudioBlobPO);
-            audioUrl = await snapshot.ref.getDownloadURL();
-            console.log("✅ Audio guardado en Firebase Storage:", audioUrl);
-        }
-    } catch (e) {
-        console.warn("No se pudo subir a Storage, usando URL local temporal:", e);
-        audioUrl = URL.createObjectURL(window.recordedAudioBlobPO);
-    }
-
-    // HTML del reproductor para el alumno
-    const playerHTML = `
-        <div style="margin: 15px 0; padding: 12px; background: #f0f4f8; border-radius: 8px; border: 1px solid #cbd5e1; text-align: center;">
-            <p style="margin-bottom: 8px; font-weight: bold; color: var(--oxford);"><i class="fas fa-volume-up"></i> Écouter votre enregistrement :</p>
-            <audio controls src="${audioUrl}" style="width: 100%; max-width: 450px;"></audio>
-        </div>
-    `;
-
-    try {
-        if (typeof window.enviarAudioAIA === "function") {
-            await window.enviarAudioAIA(window.recordedAudioBlobPO);
-        } else if (typeof window.evaluarProduccionConSophia === "function") {
-            await window.evaluarProduccionConSophia(window.recordedAudioBlobPO, "PO");
-        }
-
-        // Insertar el reproductor en la tarjeta de evaluación
-        if (verdictText && !verdictText.innerHTML.includes("<audio")) {
-            verdictText.innerHTML = playerHTML + verdictText.innerHTML;
-        }
-    } catch(err) {
-        console.error("Error evaluando audio:", err);
-    }
-};
-
-window.evaluarPO = window.subirAudioYEvaluar;
-</script>
-
-
-<script>
 window.selectedAudioFilePO = null;
 
 document.addEventListener("change", function(e) {
@@ -878,9 +818,39 @@ window.enviarAudioAIA = async function(audioBlob) {
     }
 
     if (verdictText) {
-        verdictText.innerHTML = '<div style="padding:20px; text-align:center; color:#0f172a;"><i class="fas fa-spinner fa-spin fa-2x"></i><p style="margin-top:10px; font-weight:600;">Sophia analyse votre enregistrement audio...</p></div>';
+        verdictText.innerHTML = '<div style="padding:20px; text-align:center; color:#0f172a;"><i class="fas fa-spinner fa-spin fa-2x"></i><p style="margin-top:10px; font-weight:600;">Sauvegarde de votre audio sur Firebase et analyse par Sophia...</p></div>';
     }
 
+    const studentId = window.currentStudentId || localStorage.getItem('active_student_id') || "constanza2026";
+
+    // 1. Subir audio a Firebase Storage
+    let audioStorageUrl = "";
+    try {
+        if (window.firebaseStorage && window.uploadBytes && window.storageRef && window.getDownloadURL) {
+            let ext = "webm";
+            if (finalBlob.name && finalBlob.name.includes(".")) {
+                ext = finalBlob.name.split('.').pop().toLowerCase();
+            } else if (finalBlob.type) {
+                if (finalBlob.type.includes("ogg")) ext = "ogg";
+                else if (finalBlob.type.includes("mp3")) ext = "mp3";
+                else if (finalBlob.type.includes("wav")) ext = "wav";
+                else if (finalBlob.type.includes("mp4") || finalBlob.type.includes("m4a")) ext = "m4a";
+            }
+            const filename = `audios_po/${studentId}/po_${Date.now()}.${ext}`;
+            const sRef = window.storageRef(window.firebaseStorage, filename);
+            const snapshot = await window.uploadBytes(sRef, finalBlob);
+            audioStorageUrl = await window.getDownloadURL(snapshot.ref);
+            console.log("✅ Audio guardado en Firebase Storage:", audioStorageUrl);
+        }
+    } catch (e) {
+        console.warn("No se pudo subir a Storage, usando URL local temporal:", e);
+    }
+
+    if (!audioStorageUrl) {
+        audioStorageUrl = URL.createObjectURL(finalBlob);
+    }
+
+    // 2. Convertir a Base64 y enviar al backend
     try {
         const base64Data = await new Promise((resolve, reject) => {
             const reader = new FileReader();
@@ -897,10 +867,11 @@ window.enviarAudioAIA = async function(audioBlob) {
             body: JSON.stringify({
                 audioBase64: base64Data,
                 mimeType: finalBlob.type || "audio/webm",
-                user_id: window.currentStudentId || "constanza2026",
+                user_id: studentId,
                 habilidad: "PO",
                 actividad: (typeof window.currentExerciseIndex !== "undefined" ? (window.currentExerciseIndex + 1).toString() : "1"),
-                nivel: window.currentLevel || "B1"
+                nivel: window.currentLevel || "B1",
+                audioUrl: audioStorageUrl
             })
         });
 
@@ -912,9 +883,26 @@ window.enviarAudioAIA = async function(audioBlob) {
             throw new Error(`Servidor HTTP ${response.status}: ${data.error || data.message || resText}`);
         }
 
-        let audioUrl = URL.createObjectURL(finalBlob);
+        // 3. Guardar evaluación y URL de audio en HistorialSophia
+        if (studentId !== "admin_preview" && window.db && window.addDoc && window.collection) {
+            try {
+                const jsonIA = typeof data === "string" ? data : JSON.stringify(data);
+                await window.addDoc(window.collection(window.db, "Usuarios", studentId, "HistorialSophia"), {
+                    fecha: new Date().toISOString().split('T')[0],
+                    tipo: "Production_Orale",
+                    habilidad: "PO",
+                    audio_url: audioStorageUrl,
+                    respuesta_ia: jsonIA,
+                    unidad: window.currentUnitId || "N/A",
+                    actividad: (typeof window.currentExerciseIndex !== "undefined" ? window.currentExerciseIndex : 0)
+                });
+            } catch (errHist) {
+                console.error("Error guardando historial PO en Firestore:", errHist);
+            }
+        }
+
         if (typeof window.mostrarEvaluacionOralSophia === "function") {
-            window.mostrarEvaluacionOralSophia(data, audioUrl);
+            window.mostrarEvaluacionOralSophia(data, audioStorageUrl);
         } else {
             verdictText.innerHTML = `<div style="padding:15px; text-align:left;">${JSON.stringify(data, null, 2)}</div>`;
         }
@@ -928,6 +916,9 @@ window.enviarAudioAIA = async function(audioBlob) {
         }
     }
 };
+
+window.subirAudioYEvaluar = window.enviarAudioAIA;
+window.evaluarPO = window.enviarAudioAIA;
 </script>
 <style>
 #container-po-audio-dual, 
@@ -1013,7 +1004,7 @@ window.enviarAudioAIA = async function(audioBlob) {
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
         import { getFirestore, doc, getDoc, setDoc, collection, addDoc, getDocs, query, where, onSnapshot } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js";
-        import { getStorage, ref, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-storage.js";
+        import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-storage.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyCgog8tKspHy01ZHE8Dthl9O4W6lw1a_Ec",
@@ -1028,6 +1019,20 @@ window.enviarAudioAIA = async function(audioBlob) {
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
         const storage = getStorage(app);
+
+        window.firebaseStorage = storage;
+        window.storageRef = ref;
+        window.uploadBytes = uploadBytes;
+        window.getDownloadURL = getDownloadURL;
+        window.db = db;
+        window.doc = doc;
+        window.getDoc = getDoc;
+        window.setDoc = setDoc;
+        window.addDoc = addDoc;
+        window.collection = collection;
+        window.getDocs = getDocs;
+        window.query = query;
+        window.where = where;
 
         // --- DECLARACIÓN DE VARIABLES ---
         let currentActiveTab = "parcours"; 
@@ -2231,17 +2236,17 @@ window.renderExerciseStructure = async function() {
                         }
                         
                         if (datosHistoricos.respuesta_ia) {
-    const sBox = document.getElementById("sophia-box");
-    if (sBox) sBox.style.display = "block";
-    if (window.currentSkill === "PO") {
-        window.mostrarEvaluacionOralSophia(datosHistoricos.respuesta_ia);
-    } else if (window.currentSkill === "PE") {
-        window.mostrarEvaluacionSophia(datosHistoricos.respuesta_ia);
-    } else {
-        document.getElementById("sophia-verdict-text").innerHTML = datosHistoricos.respuesta_ia;
-    }
-}
-}
+                            const sBox = document.getElementById("sophia-box");
+                            if (sBox) sBox.style.display = "block";
+                            if (window.currentSkill === "PO") {
+                                window.mostrarEvaluacionOralSophia(datosHistoricos.respuesta_ia, datosHistoricos.audio_url || "");
+                            } else if (window.currentSkill === "PE") {
+                                window.mostrarEvaluacionSophia(datosHistoricos.respuesta_ia);
+                            } else {
+                                document.getElementById("sophia-verdict-text").innerHTML = datosHistoricos.respuesta_ia;
+                            }
+                        }
+                    }
                 } catch(errFetch) { console.error("Error recuperando histórico:", errFetch); }
             }
 
