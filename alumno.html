@@ -1181,6 +1181,29 @@ window.enviarAudioAIA = function(audioBlob) {
             currentStudentId = urlId;
 
             try {
+                if (urlId === "admin_preview") {
+                    const paramLevel = urlParams.get('level');
+                    currentLevel = paramLevel ? paramLevel.toUpperCase().trim() : (localStorage.getItem('currentLevel') || 'A1');
+                    localStorage.setItem('currentLevel', currentLevel);
+
+                    const levelIndicator = document.getElementById('level-indicator');
+                    if (levelIndicator) {
+                        levelIndicator.innerText = `NIVEAU ${currentLevel}`;
+                    }
+
+                    alumnoTokensGlobal = 999;
+                    const tokenCounter = document.getElementById('banner-credits-count');
+                    if (tokenCounter) {
+                        tokenCounter.innerText = alumnoTokensGlobal;
+                    }
+
+                    mapaAciertosAlumno = {};
+                    document.getElementById('student-welcome').innerText = `Élève: Professeur (Aperçu)`;
+
+                    await descargarColeccionUnidades();
+                    return;
+                }
+
                 docRefValidado = doc(db, "Usuarios", urlId);
                 const alumnoSnap = await getDoc(docRefValidado);
 
