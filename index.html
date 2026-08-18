@@ -2,71 +2,265 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Neuroreussit - Inicio</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Objectif Réussite - Niveaux</title>
+    <link rel="icon" type="image/png" href="/assets/favicon.png">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        :root { --oxford: #002147; --gold: #C5A059; --white: #ffffff; }
-        body { font-family: 'Montserrat', sans-serif; margin: 0; background: #2f3640; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; color: var(--white); position: relative; }
-        .header { text-align: center; margin-bottom: 60px; }
-        .header h1 { color: var(--white); margin-bottom: 5px; }
-        
-        .container { display: flex; gap: 80px; justify-content: center; padding: 20px; align-items: center; position: relative; }
-        
-        /* LOGOS COMO PUERTAS DIRECTAS (SIN RECUADROS) */
-        .puerta-proyecto { display: flex; flex-direction: column; align-items: center; text-decoration: none; color: inherit; transition: transform 0.3s; cursor: pointer; }
-        .puerta-proyecto:hover { transform: translateY(-10px); }
-        
-        .logo-grande { width: 320px; height: 200px; object-fit: contain; margin-bottom: 20px; }
-        
-        /* BOTÓN LIMPIO ABAJO DE CADA LOGO */
-        .btn-entrar { color: white; padding: 12px 35px; border-radius: 30px; font-weight: bold; font-family: 'Montserrat', sans-serif; font-size: 0.95rem; text-transform: uppercase; letter-spacing: 1px; transition: background 0.2s; box-shadow: 0 4px 15px rgba(0,0,0,0.2); border: none; }
-        
-        /* BOTÓN DE ACCESO INVISIBLE PARA ADMINISTRADOR CORREGIDO */
-        .admin-secret-link { 
-            position: absolute; 
-            top: 0; 
-            left: 0; 
-            width: 80px; 
-            height: 80px; 
-            background: transparent; 
-            cursor: pointer; 
-            z-index: 99999; 
+        :root {
+            --oxford: #002147;
+            --gold: #C5A059;
+            --white: #ffffff;
+            --light-bg: #f4f7f9;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            background-color: var(--light-bg);
+            color: var(--oxford);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* BARRA SUPERIOR LIMPIA */
+        .navbar {
+            width: 100%;
+            max-width: 1200px;
+            display: flex;
+            justify-content: flex-start;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .nav-logo {
+            font-weight: 700;
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        /* CONTENEDOR DEL BANNER PRINCIPAL */
+        .banner-container {
+            width: 90%;
+            max-width: 1100px;
+            margin-top: 10px;
+            margin-bottom: 40px;
+        }
+
+        .banner-img {
+            width: 100%;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            display: block;
+        }
+
+        /* CONTENEDOR DE TARJETAS DE NIVEL */
+        .container {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            padding: 20px;
+            width: 100%;
+            max-width: 1100px;
+            box-sizing: border-box;
+            align-items: flex-start;
+        }
+
+        /* TARJETAS CON DESPLEGABLE */
+        .level-card {
+            background: var(--oxford);
+            width: 200px;
+            border-radius: 18px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: var(--white);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+            overflow: hidden;
+            padding: 25px 15px;
+            box-sizing: border-box;
+        }
+
+        .level-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        /* CLASE ESPECIAL EXCLUSIVA PARA EL C1 EN ORO */
+        .level-card.c1-gold {
+            background: var(--gold);
+            color: var(--oxford);
+        }
+
+        .level-header {
+            text-align: center;
+            width: 100%;
+        }
+
+        .level-name {
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin: 0;
+        }
+
+        .level-desc {
+            font-size: 0.75rem;
+            margin-top: 10px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            opacity: 0.8;
+            font-weight: 700;
+        }
+
+        .c1-gold .level-desc {
+            color: var(--oxford);
+            opacity: 0.8;
+        }
+
+        /* INFORMACIÓN DESPLEGABLE */
+        .level-details {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, padding 0.4s ease;
+            width: 100%;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .level-card.active .level-details {
+            max-height: 300px;
+            padding-top: 15px;
+        }
+
+        .level-info-text {
+            font-size: 0.8rem;
+            line-height: 1.4;
+            margin-bottom: 15px;
+            opacity: 0.9;
+        }
+
+        .btn-login {
+            background: var(--gold);
+            color: var(--oxford);
+            border: none;
+            padding: 10px 18px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            text-decoration: none;
+            letter-spacing: 1px;
+            display: inline-block;
+            transition: background 0.2s;
+        }
+
+        .c1-gold .btn-login {
+            background: var(--oxford);
+            color: var(--white);
+        }
+
+        .btn-login:hover {
+            opacity: 0.9;
+        }
+
+        /* PIE DE PÁGINA */
+        .footer-text {
+            font-size: 0.85rem;
+            color: #7f8c8d;
+            font-style: italic;
+            margin-top: 50px;
+            margin-bottom: 30px;
         }
     </style>
 </head>
 <body>
 
-    <div class="admin-secret-link" onclick="accesoAdminSeguro()" title="Connexion"></div>
+    <div class="navbar">
+        <div class="nav-logo">Objectif Réussite</div>
+    </div>
 
-    <div class="header">
-        <h1>NeuroRéussit</h1>
-        <p style="color: var(--gold); font-weight: bold; margin: 0; letter-spacing: 1px;">ACCESSIBILITÉ ÉDUCATIVE</p>
+    <div class="banner-container">
+        <img src="./assets/Banner.png" alt="Objectif Réussite DELF" class="banner-img">
     </div>
 
     <div class="container">
-        <a href="levels.html" class="puerta-proyecto">
-            <img src="./assets/Logo.png" alt="Logo Réussite DELF" class="logo-grande">
-            <button class="btn-entrar" style="background: var(--oxford);">Entrar</button>
-        </a>
+        <!-- A1 -->
+        <div class="level-card" onclick="toggleCard(this)">
+            <div class="level-header">
+                <h2 class="level-name">A1</h2>
+                <span class="level-desc">Découverte</span>
+            </div>
+            <div class="level-details">
+                <p class="level-info-text">Comprensión y uso de expresiones cotidianas básicas y frases sencillas.</p>
+                <a href="login.html?level=A1" class="btn-login" onclick="event.stopPropagation();">Iniciar Sesión</a>
+            </div>
+        </div>
 
-        <a href="neuroclarity.html" class="puerta-proyecto">
-            <img src="./assets/NeuroClarity.png" alt="Logo NeuroClarity" class="logo-grande">
-            <button class="btn-entrar" style="background: #B099CE;">Entrar</button>
-        </a>
+        <!-- A2 -->
+        <div class="level-card" onclick="toggleCard(this)">
+            <div class="level-header">
+                <h2 class="level-name">A2</h2>
+                <span class="level-desc">Survie</span>
+            </div>
+            <div class="level-details">
+                <p class="level-info-text">Comprensión de frases y expresiones frecuentes sobre áreas de relevancia inmediata.</p>
+                <a href="login.html?level=A2" class="btn-login" onclick="event.stopPropagation();">Iniciar Sesión</a>
+            </div>
+        </div>
+
+        <!-- B1 -->
+        <div class="level-card" onclick="toggleCard(this)">
+            <div class="level-header">
+                <h2 class="level-name">B1</h2>
+                <span class="level-desc">Seuil</span>
+            </div>
+            <div class="level-details">
+                <p class="level-info-text">Comprensión de los puntos principales en textos claros sobre temas conocidos.</p>
+                <a href="login.html?level=B1" class="btn-login" onclick="event.stopPropagation();">Iniciar Sesión</a>
+            </div>
+        </div>
+
+        <!-- B2 -->
+        <div class="level-card" onclick="toggleCard(this)">
+            <div class="level-header">
+                <h2 class="level-name">B2</h2>
+                <span class="level-desc">Indépendant</span>
+            </div>
+            <div class="level-details">
+                <p class="level-info-text">Comprensión de ideas principales en textos complejos y comunicación fluida.</p>
+                <a href="login.html?level=B2" class="btn-login" onclick="event.stopPropagation();">Iniciar Sesión</a>
+            </div>
+        </div>
+
+        <!-- C1 -->
+        <div class="level-card c1-gold" onclick="toggleCard(this)">
+            <div class="level-header">
+                <h2 class="level-name">C1</h2>
+                <span class="level-desc">Autonome</span>
+            </div>
+            <div class="level-details">
+                <p class="level-info-text">Comprensión de textos extensos y exigentes con expresión fluida y espontánea.</p>
+                <a href="login.html?level=C1" class="btn-login" onclick="event.stopPropagation();">Iniciar Sesión</a>
+            </div>
+        </div>
     </div>
 
+    <div class="footer-text">De la intención a la certificación.</div>
+
     <script>
-        function accesoAdminSeguro() {
-            // Ventana emergente que solicita la clave secreta
-            const clave = prompt("Mot de passe administrateur / Contraseña de administrador:");
-            
-            if (clave === "Gaby1429") {
-                // Si es correcta, te redirige al panel de administración
-                window.location.href = "admin.html";
-            } else if (clave !== null) {
-                // Si es incorrecta (y no presionaste cancelar)
-                alert("Accès refusé. Contraseña incorrecta.");
-            }
+        function toggleCard(card) {
+            document.querySelectorAll('.level-card').forEach(c => {
+                if (c !== card) c.classList.remove('active');
+            });
+            card.classList.toggle('active');
         }
     </script>
 

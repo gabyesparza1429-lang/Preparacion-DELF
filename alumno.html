@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Mon Espace DELF | Réussite</title>
+    <link rel="icon" type="image/png" href="/assets/favicon.png">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
+    
     <style>
         :root { 
             --oxford: #002147; 
@@ -13,6 +14,8 @@
             --cream: #F8F9FA; 
             --green: #28A745; 
             --dark-blue: #001530;
+            --danger: #dc3545;
+            --sidebar-status-color: #ffd700;
         }
         
         body { 
@@ -25,16 +28,16 @@
         }
         
         .sidebar { 
-            width: 290px; 
+            width: 300px; 
             background: var(--oxford); 
             color: white; 
-            padding: 30px 15px; 
+            padding: 25px 15px; 
             flex-shrink: 0; 
-            display: flex;
-            flex-direction: column;
-            box-shadow: 4px 0 10px rgba(0,0,0,0.1);
-            z-index: 10;
-            overflow-y: auto;
+            display: flex; 
+            flex-direction: column; 
+            box-shadow: 4px 0 10px rgba(0,0,0,0.1); 
+            z-index: 10; 
+            overflow-y: auto; 
         }
 
         .sidebar h2 {
@@ -42,11 +45,63 @@
             color: white;
             text-align: center;
             margin-top: 0;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
             letter-spacing: 1px;
             border-bottom: 2px solid var(--gold);
             padding-bottom: 15px;
             text-transform: uppercase;
+        }
+
+        .sidebar-student-info {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(197, 160, 89, 0.2);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+            font-size: 0.85rem;
+        }
+
+        .sidebar-student-info h3 {
+            margin: 0 0 10px 0;
+            font-size: 1rem;
+            color: white;
+            font-weight: 600;
+        }
+
+        .sidebar-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+            color: #ccc;
+        }
+
+        .sidebar-meta-item i {
+            color: var(--gold);
+            width: 16px;
+            text-align: center;
+        }
+
+        .sidebar-progress-container {
+            margin-top: 12px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 10px;
+        }
+
+        .sidebar-progress-bar-bg {
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 3px;
+            overflow: hidden;
+            margin-top: 5px;
+        }
+
+        .sidebar-progress-bar-fill {
+            width: 0%;
+            height: 100%;
+            background: var(--gold);
+            transition: width 0.5s ease;
         }
         
         .nav-tab-btn { 
@@ -159,89 +214,12 @@
         .project-banner {
             background: var(--oxford) url('./assets/Banner.png') no-repeat center center;
             background-size: 100% 100%; 
-            color: white;
-            padding: 15px 40px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
             border-bottom: 4px solid var(--gold);
             box-shadow: 0 4px 10px rgba(0,0,0,0.05);
             position: relative;
-            height: 200px; 
+            height: 250px; 
             box-sizing: border-box;
             flex-shrink: 0;
-        }
-
-        .banner-top {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            width: 100%;
-        }
-
-        .banner-left {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-
-        .banner-left h1 {
-            margin: 0;
-            font-size: 1.4rem;
-            font-weight: 700;
-            color: white;
-        }
-
-        .level-badge {
-            background: var(--gold);
-            color: var(--oxford);
-            padding: 6px 20px;
-            border-radius: 20px;
-            font-weight: 700;
-            font-size: 0.95rem;
-        }
-
-        .banner-bottom-info {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            width: 100%;
-            background: rgba(0, 33, 71, 0.75);
-            padding: 8px 15px;
-            border-radius: 6px;
-            box-sizing: border-box;
-            border: 1px solid rgba(197, 160, 89, 0.2);
-        }
-
-        .progress-container {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            width: 60%;
-        }
-
-        .progress-bar-bg {
-            flex-grow: 1;
-            height: 8px;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 4px;
-            overflow: hidden;
-        }
-
-        .progress-bar-fill {
-            width: 0%;
-            height: 100%;
-            background: var(--gold);
-            transition: width 0.5s ease;
-        }
-
-        .countdown-container {
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: #fff;
-            display: flex;
-            align-items: center;
-            gap: 8px;
         }
 
         .content-area {
@@ -293,6 +271,23 @@
             color: white;
         }
 
+        .zone-badge {
+            display: inline-block;
+            padding: 6px 12px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            border-radius: 4px;
+            margin-bottom: 15px;
+            letter-spacing: 0.5px;
+        }
+        .zone-entrainement { background: #e3f2fd; color: #0d47a1; border: 1px solid #bbdefb; }
+        .zone-examen-simule { background: #fff3e0; color: #e65100; border: 1px solid #ffe0b2; animation: blink-border 2s infinite; }
+
+        @keyframes blink-border {
+            50% { border-color: var(--gold); }
+        }
+
         .exercise-card {
             background: white; 
             border-left: 4px solid var(--gold); 
@@ -307,137 +302,691 @@
             background: #fafbfc; 
             padding: 15px; 
             border-radius: 6px;
-            border: 1px solid #f0f2f5;
+            border: 1px solid #eef2f5;
         }
 
-        .pdf-viewer-container {
-            width: 100%;
-            background: #fff;
-            border: 2px solid var(--gold);
-            border-radius: 8px;
-            padding: 10px;
-            margin-bottom: 25px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-            text-align: center;
-            box-sizing: border-box;
-        }
-
-        .pdf-viewer-container canvas {
-            max-width: 100%;
-            height: auto;
+        .clickable-word {
+            cursor: pointer;
+            display: inline-block;
+            padding: 2px 4px;
             border-radius: 4px;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+            transition: all 0.2s;
+            line-height: 1.8;
+        }
+        .clickable-word:hover {
+            background: #ffeaa7;
+            color: #d63031;
+            font-weight: bold;
         }
 
-        .sophia-chat-box {
-            background: #f4f6f9;
-            border-radius: 12px;
-            padding: 20px;
-            margin: 20px 0;
-            border: 1px solid #e2e8f0;
+        .word-wrong {
+            color: #d63031 !important;
+            text-decoration: line-through;
+            font-weight: 600;
         }
-        .sophia-avatar-row {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 15px;
-            color: var(--oxford);
-            font-weight: 700;
-        }
-        .audio-interactive-btn {
-            background: var(--oxford);
+
+        .btn-mic {
+            background: #d63031;
             color: white;
             border: none;
-            padding: 12px 20px;
-            border-radius: 8px;
+            padding: 8px 15px;
             font-family: 'Montserrat', sans-serif;
-            font-weight: 600;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
+            font-weight: 700;
+            border-radius: 20px;
             cursor: pointer;
             display: inline-flex;
             align-items: center;
             gap: 8px;
+            transition: all 0.3s;
+            margin-top: 10px;
+        }
+        .btn-mic.recording {
+            background: #28A745;
+            animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.04); }
+            100% { transform: scale(1); }
+        }
+
+        .production-textbox {
+            width: 100%;
+            height: 220px;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.98rem;
+            border-style: solid;
+            resize: vertical;
+            outline: none;
+            box-sizing: border-box;
+            transition: border-color 0.3s;
+            background: #fff;
+        }
+        .production-textbox:focus {
+            border-color: var(--oxford);
+        }
+
+        .french-accents-bar {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 8px;
+            background: #f1f3f5;
+            padding: 6px;
+            border-radius: 6px;
+            flex-wrap: wrap;
+        }
+        .accent-btn {
+            background: white;
+            border: 1px solid #ccc;
+            padding: 6px 12px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 600;
+            border-radius: 4px;
+            cursor: pointer;
             transition: all 0.2s;
         }
-        .audio-interactive-btn:hover {
-            background: var(--gold);
-            color: var(--oxford);
+        .accent-btn:hover {
+            background: var(--oxford);
+            color: white;
+            border-color: var(--oxford);
         }
-        .audio-interactive-btn.recording {
-            background: #ef4444;
-            animation: pulseRecord 1.5s infinite;
-        }
-        @keyframes pulseRecord {
-            0% { opacity: 1; }
-            50% { opacity: 0.6; }
-            100% { opacity: 1; }
-        }
-        .oral-card-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 15px;
-            margin: 20px 0;
-        }
-        .oral-word-card {
-            background: #ffffff;
-            border: 2px dashed var(--gold);
-            border-radius: 10px;
-            padding: 15px;
-            text-align: center;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+
+        .transcription-control-sticky-panel {
+            background: #fafbfc;
+            border-top: 1px solid #ddd;
+            padding: 12px 15px;
+            border-bottom-left-radius: 8px;
+            border-bottom-right-radius: 8px;
             display: flex;
-            flex-direction: column;
             justify-content: space-between;
-            gap: 10px;
+            align-items: center;
+            gap: 15px;
         }
-        .oral-word-card span {
+
+        .text-paragraph-block {
+            display: block;
+            margin: 0 0 14px 0;
+            line-height: 1.8;
+            font-size: 0.98rem;
+            color: #333;
+        }
+
+        .carnet-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 10px;
+        }
+        .carnet-card {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+            border-top: 5px solid var(--oxford);
+        }
+        .carnet-card.co { border-top-color: #1a73e8; }
+        .carnet-card.ce { border-top-color: #34a853; }
+        .carnet-card.pe { border-top-color: #fbbc05; }
+        .carnet-card.po { border-top-color: #ea4335; }
+
+        .carnet-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        .carnet-title {
             font-weight: 700;
             color: var(--oxford);
             font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .carnet-score {
+            font-weight: 700;
+            color: var(--green);
+            font-size: 1.05rem;
+        }
+        .carnet-descriptor-box {
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 6px;
+            font-size: 0.82rem;
+            line-height: 1.4;
+            color: #444;
+            margin-bottom: 15px;
+            border-left: 3px solid var(--gold);
+        }
+        .carnet-checklist {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            font-size: 0.8rem;
+            color: #555;
+        }
+        .checklist-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+        }
+        .checklist-item i { margin-top: 2px; }
+        .checklist-item.checked { color: var(--green); font-weight: 600; }
+
+        .grille-delf-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            font-size: 0.82rem;
+        }
+        .grille-delf-table th, .grille-delf-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        .grille-delf-table th {
+            background: var(--oxford);
+            color: white;
+        }
+        .grille-row-active {
+            background: rgba(40, 167, 69, 0.1) !important;
+            font-weight: 600;
+            border-left: 4px solid var(--green);
+        }
+
+        .btn-avanzar-dinamico {
+            background: var(--gold);
+            color: var(--oxford);
+            border: none;
+            padding: 12px 25px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: bold;
+            font-size: 0.85rem;
+            border-radius: 6px;
+            cursor: pointer;
+            text-transform: uppercase;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.2s;
+            margin-left: 10px;
+        }
+        .btn-avanzar-dinamico:hover {
+            background: #b08d4b;
+        }
+
+        .document-anuncio-block {
+            background: #fcfdfe;
+            border: 1px dashed var(--gold);
+            border-left: 4px solid var(--gold);
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 4px;
+            font-size: 0.95rem;
+        }
+
+        .intro-skill-card {
+            background: white;
+            border-top: 4px solid var(--oxford);
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+            margin-bottom: 20px;
+        }
+        .intro-skill-title {
+            color: var(--oxford);
+            font-weight: 700;
+            font-size: 1.3rem;
+            margin-top: 0;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .intro-grid-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 15px;
+        }
+        .intro-sub-box {
+            background: #fdfefe;
+            border: 1px solid #eef2f5;
+            border-left: 3px solid var(--gold);
+            padding: 15px;
+            border-radius: 4px;
+        }
+        .intro-sub-box h5 {
+            margin: 0 0 10px 0;
+            color: var(--oxford);
+            font-size: 0.9rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+        .intro-sub-box ul {
+            margin: 0;
+            padding-left: 18px;
+            font-size: 0.85rem;
+            color: #444;
+            line-height: 1.5;
+        }
+        .intro-sub-box ul li {
+            margin-bottom: 6px;
+        }
+        .activity-status-lbl {
+            font-size: 0.68rem;
+            font-weight: bold;
+            padding: 1px 4px;
+            border-radius: 3px;
+            margin-left: 5px;
         }
     </style>
+
+
+
+
+
+
+
+
+<script>
+// Mapeo automático al motor de evaluación de la plataforma
+window.evaluarProduccionConSophia = async function(texto, habilidad) {
+    if (typeof window.enviarAudioAIA === "function") {
+        return window.enviarAudioAIA(texto);
+    } else if (typeof window.evaluarRespuestaSophia === "function") {
+        return window.evaluarRespuestaSophia(texto, habilidad);
+    } else if (typeof window.procesarEvaluacionIA === "function") {
+        return window.procesarEvaluacionIA(texto, habilidad);
+    } else if (typeof window.evaluarTexto === "function") {
+        return window.evaluarTexto(texto, habilidad);
+    } else {
+        // Si la función está definida con otro nombre, la invocamos a través del evento del sistema
+        console.log("Invocando motor Firebase...");
+        if (window.currentSkill) window.currentSkill = "PO";
+        const btnOriginal = document.querySelector("[data-action='evaluar-po']") || document.querySelector(".btn-evaluar-oral");
+        if (btnOriginal && btnOriginal.onclick) {
+            return btnOriginal.onclick();
+        }
+    }
+};
+
+window.evaluarPO = function() {
+    const textEl = document.getElementById("po-student-response") || document.querySelector("textarea");
+    const text = textEl ? textEl.value.trim() : "";
+    if (!text) {
+        alert("Veuillez d'abord enregistrer ou écrire votre réponse.");
+        return;
+    }
+    
+    const sBox = document.getElementById("sophia-box");
+    if (sBox) sBox.style.display = "block";
+    
+    const verdictText = document.getElementById("sophia-verdict-text");
+    if (verdictText) {
+        verdictText.innerHTML = '<div style="padding:20px; text-align:center; color:var(--oxford);"><i class="fas fa-spinner fa-spin fa-2x"></i><p style="margin-top:10px; font-weight:600;">Sophia analyse votre production orale...</p></div>';
+    }
+
+    if (window.isRecordingPO && window.recognitionPO) {
+        try { window.recognitionPO.stop(); } catch(e){}
+    }
+
+    // Ejecutar evaluación
+    if (typeof window.evaluarProduccionConSophia === "function") {
+        window.evaluarProduccionConSophia(text, "PO");
+    }
+};
+</script>
+
+
+<script>
+window.audioStreamPO = null;
+window.mediaRecorderPO = null;
+window.audioChunksPO = [];
+window.recordedAudioBlobPO = null;
+window.isRecordingAudioPO = false;
+
+window.toggleAudioRecordingPO = async function() {
+    const btn = document.getElementById("btn-record-po") || document.querySelector("button[onclick*='Speech']") || document.querySelector("button[onclick*='Recording']");
+    const feedback = document.getElementById("po-audio-feedback") || document.querySelector(".recording-status");
+
+    // DETENER GRABACIÓN
+    if (window.isRecordingAudioPO) {
+        window.isRecordingAudioPO = false;
+        
+        if (window.mediaRecorderPO && window.mediaRecorderPO.state !== "inactive") {
+            try { window.mediaRecorderPO.stop(); } catch(e){ console.error(e); }
+        }
+        
+        if (window.audioStreamPO) {
+            window.audioStreamPO.getTracks().forEach(track => track.stop());
+            window.audioStreamPO = null;
+        }
+
+        if (btn) {
+            btn.style.background = "#28a745";
+            btn.innerHTML = '<i class="fas fa-microphone"></i> Ré-enregistrer audio';
+        }
+        return;
+    }
+
+    // INICIAR GRABACIÓN
+    try {
+        window.audioStreamPO = await navigator.mediaDevices.getUserMedia({ audio: true });
+        window.audioChunksPO = [];
+        window.recordedAudioBlobPO = null;
+
+        let mimeType = "audio/webm";
+        if (MediaRecorder.isTypeSupported("audio/webm;codecs=opus")) {
+            mimeType = "audio/webm;codecs=opus";
+        } else if (MediaRecorder.isTypeSupported("audio/webm")) {
+            mimeType = "audio/webm";
+        } else if (MediaRecorder.isTypeSupported("audio/mp4")) {
+            mimeType = "audio/mp4";
+        }
+
+        window.mediaRecorderPO = new MediaRecorder(window.audioStreamPO, { mimeType: mimeType });
+
+        window.mediaRecorderPO.ondataavailable = function(e) {
+            if (e.data && e.data.size > 0) {
+                window.audioChunksPO.push(e.data);
+            }
+        };
+
+        window.mediaRecorderPO.onstop = function() {
+            window.recordedAudioBlobPO = new Blob(window.audioChunksPO, { type: mimeType });
+            console.log("Audio generado correctamente, tamaño:", window.recordedAudioBlobPO.size, "bytes");
+            const feedback = document.getElementById("po-audio-feedback");
+            if (feedback) {
+                const audioUrl = URL.createObjectURL(window.recordedAudioBlobPO);
+                feedback.innerHTML = `
+                    <div style="margin-top:10px; padding:10px; background:#e8f5e9; border:1px solid #c8e6c9; border-radius:8px;">
+                        <span style="color:#2e7d32; font-weight:bold; display:block; margin-bottom:8px;"><i class="fas fa-check-circle"></i> Audio enregistré avec succès !</span>
+                        <audio controls src="${audioUrl}" style="width:100%; max-width:400px;"></audio>
+                    </div>`;
+            }
+        };
+
+        window.mediaRecorderPO.start(200);
+        window.isRecordingAudioPO = true;
+
+        if (btn) {
+            btn.style.background = "#d32f2f";
+            btn.innerHTML = '<i class="fas fa-stop"></i> Arrêter enregistrement';
+        }
+        if (feedback) {
+            feedback.innerHTML = '<span style="color:#d32f2f; font-weight:bold;"><i class="fas fa-circle"></i> Enregistrement en cours...</span>';
+        }
+
+    } catch (err) {
+        console.error("Error al iniciar micrófono:", err);
+        alert("Acceso denegado al micrófono. Verifica los permisos en tu navegador.");
+    }
+};
+
+window.startSpeechPO = window.toggleAudioRecordingPO;
+
+window.evaluarPO = async function() {
+    if (window.isRecordingAudioPO) {
+        await window.toggleAudioRecordingPO();
+    }
+
+    if (!window.recordedAudioBlobPO || window.recordedAudioBlobPO.size === 0) {
+        alert("Veuillez d'abord enregistrer votre réponse orale.");
+        return;
+    }
+
+    const sBox = document.getElementById("sophia-box");
+    if (sBox) sBox.style.display = "block";
+
+    const verdictText = document.getElementById("sophia-verdict-text");
+    if (verdictText) {
+        verdictText.innerHTML = '<div style="padding:20px; text-align:center; color:var(--oxford);"><i class="fas fa-spinner fa-spin fa-2x"></i><p style="margin-top:10px; font-weight:600;">Sophia analyse votre enregistrement audio...</p></div>';
+    }
+
+    try {
+        if (typeof window.enviarAudioAIA === "function") {
+            await window.enviarAudioAIA(window.recordedAudioBlobPO);
+        } else if (typeof window.evaluarProduccionConSophia === "function") {
+            await window.evaluarProduccionConSophia(window.recordedAudioBlobPO, "PO");
+        } else {
+            alert("Motor de evaluación no encontrado.");
+        }
+    } catch(err) {
+        console.error("Error al procesar evaluación:", err);
+        if (verdictText) {
+            verdictText.innerHTML = '<p style="color:red; font-weight:bold;">Erreur lors de l envoi de l audio à Sophia.</p>';
+        }
+    }
+};
+
+document.addEventListener("click", function(e) {
+    const btnRecord = e.target.closest("#btn-record-po") || (e.target.closest("button") && e.target.closest("button").textContent && (e.target.closest("button").textContent.includes("Commencer à parler") || e.target.closest("button").textContent.includes("Arrêter") || e.target.closest("button").textContent.includes("Ré-enregistrer")));
+    if (btnRecord) {
+        e.preventDefault();
+        e.stopPropagation();
+        window.toggleAudioRecordingPO();
+        return;
+    }
+
+    const btnSubmit = e.target.closest("#btn-submit-po") || (e.target.closest("button") && e.target.closest("button").textContent && e.target.closest("button").textContent.includes("Évaluer ma production"));
+    if (btnSubmit) {
+        e.preventDefault();
+        e.stopPropagation();
+        window.evaluarPO();
+        return;
+    }
+}, true);
+</script>
+<script>
+window.subirAudioYEvaluar = async function() {
+    if (!window.recordedAudioBlobPO || window.recordedAudioBlobPO.size === 0) {
+        alert("Veuillez d'abord enregistrer votre réponse orale.");
+        return;
+    }
+
+    const sBox = document.getElementById("sophia-box");
+    if (sBox) sBox.style.display = "block";
+
+    const verdictText = document.getElementById("sophia-verdict-text");
+    if (verdictText) {
+        verdictText.innerHTML = '<div style="padding:20px; text-align:center; color:var(--oxford);"><i class="fas fa-spinner fa-spin fa-2x"></i><p style="margin-top:10px; font-weight:600;">Sauvegarde de votre audio sur Firebase et analyse par Sophia...</p></div>';
+    }
+
+    let audioUrl = "";
+    const userId = "constanza2026";
+    const filename = `audios_po/${userId}/po_${Date.now()}.webm`;
+
+    try {
+        // Subida directa a Firebase Storage
+        if (typeof firebase !== "undefined" && firebase.storage) {
+            const storageRef = firebase.storage().ref().child(filename);
+            const snapshot = await storageRef.put(window.recordedAudioBlobPO);
+            audioUrl = await snapshot.ref.getDownloadURL();
+            console.log("✅ Audio guardado en Firebase Storage:", audioUrl);
+        }
+    } catch (e) {
+        console.warn("No se pudo subir a Storage, usando URL local temporal:", e);
+        audioUrl = URL.createObjectURL(window.recordedAudioBlobPO);
+    }
+
+    // HTML del reproductor para el alumno
+    const playerHTML = `
+        <div style="margin: 15px 0; padding: 12px; background: #f0f4f8; border-radius: 8px; border: 1px solid #cbd5e1; text-align: center;">
+            <p style="margin-bottom: 8px; font-weight: bold; color: var(--oxford);"><i class="fas fa-volume-up"></i> Écouter votre enregistrement :</p>
+            <audio controls src="${audioUrl}" style="width: 100%; max-width: 450px;"></audio>
+        </div>
+    `;
+
+    try {
+        if (typeof window.enviarAudioAIA === "function") {
+            await window.enviarAudioAIA(window.recordedAudioBlobPO);
+        } else if (typeof window.evaluarProduccionConSophia === "function") {
+            await window.evaluarProduccionConSophia(window.recordedAudioBlobPO, "PO");
+        }
+
+        // Insertar el reproductor en la tarjeta de evaluación
+        if (verdictText && !verdictText.innerHTML.includes("<audio")) {
+            verdictText.innerHTML = playerHTML + verdictText.innerHTML;
+        }
+    } catch(err) {
+        console.error("Error evaluando audio:", err);
+    }
+};
+
+window.evaluarPO = window.subirAudioYEvaluar;
+</script>
+
+
+<script>
+window.selectedAudioFilePO = null;
+
+document.addEventListener("change", function(e) {
+    if (e.target && e.target.id === "po-file-input") {
+        const file = e.target.files[0];
+        if (file) {
+            window.selectedAudioFilePO = file;
+            window.recordedAudioBlobPO = file;
+            const feedback = document.getElementById("po-audio-feedback");
+            if (feedback) {
+                const audioUrl = URL.createObjectURL(file);
+                feedback.innerHTML = `
+                    <div style="margin-top:10px; padding:10px; background:#e8f5e9; border:1px solid #c8e6c9; border-radius:8px;">
+                        <span style="color:#2e7d32; font-weight:bold; display:block; margin-bottom:8px;"><i class="fas fa-check-circle"></i> Fichier audio prêt : ${file.name}</span>
+                        <audio controls src="${audioUrl}" style="width:100%; max-width:400px;"></audio>
+                    </div>`;
+            }
+        }
+    }
+});
+
+window.enviarAudioAIA = async function(audioBlob) {
+    const verdictText = document.getElementById("sophia-verdict-text");
+    const sophiaBox = document.getElementById("sophia-box");
+    if (sophiaBox) sophiaBox.style.display = "block";
+
+    let finalBlob = window.selectedAudioFilePO || audioBlob || window.recordedAudioBlobPO;
+
+    if (!finalBlob) {
+        alert("Veuillez d'abord importer ou enregistrer un fichier audio.");
+        return;
+    }
+
+    if (verdictText) {
+        verdictText.innerHTML = '<div style="padding:20px; text-align:center; color:#0f172a;"><i class="fas fa-spinner fa-spin fa-2x"></i><p style="margin-top:10px; font-weight:600;">Sophia analyse votre enregistrement audio...</p></div>';
+    }
+
+    try {
+        const formData = new FormData();
+        const fileName = finalBlob.name || "audio_alumno.webm";
+
+        formData.append("audio", finalBlob, fileName);
+        formData.append("audioFile", finalBlob, fileName);
+        formData.append("file", finalBlob, fileName);
+        formData.append("audio_file", finalBlob, fileName);
+
+        formData.append("user_id", "constanza2026");
+        formData.append("habilidad", "PO");
+        formData.append("actividad", "1");
+        formData.append("nivel", "B1");
+
+        let response = await fetch("/procesarAudioPO", {
+            method: "POST",
+            body: formData
+        });
+
+        const resText = await response.text();
+        let data;
+        try { data = JSON.parse(resText); } catch(e) { data = { raw: resText }; }
+
+        if (!response.ok) {
+            throw new Error(`Servidor HTTP ${response.status}: ${data.error || data.message || resText}`);
+        }
+
+        let audioUrl = URL.createObjectURL(finalBlob);
+        if (typeof window.mostrarEvaluacionOralSophia === "function") {
+            window.mostrarEvaluacionOralSophia(data, audioUrl);
+        } else {
+            verdictText.innerHTML = `<div style="padding:15px; text-align:left;">${JSON.stringify(data, null, 2)}</div>`;
+        }
+
+    } catch(err) {
+        console.error("Error backend Sophia:", err);
+        if (verdictText) {
+            verdictText.innerHTML = `<div style="padding:15px; color:#d32f2f; font-weight:bold; background:#fee2e2; border-radius:6px; margin-top:10px;">
+                <i class="fas fa-exclamation-circle"></i> Error de backend en Sophia: ${err.message}
+            </div>`;
+        }
+    }
+};
+</script>
+<style>
+#container-po-audio-dual, 
+#container-po-audio-dual *, 
+#sophia-box, 
+#sophia-box *, 
+#sophia-verdict-text, 
+#sophia-verdict-text * {
+    font-family: inherit !important;
+    text-transform: none !important;
+    letter-spacing: normal !important;
+}
+
+#container-po-audio-dual h4 {
+    font-size: 1rem !important;
+    font-weight: 600 !important;
+    color: #1e293b !important;
+    margin-bottom: 12px !important;
+}
+</style>
 </head>
 <body>
 
     <div class="sidebar">
         <h2>Mon Espace DELF</h2>
+        
+        <div class="sidebar-student-info">
+            <h3 id="student-welcome">Vérification...</h3>
+            <div class="sidebar-meta-item">
+                <i class="fas fa-graduation-cap"></i>
+                <span id="level-indicator" style="font-weight: 700; color: var(--gold);">NIVEAU --</span>
+            </div>
+            <div class="sidebar-meta-item">
+                <i class="fas fa-magic"></i>
+                <span><span id="banner-credits-count">--</span> / 20 Crédits</span>
+            </div>
+            <div class="sidebar-meta-item">
+                <i class="far fa-clock"></i>
+                <span id="countdown-text-target">Calcul...</span>
+            </div>
+
+            <div class="sidebar-progress-container">
+                <div style="display:flex; justify-content:space-between; font-size:0.75rem; color:#bbb;">
+                    <span>Progression :</span>
+                    <span id="progress-text-target" style="color:var(--gold); font-weight:700;">0%</span>
+                </div>
+                <div class="sidebar-progress-bar-bg">
+                    <div class="sidebar-progress-bar-fill" id="progress-bar-fill"></div>
+                </div>
+            </div>
+        </div>
+
         <button class="nav-tab-btn active" id="tab-parcours">
             <i class="fas fa-route"></i> Mon Parcours
         </button>
-        
         <div id="sidebar-dynamic-menu" style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 15px;"></div>
-
         <button class="nav-tab-btn" id="tab-carnet">
             <i class="fas fa-address-book"></i> Carnet de compétences
         </button>
     </div>
 
     <div class="main-container">
-        <div class="project-banner">
-            <div class="banner-top">
-                <div class="banner-left">
-                    <i class="fas fa-user-circle" style="color: var(--gold); font-size: 1.8rem;"></i>
-                    <h1 id="student-welcome">Chargement...</h1>
-                </div>
-                <div class="banner-right">
-                    <span class="level-badge" id="level-indicator">NIVEAU --</span>
-                </div>
-            </div>
-
-            <div class="banner-bottom-info">
-                <div class="progress-container">
-                    <span style="font-size: 0.8rem; font-weight: 600;">Progression :</span>
-                    <div class="progress-bar-bg">
-                        <div class="progress-bar-fill" id="progress-bar-fill"></div>
-                    </div>
-                    <span style="font-size: 0.8rem; font-weight: 700; color: var(--gold);" id="progress-text-target">0%</span>
-                </div>
-                <div class="countdown-container">
-                    <i class="far fa-clock" style="color: var(--gold);"></i>
-                    <span id="countdown-text-target">-- jours restants avant l'examen</span>
-                </div>
-            </div>
-        </div>
+        <div class="project-banner"></div>
 
         <div class="content-area">
             <div class="workspace-content-wrapper">
@@ -450,16 +999,16 @@
                     </div>
                 </div>
 
-                <div id="dynamic-workspace-target">
-                    <p style="text-align:center; color:#666;"><i class="fas fa-spinner fa-spin"></i> Chargement...</p>
-                </div>
+                <div id="dynamic-workspace-target"></div>
             </div>
         </div>
     </div>
 
+    <div id="glosario-flotante-container" style="display:none; position: fixed; bottom: 65px; right: 30px; z-index: 9999; width: 320px;"></div>
+
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
-        import { getFirestore, doc, getDoc, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js";
+        import { getFirestore, doc, getDoc, setDoc, collection, addDoc, getDocs, query, where, onSnapshot } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js";
         import { getStorage, ref, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-storage.js";
 
         const firebaseConfig = {
@@ -468,616 +1017,1569 @@
             projectId: "objectif-reussite-delf",
             storageBucket: "objectif-reussite-delf.firebasestorage.app",
             messagingSenderId: "942279633770",
-            appId: "1:942279633770:web:687ba6d819747eb29c1313"
+            appId: "1:942279633770:web:d97b4c7158e37e449c1313",
+            measurementId: "G-HPPBFGV32R"
         };
 
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
         const storage = getStorage(app);
 
+        // --- DECLARACIÓN DE VARIABLES ---
         let currentActiveTab = "parcours"; 
         let currentLevel = "A1"; 
         let currentSkill = "CO"; 
         let currentUnitId = null; 
         let currentExerciseIndex = 0;
+        let currentStudentId = null; 
         let unidadesCache = {}; 
-        let ejerciciosFiltrados = [];
         let openUnitsState = {}; 
-
-        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
-        let pdfDocInstance = null; 
-
-        const mapLivresStorage = {
-            "A1": "ABC DELF A1 - 2025.pdf",
-            "A2": "ABC DELF A2 - 2025.pdf",
-            "B1": "ABC DELF B1 - 2025.pdf",
-            "B2": "ABC DELF B2 - 2025.pdf",
-            "C1": "Le DALF 100% Réussite C1 - C2.pdf"
-        };
+        let mapaAciertosAlumno = {}; 
+        let docRefValidado = null;
+        let notesHabilidadGlobales = { CO: 0, CE: 0, PE: 0, PO: 0 };
+        let alumnoTokensGlobal = 0;
+        let peTimerInterval = null;
 
         const urlParams = new URLSearchParams(window.location.search);
-        const studentId = urlParams.get('id') || 'default_student';
-        const levelParam = urlParams.get('level');
+        let urlId = urlParams.get('id') || urlParams.get('user') || urlParams.get('uid') || window.location.hash.replace('#', '').split('?')[0];
+        
+        if (urlId && urlId.trim() !== "" && !urlId.includes('/')) {
+            localStorage.setItem('active_student_id', urlId.trim());
+        } else {
+            urlId = localStorage.getItem('active_student_id');
+        }
 
-        let ultimoCampoEnfocado = null;
-        window.registrarUltimoFoco = function(input) {
-            ultimoCampoEnfocado = input;
-        };
-        window.insertarCaracterFicha = function(caracter) {
-            if (!ultimoCampoEnfocado) return;
-            const input = ultimoCampoEnfocado;
-            const start = input.selectionStart;
-            const end = input.selectionEnd;
-            const textoActual = input.value;
-            input.value = textoActual.substring(0, start) + caracter + textoActual.substring(end);
-            input.focus();
-            input.selectionStart = input.selectionEnd = start + 1;
-            if(input.id === "production-text-libre") {
-                window.contarPalabrasLibre();
-            }
-        };
-
-        window.contarPalabrasLibre = function() {
-            const txtArea = document.getElementById('production-text-libre');
-            const label = document.getElementById('counter-label-libre');
-            if(!txtArea || !label) return;
-            const texto = txtArea.value.trim();
-            const palabras = texto === "" ? 0 : texto.split(/\s+/).length;
-            label.innerText = `Mots: ${palabras} / 40 minimum`;
-            if (palabras >= 40) {
-                label.style.color = "#28A745";
-            } else {
-                label.style.color = "#e74c3c";
-            }
+        window.convertirTextoInteractivo = function(texto) {
+            if (!texto) return '';
+            return texto.split(/(?<=[?.!])\s+/).map(b => {
+                if (b.trim() === '') return '';
+                let palabrasHtml = b.split(/(\s+)/).map(f => {
+                    if (f.trim() === '') return f;
+                    let pLimpia = f.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()¿?¡!]/g,"");
+                    return `<span class="clickable-word" data-word="${pLimpia.toLowerCase()}">${f}</span>`;
+                }).join('');
+                return `<p class="text-paragraph-block">${palabrasHtml}</p>`;
+            }).join('');
         };
 
-        // LÓGICA DE WEBSOCKETS PARA LA PLATICA EN TIEMPO REAL (ESTILO TELÉFONO)
-        let socketSophia = null;
-        let contextoAudio = null;
-        let streamMicrofono = null;
-        let nodoProcesador = null;
+        window.insertarCaracterEspecial = function(caracter) {
+            const textarea = document.getElementById('pe-student-response');
+            if (!textarea) return;
+            const start = textarea.selectionStart;
+            const end = textarea.selectionEnd;
+            textarea.value = textarea.value.substring(0, start) + caracter + textarea.value.substring(end);
+            textarea.focus();
+            textarea.selectionStart = textarea.selectionEnd = start + caracter.length;
+        };
 
-        window.conectarPlaticaTiempoReal = async function() {
-            const btn = document.getElementById("btn-record-po-interaction");
-            if (!btn) return;
-
-            if (socketSophia && socketSophia.readyState === WebSocket.OPEN) {
-                window.detenerPlaticaTiempoReal();
+        // --- FUNCIÓN INIT ---
+        async function init() {
+            const welcomeEl = document.getElementById('student-welcome');
+            if (!urlId) {
+                console.error("No se detectó ningún ID en la barra de direcciones ni en memoria.");
+                if (welcomeEl) welcomeEl.innerText = "ID de l'élève manquant";
                 return;
             }
+            
+            urlId = urlId.trim();
+            currentStudentId = urlId;
 
-            btn.classList.add('recording');
-            btn.innerHTML = `<i class="fas fa-bounce fa-volume-up"></i> En conversation avec Sophia...`;
+            try {
+                if (urlId === "admin_preview") {
+                    const paramLevel = urlParams.get('level');
+                    currentLevel = paramLevel ? paramLevel.toUpperCase().trim() : (localStorage.getItem('currentLevel') || 'A1');
+                    localStorage.setItem('currentLevel', currentLevel);
 
-            socketSophia = new WebSocket("ws://localhost:8080");
-            socketSophia.binaryType = "arraybuffer";
+                    const levelIndicator = document.getElementById('level-indicator');
+                    if (levelIndicator) {
+                        levelIndicator.innerText = `NIVEAU ${currentLevel}`;
+                    }
 
-            contextoAudio = new (window.AudioContext || window.webkitAudioContext)({ sampleRate: 16000 });
+                    alumnoTokensGlobal = 999;
+                    const tokenCounter = document.getElementById('banner-credits-count');
+                    if (tokenCounter) {
+                        tokenCounter.innerText = alumnoTokensGlobal;
+                    }
 
-            socketSophia.onmessage = async (event) => {
-                const bloqueAudioBinario = event.data;
-                const bufferAudio = contextoAudio.createBuffer(1, bloqueAudioBinario.byteLength / 2, 16000);
-                const canalDescarga = bufferAudio.getChannelData(0);
-                const vistaDatos = new DataView(bloqueAudioBinario);
-                
-                for (let i = 0; i < canalDescarga.length; i++) {
-                    canalDescarga[i] = vistaDatos.getInt16(i * 2, true) / 32768;
+                    mapaAciertosAlumno = {};
+                    if (welcomeEl) welcomeEl.innerText = `Élève: Professeur (Aperçu)`;
+
+                    await descargarColeccionUnidades();
+                    return;
                 }
 
-                const fuenteReproduccion = contextoAudio.createBufferSource();
-                fuenteReproduccion.buffer = bufferAudio;
-                fuenteReproduccion.connect(contextoAudio.destination);
-                fuenteReproduccion.start();
-            };
+                docRefValidado = doc(db, "Usuarios", urlId);
+                const alumnoSnap = await getDoc(docRefValidado);
 
-            try {
-                streamMicrofono = await navigator.mediaDevices.getUserMedia({ audio: true });
-                const fuenteMicrofono = contextoAudio.createMediaStreamSource(streamMicrofono);
-                
-                nodoProcesador = contextoAudio.createScriptProcessor(2048, 1, 1);
-                fuenteMicrofono.connect(nodoProcesador);
-                nodoProcesador.connect(contextoAudio.destination);
-
-                nodoProcesador.onaudioprocess = (e) => {
-                    if (socketSophia && socketSophia.readyState === WebSocket.OPEN) {
-                        const entradaFloat = e.inputBuffer.getChannelData(0);
-                        const bufferPCM = new Int16Array(entradaFloat.length);
-                        for (let i = 0; i < entradaFloat.length; i++) {
-                            bufferPCM[i] = Math.min(1, Math.max(-1, entradaFloat[i])) * 0x7FFF;
-                        }
-                        socketSophia.send(bufferPCM.buffer);
+                if (alumnoSnap.exists()) {
+                    const datosAlumno = alumnoSnap.data();
+                    
+                    currentLevel = datosAlumno.nivel || 'A1';
+                    localStorage.setItem('currentLevel', currentLevel);
+                    
+                    const levelIndicator = document.getElementById('level-indicator');
+                    if (levelIndicator) {
+                        levelIndicator.innerText = `NIVEAU ${currentLevel}`;
                     }
-                };
-            } catch (err) {
-                alert("Impossible d'accéder au microphone.");
-                window.detenerPlaticaTiempoReal();
-            }
-        };
+                    
+                    alumnoTokensGlobal = datosAlumno.tokens !== undefined ? datosAlumno.tokens : 0;
+                    const tokenCounter = document.getElementById('banner-credits-count');
+                    if (tokenCounter) {
+                        tokenCounter.innerText = alumnoTokensGlobal;
+                    }
 
-        window.detenerPlaticaTiempoReal = function() {
-            const btn = document.getElementById("btn-record-po-interaction");
-            if (btn) {
-                btn.classList.remove('recording');
-                btn.innerHTML = `<i class="fas fa-microphone"></i> Répondre à Sophia (Microphone)`;
-            }
+                    if (datosAlumno.mapa_aciertos) {
+                        mapaAciertosAlumno = datosAlumno.mapa_aciertos;
+                    }
 
-            if (streamMicrofono) streamMicrofono.getTracks().forEach(track => track.stop());
-            if (nodoProcesador) nodoProcesador.disconnect();
-            if (socketSophia) socketSophia.close();
+                    const nombreMostrar = datosAlumno.nombre || urlId;
+                    if (welcomeEl) welcomeEl.innerText = `Élève: ${nombreMostrar}`;
+                    
+                    await descargarColeccionUnidades();
 
-            socketSophia = null;
-            streamMicrofono = null;
-            nodoProcesador = null;
-
-            const sBox = document.getElementById('sophia-box');
-            const sVerdict = document.getElementById('sophia-verdict-text');
-            if (sBox && sVerdict) {
-                sVerdict.innerHTML = `
-                    <strong><i class="fas fa-chart-bar"></i> ANALYSE DE SOPHIA (Rétroaction DELF) :</strong><br><br>
-                    <span style="color:var(--oxford);">• <strong>Structure de la phrase :</strong> Buena intención al usar los artículos de compra, pero recuerda la concordancia en plural (<i>"des sandales"</i> en lugar de <i>"un sandales"</i>).</span><br>
-                    <span style="color:var(--oxford);">• <strong>Prononciation :</strong> Attention au son des voyelles nasales dans <i>"chapeau"</i>. Tu fluidez general es excelente para el nivel A1.</span><br><br>
-                    <small style="color:#666;">Consulte tu expediente completo en el <strong>Carnet de compétences</strong> a la izquierda.</small>
-                `;
-                sBox.style.display = "block";
-            }
-        };
-
-        async function init() {
-            try {
-                if (studentId === 'admin_preview') {
-                    currentLevel = levelParam || "A1";
-                    document.getElementById('student-welcome').innerText = "Bonjour, Professeur (Aperçu)";
-                    document.getElementById('progress-bar-fill').style.width = "80%";
-                    document.getElementById('progress-text-target').innerText = "80%";
-                    document.getElementById('countdown-text-target').innerText = "Examen dans 30 jours (Simulation)";
                 } else {
-                    const userSnap = await getDoc(doc(db, "Usuarios", studentId));
-                    if (userSnap.exists()) {
-                        const userData = userSnap.data();
-                        currentLevel = userData.nivel || "A1";
-                        document.getElementById('student-welcome').innerText = `Bonjour, ${userData.nombre || 'Étudiant'}`;
-
-                        const prog = userData.progreso || 0;
-                        document.getElementById('progress-bar-fill').style.width = `${prog}%`;
-                        document.getElementById('progress-text-target').innerText = `${prog}%`;
-
-                        if (userData.fecha_examen) {
-                            const fechaExamen = new Date(userData.fecha_examen);
-                            const hoy = new Date();
-                            const diferenciaTiempo = fechaExamen - hoy;
-                            const diasRestantes = Math.ceil(diferenciaTiempo / (1000 * 60 * 60 * 24));
-                            document.getElementById('countdown-text-target').innerText = diasRestantes > 0 ? `${diasRestantes} jours restants avant l'examen` : "Examen terminé";
-                        } else {
-                            document.getElementById('countdown-text-target').innerText = "Pas de date d'examen fixée";
-                        }
-                    }
+                    console.error("El ID no existe en la colección usuarios de Firestore.");
+                    if (welcomeEl) welcomeEl.innerText = "ID non valide. Contactez votre professeur.";
                 }
-                
-                document.getElementById('level-indicator').innerText = `NIVEAU ${currentLevel}`;
-
-                let nombreLivre = mapLivresStorage[currentLevel] || "ABC DELF A1 - 2025.pdf";
-                
-                getDownloadURL(ref(storage, `niveles/${currentLevel}/libro/${nombreLivre}`))
-                    .then((url) => {
-                        pdfjsLib.getDocument(url).promise.then(pdf => {
-                            pdfDocInstance = pdf;
-                            if (ejerciciosFiltrados[currentExerciseIndex]?.pagina_pdf) {
-                                renderPageFromBook(ejerciciosFiltrados[currentExerciseIndex].pagina_pdf);
-                            }
-                        }).catch(err => console.error("Erreur d'analyse pdf.js:", err));
-                    })
-                    .catch((err) => console.error("Fichier introuvable sur Firebase Storage.", err));
-
-                await descargarColeccionUnidades();
-
             } catch (error) {
-                console.error(error);
-                document.getElementById('dynamic-workspace-target').innerHTML = `<p style="color:red; text-align:center;">Erreur de connexion.</p>`;
+                console.error("Error crítico en init al comunicar con Firestore:", error);
+                if (welcomeEl) welcomeEl.innerText = "Erreur de connexion. Vérifiez votre réseau.";
             }
         }
 
         async function descargarColeccionUnidades() {
             unidadesCache = {};
             const querySnapshot = await getDocs(collection(db, "BibliotecaEjercicios", currentLevel, "Unidades"));
-            querySnapshot.forEach((docSnap) => {
-                unidadesCache[docSnap.id] = docSnap.data();
-            });
+            querySnapshot.forEach((docSnap) => { unidadesCache[docSnap.id] = docSnap.data(); });
+            await calcularTodasLasNotasHabilidades();
             renderActiveInterface();
         }
 
-        window.switchMainTab = (tab) => {
+        async function calcularTodasLasNotasHabilidades() {
+            let totalEjerciciosGlobales = 0;
+            let totalEjerciciosCompletados = 0;
+
+            let mapaNotasSophia = { PE: [], PO: [] };
+            if (urlId && urlId !== "admin_preview") {
+                try {
+                    const qHistorial = await getDocs(collection(db, "Usuarios", urlId, "HistorialSophia"));
+                    qHistorial.forEach(dHist => {
+                        const hData = dHist.data();
+                        if (hData.habilidad && hData.respuesta_ia) {
+                            let matchNota = hData.respuesta_ia.match(/Note\s*Finale\s*:\s*(\d+(\.\d+)?)\s*\/|\b(\d+(\.\d+)?)\s*\/\s*25\b/i);
+                            let notaExtraida = 0;
+                            if (matchNota) {
+                                notaExtraida = parseFloat(matchNota[1] || matchNota[3]);
+                            }
+                            if (hData.habilidad === "PE") mapaNotasSophia.PE.push(notaExtraida);
+                            if (hData.habilidad === "PO") mapaNotasSophia.PO.push(notaExtraida);
+                        }
+                    });
+                } catch(e) { console.error("Error cargando notas del carnet:", e); }
+            }
+
+            ['CO', 'CE', 'PE', 'PO'].forEach(sk => {
+                let totalReactivos = 0; let totalAciertos = 0;
+                Object.keys(unidadesCache).forEach(uId => {
+                    const ejercicios = unidadesCache[uId][sk] || unidadesCache[uId][sk.toLowerCase()] || [];
+                    ejercicios.forEach((ej, eIdx) => {
+                        totalEjerciciosGlobales++;
+                        const clv = `${uId}_${sk}_${eIdx}`;
+                        if (mapaAciertosAlumno[clv] === true) {
+                            totalEjerciciosCompletados++;
+                        }
+
+                        if (ej.preguntas && Array.isArray(ej.preguntas)) {
+                            totalReactivos += ej.preguntas.length;
+                            if (mapaAciertosAlumno[clv] !== undefined && typeof mapaAciertosAlumno[clv] === "number") totalAciertos += mapaAciertosAlumno[clv];
+                        }
+                    });
+                });
+
+                if (sk === "PE" || sk === "PO") {
+                    let arrNotas = mapaNotasSophia[sk];
+                    if (arrNotas && arrNotas.length > 0) {
+                        let suma = arrNotas.reduce((a, b) => a + b, 0);
+                        notesHabilidadGlobales[sk] = parseFloat((suma / arrNotas.length).toFixed(2));
+                    } else {
+                        notesHabilidadGlobales[sk] = 0;
+                    }
+                } else {
+                    if (totalReactivos === 0) totalReactivos = 5;
+                    notesHabilidadGlobales[sk] = parseFloat(((totalAciertos / totalReactivos) * 25).toFixed(2));
+                }
+            });
+
+            if (totalEjerciciosGlobales > 0) {
+                const nuevoPorcentaje = Math.round((totalEjerciciosCompletados / totalEjerciciosGlobales) * 100);
+                document.getElementById('progress-text-target').innerText = `${nuevoPorcentaje}%`;
+                document.getElementById('progress-bar-fill').style.width = `${nuevoPorcentaje}%`;
+            }
+        }
+
+        window.switchMainTab = async (tab) => {
             currentActiveTab = tab;
             document.querySelectorAll('.sidebar .nav-tab-btn').forEach(btn => btn.classList.remove('active'));
-            if (tab === 'parcours') document.getElementById('tab-parcours').classList.add('active');
-            if (tab === 'carnet') document.getElementById('tab-carnet').classList.add('active');
+            if (tab === 'parcours') {
+                document.getElementById('tab-parcours').classList.add('active');
+                document.getElementById('parcours-controls-container').style.display = "flex";
+                window.mostrarExplicacionHabilidadInicial(currentSkill);
+            }
+            if (tab === 'carnet') {
+                document.getElementById('tab-carnet').classList.add('active');
+                await calcularTodasLasNotasHabilidades(); 
+            }
             renderActiveInterface();
         };
 
         window.setSkillFilter = (skill) => {
-            currentSkill = skill;
-            currentUnitId = null; 
-            currentExerciseIndex = 0;
+            currentSkill = skill; window.currentSkill = skill; currentUnitId = null; currentExerciseIndex = 0;
             document.querySelectorAll('.skill-tab-btn').forEach(btn => btn.classList.remove('active'));
-            document.getElementById(`skill-${skill}`).classList.add('active');
+            const activeBtn = document.getElementById(`skill-${skill}`); if (activeBtn) activeBtn.classList.add('active');
             
-            document.getElementById('dynamic-workspace-target').innerHTML = `
-                <div style="text-align: center; padding: 60px; color: var(--oxford); margin-top:30px;">
-                    <p style="font-weight: 600;">Veuillez choisir une activité dans le menu de gauche pour commencer.</p>
-                </div>`;
+            window.mostrarExplicacionHabilidadInicial(skill);
 
+            if (skill === "PO") {
+                navigator.mediaDevices.getUserMedia({ audio: true })
+                    .then((stream) => {
+                        stream.getTracks().forEach(track => track.stop());
+                        console.log("Microphone pré-autorisé avec succès.");
+                    })
+                    .catch((err) => {
+                        console.warn("Le microphone n'a pas été autorisé ou n'est pas connecté :", err);
+                    });
+            }
+
+            calcularTodasLasNotasHabilidades();
             renderActiveInterface();
+        };
+
+        window.mostrarExplicacionHabilidadInicial = function(skill) {
+            const target = document.getElementById('dynamic-workspace-target');
+            if (!target) return;
+
+            const isLevelA = currentLevel.startsWith('A');
+
+            let datosIntro = {
+                CO: {
+                    titulo: isLevelA ? "Comprensión Auditiva (CO)" : "Compréhension de l'oral (CO)",
+                    icono: "fa-headphones",
+                    color: "#1a73e8",
+                    lblBienvenida: isLevelA ? "Bienvenido a tu espacio de entrenamiento." : "Bienvenue dans votre espace d'entraînement.",
+                    lblInstruccion: isLevelA ? "Por favor lee los detalles oficiales de esta competencia, luego selecciona una actividad en el menú de la izquierda para comenzar." : "Veuillez lire les détails officiels de cette compétence ci-dessous, puis sélectionnez une activité dans le menu de gauche pour démarrer.",
+                    titObjetivos: isLevelA ? "Objetivos Oficiales" : "Objectifs Officiels",
+                    titEjercicios: isLevelA ? "Tipos de Ejercicios en el Sistema" : "Types d'exercices",
+                    titConsejos: isLevelA ? "Consejos de Éxito" : "Conseils de réussite",
+                    titIA: isLevelA ? "Interacción con la IA (Sophia)" : "Interaction avec l'IA",
+                    objetivos: isLevelA ? [
+                        "Comprender mensajes grabados simples de la vida cotidiana.",
+                        "Captar la información esencial de un diálogo corto (números, horas, lugares)."
+                    ] : [
+                        "Comprendre des messages enregistrés simples de la vie quotidienne.",
+                        "Saisir les informations essentielles d'un dialogue court (nombres, heures, lieux)."
+                    ],
+                    ejercicios: isLevelA ? [
+                        "Cuestionarios de opción múltiple basados en las grabaciones nativas.",
+                        "Al enviar tus respuestas, el sistema te mostrará automáticamente la transcripción del audio."
+                    ] : [
+                        "Association d'images avec des situations entendues.",
+                        "Questionnaires à choix multiples (QCM).",
+                        "Une fois envoyé, le système déploiera automáticamente la transcription del documento."
+                    ],
+                    consejos: isLevelA ? [
+                        "Lee las preguntas y observa con atención las imágenes antes de reproducir el audio.",
+                        "Concéntrate en captar palabras clave y datos numéricos específicos."
+                    ] : [
+                        "Lisez attentivement les consignes et observez bien les dessins avant l'écoute.",
+                        "Concentrez-vous sur les mots transparents et les chiffres."
+                    ],
+                    iaExplicacion: isLevelA ? [
+                        "**Lector de Voz Interactivo:** Después de enviar el ejercicio, podrás dar clic en cualquier palabra de la transcripción para que Sophia te explique en español su significado lingüístico.",
+                        "**Verificación de Pronunciación:** Puedes activar el micrófono en la transcripción para leer el texto en francés en voz alta; Sophia marcará en rojo las palabras que debas mejorar."
+                    ] : [
+                        "**Lecteur de contexte:** Cliquez sur n'importe quel mot de la transcription pour recevoir une explication linguistique.",
+                        "**Analyse de prononciation:** Activez le micro pour lire à haute voix, les erreurs seront surlignées en rouge."
+                    ]
+                },
+                CE: {
+                    titulo: isLevelA ? "Comprensión Lectora (CE)" : "Compréhension des écrits (CE)",
+                    icono: "fa-file-alt",
+                    color: "#34a853",
+                    lblBienvenida: isLevelA ? "Bienvenido a tu espacio de entrenamiento." : "Bienvenue dans votre espace d'entraînement.",
+                    lblInstruccion: isLevelA ? "Por favor lee los detalles oficiales de esta competencia, luego selecciona una actividad en el menú de la izquierda para comenzar." : "Veuillez lire les détails officiels de cette compétence ci-dessous, puis sélectionnez une activité dans le menu de gauche pour démarrer.",
+                    titObjetivos: isLevelA ? "Objetivos Oficiales" : "Objectifs Officiels",
+                    titEjercicios: isLevelA ? "Tipos de Ejercicios en el Sistema" : "Types d'exercices",
+                    titConsejos: isLevelA ? "Consejos de Éxito" : "Conseils de réussite",
+                    titIA: isLevelA ? "Interacción con la IA (Sophia)" : "Interaction avec l'IA",
+                    objetivos: isLevelA ? [
+                        "Comprender documentos escritos muy cortos y sencillos.",
+                        "Localizar información específica en anuncios, menús, correos o folletos."
+                    ] : [
+                        "Comprendre des documents écrits très courts et simples.",
+                        "Repérer des informations spécifiques dans des annonces, prospectus ou lettres."
+                    ],
+                    ejercicios: isLevelA ? [
+                        "Cuestionarios tradicionales de opción múltiple.",
+                        "Matrices de validación Oui/Non (diseñadas especialmente para la simulación de criterios cruzados del DELF)."
+                    ] : [
+                        "Questionnaires traditionnels à choix multiples.",
+                        "Matrices de validation Oui/Non (sélection de critères croisés du DELF)."
+                    ],
+                    consejos: isLevelA ? [
+                        "Lee primero las preguntas antes de sumergirte en el texto completo.",
+                        "No te detengas ante una palabra desconocida, busca entender el contexto general de la oración."
+                    ] : [
+                        "Lisez d'abord les questions avant de lire le document textuel complet.",
+                        "Ne bloquez pas sur un mot inconnu, déduisez le sens global de la phrase."
+                    ],
+                    iaExplicacion: isLevelA ? [
+                        "**Glosario Inteligente:** Al leer el documento, si seleccionas una frase o das doble clic sobre una palabra difícil, Sophia abrirá de inmediato un panel lateral con su traducción y desglose gramatical en español."
+                    ] : [
+                        "**Glossaire Interactif:** Sélectionnez une phrase ou un mot difficile pour ouvrir instantanément l'analyse linguistique de Sophia."
+                    ]
+                },
+                PE: {
+                    titulo: isLevelA ? "Producción Escrita (PE)" : "Production écrite (PE)",
+                    icono: "fa-pen-fancy",
+                    color: "#fbbc05",
+                    lblBienvenida: isLevelA ? "Bienvenido a la Zona de Examen Real (Blindada)." : "Bienvenue dans la Zone d'Examen Réel (Blindé).",
+                    lblInstruccion: isLevelA ? "Esta sección simula las restricciones del examen real. Selecciona una actividad para iniciar tu redacción." : "Cette section simule les restrictions réelles. Sélectionnez une activité pour commencer.",
+                    titObjetivos: isLevelA ? "Objetivos Oficiales" : "Objectifs Officiels",
+                    titEjercicios: isLevelA ? "Tipos de Ejercicios en el Sistema" : "Types d'exercices",
+                    titConsejos: isLevelA ? "Consejos de Éxito" : "Conseils de réussite",
+                    titIA: isLevelA ? "Interacción con la IA (Sophia)" : "Interaction avec l'IA",
+                    objetivos: isLevelA ? [
+                        "Rellenar un formulario de datos personales o fichas de inscripción.",
+                        "Redactar un message corto y simple (correo, postal) para invitar, agradecer o responder a un amigo."
+                    ] : [
+                        "Remplir une fiche de renseignements personnels ou un formulaire d'inscription.",
+                        "Rédiger un court message simple (carte postale, courriel) pour inviter, remercier ou s'exprimer."
+                    ],
+                    ejercicios: isLevelA ? [
+                        "**Formularios Interactivos:** Casillas individuales dinámicas que simulan fichas de inscripción (ej. Ficha de adopción, solicitud de matrícula).",
+                        "**Caja de Redacción Libre:** Cuadro interactivo protegido (anti-copiado) equipado con una barra superior de caracteres especiales franceses (`é`, `è`, `à`, `ç`)."
+                    ] : [
+                        "**Formulaires interactifs:** Des champs individuels simulant des fiches d'inscription réelles.",
+                        "**Zone de rédaction libre:** Un éditeur sécurisé équipé d'une barre de caractères spéciaux français."
+                    ],
+                    consejos: isLevelA ? [
+                        "Respeta estrictamente la consigna y el número de palabras solicitado.",
+                        "Utiliza siempre las fórmulas de saludo y despedida requeridas en el formato amistoso."
+                    ] : [
+                        "Respectez la consigne et le nombre de mots demandé.",
+                        "Utilisez les formules de politesse adaptées (Amicalement, Salut, Bisous)."
+                    ],
+                    iaExplicacion: isLevelA ? [
+                        "**Evaluación Nativa Inmediata:** Al enviar tu escrito, Sophia asumirá el rol de examinadora certificada del DELF, analizando tu texto y desplegando en pantalla una rúbrica interactiva con retroalimentación detallada y puntaje estimado."
+                    ] : [
+                        "**Correction instantanée:** Sophia analyse votre texte selon les critères du DELF et affiche une grille d'évaluation complète."
+                    ]
+                },
+                PO: {
+                    titulo: isLevelA ? "Producción Oral (PO)" : "Production orale (PO)",
+                    icono: "fa-microphone",
+                    color: "#ea4335",
+                    lblBienvenida: isLevelA ? "Bienvenido a la Zona de Examen Real (Blindada)." : "Bienvenue dans la Zone d'Examen Réel (Blindé).",
+                    lblInstruccion: isLevelA ? "Prepara tu micrófono. Selecciona un ejercicio para iniciar la simulación interactiva." : "Préparez votre micro. Sélectionnez une activité pour commencer.",
+                    titObjetivos: isLevelA ? "Objetivos Oficiales" : "Objectifs Officiels",
+                    titEjercicios: isLevelA ? "Tipos de Ejercicios en el Sistema" : "Types d'exercices",
+                    titConsejos: isLevelA ? "Consejos de Éxito" : "Conseils de réussite",
+                    titIA: isLevelA ? "Interacción con la IA (Sophia)" : "Interaction avec l'IA",
+                    objetivos: isLevelA ? [
+                        "Presentarse a sí mismo y responder preguntas sencillas sobre su identidad, familia y gustos.",
+                        "Formular preguntas simples a un examinador basándose en palabras clave.",
+                        "Desenvolverse en un juego de rol básico de la vida diaria (comprar ropa, pedir en un restaurante)."
+                    ] : [
+                        "Se présenter et répondre à des questions sur son identité.",
+                        "Poser des questions simples à partir de mots-clés ou de cartes stimulantes.",
+                        "Mener un jeu de rôle ou une interaction en contexte de service."
+                    ],
+                    ejercicios: isLevelA ? [
+                        "**Entretien Dirigé:** Guías de preguntas organizadas en viñetas en la pantalla.",
+                        "**Échange d'informations:** Tarjetas visuales interactivas en pantalla que emulan los papelitos recortables físicos del examen real.",
+                        "**Juego de Rol Interactivos:** Simulaciones situacionales guiadas."
+                    ] : [
+                        "**Entretien dirigé:** Questions guidées affichées à l'écran.",
+                        "**Échange d'informations:** Cartes visuelles interactives émulant les billets de l'examen physique.",
+                        "**Jeux de rôle:** Simulations de situations quotidiennes."
+                    ],
+                    consejos: isLevelA ? [
+                        "¡No tengas miedo de hablar! El sistema está diseñado para que ganes confianza.",
+                        "Verifica que tu navegador tenga el permiso del micrófono concedido para evitar retrasos."
+                    ] : [
+                        "N'ayez pas peur de parler! Gagnez de la confiance en vous.",
+                        "Vérifiez que l'autorisation de votre microphone est active avant de démarrer."
+                    ],
+                    iaExplicacion: isLevelA ? [
+                        "**Activación Automatizada por Botón:** Al dar clic en el botón rojo de grabación, el sistema inyecta un guion introductorio nativo de fondo. Sophia tomará de inmediato el rol de examinadora o dependienta nativa en Francia y entablará un diálogo fluido basado en lo que hables frente a la pantalla, respondiendo dinámicamente según tus elecciones de palabras o tarjetas."
+                    ] : [
+                        "**Dialogue dynamique:** En cliquant sur le bouton d'enregistrement, Sophia prend le rôle de l'examinateur natif et répond en temps réel à vos interventions orales."
+                    ]
+                }
+            };
+
+            let skInfo = datosIntro[skill];
+            
+            let htmlIntro = `
+            <div class="intro-skill-card" style="border-top-color: ${skInfo.color};">
+                <h4 class="intro-skill-title"><i class="fas ${skInfo.icono}" style="color:${skInfo.color};"></i> ${skInfo.titulo}</h4>
+                <p style="font-size: 0.92rem; color: #555; line-height: 1.5; margin-bottom: 20px;">
+                    <strong>${skInfo.lblBienvenida}</strong> ${skInfo.lblInstruccion}
+                </p>
+                
+                <div class="intro-grid-section">
+                    <div class="intro-sub-box">
+                        <h5><i class="fas fa-bullseye"></i> ${skInfo.titObjetivos}</h5>
+                        <ul>${skInfo.objetivos.map(o => `<li>${o}</li>`).join('')}</ul>
+                    <div style="margin-top:20px; text-align:center;"></div></div>
+                    <div class="intro-sub-box">
+                        <h5><i class="fas fa-tasks"></i> ${skInfo.titEjercicios}</h5>
+                        <ul>${skInfo.ejercicios.map(e => `<li>${e}</li>`).join('')}</ul>
+                    </div>
+                </div>
+
+                <div class="intro-sub-box" style="margin-top:20px; border-left-color: #7f8c8d; background: #f8f9fa;">
+                    <h5><i class="fas fa-robot"></i> ${skInfo.titIA}</h5>
+                    <ul>${skInfo.iaExplicacion.map(i => `<li>${i}</li>`).join('')}</ul>
+                </div>
+                
+                <div class="intro-sub-box" style="margin-top:20px; border-left-color: var(--oxford);">
+                    <h5><i class="fas fa-lightbulb"></i> ${skInfo.titConsejos}</h5>
+                    <ul>${skInfo.consejos.map(c => `<li>${c}</li>`).join('')}</ul>
+                </div>
+            </div>`;
+            
+            target.innerHTML = htmlIntro;
         };
 
         function renderActiveInterface() {
             const menuContainer = document.getElementById('sidebar-dynamic-menu');
+            const controlsRow = document.getElementById('parcours-controls-container');
+            
             if (currentActiveTab === "parcours") {
-                document.getElementById('parcours-controls-container').style.display = "flex";
-                menuContainer.style.display = "flex"; 
-                generarMenuJerarquico();
+                if (controlsRow) controlsRow.style.display = "flex";
+                menuContainer.style.display = "flex"; generarMenuJerarquico();
             } else {
-                document.getElementById('parcours-controls-container').style.display = "none";
-                menuContainer.style.display = "none"; 
-                renderCarnetInterface();
+                if (controlsRow) controlsRow.style.display = "none";
+                menuContainer.style.display = "none"; renderCarnetInterfaceReal();
             }
         }
 
         function generarMenuJerarquico() {
             const menuContainer = document.getElementById('sidebar-dynamic-menu');
-            const target = document.getElementById('dynamic-workspace-target');
             menuContainer.innerHTML = "";
-
-            const keys = Object.keys(unidadesCache).sort((a, b) => a.localeCompare(b, undefined, { numeric: true }));
-
-            if (keys.length === 0) {
-                target.innerHTML = `<div style="text-align: center; padding: 40px; color: #888;"><p>Aucun exercice chargé pour le moment.</p></div>`;
-                return;
-            }
-
-            keys.forEach((uId) => {
+            Object.keys(unidadesCache).sort((a, b) => a.localeCompare(b, undefined, { numeric: true })).forEach((uId) => {
                 const u = unidadesCache[uId];
-                let ejerciciosHabilidad = u[currentSkill] || u[currentSkill.toLowerCase()] || [];
-                
-                if (ejerciciosHabilidad.length === 0) {
-                    return; 
-                }
-
-                let temaRealHabilidad = u[`tema_${currentSkill}`] || u[`tema_${currentSkill.toLowerCase()}`] || u.tema || "Exercice";
-                let numeroUnidad = uId.replace(/\D/g, '');
-                let tituloUnidadMostrar = `Unité ${numeroUnidad} - ${temaRealHabilidad}`;
-
+                let ejH = u[currentSkill] || u[currentSkill.toLowerCase()] || [];
+                if (ejH.length === 0) return;
                 const isUnitOpen = openUnitsState[uId] === true;
-                const displayStyle = isUnitOpen ? 'flex' : 'none';
-                const chevronIcon = isUnitOpen ? 'fa-chevron-down' : 'fa-chevron-right';
 
-                let unitWrapper = document.createElement('div');
-                unitWrapper.className = 'unit-wrapper';
-                unitWrapper.innerHTML = `
-                    <button class="unit-toggle-btn ${currentUnitId === uId ? 'active' : ''}" onclick="window.toggleUnitMenu('${uId}')">
-                        <span><i class="fas fa-book" style="color:var(--gold); margin-right:8px;"></i>${tituloUnidadMostrar}</span>
-                        <i class="fas ${chevronIcon}" style="font-size:0.7rem; color:var(--gold);"></i>
-                    </button>
-                `;
-
-                let subContainer = document.createElement('div');
-                subContainer.className = 'submenu-activities';
-                subContainer.style.display = displayStyle;
-
-                ejerciciosHabilidad.forEach((ej, eIdx) => {
-                    const esActivo = (currentUnitId === uId && currentExerciseIndex === eIdx);
-                    let tituloLimpio = "";
-                    if (ej.instruccion) {
-                        let matchActividad = ej.instruccion.match(/Activité\s*\d+/i);
-                        if (matchActividad) tituloLimpio = matchActividad[0]; 
-                    }
-                    if (!tituloLimpio) tituloLimpio = `Activité ${eIdx + 1}`;
-
-                    subContainer.innerHTML += `
-                        <button class="activity-link-btn ${esActivo ? 'active' : ''}" onclick="window.cargarActividadDirecta('${uId}', ${eIdx})">
-                            <i class="fas fa-play" style="font-size:0.6rem; margin-right:6px;"></i>${tituloLimpio}
-                        </button>
-                    `;
-                });
+                let wrapper = document.createElement('div'); wrapper.className = 'unit-wrapper';
                 
-                unitWrapper.appendChild(subContainer);
-                menuContainer.appendChild(unitWrapper);
+                let unidadCompletada = true;
+                ejH.forEach((ej, eIdx) => {
+                    if (mapaAciertosAlumno[`${uId}_${currentSkill}_${eIdx}`] !== true) {
+                        unidadCompletada = false;
+                    }
+                });
+
+                let iconoUnidad = unidadCompletada ? '<i class="fas fa-check-circle" style="color:var(--green)"></i>' : `<i class="fas ${isUnitOpen ? 'fa-chevron-down' : 'fa-chevron-right'}"></i>`;
+
+                let llaveTemaDinamico = `tema_${currentSkill}`;
+                let ID_Limpio = uId ? uId.replace(/\D/g, '') : '';
+                let nombreUnidadReal = (u && u[llaveTemaDinamico]) ? u[llaveTemaDinamico] : `Unité ${ID_Limpio}`;
+
+                wrapper.innerHTML = `<button class="unit-toggle-btn ${currentUnitId === uId ? 'active' : ''}" onclick="window.toggleUnitMenu('${uId}')"><span><i class="fas fa-book"></i> ${nombreUnidadReal}</span>${iconoUnidad}</button>`;
+                
+                let sub = document.createElement('div'); sub.className = 'submenu-activities'; sub.style.display = isUnitOpen ? 'flex' : 'none';
+
+                ejH.forEach((ej, eIdx) => {
+                    const esCompleto = mapaAciertosAlumno[`${uId}_${currentSkill}_${eIdx}`] === true;
+                   const statusText = esCompleto ? '<span class="activity-status-lbl" style="background:#e8f5e9; color:#2e7d32;">✅ Hecho</span>' : '<span class="activity-status-lbl" style="background:#f5f5f5; color:#757575;">❌ No comenzado</span>';
+                    
+                    sub.innerHTML += `
+                        <button class="activity-link-btn ${currentUnitId === uId && currentExerciseIndex === eIdx ? 'active' : ''}" onclick="window.cargarActividadDirecta('${uId}', ${eIdx})">
+                            <i class="fas ${esCompleto ? 'fa-check' : 'fa-play'}" style="${esCompleto ? 'color:var(--green)' : ''}"></i> Activité ${eIdx + 1} ${statusText}
+                        </button>`;
+                });
+                wrapper.appendChild(sub); menuContainer.appendChild(wrapper);
             });
         }
 
-        window.toggleUnitMenu = (uId) => {
-            openUnitsState[uId] = !openUnitsState[uId];
-            generarMenuJerarquico();
-        };
-
-        window.cargarActividadDirecta = (uId, eIdx) => {
-            currentUnitId = uId;
-            currentExerciseIndex = eIdx;
+        window.toggleUnitMenu = (uId) => { openUnitsState[uId] = !openUnitsState[uId]; generarMenuJerarquico(); };
+        window.cargarActividadDirecta = (uId, eIdx) => { 
+            currentUnitId = uId; 
+            currentExerciseIndex = eIdx; 
             openUnitsState[uId] = true; 
-            generarMenuJerarquico();
-            renderExerciseStructure();
+            generarMenuJerarquico(); 
+            window.renderExerciseStructure(); 
+
+            if (window.currentSkill === "PO") {
+                navigator.mediaDevices.getUserMedia({ audio: true })
+                    .then((stream) => { stream.getTracks().forEach(track => track.stop()); })
+                    .catch((err) => { console.warn(err); });
+            }
         };
 
-        function filtrarEjerciciosDeUnidadActual() {
-            ejerciciosFiltrados = [];
-            if (currentUnitId === null || !unidadesCache[currentUnitId]) return;
-            ejerciciosFiltrados = unidadesCache[currentUnitId][currentSkill] || unidadesCache[currentUnitId][currentSkill.toLowerCase()] || [];
-        }
+        function renderCarnetInterfaceReal() {
+            const isBasic = currentLevel.startsWith('A');
+            const descCO = isBasic ? "Comprendre des expressions fréquentes. / Comprender expresiones." : "Peut comprendre les points principaux d'une intervention claire (école, travail).";
+            const descCE = isBasic ? "Lire des textes courts. / Leer textos cortos." : "Peut comprendre des textes rédigés essentiellement dans une langue courante.";
+            const descPE = isBasic ? "Écrire des messages simples. / Escribir mensajes." : "Peut écrire un texte suivi simple et articulé sur des sujets familiers.";
+            const descPO = isBasic ? "S'exprimer en situation simple. / Expresarse en situations cotidianas." : "Peut s'exprimer de manière cohérente sur des expériences ou projets.";
 
-        function renderExerciseStructure() {
-            const target = document.getElementById('dynamic-workspace-target');
-            filtrarEjerciciosDeUnidadActual();
+            const iconCheckCO = notesHabilidadGlobales.CO > 0 ? 'fas fa-check-circle" style="color:var(--green);"' : 'far fa-circle"';
+            const iconCheckCE = notesHabilidadGlobales.CE > 0 ? 'fas fa-check-circle" style="color:var(--green);"' : 'far fa-circle"';
+            const iconCheckPE = notesHabilidadGlobales.PE > 0 ? 'fas fa-check-circle" style="color:var(--green);"' : 'far fa-circle"';
+            const iconCheckPO = notesHabilidadGlobales.PO > 0 ? 'fas fa-check-circle" style="color:var(--green);"' : 'far fa-circle"';
 
-            if (ejerciciosFiltrados.length === 0 || !ejerciciosFiltrados[currentExerciseIndex]) {
-                target.innerHTML = `<p style="text-align:center; color:#888;">Aucun exercice disponible.</p>`;
-                return;
-            }
-
-            const ej = ejerciciosFiltrados[currentExerciseIndex];
-            const audioId = `audio-container-${currentExerciseIndex}`;
-
-            let tipoEjercicio = ej.tipo ? ej.tipo.toLowerCase().trim() : "";
-            if (tipoEjercicio.includes("libre") || tipoEjercicio.includes("question") || tipoEjercicio.includes("réponses")) {
-                tipoEjercicio = "oral_interaction"; 
-            }
-
-            let html = `
-            <div class="exercise-card">
-                <h4 style="margin-top: 0; margin-bottom: 20px; color: var(--oxford); font-size: 1.05rem; font-weight:700;">
-                    ${ej.instruccion || 'Exercice'} 
-                </h4>`;
-
-            if (currentSkill === "PO" || currentSkill === "po") {
-                
-                if (tipoEjercicio === "oral_interaction" || !tipoEjercicio) {
-                    let fraseSophia = ej.ruta_audio || "Bonjour! Je t'écoute. En quoi puis-je t'aider ?";
-                    html += `
-                    <div class="sophia-chat-box">
-                        <div class="sophia-avatar-row">
-                            <i class="fas fa-robot" style="color:var(--gold); font-size:1.3rem;"></i>
-                            <span>Sophia (Examinatrice Jury) :</span>
-                        </div>
-                        <p style="background: white; padding: 12px 15px; border-radius: 8px; border: 1px solid #e2e8f0; font-size: 0.95rem; font-style: italic; color:#333;">
-                            <i class="fas fa-volume-up" style="color:var(--gold); margin-right:8px; cursor:pointer;" onclick="window.conectarPlaticaTiempoReal()"></i> "${fraseSophia}"
-                        </p>`;
-
-                    if (ej.campos_formulario && ej.campos_formulario.length > 0) {
-                        html += `
-                        <p style="font-size:0.85rem; font-weight:600; color:var(--oxford); margin-top:15px; margin-bottom:5px;"><i class="fas fa-shopping-bag"></i> Éléments disponibles pour votre interaction :</p>
-                        <div style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:15px;">`;
-                        ej.campos_formulario.forEach(item => {
-                            html += `<span style="background:rgba(197, 160, 89, 0.15); color:var(--oxford); border:1px solid var(--gold); padding:6px 12px; border-radius:6px; font-size:0.8rem; font-weight:700;"><i class="fas fa-tags" style="color:var(--gold); margin-right:4px;"></i> ${item}</span>`;
-                        });
-                        html += `</div>`;
-                    }
-
-                    html += `
-                        <div style="margin-top: 15px; display:flex; gap:10px;">
-                            <button class="audio-interactive-btn" id="btn-record-po-interaction" onclick="window.conectarPlaticaTiempoReal()" style="background:var(--green);">
-                                <i class="fas fa-microphone"></i> Répondre à Sophia (Microphone)
-                            </button>
-                        </div>
-                    </div>`;
-                }
-
-                else if (tipoEjercicio === "oral_cards") {
-                    let listaTarjetas = ej.campos_formulario || [];
-                    html += `
-                    <p style="font-size:0.9rem; font-weight:600; color:#555; margin-bottom:15px;"><i class="fas fa-info-circle"></i> Formulez une question pour cada carte ci-dessous :</p>
-                    <div class="oral-card-grid">`;
-                    listaTarjetas.forEach((palabra, idxCard) => {
-                        html += `
-                        <div class="oral-word-card">
-                            <span>${palabra.trim()}</span>
-                            <button class="audio-interactive-btn" id="btn-card-rec-${idxCard}" onclick="window.toggleGrabacionInteractiva('btn-card-rec-${idxCard}')" style="padding:6px 12px; font-size:0.75rem; justify-content:center;">
-                                <i class="fas fa-microphone"></i> Question
-                            </button>
-                        </div>`;
-                    });
-                    html += `</div>`;
-                }
-
-                else if (tipoEjercicio === "oral_monologue" || tipoEjercicio === "oral_debate") {
-                    if (ej.texto_lectura) {
-                        html += `
-                        <div style="background: #ffffff; border-left: 4px solid var(--gold); padding: 20px; border-radius: 8px; margin-bottom: 25px; font-size: 0.95rem; line-height: 1.6; color: #333; white-space: pre-wrap; box-shadow:0 2px 6px rgba(0,0,0,0.02); border:1px solid #e2e8f0; border-left-width:4px;">
-                            <strong><i class="fas fa-file-invoice" style="color:var(--gold); margin-right:8px;"></i> Document Détonateur / Consigne :</strong><br><br>${ej.texto_lectura}
-                        </div>`;
-                    }
-                    html += `
-                    <div class="sophia-chat-box" style="border-left:4px solid var(--green);">
-                        <div style="font-weight:700; font-size:0.9rem; margin-bottom:10px; color:var(--oxford);"><i class="fas fa-microphone-alt"></i> PHASE 1 : ENREGISTREMENT DE VOTRE EXPOSÉ CONTINU</div>
-                        <button class="audio-interactive-btn" id="btn-record-expose" onclick="window.toggleGrabacionInteractiva('btn-record-expose')" style="background:var(--oxford); width:100%; justify-content:center; padding:15px;">
-                            <i class="fas fa-microphone"></i> Commencer le Monologue Continu
-                        </button>
-                    </div>`;
-                }
-            }
-
-            if (currentSkill === "CE" && ej.texto_lectura) {
-                html += `
-                <div style="background: #f8f9fa; border-left: 4px solid var(--gold); padding: 20px; border-radius: 6px; margin-bottom: 25px; font-size: 0.95rem; line-height: 1.6; color: #333; white-space: pre-wrap;">
-                    <strong><i class="fas fa-file-alt" style="color:var(--gold); margin-right:8px;"></i> Document de lecture :</strong><br><br>${ej.texto_lectura}
-                </div>`;
-            }
-
-            if (ej.pagina_pdf) {
-                html += `
-                <div class="pdf-viewer-container" id="pdf-viewer-block">
-                    <p style="font-size:0.8rem; color:var(--gold); font-weight:600; margin-top:0;"><i class="fas fa-book-open"></i> Page ${ej.pagina_pdf} du libro original</p>
-                    <canvas id="pdf-canvas-render"></canvas>
-                </div>`;
-                setTimeout(() => renderPageFromBook(ej.pagina_pdf), 50);
-            }
-
-            if (ej.ruta_audio && currentSkill !== "PO" && currentSkill !== "po") {
-                const nombreArchivo = ej.ruta_audio.split('/').pop();
-                let trackMatch = nombreArchivo.match(/\d+/);
-                let track = trackMatch ? trackMatch[0] : "02";
-                if (track === "1" || track === "01") track = "02";
-                if (track.length > 2) track = track.slice(-2);
-                if (track.length === 1) track = "0" + track;
-                let nombreArchivoFinal = `${currentLevel}-${track}.mp3`;
-
-                getDownloadURL(ref(storage, `niveles/${currentLevel}/audios/${nombreArchivoFinal}`))
-                    .then(url => {
-                        const container = document.getElementById(audioId);
-                        if (container) container.innerHTML = `<audio controls style="width:100%;" src="${url}"></audio>`;
-                    })
-                    .catch(() => {
-                        getDownloadURL(ref(storage, `niveles/${currentLevel}/audios/${track}.mp3`))
-                            .then(url => {
-                                const container = document.getElementById(audioId);
-                                if (container) container.innerHTML = `<audio controls style="width:100%;" src="${url}"></audio>`;
-                            })
-                            .catch(() => {
-                                const container = document.getElementById(audioId);
-                                container.innerHTML = `<span style="color:red; font-size:0.85rem;"><i class="fas fa-exclamation-triangle"></i> Audio indisponible</span>`;
-                            });
-                    });
-            }
-
-            if (ej.preguntas && ej.preguntas.length > 0) {
-                ej.preguntas.forEach((p, pIdx) => {
-                    html += `
-                    <div class="pregunta-block" id="block-preg-${pIdx}" style="padding:15px; border-radius:6px; margin-bottom:15px; border:1px solid #eef2f5;">
-                        <p style="margin-top:0; margin-bottom:12px; font-weight:600; color:#222; display:flex; align-items:center;">
-                            <span id="status-icon-target-${pIdx}"></span>
-                            <span>${p.pregunta}</span>
-                        </p>`;
-                    if (p.opciones) {
-                        p.opciones.forEach((opt) => {
-                            html += `
-                            <label style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px; cursor: pointer;">
-                                <input type="radio" name="question_${pIdx}" value="${opt}" style="accent-color:var(--oxford);"> ${opt}
-                            </label>`;
-                        });
-                    }
-                    html += `</div>`;
-                });
-
-                html += `
-                <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px;">
-                    <button class="nav-tab-btn" id="btn-submit-exercise" style="width:auto; background:var(--oxford); color:white; padding:10px 22px;"><i class="fas fa-paper-plane"></i> Envoyer</button>
-                </div>`;
-            } else if (currentSkill === "PE" || currentSkill === "pe") {
-                if (ej.tipo === "formulario" && ej.campos_formulario && ej.campos_formulario.length > 0) {
-                    html += `
-                    <div class="fiche-container" style="background: #ffffff; border: 1px solid #ddd; border-radius: 12px; padding: 25px; max-width: 500px; margin: 20px auto; box-shadow: 0 4px 15px rgba(0,0,0,0.05); color: #002147; text-align: left;">
-                        <div style="text-align: center; margin-bottom: 20px; border-bottom: 2px dashed #002147; padding-bottom: 10px;">
-                            <h3 style="margin: 0; color: #002147; text-transform: uppercase; font-size: 1.05rem; letter-spacing: 1px;">École de langues</h3>
-                            <h4 style="margin: 5px 0 0 0; color: #C5A059; font-weight: 400; font-size: 0.9rem;">Fiche d'inscription</h4>
-                        </div>
-                        <div class="accent-bar" style="display: flex; gap: 5px; margin-bottom: 20px; flex-wrap: wrap; justify-content: center;">
-                            <button type="button" class="accent-btn" onclick="insertarCaracterFicha('é')">é</button>
-                            <button type="button" class="accent-btn" onclick="insertarCaracterFicha('è')">è</button>
-                            <button type="button" class="accent-btn" onclick="insertarCaracterFicha('à')">à</button>
-                            <button type="button" class="accent-btn" onclick="insertarCaracterFicha('ç')">ç</button>
-                            <button type="button" class="accent-btn" onclick="insertarCaracterFicha('ù')">ù</button>
-                        </div>
-                        <form id="ficheFormDinámico" style="display: flex; flex-direction: column; gap: 15px;">`;
-
-                    ej.campos_formulario.forEach((campo) => {
-                        html += `
-                        <div style="display: flex; align-items: center; border-bottom: 1px solid #eee; padding-bottom: 5px;">
-                            <label style="width: 155px; font-weight: bold; font-size: 0.85rem;">${campo} :</label>
-                            <input type="text" data-campo-nombre="${campo}" class="input-dinamico-ficha" onfocus="registrarUltimoFoco(this)" style="flex: 1; border: none; outline: none; font-family: 'Montserrat', sans-serif; font-size: 0.9rem; color: #002147;">
-                        </div>`;
-                    });
-
-                    html += `
-                            <button type="button" id="btn-save-fiche-dinamico" style="background: var(--oxford); color: #ffffff; border: none; padding: 12px; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 15px; font-family: 'Montserrat', sans-serif; font-size: 0.9rem; width: 100%;">Enregistrer la fiche</button>
-                        </form>
-                    </div>`;
-                    
-                    setTimeout(() => {
-                        const btnSaveDin = document.getElementById('btn-save-fiche-dinamico');
-                        if(btnSaveDin) {
-                            btnSaveDin.onclick = function() {
-                                let respuestasFicha = [];
-                                let inputs = document.querySelectorAll('.input-dinamico-ficha');
-                                let incompleto = false;
-
-                                inputs.forEach(inp => {
-                                    let etiqueta = inp.getAttribute('data-campo-nombre');
-                                    let valor = inp.value.trim();
-                                    if(!valor) incompleto = true;
-                                    respuestasFicha.push(`${etiqueta}: ${valor}`);
-                                });
-
-                                if(incompleto) {
-                                    alert("S'il vous plaît, complétez tous les champs.");
-                                    return;
-                                }
-                                alert("Fiche enregistrée avec succès.");
-                            };
-                        }
-                    }, 50);
-
-                } else {
-                    html += `
-                    <div class="libre-container" style="background: #ffffff; border: 1px solid #ddd; border-radius: 12px; padding: 25px; margin-top: 20px; text-align: left; color: #002147;">
-                        <div class="accent-bar" style="display: flex; gap: 5px; margin-bottom: 12px; flex-wrap: wrap;">
-                            <button type="button" class="accent-btn" onclick="insertarCaracterFicha('é')">é</button>
-                            <button type="button" class="accent-btn" onclick="insertarCaracterFicha('è')">è</button>
-                            <button type="button" class="accent-btn" onclick="insertarCaracterFicha('à')">à</button>
-                            <button type="button" class="accent-btn" onclick="insertarCaracterFicha('ç')">ç</button>
-                            <button type="button" class="accent-btn" onclick="insertarCaracterFicha('ù')">ù</button>
-                        </div>
-                        <textarea id="production-text-libre" onfocus="registrarUltimoFoco(this)" oninput="window.contarPalabrasLibre()" placeholder="Écrivez votre message ici..." style="width: 100%; height: 180px; padding: 12px; border: 1px solid #ccc; border-radius: 8px; font-family: 'Montserrat', sans-serif; font-size: 0.95rem; line-height: 1.5; box-sizing: border-box; resize: vertical; outline: none;"></textarea>
-                        <div id="counter-label-libre" style="text-align: right; font-size: 0.85rem; margin-top: 5px; font-weight: 700; color: #e74c3c;">Mots: 0 / 40 minimum</div>
-                        <button type="button" id="btn-save-libre-direct" style="background: var(--oxford); color: #ffffff; border: none; padding: 12px; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 15px; font-family: 'Montserrat', sans-serif; font-size: 0.9rem; width: 100%;">Envoyer la production</button>
-                    </div>`;
-                    
-                    setTimeout(() => {
-                        const btnSaveLibre = document.getElementById('btn-save-libre-direct');
-                        if(btnSaveLibre) {
-                            btnSaveLibre.onclick = function() {
-                                const textoLibre = document.getElementById('production-text-libre').value.trim();
-                                if(!textoLibre) {
-                                    alert("S'il vous plaît, écrivez votre message avant d'envoyer.");
-                                    return;
-                                }
-                                alert("Production enregistrée avec succès.");
-                            };
-                        }
-                    }, 50);
-                }
-            }
-
-            html += `
-                <div id="sophia-box" style="display:none; background:#f4f7f9; border-left:4px solid var(--gold); padding:20px; border-radius:6px; margin-top:25px;">
-                    <div style="display:flex; align-items:center; gap:10px; font-weight:700; color:var(--oxford);"><i class="fas fa-chart-bar" style="color:var(--gold);"></i> CONSEIL DE SOPHIA</div>
-                    <p id="sophia-verdict-text" style="margin:0; font-size:0.95rem;"></p>
+            let checklistHTML = `
+            <div class="carnet-grid">
+                <div class="carnet-card co">
+                    <div class="carnet-header"><span class="carnet-title"><i class="fas fa-headphones" style="color:#1a73e8;"></i> Compréhension Orale</span><span class="carnet-score">${notesHabilidadGlobales.CO} / 25 pts</span></div>
+                    <div class="carnet-descriptor-box"><strong>Objectif ${currentLevel} :</strong> ${descCO}</div>
+                    <div class="carnet-checklist">
+                        <div class="checklist-item ${notesHabilidadGlobales.CO > 0 ? 'checked':''}"><i class="${iconCheckCO}></i> Repérer des informations factuelles et détails clés</div>
+                    </div>
+                </div>
+                <div class="carnet-card ce">
+                    <div class="carnet-header"><span class="carnet-title"><i class="fas fa-file-alt" style="color:#34a853;"></i> Compréhension Écrite</span><span class="carnet-score">${notesHabilidadGlobales.CE} / 25 pts</span></div>
+                    <div class="carnet-descriptor-box"><strong>Objectif ${currentLevel} :</strong> ${descCE}</div>
+                    <div class="carnet-checklist">
+                        <div class="checklist-item ${notesHabilidadGlobales.CE > 0 ? 'checked':''}"><i class="${iconCheckCE}></i> Identifier des informations significatives dans les textes</div>
+                    </div>
+                </div>
+                <div class="carnet-card pe">
+                    <div class="carnet-header"><span class="carnet-title"><i class="fas fa-pen-fancy" style="color:#fbbc05;"></i> Production Écrite</span><span class="carnet-score">${notesHabilidadGlobales.PE} / 25 pts</span></div>
+                    <div class="carnet-descriptor-box"><strong>Objectif ${currentLevel} :</strong> ${descPE}</div>
+                    <div class="carnet-checklist">
+                        <div class="checklist-item ${notesHabilidadGlobales.PE > 0 ? 'checked':''}"><i class="${iconCheckPE}></i> Rédiger un texte suivi structuré et formules adaptées</div>
+                    </div>
+                </div>
+                <div class="carnet-card po">
+                    <div class="carnet-header"><span class="carnet-title"><i class="fas fa-microphone" style="color:#ea4335;"></i> Production Orale</span><span class="carnet-score">${notesHabilidadGlobales.PO} / 25 pts</span></div>
+                    <div class="carnet-descriptor-box"><strong>Objectif ${currentLevel} :</strong> ${descPO}</div>
+                    <div class="carnet-checklist">
+                        <div class="checklist-item ${notesHabilidadGlobales.PO > 0 ? 'checked':''}"><i class="${iconCheckPO}></i> S'exprimer de manière fluide lors d'une interaction</div>
+                    </div>
                 </div>
             </div>`;
 
-            target.innerHTML = html;
+            document.getElementById('dynamic-workspace-target').innerHTML = `
+                <h3 style="color:var(--oxford); margin-top:0; font-weight:700;"><i class="fas fa-id-card"></i> Livret de Compétences Officiel (CECRL)</h3>
+                ${checklistHTML}`;
         }
+        
+        
+window.parseSophiaPayload = function(jsonRaw) {
+    let data = jsonRaw;
+    if (typeof data === "string") {
+        let clean = data.trim().replace(/^```json/i, "").replace(/^```/i, "").replace(/```$/, "").trim();
+        const start = clean.indexOf("{");
+        const end = clean.lastIndexOf("}");
+        if (start !== -1 && end !== -1) {
+            clean = clean.substring(start, end + 1);
+        }
+        try {
+            data = JSON.parse(clean);
+        } catch(e) {
+            data = { raw: clean };
+        }
+    }
 
-        function renderPageFromBook(pageNum) {
-            if (!pdfDocInstance) {
-                setTimeout(() => renderPageFromBook(pageNum), 1000);
-                return;
+    if (data && typeof data.feedback === "string") {
+        try {
+            let parsedFb = window.parseSophiaPayload(data.feedback);
+            if (typeof parsedFb === "object") data.feedback = parsedFb;
+        } catch(e){}
+    }
+    if (data && typeof data.evaluacion === "string") {
+        try {
+            let parsedEv = window.parseSophiaPayload(data.evaluacion);
+            if (typeof parsedEv === "object") data.evaluacion = parsedEv;
+        } catch(e){}
+    }
+
+    const fb = (data.feedback && typeof data.feedback === "object") ? data.feedback :
+               (data.evaluacion && typeof data.evaluacion === "object") ? data.evaluacion : data;
+
+    const transcription = data.transcription || data.transcription_html || fb.transcription || fb.transcription_html || data.texte || "";
+
+    const rubricsMap = {};
+
+    const itemTask = fb.completeness_relevance || fb.production_orale_task || fb.tache_orale || fb.task || (data.rubriques && data.rubriques.production_orale_task) || {};
+    rubricsMap.tache_orale = {
+        title: "Tâche Oral",
+        score: itemTask.score || itemTask.note || "--",
+        comment: itemTask.comment || itemTask.commentaire || itemTask.ce_qui_ne_va_pas || "Aucune remarque particulière.",
+        supra: itemTask.objectif_supra || itemTask.supra || ""
+    };
+
+    const itemLex = fb.lexical_richness_control || fb.lexique || fb.lexicon || (data.rubriques && data.rubriques.lexique) || {};
+    rubricsMap.lexique = {
+        title: "Lexique",
+        score: itemLex.score || itemLex.note || "--",
+        comment: itemLex.comment || itemLex.commentaire || itemLex.ce_qui_ne_va_pas || "Aucune remarque particulière.",
+        supra: itemLex.objectif_supra || itemLex.supra || ""
+    };
+
+    const itemMorph = fb.grammatical_correctness_control || fb.morphosyntaxe || fb.grammar || (data.rubriques && data.rubriques.morphosyntaxe) || {};
+    rubricsMap.morphosyntaxe = {
+        title: "Morphosyntaxe",
+        score: itemMorph.score || itemMorph.note || "--",
+        comment: itemMorph.comment || itemMorph.commentaire || itemMorph.ce_qui_ne_va_pas || "Aucune remarque particulière.",
+        supra: itemMorph.objectif_supra || itemMorph.supra || ""
+    };
+
+    const itemPhon = fb.pronunciation_intonation || fb.phonologique || fb.phonologie || (data.rubriques && data.rubriques.phonologique) || {};
+    const itemFluency = fb.fluency || {};
+
+    let phonScore = itemPhon.score || itemPhon.note || "--";
+    if (itemFluency.score && phonScore !== "--") {
+        phonScore = `${phonScore} | Fluidité: ${itemFluency.score}`;
+    } else if (phonScore === "--" && itemFluency.score) {
+        phonScore = `Fluidité: ${itemFluency.score}`;
+    }
+
+    let phonComment = itemPhon.comment || itemPhon.commentaire || itemPhon.ce_qui_ne_va_pas || "";
+    if (itemFluency.comment) {
+        phonComment = phonComment ? `${phonComment}\n\n[Fluidité] ${itemFluency.comment}` : `[Fluidité] ${itemFluency.comment}`;
+    }
+    if (!phonComment) phonComment = "Aucune remarque particulière.";
+
+    rubricsMap.phonologie = {
+        title: "Phonologie",
+        score: phonScore,
+        comment: phonComment,
+        supra: itemPhon.objectif_supra || itemPhon.supra || ""
+    };
+
+    const overallAssessment = fb.overall_assessment || data.overall_assessment || data.appreciation_globale || fb.appreciation_globale || "";
+
+    const suggestions = fb.suggestions_for_improvement || data.suggestions_for_improvement || data.pistes_amelioration || fb.pistes_amelioration || [];
+
+    let globalScoreStr = data.score_global || fb.score_global || data.note_globale || "";
+    if (!globalScoreStr) {
+        let numTotal = 0;
+        let denomTotal = 0;
+        [itemTask, itemLex, itemMorph, itemPhon, itemFluency].forEach(it => {
+            if (it && it.score && typeof it.score === "string" && it.score.includes("/")) {
+                const parts = it.score.split("/");
+                const n = parseFloat(parts[0]);
+                const d = parseFloat(parts[1]);
+                if (!isNaN(n) && !isNaN(d)) {
+                    numTotal += n;
+                    denomTotal += d;
+                }
             }
-            pdfDocInstance.getPage(pageNum).then(page => {
-                const canvas = document.getElementById('pdf-canvas-render');
-                if (!canvas) return;
-                const ctx = canvas.getContext('2d');
-                const viewport = page.getViewport({ scale: 1.5 });
-                canvas.height = viewport.height;
-                canvas.width = viewport.width;
-                page.render({ canvasContext: ctx, viewport: viewport });
-            }).catch(err => console.error("Erreur de rendu PDF:", err));
+        });
+        if (denomTotal > 0) {
+            globalScoreStr = `${numTotal}/${denomTotal}`;
+        } else {
+            globalScoreStr = "--/25";
+        }
+    }
+
+    let status = data.status || fb.status || "Evalué";
+    if (status === "Evalué" && globalScoreStr.includes("/")) {
+        const parts = globalScoreStr.split("/");
+        const num = parseFloat(parts[0]);
+        const den = parseFloat(parts[1]);
+        if (!isNaN(num) && !isNaN(den) && den > 0) {
+            status = (num / den >= 0.5) ? "B1 Atteint" : "Non Atteint";
+        }
+    }
+
+    return {
+        transcription,
+        score_global: globalScoreStr,
+        status,
+        rubriques: rubricsMap,
+        overall_assessment: overallAssessment,
+        suggestions
+    };
+};
+
+window.renderBotonesRubrosOral = function() {
+    const bar = document.getElementById("sophia-rubrics-bar");
+    if (!bar) return;
+
+    bar.innerHTML = `
+        <button type="button" class="btn-rubric" data-rubric="tache_orale" style="flex:1; min-width:130px; padding:10px; border-radius:6px; border:1px solid #ccc; background:#fff; font-weight:600; cursor:pointer;">Tâche Oral</button>
+        <button type="button" class="btn-rubric" data-rubric="lexique" style="flex:1; min-width:130px; padding:10px; border-radius:6px; border:1px solid #ccc; background:#fff; font-weight:600; cursor:pointer;">Lexique</button>
+        <button type="button" class="btn-rubric" data-rubric="morphosyntaxe" style="flex:1; min-width:130px; padding:10px; border-radius:6px; border:1px solid #ccc; background:#fff; font-weight:600; cursor:pointer;">Morphosyntaxe</button>
+        <button type="button" class="btn-rubric" data-rubric="phonologie" style="flex:1; min-width:130px; padding:10px; border-radius:6px; border:1px solid #ccc; background:#fff; font-weight:600; cursor:pointer;">Phonologie</button>`;
+
+    const buttons = bar.querySelectorAll('.btn-rubric');
+
+    buttons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            buttons.forEach(b => {
+                b.style.background = '#fff';
+                b.style.color = '#333';
+            });
+            btn.style.background = 'var(--oxford)';
+            btn.style.color = 'white';
+
+            const rKey = btn.getAttribute('data-rubric');
+            const vText = document.getElementById("sophia-verdict-text");
+            const scoreBadge = document.getElementById("sophia-rubric-score-badge");
+            const errDiv = document.getElementById("sophia-feedback-errors");
+            const supraDiv = document.getElementById("sophia-feedback-supra");
+            const supraBox = document.getElementById("sophia-feedback-supra-box");
+
+            if (!vText || !vText.dataset.evaluation) return;
+
+            try {
+                const rubricas = JSON.parse(vText.dataset.evaluation);
+                const itemData = rubricas[rKey] || {};
+
+                if (scoreBadge) scoreBadge.innerText = `${itemData.title || 'Rubrique'} - Score : ${itemData.score || '--'}`;
+                if (errDiv) errDiv.innerText = itemData.comment || "Aucune remarque particulière.";
+
+                if (itemData.supra) {
+                    if (supraDiv) supraDiv.innerText = itemData.supra;
+                    if (supraBox) supraBox.style.display = "block";
+                } else {
+                    if (supraBox) supraBox.style.display = "none";
+                }
+            } catch(err) {
+                console.error("Error mostrando rúbrica:", err);
+            }
+        });
+    });
+
+    if (buttons.length > 0) {
+        buttons[0].click();
+    }
+};
+
+window.mostrarEvaluacionOralSophia = function(jsonRaw, audioUrl) {
+    try {
+        const parsed = window.parseSophiaPayload(jsonRaw);
+
+        let sophiaBox = document.getElementById("sophia-box");
+        if (!sophiaBox) {
+            const target = document.getElementById("dynamic-workspace-target");
+            if (target) {
+                sophiaBox = document.createElement("div");
+                sophiaBox.id = "sophia-box";
+                sophiaBox.style.cssText = "display:none; background:white; border:1px solid #e0e6ed; border-left:4px solid var(--gold); padding:25px; border-radius:6px; margin-top:25px; box-shadow:0 4px 12px rgba(0,0,0,0.02); box-sizing:border-box; width:100%;";
+                sophiaBox.innerHTML = '<div id="sophia-verdict-text"></div>';
+                target.appendChild(sophiaBox);
+            }
+        }
+        if (sophiaBox) sophiaBox.style.display = "block";
+
+        const verdictText = document.getElementById("sophia-verdict-text");
+        if (!verdictText) return;
+
+        let playerHTML = "";
+        if (audioUrl) {
+            playerHTML = `
+                <div style="margin: 0 0 15px 0; padding: 12px; background: #f0f4f8; border-radius: 8px; border: 1px solid #cbd5e1; text-align: center;">
+                    <p style="margin-bottom: 8px; font-weight: bold; color: var(--oxford);"><i class="fas fa-volume-up"></i> Écouter votre enregistrement :</p>
+                    <audio controls src="${audioUrl}" style="width: 100%; max-width: 450px;"></audio>
+                </div>`;
         }
 
-        async function renderCarnetInterface() {}
+        let suggestionsHTML = "";
+        if (Array.isArray(parsed.suggestions) && parsed.suggestions.length > 0) {
+            suggestionsHTML = `
+                <div style="margin-top:15px; background:#fff8e1; border-left:4px solid var(--gold); padding:15px; border-radius:6px;">
+                    <strong style="color:#b78103; display:block; margin-bottom:8px; font-size:0.95rem;">
+                        <i class="fas fa-lightbulb"></i> Pistes d'amélioration :
+                    </strong>
+                    <ul style="margin:0; padding-left:20px; font-size:0.9rem; color:#444; line-height:1.6;">
+                        ${parsed.suggestions.map(s => `<li>${s}</li>`).join('')}
+                    </ul>
+                </div>`;
+        }
 
-        document.getElementById('tab-parcours').addEventListener('click', () => window.switchMainTab('parcours'));
-        document.getElementById('tab-carnet').addEventListener('click', () => window.switchMainTab('carnet'));
-        document.getElementById('skill-CO').addEventListener('click', () => window.setSkillFilter('CO'));
-        document.getElementById('skill-CE').addEventListener('click', () => window.setSkillFilter('CE'));
-        document.getElementById('skill-PE').addEventListener('click', () => window.setSkillFilter('PE'));
-        document.getElementById('skill-PO').addEventListener('click', () => window.setSkillFilter('PO'));
+        let overallHTML = "";
+        if (parsed.overall_assessment) {
+            overallHTML = `
+                <div style="margin-top:15px; background:#f4f6f9; border-left:4px solid var(--oxford); padding:15px; border-radius:6px;">
+                    <strong style="color:var(--oxford); display:block; margin-bottom:6px; font-size:0.95rem;">
+                        <i class="fas fa-info-circle"></i> Appréciation globale :
+                    </strong>
+                    <p style="margin:0; font-size:0.9rem; color:#333; line-height:1.5;">${parsed.overall_assessment}</p>
+                </div>`;
+        }
 
+        let transcriptionHTML = "";
+        if (parsed.transcription) {
+            transcriptionHTML = `
+                <div style="margin-top:15px;">
+                    <strong style="color:var(--oxford); font-size:0.9rem; display:block; margin-bottom:6px;">
+                        <i class="fas fa-quote-left"></i> Transcription :
+                    </strong>
+                    <div id="sophia-text-mirror" style="background:#fff; border:1px solid #ddd; padding:12px; border-radius:6px; max-height:150px; overflow-y:auto; line-height:1.6; font-size:0.9rem; color:#333; white-space:pre-wrap;">${parsed.transcription}</div>
+                </div>`;
+        }
+
+        verdictText.innerHTML = `
+            ${playerHTML}
+            <div id="sophia-header-result" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px; background:white; padding:12px 16px; border-radius:6px; border:1px solid #ddd;">
+                <span style="font-weight:700; font-size:1.1rem; color:var(--oxford);">Note globale : <span id="sophia-global-score">${parsed.score_global}</span></span>
+                <span id="sophia-global-badge" style="font-weight:700; padding:6px 14px; border-radius:20px; background:${parsed.status.includes('Atteint') && !parsed.status.includes('Non') ? '#28A745' : '#d32f2f'}; color:white; font-size:0.85rem;">${parsed.status}</span>
+            </div>
+
+            <div id="sophia-rubrics-bar" style="display:flex; flex-wrap:wrap; gap:8px; margin-bottom:15px;"></div>
+
+            <div id="sophia-feedback-details" style="display:flex; flex-direction:column; gap:12px; background:#fff; padding:15px; border-radius:6px; border:1px solid #e0e6ed;">
+                <div id="sophia-rubric-score-badge" style="font-weight:700; color:var(--oxford); font-size:0.95rem;"></div>
+                <div style="background:#fce8e6; border-left:4px solid #d93025; padding:12px; border-radius:4px;">
+                    <strong style="color:#c5221f; display:block; margin-bottom:4px;"><i class="fas fa-exclamation-circle"></i> Diagnostic / Remarques :</strong>
+                    <div id="sophia-feedback-errors" style="font-size:0.9rem; color:#3c4043; line-height:1.5; white-space:pre-wrap;"></div>
+                </div>
+                <div id="sophia-feedback-supra-box" style="display:none; background:#e6f4ea; border-left:4px solid #137333; padding:12px; border-radius:4px;">
+                    <strong style="color:#137333; display:block; margin-bottom:4px;"><i class="fas fa-arrow-alt-circle-up"></i> Objectif Supra :</strong>
+                    <div id="sophia-feedback-supra" style="font-size:0.9rem; color:#3c4043;"></div>
+                </div>
+            </div>
+
+            ${overallHTML}
+            ${suggestionsHTML}
+            ${transcriptionHTML}
+        `;
+
+        verdictText.dataset.evaluation = JSON.stringify(parsed.rubriques);
+
+        if (typeof window.renderBotonesRubrosOral === "function") {
+            window.renderBotonesRubrosOral();
+        }
+    } catch(e) {
+        console.error("Error en PO:", e);
+    }
+};
+
+window.renderExerciseStructure = async function() {
+            const target = document.getElementById('dynamic-workspace-target');
+            if (currentUnitId === null || !unidadesCache[currentUnitId]) return;
+            let ejercicios = unidadesCache[currentUnitId][currentSkill] || unidadesCache[currentUnitId][currentSkill.toLowerCase()] || [];
+
+            if (ejercicios.length === 0 || !ejercicios[currentExerciseIndex]) return;
+            const ej = ejercicios[currentExerciseIndex];
+            const audioId = `audio-container-${currentExerciseIndex}`;
+
+            if (peTimerInterval) clearInterval(peTimerInterval);
+
+            let zoneHTML = (window.currentSkill === "PE" || window.currentSkill === "PO") 
+                ? `<span class="zone-badge zone-examen-simule"><i class="fas fa-exclamation-triangle"></i> Zone d'Examen Réel (Blindé)</span>`
+                : `<span class="zone-badge zone-entrainement"><i class="fas fa-graduation-cap"></i> Zone d'Entraînement</span>`;
+
+            let tituloInstruccion = ej.instruccion || 'Exercice';
+            if (window.currentSkill === "PE") {
+                tituloInstruccion = `Activité ${currentExerciseIndex + 1} : Production Écrite - Sujet de rédaction`;
+            }
+
+            let html = `<div class="exercise-card">${zoneHTML}<h4 style="margin-top:0; color:var(--oxford); font-weight:700; margin-bottom: 20px;">${tituloInstruccion}</h4>`;
+            if (ej.ruta_audio && window.currentSkill !== "PO") {
+                html += `<div style="background:#f1f3f5; padding:15px; border-radius:8px; margin-bottom:20px; text-align:center;"><div class="audio-counter-badge"><i class="fas fa-headphones"></i><span id="audio-count-label">Écoutes / Escuchas : 0 / 2</span></div><div id="${audioId}">Loading...</div></div>`;
+            }
+            
+            if (window.currentSkill === "PE") {
+                let instruccionOriginal = ej.instruccion || "";
+                let consigneLimpia = instruccionOriginal.replace(/^Activité\s*\d+\s*[\.\:]*\s*/i, "");
+
+                let minutosAsignados = consigneLimpia.toLowerCase().includes("article") ? 35 : 25;
+
+                html += `
+                <div id="pe-timer-bar" style="background: #fff3e0; border: 1px solid #ffe0b2; padding: 12px 15px; margin-bottom: 20px; border-radius: 6px; display: flex; align-items: center; justify-content: space-between; font-family: 'Montserrat';">
+                    <span style="font-weight: 600; color: #e65100;"><i class="fas fa-hourglass-half"></i> Temps disponible pour l'examen :</span>
+                    <span id="pe-countdown-clock" style="font-size: 1.3rem; font-weight: 700; color: #d63031; background: white; padding: 4px 12px; border-radius: 4px; border: 1px solid #ffe0b2;">${minutosAsignados}:00</span>
+                </div>`;
+
+                html += `
+                <div style="font-weight: bold; font-size: 0.95rem; color: #111; margin-top: 10px; margin-bottom: 25px; line-height: 1.5;">
+                    ${consigneLimpia}
+                </div>`;
+
+                if (ej.tipo === "formulario" && ej.campos_formulario && ej.campos_formulario.length > 0) {
+                    html += `
+                    <div style="background: white; border: 1px solid #e0e6ed; border-radius: 8px; padding: 25px; box-shadow: 0 4px 10px rgba(0,0,0,0.02); margin-bottom: 20px;">
+                        <h5 style="margin: 0 0 20px 0; color: var(--oxford); font-size: 1.1rem; font-weight: 700; text-align: center; border-bottom: 2px dashed var(--gold); padding-bottom: 10px; text-transform: uppercase;">
+                            <i class="fas fa-file-alt"></i> Formulaire à remplir
+                        </h5>
+                        <div style="display: flex; flex-direction: column; gap: 16px;">`;
+                    
+                    ej.campos_formulario.forEach((campo, fIdx) => {
+                        html += `
+                            <div style="display: flex; flex-direction: column; gap: 6px;">
+                                <label style="font-size: 0.88rem; font-weight: 600; color: #444;">${campo}</label>
+                                <input type="text" id="form-field-${fIdx}" class="form-student-input" style="width: 100%; padding: 10px 12px; border: 1px solid #ccc; border-radius: 6px; font-family: 'Montserrat', sans-serif; font-size: 0.95rem; box-sizing: border-box;" autocomplete="off">
+                            </div>`;
+                    });
+                    
+                    html += `
+                        </div>
+                    </div>`;
+                } else {
+                    if (ej.texto_lectura) {
+                        html += `
+                        <div style="background: #f4f6f9; border-left: 4px solid var(--gold); padding: 20px; margin-bottom: 20px; border-radius: 6px; box-shadow: 0 2px 5px rgba(0,0,0,0.02);">
+                            <div style="color: #222; line-height: 1.6; font-size: 0.95rem;">
+                                ${window.convertirTextoInteractivo(ej.texto_lectura)}
+                            </div>
+                        </div>`;
+                    }
+
+                    html += `
+                    <div style="margin-bottom:20px;">
+                        <div class="french-accents-bar">
+                            <button type="button" class="accent-btn" onclick="window.insertarCaracterEspecial('é')">é</button>
+                            <button type="button" class="accent-btn" onclick="window.insertarCaracterEspecial('è')">è</button>
+                            <button type="button" class="accent-btn" onclick="window.insertarCaracterEspecial('à')">à</button>
+                            <button type="button" class="accent-btn" onclick="window.insertarCaracterEspecial('ç')">ç</button>
+                            <button type="button" class="accent-btn" onclick="window.insertarCaracterEspecial('â')">â</button>
+                            <button type="button" class="accent-btn" onclick="window.insertarCaracterEspecial('ê')">ê</button>
+                            <button type="button" class="accent-btn" onclick="window.insertarCaracterEspecial('œ')">œ</button>
+                        </div>
+                        <textarea id="pe-student-response" class="production-textbox" placeholder="Rédigez votre texte ici..." spellcheck="false" autocomplete="off"></textarea>
+                    </div>`;
+                }
+
+                html += `
+                <div style="display:flex; justify-content:flex-end;">
+                    <button class="nav-tab-btn" id="btn-submit-pe" style="width:auto; background:var(--oxford); color:white; padding:10px 22px;"><i class="fas fa-paper-plane"></i> Soumettre la production</button>
+                </div>`;
+                
+                let tiempoTotalSegundos = minutosAsignados * 60;
+                peTimerInterval = setInterval(() => {
+                    tiempoTotalSegundos--;
+                    let min = Math.floor(tiempoTotalSegundos / 60);
+                    let seg = tiempoTotalSegundos % 60;
+                    
+                    const elReloj = document.getElementById('pe-countdown-clock');
+                    if (elReloj) {
+                        elReloj.innerText = `${min.toString().padStart(2, '0')}:${seg.toString().padStart(2, '0')}`;
+                    }
+
+                    if (tiempoTotalSegundos <= 0) {
+                        clearInterval(peTimerInterval);
+                        const elInput = document.getElementById('pe-student-response');
+                        if (elInput) {
+                            elInput.disabled = true; 
+                            elInput.style.background = "#f5f5f5";
+                            elInput.placeholder = "Temps écoulé ! Votre examen est bloqué.";
+                        }
+                        if (elReloj) {
+                            elReloj.innerText = "00:00 - Temps écoulé";
+                            elReloj.style.background = "#d63031";
+                            elReloj.style.color = "white";
+                        }
+                        alert("Le temps est écoulé ! Vous ne pouvez plus modifier votre production.");
+                    }
+                }, 1000);
+
+           } else if (window.currentSkill === "PO") {
+                if (ej.texto_lectura) {
+                    html += `<div style="background:#f8f9fa; border-left:4px solid var(--gold); padding:20px; margin-bottom:25px;"><strong>Document :</strong><br><br>${window.convertirTextoInteractivo(ej.texto_lectura)}</div>`;
+                }
+
+                if (ej.tipo === "oral_interaction" && ej.preguntas && ej.preguntas.length > 0) {
+                    html += `
+                    <div style="margin-bottom: 25px; background: #fff; border: 1px solid #e0e6ed; border-radius: 8px; padding: 20px;">
+                        <p style="color: var(--oxford); font-weight: 600; font-size: 0.95rem; margin-bottom: 15px; border-bottom: 2px dashed var(--gold); padding-bottom: 8px;">
+                            <i class="fas fa-comments"></i> Questions de l'examinateur (Répondez à l'oral) :
+                        </p>
+                        <ul style="padding-left: 20px; color: #333; line-height: 1.6; font-size: 0.95rem;">`;
+                    
+                    ej.preguntas.forEach((p) => {
+                        html += `<li style="margin-bottom: 10px; font-weight: 500;">${p.pregunta || p}</li>`;
+                    });
+                    
+                    html += `</ul></div>`;
+                }
+
+                if (ej.tipo === "oral_cards" && ej.campos_formulario && ej.campos_formulario.length > 0) {
+                    html += `
+                    <div style="margin-bottom: 25px;">
+                        <p style="color: var(--oxford); font-weight: 600; font-size: 0.92rem; margin-bottom: 15px;">
+                            <i class="fas fa-id-card-alt"></i> Cliquez sur une carte pour vous inspirer et poser votre question :
+                        </p>
+                        <div style="display: flex; flex-wrap: wrap; gap: 15px; justify-content: center;">`;
+                    
+                    ej.campos_formulario.forEach((palabraTarjeta) => {
+                        html += `
+                            <div class="delf-oral-card-item" style="background: white; border: 2px solid var(--oxford); border-radius: 6px; padding: 15px 25px; min-width: 100px; text-align: center; font-family: 'Montserrat', sans-serif; font-weight: 600; font-size: 1rem; color: var(--oxford); box-shadow: 0 4px 6px rgba(0,0,0,0.05); cursor: pointer; transition: transform 0.2s, border-color 0.2s;" onclick="this.style.borderColor='var(--gold)'; this.style.transform='scale(1.03)';">
+                                ${palabraTarjeta}
+                            </div>`;
+                    });
+                    
+                    html += `
+                        </div>
+                    </div>`;
+                }
+
+                html += `
+                <div style="background: #fff; border: 1px solid #e0e6ed; border-radius: 8px; padding: 25px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); margin-bottom: 25px;">
+<div id="container-po-audio-dual" style="margin: 20px 0; padding: 20px; background: #f8fafc; border: 2px dashed #0288d1; border-radius: 10px; text-align: center;">
+    <h4 style="margin-top:0; color:#0f172a; font-weight:bold;"><i class="fas fa-file-audio"></i> Soumettre votre production orale</h4>
+    
+    <div style="display: flex; flex-wrap: wrap; gap: 15px; justify-content: center; align-items: center; margin-top: 15px;">
+        <!-- OPCION 1: SUBIR ARCHIVO -->
+        <div style="flex: 1; min-width: 240px; background: #ffffff; padding: 15px; border-radius: 8px; border: 1px solid #cbd5e1; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+            <label style="font-weight: bold; display: block; margin-bottom: 8px; color: #1e293b;">
+                <i class="fas fa-upload" style="color:#0288d1;"></i> Option 1 : Importer un fichier audio
+            </label>
+            <input type="file" id="po-file-input" accept="audio/*" style="width: 100%; font-size: 13px; padding: 6px; border: 1px solid #ccc; border-radius: 4px;">
+        </div>
+
+        <div style="font-weight: bold; color: #64748b;">OU</div>
+
+        <!-- OPCION 2: GRABAR MICRÓFONO -->
+        <div style="flex: 1; min-width: 240px; background: #ffffff; padding: 15px; border-radius: 8px; border: 1px solid #cbd5e1; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+            <label style="font-weight: bold; display: block; margin-bottom: 8px; color: #1e293b;">
+                <i class="fas fa-microphone" style="color:#d32f2f;"></i> Option 2 : Enregistrer votre voix
+            </label>
+            <button type="button" id="btn-record-po" class="btn btn-primary" style="background: #0288d1; border: none; padding: 10px 16px; border-radius: 6px; color: white; font-weight: bold; cursor: pointer;">
+                <i class="fas fa-microphone"></i> Commencer à parler
+            </button>
+        </div>
+    </div>
+    <div id="po-audio-feedback" style="margin-top: 15px; font-weight: bold;"></div>
+</div>
+
+<button type="button" id="btn-reset-po" style="background:#6c757d; color:white; border:none; padding:10px 20px; border-radius:6px; cursor:pointer;">Réinitialiser</button>
+                        <button type="button" id="btn-submit-po" onclick="window.evaluarPO()" style="background:var(--oxford); color:white; padding:10px 22px; border:none; border-radius:6px; cursor:pointer; font-weight:700; display: inline-flex; align-items: center; gap: 8px;">
+                            <i class="fas fa-paper-plane"></i> Évaluer ma production orale
+                        </button>
+                    </div>
+                </div>`;
+                
+            } else if (ej.preguntas && ej.preguntas.length > 0) {
+                const esMatrizB1 = ej.preguntas[0].opciones.includes("Oui") || ej.preguntas[0].opciones.includes("Non");
+                
+                if (esMatrizB1 && ej.texto_lectura) {
+                    let anunciosAgrupados = {};
+                    ej.preguntas.forEach((p, pIdx) => {
+                        let textCriterio = p.pregunta;
+                        let nombreAnuncio = "Critères d'évaluation"; 
+                        
+                        if (p.pregunta.includes(" - ")) {
+                            let partes = p.pregunta.split(" - ");
+                            nombreAnuncio = partes[0].trim();
+                            textCriterio = partes[1].trim();
+                        } else if (p.pregunta.includes(" : ")) {
+                            let partes = p.pregunta.split(" : ");
+                            nombreAnuncio = partes[0].trim();
+                            textCriterio = partes[1].trim();
+                        }
+                        
+                        if (!anunciosAgrupados[nombreAnuncio]) anunciosAgrupados[nombreAnuncio] = [];
+                        anunciosAgrupados[nombreAnuncio].push({ originalIndex: pIdx, criterio: textCriterio });
+                    });
+
+                    let textoRestante = ej.texto_lectura;
+                    let bloquesMapeadosPorAnuncio = {};
+                    let llavesAnuncios = Object.keys(anunciosAgrupados);
+
+                    for (let i = 0; i < llavesAnuncios.length; i++) {
+                        let tituloActual = llavesAnuncios[i];
+                        let tituloSiguiente = llavesAnuncios[i + 1];
+                        
+                        let idxInicio = textoRestante.indexOf(tituloActual);
+                        if (idxInicio !== -1) {
+                            let idxFin = tituloSiguiente ? textoRestante.indexOf(tituloSiguiente) : textoRestante.length;
+                            if (idxFin !== -1 && idxFin > idxInicio) {
+                                  bloquesMapeadosPorAnuncio[tituloActual] = textoRestante.substring(idxInicio, idxFin).trim();
+                            } else {
+                                  bloquesMapeadosPorAnuncio[tituloActual] = textoRestante.substring(idxInicio).trim();
+                            }
+                        } else {
+                            let bloquesAlternativos = ej.texto_lectura.split(/\n\s*\n/);
+                            bloquesMapeadosPorAnuncio[tituloActual] = bloquesAlternativos[i] || ej.texto_lectura;
+                        }
+                    }
+
+                    html += `<div id="preguntas-wrapper-bloque">`;
+
+                    llavesAnuncios.forEach((tituloAnuncio) => {
+                        let contenidoTextoFiltrado = bloquesMapeadosPorAnuncio[tituloAnuncio] || "<em>Document joint.</em>";
+
+                        html += `
+                        <div class="modulo-anuncio-completo" style="margin-bottom: 35px; background: #fff; border: 1px solid #e0e6ed; border-radius: 8px; padding: 20px; box-shadow: 0 3px 99px rgba(0,0,0,0.02);">
+                            
+                            <div class="document-anuncio-block" style="background: #fdfefe; border: 1px dashed var(--gold); border-left: 4px solid var(--gold); padding: 15px; margin-bottom: 18px; border-radius: 4px;">
+                                <div style="color: #222; line-height: 1.6; font-size: 0.95rem;">
+                                    ${window.convertirTextoInteractivo(contenidoTextoFiltrado)}
+                                </div>
+                            </div>
+
+                            <h5 style="margin: 20px 0 12px 0; color: var(--oxford); font-size: 1rem; font-weight: 700; border-left: 4px solid var(--gold); padding-left: 10px; text-transform: uppercase; font-family: 'Montserrat';">
+                                VALIDATION : ${tituloAnuncio}
+                            </h5>
+                            
+                            <table style="width: 100%; border-collapse: collapse; font-size: 0.88rem;">
+                                <thead>
+                                    <tr style="border-bottom: 2px solid #eef2f5; text-align: left; background: #fafbfc;">
+                                        <th style="padding: 10px; color: #555; font-weight: 600;">Spécifications / Critères</th>
+                                        <th style="padding: 10px; text-align: center; width: 75px; color: var(--green); font-weight: 700;">OUI</th>
+                                        <th style="padding: 10px; text-align: center; width: 75px; color: var(--danger); font-weight: 700;">NON</th>
+                                    </tr>
+                                </thead>
+                                <tbody>`;
+                        
+                        anunciosAgrupados[tituloAnuncio].forEach((item) => {
+                            html += `
+                                    <tr id="block-preg-${item.originalIndex}" style="border-bottom: 1px solid #eef2f5; transition: background 0.2s;">
+                                        <td style="padding: 11px 10px; color: #333; font-weight: 500; line-height: 1.4;">
+                                            <span id="status-icon-target-${item.originalIndex}"></span>
+                                            <span>${item.criterio}</span>
+                                        </td>
+                                        <td style="padding: 11px 10px; text-align: center;">
+                                            <label style="cursor: pointer; display: block; width: 100%;">
+                                                <input type="radio" name="question_${item.originalIndex}" value="Oui" style="transform: scale(1.15);">
+                                            </label>
+                                        </td>
+                                        <td style="padding: 11px 10px; text-align: center;">
+                                            <label style="cursor: pointer; display: block; width: 100%;">
+                                                <input type="radio" name="question_${item.originalIndex}" value="Non" style="transform: scale(1.15);">
+                                            </label>
+                                        </td>
+                                    </tr>`;
+                        });
+                        
+                        html += `
+                                </tbody>
+                            </table>
+                        </div>`;
+                    });
+
+                    html += `</div>`;
+
+                } else {
+                    if (ej.texto_lectura) {
+                        html += `<div style="background:#f8f9fa; border-left:4px solid var(--gold); padding:20px; margin-bottom:25px;"><strong>Document :</strong><br><br>${window.convertirTextoInteractivo(ej.texto_lectura)}</div>`;
+                    }
+                    html += `<div id="preguntas-wrapper-bloque">`;
+                    ej.preguntas.forEach((p, pIdx) => {
+                        html += `<div class="pregunta-block" id="block-preg-${pIdx}"><p style="margin:0 0 12px 0; font-weight:600;"><span id="status-icon-target-${pIdx}"></span><span>${p.pregunta}</span></p>`;
+
+                        if (p.opciones) {
+                            p.opciones.forEach((opt) => {
+                                let contenidoOpcion = opt;
+                                
+                                if (typeof opt === 'string') {
+                                    let textoTraducido = opt;
+                                    
+                                    if (opt.includes('|')) {
+                                        let partes = opt.split('|');
+                                        textoTraducido = partes[1] ? partes[1].trim() : partes[0].trim();
+                                    }
+                                    
+                                    let textoLimpio = textoTraducido
+                                        .replace(/\.(png|jpg|jpeg|gif)/i, '')
+                                        .replace(/activit[eé]\s*\d*_*q\d*_*[a-z]*/i, '')
+                                        .replace(/[-_]/g, ' ')
+                                        .trim();
+                                    
+                                    textoLimpio = textoLimpio
+                                        .replace(/\(?r[eé]ponse\s+correcte\)?/i, '')
+                                        .replace(/\(?correct\s+answer\)?/i, '')
+                                        .trim();
+                                    
+                                    contenidoOpcion = textoLimpio.charAt(0).toUpperCase() + textoLimpio.slice(1);
+                                }
+                                
+                                html += `<label style="display:flex; align-items:center; gap:12px; margin-bottom:14px; cursor:pointer; font-size:0.95rem; color:#333;"><input type="radio" name="question_${pIdx}" value="${opt}"> <span>${contenidoOpcion}</span></label>`;
+                            });
+                        }
+                        html += `</div>`;
+                    });
+                    html += `</div>`;
+                }
+                
+                html += `
+                <div style="display:flex; justify-content:flex-end; margin-top:15px;" id="contenedor-acciones-ejercicio">
+                    <button class="nav-tab-btn" id="btn-submit-exercise" style="width:auto; background:var(--oxford); color:white; padding:10px 22px;">Envoyer</button>
+                    <button class="btn-avanzar-dinamico" id="btn-avanzar-siguiente" style="display:none;" onclick="window.avanzarSiguienteEjercicio()">Activité Suivante <i class="fas fa-arrow-right"></i></button>
+                </div>`;
+            }
+
+            html += `
+                <div id="sophia-box" style="display:none; background:white; border:1px solid #e0e6ed; border-left:4px solid var(--gold); padding:25px; border-radius:6px; margin-top:25px; box-shadow:0 4px 12px rgba(0,0,0,0.02); box-sizing:border-box; width:100%;">
+                    <div id="sophia-verdict-text"></div>
+                </div>
+            </div>`;
+            
+            target.innerHTML = html;
+
+            const llaveProgresoVerif = `${currentUnitId}_${window.currentSkill}_${currentExerciseIndex}`;
+            if (mapaAciertosAlumno[llaveProgresoVerif] === true && urlId !== "admin_preview") {
+                try {
+                    const qFiltro = query(collection(db, "Usuarios", urlId, "HistorialSophia"), 
+                                          where("unidad", "==", currentUnitId), 
+                                          where("actividad", "==", currentExerciseIndex));
+                    const snapFiltro = await getDocs(qFiltro);
+                    if (!snapFiltro.empty) {
+                        const datosHistoricos = snapFiltro.docs[0].data();
+                        
+                        if (window.currentSkill === "PE") {
+                            const inputPE = document.getElementById('pe-student-response');
+                            if (inputPE && datosHistoricos.texto_alumno) inputPE.value = datosHistoricos.texto_alumno;
+                            
+                            if (peTimerInterval) clearInterval(peTimerInterval);
+                            const elRelojBar = document.getElementById('pe-timer-bar');
+                            if (elRelojBar) elRelojBar.innerHTML = `<span style="font-weight:600; color:#2e7d32;"><i class="fas fa-check-double"></i> Statut : Examen complété et sauvegardé.</span>`;
+                        }
+                        
+                        if (datosHistoricos.respuesta_ia) {
+    const sBox = document.getElementById("sophia-box");
+    if (sBox) sBox.style.display = "block";
+    if (window.currentSkill === "PO") {
+        window.mostrarEvaluacionOralSophia(datosHistoricos.respuesta_ia);
+    } else if (window.currentSkill === "PE") {
+        window.mostrarEvaluacionSophia(datosHistoricos.respuesta_ia);
+    } else {
+        document.getElementById("sophia-verdict-text").innerHTML = datosHistoricos.respuesta_ia;
+    }
+}
+}
+                } catch(errFetch) { console.error("Error recuperando histórico:", errFetch); }
+            }
+
+            if (ej.ruta_audio && window.currentSkill !== "PO") {
+                let extraerNumeros = ej.ruta_audio.match(/\d+/);
+                let numeroPista = extraerNumeros ? extraerNumeros[0].padStart(2, '0') : "02";
+                let rutaCompletaStorage = `niveles/${currentLevel}/audios/${numeroPista}.mp3`;
+
+                getDownloadURL(ref(storage, rutaCompletaStorage)).then(url => {
+                    const container = document.getElementById(audioId);
+                    if (container) {
+                        container.innerHTML = `<audio id="native-audio-player" controls style="width:100%;" src="${url}"></audio>`;
+                        const player = document.getElementById("native-audio-player");
+                        let listenCount = 0; let activeListen = false;
+                        player.addEventListener('play', () => { if (!activeListen) { listenCount++; document.getElementById('audio-count-label').innerText = `Écoutes / Escuchas : ${listenCount} / 2`; activeListen = true; } });
+                        player.addEventListener('ended', () => { activeListen = false; if (listenCount >= 2) { player.pause(); player.src = ""; container.innerHTML = `<span style="color:red; font-weight:700;">Limite d'écoutes atteinte (2/2)</span>`; } });
+                    }
+                }).catch(err => {
+                    console.error("Error al descargar el audio de Storage: ", err);
+                    const container = document.getElementById(audioId);
+                    if (container) container.innerHTML = `<span style="color:red;">Audio no encontrado en Storage (${rutaCompletaStorage})</span>`;
+                });
+            }
+
+            if (window.currentSkill === "PE") {
+                const elInputRedaccion = document.getElementById('pe-student-response');
+                if (elInputRedaccion) {
+                    ['copy', 'cut', 'contextmenu'].forEach(evt => elInputRedaccion.addEventListener(evt, e => e.preventDefault(), true));
+                }
+                
+                document.getElementById('btn-submit-pe').addEventListener('click', async () => {
+                    const elInputRedaccion = document.getElementById('pe-student-response');
+                    const txtAlumno = elInputRedaccion ? elInputRedaccion.value.trim() : "";
+                    if (!txtAlumno) return;
+
+                    if (peTimerInterval) clearInterval(peTimerInterval);
+
+                    const saludoH3 = document.getElementById('student-welcome')?.innerText || "";
+                    const nombreAlumno = saludoH3.replace("Élève:", "").trim() || "l'élève";
+
+                    document.getElementById('btn-submit-pe').disabled = true;
+                    document.getElementById('sophia-verdict-text').innerHTML = "<i>Sophia corrige ta production...</i>";
+                    document.getElementById('sophia-box').style.display = "block";
+
+                    try {
+                        const extDocRef = await addDoc(collection(db, "generate"), {
+                            prompt: `Actúa como examinadora certificada DELF para nivel ${currentLevel}. Evalúa la siguiente producción escrita asignando una nota detallada sobre 25 basada en los criterios oficiales. Es MANDATORIO que personalices tu respuesta: dirígete directamente al alumno llamándolo por su nombre (${nombreAlumno}) de forma empática y profesional. Texto del alumno: ${txtAlumno}`
+                        });
+
+                        const desvincularEscucha = onSnapshot(extDocRef, async (snapshot) => {
+                            if (snapshot.exists() && snapshot.data().response) {
+                                desvincularEscucha();
+                                const respuestaIA = snapshot.data().response;
+                                
+                                document.getElementById('sophia-verdict-text').innerHTML = respuestaIA;
+
+                                const llaveProgreso = `${currentUnitId}_${window.currentSkill}_${currentExerciseIndex}`;
+                                
+                                if (typeof mapaAciertosAlumno !== "undefined") {
+                                    mapaAciertosAlumno[llaveProgreso] = true;
+                                }
+
+                                if (urlId !== "admin_preview" && docRefValidado) {
+                                    const perfilUsuarioRef = doc(db, "Usuarios", urlId);
+                                    await setDoc(perfilUsuarioRef, {
+                                        mapa_aciertos: {
+                                            [llaveProgreso]: true
+                                        }
+                                    }, { merge: true });
+                                    
+                                    generarMenuJerarquico();
+                                }
+
+                                if (urlId !== "admin_preview" && docRefValidado) {
+                                    await addDoc(collection(db, "Usuarios", urlId, "HistorialSophia"), {
+                                        fecha: new Date().toISOString().split('T')[0],
+                                        tipo: "Production_Escrita",
+                                        habilidad: "PE",
+                                        texto_alumno: txtAlumno,
+                                        respuesta_ia: respuestaIA,
+                                        unidad: currentUnitId,
+                                        actividad: currentExerciseIndex
+                                    });
+                                }
+                                
+                                await calcularTodasLasNotasHabilidades();
+                            } else if (snapshot.exists() && snapshot.data().status?.state === "ERROR") {
+                                desvincularEscucha();
+                                document.getElementById('sophia-verdict-text').innerHTML = "<span style='color:red;'>Erreur d'évaluation par l'IA.</span>";
+                            }
+                        });
+                    } catch (e) {
+                        console.error(e);
+                        alert("Une erreur est survenue con Sophia. Veuillez réessayer.");
+                    } finally {
+                        document.getElementById('btn-submit-pe').disabled = false;
+                    }
+                });
+            }
+
+            const btnSubmit = document.getElementById('btn-submit-exercise');
+            if (btnSubmit) {
+                btnSubmit.addEventListener('click', async () => {
+                    let aciertosN = 0;
+                    let totalPreguntas = ej.preguntas.length;
+
+                    ej.preguntas.forEach((p, pIdx) => {
+                        const sel = document.querySelector(`input[name="question_${pIdx}"]:checked`);
+                        const icon = document.getElementById(`status-icon-target-${pIdx}`);
+                        const blk = document.getElementById(`block-preg-${pIdx}`);
+                        let ok = sel && sel.value.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()¿?¡!]/g,"").trim().toLowerCase() === (p.respuesta_correcta || "").replace(/[.,\/#!$%\^&\*;:{}=\-_`~()¿?¡!]/g,"").trim().toLowerCase();
+                        if (ok) { aciertosN++; icon.innerHTML = `<i class="fas fa-check-circle" style="color:var(--green); margin-right:8px;"></i>`; blk.style.background = "#f4fff5"; }
+                        else { icon.innerHTML = `<i class="fas fa-times-circle" style="color:red; margin-right:8px;"></i>`; blk.style.background = "#fff5f5"; }
+                    });
+
+                    document.querySelectorAll('#preguntas-wrapper-bloque input[type="radio"]').forEach(r => r.disabled = true);
+                    document.getElementById('sophia-verdict-text').innerHTML = `Tu as obtenu <strong>${aciertosN} / ${totalPreguntas}</strong> aciertos.`;
+                    
+                    if (ej.transcripcion) {
+                        document.getElementById('interactive-transcription-box').innerHTML = window.convertirTextoInteractivo(ej.transcripcion);
+                        window.inicializarLectorVozGratuito(ej.transcripcion);
+                    }
+                    document.getElementById('sophia-box').style.display = "block";
+
+                    const claveUnica = `${currentUnitId}_${currentSkill}_${currentExerciseIndex}`;
+                    mapaAciertosAlumno = mapaAciertosAlumno || {};
+                    mapaAciertosAlumno[claveUnica] = true; 
+
+                    let totalActividadesNivel = 0;
+                    let completadasNivel = 0;
+                    Object.keys(unidadesCache).forEach(uKey => {
+                        const arr = unidadesCache[uKey][currentSkill] || unidadesCache[uKey][currentSkill.toLowerCase()] || [];
+                        arr.forEach((_, indices) => {
+                            totalActividadesNivel++;
+                            if (mapaAciertosAlumno[`${uKey}_${currentSkill}_${indices}`] === true) {
+                                completadasNivel++;
+                            }
+                        });
+                    });
+
+                    const finalProgresoCalculado = Math.round((completadasNivel / totalActividadesNivel) * 100);
+
+                    if (urlId !== "admin_preview" && docRefValidado) {
+                        try {
+                            await setDoc(docRefValidado, {
+                                mapa_aciertos: mapaAciertosAlumno,
+                                progreso: finalProgresoCalculado
+                            }, { merge: true });
+                        } catch (err) { console.error("Error al guardar en la base de datos:", err); }
+                    }
+
+                    document.getElementById('progress-text-target').innerText = `${finalProgresoCalculado}%`;
+                    document.getElementById('progress-bar-fill').style.width = `${finalProgresoCalculado}%`;
+
+                    btnSubmit.style.display = "none";
+                    document.getElementById('btn-avanzar-siguiente').style.display = "inline-flex";
+                    generarMenuJerarquico(); 
+                });
+            }
+        };
+        
+        window.avanzarSiguienteEjercicio = function() {
+            let ejercicios = unidadesCache[currentUnitId][currentSkill] || unidadesCache[currentUnitId][currentSkill.toLowerCase()] || [];
+            if (currentExerciseIndex + 1 < ejercicios.length) {
+                currentExerciseIndex++;
+                window.renderExerciseStructure();
+                generarMenuJerarquico();
+            } else {
+                alert("Félicitations! Vous avez complété toutes les activités de cette Unité.");
+            }
+        };
+
+        window.inicializarLectorVozGratuito = function(textoOriginal) {
+            const btnRecord = document.getElementById('btn-record-transcription');
+            const feedback = document.getElementById('audio-reading-feedback');
+            if (!btnRecord) return;
+            const SpeechRecognition = window.SpeechRecognition || window.webkitRecognition || window.webkitSpeechRecognition; if (!SpeechRecognition) return;
+            const recognition = new SpeechRecognition(); recognition.lang = 'fr-FR'; recognition.continuous = true;
+
+            let modoGrabacionManualActivo = false; let buzonTexto = ""; 
+
+            btnRecord.addEventListener('click', () => {
+                if (!modoGrabacionManualActivo) {
+                    modoGrabacionManualActivo = true; buzonTexto = ""; 
+                    document.querySelectorAll('.clickable-word').forEach(s => s.classList.remove('word-wrong'));
+                    feedback.innerText = "Écoute active... Parlez librement."; feedback.style.color = "var(--green)";
+                    btnRecord.innerHTML = `<i class="fas fa-stop"></i> Terminer`; recognition.start();
+                } else { modoGrabacionManualActivo = false; recognition.stop(); }
+            });
+
+            recognition.onend = () => {
+                if (!modoGrabacionManualActivo) {
+                    btnRecord.innerHTML = `<i class="fas fa-microphone"></i> Commencer`;
+                    let lOrig = textoOriginal.toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()¿?¡!]/g,"").split(/\s+/);
+                    let lEsc = buzonTexto.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()¿?¡!]/g,"").split(/\s+/);
+                    lOrig.forEach(p => { if (p.trim() !== "" && !lEsc.includes(p)) { document.querySelectorAll(`.clickable-word[data-word="${p}"]`).forEach(el => el.classList.add('word-wrong')); } });
+                }
+            };
+            recognition.onresult = (e) => { for (let i = e.resultIndex; i < e.results.length; ++i) { if (e.results[i].isFinal) buzonTexto += " " + e.results[i][0].transcript.toLowerCase(); } };
+        };
+
+        window.ejecutarConsultaSophiaConFiltro = async function(frase) {
+            const container = document.getElementById("glosario-flotante-container"); if (!container) return;
+            container.innerHTML = `<div style="background:#fff; padding:15px; border-radius:8px; box-shadow:0 4px 15px rgba(0,0,0,0.15); font-family:'Montserrat';"><p style="margin:0; font-size:13px; color:#333;"><i class="fas fa-spinner fa-spin"></i> Sophia cherche...</p></div>`;
+            container.style.display = "block";
+
+            const palabraLimpia = frase.toLowerCase().trim();
+
+            try {
+                const docRefDiccionario = doc(db, "diccionario_maestro", palabraLimpia);
+                const diccionarioSnap = await getDoc(docRefDiccionario);
+
+                if (diccionarioSnap.exists()) {
+                    const datos = diccionarioSnap.data();
+                    const definicionFr = datos.definicion || "Pas de définition disponible.";
+                    const ejemploFr = datos.ejemplo_uso || "";
+                    const traduccionEs = datos.significado_espansol || "Sin traducción.";
+                    const tipo = datos.tipo_gramatical || "N/A";
+                    const listaSinonimos = datos.sinonimos ? datos.sinonimos.join(", ") : "Aucun";
+
+                    container.innerHTML = `
+                    <div style="background:#fff; padding:18px; border-radius:8px; box-shadow:0 4px 15px rgba(0,0,0,0.15); max-height:380px; overflow-y:auto; font-family:'Montserrat';">
+                        <h4 style="margin:0 0 5px 0; color:var(--oxford); font-size:1.1rem; text-transform:capitalize;">${palabraLimpia} <span style="font-size:0.75rem; color:var(--gold); font-weight:600;">(${tipo})</span></h4>
+                        <p style="margin:0 0 10px 0; font-size:0.85rem; color:#28A745; font-weight:600;"><i class="fas fa-language"></i> ${traduccionEs}</p>
+                        <hr style="border:0; border-top:1px solid #eee; margin:10px 0;">
+                        <p style="margin:0 0 8px 0; font-size:0.88rem; line-height:1.4; color:#333;"><strong>Définition:</strong> ${definicionFr}</p>
+                        ${ejemploFr ? `<p style="margin:0 0 8px 0; font-size:0.85rem; color:#555; background:#f9f9f9; padding:6px; border-radius:4px;"><i>Exemple: ${ejemploFr}</i></p>` : ''}
+                        <p style="margin:0; font-size:0.8rem; color:#777;"><strong>Synonymes:</strong> ${listaSinonimos}</p>
+                        <button onclick="document.getElementById('glosario-flotante-container').style.display='none'" style="margin-top:15px; width:100%; padding:8px; cursor:pointer; background:var(--oxford); color:white; border:none; border-radius:4px; font-weight:600;">Fermer</button>
+                    </div>`;
+                    return;
+                }
+
+                if (alumnoTokensGlobal <= 0) {
+                    container.innerHTML = `
+                    <div style="background:#fff; padding:15px; border-radius:8px; box-shadow:0 4px 15px rgba(0,0,0,0.15); text-align:center; font-family:'Montserrat';">
+                        <p style="margin:0 0 10px 0; font-size:0.88rem; color:var(--danger); font-weight:700;"><i class="fas fa-exclamation-circle"></i> Crédits épuisés</p>
+                        <p style="margin:0 0 12px 0; font-size:0.8rem; color:#555;">Vous n'avez plus de crédits pour consulter l'IA. Contactez votre professeur.</p>
+                        <button onclick="document.getElementById('glosario-flotante-container').style.display='none'" style="padding:6px 12px; cursor:pointer; background:#555; color:white; border:none; border-radius:4px;">Fermer</button>
+                    </div>`;
+                    return;
+                }
+
+                const promptContexto = `Actúa como Sophia, un diccionario monolingüe en francés para estudiantes de nivel A1 a B2. Define la palabra de forma clara y muy breve en francés, y agrega su significado en español. Incluye su categoría gramatical y un ejemplo corto en francés. Responde utilizando un formato HTML limpio y compacto. Palabra: "${palabraLimpia}"`;
+
+                const extDocRef = await addDoc(collection(db, "generate"), {
+                    prompt: promptContexto
+                });
+
+                let desvincularEscucha = onSnapshot(extDocRef, async (snapshot) => {
+                    if (snapshot.exists()) {
+                        const datosExt = snapshot.data();
+
+                        if (datosExt.response) {
+                            desvincularEscucha();
+                            const respuestaTextoSophia = datosExt.response;
+
+                            await setDoc(doc(db, "diccionario_maestro", palabraLimpia), {
+                                definicion: respuestaTextoSophia,
+                                tipo_gramatical: "IA",
+                                significado_espansol: "Generado por IA",
+                                ejemplo_uso: ""
+                            });
+
+                            alumnoTokensGlobal--;
+                            await setDoc(docRefValidado, { tokens: alumnoTokensGlobal }, { merge: true });
+
+                            const tokenCounter = document.getElementById('banner-credits-count');
+                            if (tokenCounter) tokenCounter.innerText = alumnoTokensGlobal;
+
+                            if (urlId !== "admin_preview" && docRefValidado) {
+                                const subColRef = collection(db, "Usuarios", urlId, "HistorialSophia");
+                                await addDoc(subColRef, {
+                                    fecha: new Date().toISOString().split('T')[0],
+                                    tipo: "Vocabulaire",
+                                    habilidad: currentSkill,
+                                    palabra_consultada: palabraLimpia,
+                                    respuesta_ia: respuestaTextoSophia,
+                                    unidad: currentUnitId || "N/A"
+                                });
+                            }
+
+                            container.innerHTML = `
+                            <div style="background:#fff; padding:15px; border-radius:8px; box-shadow:0 4px 15px rgba(0,0,0,0.15); max-height:380px; overflow-y:auto; font-family:'Montserrat';">
+                                <h4 style="margin:0 0 10px 0; color:var(--oxford); font-size:1rem;">Analyse de Sophia:</h4>
+                                <div style="font-size:0.88rem; line-height:1.5; color:#333;">${respuestaTextoSophia}</div>
+                                <p style="margin:10px 0 0 0; font-size:0.7rem; color:#999; text-align:right;"><i>-1 Crédit IA</i></p>
+                                <button onclick="document.getElementById('glosario-flotante-container').style.display='none'" style="margin-top:10px; width:100%; padding:6px; cursor:pointer; background:var(--oxford); color:white; border:none; border-radius:4px;">Fermer</button>
+                            </div>`;
+                        } else if (datosExt.status?.state === "ERROR") {
+                            desvincularEscucha();
+                            throw new Error(datosExt.status.errorMessage || "Fallo en el motor de la extensión");
+                        }
+                    }
+                });
+
+            } catch (error) {
+                console.error("Erreur Sophia:", error);
+                container.innerHTML = `
+                <div style="background:#fff; padding:15px; border-radius:8px; box-shadow:0 4px 15px rgba(0,0,0,0.15); font-family:'Montserrat'; text-align:center;">
+                    <p style="margin:0 0 10px 0; font-size:0.85rem; color:var(--danger); font-weight:700;"><i class="fas fa-exclamation-triangle"></i> Connexion interrompue</p>
+                    <p style="margin:0 0 12px 0; font-size:0.78rem; color:#666;">${error.message}</p>
+                    <button onclick="document.getElementById('glosario-flotante-container').style.display='none'" style="padding:5px 12px; cursor:pointer; background:#555; color:white; border:none; border-radius:4px;">Fermer</button>
+                </div>`;
+            }
+        };
+        
+        let selectionTimeout = null;
+        document.addEventListener('selectionchange', () => {
+            clearTimeout(selectionTimeout);
+            selectionTimeout = setTimeout(() => {
+                const txt = window.getSelection().toString().trim();
+                if (txt && txt.includes(" ") && txt.length > 4 && !txt.includes("\n")) { window.getSelection().removeAllRanges(); }
+            }, 700); 
+        });
+
+        document.addEventListener('click', (e) => {
+            if (window.getSelection().toString().trim().includes(" ")) return;
+            if (e.target.classList.contains('clickable-word')) {
+                const pal = e.target.getAttribute('data-word') || e.target.innerText.trim();
+                if (pal.length > 1) window.ejecutarConsultaSophiaConFiltro(pal);
+            }
+        });
+
+        const tabParcours = document.getElementById('tab-parcours');
+        if (tabParcours) tabParcours.addEventListener('click', () => window.switchMainTab('parcours'));
+
+        const tabCarnet = document.getElementById('tab-carnet');
+        if (tabCarnet) tabCarnet.addEventListener('click', () => window.switchMainTab('carnet'));
+
+        const parcoursControls = document.getElementById('parcours-controls-container');
+        if (parcoursControls) {
+            parcoursControls.addEventListener('click', (e) => {
+                const btn = e.target.closest('.skill-tab-btn');
+                if (btn) window.setSkillFilter(btn.id.replace('skill-', ''));
+            });
+        }
+
+        setTimeout(() => {
+            window.mostrarExplicacionHabilidadInicial("CO");
+        }, 500);
+        
         init();
     </script>
 </body>

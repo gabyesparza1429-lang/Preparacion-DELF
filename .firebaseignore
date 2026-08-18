@@ -1,0 +1,6 @@
+firebase.json
+**/.*
+**/node_modules/**
+functions/**
+.git/**
+*.log

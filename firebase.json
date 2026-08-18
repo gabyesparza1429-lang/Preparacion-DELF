@@ -1,0 +1,34 @@
+{
+  "hosting": {
+    "public": ".",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**",
+      "functions/**",
+      "**/*.git/**",
+      "**/*.mp3",
+      "**/*.mp4",
+      "**/*.wav",
+      "**/*.zip",
+      "**/*.tar.gz",
+      "**/*.pdf"
+    ],
+    "rewrites": [
+      {
+        "source": "/procesarAudioPO",
+        "function": "procesarAudioPO"
+      }
+    ]
+  },
+  "functions": {
+    "source": "functions",
+    "codebase": "default",
+    "ignore": [
+      "node_modules",
+      ".git",
+      "firebase-debug.log",
+      "firebase-debug.*.log"
+    ]
+  }
+}
