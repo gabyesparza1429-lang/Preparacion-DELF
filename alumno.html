@@ -1182,9 +1182,10 @@ window.enviarAudioAIA = function(audioBlob) {
 
         // --- FUNCIÓN INIT ---
         async function init() {
+            const welcomeEl = document.getElementById('student-welcome');
             if (!urlId) {
                 console.error("No se detectó ningún ID en la barra de direcciones ni en memoria.");
-                document.getElementById('student-welcome').innerText = "ID de l'élève manquant";
+                if (welcomeEl) welcomeEl.innerText = "ID de l'élève manquant";
                 return;
             }
             
@@ -1209,7 +1210,7 @@ window.enviarAudioAIA = function(audioBlob) {
                     }
 
                     mapaAciertosAlumno = {};
-                    document.getElementById('student-welcome').innerText = `Élève: Professeur (Aperçu)`;
+                    if (welcomeEl) welcomeEl.innerText = `Élève: Professeur (Aperçu)`;
 
                     await descargarColeccionUnidades();
                     return;
@@ -1240,17 +1241,17 @@ window.enviarAudioAIA = function(audioBlob) {
                     }
 
                     const nombreMostrar = datosAlumno.nombre || urlId;
-                    document.getElementById('student-welcome').innerText = `Élève: ${nombreMostrar}`;
+                    if (welcomeEl) welcomeEl.innerText = `Élève: ${nombreMostrar}`;
                     
                     await descargarColeccionUnidades();
 
                 } else {
                     console.error("El ID no existe en la colección usuarios de Firestore.");
-                    document.getElementById('student-welcome').innerText = "ID non valide. Contactez votre professeur.";
+                    if (welcomeEl) welcomeEl.innerText = "ID non valide. Contactez votre professeur.";
                 }
             } catch (error) {
                 console.error("Error crítico en init al comunicar con Firestore:", error);
-                document.getElementById('student-welcome').innerText = "Erreur de connexion.";
+                if (welcomeEl) welcomeEl.innerText = "Erreur de connexion. Vérifiez votre réseau.";
             }
         }
 
@@ -2467,12 +2468,19 @@ window.renderExerciseStructure = async function() {
             }
         });
 
-        document.getElementById('tab-parcours').addEventListener('click', () => window.switchMainTab('parcours'));
-        document.getElementById('tab-carnet').addEventListener('click', () => window.switchMainTab('carnet'));
-        document.getElementById('parcours-controls-container').addEventListener('click', (e) => {
-            const btn = e.target.closest('.skill-tab-btn');
-            if (btn) window.setSkillFilter(btn.id.replace('skill-', ''));
-        });
+        const tabParcours = document.getElementById('tab-parcours');
+        if (tabParcours) tabParcours.addEventListener('click', () => window.switchMainTab('parcours'));
+
+        const tabCarnet = document.getElementById('tab-carnet');
+        if (tabCarnet) tabCarnet.addEventListener('click', () => window.switchMainTab('carnet'));
+
+        const parcoursControls = document.getElementById('parcours-controls-container');
+        if (parcoursControls) {
+            parcoursControls.addEventListener('click', (e) => {
+                const btn = e.target.closest('.skill-tab-btn');
+                if (btn) window.setSkillFilter(btn.id.replace('skill-', ''));
+            });
+        }
 
         setTimeout(() => {
             window.mostrarExplicacionHabilidadInicial("CO");
@@ -2480,51 +2488,5 @@ window.renderExerciseStructure = async function() {
         
         init();
     </script>
-</body>
-</html>
-
-<script>
-window.grabarPO = async function() {
-    const btn = document.getElementById('btn-record-po');
-    if (!window.mediaRecorder || window.mediaRecorder.state === "inactive") {
-        try {
-            const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-            window.mediaRecorder = new MediaRecorder(stream);
-            window.audioChunks = [];
-            
-            window.mediaRecorder.ondataavailable = e => window.audioChunks.push(e.data);
-            
-            window.mediaRecorder.onstop = async function() {
-                const audioBlob = new Blob(window.audioChunks, { type: 'audio/webm' });
-                console.log("Audio capturado listo para IA:", audioBlob);
-                
-                if (btn) btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Analyse par l\'IA...';
-                
-                if (typeof enviarAudioAIA === 'function') {
-                    await enviarAudioAIA(audioBlob);
-                } else if (typeof enviarGrabacionPO === 'function') {
-                    await enviarGrabacionPO(audioBlob);
-                }
-                
-                if (btn) btn.innerHTML = '<i class="fas fa-microphone"></i> Commencer l\'enregistrement';
-            };
-
-            window.mediaRecorder.start();
-            if (btn) btn.innerHTML = '<i class="fas fa-stop"></i> Arrêter l\'enregistrement';
-        } catch (err) {
-            alert("No se pudo acceder al micrófono.");
-        }
-    } else {
-        window.mediaRecorder.stop();
-        window.mediaRecorder.stream.getTracks().forEach(track => track.stop());
-    }
-};
-</script>
-
-
-
-
-
-
 </body>
 </html>
