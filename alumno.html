@@ -1612,11 +1612,13 @@ window.parseSophiaPayload = function(jsonRaw) {
     const fb = (data.feedback && typeof data.feedback === "object") ? data.feedback :
                (data.evaluacion && typeof data.evaluacion === "object") ? data.evaluacion : data;
 
+    const rootRubriques = data.rubriques || fb.rubriques || {};
+
     const transcription = data.transcription || data.transcription_html || fb.transcription || fb.transcription_html || data.texte || "";
 
     const rubricsMap = {};
 
-    const itemTask = fb.completeness_relevance || fb.production_orale_task || fb.tache_orale || fb.task || (data.rubriques && data.rubriques.production_orale_task) || {};
+    const itemTask = rootRubriques.tache_orale || rootRubriques.production_orale_task || fb.completeness_relevance || fb.production_orale_task || fb.tache_orale || fb.task || {};
     rubricsMap.tache_orale = {
         title: "Tâche Oral",
         score: itemTask.score || itemTask.note || "--",
@@ -1624,7 +1626,7 @@ window.parseSophiaPayload = function(jsonRaw) {
         supra: itemTask.objectif_supra || itemTask.supra || ""
     };
 
-    const itemLex = fb.lexical_richness_control || fb.lexique || fb.lexicon || (data.rubriques && data.rubriques.lexique) || {};
+    const itemLex = rootRubriques.lexique || fb.lexical_richness_control || fb.lexique || fb.lexicon || {};
     rubricsMap.lexique = {
         title: "Lexique",
         score: itemLex.score || itemLex.note || "--",
@@ -1632,7 +1634,7 @@ window.parseSophiaPayload = function(jsonRaw) {
         supra: itemLex.objectif_supra || itemLex.supra || ""
     };
 
-    const itemMorph = fb.grammatical_correctness_control || fb.morphosyntaxe || fb.grammar || (data.rubriques && data.rubriques.morphosyntaxe) || {};
+    const itemMorph = rootRubriques.morphosyntaxe || fb.grammatical_correctness_control || fb.morphosyntaxe || fb.grammar || {};
     rubricsMap.morphosyntaxe = {
         title: "Morphosyntaxe",
         score: itemMorph.score || itemMorph.note || "--",
@@ -1640,7 +1642,7 @@ window.parseSophiaPayload = function(jsonRaw) {
         supra: itemMorph.objectif_supra || itemMorph.supra || ""
     };
 
-    const itemPhon = fb.pronunciation_intonation || fb.phonologique || fb.phonologie || (data.rubriques && data.rubriques.phonologique) || {};
+    const itemPhon = rootRubriques.phonologie || fb.pronunciation_intonation || fb.phonologique || fb.phonologie || {};
     const itemFluency = fb.fluency || {};
 
     let phonScore = itemPhon.score || itemPhon.note || "--";
@@ -1663,9 +1665,9 @@ window.parseSophiaPayload = function(jsonRaw) {
         supra: itemPhon.objectif_supra || itemPhon.supra || ""
     };
 
-    const overallAssessment = fb.overall_assessment || data.overall_assessment || data.appreciation_globale || fb.appreciation_globale || "";
+    const overallAssessment = data.overall_assessment || fb.overall_assessment || data.appreciation_globale || fb.appreciation_globale || "";
 
-    const suggestions = fb.suggestions_for_improvement || data.suggestions_for_improvement || data.pistes_amelioration || fb.pistes_amelioration || [];
+    const suggestions = data.suggestions || fb.suggestions || data.suggestions_for_improvement || fb.suggestions_for_improvement || data.pistes_amelioration || fb.pistes_amelioration || [];
 
     let globalScoreStr = data.score_global || fb.score_global || data.note_globale || "";
     if (!globalScoreStr) {

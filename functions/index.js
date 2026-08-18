@@ -21,7 +21,7 @@ exports.procesarAudioPO = onRequest({
         return res.status(500).json({ error: "Clé API non configurée sur le serveur." });
       }
 
-      let { audioBase64, mimeType } = req.body || {};
+      let { audioBase64, mimeType, nivel } = req.body || {};
       if (!audioBase64) {
         return res.status(400).json({ error: "Aucun fichier audio reçu." });
       }
@@ -29,6 +29,8 @@ exports.procesarAudioPO = onRequest({
       if (audioBase64.includes(",")) {
         audioBase64 = audioBase64.split(",")[1];
       }
+
+      const currentNivel = nivel || "B1";
 
       const ai = new GoogleGenAI({ apiKey });
       const response = await ai.models.generateContent({
@@ -44,17 +46,64 @@ exports.procesarAudioPO = onRequest({
                 }
               },
               {
-                text: "Tu es un jury officiel du DELF. Évalue cet enregistrement oral selon les critères officiels du DELF. Fournis la transcription exacte et une évaluation pédagogique détaillée en JSON avec les clés 'transcription' et 'feedback'."
+                text: `Tu es un jury officiel certifié du DELF pour le niveau ${currentNivel}. Évalue cet enregistrement oral de l'élève selon la grille d'évaluation officielle du DELF (Production Orale).
+Tu DOIS impérativement répondre au format JSON strict avec la structure exacte suivante :
+{
+  "transcription": "Texte exact transcrit de l'audio de l'élève en français",
+  "score_global": "Note globale sur 25 (ex: 18.5/25)",
+  "status": "DELF ${currentNivel} Atteint" ou "DELF ${currentNivel} Non Atteint",
+  "overall_assessment": "Appréciation globale pédagogique et bienveillante en français",
+  "suggestions": [
+    "Conseil ou piste d'amélioration 1",
+    "Conseil ou piste d'amélioration 2"
+  ],
+  "rubriques": {
+    "tache_orale": {
+      "title": "Tâche Oral",
+      "score": "Note sur 5 (ex: 4.5/5)",
+      "comment": "Commentaire sur la réalisation de la tâche, la cohérence et le respect de la consigne",
+      "supra": "Objectif pour progresser"
+    },
+    "lexique": {
+      "title": "Lexique",
+      "score": "Note sur 5 (ex: 4/5)",
+      "comment": "Commentaire sur la richesse et l'exactitude du vocabulaire",
+      "supra": "Objectif lexique"
+    },
+    "morphosyntaxe": {
+      "title": "Morphosyntaxe",
+      "score": "Note sur 5 (ex: 3.5/5)",
+      "comment": "Commentaire sur la structure des phrases, conjugaisons et grammaire",
+      "supra": "Objectif grammaire"
+    },
+    "phonologie": {
+      "title": "Phonologie",
+      "score": "Note sur 5 ou 10 (ex: 4/5)",
+      "comment": "Commentaire sur la prononciation, l'intonation et la fluidité",
+      "supra": "Objectif phonétique"
+    }
+  }
+}`
               }
             ]
           }
-        ]
+        ],
+        config: {
+          responseMimeType: "application/json"
+        }
       });
 
-      return res.status(200).json({
-        transcription: "Enregistrement analysé par le jury DELF.",
-        feedback: response.text || "Analyse terminée."
-      });
+      let jsonResult;
+      try {
+        jsonResult = JSON.parse(response.text);
+      } catch (e) {
+        jsonResult = {
+          transcription: "Enregistrement reçu.",
+          feedback: response.text
+        };
+      }
+
+      return res.status(200).json(jsonResult);
     } catch (err) {
       console.error("Erreur Backend:", err);
       return res.status(500).json({ error: err.message || "Erreur interne" });
