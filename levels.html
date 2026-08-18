@@ -1,34 +1,458 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Niveaux | Objectif Réussite</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Objectif Réussite - Niveaux & Certification</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        :root { --oxford: #002147; --gold: #C5A059; --white: #ffffff; }
-        body { font-family: 'Montserrat', sans-serif; margin: 0; background: #f4f7f9; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; color: var(--oxford); position: relative; }
-        .admin-access { position: absolute; top: 0; left: 0; width: 60px; height: 60px; background: transparent; cursor: default; z-index: 100; }
-        .header { text-align: center; margin-bottom: 50px; }
-        .container { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; padding: 20px; }
-        .level-card { background: var(--white); width: 150px; padding: 30px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); text-align: center; text-decoration: none; color: inherit; transition: 0.3s; border: 2px solid transparent; }
-        .level-card:hover { transform: translateY(-5px); border-color: var(--gold); }
-        .level-card h2 { margin: 0; font-size: 2.5rem; color: var(--gold); }
+        :root {
+            --oxford: #002147;
+            --gold: #C5A059;
+            --white: #ffffff;
+            --light-bg: #f4f7f9;
+            --dark-text: #2c3e50;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            background-color: var(--light-bg);
+            color: var(--oxford);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .navbar {
+            width: 100%;
+            max-width: 1200px;
+            display: flex;
+            justify-content: flex-start;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .nav-logo {
+            font-weight: 700;
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .banner-container {
+            width: 90%;
+            max-width: 1100px;
+            margin-top: 10px;
+            margin-bottom: 30px;
+        }
+
+        .banner-img {
+            width: 100%;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            display: block;
+        }
+
+        .cards-section-title {
+            text-align: center;
+            font-size: 1.5rem;
+            margin: 20px 0 10px 0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .levels-wrapper {
+            width: 90%;
+            max-width: 900px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .level-block {
+            background: var(--white);
+            border-radius: 16px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            transition: box-shadow 0.3s;
+        }
+
+        .level-block:hover {
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+        }
+
+        .level-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+        }
+
+        .level-badge {
+            background: var(--oxford);
+            color: var(--white);
+            width: 100px;
+            height: 60px;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .level-badge.c1-gold {
+            background: var(--gold);
+            color: var(--oxford);
+        }
+
+        .level-name {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin: 0;
+        }
+
+        .level-desc {
+            font-size: 0.6rem;
+            text-transform: uppercase;
+            font-weight: 600;
+            opacity: 0.8;
+        }
+
+        .level-title-text {
+            flex-grow: 1;
+            padding-left: 20px;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .toggle-arrow {
+            font-size: 1.2rem;
+            color: var(--gold);
+            font-weight: bold;
+            transition: transform 0.3s;
+        }
+
+        .level-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out, padding 0.4s ease;
+            padding: 0 10px;
+        }
+
+        .level-content.active {
+            max-height: 800px;
+            padding: 20px 10px 10px 10px;
+            border-top: 1px solid #eee;
+            margin-top: 15px;
+        }
+
+        .level-content h4 {
+            margin-top: 0;
+            color: var(--oxford);
+            font-size: 1rem;
+        }
+
+        .level-content p, .level-content li {
+            font-size: 0.9rem;
+            line-height: 1.6;
+            color: var(--dark-text);
+        }
+
+        .level-content ul {
+            padding-left: 20px;
+        }
+
+        .enter-btn {
+            display: inline-block;
+            background: var(--oxford);
+            color: var(--white);
+            text-decoration: none;
+            padding: 10px 25px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-top: 15px;
+            transition: background-color 0.2s;
+        }
+
+        .enter-btn:hover {
+            background-color: var(--gold);
+            color: var(--oxford);
+        }
+
+        .info-section {
+            width: 90%;
+            max-width: 900px;
+            background: var(--white);
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            margin-bottom: 40px;
+            box-sizing: border-box;
+        }
+
+        .info-section h2 {
+            font-size: 1.4rem;
+            border-left: 5px solid var(--gold);
+            padding-left: 12px;
+            margin-top: 0;
+            margin-bottom: 20px;
+            color: var(--oxford);
+        }
+
+        .info-section p, .info-section li {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: var(--dark-text);
+        }
+
+        .payment-box {
+            text-align: center;
+            background: linear-gradient(135deg, #002147 0%, #001025 100%);
+            color: var(--white);
+            width: 100%;
+            padding: 35px 20px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .payment-box h2 {
+            font-size: 1.5rem;
+            margin: 0 0 10px 0;
+            color: var(--gold);
+        }
+
+        .payment-box p {
+            font-size: 0.95rem;
+            max-width: 600px;
+            margin: 0 0 25px 0;
+            opacity: 0.9;
+            line-height: 1.5;
+        }
+
+        .stripe-btn {
+            background-color: var(--gold);
+            color: var(--oxford);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 14px 35px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-size: 0.95rem;
+            box-shadow: 0 4px 15px rgba(197, 160, 89, 0.3);
+            transition: transform 0.2s, background-color 0.2s;
+        }
+
+        .stripe-btn:hover {
+            transform: scale(1.05);
+            background-color: #b38f4b;
+        }
+
+        .footer-text {
+            font-size: 0.85rem;
+            color: #7f8c8d;
+            font-style: italic;
+            margin-top: 40px;
+            margin-bottom: 30px;
+        }
+
+        @media (max-width: 600px) {
+            .level-title-text {
+                font-size: 0.95rem;
+                padding-left: 12px;
+            }
+            .level-badge {
+                width: 80px;
+                height: 55px;
+            }
+            .level-name {
+                font-size: 1.3rem;
+            }
+            .info-section {
+                padding: 20px;
+            }
+        }
     </style>
 </head>
 <body>
-    <div class="admin-access" onclick="window.location.href='admin.html'"></div>
 
-    <div class="header">
-        <h1>Choisissez votre niveau</h1>
-        <p>Selecciona tu nivel de certificación DELF</p>
+    <div class="navbar">
+        <div class="nav-logo">Objectif Réussite</div>
     </div>
 
-    <div class="container">
-        <a href="login.html?level=A1" class="level-card"><h2>A1</h2><p>Découverte</p></a>
-        <a href="login.html?level=A2" class="level-card"><h2>A2</h2><p>Survie</p></a>
-        <a href="login.html?level=B1" class="level-card"><h2>B1</h2><p>Seuil</p></a>
-        <a href="login.html?level=B2" class="level-card"><h2>B2</h2><p>Avancé</p></a>
-        <a href="login.html?level=C1" class="level-card"><h2>C1</h2><p>Autonome</p></a>
+    <div class="banner-container">
+        <img src="./assets/Banner.png" alt="Objectif Réussite DELF" class="banner-img">
     </div>
+
+    <h2 class="cards-section-title">Espacio de Entrenamiento</h2>
+    
+    <div class="levels-wrapper">
+
+        <!-- BLOQUE A1 -->
+        <div class="level-block">
+            <div class="level-header" onclick="toggleLevel('content-a1', this)">
+                <div class="level-badge">
+                    <h3 class="level-name">A1</h3>
+                    <span class="level-desc">Acceso</span>
+                </div>
+                <div class="level-title-text">Usuario Elemental - Nivel Descubrimiento</div>
+                <span class="toggle-arrow">▼</span>
+            </div>
+            <div id="content-a1" class="level-content">
+                <h4>Aprendizajes Esperados (Attendus) - Nivel A1</h4>
+                <p>Este nivel valora los primeros conocimientos de la lengua. El candidato es capaz de</p>
+                <ul>
+                    <li>Comprender y utilizar expresiones familiares y cotidianas orientadas a satisfacer necesidades concretas.</li>
+                    <li>Presentarse a sí mismo, formular preguntas sencillas sobre datos personales (vivienda, relaciones, pertenencias) y responder a ellas.</li>
+                    <li>Interactuar de forma sencilla siempre que el interlocutor hable despacio y se muestre cooperativo.</li>
+                </ul>
+                <a href="login.html?level=A1" class="enter-btn">Entrenar Nivel A1</a>
+            </div>
+        </div>
+
+        <!-- BLOQUE A2 -->
+        <div class="level-block">
+            <div class="level-header" onclick="toggleLevel('content-a2', this)">
+                <div class="level-badge">
+                    <h3 class="level-name">A2</h3>
+                    <span class="level-desc">Plataforma</span>
+                </div>
+                <div class="level-title-text">Usuario Elemental - Nivel de Supervivencia</div>
+                <span class="toggle-arrow">▼</span>
+            </div>
+            <div id="content-a2" class="level-content">
+                <h4>Aprendizajes Esperados (Attendus) - Nivel A2</h4>
+                <p>Este nivel valida la competencia lingüística de un usuario básico, capaz de desenvolverse en la vida cotidiana. Los objetivos clave son</p>
+                <ul>
+                    <li>Comprender frases aisladas y expresiones de uso frecuente relacionadas con áreas de relevancia inmediata (información personal, compras, empleo, entorno cercano).</li>
+                    <li>Comunicarse al realizar tareas simples y rutinarias que requieren un intercambio directo de información.</li>
+                    <li>Describir con términos sencillos su formación, su entorno inmediato y temas correspondientes a necesidades inmediatas.</li>
+                </ul>
+                <a href="login.html?level=A2" class="enter-btn">Entrenar Nivel A2</a>
+            </div>
+        </div>
+
+        <!-- BLOQUE B1 -->
+        <div class="level-block">
+            <div class="level-header" onclick="toggleLevel('content-b1', this)">
+                <div class="level-badge">
+                    <h3 class="level-name">B1</h3>
+                    <span class="level-desc">Umbral</span>
+                </div>
+                <div class="level-title-text">Usuario Independiente - Autonomía Práctica</div>
+                <span class="toggle-arrow">▼</span>
+            </div>
+            <div id="content-b1" class="level-content">
+                <h4>Aprendizajes Esperados (Attendus) - Nivel B1</h4>
+                <p>Aquí el usuario se vuelve independiente. Es capaz de mantener una interacción y hacer frente a situaciones imprevistas</p>
+                <ul>
+                    <li>Comprender los puntos principales de un discurso claro y estándar sobre temas familiares (trabajo, escuela, ocio).</li>
+                    <li>Desenvolverse en la mayoría de las situaciones que pueden surgir durante un viaje por zonas donde se utiliza la lengua meta.</li>
+                    <li>Producir un discurso sencillo y coherente sobre temas familiares y expresar brevemente razones o explicaciones para un proyecto o idea.</li>
+                </ul>
+                <a href="login.html?level=B1" class="enter-btn">Entrenar Nivel B1</a>
+            </div>
+        </div>
+
+        <!-- BLOQUE B2 -->
+        <div class="level-block">
+            <div class="level-header" onclick="toggleLevel('content-b2', this)">
+                <div class="level-badge">
+                    <h3 class="level-name">B2</h3>
+                    <span class="level-desc">Avanzado</span>
+                </div>
+                <div class="level-title-text">Usuario Independiente - Argumentación y Fluidez</div>
+                <span class="toggle-arrow">▼</span>
+            </div>
+            <div id="content-b2" class="level-content">
+                <h4>Aprendizajes Esperados (Attendus) - Nivel B2</h4>
+                <p>El usuario adquiere un grado de independencia que le permite argumentar, defender su opinión y mantener una negociación fluida</p>
+                <ul>
+                    <li>Comprender el contenido esencial de textos complejos sobre temas tanto concretos como abstractos, incluyendo discusiones técnicas en su especialidad.</li>
+                    <li>Comunicarse con un grado de espontaneidad y fluidez que hace posible la interacción regular con hablantes nativos sin tensión para ninguna de las partes.</li>
+                    <li>Expresarse de forma clara y detallada sobre una gran variedad de temas, así como defender un punto de vista exponiendo las ventajas e inconvenientes de distintas opciones.</li>
+                </ul>
+                <a href="login.html?level=B2" class="enter-btn">Entrenar Nivel B2</a>
+            </div>
+        </div>
+
+        <!-- BLOQUE C1 -->
+        <div class="level-block">
+            <div class="level-header" onclick="toggleLevel('content-c1', this)">
+                <div class="level-badge c1-gold">
+                    <h3 class="level-name">C1</h3>
+                    <span class="level-desc">Autónomo</span>
+                </div>
+                <div class="level-title-text">Usuario Experimentado - Nivel Académico</div>
+                <span class="toggle-arrow">▼</span>
+            </div>
+            <div id="content-c1" class="level-content">
+                <h4>Aprendizajes Esperados (Attendus) - Nivel C1</h4>
+                <p>El nivel de un usuario competente, capaz de mantener una comunicación académica y profesional de alto nivel</p>
+                <ul>
+                    <li>Comprender una amplia variedad de textos extensos y exigentes, reconociendo sentidos implícitos y matices sutiles.</li>
+                    <li>Expresarse de forma espontánea y fluida sin un esfuerzo evidente para encontrar las palabras adecuadas.</li>
+                    <li>Utilizar el idioma de manera flexible y eficaz para fines sociales, profesionales o académicos, estructurando discursos complejos.</li>
+                </ul>
+                <a href="login.html?level=C1" class="enter-btn">Entrenar Nivel C1</a>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- SECCIÓN DE IMPORTANCIA DE LA CERTIFICACIÓN -->
+    <div class="info-section">
+        <h2>La Importancia de la Certificación DELF</h2>
+        <p>Los diplomas **DELF (Diplôme d'Études en Langue Française)** son certificaciones oficiales otorgadas por el Ministerio de Educación Nacional de Francia.</p>
+        <ul>
+            <li>**Validez permanente:** A diferencia de otras evaluaciones, una vez obtenido, el diploma DELF tiene vigencia para toda la vida.</li>
+            <li>**Reconocimiento internacional:** Certifica oficialmente tus competencias lingüísticas ante universidades francófonas, instituciones y empresas en todo el mundo.</li>
+            <li>**Impulso profesional:** Enriquece tu perfil internacional y abre las puertas a oportunidades de movilidad académica y laboral en Europa, Canadá y toda la francofonía.</li>
+        </ul>
+    </div>
+
+    <!-- SECCIÓN DE PAGO (STRIPE) -->
+    <div class="payment-box">
+        <h2>Acceso Premium a la Plataforma</h2>
+        <p>Desbloquea simulacros de examen completos, criterios de evaluación oficiales y retroalimentación personalizada paso a paso para asegurar tu éxito.</p>
+        <a href="#" class="stripe-btn" id="stripe-link">Activar mi acceso Premium</a>
+    </div>
+
+    <div class="footer-text">De la intención a la certificación.</div>
+
+    <script>
+        function toggleLevel(id, headerElement) {
+            const content = document.getElementById(id);
+            const arrow = headerElement.querySelector('.toggle-arrow');
+            
+            document.querySelectorAll('.level-content').forEach(el => {
+                if(el.id !== id && el.classList.contains('active')) {
+                    el.classList.remove('active');
+                    el.style.maxHeight = "0";
+                    el.parentElement.querySelector('.toggle-arrow').style.transform = "rotate(0deg)";
+                }
+            });
+
+            if (content.classList.contains('active')) {
+                content.classList.remove('active');
+                content.style.maxHeight = "0";
+                arrow.style.transform = "rotate(0deg)";
+            } else {
+                content.classList.add('active');
+                content.style.maxHeight = content.scrollHeight + "px";
+                arrow.style.transform = "rotate(180deg)";
+            }
+        }
+    </script>
+
 </body>
 </html>

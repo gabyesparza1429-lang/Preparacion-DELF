@@ -20,7 +20,7 @@
 <body>
 
 <div class="login-container">
-    <img src="assets/Logo.png" alt="Logo Objectif Réussite" class="logo">
+    <img src="/assets/Banner.png" alt="Logo Objectif Réussite" class="logo">
     <h2 id="title">Bienvenue</h2>
     <div id="level-indicator" class="level-tag">Niveau --</div>
     
@@ -39,7 +39,8 @@
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
-    const level = new URLSearchParams(window.location.search).get('level') || "B1";
+    const rawLevel = new URLSearchParams(window.location.search).get('level') || "B1";
+    const level = rawLevel.toUpperCase().trim();
     document.getElementById('level-indicator').innerText = "Niveau " + level;
 
     window.login = async () => {
