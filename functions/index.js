@@ -4,7 +4,7 @@ const { GoogleGenAI } = require("@google/genai");
 
 exports.procesarAudioPO = onRequest({
   cors: true,
-  bodyParserOptions: { json: { limit: "10mb" } }
+  bodyParserOptions: { json: { limit: "50mb" } }
 }, (req, res) => {
   return cors(req, res, async () => {
     if (req.method === "OPTIONS") {
