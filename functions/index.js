@@ -1,6 +1,12 @@
 const { onRequest } = require("firebase-functions/v2/https");
 const cors = require("cors")({ origin: true });
 const { GoogleGenAI } = require("@google/genai");
+const admin = require("firebase-admin");
+
+if (!admin.apps.length) {
+  admin.initializeApp();
+}
+const db = admin.firestore();
 
 exports.procesarAudioPO = onRequest({
   cors: true,
@@ -16,12 +22,7 @@ exports.procesarAudioPO = onRequest({
     }
 
     try {
-      const apiKey = process.env.GEMINI_API_KEY;
-      if (!apiKey) {
-        return res.status(500).json({ error: "Clé API non configurée sur le serveur." });
-      }
-
-      let { audioBase64, mimeType, nivel } = req.body || {};
+      let { audioBase64, mimeType, nivel, apiKey: clientApiKey } = req.body || {};
       if (!audioBase64) {
         return res.status(400).json({ error: "Aucun fichier audio reçu." });
       }
@@ -32,21 +33,40 @@ exports.procesarAudioPO = onRequest({
 
       const currentNivel = nivel || "B1";
 
-      const ai = new GoogleGenAI({ apiKey });
-      const response = await ai.models.generateContent({
-        model: "gemini-2.5-flash",
-        contents: [
-          {
-            role: "user",
-            parts: [
-              {
-                inlineData: {
-                  mimeType: mimeType || "audio/webm",
-                  data: audioBase64
-                }
-              },
-              {
-                text: `Tu es un jury officiel certifié du DELF pour le niveau ${currentNivel}. Évalue cet enregistrement oral de l'élève selon la grille d'évaluation officielle du DELF (Production Orale).
+      let apiKey = process.env.GEMINI_API_KEY || clientApiKey;
+
+      let configSophia = {};
+      try {
+        const sophiaDoc = await db.doc("Config/Sophia").get();
+        if (sophiaDoc.exists) {
+          configSophia = sophiaDoc.data() || {};
+          if (!apiKey && configSophia.apiKey) {
+            apiKey = configSophia.apiKey;
+          }
+        }
+      } catch (e) {
+        console.warn("Erreur lecture Config/Sophia:", e);
+      }
+
+      let directrices = configSophia.po_prompt || configSophia.prompt || "";
+      try {
+        const dirDoc = await db.doc(`IA_Directrices/${currentNivel}_PO`).get();
+        if (dirDoc.exists) {
+          const dirData = dirDoc.data();
+          if (dirData.prompt || dirData.description) {
+            directrices += "\n" + (dirData.prompt || dirData.description);
+          }
+        }
+      } catch (e) {
+        // Optionnel
+      }
+
+      if (!apiKey) {
+        return res.status(500).json({ error: "Clé API Gemini non configurée sur el servidor ni recibida del cliente." });
+      }
+
+      const promptText = `Tu es un jury officiel certifié du DELF pour le niveau ${currentNivel}. Évalue cet enregistrement oral de l'élève selon la grille d'évaluation officielle du DELF (Production Orale).
+${directrices ? "Consignes spécifiques et grille d'évaluation à appliquer :\n" + directrices : ""}
 Tu DOIS impérativement répondre au format JSON strict avec la structure exacte suivante :
 {
   "transcription": "Texte exact transcrit de l'audio de l'élève en français",
@@ -83,7 +103,23 @@ Tu DOIS impérativement répondre au format JSON strict avec la structure exacte
       "supra": "Objectif phonétique"
     }
   }
-}`
+}`;
+
+      const ai = new GoogleGenAI({ apiKey });
+      const response = await ai.models.generateContent({
+        model: "gemini-2.5-flash",
+        contents: [
+          {
+            role: "user",
+            parts: [
+              {
+                inlineData: {
+                  mimeType: mimeType || "audio/webm",
+                  data: audioBase64
+                }
+              },
+              {
+                text: promptText
               }
             ]
           }
