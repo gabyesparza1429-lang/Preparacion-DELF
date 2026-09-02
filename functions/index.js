@@ -3,7 +3,7 @@ const cors = require("cors")({ origin: true });
 const { GoogleGenAI } = require("@google/genai");
 const admin = require("firebase-admin");
 
-if (!admin.apps.length) {
+if (!admin.apps?.length) {
   admin.initializeApp();
 }
 const db = admin.firestore();
