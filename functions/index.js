@@ -2,6 +2,7 @@ const { onRequest } = require("firebase-functions/v2/https");
 const cors = require("cors")({ origin: true });
 const { GoogleGenAI } = require("@google/genai");
 const admin = require("firebase-admin");
+if (!admin.apps.length) { admin.initializeApp(); }
 
 if (!admin.apps?.length) {
   admin.initializeApp();
