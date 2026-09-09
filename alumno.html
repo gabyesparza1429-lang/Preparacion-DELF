@@ -1231,7 +1231,64 @@ window.renderBotonesRubrosOral = function() {
             }
         }
 
-        async function descargarColeccionUnidades() {
+        
+window.renderActiveInterface = function() {
+    const container = document.getElementById('sidebar-units-container') || document.getElementById('units-list') || document.querySelector('.sidebar-menu');
+    if (!container) return;
+
+    let html = '';
+    const unitKeys = Object.keys(unidadesCache).sort();
+
+    if (unitKeys.length === 0) {
+        container.innerHTML = '<div style="padding:15px; color:#888; font-size:12px;">Cargando actividades...</div>';
+        return;
+    }
+
+    unitKeys.forEach((uKey) => {
+        const uData = unidadesCache[uKey] || {};
+        const nombreUnidad = uData.nombre || uKey;
+
+        // Extraer lista según habilidad activa (CO, CE, PE, PO)
+        let ejList = [];
+        if (currentSkill === "CO") ejList = uData.CO || uData.ejercicios_CO || [];
+        else if (currentSkill === "CE") ejList = uData.CE || uData.ejercicios_CE || [];
+        else if (currentSkill === "PE") ejList = uData.PE || uData.ejercicios_PE || [];
+        else if (currentSkill === "PO") ejList = uData.PO || uData.PO_entretien || uData.PO_interaction || uData.PO_expression || [];
+
+        html += `
+        <div class="unit-accordion-item" style="margin-top:10px; background:#1b2a4a; border-radius:6px; overflow:hidden;">
+            <div class="unit-header" style="padding:12px 15px; color:#e2b044; font-weight:700; font-size:0.9rem; cursor:pointer; display:flex; justify-content:space-between; align-items:center;" onclick="this.nextElementSibling.style.display = this.nextElementSibling.style.display === 'none' ? 'block' : 'none'">
+                <span><i class="fas fa-book-open"></i> ${nombreUnidad}</span>
+                <i class="fas fa-chevron-down" style="font-size:0.8rem;"></i>
+            </div>
+            <div class="unit-body" style="display:block; background:#111d35; padding:5px 0;">
+        `;
+
+        if (!ejList || ejList.length === 0) {
+            html += `<div style="padding:8px 15px; color:#888; font-size:0.8rem;">Sin ejercicios asignados</div>`;
+        } else {
+            ejList.forEach((ej, idx) => {
+                const keyAcierto = `${uKey}_${currentSkill}_${idx}`;
+                const completado = mapaAciertosAlumno[keyAcierto] ? ' <i class="fas fa-check-circle" style="color:#28a745; margin-left: auto;"></i>' : '';
+                const titulo = ej.titre || ej.titulo || `Activité ${idx + 1}`;
+
+                html += `
+                    <div class="exercise-link" onclick="window.cargarEjercicio('${uKey}', ${idx})" style="padding:8px 15px; color:#cfd8dc; font-size:0.82rem; cursor:pointer; display:flex; align-items:center; gap:8px; border-bottom:1px solid rgba(255,255,255,0.05);">
+                        <i class="fas fa-pen-alt" style="font-size:0.7rem; color:#888;"></i>
+                        <span>${idx + 1}. ${titulo}</span>
+                        ${completado}
+                    </div>
+                `;
+            });
+        }
+
+        html += `</div></div>`;
+    });
+
+    container.innerHTML = html;
+};
+
+async function descargarColeccionUnidades() {
             unidadesCache = {};
             const querySnapshot = await getDocs(collection(db, "BibliotecaEjercicios", currentLevel, "Unidades"));
             querySnapshot.forEach((docSnap) => { unidadesCache[docSnap.id] = docSnap.data(); });
