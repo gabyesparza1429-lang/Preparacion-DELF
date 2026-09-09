@@ -1288,6 +1288,93 @@ window.renderActiveInterface = function() {
     container.innerHTML = html;
 };
 
+
+window.generarMenuJerarquico = function() {
+    const menuContainer = document.getElementById('sidebar-units-container') || document.getElementById('units-list') || document.querySelector('.sidebar-menu');
+    if (!menuContainer) return;
+    menuContainer.innerHTML = '';
+
+    const uKeys = Object.keys(unidadesCache).sort();
+    if (uKeys.length === 0) {
+        menuContainer.innerHTML = '<div style="padding:15px; color:#aaa; font-size:12px;">Chargement des unités...</div>';
+        return;
+    }
+
+    uKeys.forEach(uId => {
+        const u = unidadesCache[uId] || {};
+        const wrapper = document.createElement('div');
+        wrapper.className = 'unit-wrapper';
+        wrapper.style.marginBottom = '10px';
+
+        let ejH = [];
+        if (currentSkill === 'PO') {
+            ejH = u.PO || u.PO_interaction || u.PO_entretien || u.PO_expression || [];
+        } else {
+            ejH = u[currentSkill] || u[currentSkill.toLowerCase()] || [];
+        }
+
+        const ID_Limpio = uId.replace(/\D/g, '');
+        const nombreUnidadReal = u.nombre || `Unité ${ID_Limpio}`;
+        const isUnitOpen = openUnitsState[uId] !== false;
+
+        const toggleBtn = document.createElement('button');
+        toggleBtn.className = `unit-toggle-btn ${currentUnitId === uId ? 'active' : ''}`;
+        toggleBtn.onclick = () => window.toggleUnitMenu(uId);
+        toggleBtn.style.width = '100%';
+        toggleBtn.style.padding = '10px';
+        toggleBtn.style.background = 'rgba(255,255,255,0.05)';
+        toggleBtn.style.color = '#e2b044';
+        toggleBtn.style.border = '1px solid rgba(197,160,89,0.3)';
+        toggleBtn.style.borderRadius = '6px';
+        toggleBtn.style.cursor = 'pointer';
+        toggleBtn.style.display = 'flex';
+        toggleBtn.style.justifyContent = 'space-between';
+        toggleBtn.style.alignItems = 'center';
+        toggleBtn.style.fontWeight = '700';
+        toggleBtn.innerHTML = `<span><i class="fas fa-book"></i> ${nombreUnidadReal}</span> <i class="fas ${isUnitOpen ? 'fa-chevron-down' : 'fa-chevron-right'}"></i>`;
+        wrapper.appendChild(toggleBtn);
+
+        const sub = document.createElement('div');
+        sub.className = 'submenu-activities';
+        sub.style.display = isUnitOpen ? 'flex' : 'none';
+        sub.style.flexDirection = 'column';
+        sub.style.gap = '4px';
+        sub.style.padding = '6px 0 6px 10px';
+
+        if (ejH.length === 0) {
+            sub.innerHTML = '<div style="font-size:0.75rem; color:#888; padding:5px;">Aucune activité</div>';
+        } else {
+            ejH.forEach((ej, eIdx) => {
+                const clv = `${uId}_${currentSkill}_${eIdx}`;
+                const esCompleto = mapaAciertosAlumno && mapaAciertosAlumno[clv] === true;
+                const titulo = ej.titre || ej.titulo || `Activité ${eIdx + 1}`;
+                const statusText = esCompleto ? '<span style="color:#28a745; font-size:0.75rem;">✅ Hecho</span>' : '<span style="color:#888; font-size:0.75rem;">⏳ Pendiente</span>';
+
+                const btnAct = document.createElement('button');
+                btnAct.className = `activity-link-btn ${currentUnitId === uId && currentExerciseIndex === eIdx ? 'active' : ''}`;
+                btnAct.onclick = () => window.cargarActividadDirecta(uId, eIdx);
+                btnAct.style.display = 'flex';
+                btnAct.style.alignItems = 'center';
+                btnAct.style.justifyContent = 'space-between';
+                btnAct.style.width = '100%';
+                btnAct.style.padding = '8px 10px';
+                btnAct.style.background = 'transparent';
+                btnAct.style.color = '#fff';
+                btnAct.style.border = 'none';
+                btnAct.style.borderBottom = '1px solid rgba(255,255,255,0.05)';
+                btnAct.style.cursor = 'pointer';
+                btnAct.style.fontSize = '0.82rem';
+                btnAct.innerHTML = `<span><i class="fas ${esCompleto ? 'fa-check' : 'fa-play'}" style="${esCompleto ? 'color:#28a745' : ''}"></i> ${eIdx + 1}. ${titulo}</span> ${statusText}`;
+                sub.appendChild(btnAct);
+            });
+        }
+
+        wrapper.appendChild(sub);
+        menuContainer.appendChild(wrapper);
+    });
+};
+window.renderActiveInterface = window.generarMenuJerarquico;
+
 async function descargarColeccionUnidades() {
             unidadesCache = {};
             const querySnapshot = await getDocs(collection(db, "BibliotecaEjercicios", currentLevel, "Unidades"));
