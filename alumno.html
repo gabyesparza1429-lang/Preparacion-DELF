@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
+<script>try{localStorage.clear();sessionStorage.clear();}catch(e){}</script>
     <meta charset="UTF-8">
     <title>Mon Espace DELF | Réussite</title>
     <link rel="icon" type="image/png" href="/assets/favicon.png">
@@ -942,6 +943,77 @@ window.evaluarPO = window.enviarAudioAIA;
     margin-bottom: 12px !important;
 }
 </style>
+<script>
+window.renderBotonesRubrosOral = function() {
+    const verdictText = document.getElementById("sophia-verdict-text");
+    if (!verdictText || !verdictText.dataset.evaluation) return;
+
+    let rubriques;
+    try {
+        rubriques = JSON.parse(verdictText.dataset.evaluation);
+    } catch(e) { return; }
+
+    const bar = document.getElementById("sophia-rubrics-bar");
+    const details = document.getElementById("sophia-feedback-details");
+    const errBox = document.getElementById("sophia-feedback-errors");
+    const supraBox = document.getElementById("sophia-feedback-supra");
+
+    if (!bar || !details) return;
+
+    const mapaClaves = {
+        "task": { title: "Tâche Oral", key: "production_orale_task", cssClass: "err-task" },
+        "lexique": { title: "Lexique", key: "lexique", cssClass: "err-lexique" },
+        "morphosyntaxe": { title: "Morphosyntaxe", key: "morphosyntaxe", cssClass: "err-morphosyntaxe" },
+        "phonologique": { title: "Phonologie", key: "phonologique", cssClass: "err-phonologique" }
+    };
+
+    bar.innerHTML = "";
+    details.style.display = "flex";
+
+    Object.keys(mapaClaves).forEach((catKey, index) => {
+        const item = mapaClaves[catKey];
+        const dataRubro = rubriques[item.key] || { score: "--/5", error: "Aucun détail disponible.", supra: "" };
+
+        const btn = document.createElement("button");
+        btn.className = "rubric-tab-btn" + (index === 0 ? " active" : "");
+        btn.style.cssText = index === 0 
+            ? "padding:8px 16px; border:none; border-radius:4px; background:#001f3f; color:white; font-weight:bold; cursor:pointer;" 
+            : "padding:8px 16px; border:1px solid #ccc; border-radius:4px; background:#f8f9fa; color:#333; font-weight:bold; cursor:pointer;";
+        btn.innerText = item.title;
+
+        btn.onclick = function() {
+            document.querySelectorAll(".rubric-tab-btn").forEach(b => {
+                b.style.background = "#f8f9fa";
+                b.style.color = "#333";
+                b.style.border = "1px solid #ccc";
+            });
+            btn.style.background = "#001f3f";
+            btn.style.color = "white";
+
+            // 1. Cargar el diagnóstico detallado del rubro seleccionado
+            if (errBox) errBox.innerHTML = `<strong>Score : ${dataRubro.score}</strong><br>` + (dataRubro.error || "Aucune remarque.");
+            if (supraBox) supraBox.innerHTML = dataRubro.supra || "Pas d'objectif spécifique.";
+
+            // 2. Filtrar el resaltado de errores en la transcripción según la pestaña
+            const mirrorsSpans = document.querySelectorAll("#sophia-text-mirror .err-item");
+            mirrorsSpans.forEach(span => {
+                if (span.classList.contains(item.cssClass)) {
+                    span.style.opacity = "1";
+                    span.style.filter = "none";
+                } else {
+                    span.style.opacity = "0.35";
+                    span.style.filter = "grayscale(80%)";
+                }
+            });
+        };
+
+        bar.appendChild(btn);
+
+        // Activar por defecto el primer rubro (Tâche Oral)
+        if (index === 0) btn.click();
+    });
+};
+</script>
 </head>
 <body>
 
