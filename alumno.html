@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Mon Espace DELF | Réussite</title>
+    <link rel="icon" type="image/png" href="./assets/favicon.png">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
@@ -561,8 +562,30 @@
 
         async function descargarColeccionUnidades() {
             unidadesCache = {};
-            const querySnapshot = await getDocs(collection(db, "BibliotecaEjercicios", currentLevel, "Unidades"));
-            querySnapshot.forEach((docSnap) => { unidadesCache[docSnap.id] = docSnap.data(); });
+            try {
+                const querySnapshot = await getDocs(collection(db, "BibliotecaEjercicios", currentLevel, "Unidades"));
+                querySnapshot.forEach((docSnap) => { unidadesCache[docSnap.id] = docSnap.data(); });
+
+                // Fallback si la subcolección Unidades está vacía
+                if (Object.keys(unidadesCache).length === 0) {
+                    const docLvlSnap = await getDoc(doc(db, "BibliotecaEjercicios", currentLevel));
+                    if (docLvlSnap.exists()) {
+                        const dataLvl = docLvlSnap.data();
+                        let parsedData = null;
+                        if (dataLvl.Valor) {
+                            try { parsedData = typeof dataLvl.Valor === 'string' ? JSON.parse(dataLvl.Valor) : dataLvl.Valor; } catch (e) { console.error("Error al parsear Valor:", e); }
+                        } else {
+                            parsedData = dataLvl;
+                        }
+                        if (parsedData) {
+                            const unitKey = parsedData.unidad || "Unité 1";
+                            unidadesCache[unitKey] = parsedData;
+                        }
+                    }
+                }
+            } catch (err) {
+                console.error("Error al descargar unidades:", err);
+            }
             calcularTodasLasNotasHabilidades();
             renderActiveInterface();
         }
@@ -711,19 +734,149 @@
                 </div>`;
         }
 
+        window.insertAccent = function(char, textareaId) {
+            const textarea = document.getElementById(textareaId);
+            if (!textarea) return;
+            const start = textarea.selectionStart;
+            const end = textarea.selectionEnd;
+            const text = textarea.value;
+            textarea.value = text.substring(0, start) + char + text.substring(end);
+            textarea.selectionStart = textarea.selectionEnd = start + char.length;
+            textarea.focus();
+        };
+
+        window.validarQCM = async function(uId, skill, eIdx, totalPreguntas) {
+            let aciertos = 0;
+            for (let i = 0; i < totalPreguntas; i++) {
+                const selected = document.querySelector(`input[name="q_${i}"]:checked`);
+                const feedbackEl = document.getElementById(`fb_${i}`);
+                if (!feedbackEl) continue;
+
+                if (selected) {
+                    const esCorrecta = selected.dataset.correct === "true";
+                    if (esCorrecta) {
+                        aciertos++;
+                        feedbackEl.innerHTML = `<span style="color:var(--green); font-weight:bold;">✅ Correct !</span>`;
+                    } else {
+                        feedbackEl.innerHTML = `<span style="color:var(--danger); font-weight:bold;">❌ Incorrect.</span>`;
+                    }
+                } else {
+                    feedbackEl.innerHTML = `<span style="color:#e65100; font-style:italic;">⚠️ Non répondu.</span>`;
+                }
+            }
+
+            const clave = `${uId}_${skill}_${eIdx}`;
+            mapaAciertosAlumno[clave] = (aciertos === totalPreguntas) ? true : aciertos;
+
+            if (docRefValidado) {
+                try {
+                    await setDoc(docRefValidado, { mapa_aciertos: mapaAciertosAlumno }, { merge: true });
+                } catch (e) {
+                    console.error("Error al guardar aciertos:", e);
+                }
+            }
+
+            calcularTodasLasNotasHabilidades();
+            generarMenuJerarquico();
+            alert(`Résultat: ${aciertos} / ${totalPreguntas} réponses correctes.`);
+        };
+
         window.renderExerciseStructure = function() {
             const target = document.getElementById('dynamic-workspace-target');
-            if (currentUnitId === null || !unidadesCache[currentUnitId]) return;
+            if (!target) return;
+            if (currentUnitId === null || !unidadesCache[currentUnitId]) {
+                window.mostrarExplicacionHabilidadInicial(currentSkill);
+                return;
+            }
             const u = unidadesCache[currentUnitId];
             let ejercicios = (currentSkill === 'PO') ? (u.PO || u.PO_entretien || u.PO_interaction || u.PO_expression || []) : (u[currentSkill] || u[currentSkill.toLowerCase()] || []);
 
-            if (ejercicios.length === 0 || !ejercicios[currentExerciseIndex]) return;
+            if (ejercicios.length === 0 || !ejercicios[currentExerciseIndex]) {
+                target.innerHTML = `<div class="exercise-card"><p style="color:#666;">Aucune activité disponible pour cette compétence dans cette unité.</p></div>`;
+                return;
+            }
             const ej = ejercicios[currentExerciseIndex];
 
-            let html = `<div class="exercise-card">
-                <h4 style="color:var(--oxford); font-weight:700;">${ej.titre || ej.instruccion || 'Activité'}</h4>
-                <p style="color:#333; font-size:0.95rem; line-height:1.6;">${ej.consigne || ej.texto_lectura || ''}</p>
-            </div>`;
+            let html = `<div class="exercise-card">`;
+
+            // Título e Instrucción
+            const tituloAct = ej.titre || ej.titulo || `Activité ${currentExerciseIndex + 1}`;
+            html += `<h3 style="color:var(--oxford); font-weight:700; margin-top:0;">${tituloAct}</h3>`;
+
+            const instruccion = ej.consigne || ej.instruccion || '';
+            if (instruccion) {
+                html += `<p style="color:#444; font-weight:600; font-size:0.95rem; line-height:1.5;">${instruccion}</p>`;
+            }
+
+            // Reproductor de Audio para CO o PO
+            if (ej.ruta_audio) {
+                let srcAudio = ej.ruta_audio;
+                if (!srcAudio.startsWith('http') && !srcAudio.startsWith('/')) {
+                    srcAudio = `./assets/audios/${srcAudio}`;
+                }
+                html += `<div style="margin: 20px 0; background:#f8f9fa; padding:15px; border-radius:8px; border:1px solid #e0e0e0;">
+                    <label style="font-weight:700; font-size:0.85rem; color:var(--oxford); display:block; margin-bottom:8px;"><i class="fas fa-volume-up"></i> Document Sonore:</label>
+                    <audio controls src="${srcAudio}" style="width:100%; outline:none;"></audio>
+                </div>`;
+            }
+
+            // Texto de Lectura para CE / PE
+            if (ej.texto_lectura) {
+                const textoHtml = window.convertirTextoInteractivo(ej.texto_lectura);
+                html += `<div style="background:#fff; border:1px solid #e0e0e0; padding:20px; border-radius:8px; margin:20px 0; max-height:350px; overflow-y:auto; font-size:0.95rem; line-height:1.7;">
+                    ${textoHtml}
+                </div>`;
+            }
+
+            // Preguntas QCM (Comprensión)
+            if (ej.preguntas && Array.isArray(ej.preguntas) && ej.preguntas.length > 0) {
+                html += `<form id="qcm-form" onsubmit="event.preventDefault(); window.validarQCM('${currentUnitId}', '${currentSkill}', ${currentExerciseIndex}, ${ej.preguntas.length});">`;
+                ej.preguntas.forEach((p, pIdx) => {
+                    html += `<div class="pregunta-block">
+                        <p style="font-weight:700; color:var(--oxford); margin-top:0; font-size:0.9rem;">${pIdx + 1}. ${p.pregunta}</p>`;
+
+                    if (p.opciones && Array.isArray(p.opciones)) {
+                        p.opciones.forEach((opt, oIdx) => {
+                            const isCorrect = (opt === p.respuesta_correcta);
+                            html += `<label style="display:block; margin-bottom:8px; cursor:pointer; font-size:0.88rem;">
+                                <input type="radio" name="q_${pIdx}" value="${oIdx}" data-correct="${isCorrect}" style="margin-right:8px;"> ${opt}
+                            </label>`;
+                        });
+                    }
+                    html += `<div id="fb_${pIdx}" style="margin-top:6px; font-size:0.85rem;"></div>`;
+                    html += `</div>`;
+                });
+                html += `<button type="submit" style="background:var(--oxford); color:white; border:none; padding:12px 25px; border-radius:20px; font-family:'Montserrat',sans-serif; font-weight:700; cursor:pointer; text-transform:uppercase; font-size:0.85rem;"><i class="fas fa-check-circle"></i> Valider les réponses</button>`;
+                html += `</form>`;
+            }
+
+            // Producción Escrita (PE)
+            if (currentSkill === 'PE') {
+                const accents = ['é', 'è', 'ê', 'ë', 'à', 'â', 'ù', 'û', 'î', 'ï', 'ô', 'ç', 'œ', 'Æ'];
+                html += `<div style="margin-top:20px;">
+                    <div class="french-accents-bar">`;
+                accents.forEach(char => {
+                    html += `<button type="button" class="accent-btn" onclick="window.insertAccent('${char}', 'pe-response-input')">${char}</button>`;
+                });
+                html += `</div>
+                    <textarea id="pe-response-input" class="production-textbox" placeholder="Rédigez votre texte ici en français..."></textarea>
+                    <button type="button" style="margin-top:15px; background:var(--oxford); color:white; border:none; padding:12px 25px; border-radius:20px; font-family:'Montserrat',sans-serif; font-weight:700; cursor:pointer; text-transform:uppercase; font-size:0.85rem;" onclick="alert('Votre texte a été enregistré !');"><i class="fas fa-paper-plane"></i> Soumettre la production</button>
+                </div>`;
+            }
+
+            // Producción Oral (PO)
+            if (currentSkill === 'PO') {
+                html += `<div style="margin-top:20px; text-align:center; background:#fafbfc; padding:25px; border-radius:10px; border:1px dashed var(--gold);">
+                    <p style="font-size:0.9rem; color:#555; margin-bottom:15px;">Enregistrez votre réponse orale ou importez votre fichier audio :</p>
+                    <div style="display:flex; justify-content:center; gap:15px; flex-wrap:wrap;">
+                        <button type="button" class="btn-mic"><i class="fas fa-microphone"></i> Commencer l'enregistrement</button>
+                        <input type="file" accept="audio/*" id="po-file-input" style="display:none;" onchange="alert('Fichier audio sélectionné.');">
+                        <button type="button" style="background:var(--oxford); color:white; border:none; padding:10px 20px; border-radius:20px; font-family:'Montserrat',sans-serif; font-weight:700; font-size:0.85rem; cursor:pointer;" onclick="document.getElementById('po-file-input').click();"><i class="fas fa-upload"></i> Importer un audio</button>
+                    </div>
+                </div>`;
+            }
+
+            html += `</div>`;
             target.innerHTML = html;
         };
 
