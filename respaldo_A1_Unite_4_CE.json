@@ -1,0 +1,3859 @@
+{
+  "tema_CO": "Identifier des sotuations",
+  "diccionario_unidad": [
+    {
+      "definicion": "Forma conjugada del verbo \"avoir\" (tener) en tercera persona del singular del presente de indicativo.",
+      "tipo_gramatical": "verbe (auxiliaire)",
+      "ejemplo_uso": "Il a un nouveau livre.",
+      "palabra": "a",
+      "frecuencia": 21,
+      "lema": "avoir",
+      "sinonimos": [
+        "possède",
+        "détient"
+      ]
+    },
+    {
+      "definicion": "Que han sido recibidos o aprobados.",
+      "tipo_gramatical": "participe passé (adjectif)",
+      "ejemplo_uso": "Les dossiers ont été acceptés.",
+      "palabra": "acceptés",
+      "frecuencia": 1,
+      "lema": "accepter",
+      "sinonimos": [
+        "admis",
+        "reçus"
+      ]
+    },
+    {
+      "definicion": "Acción de recibir a alguien o la manera en que se le recibe.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "L'accueil à l'hôtel était chaleureux.",
+      "palabra": "accueil",
+      "frecuencia": 1,
+      "lema": "accueil",
+      "sinonimos": [
+        "réception",
+        "bienvenue"
+      ]
+    },
+    {
+      "definicion": "Recibir a alguien o algo.",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "Elle accueille ses amis avec un sourire.",
+      "palabra": "accueille",
+      "frecuencia": 1,
+      "lema": "accueillir",
+      "sinonimos": [
+        "reçoit",
+        "héberge"
+      ]
+    },
+    {
+      "definicion": "Persona que interpreta un papel en una obra de teatro, película o serie.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "Cet acteur est très célèbre.",
+      "palabra": "acteur",
+      "frecuencia": 3,
+      "lema": "acteur",
+      "sinonimos": [
+        "comédien",
+        "interprète"
+      ]
+    },
+    {
+      "definicion": "Conjunto de acciones o tareas que realiza una persona o un grupo.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "La lecture est une activité relaxante.",
+      "palabra": "activité",
+      "frecuencia": 14,
+      "lema": "activité",
+      "sinonimos": [
+        "occupation",
+        "tâche"
+      ]
+    },
+    {
+      "definicion": "Plural de \"activité\". Conjunto de acciones o tareas que realiza una persona o un grupo.",
+      "tipo_gramatical": "nom (f, pluriel)",
+      "ejemplo_uso": "Nous avons beaucoup d'activités ce week-end.",
+      "palabra": "activités",
+      "frecuencia": 2,
+      "lema": "activité",
+      "sinonimos": [
+        "occupations",
+        "tâches"
+      ]
+    },
+    {
+      "definicion": "Mujer que interpreta un papel en una obra de teatro, película o serie.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "Elle est une actrice talentueuse.",
+      "palabra": "actrice",
+      "frecuencia": 3,
+      "lema": "actrice",
+      "sinonimos": [
+        "comédienne",
+        "interprète"
+      ]
+    },
+    {
+      "definicion": "Que es objeto de admiración o respeto.",
+      "tipo_gramatical": "participe passé (adjectif)",
+      "ejemplo_uso": "Son travail est très admiré.",
+      "palabra": "admiré",
+      "frecuencia": 1,
+      "lema": "admirer",
+      "sinonimos": [
+        "respecté",
+        "estimé"
+      ]
+    },
+    {
+      "definicion": "Sentir un amor o una gran afición por algo o alguien.",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "J'adore le chocolat.",
+      "palabra": "adore",
+      "frecuencia": 1,
+      "lema": "adorer",
+      "sinonimos": [
+        "aime",
+        "vénère"
+      ]
+    },
+    {
+      "definicion": "Forma conjugada del verbo \"adorer\" (adorar) en tercera persona del plural del presente de indicativo.",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "Les enfants adorent jouer dehors.",
+      "palabra": "adorent",
+      "frecuencia": 1,
+      "lema": "adorer",
+      "sinonimos": [
+        "aiment",
+        "vénèrent"
+      ]
+    },
+    {
+      "definicion": "Indicación del lugar donde vive una persona o se encuentra algo.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "Quelle est ton adresse?",
+      "palabra": "adresse",
+      "frecuencia": 1,
+      "lema": "adresse",
+      "sinonimos": [
+        "domicile",
+        "lieu"
+      ]
+    },
+    {
+      "definicion": "Personas que han alcanzado la madurez física y mental.",
+      "tipo_gramatical": "nom (m/f, pluriel)",
+      "ejemplo_uso": "Les adultes travaillent.",
+      "palabra": "adultes",
+      "frecuencia": 3,
+      "lema": "adulte",
+      "sinonimos": [
+        "grands",
+        "majeurs"
+      ]
+    },
+    {
+      "definicion": "Empresa que ofrece servicios específicos, como viajes o publicidad.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "J'ai réservé mes vacances à l'agence de voyages.",
+      "palabra": "agence",
+      "frecuencia": 1,
+      "lema": "agence",
+      "sinonimos": [
+        "bureau",
+        "société"
+      ]
+    },
+    {
+      "definicion": "Sentir afecto o gusto por algo o alguien.",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "Ils aiment la musique classique.",
+      "palabra": "aiment",
+      "frecuencia": 2,
+      "lema": "aimer",
+      "sinonimos": [
+        "adorent",
+        "apprécient"
+      ]
+    },
+    {
+      "definicion": "Nombre propio masculino.",
+      "tipo_gramatical": "nom propre (m)",
+      "ejemplo_uso": "Les frères Alberts sont célèbres.",
+      "palabra": "alberts",
+      "frecuencia": 2,
+      "lema": "Albert",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Moverse de un lugar a otro.",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "Je vais aller au marché.",
+      "palabra": "aller",
+      "frecuencia": 4,
+      "lema": "aller",
+      "sinonimos": [
+        "partir",
+        "se rendre"
+      ]
+    },
+    {
+      "definicion": "Personas con las que se tiene una relación de amistad.",
+      "tipo_gramatical": "nom (m, pluriel)",
+      "ejemplo_uso": "J'ai beaucoup d'amis.",
+      "palabra": "amis",
+      "frecuencia": 1,
+      "lema": "ami",
+      "sinonimos": [
+        "copains",
+        "potes"
+      ]
+    },
+    {
+      "definicion": "Sentimiento de afecto intenso hacia una persona, animal o cosa.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "L'amour est un sentiment puissant.",
+      "palabra": "amour",
+      "frecuencia": 1,
+      "lema": "amour",
+      "sinonimos": [
+        "affection",
+        "passion"
+      ]
+    },
+    {
+      "definicion": "Relativo o perteneciente a América o a los Estados Unidos.",
+      "tipo_gramatical": "adjectif (f)",
+      "ejemplo_uso": "C'est une voiture américaine.",
+      "palabra": "américaine",
+      "frecuencia": 1,
+      "lema": "américain",
+      "sinonimos": [
+        "états-unienne",
+        "US"
+      ]
+    },
+    {
+      "definicion": "Continente que se extiende desde el Ártico hasta el Antártico.",
+      "tipo_gramatical": "nom propre (f)",
+      "ejemplo_uso": "L'Amérique est un grand continent.",
+      "palabra": "amérique",
+      "frecuencia": 1,
+      "lema": "Amérique",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Seres vivos que se mueven, se alimentan y se reproducen.",
+      "tipo_gramatical": "nom (m, pluriel)",
+      "ejemplo_uso": "J'aime les animaux.",
+      "palabra": "animaux",
+      "frecuencia": 8,
+      "lema": "animal",
+      "sinonimos": [
+        "bêtes",
+        "créatures"
+      ]
+    },
+    {
+      "definicion": "Nombre propio femenino.",
+      "tipo_gramatical": "nom propre (f)",
+      "ejemplo_uso": "Annie est ma sœur.",
+      "palabra": "annie",
+      "frecuencia": 2,
+      "lema": "Annie",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Período de doce meses.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "Cette année est spéciale.",
+      "palabra": "année",
+      "frecuencia": 2,
+      "lema": "année",
+      "sinonimos": [
+        "an",
+        "saison"
+      ]
+    },
+    {
+      "definicion": "Plural de \"an\". Unidad de tiempo equivalente a doce meses.",
+      "tipo_gramatical": "nom (m, pluriel)",
+      "ejemplo_uso": "J'ai vingt ans.",
+      "palabra": "ans",
+      "frecuencia": 7,
+      "lema": "an",
+      "sinonimos": [
+        "années",
+        "lustres"
+      ]
+    },
+    {
+      "definicion": "Objeto o máquina diseñada para una función específica.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "J'ai acheté un nouvel appareil photo.",
+      "palabra": "appareil",
+      "frecuencia": 1,
+      "lema": "appareil",
+      "sinonimos": [
+        "machine",
+        "instrument"
+      ]
+    },
+    {
+      "definicion": "Que llama o está llamando.",
+      "tipo_gramatical": "participe présent",
+      "ejemplo_uso": "En l'appelant, j'ai eu la réponse.",
+      "palabra": "appelant",
+      "frecuencia": 2,
+      "lema": "appeler",
+      "sinonimos": [
+        "téléphonant",
+        "convoquant"
+      ]
+    },
+    {
+      "definicion": "Dirigirse a alguien con la voz o por teléfono.",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "Je dois appeler ma mère.",
+      "palabra": "appeler",
+      "frecuencia": 2,
+      "lema": "appeler",
+      "sinonimos": [
+        "téléphoner",
+        "nommer"
+      ]
+    },
+    {
+      "definicion": "Forma conjugada del verbo \"appeler\" (llamar) en segunda persona del plural del presente de indicativo o imperativo.",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "Appelez-moi si vous avez besoin d'aide.",
+      "palabra": "appelez",
+      "frecuencia": 1,
+      "lema": "appeler",
+      "sinonimos": [
+        "téléphonez",
+        "nommez"
+      ]
+    },
+    {
+      "definicion": "Forma conjugada del verbo \"appeler\" (llamar) en primera o tercera persona del singular del presente de indicativo.",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "Il m'appelle tous les jours.",
+      "palabra": "appelle",
+      "frecuencia": 2,
+      "lema": "appeler",
+      "sinonimos": [
+        "téléphone",
+        "nomme"
+      ]
+    },
+    {
+      "definicion": "Indica posterioridad en el tiempo o en el espacio.",
+      "tipo_gramatical": "préposition",
+      "ejemplo_uso": "Après le travail, je rentre chez moi.",
+      "palabra": "après",
+      "frecuencia": 1,
+      "lema": "après",
+      "sinonimos": [
+        "ensuite",
+        "après coup"
+      ]
+    },
+    {
+      "definicion": "Plantas de tronco leñoso que se ramifican a cierta altura.",
+      "tipo_gramatical": "nom (m, pluriel)",
+      "ejemplo_uso": "Il y a beaucoup d'arbres dans la forêt.",
+      "palabra": "arbres",
+      "frecuencia": 2,
+      "lema": "arbre",
+      "sinonimos": [
+        "végétaux",
+        "plantes"
+      ]
+    },
+    {
+      "definicion": "Personas que diseñan y supervisan la construcción de edificios.",
+      "tipo_gramatical": "nom (m/f, pluriel)",
+      "ejemplo_uso": "Les architectes ont créé de beaux plans.",
+      "palabra": "architectes",
+      "frecuencia": 1,
+      "lema": "architecte",
+      "sinonimos": [
+        "bâtisseurs",
+        "concepteurs"
+      ]
+    },
+    {
+      "definicion": "Actividad humana que crea obras de belleza o expresión.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "L'art est une forme d'expression.",
+      "palabra": "art",
+      "frecuencia": 2,
+      "lema": "art",
+      "sinonimos": [
+        "création",
+        "œuvre"
+      ]
+    },
+    {
+      "definicion": "Escrito breve en una publicación o una parte de un contrato o ley.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "J'ai lu un article intéressant.",
+      "palabra": "article",
+      "frecuencia": 8,
+      "lema": "article",
+      "sinonimos": [
+        "texte",
+        "paragraphe"
+      ]
+    },
+    {
+      "definicion": "Persona que se dedica al arte.",
+      "tipo_gramatical": "nom (m/f)",
+      "ejemplo_uso": "C'est un artiste talentueux.",
+      "palabra": "artiste",
+      "frecuencia": 2,
+      "lema": "artiste",
+      "sinonimos": [
+        "créateur",
+        "peintre"
+      ]
+    },
+    {
+      "definicion": "Plural de \"art\". Actividades humanas que crean obras de belleza o expresión.",
+      "tipo_gramatical": "nom (m, pluriel)",
+      "ejemplo_uso": "Il étudie les beaux-arts.",
+      "palabra": "arts",
+      "frecuencia": 1,
+      "lema": "art",
+      "sinonimos": [
+        "créations",
+        "œuvres"
+      ]
+    },
+    {
+      "definicion": "El continente más grande y poblado de la Tierra.",
+      "tipo_gramatical": "nom propre (f)",
+      "ejemplo_uso": "L'Asie est un continent fascinant.",
+      "palabra": "asie",
+      "frecuencia": 1,
+      "lema": "Asie",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Grupo de personas unidas con un fin común.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "Elle travaille pour une association caritative.",
+      "palabra": "association",
+      "frecuencia": 2,
+      "lema": "association",
+      "sinonimos": [
+        "organisation",
+        "club"
+      ]
+    },
+    {
+      "definicion": "Conjunto de deportes que incluyen carreras, saltos y lanzamientos.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "L'athlétisme est un sport olympique.",
+      "palabra": "athlétisme",
+      "frecuencia": 1,
+      "lema": "athlétisme",
+      "sinonimos": [
+        "sport",
+        "course"
+      ]
+    },
+    {
+      "definicion": "Forma conjugada del verbo \"attendre\" (esperar) en primera o tercera persona del singular del presente de indicativo.",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "Il attend le bus.",
+      "palabra": "attend",
+      "frecuencia": 1,
+      "lema": "attendre",
+      "sinonimos": [
+        "espère",
+        "patiente"
+      ]
+    },
+    {
+      "definicion": "Concentración de la mente en algo.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "Faites attention en traversant la rue.",
+      "palabra": "attention",
+      "frecuencia": 1,
+      "lema": "attention",
+      "sinonimos": [
+        "vigilance",
+        "concentration"
+      ]
+    },
+    {
+      "definicion": "Contracción de la preposición \"à\" y el artículo definido \"le\".",
+      "tipo_gramatical": "article contracté (m)",
+      "ejemplo_uso": "Je vais au cinéma.",
+      "palabra": "au",
+      "frecuencia": 13,
+      "lema": "à le",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Relativo al sonido o a su grabación y reproducción.",
+      "tipo_gramatical": "adjectif / nom (m)",
+      "ejemplo_uso": "J'écoute un livre audio.",
+      "palabra": "audio",
+      "frecuencia": 11,
+      "lema": "audio",
+      "sinonimos": [
+        "sonore",
+        "acoustique"
+      ]
+    },
+    {
+      "definicion": "En el día presente.",
+      "tipo_gramatical": "adverbe",
+      "ejemplo_uso": "Aujourd'hui, il fait beau.",
+      "palabra": "aujourd",
+      "frecuencia": 3,
+      "lema": "aujourd'hui",
+      "sinonimos": [
+        "maintenant",
+        "ce jour"
+      ]
+    },
+    {
+      "definicion": "Indica igualdad o adición. También.",
+      "tipo_gramatical": "adverbe",
+      "ejemplo_uso": "J'aime le café, et toi aussi?",
+      "palabra": "aussi",
+      "frecuencia": 3,
+      "lema": "aussi",
+      "sinonimos": [
+        "également",
+        "de même"
+      ]
+    },
+    {
+      "definicion": "Contracción de la preposición \"à\" y el artículo definido \"les\".",
+      "tipo_gramatical": "article contracté (pluriel)",
+      "ejemplo_uso": "Je parle aux étudiants.",
+      "palabra": "aux",
+      "frecuencia": 3,
+      "lema": "à les",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Indica compañía, instrumento o modo.",
+      "tipo_gramatical": "préposition",
+      "ejemplo_uso": "Je vais au restaurant avec mes amis.",
+      "palabra": "avec",
+      "frecuencia": 12,
+      "lema": "avec",
+      "sinonimos": [
+        "en compagnie de",
+        "par"
+      ]
+    },
+    {
+      "definicion": "Profesional del derecho que defiende o representa a sus clientes.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "Mon avocat est très compétent.",
+      "palabra": "avocat",
+      "frecuencia": 1,
+      "lema": "avocat",
+      "sinonimos": [
+        "juriste",
+        "défenseur"
+      ]
+    },
+    {
+      "definicion": "Poseer o tener algo.",
+      "tipo_gramatical": "verbe (auxiliaire)",
+      "ejemplo_uso": "J'ai beaucoup de travail.",
+      "palabra": "avoir",
+      "frecuencia": 4,
+      "lema": "avoir",
+      "sinonimos": [
+        "posséder",
+        "détenir"
+      ]
+    },
+    {
+      "definicion": "Cuarto mes del año.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "Mon anniversaire est en avril.",
+      "palabra": "avril",
+      "frecuencia": 1,
+      "lema": "avril",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Nombre propio masculino.",
+      "tipo_gramatical": "nom propre (m)",
+      "ejemplo_uso": "Axel est un bon ami.",
+      "palabra": "axel",
+      "frecuencia": 6,
+      "lema": "Axel",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Término inglés que significa bebé, a menudo usado en francés en compuestos.",
+      "tipo_gramatical": "nom (m/f)",
+      "ejemplo_uso": "C'est un baby-sitter.",
+      "palabra": "baby",
+      "frecuencia": 1,
+      "lema": "baby",
+      "sinonimos": [
+        "bébé",
+        "enfant"
+      ]
+    },
+    {
+      "definicion": "Paseo corto y agradable.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "Nous faisons une balade en forêt.",
+      "palabra": "balade",
+      "frecuencia": 1,
+      "lema": "balade",
+      "sinonimos": [
+        "promenade",
+        "excursion"
+      ]
+    },
+    {
+      "definicion": "Objeto esférico, generalmente inflado, usado en juegos o deportes.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "Les enfants jouent au ballon.",
+      "palabra": "ballon",
+      "frecuencia": 1,
+      "lema": "ballon",
+      "sinonimos": [
+        "sphère",
+        "balle"
+      ]
+    },
+    {
+      "definicion": "Zona residencial que rodea una ciudad.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "Il habite en banlieue parisienne.",
+      "palabra": "banlieue",
+      "frecuencia": 1,
+      "lema": "banlieue",
+      "sinonimos": [
+        "périphérie",
+        "faubourg"
+      ]
+    },
+    {
+      "definicion": "En gran cantidad o medida.",
+      "tipo_gramatical": "adverbe",
+      "ejemplo_uso": "J'ai beaucoup de travail.",
+      "palabra": "beaucoup",
+      "frecuencia": 3,
+      "lema": "beaucoup",
+      "sinonimos": [
+        "énormément",
+        "très"
+      ]
+    },
+    {
+      "definicion": "Que posee belleza o es agradable a la vista.",
+      "tipo_gramatical": "adjectif (f)",
+      "ejemplo_uso": "C'est une belle fleur.",
+      "palabra": "belle",
+      "frecuencia": 1,
+      "lema": "beau",
+      "sinonimos": [
+        "jolie",
+        "magnifique"
+      ]
+    },
+    {
+      "definicion": "Expresión de cortesía para recibir a alguien.",
+      "tipo_gramatical": "interjection / nom (f)",
+      "ejemplo_uso": "Bienvenue à Paris!",
+      "palabra": "bienvenue",
+      "frecuencia": 1,
+      "lema": "bienvenue",
+      "sinonimos": [
+        "accueil",
+        "salut"
+      ]
+    },
+    {
+      "definicion": "De color blanco.",
+      "tipo_gramatical": "adjectif (f)",
+      "ejemplo_uso": "La neige est blanche.",
+      "palabra": "blanche",
+      "frecuencia": 1,
+      "lema": "blanc",
+      "sinonimos": [
+        "immaculée",
+        "claire"
+      ]
+    },
+    {
+      "definicion": "De color blanco (plural masculino).",
+      "tipo_gramatical": "adjectif (m, pluriel)",
+      "ejemplo_uso": "Les murs sont blancs.",
+      "palabra": "blancs",
+      "frecuencia": 1,
+      "lema": "blanc",
+      "sinonimos": [
+        "clairs",
+        "immaculés"
+      ]
+    },
+    {
+      "definicion": "Prenda de vestir ligera que cubre el torso, usada a menudo como uniforme o protección.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "Elle porte une blouse bleue.",
+      "palabra": "blouse",
+      "frecuencia": 1,
+      "lema": "blouse",
+      "sinonimos": [
+        "chemise",
+        "tunique"
+      ]
+    },
+    {
+      "definicion": "Cilindro sobre el que se enrolla hilo, cable o película.",
+      "tipo_gramatical": "nom (f, pluriel)",
+      "ejemplo_uso": "Les vieilles bobines de film sont fragiles.",
+      "palabra": "bobines",
+      "frecuencia": 1,
+      "lema": "bobine",
+      "sinonimos": [
+        "rouleaux",
+        "enrouleurs"
+      ]
+    },
+    {
+      "definicion": "Líquidos que se beben.",
+      "tipo_gramatical": "nom (f, pluriel)",
+      "ejemplo_uso": "Nous avons commandé des boissons.",
+      "palabra": "boissons",
+      "frecuencia": 1,
+      "lema": "boisson",
+      "sinonimos": [
+        "breuvages",
+        "liquides"
+      ]
+    },
+    {
+      "definicion": "Vehículo de transporte público de pasajeros.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "Je prends le bus pour aller au travail.",
+      "palabra": "bus",
+      "frecuencia": 2,
+      "lema": "bus",
+      "sinonimos": [
+        "autocar",
+        "autobus"
+      ]
+    },
+    {
+      "definicion": "Construcciones grandes, como casas o edificios.",
+      "tipo_gramatical": "nom (m, pluriel)",
+      "ejemplo_uso": "Les bâtiments historiques sont magnifiques.",
+      "palabra": "bâtiments",
+      "frecuencia": 1,
+      "lema": "bâtiment",
+      "sinonimos": [
+        "édifices",
+        "constructions"
+      ]
+    },
+    {
+      "definicion": "Niño o niña de muy corta edad.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "Le bébé dort paisiblement.",
+      "palabra": "bébé",
+      "frecuencia": 1,
+      "lema": "bébé",
+      "sinonimos": [
+        "nourrisson",
+        "enfant"
+      ]
+    },
+    {
+      "definicion": "Establecimiento donde se sirven comidas y bebidas de forma rápida.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "Nous déjeunons à la cafétéria.",
+      "palabra": "cafétéria",
+      "frecuencia": 5,
+      "lema": "cafétéria",
+      "sinonimos": [
+        "cantine",
+        "restaurant"
+      ]
+    },
+    {
+      "definicion": "Zona rural, fuera de la ciudad.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "J'aime passer mes vacances à la campagne.",
+      "palabra": "campagne",
+      "frecuencia": 4,
+      "lema": "campagne",
+      "sinonimos": [
+        "ruralité",
+        "champs"
+      ]
+    },
+    {
+      "definicion": "Apellido o nombre propio.",
+      "tipo_gramatical": "nom propre (m)",
+      "ejemplo_uso": "Monsieur Campos est notre professeur.",
+      "palabra": "campos",
+      "frecuencia": 11,
+      "lema": "Campos",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Aparato para grabar imágenes en movimiento.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "La caméra filme la scène.",
+      "palabra": "caméra",
+      "frecuencia": 2,
+      "lema": "caméra",
+      "sinonimos": [
+        "appareil photo",
+        "ciné-caméra"
+      ]
+    },
+    {
+      "definicion": "País de América del Norte.",
+      "tipo_gramatical": "nom propre (m)",
+      "ejemplo_uso": "Le Canada est un grand pays.",
+      "palabra": "canada",
+      "frecuencia": 1,
+      "lema": "Canada",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Introduce una explicación o una causa.",
+      "tipo_gramatical": "conjonction de coordination",
+      "ejemplo_uso": "Je suis fatigué car j'ai beaucoup travaillé.",
+      "palabra": "car",
+      "frecuencia": 1,
+      "lema": "car",
+      "sinonimos": [
+        "parce que",
+        "en effet"
+      ]
+    },
+    {
+      "definicion": "Nombre propio masculino.",
+      "tipo_gramatical": "nom propre (m)",
+      "ejemplo_uso": "Carlos est mon ami.",
+      "palabra": "carlos",
+      "frecuencia": 3,
+      "lema": "Carlos",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Trayectoria profesional de una persona.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "Sa carrière est très réussie.",
+      "palabra": "carrière",
+      "frecuencia": 1,
+      "lema": "carrière",
+      "sinonimos": [
+        "profession",
+        "parcours"
+      ]
+    },
+    {
+      "definicion": "Documento o representación gráfica de un territorio.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "J'ai une carte d'identité.",
+      "palabra": "carte",
+      "frecuencia": 2,
+      "lema": "carte",
+      "sinonimos": [
+        "plan",
+        "document"
+      ]
+    },
+    {
+      "definicion": "Indica algo cercano o ya mencionado.",
+      "tipo_gramatical": "déterminant démonstratif (m) / pronom démonstratif",
+      "ejemplo_uso": "Ce livre est intéressant.",
+      "palabra": "ce",
+      "frecuencia": 13,
+      "lema": "ce",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Punto equidistante de los extremos o la parte principal de una ciudad.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "Le centre-ville est animé.",
+      "palabra": "centre",
+      "frecuencia": 10,
+      "lema": "centre",
+      "sinonimos": [
+        "milieu",
+        "cœur"
+      ]
+    },
+    {
+      "definicion": "Plural de \"ce\" o \"cette\". Indica cosas cercanas o ya mencionadas.",
+      "tipo_gramatical": "déterminant démonstratif (pluriel)",
+      "ejemplo_uso": "Ces fleurs sont belles.",
+      "palabra": "ces",
+      "frecuencia": 1,
+      "lema": "ce",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Forma de \"ce\" usada delante de sustantivos masculinos que empiezan por vocal o 'h' muda.",
+      "tipo_gramatical": "déterminant démonstratif (m, devant voyelle/h muet)",
+      "ejemplo_uso": "Cet arbre est grand.",
+      "palabra": "cet",
+      "frecuencia": 8,
+      "lema": "ce",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Forma femenina de \"ce\". Indica algo cercano o ya mencionado.",
+      "tipo_gramatical": "déterminant démonstratif (f)",
+      "ejemplo_uso": "Cette maison est grande.",
+      "palabra": "cette",
+      "frecuencia": 4,
+      "lema": "ce",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Casa pequeña de madera, típica de zonas montañosas.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "Nous avons loué un chalet à la montagne.",
+      "palabra": "chalet",
+      "frecuencia": 1,
+      "lema": "chalet",
+      "sinonimos": [
+        "cabane",
+        "refuge"
+      ]
+    },
+    {
+      "definicion": "Persona que gana una competición deportiva.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "Il est le champion du monde.",
+      "palabra": "champion",
+      "frecuencia": 1,
+      "lema": "champion",
+      "sinonimos": [
+        "vainqueur",
+        "lauréat"
+      ]
+    },
+    {
+      "definicion": "Composición musical con letra para ser cantada.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "J'aime cette chanson.",
+      "palabra": "chanson",
+      "frecuencia": 4,
+      "lema": "chanson",
+      "sinonimos": [
+        "mélodie",
+        "air"
+      ]
+    },
+    {
+      "definicion": "Que canta o está cantando.",
+      "tipo_gramatical": "participe présent",
+      "ejemplo_uso": "Elle travaille en chantant.",
+      "palabra": "chantant",
+      "frecuencia": 2,
+      "lema": "chanter",
+      "sinonimos": [
+        "fredonnant",
+        "vocalise"
+      ]
+    },
+    {
+      "definicion": "Persona que canta profesionalmente.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "Ce chanteur a une belle voix.",
+      "palabra": "chanteur",
+      "frecuencia": 3,
+      "lema": "chanteur",
+      "sinonimos": [
+        "vocaliste",
+        "interprète"
+      ]
+    },
+    {
+      "definicion": "Plural de \"chanteur\". Personas que cantan profesionalmente.",
+      "tipo_gramatical": "nom (m, pluriel)",
+      "ejemplo_uso": "Les chanteurs sont sur scène.",
+      "palabra": "chanteurs",
+      "frecuencia": 1,
+      "lema": "chanteur",
+      "sinonimos": [
+        "vocalistes",
+        "interprètes"
+      ]
+    },
+    {
+      "definicion": "Mujer que canta profesionalmente.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "C'est une chanteuse très connue.",
+      "palabra": "chanteuse",
+      "frecuencia": 1,
+      "lema": "chanteuse",
+      "sinonimos": [
+        "vocaliste",
+        "interprète"
+      ]
+    },
+    {
+      "definicion": "Que tiene una temperatura elevada (femenino plural).",
+      "tipo_gramatical": "adjectif (f, pluriel)",
+      "ejemplo_uso": "Les boissons chaudes sont agréables en hiver.",
+      "palabra": "chaudes",
+      "frecuencia": 1,
+      "lema": "chaud",
+      "sinonimos": [
+        "brûlantes",
+        "tièdes"
+      ]
+    },
+    {
+      "definicion": "Que tiene una temperatura elevada (masculino plural).",
+      "tipo_gramatical": "adjectif (m, pluriel)",
+      "ejemplo_uso": "Les plats chauds sont servis.",
+      "palabra": "chauds",
+      "frecuencia": 1,
+      "lema": "chaud",
+      "sinonimos": [
+        "brûlants",
+        "tièdes"
+      ]
+    },
+    {
+      "definicion": "Vía por donde se transita.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "Suivez ce chemin.",
+      "palabra": "chemin",
+      "frecuencia": 1,
+      "lema": "chemin",
+      "sinonimos": [
+        "route",
+        "sentier"
+      ]
+    },
+    {
+      "definicion": "Forma conjugada del verbo \"chercher\" (buscar) en tercera persona del plural del presente de indicativo.",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "Ils cherchent leurs clés.",
+      "palabra": "cherchent",
+      "frecuencia": 1,
+      "lema": "chercher",
+      "sinonimos": [
+        "recherchent",
+        "fouillent"
+      ]
+    },
+    {
+      "definicion": "Mamífero équido, domesticado, usado para montar o tirar.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "J'aime monter à cheval.",
+      "palabra": "cheval",
+      "frecuencia": 4,
+      "lema": "cheval",
+      "sinonimos": [
+        "monture",
+        "équidé"
+      ]
+    },
+    {
+      "definicion": "Médico especializado en realizar operaciones quirúrgicas.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "Le chirurgien a réussi l'opération.",
+      "palabra": "chirurgien",
+      "frecuencia": 1,
+      "lema": "chirurgien",
+      "sinonimos": [
+        "opérateur",
+        "médecin"
+      ]
+    },
+    {
+      "definicion": "Que ha sido seleccionado o preferido.",
+      "tipo_gramatical": "participe passé (adjectif)",
+      "ejemplo_uso": "Le chemin choisi est le bon.",
+      "palabra": "choisi",
+      "frecuencia": 1,
+      "lema": "choisir",
+      "sinonimos": [
+        "sélectionné",
+        "élu"
+      ]
+    },
+    {
+      "definicion": "Seleccionar o preferir una cosa entre varias.",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "Je dois choisir une robe.",
+      "palabra": "choisir",
+      "frecuencia": 1,
+      "lema": "choisir",
+      "sinonimos": [
+        "sélectionner",
+        "opter"
+      ]
+    },
+    {
+      "definicion": "Forma abreviada y familiar de \"cinéma\".",
+      "tipo_gramatical": "nom (m) (familier)",
+      "ejemplo_uso": "On va au ciné ce soir?",
+      "palabra": "ciné",
+      "frecuencia": 1,
+      "lema": "cinéma",
+      "sinonimos": [
+        "cinéma",
+        "film"
+      ]
+    },
+    {
+      "definicion": "Arte de proyectar películas o el lugar donde se proyectan.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "J'adore aller au cinéma.",
+      "palabra": "cinéma",
+      "frecuencia": 3,
+      "lema": "cinéma",
+      "sinonimos": [
+        "film",
+        "salle de cinéma"
+      ]
+    },
+    {
+      "definicion": "Calzado ligero, a menudo de playa, o instrumento para marcar el inicio de una escena de cine.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "Elle porte des claquettes à la piscine.",
+      "palabra": "claquette",
+      "frecuencia": 1,
+      "lema": "claquette",
+      "sinonimos": [
+        "sandale",
+        "clap"
+      ]
+    },
+    {
+      "definicion": "Que pertenece o concierne a un grupo de personas.",
+      "tipo_gramatical": "adjectif (f, pluriel)",
+      "ejemplo_uso": "Nous organisons des activités collectives.",
+      "palabra": "collectives",
+      "frecuencia": 1,
+      "lema": "collectif",
+      "sinonimos": [
+        "communes",
+        "groupées"
+      ]
+    },
+    {
+      "definicion": "Las primeras tres letras del alfabeto. Se usa para referirse a los fundamentos o lo básico de algo.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "Apprendre l'ABC est la première étape.",
+      "palabra": "abc",
+      "frecuencia": 1,
+      "lema": "abc",
+      "sinonimos": [
+        "alphabet",
+        "rudiments"
+      ]
+    },
+    {
+      "definicion": "Convenio o pacto entre dos o más partes; también, armonía o conformidad.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "Nous sommes arrivés à un accord.",
+      "palabra": "accord",
+      "frecuencia": 7,
+      "lema": "accord",
+      "sinonimos": [
+        "entente",
+        "pacte"
+      ]
+    },
+    {
+      "definicion": "Adquirir algo a cambio de dinero.",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "Je veux acheter un nouveau téléphone.",
+      "palabra": "acheter",
+      "frecuencia": 1,
+      "lema": "acheter",
+      "sinonimos": [
+        "acquérir",
+        "se procurer"
+      ]
+    },
+    {
+      "definicion": "Forma del participio pasado del verbo \"comprar\", que indica que algo ha sido adquirido.",
+      "tipo_gramatical": "participe passé (verbe)",
+      "ejemplo_uso": "J'ai acheté du pain ce matin.",
+      "palabra": "acheté",
+      "frecuencia": 1,
+      "lema": "acheter",
+      "sinonimos": [
+        "acquis",
+        "payé"
+      ]
+    },
+    {
+      "definicion": "Operación matemática de sumar; también, la cuenta de lo que se debe pagar en un restaurante.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "L'addition s'il vous plaît.",
+      "palabra": "addition",
+      "frecuencia": 1,
+      "lema": "addition",
+      "sinonimos": [
+        "somme",
+        "facture"
+      ]
+    },
+    {
+      "definicion": "Abreviatura que puede referirse a diversos términos dependiendo del contexto, como \"affaires\" (negocios) o \"Afrique\" (África).",
+      "tipo_gramatical": "abréviation",
+      "ejemplo_uso": "L'AF (Agence France) a publié un communiqué.",
+      "palabra": "af",
+      "frecuencia": 1,
+      "lema": "af",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Conjunto de actividades comerciales o económicas; también, asuntos o cuestiones.",
+      "tipo_gramatical": "nom (f, pluriel)",
+      "ejemplo_uso": "J'ai beaucoup d'affaires à régler.",
+      "palabra": "affaires",
+      "frecuencia": 1,
+      "lema": "affaire",
+      "sinonimos": [
+        "business",
+        "commerce"
+      ]
+    },
+    {
+      "definicion": "Cuaderno o aplicación donde se anotan las tareas, citas y eventos.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "Mon agenda est plein cette semaine.",
+      "palabra": "agenda",
+      "frecuencia": 6,
+      "lema": "agenda",
+      "sinonimos": [
+        "carnet",
+        "calendrier"
+      ]
+    },
+    {
+      "definicion": "Expresión que denota sorpresa, dolor, placer o comprensión.",
+      "tipo_gramatical": "interjection",
+      "ejemplo_uso": "Ah, je comprends maintenant!",
+      "palabra": "ah",
+      "frecuencia": 3,
+      "lema": "ah",
+      "sinonimos": [
+        "oh",
+        "hélas"
+      ]
+    },
+    {
+      "definicion": "Forma conjugada del verbo \"tener\" en primera persona del singular del presente.",
+      "tipo_gramatical": "verbe (avoir, 1e pers. sing. présent)",
+      "ejemplo_uso": "J'ai faim.",
+      "palabra": "ai",
+      "frecuencia": 20,
+      "lema": "avoir",
+      "sinonimos": [
+        "possède",
+        "détiens"
+      ]
+    },
+    {
+      "definicion": "Apoyo o asistencia que se presta a alguien; también, la acción de ayudar.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "J'ai besoin d'aide pour mes devoirs.",
+      "palabra": "aide",
+      "frecuencia": 1,
+      "lema": "aide",
+      "sinonimos": [
+        "soutien",
+        "assistance"
+      ]
+    },
+    {
+      "definicion": "Prestar apoyo o asistencia a alguien para que realice algo o supere una dificultad.",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "Peux-tu m'aider s'il te plaît?",
+      "palabra": "aider",
+      "frecuencia": 2,
+      "lema": "aider",
+      "sinonimos": [
+        "assister",
+        "secourir"
+      ]
+    },
+    {
+      "definicion": "Forma conjugada del verbo \"amar\" o \"gustar\" en primera o tercera persona del singular del presente.",
+      "tipo_gramatical": "verbe (aimer, 1e/3e pers. sing. présent/subjonctif)",
+      "ejemplo_uso": "Il aime le chocolat.",
+      "palabra": "aime",
+      "frecuencia": 2,
+      "lema": "aimer",
+      "sinonimos": [
+        "adore",
+        "apprécie"
+      ]
+    },
+    {
+      "definicion": "Forma conjugada del verbo \"amar\" o \"gustar\" en primera o segunda persona del singular del condicional presente, expresando un deseo.",
+      "tipo_gramatical": "verbe (aimer, 1e/2e pers. sing. conditionnel présent)",
+      "ejemplo_uso": "J'aimerais voyager en France.",
+      "palabra": "aimerais",
+      "frecuencia": 1,
+      "lema": "aimer",
+      "sinonimos": [
+        "souhaiterais",
+        "désirerais"
+      ]
+    },
+    {
+      "definicion": "Forma conjugada del verbo \"ir\" en segunda persona del plural del presente o del imperativo.",
+      "tipo_gramatical": "verbe (aller, 2e pers. plur. présent/impératif)",
+      "ejemplo_uso": "Allez, on y va!",
+      "palabra": "allez",
+      "frecuencia": 15,
+      "lema": "aller",
+      "sinonimos": [
+        "partez",
+        "marchez"
+      ]
+    },
+    {
+      "definicion": "Forma conjugada del verbo \"ir\" en primera persona del plural del presente o del imperativo.",
+      "tipo_gramatical": "verbe (aller, 1e pers. plur. présent/impératif)",
+      "ejemplo_uso": "Allons au cinéma ce soir.",
+      "palabra": "allons",
+      "frecuencia": 2,
+      "lema": "aller",
+      "sinonimos": [
+        "partons",
+        "marchons"
+      ]
+    },
+    {
+      "definicion": "Expresión utilizada para iniciar una conversación telefónica o para llamar la atención de alguien.",
+      "tipo_gramatical": "interjection",
+      "ejemplo_uso": "Allô, tu m'entends?",
+      "palabra": "allô",
+      "frecuencia": 1,
+      "lema": "allô",
+      "sinonimos": [
+        "bonjour",
+        "salut"
+      ]
+    },
+    {
+      "definicion": "En ese momento; por consiguiente; en ese caso.",
+      "tipo_gramatical": "adverbe",
+      "ejemplo_uso": "Alors, qu'est-ce qu'on fait?",
+      "palabra": "alors",
+      "frecuencia": 4,
+      "lema": "alors",
+      "sinonimos": [
+        "donc",
+        "ensuite"
+      ]
+    },
+    {
+      "definicion": "Relativo a Inglaterra o a su idioma; también, el idioma inglés.",
+      "tipo_gramatical": "adjectif / nom (m)",
+      "ejemplo_uso": "Je parle anglais.",
+      "palabra": "anglais",
+      "frecuencia": 1,
+      "lema": "anglais",
+      "sinonimos": [
+        "britannique",
+        "anglophone"
+      ]
+    },
+    {
+      "definicion": "Forma conjugada del verbo \"anular\" en primera o tercera persona del singular del presente.",
+      "tipo_gramatical": "verbe (annuler, 1e/3e pers. sing. présent/subjonctif)",
+      "ejemplo_uso": "Il annule son rendez-vous.",
+      "palabra": "annule",
+      "frecuencia": 1,
+      "lema": "annuler",
+      "sinonimos": [
+        "supprime",
+        "invalide"
+      ]
+    },
+    {
+      "definicion": "Nombre propio femenino.",
+      "tipo_gramatical": "nom propre (f)",
+      "ejemplo_uso": "Anya est une étudiante très sérieuse.",
+      "palabra": "anya",
+      "frecuencia": 1,
+      "lema": "Anya",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Forma conjugada del verbo \"traer\" o \"llevar\" en primera o tercera persona del singular del presente.",
+      "tipo_gramatical": "verbe (apporter, 1e/3e pers. sing. présent/subjonctif)",
+      "ejemplo_uso": "Il apporte des fleurs.",
+      "palabra": "apporte",
+      "frecuencia": 1,
+      "lema": "apporter",
+      "sinonimos": [
+        "amène",
+        "porte"
+      ]
+    },
+    {
+      "definicion": "Llevar o traer algo a un lugar o a una persona.",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "N'oublie pas d'apporter ton livre.",
+      "palabra": "apporter",
+      "frecuencia": 1,
+      "lema": "apporter",
+      "sinonimos": [
+        "amener",
+        "porter"
+      ]
+    },
+    {
+      "definicion": "Adquirir conocimientos o habilidades mediante el estudio o la experiencia.",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "J'aime apprendre de nouvelles langues.",
+      "palabra": "apprendre",
+      "frecuencia": 2,
+      "lema": "apprendre",
+      "sinonimos": [
+        "étudier",
+        "s'instruire"
+      ]
+    },
+    {
+      "definicion": "Forma conjugada del verbo \"llegar\" o \"suceder\" en primera o tercera persona del singular del presente.",
+      "tipo_gramatical": "verbe (arriver, 1e/3e pers. sing. présent/subjonctif)",
+      "ejemplo_uso": "Le train arrive à l'heure.",
+      "palabra": "arrive",
+      "frecuencia": 4,
+      "lema": "arriver",
+      "sinonimos": [
+        "parvient",
+        "se produit"
+      ]
+    },
+    {
+      "definicion": "Alcanzar un destino; también, suceder o acontecer.",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "J'espère arriver à temps.",
+      "palabra": "arriver",
+      "frecuencia": 3,
+      "lema": "arriver",
+      "sinonimos": [
+        "parvenir",
+        "survenir"
+      ]
+    },
+    {
+      "definicion": "Interrupción de un movimiento o una actividad; lugar donde se detiene un vehículo.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "Le bus fait un arrêt ici.",
+      "palabra": "arrêt",
+      "frecuencia": 5,
+      "lema": "arrêt",
+      "sinonimos": [
+        "pause",
+        "halte"
+      ]
+    },
+    {
+      "definicion": "Forma conjugada del verbo \"tener\" en segunda persona del singular del presente.",
+      "tipo_gramatical": "verbe (avoir, 2e pers. sing. présent)",
+      "ejemplo_uso": "Tu as un nouveau vélo?",
+      "palabra": "as",
+      "frecuencia": 1,
+      "lema": "avoir",
+      "sinonimos": [
+        "possèdes",
+        "détiens"
+      ]
+    },
+    {
+      "definicion": "Medicamento utilizado para aliviar el dolor, reducir la fiebre y la inflamación.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "J'ai mal à la tête, je vais prendre une aspirine.",
+      "palabra": "aspirine",
+      "frecuencia": 1,
+      "lema": "aspirine",
+      "sinonimos": [
+        "analgésique",
+        "médicament"
+      ]
+    },
+    {
+      "definicion": "Poner a alguien o sentarse uno mismo en una silla o superficie.",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "Veuillez vous asseoir.",
+      "palabra": "asseoir",
+      "frecuencia": 1,
+      "lema": "asseoir",
+      "sinonimos": [
+        "s'installer",
+        "se poser"
+      ]
+    },
+    {
+      "definicion": "Forma conjugada del verbo \"sentar\" en segunda persona del singular del presente o del imperativo.",
+      "tipo_gramatical": "verbe (asseoir, 2e pers. sing. présent/impératif)",
+      "ejemplo_uso": "Assieds-toi ici, s'il te plaît.",
+      "palabra": "assieds",
+      "frecuencia": 1,
+      "lema": "asseoir",
+      "sinonimos": [
+        "installe-toi",
+        "pose-toi"
+      ]
+    },
+    {
+      "definicion": "Forma conjugada del verbo \"asociar\" en segunda persona del plural del presente o del imperativo.",
+      "tipo_gramatical": "verbe (associer, 2e pers. plur. présent/impératif)",
+      "ejemplo_uso": "Associez les mots aux images.",
+      "palabra": "associez",
+      "frecuencia": 14,
+      "lema": "associer",
+      "sinonimos": [
+        "joignez",
+        "reliez"
+      ]
+    },
+    {
+      "definicion": "Relatos de la vida de una persona escritos por ella misma.",
+      "tipo_gramatical": "nom (f, pluriel)",
+      "ejemplo_uso": "J'aime lire des autobiographies d'écrivains célèbres.",
+      "palabra": "autobiographies",
+      "frecuencia": 1,
+      "lema": "autobiographie",
+      "sinonimos": [
+        "mémoires",
+        "récits de vie"
+      ]
+    },
+    {
+      "definicion": "Diferente; distinto; que no es lo mismo.",
+      "tipo_gramatical": "adjectif indéfini / pronom indéfini",
+      "ejemplo_uso": "Je voudrais un autre café.",
+      "palabra": "autre",
+      "frecuencia": 2,
+      "lema": "autre",
+      "sinonimos": [
+        "différent",
+        "distinct"
+      ]
+    },
+    {
+      "definicion": "Indica anterioridad en el tiempo o en el espacio.",
+      "tipo_gramatical": "préposition / adverbe",
+      "ejemplo_uso": "Avant de partir, ferme la porte.",
+      "palabra": "avant",
+      "frecuencia": 2,
+      "lema": "avant",
+      "sinonimos": [
+        "auparavant",
+        "précédemment"
+      ]
+    },
+    {
+      "definicion": "Forma conjugada del verbo \"tener\" en segunda persona del plural del presente.",
+      "tipo_gramatical": "verbe (avoir, 2e pers. plur. présent)",
+      "ejemplo_uso": "Vous avez faim?",
+      "palabra": "avez",
+      "frecuencia": 5,
+      "lema": "avoir",
+      "sinonimos": [
+        "possédez",
+        "détenez"
+      ]
+    },
+    {
+      "definicion": "Aeronave con alas que se propulsa por motores y se utiliza para volar.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "Je prends l'avion pour Paris.",
+      "palabra": "avion",
+      "frecuencia": 2,
+      "lema": "avion",
+      "sinonimos": [
+        "aéronef",
+        "appareil"
+      ]
+    },
+    {
+      "definicion": "Forma conjugada del verbo \"tener\" en primera persona del plural del presente.",
+      "tipo_gramatical": "verbe (avoir, 1e pers. plur. présent)",
+      "ejemplo_uso": "Nous avons un chat.",
+      "palabra": "avons",
+      "frecuencia": 1,
+      "lema": "avoir",
+      "sinonimos": [
+        "possédons",
+        "détenons"
+      ]
+    },
+    {
+      "definicion": "Instalación donde aterrizan y despegan los aviones, y donde se gestiona el tráfico aéreo y de pasajeros.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "Je vais à l'aéroport pour prendre mon vol.",
+      "palabra": "aéroport",
+      "frecuencia": 5,
+      "lema": "aéroport",
+      "sinonimos": [
+        "aérogare",
+        "terrain d'aviation"
+      ]
+    },
+    {
+      "definicion": "Pan largo y estrecho, típico de Francia; también, palillos para comer.",
+      "tipo_gramatical": "nom (f, pluriel)",
+      "ejemplo_uso": "J'achète deux baguettes à la boulangerie.",
+      "palabra": "baguettes",
+      "frecuencia": 1,
+      "lema": "baguette",
+      "sinonimos": [
+        "pain",
+        "bâtonnets"
+      ]
+    },
+    {
+      "definicion": "Tiras o fajas de material; también, grupos de personas.",
+      "tipo_gramatical": "nom (f, pluriel)",
+      "ejemplo_uso": "Les bandes dessinées sont très populaires.",
+      "palabra": "bandes",
+      "frecuencia": 1,
+      "lema": "bande",
+      "sinonimos": [
+        "rubans",
+        "groupes"
+      ]
+    },
+    {
+      "definicion": "Parrilla o asador para cocinar alimentos al aire libre; también, la comida preparada de esta manera.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "On fait un barbecue ce week-end.",
+      "palabra": "barbecue",
+      "frecuencia": 1,
+      "lema": "barbecue",
+      "sinonimos": [
+        "grill",
+        "grillade"
+      ]
+    },
+    {
+      "definicion": "Que está en la parte inferior; de poca altura; también, la parte inferior de algo.",
+      "tipo_gramatical": "adjectif / adverbe / nom (m)",
+      "ejemplo_uso": "Le prix est très bas.",
+      "palabra": "bas",
+      "frecuencia": 2,
+      "lema": "bas",
+      "sinonimos": [
+        "inférieur",
+        "dessous"
+      ]
+    },
+    {
+      "definicion": "Nombre propio de lugar o persona, que significa \"hermoso lugar\".",
+      "tipo_gramatical": "nom propre (m)",
+      "ejemplo_uso": "Nous allons visiter Beaulieu-sur-Mer.",
+      "palabra": "beaulieu",
+      "frecuencia": 1,
+      "lema": "Beaulieu",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Carencia de algo que se considera necesario; exigencia.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "J'ai besoin d'eau.",
+      "palabra": "besoin",
+      "frecuencia": 7,
+      "lema": "besoin",
+      "sinonimos": [
+        "nécessité",
+        "exigence"
+      ]
+    },
+    {
+      "definicion": "Lugar donde se guardan y consultan libros; también, mueble para guardar libros.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "J'étudie à la bibliothèque.",
+      "palabra": "bibliothèque",
+      "frecuencia": 7,
+      "lema": "bibliothèque",
+      "sinonimos": [
+        "librairie",
+        "médiathèque"
+      ]
+    },
+    {
+      "definicion": "De manera correcta o satisfactoria; también, lo que es bueno o beneficioso.",
+      "tipo_gramatical": "adverbe / nom (m)",
+      "ejemplo_uso": "Je me sens bien.",
+      "palabra": "bien",
+      "frecuencia": 14,
+      "lema": "bien",
+      "sinonimos": [
+        "correctement",
+        "avantage"
+      ]
+    },
+    {
+      "definicion": "En poco tiempo; dentro de un breve período.",
+      "tipo_gramatical": "adverbe",
+      "ejemplo_uso": "À bientôt!",
+      "palabra": "bientôt",
+      "frecuencia": 3,
+      "lema": "bientôt",
+      "sinonimos": [
+        "prochainement",
+        "sous peu"
+      ]
+    },
+    {
+      "definicion": "Trozo de papel que sirve como entrada para un evento, transporte o como dinero.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "J'ai acheté un billet de train.",
+      "palabra": "billet",
+      "frecuencia": 1,
+      "lema": "billet",
+      "sinonimos": [
+        "ticket",
+        "coupon"
+      ]
+    },
+    {
+      "definicion": "Plural de \"billet\", trozos de papel que sirven como entradas o dinero.",
+      "tipo_gramatical": "nom (m, pluriel)",
+      "ejemplo_uso": "J'ai des billets pour le concert.",
+      "palabra": "billets",
+      "frecuencia": 1,
+      "lema": "billet",
+      "sinonimos": [
+        "tickets",
+        "coupons"
+      ]
+    },
+    {
+      "definicion": "Color del cielo despejado o del mar; también, algo de ese color.",
+      "tipo_gramatical": "adjectif / nom (m)",
+      "ejemplo_uso": "J'aime la couleur bleue.",
+      "palabra": "bleu",
+      "frecuencia": 1,
+      "lema": "bleu",
+      "sinonimos": [
+        "azur",
+        "céruléen"
+      ]
+    },
+    {
+      "definicion": "Ingerir un líquido.",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "J'ai soif, je veux boire de l'eau.",
+      "palabra": "boire",
+      "frecuencia": 1,
+      "lema": "boire",
+      "sinonimos": [
+        "s'abreuver",
+        "ingurgiter"
+      ]
+    },
+    {
+      "definicion": "Forma conjugada del verbo \"beber\" en primera o segunda persona del singular del presente; también, material de los árboles o un pequeño bosque.",
+      "tipo_gramatical": "verbe (boire, 1e/2e pers. sing. présent) / nom (m)",
+      "ejemplo_uso": "Je bois du café tous les matins. / La table est en bois.",
+      "palabra": "bois",
+      "frecuencia": 1,
+      "lema": "boire / bois",
+      "sinonimos": [
+        "consomme",
+        "forêt"
+      ]
+    },
+    {
+      "definicion": "Que tiene buenas cualidades; adecuado; también, expresión de aprobación.",
+      "tipo_gramatical": "adjectif / interjection",
+      "ejemplo_uso": "C'est un bon livre.",
+      "palabra": "bon",
+      "frecuencia": 1,
+      "lema": "bon",
+      "sinonimos": [
+        "excellent",
+        "agréable"
+      ]
+    },
+    {
+      "definicion": "Forma femenina del adjetivo \"bondé\", que significa \"abarrotada\" o \"llena de gente\".",
+      "tipo_gramatical": "adjectif (f)",
+      "ejemplo_uso": "La salle de concert était bondée.",
+      "palabra": "bondée",
+      "frecuencia": 5,
+      "lema": "bondé",
+      "sinonimos": [
+        "pleine",
+        "surchargée"
+      ]
+    },
+    {
+      "definicion": "Saludo que se usa durante el día.",
+      "tipo_gramatical": "interjection / nom (m)",
+      "ejemplo_uso": "Bonjour, comment allez-vous?",
+      "palabra": "bonjour",
+      "frecuencia": 22,
+      "lema": "bonjour",
+      "sinonimos": [
+        "salut",
+        "bonne journée"
+      ]
+    },
+    {
+      "definicion": "Forma femenina del adjetivo \"bon\", que significa \"buena\".",
+      "tipo_gramatical": "adjectif (f)",
+      "ejemplo_uso": "J'ai une bonne nouvelle.",
+      "palabra": "bonne",
+      "frecuencia": 2,
+      "lema": "bon",
+      "sinonimos": [
+        "excellente",
+        "agréable"
+      ]
+    },
+    {
+      "definicion": "Persona que hace o vende pan.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "Le boulanger fait du pain frais.",
+      "palabra": "boulanger",
+      "frecuencia": 5,
+      "lema": "boulanger",
+      "sinonimos": [
+        "panetier",
+        "artisan"
+      ]
+    },
+    {
+      "definicion": "Extremo o final de algo.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "Au bout de la rue, il y a un parc.",
+      "palabra": "bout",
+      "frecuencia": 1,
+      "lema": "bout",
+      "sinonimos": [
+        "extrémité",
+        "fin"
+      ]
+    },
+    {
+      "definicion": "Recipiente con tapa para guardar cosas; también, una discoteca o club nocturno.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "Mets les jouets dans la boîte.",
+      "palabra": "boîte",
+      "frecuencia": 7,
+      "lema": "boîte",
+      "sinonimos": [
+        "caisse",
+        "coffret"
+      ]
+    },
+    {
+      "definicion": "Extremidad superior del cuerpo humano, desde el hombro hasta la mano.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "Il a les bras croisés.",
+      "palabra": "bras",
+      "frecuencia": 1,
+      "lema": "bras",
+      "sinonimos": [
+        "membre",
+        "avant-bras"
+      ]
+    },
+    {
+      "definicion": "Borrador o primer escrito de algo; también, que está desordenado o sin pulir.",
+      "tipo_gramatical": "nom (m) / adjectif",
+      "ejemplo_uso": "J'ai écrit un brouillon de ma lettre.",
+      "palabra": "brouillon",
+      "frecuencia": 1,
+      "lema": "brouillon",
+      "sinonimos": [
+        "ébauche",
+        "projet"
+      ]
+    },
+    {
+      "definicion": "Mesa de trabajo; también, la oficina o lugar de trabajo.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "Je travaille dans mon bureau.",
+      "palabra": "bureau",
+      "frecuencia": 33,
+      "lema": "bureau",
+      "sinonimos": [
+        "office",
+        "pupitre"
+      ]
+    },
+    {
+      "definicion": "Término familiar para referirse al vientre o la barriga.",
+      "tipo_gramatical": "nom (m) (familier)",
+      "ejemplo_uso": "Il a un gros bédon.",
+      "palabra": "bédon",
+      "frecuencia": 1,
+      "lema": "bédon",
+      "sinonimos": [
+        "ventre",
+        "bedaine"
+      ]
+    },
+    {
+      "definicion": "Oficina de un profesional (médico, abogado); también, un pequeño cuarto o estudio.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "J'ai rendez-vous au cabinet du médecin.",
+      "palabra": "cabinet",
+      "frecuencia": 5,
+      "lema": "cabinet",
+      "sinonimos": [
+        "bureau",
+        "étude"
+      ]
+    },
+    {
+      "definicion": "Bebida estimulante hecha con granos tostados de café; también, el lugar donde se sirve esta bebida.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "Je bois un café le matin.",
+      "palabra": "café",
+      "frecuencia": 55,
+      "lema": "café",
+      "sinonimos": [
+        "bistrot",
+        "expresso"
+      ]
+    },
+    {
+      "definicion": "Realizar operaciones matemáticas para obtener un resultado.",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "Je dois calculer le prix total.",
+      "palabra": "calculer",
+      "frecuencia": 1,
+      "lema": "calculer",
+      "sinonimos": [
+        "compter",
+        "évaluer"
+      ]
+    },
+    {
+      "definicion": "Plural de \"calcul\", operaciones matemáticas o estimaciones.",
+      "tipo_gramatical": "nom (m, pluriel)",
+      "ejemplo_uso": "Les calculs sont corrects.",
+      "palabra": "calculs",
+      "frecuencia": 1,
+      "lema": "calcul",
+      "sinonimos": [
+        "opérations",
+        "estimations"
+      ]
+    },
+    {
+      "definicion": "Compañero o amigo, especialmente en el estudio o el trabajo.",
+      "tipo_gramatical": "nom (m/f)",
+      "ejemplo_uso": "C'est mon camarade de classe.",
+      "palabra": "camarade",
+      "frecuencia": 2,
+      "lema": "camarade",
+      "sinonimos": [
+        "ami",
+        "collègue"
+      ]
+    },
+    {
+      "definicion": "Conjunto de edificios y terrenos de una universidad o institución educativa.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "Le campus est très grand.",
+      "palabra": "campus",
+      "frecuencia": 1,
+      "lema": "campus",
+      "sinonimos": [
+        "site universitaire",
+        "domaine"
+      ]
+    },
+    {
+      "definicion": "Gorra con visera.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "Il porte une casquette bleue.",
+      "palabra": "casquette",
+      "frecuencia": 1,
+      "lema": "casquette",
+      "sinonimos": [
+        "képi",
+        "béret"
+      ]
+    },
+    {
+      "definicion": "Pronombre demostrativo neutro que se refiere a algo que se va a decir o que está cerca.",
+      "tipo_gramatical": "pronom démonstratif",
+      "ejemplo_uso": "Ceci est important.",
+      "palabra": "ceci",
+      "frecuencia": 2,
+      "lema": "ceci",
+      "sinonimos": [
+        "cela",
+        "ça"
+      ]
+    },
+    {
+      "definicion": "Plural de \"chaise\", muebles con respaldo y asiento para una persona.",
+      "tipo_gramatical": "nom (f, pluriel)",
+      "ejemplo_uso": "Il y a quatre chaises autour de la table.",
+      "palabra": "chaises",
+      "frecuencia": 6,
+      "lema": "chaise",
+      "sinonimos": [
+        "sièges",
+        "tabourets"
+      ]
+    },
+    {
+      "definicion": "Habitación, especialmente la destinada a dormir.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "Ma chambre est au premier étage.",
+      "palabra": "chambre",
+      "frecuencia": 6,
+      "lema": "chambre",
+      "sinonimos": [
+        "pièce",
+        "pièce à coucher"
+      ]
+    },
+    {
+      "definicion": "Acción de emparejar o hacer corresponder elementos.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "Faites l'appariement des mots et des images.",
+      "palabra": "appariement",
+      "frecuencia": 14,
+      "lema": "appariement",
+      "sinonimos": [
+        "jumelage",
+        "association"
+      ]
+    },
+    {
+      "definicion": "Permanecer en un lugar hasta que algo suceda o alguien llegue.",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "Je dois attendre le bus.",
+      "palabra": "attendre",
+      "frecuencia": 1,
+      "lema": "attendre",
+      "sinonimos": [
+        "patienter",
+        "espérer"
+      ]
+    },
+    {
+      "definicion": "Indica que se considera a todos los elementos de un conjunto de forma individual.",
+      "tipo_gramatical": "déterminant indéfini",
+      "ejemplo_uso": "Chaque étudiant doit faire ses devoirs.",
+      "palabra": "chaque",
+      "frecuencia": 14,
+      "lema": "chaque",
+      "sinonimos": [
+        "tout",
+        "chacun"
+      ]
+    },
+    {
+      "definicion": "Forma conjugada del verbo 'chercher' (buscar) en primera o tercera persona del singular del presente de indicativo.",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "Je cherche mes clés.",
+      "palabra": "cherche",
+      "frecuencia": 3,
+      "lema": "chercher",
+      "sinonimos": [
+        "recherche",
+        "trouve"
+      ]
+    },
+    {
+      "definicion": "Alimento dulce hecho de cacao, azúcar y a menudo leche.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "J'adore le chocolat noir.",
+      "palabra": "chocolat",
+      "frecuencia": 1,
+      "lema": "chocolat",
+      "sinonimos": [
+        "cacao",
+        "friandise"
+      ]
+    },
+    {
+      "definicion": "Objeto, hecho o asunto indeterminado.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "J'ai une chose à te dire.",
+      "palabra": "chose",
+      "frecuencia": 1,
+      "lema": "chose",
+      "sinonimos": [
+        "objet",
+        "affaire"
+      ]
+    },
+    {
+      "definicion": "Expresión para pedir silencio.",
+      "tipo_gramatical": "interjection",
+      "ejemplo_uso": "Chut! Le bébé dort.",
+      "palabra": "chut",
+      "frecuencia": 1,
+      "lema": "chut",
+      "sinonimos": [
+        "silence",
+        "tais-toi"
+      ]
+    },
+    {
+      "definicion": "Número cardinal que sigue al cuatro y precede al seis.",
+      "tipo_gramatical": "adjectif numéral",
+      "ejemplo_uso": "J'ai cinq doigts à chaque main.",
+      "palabra": "cinq",
+      "frecuencia": 1,
+      "lema": "cinq",
+      "sinonimos": [
+        "cinquième",
+        "5"
+      ]
+    },
+    {
+      "definicion": "Nombre propio de persona (masculino).",
+      "tipo_gramatical": "nom propre",
+      "ejemplo_uso": "Clément est mon ami.",
+      "palabra": "clément",
+      "frecuencia": 1,
+      "lema": "Clément",
+      "sinonimos": [
+        "(aucun)"
+      ]
+    },
+    {
+      "definicion": "Indica comparación, causa o modo.",
+      "tipo_gramatical": "conjonction",
+      "ejemplo_uso": "Il chante comme un oiseau.",
+      "palabra": "comme",
+      "frecuencia": 1,
+      "lema": "comme",
+      "sinonimos": [
+        "tel que",
+        "puisque"
+      ]
+    },
+    {
+      "definicion": "Forma conjugada del verbo 'commencer' (empezar) en primera o tercera persona del singular del presente de indicativo.",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "Le cours commence à huit heures.",
+      "palabra": "commence",
+      "frecuencia": 2,
+      "lema": "commencer",
+      "sinonimos": [
+        "débute",
+        "entame"
+      ]
+    },
+    {
+      "definicion": "Dar inicio a algo.",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "Nous allons commencer le travail.",
+      "palabra": "commencer",
+      "frecuencia": 1,
+      "lema": "commencer",
+      "sinonimos": [
+        "débuter",
+        "entamer"
+      ]
+    },
+    {
+      "definicion": "Palabra utilizada para preguntar sobre la manera, el estado o la causa.",
+      "tipo_gramatical": "adverbe interrogatif",
+      "ejemplo_uso": "Comment allez-vous?",
+      "palabra": "comment",
+      "frecuencia": 1,
+      "lema": "comment",
+      "sinonimos": [
+        "de quelle manière",
+        "pourquoi"
+      ]
+    },
+    {
+      "definicion": "Forma conjugada del verbo 'comprendre' (entender) en primera o segunda persona del singular del presente de indicativo.",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "Je comprends ce que tu dis.",
+      "palabra": "comprends",
+      "frecuencia": 2,
+      "lema": "comprendre",
+      "sinonimos": [
+        "saisis",
+        "entends"
+      ]
+    },
+    {
+      "definicion": "Capacidad de entender o captar el significado de algo.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "La compréhension de texte est importante.",
+      "palabra": "compréhension",
+      "frecuencia": 14,
+      "lema": "compréhension",
+      "sinonimos": [
+        "intelligence",
+        "saisie"
+      ]
+    },
+    {
+      "definicion": "Reproducción exacta de un original. También puede ser un examen o trabajo escolar.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "J'ai fait une copie de ce document.",
+      "palabra": "copie",
+      "frecuencia": 1,
+      "lema": "copie",
+      "sinonimos": [
+        "reproduction",
+        "exemplaire"
+      ]
+    },
+    {
+      "definicion": "Forma conjugada del verbo 'correspondre' (corresponder) en tercera persona del plural del presente de indicativo.",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "Les images correspondent aux descriptions.",
+      "palabra": "correspondent",
+      "frecuencia": 14,
+      "lema": "correspondre",
+      "sinonimos": [
+        "concordent",
+        "coïncident"
+      ]
+    },
+    {
+      "definicion": "Propiedad de la luz que se percibe como un tono específico (rojo, azul, etc.).",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "Quelle est ta couleur préférée?",
+      "palabra": "couleur",
+      "frecuencia": 3,
+      "lema": "couleur",
+      "sinonimos": [
+        "teinte",
+        "nuance"
+      ]
+    },
+    {
+      "definicion": "Plural de 'couleur'. Propiedades de la luz que se perciben como tonos específicos.",
+      "tipo_gramatical": "nom (f, pl)",
+      "ejemplo_uso": "J'aime toutes les couleurs.",
+      "palabra": "couleurs",
+      "frecuencia": 2,
+      "lema": "couleur",
+      "sinonimos": [
+        "teintes",
+        "nuances"
+      ]
+    },
+    {
+      "definicion": "Golpe, impacto. También se usa en muchas expresiones idiomáticas.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "J'ai entendu un coup à la porte.",
+      "palabra": "coup",
+      "frecuencia": 1,
+      "lema": "coup",
+      "sinonimos": [
+        "choc",
+        "frappe"
+      ]
+    },
+    {
+      "definicion": "Clase, lección o asignatura. También puede referirse al flujo de un río o al transcurso del tiempo.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "J'ai un cours de français.",
+      "palabra": "cours",
+      "frecuencia": 4,
+      "lema": "cours",
+      "sinonimos": [
+        "leçon",
+        "matière"
+      ]
+    },
+    {
+      "definicion": "Instrumento para escribir o dibujar, que consiste en una mina de grafito dentro de un cilindro de madera.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "J'ai besoin d'un crayon pour écrire.",
+      "palabra": "crayon",
+      "frecuencia": 1,
+      "lema": "crayon",
+      "sinonimos": [
+        "mine",
+        "fusain"
+      ]
+    },
+    {
+      "definicion": "Forma conjugada del verbo 'croire' (creer) en primera o segunda persona del singular del presente de indicativo.",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "Je crois que c'est vrai.",
+      "palabra": "crois",
+      "frecuencia": 1,
+      "lema": "croire",
+      "sinonimos": [
+        "pense",
+        "estime"
+      ]
+    },
+    {
+      "definicion": "Bollo de hojaldre en forma de media luna, típico de la repostería francesa.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "Je mange un croissant au petit-déjeuner.",
+      "palabra": "croissant",
+      "frecuencia": 1,
+      "lema": "croissant",
+      "sinonimos": [
+        "viennoiserie",
+        "pâtisserie"
+      ]
+    },
+    {
+      "definicion": "Plural de 'croissant'. Bollos de hojaldre en forma de media luna.",
+      "tipo_gramatical": "nom (m, pl)",
+      "ejemplo_uso": "Nous avons acheté des croissants pour toute la famille.",
+      "palabra": "croissants",
+      "frecuencia": 1,
+      "lema": "croissant",
+      "sinonimos": [
+        "viennoiseries",
+        "pâtisseries"
+      ]
+    },
+    {
+      "definicion": "Cada una de las partes o caras de un objeto. También puede referirse a una dirección.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "De quel côté est la boulangerie?",
+      "palabra": "côté",
+      "frecuencia": 3,
+      "lema": "côté",
+      "sinonimos": [
+        "flanc",
+        "direction"
+      ]
+    },
+    {
+      "definicion": "Indica ubicación dentro de un espacio, o un período de tiempo.",
+      "tipo_gramatical": "préposition",
+      "ejemplo_uso": "Le livre est dans le sac.",
+      "palabra": "dans",
+      "frecuencia": 4,
+      "lema": "dans",
+      "sinonimos": [
+        "à l'intérieur de",
+        "en"
+      ]
+    },
+    {
+      "definicion": "Indica origen, posesión, materia o parte de un todo.",
+      "tipo_gramatical": "préposition",
+      "ejemplo_uso": "C'est le livre de Marie.",
+      "palabra": "de",
+      "frecuencia": 45,
+      "lema": "de",
+      "sinonimos": [
+        "provenant de",
+        "appartenant à"
+      ]
+    },
+    {
+      "definicion": "El día siguiente al de hoy.",
+      "tipo_gramatical": "adverbe",
+      "ejemplo_uso": "Je te verrai demain.",
+      "palabra": "demain",
+      "frecuencia": 1,
+      "lema": "demain",
+      "sinonimos": [
+        "lendemain",
+        "jour suivant"
+      ]
+    }
+  ],
+  "tema_CE": "Comprendre un document informatif",
+  "unidad": "Unité 4",
+  "CO": [
+    {
+      "ruta_audio": "46.mp3",
+      "habilidad": "Compréhension de l'oral",
+      "instruccion": "Activité 46 Vous allez entendre 4 petits dialogues. Ils correspondent à 4 situations différentes. Associez chaque dialogue à une image. Attention : il y a 6 images mais seulement 4 situations.",
+      "tipo": "Asociación de imágenes",
+      "preguntas": [
+        {
+          "respuesta_correcta": "Image A | Un homme et une femme dans une librairie",
+          "opciones": [
+            "Image A | Un homme et une femme dans une librairie",
+            "Image B | Un homme et une femme dans un magasin de vêtements",
+            "Image C | Un homme et une femme dans une pièce avec des chaises",
+            "Image D | Un homme et une femme demandant leur chemin dans la rue",
+            "Image E | Un homme et une femme dans un marché de fruits et légumes",
+            "Image F | Un homme et une femme dans un magasin de vêtements"
+          ],
+          "pregunta": "Situation n° 1"
+        },
+        {
+          "respuesta_correcta": "Image E | Un homme et une femme dans un marché de fruits et légumes",
+          "opciones": [
+            "Image A | Un homme et une femme dans une librairie",
+            "Image B | Un homme et une femme dans un magasin de vêtements",
+            "Image C | Un homme et une femme dans une pièce avec des chaises",
+            "Image D | Un homme et une femme demandant leur chemin dans la rue",
+            "Image E | Un homme et une femme dans un marché de fruits et légumes",
+            "Image F | Un homme et une femme dans un magasin de vêtements"
+          ],
+          "pregunta": "Situation n° 2"
+        },
+        {
+          "respuesta_correcta": "Image D | Un homme et une femme demandant leur chemin dans la rue",
+          "opciones": [
+            "Image A | Un homme et une femme dans une librairie",
+            "Image B | Un homme et une femme dans un magasin de vêtements",
+            "Image C | Un homme et une femme dans une pièce avec des chaises",
+            "Image D | Un homme et une femme demandant leur chemin dans la rue",
+            "Image E | Un homme et une femme dans un marché de fruits et légumes",
+            "Image F | Un homme et une femme dans un magasin de vêtements"
+          ],
+          "pregunta": "Situation n° 3"
+        },
+        {
+          "respuesta_correcta": "Image C | Un homme et une femme dans une pièce avec des chaises",
+          "opciones": [
+            "Image A | Un homme et une femme dans une librairie",
+            "Image B | Un homme et une femme dans un magasin de vêtements",
+            "Image C | Un homme et une femme dans une pièce avec des chaises",
+            "Image D | Un homme et une femme demandant leur chemin dans la rue",
+            "Image E | Un homme et une femme dans un marché de fruits et légumes",
+            "Image F | Un homme et une femme dans un magasin de vêtements"
+          ],
+          "pregunta": "Situation n° 4"
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": null,
+      "transcripcion": "Situation n° 1 Bonjour monsieur, où se trouve le rayon « bandes dessinées » s'il vous plaît ? Au fond à droite, à côté du rayon « autobiographies ». Merci. Situation n° 2 Bonjour madame, j'ai besoin de 5 kilos de tomates et de 2 kilos de pommes s'il vous plaît. Voilà, et avec ceci ? Je vais prendre deux melons aussi. Et voilà, ça vous fera 12 euros 50. Situation n° 3 Excusez-moi monsieur, où se trouve la rue Didier Clément? C'est la première à droite. Merci monsieur. Situation n° 4 Regarde Sophie, j'ai acheté de nouvelles chaises. Tu les trouves comment? Elles sont sympa, mais je n'aime pas trop la couleur.",
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": "47.mp3",
+      "habilidad": "Compréhension de l'oral",
+      "instruccion": "Activité 47 Vous allez entendre 4 petits dialogues. Ils correspondent à 4 situations différentes. Associez chaque dialogue à une image. Attention : il y a 6 images mais seulement 4 situations.",
+      "tipo": "Asociación de imágenes",
+      "preguntas": [
+        {
+          "respuesta_correcta": "Image D | Un homme et une femme devant un guichet de gare",
+          "opciones": [
+            "Image A | Un boulanger servant un client",
+            "Image B | Un homme et une femme à la réception d'un hôtel",
+            "Image C | Un homme et une femme dans un café",
+            "Image D | Un homme et une femme devant un guichet de gare",
+            "Image E | Un homme et une femme dans un magasin de vêtements",
+            "Image F | Un homme et une femme dans un restaurant"
+          ],
+          "pregunta": "Situation n° 1"
+        },
+        {
+          "respuesta_correcta": "Image B | Un homme et une femme à la réception d'un hôtel",
+          "opciones": [
+            "Image A | Un boulanger servant un client",
+            "Image B | Un homme et une femme à la réception d'un hôtel",
+            "Image C | Un homme et une femme dans un café",
+            "Image D | Un homme et une femme devant un guichet de gare",
+            "Image E | Un homme et une femme dans un magasin de vêtements",
+            "Image F | Un homme et une femme dans un restaurant"
+          ],
+          "pregunta": "Situation n° 2"
+        },
+        {
+          "respuesta_correcta": "Image C | Un homme et une femme dans un café",
+          "opciones": [
+            "Image A | Un boulanger servant un client",
+            "Image B | Un homme et une femme à la réception d'un hôtel",
+            "Image C | Un homme et une femme dans un café",
+            "Image D | Un homme et une femme devant un guichet de gare",
+            "Image E | Un homme et une femme dans un magasin de vêtements",
+            "Image F | Un homme et une femme dans un restaurant"
+          ],
+          "pregunta": "Situation n° 3"
+        },
+        {
+          "respuesta_correcta": "Image A | Un boulanger servant un client",
+          "opciones": [
+            "Image A | Un boulanger servant un client",
+            "Image B | Un homme et une femme à la réception d'un hôtel",
+            "Image C | Un homme et une femme dans un café",
+            "Image D | Un homme et une femme devant un guichet de gare",
+            "Image E | Un homme et une femme dans un magasin de vêtements",
+            "Image F | Un homme et une femme dans un restaurant"
+          ],
+          "pregunta": "Situation n° 4"
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": null,
+      "transcripcion": "Situation n° 1 Bonjour, je voudrais un billet pour Paris. Vous voulez partir à quelle heure ? Vers 14 heures si c'est possible. Situation n° 2 Bonjour monsieur, bienvenue à l'hôtel Beaulieu. Bonjour madame. J'ai réservé une chambre hier. Très bien. C'est à quel nom ? Monsieur Michel Dubar. Situation n° 3 Bonjour, j'aimerais un café et un croissant s'il vous plaît. Je vous apporte ça tout de suite mademoiselle. Et l'addition aussi. Je veux payer tout de suite. Situation n° 4 Bonjour, je voudrais deux pains au chocolat et trois croissants s'il vous plaît. Avec ceci ? On a des baguettes qui viennent de sortir du four. Non merci, ça sera tout. 3 euros s'il vous plaît.",
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": "48.mp3",
+      "habilidad": "Compréhension de l'oral",
+      "instruccion": "Activité 48 Vous allez entendre 4 petits dialogues. Ils correspondent à 4 situations différentes. Associez chaque dialogue à une image. Attention : il y a 6 images mais seulement 4 situations.",
+      "tipo": "Asociación de imágenes",
+      "preguntas": [
+        {
+          "respuesta_correcta": "Image A | Une femme et un homme à un arrêt de bus",
+          "opciones": [
+            "Image A | Une femme et un homme à un arrêt de bus",
+            "Image B | Un homme et une femme dans un café",
+            "Image C | Un homme et une femme dans un musée",
+            "Image D | Un homme et une femme dans une gare",
+            "Image E | Un homme et une femme dans un magasin",
+            "Image F | Un homme et une femme dans un parc"
+          ],
+          "pregunta": "Situation n° 1"
+        },
+        {
+          "respuesta_correcta": "Image D | Un homme et une femme dans une gare",
+          "opciones": [
+            "Image A | Une femme et un homme à un arrêt de bus",
+            "Image B | Un homme et une femme dans un café",
+            "Image C | Un homme et une femme dans un musée",
+            "Image D | Un homme et une femme dans une gare",
+            "Image E | Un homme et une femme dans un magasin",
+            "Image F | Un homme et une femme dans un parc"
+          ],
+          "pregunta": "Situation n° 2"
+        },
+        {
+          "respuesta_correcta": "Image B | Un homme et une femme dans un café",
+          "opciones": [
+            "Image A | Une femme et un homme à un arrêt de bus",
+            "Image B | Un homme et une femme dans un café",
+            "Image C | Un homme et une femme dans un musée",
+            "Image D | Un homme et une femme dans une gare",
+            "Image E | Un homme et une femme dans un magasin",
+            "Image F | Un homme et une femme dans un parc"
+          ],
+          "pregunta": "Situation n° 3"
+        },
+        {
+          "respuesta_correcta": "Image C | Un homme et une femme dans un musée",
+          "opciones": [
+            "Image A | Une femme et un homme à un arrêt de bus",
+            "Image B | Un homme et une femme dans un café",
+            "Image C | Un homme et une femme dans un musée",
+            "Image D | Un homme et une femme dans une gare",
+            "Image E | Un homme et une femme dans un magasin",
+            "Image F | Un homme et une femme dans un parc"
+          ],
+          "pregunta": "Situation n° 4"
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": null,
+      "transcripcion": "Situation n° 1 Excusez-moi, madame, est-ce que le bus numéro 2 est passé ? Non pas encore. Il doit arriver dans cinq minutes. Très bien merci ! Situation n° 2 Bonjour madame, à quelle heure part le train pour Montréal ? À 6 h 15, monsieur. Merci beaucoup. Situation n° 3 Qu'est-ce que tu veux boire ? Un café, s'il te plaît. Tu veux du sucre avec ? Non merci, je le bois nature. Situation n° 4 Joël, le musée ferme à quelle heure ? À 17 heures 30. Alors, il reste une heure avant la fermeture !",
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": "49.mp3",
+      "habilidad": "Compréhension de l'oral",
+      "instruccion": "Activité 49 Vous allez entendre 4 petits dialogues. Ils correspondent à 4 situations différentes. Associez chaque dialogue à une image. Attention : il y a 6 images mais seulement 4 situations.",
+      "tipo": "Asociación de imágenes",
+      "preguntas": [
+        {
+          "respuesta_correcta": "Image A | Un homme et une femme devant un ordinateur",
+          "opciones": [
+            "Image A | Un homme et une femme devant un ordinateur",
+            "Image B | Un homme et une femme regardant la météo par la fenêtre",
+            "Image C | Un homme et une femme dans un aéroport",
+            "Image D | Un homme et une femme dans une pizzeria",
+            "Image E | Un homme et une femme dans un bureau",
+            "Image F | Un homme et une femme dans un magasin de vêtements"
+          ],
+          "pregunta": "Situation n° 1"
+        },
+        {
+          "respuesta_correcta": "Image D | Un homme et une femme dans une pizzeria",
+          "opciones": [
+            "Image A | Un homme et une femme devant un ordinateur",
+            "Image B | Un homme et une femme regardant la météo par la fenêtre",
+            "Image C | Un homme et une femme dans un aéroport",
+            "Image D | Un homme et une femme dans une pizzeria",
+            "Image E | Un homme et une femme dans un bureau",
+            "Image F | Un homme et une femme dans un magasin de vêtements"
+          ],
+          "pregunta": "Situation n° 2"
+        },
+        {
+          "respuesta_correcta": "Image B | Un homme et une femme regardant la météo par la fenêtre",
+          "opciones": [
+            "Image A | Un homme et une femme devant un ordinateur",
+            "Image B | Un homme et une femme regardant la météo par la fenêtre",
+            "Image C | Un homme et une femme dans un aéroport",
+            "Image D | Un homme et une femme dans une pizzeria",
+            "Image E | Un homme et une femme dans un bureau",
+            "Image F | Un homme et une femme dans un magasin de vêtements"
+          ],
+          "pregunta": "Situation n° 3"
+        },
+        {
+          "respuesta_correcta": "Image C | Un homme et une femme dans un aéroport",
+          "opciones": [
+            "Image A | Un homme et une femme devant un ordinateur",
+            "Image B | Un homme et une femme regardant la météo par la fenêtre",
+            "Image C | Un homme et une femme dans un aéroport",
+            "Image D | Un homme et une femme dans une pizzeria",
+            "Image E | Un homme et une femme dans un bureau",
+            "Image F | Un homme et une femme dans un magasin de vêtements"
+          ],
+          "pregunta": "Situation n° 4"
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": null,
+      "transcripcion": "Situation n° 1 Tu peux voir les dates du DELF sur Internet. Vraiment ? À quelle adresse ? www.abc-delf.fr Situation n° 2 Qu'est-ce que tu veux pour dîner ? Pourquoi pas une pizza ? Oui, c'est une bonne idée. Situation n° 3 Quel mauvais temps aujourd'hui ! Oui... Il paraît que ça va durer toute la semaine ! Oh non! Je voulais organiser un barbecue ce week-end... Situation n° 4 Quentin, quel est notre numéro de vol ? C'est le AF340. L'avion décolle dans deux heures. Très bien, j'ai le temps d'aller me chercher un café.",
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": "50.mp3",
+      "habilidad": "Compréhension de l'oral",
+      "instruccion": "Activité 50 Vous allez entendre 4 petits dialogues. Ils correspondent à 4 situations différentes. Associez chaque dialogue à une image. Attention : il y a 6 images mais seulement 4 situations.",
+      "tipo": "Asociación de imágenes",
+      "preguntas": [
+        {
+          "respuesta_correcta": "Image D | Un homme et une femme dans un bureau",
+          "opciones": [
+            "Image A | Un homme et une femme devant un cinéma",
+            "Image B | Un homme et une femme dans un cabinet médical",
+            "Image C | Un homme et une femme étudiant à une table",
+            "Image D | Un homme et une femme dans un bureau",
+            "Image E | Un homme et une femme regardant la télévision",
+            "Image F | Un homme et une femme dans un café"
+          ],
+          "pregunta": "Situation n° 1"
+        },
+        {
+          "respuesta_correcta": "Image B | Un homme et une femme dans un cabinet médical",
+          "opciones": [
+            "Image A | Un homme et une femme devant un cinéma",
+            "Image B | Un homme et une femme dans un cabinet médical",
+            "Image C | Un homme et une femme étudiant à une table",
+            "Image D | Un homme et une femme dans un bureau",
+            "Image E | Un homme et une femme regardant la télévision",
+            "Image F | Un homme et une femme dans un café"
+          ],
+          "pregunta": "Situation n° 2"
+        },
+        {
+          "respuesta_correcta": "Image A | Un homme et une femme devant un cinéma",
+          "opciones": [
+            "Image A | Un homme et une femme devant un cinéma",
+            "Image B | Un homme et une femme dans un cabinet médical",
+            "Image C | Un homme et une femme étudiant à une table",
+            "Image D | Un homme et une femme dans un bureau",
+            "Image E | Un homme et une femme regardant la télévision",
+            "Image F | Un homme et une femme dans un café"
+          ],
+          "pregunta": "Situation n° 3"
+        },
+        {
+          "respuesta_correcta": "Image C | Un homme et une femme étudiant à une table",
+          "opciones": [
+            "Image A | Un homme et une femme devant un cinéma",
+            "Image B | Un homme et une femme dans un cabinet médical",
+            "Image C | Un homme et une femme étudiant à une table",
+            "Image D | Un homme et une femme dans un bureau",
+            "Image E | Un homme et une femme regardant la télévision",
+            "Image F | Un homme et une femme dans un café"
+          ],
+          "pregunta": "Situation n° 4"
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": null,
+      "transcripcion": "Situation n° 1 Bonjour, monsieur Durand. Bonjour Coralie. Est-ce que j'ai des messages ? Oui, M. Rostand annule son rendez-vous de 11 heures. Situation n° 2 Bonjour, qu'est-ce qui vous arrive ? Bonjour docteur, j'ai très mal au bras. Venez, on va regarder ça. Situation n° 3 Le film commence bientôt ? Dans vingt minutes environ. Tu me gardes une place? Je dois téléphoner avant. Situation n° 4 J'espère que l'examen est facile. Oh non, les examens universitaires sont difficiles. Alors, nous devons étudier toute la soirée !",
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": "51.mp3",
+      "habilidad": "Compréhension de l'oral",
+      "instruccion": "Activité 51 Vous allez entendre 4 petits dialogues. Ils correspondent à 4 situations différentes. Associez chaque dialogue à une image. Attention : il y a 6 images mais seulement 4 situations.",
+      "tipo": "Asociación de imágenes",
+      "preguntas": [
+        {
+          "respuesta_correcta": "Image B | Un homme malade au lit, une femme lui donne un médicament",
+          "opciones": [
+            "Image A | Une femme qui danse et écoute de la musique",
+            "Image B | Un homme malade au lit, une femme lui donne un médicament",
+            "Image C | Une femme au téléphone, excitée",
+            "Image D | Un homme et une femme dans un magasin de vêtements",
+            "Image E | Un homme et une femme dans un bureau",
+            "Image F | Un homme et une femme dans un café"
+          ],
+          "pregunta": "Situation n° 1"
+        },
+        {
+          "respuesta_correcta": "Image A | Une femme qui danse et écoute de la musique",
+          "opciones": [
+            "Image A | Une femme qui danse et écoute de la musique",
+            "Image B | Un homme malade au lit, une femme lui donne un médicament",
+            "Image C | Une femme au téléphone, excitée",
+            "Image D | Un homme et une femme dans un magasin de vêtements",
+            "Image E | Un homme et une femme dans un bureau",
+            "Image F | Un homme et une femme dans un café"
+          ],
+          "pregunta": "Situation n° 2"
+        },
+        {
+          "respuesta_correcta": "Image C | Une femme au téléphone, excitée",
+          "opciones": [
+            "Image A | Une femme qui danse et écoute de la musique",
+            "Image B | Un homme malade au lit, une femme lui donne un médicament",
+            "Image C | Une femme au téléphone, excitée",
+            "Image D | Un homme et une femme dans un magasin de vêtements",
+            "Image E | Un homme et une femme dans un bureau",
+            "Image F | Un homme et une femme dans un café"
+          ],
+          "pregunta": "Situation n° 3"
+        },
+        {
+          "respuesta_correcta": "Image D | Un homme et une femme dans un magasin de vêtements",
+          "opciones": [
+            "Image A | Une femme qui danse et écoute de la musique",
+            "Image B | Un homme malade au lit, une femme lui donne un médicament",
+            "Image C | Une femme au téléphone, excitée",
+            "Image D | Un homme et une femme dans un magasin de vêtements",
+            "Image E | Un homme et une femme dans un bureau",
+            "Image F | Un homme et une femme dans un café"
+          ],
+          "pregunta": "Situation n° 4"
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": null,
+      "transcripcion": "Situation n° 1 Bonjour, j'ai très mal à la tête. Avez-vous de l'aspirine ? Oui bien sûr monsieur, ça fera 2 euros 50 la boîte. Situation n° 2 Qu'est-ce que tu fais ? J'écoute de la musique. J'ai besoin d'un coup de main pour ranger. Tu peux venir? Situation n° 3 Allô, madame Martin ? C'est RadioFM. Vous avez gagné un voyage en Martinique ! Oh, mais c'est super, je n'en reviens pas ! Vous recevrez vos billets d'avion bientôt ! Situation n° 4 Que pensez-vous de cette casquette ? Elle est jolie. Mais je n'aime pas la couleur. Je peux vous proposer une autre couleur si vous voulez. Oui, je veux bien, s'il vous plaît.",
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": "52.mp3",
+      "habilidad": "Compréhension de l'oral",
+      "instruccion": "Activité 52 Vous allez entendre 4 petits dialogues. Ils correspondent à 4 situations différentes. Associez chaque dialogue à une image. Attention : il y a 6 images mais seulement 4 situations.",
+      "tipo": "Asociación de imágenes",
+      "preguntas": [
+        {
+          "respuesta_correcta": "Image C | Un homme et une femme dans un couloir, la femme entre dans une pièce",
+          "opciones": [
+            "Image A | Un homme et une femme dans une salle de classe, l'homme écrit",
+            "Image B | Un homme et une femme devant un ordinateur, la femme explique",
+            "Image C | Un homme et une femme dans un couloir, la femme entre dans une pièce",
+            "Image D | Un homme et une femme dans une chambre, l'homme prépare un sac",
+            "Image E | Un homme et une femme dans un magasin",
+            "Image F | Un homme et une femme dans un café"
+          ],
+          "pregunta": "Situation n° 1"
+        },
+        {
+          "respuesta_correcta": "Image B | Un homme et une femme devant un ordinateur, la femme explique",
+          "opciones": [
+            "Image A | Un homme et une femme dans une salle de classe, l'homme écrit",
+            "Image B | Un homme et une femme devant un ordinateur, la femme explique",
+            "Image C | Un homme et une femme dans un couloir, la femme entre dans une pièce",
+            "Image D | Un homme et une femme dans une chambre, l'homme prépare un sac",
+            "Image E | Un homme et une femme dans un magasin",
+            "Image F | Un homme et une femme dans un café"
+          ],
+          "pregunta": "Situation n° 2"
+        },
+        {
+          "respuesta_correcta": "Image D | Un homme et une femme dans une chambre, l'homme prépare un sac",
+          "opciones": [
+            "Image A | Un homme et une femme dans une salle de classe, l'homme écrit",
+            "Image B | Un homme et une femme devant un ordinateur, la femme explique",
+            "Image C | Un homme et une femme dans un couloir, la femme entre dans une pièce",
+            "Image D | Un homme et une femme dans une chambre, l'homme prépare un sac",
+            "Image E | Un homme et une femme dans un magasin",
+            "Image F | Un homme et une femme dans un café"
+          ],
+          "pregunta": "Situation n° 3"
+        },
+        {
+          "respuesta_correcta": "Image A | Un homme et une femme dans une salle de classe, l'homme écrit",
+          "opciones": [
+            "Image A | Un homme et une femme dans une salle de classe, l'homme écrit",
+            "Image B | Un homme et une femme devant un ordinateur, la femme explique",
+            "Image C | Un homme et une femme dans un couloir, la femme entre dans une pièce",
+            "Image D | Un homme et une femme dans une chambre, l'homme prépare un sac",
+            "Image E | Un homme et une femme dans un magasin",
+            "Image F | Un homme et une femme dans un café"
+          ],
+          "pregunta": "Situation n° 4"
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": null,
+      "transcripcion": "Situation n° 1 Bonjour! Je suis la nouvelle professeure de français. Je peux entrer? Bienvenue! Bien sûr, allez-y, entrez, je vais vous présenter vos collègues. Merci! Situation n° 2 Cet exercice est vraiment difficile... Je n'arrive pas à trouver la solution. Oui, il est très difficile. Tu as besoin d'aide? Oui, je veux bien, s'il te plaît... Situation n° 3 Marc, tu peux préparer ton sac pour l'université? Mais je suis fatigué maintenant... je le ferai demain. Non, maintenant, s'il te plaît! Sinon on va être en retard demain matin pour prendre le train. Situation n° 4 J'ai un petit problème. Mon stylo ne marche plus. Tu peux me prêter ton stylo, s'il te plaît? Bien sûr, tiens. Mais n'oublie pas de me le rendre. Super, merci! Je te le rends à la fin du cours.",
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": "53.mp3",
+      "habilidad": "Compréhension de l'oral",
+      "instruccion": "Activité 53 Vous allez entendre 4 petits dialogues. Ils correspondent à 4 situations différentes. Associez chaque dialogue à une image. Attention : il y a 6 images mais seulement 4 situations.",
+      "tipo": "Asociación de imágenes",
+      "preguntas": [
+        {
+          "respuesta_correcta": "Image D | Un homme et une femme dans un couloir avec des escaliers",
+          "opciones": [
+            "Image A | Un homme et une femme dans un café",
+            "Image B | Un homme et une femme dans un bureau, la femme signe un formulaire",
+            "Image C | Un groupe de personnes dans une salle de conférence/cours",
+            "Image D | Un homme et une femme dans un couloir avec des escaliers",
+            "Image E | Un homme et une femme dans une salle de classe bondée",
+            "Image F | Un homme et une femme dans un magasin"
+          ],
+          "pregunta": "Situation n° 1"
+        },
+        {
+          "respuesta_correcta": "Image E | Un homme et une femme dans une salle de classe bondée",
+          "opciones": [
+            "Image A | Un homme et une femme dans un café",
+            "Image B | Un homme et une femme dans un bureau, la femme signe un formulaire",
+            "Image C | Un groupe de personnes dans une salle de conférence/cours",
+            "Image D | Un homme et une femme dans un couloir avec des escaliers",
+            "Image E | Un homme et une femme dans une salle de classe bondée",
+            "Image F | Un homme et une femme dans un magasin"
+          ],
+          "pregunta": "Situation n° 2"
+        },
+        {
+          "respuesta_correcta": "Image C | Un groupe de personnes dans une salle de conférence/cours",
+          "opciones": [
+            "Image A | Un homme et une femme dans un café",
+            "Image B | Un homme et une femme dans un bureau, la femme signe un formulaire",
+            "Image C | Un groupe de personnes dans une salle de conférence/cours",
+            "Image D | Un homme et une femme dans un couloir avec des escaliers",
+            "Image E | Un homme et une femme dans une salle de classe bondée",
+            "Image F | Un homme et une femme dans un magasin"
+          ],
+          "pregunta": "Situation n° 3"
+        },
+        {
+          "respuesta_correcta": "Image B | Un homme et une femme dans un bureau, la femme signe un formulaire",
+          "opciones": [
+            "Image A | Un homme et une femme dans un café",
+            "Image B | Un homme et une femme dans un bureau, la femme signe un formulaire",
+            "Image C | Un groupe de personnes dans une salle de conférence/cours",
+            "Image D | Un homme et une femme dans un couloir avec des escaliers",
+            "Image E | Un homme et une femme dans une salle de classe bondée",
+            "Image F | Un homme et une femme dans un magasin"
+          ],
+          "pregunta": "Situation n° 4"
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": null,
+      "transcripcion": "Situation n° 1 Bonjour. Je suis perdue. Je cherche la salle d'examen. Il faut prendre les escaliers et ce sera la première porte à droite. D'accord, merci beaucoup! Situation n° 2 Je crois qu'il n'y a plus de places pour s'asseoir... Il y a beaucoup de monde à ce cours! Ah regarde, il reste deux places là-bas! Vite! Situation n° 3 Nous allons maintenant donner la parole à Yani, qui va nous présenter quelques chiffres. Merci. Alors, voici le nombre d'étudiants inscrits pour cette année à l'université. Waouh! Il y a beaucoup d'étudiants! Situation n° 4 Bonjour madame. Bonjour! Je dois m'inscrire au cours de théâtre, s'il vous plaît. Veuillez remplir ce formulaire et le signer. Faites vite, parce que c'est le dernier jour des inscriptions.",
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": "54.mp3",
+      "habilidad": "Compréhension de l'oral",
+      "instruccion": "Activité 54 Vous allez entendre 4 petits dialogues. Ils correspondent à 4 situations différentes. Associez chaque dialogue à une image. Attention : il y a 6 images mais seulement 4 situations.",
+      "tipo": "Asociación de imágenes",
+      "preguntas": [
+        {
+          "respuesta_correcta": "Image A | Une femme et un homme dans une bibliothèque/librairie",
+          "opciones": [
+            "Image A | Une femme et un homme dans une bibliothèque/librairie",
+            "Image B | Un homme et une femme dans une salle de classe, l'homme fait une présentation",
+            "Image C | Un homme et une femme devant un ordinateur portable",
+            "Image D | Un homme et une femme dans un couloir d'école",
+            "Image E | Un homme et une femme dans un magasin",
+            "Image F | Un homme et une femme dans un café"
+          ],
+          "pregunta": "Situation n° 1"
+        },
+        {
+          "respuesta_correcta": "Image B | Un homme et une femme dans une salle de classe, l'homme fait une présentation",
+          "opciones": [
+            "Image A | Une femme et un homme dans une bibliothèque/librairie",
+            "Image B | Un homme et une femme dans une salle de classe, l'homme fait une présentation",
+            "Image C | Un homme et une femme devant un ordinateur portable",
+            "Image D | Un homme et une femme dans un couloir d'école",
+            "Image E | Un homme et une femme dans un magasin",
+            "Image F | Un homme et une femme dans un café"
+          ],
+          "pregunta": "Situation n° 2"
+        },
+        {
+          "respuesta_correcta": "Image D | Un homme et une femme dans un couloir d'école",
+          "opciones": [
+            "Image A | Une femme et un homme dans une bibliothèque/librairie",
+            "Image B | Un homme et une femme dans une salle de classe, l'homme fait une présentation",
+            "Image C | Un homme et une femme devant un ordinateur portable",
+            "Image D | Un homme et une femme dans un couloir d'école",
+            "Image E | Un homme et une femme dans un magasin",
+            "Image F | Un homme et une femme dans un café"
+          ],
+          "pregunta": "Situation n° 3"
+        },
+        {
+          "respuesta_correcta": "Image A | Une femme et un homme dans une bibliothèque/librairie",
+          "opciones": [
+            "Image A | Une femme et un homme dans une bibliothèque/librairie",
+            "Image B | Un homme et une femme dans une salle de classe, l'homme fait une présentation",
+            "Image C | Un homme et une femme devant un ordinateur portable",
+            "Image D | Un homme et une femme dans un couloir d'école",
+            "Image E | Un homme et une femme dans un magasin",
+            "Image F | Un homme et une femme dans un café"
+          ],
+          "pregunta": "Situation n° 4"
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": null,
+      "transcripcion": "Situation n° 1 Bonjour, je cherche un dictionnaire d'anglais s'il vous plaît. Juste ici, à côté des dictionnaires de français. Merci! Bonne journée! Situation n° 2 Je vais vous présenter aujourd'hui mon exposé sur la ville de Québec. Chut, s'il vous plaît! On écoute votre camarade! Alors, la ville de Québec existe depuis... Situation n° 3 J'ai oublié mon emploi du temps. À quelle heure commence le cours? On commence dans 15 minutes. Le professeur va bientôt arriver. D'accord, merci. Situation n° 4 J'ai perdu mon livre de sciences... Je peux emprunter le tien ce soir? D'accord, mais n'oublie pas de me le rendre demain! Oui, oui, bien sûr. Ne t'inquiète pas.",
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": "55.mp3",
+      "habilidad": "Compréhension de l'oral",
+      "instruccion": "Activité 55 Vous allez entendre 4 petits dialogues. Ils correspondent à 4 situations différentes. Associez chaque dialogue à une image. Attention : il y a 6 images mais seulement 4 situations.",
+      "tipo": "Asociación de imágenes",
+      "preguntas": [
+        {
+          "respuesta_correcta": "Image A | Un homme et une femme dans un café",
+          "opciones": [
+            "Image A | Un homme et une femme dans un café",
+            "Image B | Un homme et une femme dans un magasin de fournitures d'art",
+            "Image C | Un homme et une femme dans un bureau, la femme regarde un agenda",
+            "Image D | Un homme et une femme dans une salle de classe/université",
+            "Image E | Un homme et une femme dans un magasin de vêtements",
+            "Image F | Un homme et une femme dans un salon"
+          ],
+          "pregunta": "Situation n° 1"
+        },
+        {
+          "respuesta_correcta": "Image B | Un homme et une femme dans un magasin de fournitures d'art",
+          "opciones": [
+            "Image A | Un homme et une femme dans un café",
+            "Image B | Un homme et une femme dans un magasin de fournitures d'art",
+            "Image C | Un homme et une femme dans un bureau, la femme regarde un agenda",
+            "Image D | Un homme et une femme dans une salle de classe/université",
+            "Image E | Un homme et une femme dans un magasin de vêtements",
+            "Image F | Un homme et une femme dans un salon"
+          ],
+          "pregunta": "Situation n° 2"
+        },
+        {
+          "respuesta_correcta": "Image C | Un homme et une femme dans un bureau, la femme regarde un agenda",
+          "opciones": [
+            "Image A | Un homme et une femme dans un café",
+            "Image B | Un homme et une femme dans un magasin de fournitures d'art",
+            "Image C | Un homme et une femme dans un bureau, la femme regarde un agenda",
+            "Image D | Un homme et une femme dans une salle de classe/université",
+            "Image E | Un homme et une femme dans un magasin de vêtements",
+            "Image F | Un homme et une femme dans un salon"
+          ],
+          "pregunta": "Situation n° 3"
+        },
+        {
+          "respuesta_correcta": "Image D | Un homme et une femme dans une salle de classe/université",
+          "opciones": [
+            "Image A | Un homme et une femme dans un café",
+            "Image B | Un homme et une femme dans un magasin de fournitures d'art",
+            "Image C | Un homme et une femme dans un bureau, la femme regarde un agenda",
+            "Image D | Un homme et une femme dans une salle de classe/université",
+            "Image E | Un homme et une femme dans un magasin de vêtements",
+            "Image F | Un homme et une femme dans un salon"
+          ],
+          "pregunta": "Situation n° 4"
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": null,
+      "transcripcion": "Situation n° 1 Je suis fatigué avec toutes ces révisions... J'ai besoin d'un café. Moi aussi! On fait une petite pause et on reprend les révisions après. Oui, je veux bien. Situation n° 2 J'ai besoin d'acheter de nouvelles couleurs de peinture pour mon cours d'art. Je peux t'aider à choisir si tu veux. Oui, pourquoi pas! C'est gentil. Situation n° 3 Bonjour, je cherche un nouvel agenda. Oui, bien sûr, vous en trouverez ici. Nous avons plusieurs modèles et différentes couleurs. D'accord. Merci! Je vais regarder ce que vous avez. Situation n° 4 Marta, voici Simon, c'est notre nouveau camarade. Il vient d'arriver de Nice. Bonjour Simon, bienvenue dans notre université. Enchantée! Simon, Marta vient de Nice aussi, comme toi.",
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": "56.mp3",
+      "habilidad": "Compréhension de l'oral",
+      "instruccion": "Activité 56 Vous allez entendre 4 petits dialogues. Ils correspondent à 4 situations différentes. Associez chaque dialogue à une image. Attention : il y a 6 images mais seulement 4 situations.",
+      "tipo": "Asociación de imágenes",
+      "preguntas": [
+        {
+          "respuesta_correcta": "Image B | Un homme et une femme devant un ordinateur, l'homme montre l'écran",
+          "opciones": [
+            "Image A | Un homme et une femme discutant d'un dessin/plan",
+            "Image B | Un homme et une femme devant un ordinateur, l'homme montre l'écran",
+            "Image C | Un homme et une femme étudiant/travaillant sur un exercice",
+            "Image D | Un homme et une femme dans un studio de radio",
+            "Image E | Un homme et une femme devant un ordinateur, la femme semble frustrée",
+            "Image F | Un homme et une femme dans un café"
+          ],
+          "pregunta": "Situation n° 1"
+        },
+        {
+          "respuesta_correcta": "Image C | Un homme et une femme étudiant/travaillant sur un exercice",
+          "opciones": [
+            "Image A | Un homme et une femme discutant d'un dessin/plan",
+            "Image B | Un homme et une femme devant un ordinateur, l'homme montre l'écran",
+            "Image C | Un homme et une femme étudiant/travaillant sur un exercice",
+            "Image D | Un homme et une femme dans un studio de radio",
+            "Image E | Un homme et une femme devant un ordinateur, la femme semble frustrée",
+            "Image F | Un homme et une femme dans un café"
+          ],
+          "pregunta": "Situation n° 2"
+        },
+        {
+          "respuesta_correcta": "Image A | Un homme et une femme discutant d'un dessin/plan",
+          "opciones": [
+            "Image A | Un homme et une femme discutant d'un dessin/plan",
+            "Image B | Un homme et une femme devant un ordinateur, l'homme montre l'écran",
+            "Image C | Un homme et une femme étudiant/travaillant sur un exercice",
+            "Image D | Un homme et une femme dans un studio de radio",
+            "Image E | Un homme et une femme devant un ordinateur, la femme semble frustrée",
+            "Image F | Un homme et une femme dans un café"
+          ],
+          "pregunta": "Situation n° 3"
+        },
+        {
+          "respuesta_correcta": "Image D | Un homme et une femme dans un studio de radio",
+          "opciones": [
+            "Image A | Un homme et une femme discutant d'un dessin/plan",
+            "Image B | Un homme et une femme devant un ordinateur, l'homme montre l'écran",
+            "Image C | Un homme et une femme étudiant/travaillant sur un exercice",
+            "Image D | Un homme et une femme dans un studio de radio",
+            "Image E | Un homme et une femme devant un ordinateur, la femme semble frustrée",
+            "Image F | Un homme et une femme dans un café"
+          ],
+          "pregunta": "Situation n° 4"
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": null,
+      "transcripcion": "Situation n° 1 Tu peux me montrer ton travail sur ton ordinateur? Oui, bien sûr! Mais je n'ai pas encore fini. Je te le montre tout à l'heure. D'accord. Merci. Bon courage. Situation n° 2 Peux-tu m'expliquer comment faire pour calculer ce pourcentage? Oui, bien sûr, montre-moi ton exercice. J'ai tout essayé, mais je n'arrive pas à comprendre. Situation n° 3 Je pense qu'on devrait mettre un dessin à cet endroit. Tu es sûr? Je ne sais pas si c'est utile. La présentation sera plus belle avec des images. Situation n° 4 Bonjour à tous! Vous écoutez Radio Campus. Aujourd'hui, je reçois Erica Bédon, étudiante en histoire de l'art dans notre université. Bonjour! Je suis très contente d'être avec vous aujourd'hui. Nous allons donc commencer avec quelques questions pour mieux vous connaître.",
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": "57.mp3",
+      "habilidad": "Compréhension de l'oral",
+      "instruccion": "Activité 57 Vous allez entendre 4 petits dialogues. Ils correspondent à 4 situations différentes. Associez chaque dialogue à une image. Attention : il y a 6 images mais seulement 4 situations.",
+      "tipo": "Asociación de imágenes",
+      "preguntas": [
+        {
+          "respuesta_correcta": "Image A | Un homme et une femme jouant de la guitare",
+          "opciones": [
+            "Image A | Un homme et une femme jouant de la guitare",
+            "Image B | Un groupe de personnes dans une galerie d'art",
+            "Image C | Un homme et une femme dans un couloir, la femme montre une direction",
+            "Image D | Un homme et une femme devant un ordinateur portable",
+            "Image E | Un homme et une femme dans un magasin",
+            "Image F | Un homme et une femme dans un café"
+          ],
+          "pregunta": "Situation n° 1"
+        },
+        {
+          "respuesta_correcta": "Image B | Un groupe de personnes dans une galerie d'art",
+          "opciones": [
+            "Image A | Un homme et une femme jouant de la guitare",
+            "Image B | Un groupe de personnes dans une galerie d'art",
+            "Image C | Un homme et une femme dans un couloir, la femme montre une direction",
+            "Image D | Un homme et une femme devant un ordinateur portable",
+            "Image E | Un homme et une femme dans un magasin",
+            "Image F | Un homme et une femme dans un café"
+          ],
+          "pregunta": "Situation n° 2"
+        },
+        {
+          "respuesta_correcta": "Image C | Un homme et une femme dans un couloir, la femme montre une direction",
+          "opciones": [
+            "Image A | Un homme et une femme jouant de la guitare",
+            "Image B | Un groupe de personnes dans une galerie d'art",
+            "Image C | Un homme et une femme dans un couloir, la femme montre une direction",
+            "Image D | Un homme et une femme devant un ordinateur portable",
+            "Image E | Un homme et une femme dans un magasin",
+            "Image F | Un homme et une femme dans un café"
+          ],
+          "pregunta": "Situation n° 3"
+        },
+        {
+          "respuesta_correcta": "Image D | Un homme et une femme devant un ordinateur portable",
+          "opciones": [
+            "Image A | Un homme et une femme jouant de la guitare",
+            "Image B | Un groupe de personnes dans une galerie d'art",
+            "Image C | Un homme et une femme dans un couloir, la femme montre une direction",
+            "Image D | Un homme et une femme devant un ordinateur portable",
+            "Image E | Un homme et une femme dans un magasin",
+            "Image F | Un homme et une femme dans un café"
+          ],
+          "pregunta": "Situation n° 4"
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": null,
+      "transcripcion": "Situation n° 1 Aujourd'hui, je veux apprendre à jouer une nouvelle chanson à la guitare. Ah super! Assieds-toi. Qu'est-ce que tu veux apprendre comme chanson? C'est une chanson que j'ai entendue dans le métro. Situation n° 2 Comme vous voyez sur cette peinture, l'artiste a décidé de représenter la nature. Qui est ce peintre? C'est Claude Monet. Vous devez le connaître. Il est très célèbre. Situation n° 3 Excusez-moi, je crois que je suis perdue. Je cherche la bibliothèque. Oui, c'est par ici. C'est la porte à droite, au bout du couloir. Super, merci beaucoup! Situation n° 4 Anya, j'ai oublié le chargeur de mon ordinateur à la maison... Tu peux me prêter ton chargeur?",
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": "58.mp3",
+      "habilidad": "Compréhension de l'oral",
+      "instruccion": "Activité 58 Vous allez entendre 4 petits dialogues. Ils correspondent à 4 situations différentes. Associez chaque dialogue à une image. Attention : il y a 6 images mais seulement 4 situations.",
+      "tipo": "Asociación de imágenes",
+      "preguntas": [
+        {
+          "respuesta_correcta": "Image C | Un homme et une femme dans un bureau, l'homme donne un dossier",
+          "opciones": [
+            "Image A | Un homme et une femme dans une salle de classe, la femme demande des feuilles",
+            "Image B | Un homme et une femme dans une salle de classe, la femme prête un crayon",
+            "Image C | Un homme et une femme dans un bureau, l'homme donne un dossier",
+            "Image D | Un homme et une femme dans un couloir, l'homme cherche son sac",
+            "Image E | Un homme et une femme dans un magasin",
+            "Image F | Un homme et une femme dans un café"
+          ],
+          "pregunta": "Situation n° 1"
+        },
+        {
+          "respuesta_correcta": "Image A | Un homme et une femme dans une salle de classe, la femme demande des feuilles",
+          "opciones": [
+            "Image A | Un homme et une femme dans une salle de classe, la femme demande des feuilles",
+            "Image B | Un homme et une femme dans une salle de classe, la femme prête un crayon",
+            "Image C | Un homme et une femme dans un bureau, l'homme donne un dossier",
+            "Image D | Un homme et une femme dans un couloir, l'homme cherche son sac",
+            "Image E | Un homme et une femme dans un magasin",
+            "Image F | Un homme et une femme dans un café"
+          ],
+          "pregunta": "Situation n° 2"
+        },
+        {
+          "respuesta_correcta": "Image B | Un homme et une femme dans une salle de classe, la femme prête un crayon",
+          "opciones": [
+            "Image A | Un homme et une femme dans une salle de classe, la femme demande des feuilles",
+            "Image B | Un homme et une femme dans une salle de classe, la femme prête un crayon",
+            "Image C | Un homme et une femme dans un bureau, l'homme donne un dossier",
+            "Image D | Un homme et une femme dans un couloir, l'homme cherche son sac",
+            "Image E | Un homme et une femme dans un magasin",
+            "Image F | Un homme et une femme dans un café"
+          ],
+          "pregunta": "Situation n° 3"
+        },
+        {
+          "respuesta_correcta": "Image D | Un homme et une femme dans un couloir, l'homme cherche son sac",
+          "opciones": [
+            "Image A | Un homme et une femme dans une salle de classe, la femme demande des feuilles",
+            "Image B | Un homme et une femme dans une salle de classe, la femme prête un crayon",
+            "Image C | Un homme et une femme dans un bureau, l'homme donne un dossier",
+            "Image D | Un homme et une femme dans un couloir, l'homme cherche son sac",
+            "Image E | Un homme et une femme dans un magasin",
+            "Image F | Un homme et une femme dans un café"
+          ],
+          "pregunta": "Situation n° 4"
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": null,
+      "transcripcion": "Situation n° 1 Éric, pouvez-vous m'apporter le dossier scolaire de Théo? Et voilà. Vous avez besoin d'autre chose? Oui, je cherche aussi le dossier de Nelya! Situation n° 2 Je vous rappelle que vous avez 1 h 30 pour faire votre examen. Monsieur, est-ce qu'on peut avoir des feuilles de brouillon, s'il vous plaît? Oui, je vais vous en donner. Situation n° 3 J'ai oublié ma trousse à la maison... Tu peux me prêter un crayon à papier et une gomme s'il te plaît? Oui, prends ce qu'il te faut. Merci beaucoup! Je te les rends à la fin du cours. Situation n° 4 J'ai perdu mon sac à dos.... Je crois que quelqu'un l'a pris. Non, il est là-bas, à côté des escaliers! Ah oui, je le vois, merci!",
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": "59.mp3",
+      "habilidad": "Compréhension de l'oral",
+      "instruccion": "Activité 59 Vous allez entendre 4 petits dialogues. Ils correspondent à 4 situations différentes. Associez chaque dialogue à une image. Attention : il y a 6 images mais seulement 4 situations.",
+      "tipo": "Asociación de imágenes",
+      "preguntas": [
+        {
+          "respuesta_correcta": "Image D | Un homme et une femme dans un bureau, la femme dépose un formulaire dans une boîte aux lettres",
+          "opciones": [
+            "Image A | Un homme et une femme étudiant/travaillant sur un exercice",
+            "Image B | Un homme et une femme dans une salle de classe, l'homme distribue des feuilles",
+            "Image C | Un homme et une femme devant une photocopieuse",
+            "Image D | Un homme et une femme dans un bureau, la femme dépose un formulaire dans une boîte aux lettres",
+            "Image E | Un homme et une femme dans un laboratoire",
+            "Image F | Un homme et une femme dans un café"
+          ],
+          "pregunta": "Situation n° 1"
+        },
+        {
+          "respuesta_correcta": "Image B | Un homme et une femme dans une salle de classe, l'homme distribue des feuilles",
+          "opciones": [
+            "Image A | Un homme et une femme étudiant/travaillant sur un exercice",
+            "Image B | Un homme et une femme dans une salle de classe, l'homme distribue des feuilles",
+            "Image C | Un homme et une femme devant une photocopieuse",
+            "Image D | Un homme et une femme dans un bureau, la femme dépose un formulaire dans une boîte aux lettres",
+            "Image E | Un homme et une femme dans un laboratoire",
+            "Image F | Un homme et une femme dans un café"
+          ],
+          "pregunta": "Situation n° 2"
+        },
+        {
+          "respuesta_correcta": "Image C | Un homme et une femme devant une photocopieuse",
+          "opciones": [
+            "Image A | Un homme et une femme étudiant/travaillant sur un exercice",
+            "Image B | Un homme et une femme dans une salle de classe, l'homme distribue des feuilles",
+            "Image C | Un homme et une femme devant une photocopieuse",
+            "Image D | Un homme et une femme dans un bureau, la femme dépose un formulaire dans une boîte aux lettres",
+            "Image E | Un homme et une femme dans un laboratoire",
+            "Image F | Un homme et une femme dans un café"
+          ],
+          "pregunta": "Situation n° 3"
+        },
+        {
+          "respuesta_correcta": "Image A | Un homme et une femme étudiant/travaillant sur un exercice",
+          "opciones": [
+            "Image A | Un homme et une femme étudiant/travaillant sur un exercice",
+            "Image B | Un homme et une femme dans une salle de classe, l'homme distribue des feuilles",
+            "Image C | Un homme et une femme devant une photocopieuse",
+            "Image D | Un homme et une femme dans un bureau, la femme dépose un formulaire dans une boîte aux lettres",
+            "Image E | Un homme et une femme dans un laboratoire",
+            "Image F | Un homme et une femme dans un café"
+          ],
+          "pregunta": "Situation n° 4"
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": null,
+      "transcripcion": "Situation n° 1 Je dois m'inscrire pour le cours de sciences et technologie de M. Lajoie. D'accord, il faut remplir ce formulaire et le déposer dans la boîte aux lettres. Très bien, merci. Situation n° 2 Silence, s'il vous plaît! L'examen va commencer. Rangez toutes vos affaires. Je distribue les feuilles. Est-ce qu'on peut garder notre trousse? Juste un stylo bleu! Situation n° 3 J'ai besoin de faire une copie de quelques pages de ce livre s'il vous plaît. D'accord. Quelles pages? De la page 17 à la page 27. Situation n° 4 Je ne comprends pas cet exercice. Tu peux m'aider? Oui, dis-moi, qu'est-ce que tu ne comprends pas? Je n'arrive pas à faire ces calculs.",
+      "campos_formulario": null
+    }
+  ],
+  "CE": [
+    {
+      "ruta_audio": null,
+      "habilidad": "Compréhension des écrits",
+      "instruccion": "Activité 43 Vous lisez cet article dans un journal français.",
+      "tipo": "QCM",
+      "preguntas": [
+        {
+          "respuesta_correcta": "2006.",
+          "opciones": [
+            "2005.",
+            "2006.",
+            "2007."
+          ],
+          "pregunta": "1. Depuis quand les Grands Prix SACEM existent ?"
+        },
+        {
+          "respuesta_correcta": "Image de trois musiciens jouant de la guitare et chantant.",
+          "opciones": [
+            "Image d'une claquette de cinéma avec des bobines de film.",
+            "Image de trois musiciens jouant de la guitare et chantant.",
+            "Image d'un danseur en mouvement."
+          ],
+          "pregunta": "2. Quel est le domaine d'activité de la SACEM ?"
+        },
+        {
+          "respuesta_correcta": "Le Prix Spécial.",
+          "opciones": [
+            "Le Prix Spécial.",
+            "Le Grand Prix de la chanson française.",
+            "Le Grand Prix des musiques du monde."
+          ],
+          "pregunta": "3. Quel est le Grand Prix le plus important ?"
+        },
+        {
+          "respuesta_correcta": "Le Grand Prix de la chanson française.",
+          "opciones": [
+            "Le Prix spécial.",
+            "Le Grand Prix de la chanson française.",
+            "Le Grand Prix de la nouvelle génération."
+          ],
+          "pregunta": "4. Quel prix Daho a-t-il remporté ?"
+        },
+        {
+          "respuesta_correcta": "La qualité de la musique.",
+          "opciones": [
+            "La carrière de l'artiste.",
+            "La qualité de la musique.",
+            "La popularité médiatique."
+          ],
+          "pregunta": "5. Sur quel critère est-ce qu'un artiste peut gagner un grand prix ?"
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": "Les grands prix SACEM Depuis 2006, la SACEM donne ses Grands Prix aux chanteurs. La cérémonie a lieu le 25 novembre à Paris. Cette année, Serge Lama a eu le Prix spécial, c'est la récompense la plus importante. Daho a eu le Grand Prix de la chanson française. Il est considéré comme un modèle de la nouvelle génération. Romane a gagné le Grand Prix du jazz et Gilberto le Grand Prix des musiques du monde. La SACEM récompense la qualité musicale, elle ne s'intéresse pas au succès commercial.",
+      "transcripcion": null,
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": null,
+      "habilidad": "Compréhension des écrits",
+      "instruccion": "Activité 44 Vous lisez cet article dans un journal francophone.",
+      "tipo": "QCM",
+      "preguntas": [
+        {
+          "respuesta_correcta": "en Europe.",
+          "opciones": [
+            "en Asie.",
+            "en Europe.",
+            "en Amérique."
+          ],
+          "pregunta": "1. La série est produite..."
+        },
+        {
+          "respuesta_correcta": "Image de trois policiers en uniforme.",
+          "opciones": [
+            "Image d'un juge ou avocat avec une robe noire.",
+            "Image de trois policiers en uniforme.",
+            "Image d'un médecin en blouse blanche."
+          ],
+          "pregunta": "2. Quelle est la profession des personnages ?"
+        },
+        {
+          "respuesta_correcta": "15 millions.",
+          "opciones": [
+            "10 millions.",
+            "15 millions.",
+            "20 millions."
+          ],
+          "pregunta": "3. Combien de personnes ont regardé le premier épisode ?"
+        },
+        {
+          "respuesta_correcta": "Chanteur.",
+          "opciones": [
+            "Acteur.",
+            "Chanteur.",
+            "Producteur."
+          ],
+          "pregunta": "4. Quelle est la profession de Marc Leblé ?"
+        },
+        {
+          "respuesta_correcta": "Simple.",
+          "opciones": [
+            "Simple.",
+            "Stressé.",
+            "Énergique."
+          ],
+          "pregunta": "5. Comment est Marc Leblé devant la caméra ?"
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": "Sans frontières : une série télévisée qui a du potentiel Cette série est une coproduction européenne. C'est l'histoire d'une équipe de policiers internationaux qui cherchent des criminels dans toute l'Europe. Le premier épisode a eu beaucoup de succès : 15 millions de spectateurs en France. Surprise ! C'est le chanteur Marc Leblé qui joue le rôle de Louis, le policier français. Les producteurs ont choisi un acteur peu expérimenté, mais très populaire. Marc Leblé est parfait, les Français l'adorent depuis longtemps. Devant la caméra, il est naturel.",
+      "transcripcion": null,
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": null,
+      "habilidad": "Compréhension des écrits",
+      "instruccion": "Activité 45 Vous lisez cet article dans un journal francophone.",
+      "tipo": "QCM",
+      "preguntas": [
+        {
+          "respuesta_correcta": "des enfants.",
+          "opciones": [
+            "des enfants.",
+            "des adultes.",
+            "des personnes âgées."
+          ],
+          "pregunta": "1. Ce documentaire met en scène..."
+        },
+        {
+          "respuesta_correcta": "Image d'une savane avec des arbres isolés.",
+          "opciones": [
+            "Image d'une forêt dense.",
+            "Image de montagnes enneigées.",
+            "Image d'une savane avec des arbres isolés."
+          ],
+          "pregunta": "2. Quel paysage traverse Jackson ?"
+        },
+        {
+          "respuesta_correcta": "Zahira.",
+          "opciones": [
+            "Carlos.",
+            "Zahira.",
+            "Samuel."
+          ],
+          "pregunta": "3. Qui habite au Maroc ?"
+        },
+        {
+          "respuesta_correcta": "Le cheval.",
+          "opciones": [
+            "Le cheval.",
+            "La marche à pied.",
+            "Le fauteuil roulant."
+          ],
+          "pregunta": "4. Par quel moyen se déplace Carlos ?"
+        },
+        {
+          "respuesta_correcta": "2 frères.",
+          "opciones": [
+            "1 frère.",
+            "2 frères.",
+            "3 frères."
+          ],
+          "pregunta": "5. Samuel a..."
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": "Coup de cœur ciné Sur le chemin de l'école est un documentaire réalisé par Pascal Plisson. On observe la vie d'enfants qui vont à l'école. Jackson, 10 ans, traverse la savane du Kenya et évite les éléphants dangereux. Zahira a 12 ans. Elle est du Maroc. Elle traverse les montagnes pendant 4 h. Carlos, 11 ans, habite en Patagonie. Il traverse la pampa à cheval pendant 1 h 30. Samuel, 11 ans, est handicapé. Il utilise un fauteuil roulant poussé par ses deux frères. Ils font 1 h 15 de route en Inde.",
+      "transcripcion": null,
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": null,
+      "habilidad": "Compréhension des écrits",
+      "instruccion": "Activité 46 Vous lisez cet article dans un journal francophone.",
+      "tipo": "QCM",
+      "preguntas": [
+        {
+          "respuesta_correcta": "Réalisateur.",
+          "opciones": [
+            "Acteur.",
+            "Scénariste.",
+            "Réalisateur."
+          ],
+          "pregunta": "1. Quelle est la profession de Jean-Pierre Jeunet ?"
+        },
+        {
+          "respuesta_correcta": "Aux États-Unis.",
+          "opciones": [
+            "En France.",
+            "Au Canada.",
+            "Aux États-Unis."
+          ],
+          "pregunta": "2. Le personnage principal du film voyage..."
+        },
+        {
+          "respuesta_correcta": "5.",
+          "opciones": [
+            "2.",
+            "3.",
+            "5."
+          ],
+          "pregunta": "3. Combien de langues parle le personnage principal ?"
+        },
+        {
+          "respuesta_correcta": "Image d'un karatéka en position de combat.",
+          "opciones": [
+            "Image d'un joueur de football frappant le ballon.",
+            "Image d'un karatéka en position de combat.",
+            "Image d'une personne jouant au tennis de table."
+          ],
+          "pregunta": "4. Quel sport pratique TS Spivet ?"
+        },
+        {
+          "respuesta_correcta": "Montréal.",
+          "opciones": [
+            "Paris.",
+            "Montréal.",
+            "Washington."
+          ],
+          "pregunta": "5. Où a lieu le tournage du film ?"
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": "Sortie de la semaine Après Micsmacs à tire-larigot et Un long dimanche de fiançailles, le réalisateur Jean-Pierre Jeunet revient avec un nouveau film : L'extravagant voyage du jeune et prodigieux TS Spivet. Le film raconte l'histoire d'un petit garçon qui traverse les États-Unis pour aller dans la ville de Washington car il a gagné un prix. Ce personnage est extraordinaire : il parle 5 langues et est champion du monde de karaté. Ce film tourné à Montréal sort en 3D la semaine prochaine. Vous pouvez gagner 2 tickets sur Internet.",
+      "transcripcion": null,
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": null,
+      "habilidad": "Compréhension des écrits",
+      "instruccion": "Activité 47 Vous lisez cet article dans un journal français.",
+      "tipo": "QCM",
+      "preguntas": [
+        {
+          "respuesta_correcta": "Le 24.",
+          "opciones": [
+            "Le 24.",
+            "Le 26.",
+            "Le 28."
+          ],
+          "pregunta": "1. Quel est le jour d'ouverture du zoo ?"
+        },
+        {
+          "respuesta_correcta": "3100.",
+          "opciones": [
+            "1000.",
+            "2800.",
+            "3100."
+          ],
+          "pregunta": "2. Il y a combien d'animaux ?"
+        },
+        {
+          "respuesta_correcta": "Image d'un éléphant.",
+          "opciones": [
+            "Image d'un éléphant.",
+            "Image de girafes.",
+            "Image de lions."
+          ],
+          "pregunta": "3. Quels sont les animaux préférés de la princesse Annie ?"
+        },
+        {
+          "respuesta_correcta": "actrice.",
+          "opciones": [
+            "actrice.",
+            "danseuse.",
+            "chanteuse."
+          ],
+          "pregunta": "4. Lucy Alberts est..."
+        },
+        {
+          "respuesta_correcta": "un spectacle de lumières.",
+          "opciones": [
+            "une rencontre avec des célébrités.",
+            "une rencontre avec les animaux du zoo.",
+            "un spectacle de lumières."
+          ],
+          "pregunta": "5. Le mois prochain, le zoo propose..."
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": "À Monaco, une histoire d'amour entre stars et animaux Le zoo de Monaco a ouvert le 24 mars. Sa construction a duré 28 mois. Aujourd'hui, il accueille 3 100 animaux. 1 000 visiteurs sont déjà venus. Les propriétaires sont très contents parce que beaucoup de célébrités viennent voir les animaux. Le 26 mars, la princesse Annie a visité le zoo. Elle adore Baby et Népal, un couple d'éléphants qui attend un bébé ! L'actrice américaine Lucy Alberts a admiré les lions et les tigres. Le mois prochain, le zoo présente un nouveau spectacle avec des jeux de lumières. Une danseuse célèbre va faire l'inauguration.",
+      "transcripcion": null,
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": null,
+      "habilidad": "Compréhension des écrits",
+      "instruccion": "Activité 48 Vous vivez en France et vous lisez cet article sur un forum.",
+      "tipo": "QCM",
+      "preguntas": [
+        {
+          "respuesta_correcta": "de sport.",
+          "opciones": [
+            "des fêtes.",
+            "de sport.",
+            "de cinéma."
+          ],
+          "pregunta": "1. Romain vous conseille des salles..."
+        },
+        {
+          "respuesta_correcta": "En centre-ville.",
+          "opciones": [
+            "En banlieue.",
+            "En centre-ville.",
+            "À la campagne."
+          ],
+          "pregunta": "2. Où est Sport Tonic ?"
+        },
+        {
+          "respuesta_correcta": "Image d'une piscine intérieure.",
+          "opciones": [
+            "Image d'un court de tennis.",
+            "Image d'une piscine intérieure.",
+            "Image d'une piste d'athlétisme."
+          ],
+          "pregunta": "3. Que peut-on trouver à Gym Mania ?"
+        },
+        {
+          "respuesta_correcta": "Lundi.",
+          "opciones": [
+            "Lundi.",
+            "Mardi.",
+            "Dimanche."
+          ],
+          "pregunta": "4. Quel jour ouvre Gym Mania?"
+        },
+        {
+          "respuesta_correcta": "La voiture.",
+          "opciones": [
+            "Le bus.",
+            "Le métro.",
+            "La voiture."
+          ],
+          "pregunta": "5. Quel moyen de transport devez-vous utiliser pour aller à Gym Mania ?"
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": "Re: Quelle salle de sport choisir ? Romain Posté le : 16 mars à 09:20 Bienvenue dans notre ville. Je peux vous conseiller deux salles de sport. La première s'appelle Sport Tonic. Elle est dans le centre de la ville, pas loin du métro. Elle ouvre du lundi au dimanche. La deuxième s'appelle Gym Mania, près du cinéma de la Place des fêtes. Elle est à 15 minutes du centre-ville. Il y a une piscine et des activités collectives du mardi au samedi. C'est ouvert du lundi au samedi matin et il faut une voiture pour aller à cette salle, il n'y a pas de bus.",
+      "transcripcion": null,
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": null,
+      "habilidad": "Compréhension des écrits",
+      "instruccion": "Activité 49 Vous étudiez en France et vous recevez ce courrier de votre école.",
+      "tipo": "QCM",
+      "preguntas": [
+        {
+          "respuesta_correcta": "Image d'un passeport.",
+          "opciones": [
+            "Image d'un passeport.",
+            "Image d'une carte d'étudiant.",
+            "Image d'un permis de conduire."
+          ],
+          "pregunta": "1. Sur place, quel document devez-vous présenter ?"
+        },
+        {
+          "respuesta_correcta": "Votre nom et votre prénom.",
+          "opciones": [
+            "Votre nom et votre prénom.",
+            "Votre numéro de téléphone.",
+            "Le nom du diplôme obtenu."
+          ],
+          "pregunta": "2. Que devez-vous écrire sur l'enveloppe ?"
+        },
+        {
+          "respuesta_correcta": "Le nom du diplôme obtenu.",
+          "opciones": [
+            "Vos coordonnées.",
+            "Votre date de naissance.",
+            "Le nom du diplôme obtenu."
+          ],
+          "pregunta": "3. Quelles informations devez-vous indiquer sur le formulaire ?"
+        },
+        {
+          "respuesta_correcta": "en l'appelant au téléphone.",
+          "opciones": [
+            "par message électronique.",
+            "en vous présentant sur place.",
+            "en l'appelant au téléphone."
+          ],
+          "pregunta": "4. Vous pouvez contacter M. Sève..."
+        },
+        {
+          "respuesta_correcta": "8 h 30.",
+          "opciones": [
+            "8 h 30.",
+            "9 h 30.",
+            "12 h 30."
+          ],
+          "pregunta": "5. À partir de quelle heure pouvez-vous le contacter ?"
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": "Comment récupérer votre diplôme ? Sur place Vous devez présenter votre pièce d'identité (attention : la carte étudiante et le permis ne sont pas acceptés). Par courrier Vous devez envoyer ces documents : - une enveloppe (format A4) timbrée à 9 € 30 avec votre nom et votre adresse (en France seulement) ; - le formulaire de demande : indiquez le nom du diplôme et la date des examens. Pour recevoir votre diplôme à l'étranger, appelez M. Sève au 05 46 44 83 79 entre 8 h 30 et 12 h 30.",
+      "transcripcion": null,
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": null,
+      "habilidad": "Compréhension des écrits",
+      "instruccion": "Activité 50 Vous lisez cet article dans un journal francophone.",
+      "tipo": "QCM",
+      "preguntas": [
+        {
+          "respuesta_correcta": "la médecine.",
+          "opciones": [
+            "les arts.",
+            "l'éducation.",
+            "la médecine."
+          ],
+          "pregunta": "1. Axel veut travailler dans..."
+        },
+        {
+          "respuesta_correcta": "Deux jours.",
+          "opciones": [
+            "Un jour.",
+            "Deux jours.",
+            "Quatre jours."
+          ],
+          "pregunta": "2. Combien de jours par semaine Axel va-t-il en cours ?"
+        },
+        {
+          "respuesta_correcta": "Image d'un groupe d'enfants souriants.",
+          "opciones": [
+            "Image d'un groupe d'enfants souriants.",
+            "Image d'un groupe d'adultes souriants.",
+            "Image d'un groupe de personnes âgées souriantes."
+          ],
+          "pregunta": "3. Avec quel public travaille Axel ?"
+        },
+        {
+          "respuesta_correcta": "En mai.",
+          "opciones": [
+            "En mai.",
+            "En septembre.",
+            "En novembre."
+          ],
+          "pregunta": "4. Quand est-ce qu'Axel doit passer ses examens ?"
+        },
+        {
+          "respuesta_correcta": "Son employeur.",
+          "opciones": [
+            "Ses parents.",
+            "L'université.",
+            "Son employeur."
+          ],
+          "pregunta": "5. Qui paie les études d'Axel ?"
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": "Aujourd'hui, le 10 septembre, c'est la rentrée universitaire. Axel a 27 ans, il est étudiant en master pour devenir chirurgien. Il étudie et travaille en même temps. Il va aller à l'université deux fois par semaine et travailler à l'hôpital 4 jours à partir du mois de novembre. Il soigne les enfants. Ses examens finaux pour obtenir son master sont en mai. Ses études ne sont pas gratuites. Il doit payer 3 500 € pour une année scolaire. Mais l'hôpital lui rembourse tous les frais.",
+      "transcripcion": null,
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": null,
+      "habilidad": "Compréhension des écrits",
+      "instruccion": "Activité 51 Vous lisez cet article dans un journal français.",
+      "tipo": "QCM",
+      "preguntas": [
+        {
+          "respuesta_correcta": "Image de pinceaux et de peintures.",
+          "opciones": [
+            "Image d'un appareil photo.",
+            "Image de pinceaux et de peintures.",
+            "Image d'un instrument de musique (violon)."
+          ],
+          "pregunta": "1. Quel métier font Émilien et Sophie ?"
+        },
+        {
+          "respuesta_correcta": "Lyon.",
+          "opciones": [
+            "Lille.",
+            "Lyon.",
+            "Laval."
+          ],
+          "pregunta": "2. Dans quelle ville Émilien et Sophie travaillent-ils ?"
+        },
+        {
+          "respuesta_correcta": "En 2022.",
+          "opciones": [
+            "En 2022.",
+            "En 2023.",
+            "En 2024."
+          ],
+          "pregunta": "3. Quand est-ce que l'association a été créée ?"
+        },
+        {
+          "respuesta_correcta": "professeurs.",
+          "opciones": [
+            "architectes.",
+            "professeurs.",
+            "photographes."
+          ],
+          "pregunta": "4. Émilien et Sophie sont aussi..."
+        },
+        {
+          "respuesta_correcta": "Les couleurs en ville.",
+          "opciones": [
+            "La qualité du travail.",
+            "Les couleurs en ville.",
+            "Les idées des habitants."
+          ],
+          "pregunta": "5. Qu'est-ce que les commerçants aiment ?"
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": "Des couleurs en ville ! Émilien, de Lille, et Sophie, originaire de Laval, sont amis et peintres. Leur art est particulier : ils font de la peinture sur les murs ! Émilien explique : « Nous voulons une belle ville. Quand nous peignons les murs de la ville à Lyon, elle devient colorée. » Émilien et Sophie ont créé l'association « Décore ma ville » en 2022. Depuis 2023, ils donnent aussi des cours gratuits de peinture. Leur art est populaire : les commerçants et habitants aiment beaucoup les œuvres colorées de la ville aujourd'hui.",
+      "transcripcion": null,
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": null,
+      "habilidad": "Compréhension des écrits",
+      "instruccion": "Activité 52 Vous recevez cette publicité d'une agence de voyages.",
+      "tipo": "QCM",
+      "preguntas": [
+        {
+          "respuesta_correcta": "Image d'un paysage de campagne verdoyant.",
+          "opciones": [
+            "Image d'un chalet à la montagne enneigée.",
+            "Image d'une ville côtière avec des bâtiments blancs.",
+            "Image d'un paysage de campagne verdoyant."
+          ],
+          "pregunta": "1. Où est-ce que vous pouvez partir en vacances ?"
+        },
+        {
+          "respuesta_correcta": "La marche en forêt.",
+          "opciones": [
+            "La marche en forêt.",
+            "Un cours de cuisine.",
+            "Nourrir les animaux."
+          ],
+          "pregunta": "2. Quelle activité est gratuite ?"
+        },
+        {
+          "respuesta_correcta": "samedi.",
+          "opciones": [
+            "vendredi.",
+            "samedi.",
+            "dimanche."
+          ],
+          "pregunta": "3. Vous pouvez avoir un repas gratuit..."
+        },
+        {
+          "respuesta_correcta": "appeler.",
+          "opciones": [
+            "appeler.",
+            "écrire un courriel.",
+            "remplir un formulaire."
+          ],
+          "pregunta": "4. Pour vous inscrire, vous devez..."
+        },
+        {
+          "respuesta_correcta": "En mai.",
+          "opciones": [
+            "En avril.",
+            "En mai.",
+            "En juin."
+          ],
+          "pregunta": "5. Quand pouvez-vous vous inscrire ?"
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": "PROMOTION Réservez vite votre voyage ! Week-end de trois jours (de vendredi à dimanche) pour deux personnes à la campagne en juin. Nous vous offrons deux activités : balade à cheval et randonnée en forêt avec guide. L'hôtel propose aussi une matinée à la ferme pour s'occuper des animaux ou un cours de cuisine locale le samedi (1 activité = 50 euros). Le samedi soir, l'hôtel vous offre le dîner. Inscription par téléphone au 01 75 95 93 78 du 2 au 25 mai.",
+      "transcripcion": null,
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": null,
+      "habilidad": "Compréhension des écrits",
+      "instruccion": "Activité 53 Vous lisez ce panneau d'information dans un centre commercial.",
+      "tipo": "QCM",
+      "preguntas": [
+        {
+          "respuesta_correcta": "mercredi.",
+          "opciones": [
+            "lundi.",
+            "mardi.",
+            "mercredi."
+          ],
+          "pregunta": "1. La cafétéria ouvre..."
+        },
+        {
+          "respuesta_correcta": "20 h 30.",
+          "opciones": [
+            "19 h 30.",
+            "20 h.",
+            "20 h 30."
+          ],
+          "pregunta": "2. Le samedi, la cafétéria ferme à..."
+        },
+        {
+          "respuesta_correcta": "Dans le centre commercial.",
+          "opciones": [
+            "Dans le centre commercial.",
+            "À côté du centre commercial.",
+            "Derrière le centre commercial."
+          ],
+          "pregunta": "3. Où est la cafétéria ?"
+        },
+        {
+          "respuesta_correcta": "Image d'un sandwich.",
+          "opciones": [
+            "Image d'un sandwich.",
+            "Image d'une pizza.",
+            "Image d'une salade."
+          ],
+          "pregunta": "4. Qu'est-ce qu'on peut manger à la cafétéria ?"
+        },
+        {
+          "respuesta_correcta": "Les personnes âgées.",
+          "opciones": [
+            "Les enfants.",
+            "Les adultes.",
+            "Les personnes âgées."
+          ],
+          "pregunta": "5. Qui peut avoir une réduction sur un repas le dimanche ?"
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": "La nouvelle cafétéria est ouverte du mercredi au samedi jusqu'à 20 h 30 et le dimanche jusqu'à 20 h. Elle est à droite de l'accueil du centre commercial. Nous vous servons des sandwichs (seulement le midi), des repas chauds, des desserts, des boissons chaudes et froides (la machine à glaces ne marche pas en ce moment). Tous les mercredis, les moins de 15 ans peuvent avoir une réduction de 15%. Le dimanche, ce sont les plus de 75 ans qui peuvent avoir une réduction de 10 %.",
+      "transcripcion": null,
+      "campos_formulario": null
+    }
+  ]
+}

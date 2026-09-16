@@ -1,0 +1,1808 @@
+{
+  "diccionario_unidad": [
+    {
+      "definicion": "Forma del verbo 'avoir' en presente de indicativo, tercera persona del singular (él/ella/ello tiene).",
+      "tipo_gramatical": "verbe (présent)",
+      "ejemplo_uso": "Il a un nouveau livre.",
+      "palabra": "a",
+      "frecuencia": 5,
+      "lema": "avoir",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Nombre propio masculino.",
+      "tipo_gramatical": "nom propre (m)",
+      "ejemplo_uso": "Abishek est mon ami.",
+      "palabra": "abishek",
+      "frecuencia": 1,
+      "lema": "Abishek",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Adquirir algo a cambio de dinero.",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "Je veux acheter un nouveau livre.",
+      "palabra": "acheter",
+      "frecuencia": 3,
+      "lema": "acheter",
+      "sinonimos": [
+        "acquérir",
+        "se procurer"
+      ]
+    },
+    {
+      "definicion": "Forma del verbo 'acheter' que indica una acción pasada y completada.",
+      "tipo_gramatical": "participe passé",
+      "ejemplo_uso": "J'ai acheté du pain ce matin.",
+      "palabra": "acheté",
+      "frecuencia": 3,
+      "lema": "acheter",
+      "sinonimos": [
+        "acquis",
+        "payé"
+      ]
+    },
+    {
+      "definicion": "Forma del verbo 'acheter' en futuro simple, primera persona del singular.",
+      "tipo_gramatical": "verbe (futur simple)",
+      "ejemplo_uso": "Demain, j'achèterai un cadeau.",
+      "palabra": "achèterai",
+      "frecuencia": 1,
+      "lema": "acheter",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Forma del verbo 'acheter' en presente de indicativo (tú) o subjuntivo (que tú).",
+      "tipo_gramatical": "verbe (présent/subjonctif)",
+      "ejemplo_uso": "Tu achètes toujours de belles choses.",
+      "palabra": "achètes",
+      "frecuencia": 1,
+      "lema": "acheter",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Conjunto de operaciones o tareas que realiza una persona o un grupo.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "Quelle est ton activité préférée?",
+      "palabra": "activité",
+      "frecuencia": 13,
+      "lema": "activité",
+      "sinonimos": [
+        "occupation",
+        "tâche"
+      ]
+    },
+    {
+      "definicion": "Forma del verbo 'adorer' en presente de indicativo, tercera persona del plural. Significa amar o gustar mucho.",
+      "tipo_gramatical": "verbe (présent)",
+      "ejemplo_uso": "Ils adorent le chocolat.",
+      "palabra": "adorent",
+      "frecuencia": 1,
+      "lema": "adorer",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Conjunto de cosas personales, o también negocios o asuntos.",
+      "tipo_gramatical": "nom (f, pluriel)",
+      "ejemplo_uso": "Range tes affaires avant de partir.",
+      "palabra": "affaires",
+      "frecuencia": 1,
+      "lema": "affaire",
+      "sinonimos": [
+        "choses",
+        "objets"
+      ]
+    },
+    {
+      "definicion": "Cuaderno o libro donde se anotan las citas y tareas pendientes.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "J'ai noté le rendez-vous dans mon agenda.",
+      "palabra": "agenda",
+      "frecuencia": 2,
+      "lema": "agenda",
+      "sinonimos": [
+        "carnet",
+        "calepin"
+      ]
+    },
+    {
+      "definicion": "Forma del verbo 'avoir' en presente de indicativo, primera persona del singular. Significa tener.",
+      "tipo_gramatical": "verbe (présent)",
+      "ejemplo_uso": "J'ai un chat.",
+      "palabra": "ai",
+      "frecuencia": 12,
+      "lema": "avoir",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Prestar asistencia o colaboración a alguien.",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "Peux-tu m'aider s'il te plaît?",
+      "palabra": "aider",
+      "frecuencia": 1,
+      "lema": "aider",
+      "sinonimos": [
+        "assister",
+        "secourir"
+      ]
+    },
+    {
+      "definicion": "Forma del verbo 'aimer' en presente de indicativo, primera o tercera persona del singular. Significa querer o gustar.",
+      "tipo_gramatical": "verbe (présent)",
+      "ejemplo_uso": "J'aime lire des livres.",
+      "palabra": "aime",
+      "frecuencia": 3,
+      "lema": "aimer",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Forma del verbo 'aimer' en condicional presente, primera o segunda persona del singular. Expresa un deseo.",
+      "tipo_gramatical": "verbe (conditionnel présent)",
+      "ejemplo_uso": "J'aimerais voyager autour du monde.",
+      "palabra": "aimerais",
+      "frecuencia": 1,
+      "lema": "aimer",
+      "sinonimos": []
+    },
+    {
+      "definicion": "De esta manera o modo.",
+      "tipo_gramatical": "adverbe",
+      "ejemplo_uso": "Il a agi ainsi pour nous aider.",
+      "palabra": "ainsi",
+      "frecuencia": 1,
+      "lema": "ainsi",
+      "sinonimos": [
+        "de cette façon",
+        "comme ça"
+      ]
+    },
+    {
+      "definicion": "Forma del verbo 'aller' en presente de indicativo (ustedes) o imperativo (ustedes/vosotros). Significa ir.",
+      "tipo_gramatical": "verbe (présent/impératif)",
+      "ejemplo_uso": "Allez, on y va!",
+      "palabra": "allez",
+      "frecuencia": 24,
+      "lema": "aller",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Forma del verbo 'aller' en presente de indicativo (nosotros) o imperativo (nosotros). Significa ir.",
+      "tipo_gramatical": "verbe (présent/impératif)",
+      "ejemplo_uso": "Allons au cinéma ce soir.",
+      "palabra": "allons",
+      "frecuencia": 1,
+      "lema": "aller",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Personas con las que se tiene una relación de amistad.",
+      "tipo_gramatical": "nom (m, pluriel)",
+      "ejemplo_uso": "J'ai beaucoup d'amis.",
+      "palabra": "amis",
+      "frecuencia": 1,
+      "lema": "ami",
+      "sinonimos": [
+        "copains",
+        "potes"
+      ]
+    },
+    {
+      "definicion": "Nombre propio masculino.",
+      "tipo_gramatical": "nom propre (m)",
+      "ejemplo_uso": "Amit est un prénom indien.",
+      "palabra": "amit",
+      "frecuencia": 1,
+      "lema": "Amit",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Acción y efecto de mejorar algo.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "Nous cherchons une amélioration continue.",
+      "palabra": "amélioration",
+      "frecuencia": 1,
+      "lema": "amélioration",
+      "sinonimos": [
+        "progrès",
+        "perfectionnement"
+      ]
+    },
+    {
+      "definicion": "Que existe desde hace mucho tiempo o que es de un tiempo pasado.",
+      "tipo_gramatical": "adjectif (f)",
+      "ejemplo_uso": "C'est une ancienne maison.",
+      "palabra": "ancienne",
+      "frecuencia": 1,
+      "lema": "ancien",
+      "sinonimos": [
+        "vieille",
+        "antique"
+      ]
+    },
+    {
+      "definicion": "Día en que se cumple un año más de un suceso, especialmente el nacimiento de una persona.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "Joyeux anniversaire!",
+      "palabra": "anniversaire",
+      "frecuencia": 2,
+      "lema": "anniversaire",
+      "sinonimos": [
+        "fête",
+        "célébration"
+      ]
+    },
+    {
+      "definicion": "Unidad de tiempo equivalente a doce meses. Se usa para indicar la edad.",
+      "tipo_gramatical": "nom (m, pluriel)",
+      "ejemplo_uso": "J'ai vingt ans.",
+      "palabra": "ans",
+      "frecuencia": 1,
+      "lema": "an",
+      "sinonimos": [
+        "années",
+        "lustres"
+      ]
+    },
+    {
+      "definicion": "Forma del verbo 'apporter' en presente de indicativo (yo/él/ella), subjuntivo (que yo/él/ella) o imperativo (tú). Significa llevar o traer.",
+      "tipo_gramatical": "verbe (présent/subjonctif/impératif)",
+      "ejemplo_uso": "Il apporte toujours des fleurs.",
+      "palabra": "apporte",
+      "frecuencia": 1,
+      "lema": "apporter",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Llevar o traer algo a un lugar o a alguien.",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "N'oublie pas d'apporter ton livre.",
+      "palabra": "apporter",
+      "frecuencia": 1,
+      "lema": "apporter",
+      "sinonimos": [
+        "amener",
+        "porter"
+      ]
+    },
+    {
+      "definicion": "Forma del verbo 'avoir' en presente de indicativo, segunda persona del singular. Significa tener.",
+      "tipo_gramatical": "verbe (présent)",
+      "ejemplo_uso": "Tu as un nouveau vélo.",
+      "palabra": "as",
+      "frecuencia": 2,
+      "lema": "avoir",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Recipientes planos o ligeramente cóncavos donde se sirve la comida.",
+      "tipo_gramatical": "nom (f, pluriel)",
+      "ejemplo_uso": "Lave les assiettes après le repas.",
+      "palabra": "assiettes",
+      "frecuencia": 2,
+      "lema": "assiette",
+      "sinonimos": [
+        "plats",
+        "vaisselle"
+      ]
+    },
+    {
+      "definicion": "Que está sentado o en posición de sentarse.",
+      "tipo_gramatical": "adjectif (f)",
+      "ejemplo_uso": "Elle est assise sur la chaise.",
+      "palabra": "assise",
+      "frecuencia": 1,
+      "lema": "assis",
+      "sinonimos": [
+        "posée",
+        "installée"
+      ]
+    },
+    {
+      "definicion": "Forma del verbo 'attendre' en presente de indicativo (yo/tú) o imperativo (tú). Significa esperar.",
+      "tipo_gramatical": "verbe (présent/impératif)",
+      "ejemplo_uso": "J'attends le bus.",
+      "palabra": "attends",
+      "frecuencia": 1,
+      "lema": "attendre",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Concentración de la mente en algo, o cuidado y consideración.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "Fais attention en traversant la rue.",
+      "palabra": "attention",
+      "frecuencia": 1,
+      "lema": "attention",
+      "sinonimos": [
+        "vigilance",
+        "prudence"
+      ]
+    },
+    {
+      "definicion": "Contracción de la preposición 'à' y el artículo definido masculino singular 'le'.",
+      "tipo_gramatical": "article contracté",
+      "ejemplo_uso": "Je vais au marché.",
+      "palabra": "au",
+      "frecuencia": 2,
+      "lema": "à le (contraction)",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Relativo al sonido o a la audición. También puede referirse al sonido en sí.",
+      "tipo_gramatical": "adjectif / nom (m)",
+      "ejemplo_uso": "J'écoute un livre audio.",
+      "palabra": "audio",
+      "frecuencia": 13,
+      "lema": "audio",
+      "sinonimos": [
+        "sonore",
+        "acoustique"
+      ]
+    },
+    {
+      "definicion": "Forma del verbo 'avoir' en futuro simple, tercera persona del singular.",
+      "tipo_gramatical": "verbe (futur simple)",
+      "ejemplo_uso": "Il aura une surprise demain.",
+      "palabra": "aura",
+      "frecuencia": 1,
+      "lema": "avoir",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Indica igualdad, semejanza o adición.",
+      "tipo_gramatical": "adverbe",
+      "ejemplo_uso": "Moi aussi, j'aime le chocolat.",
+      "palabra": "aussi",
+      "frecuencia": 4,
+      "lema": "aussi",
+      "sinonimos": [
+        "également",
+        "de même"
+      ]
+    },
+    {
+      "definicion": "Indica un tiempo o lugar anterior a otro.",
+      "tipo_gramatical": "préposition / adverbe",
+      "ejemplo_uso": "Lave-toi les mains avant de manger.",
+      "palabra": "avant",
+      "frecuencia": 1,
+      "lema": "avant",
+      "sinonimos": [
+        "auparavant",
+        "précédemment"
+      ]
+    },
+    {
+      "definicion": "Indica compañía, instrumento o modo.",
+      "tipo_gramatical": "préposition",
+      "ejemplo_uso": "Je vais au cinéma avec mes amis.",
+      "palabra": "avec",
+      "frecuencia": 4,
+      "lema": "avec",
+      "sinonimos": [
+        "en compagnie de",
+        "à l'aide de"
+      ]
+    },
+    {
+      "definicion": "Lluvias repentinas y de corta duración.",
+      "tipo_gramatical": "nom (f, pluriel)",
+      "ejemplo_uso": "Il y aura des averses cet après-midi.",
+      "palabra": "averses",
+      "frecuencia": 1,
+      "lema": "averse",
+      "sinonimos": [
+        "pluies",
+        "giboulées"
+      ]
+    },
+    {
+      "definicion": "Poseer, tener o experimentar algo. También se usa como auxiliar.",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "J'ai besoin d'avoir plus de temps.",
+      "palabra": "avoir",
+      "frecuencia": 1,
+      "lema": "avoir",
+      "sinonimos": [
+        "posséder",
+        "détenir"
+      ]
+    },
+    {
+      "definicion": "Objetos esféricos, a menudo inflados con aire, usados para jugar o decorar.",
+      "tipo_gramatical": "nom (m, pluriel)",
+      "ejemplo_uso": "Les enfants jouent avec des ballons.",
+      "palabra": "ballons",
+      "frecuencia": 1,
+      "lema": "ballon",
+      "sinonimos": [
+        "boules",
+        "sphères"
+      ]
+    },
+    {
+      "definicion": "En gran cantidad o medida.",
+      "tipo_gramatical": "adverbe",
+      "ejemplo_uso": "J'aime beaucoup ce film.",
+      "palabra": "beaucoup",
+      "frecuencia": 1,
+      "lema": "beaucoup",
+      "sinonimos": [
+        "énormément",
+        "très"
+      ]
+    },
+    {
+      "definicion": "Que tiene belleza o es agradable a la vista.",
+      "tipo_gramatical": "adjectif (f)",
+      "ejemplo_uso": "C'est une belle fleur.",
+      "palabra": "belle",
+      "frecuencia": 2,
+      "lema": "beau",
+      "sinonimos": [
+        "jolie",
+        "magnifique"
+      ]
+    },
+    {
+      "definicion": "Carencia de algo que se considera necesario.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "J'ai besoin d'eau.",
+      "palabra": "besoin",
+      "frecuencia": 3,
+      "lema": "besoin",
+      "sinonimos": [
+        "nécessité",
+        "manque"
+      ]
+    },
+    {
+      "definicion": "Dentro de poco tiempo.",
+      "tipo_gramatical": "adverbe",
+      "ejemplo_uso": "À bientôt!",
+      "palabra": "bientôt",
+      "frecuencia": 1,
+      "lema": "bientôt",
+      "sinonimos": [
+        "prochainement",
+        "sous peu"
+      ]
+    },
+    {
+      "definicion": "Color de la nieve o la leche, el más claro de todos.",
+      "tipo_gramatical": "adjectif (m)",
+      "ejemplo_uso": "Le mur est blanc.",
+      "palabra": "blanc",
+      "frecuencia": 2,
+      "lema": "blanc",
+      "sinonimos": [
+        "immaculé",
+        "clair"
+      ]
+    },
+    {
+      "definicion": "Forma femenina del adjetivo 'blanc'.",
+      "tipo_gramatical": "adjectif (f)",
+      "ejemplo_uso": "La feuille est blanche.",
+      "palabra": "blanche",
+      "frecuencia": 1,
+      "lema": "blanc",
+      "sinonimos": [
+        "claire",
+        "laiteuse"
+      ]
+    },
+    {
+      "definicion": "Forma femenina plural del adjetivo 'blanc'.",
+      "tipo_gramatical": "adjectif (f, pluriel)",
+      "ejemplo_uso": "Les pages sont blanches.",
+      "palabra": "blanches",
+      "frecuencia": 2,
+      "lema": "blanc",
+      "sinonimos": [
+        "claires",
+        "laiteuses"
+      ]
+    },
+    {
+      "definicion": "Líquidos que se beben.",
+      "tipo_gramatical": "nom (f, pluriel)",
+      "ejemplo_uso": "Nous avons des boissons fraîches.",
+      "palabra": "boissons",
+      "frecuencia": 1,
+      "lema": "boisson",
+      "sinonimos": [
+        "breuvages",
+        "liquides"
+      ]
+    },
+    {
+      "definicion": "Mesa de trabajo o habitación destinada a trabajar.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "Je travaille dans mon bureau.",
+      "palabra": "bureau",
+      "frecuencia": 5,
+      "lema": "bureau",
+      "sinonimos": [
+        "table",
+        "office"
+      ]
+    },
+    {
+      "definicion": "Objeto que se da a alguien sin esperar nada a cambio, como muestra de afecto o celebración.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "J'ai acheté un cadeau pour mon ami.",
+      "palabra": "cadeau",
+      "frecuencia": 1,
+      "lema": "cadeau",
+      "sinonimos": [
+        "présent",
+        "don"
+      ]
+    },
+    {
+      "definicion": "Cuaderno de hojas de papel unidas, usado para escribir o dibujar.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "Écris la leçon dans ton cahier.",
+      "palabra": "cahier",
+      "frecuencia": 2,
+      "lema": "cahier",
+      "sinonimos": [
+        "carnet",
+        "bloc-notes"
+      ]
+    },
+    {
+      "definicion": "Tranquilizar o apaciguar a alguien o algo.",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "Il faut calmer les enfants.",
+      "palabra": "calmer",
+      "frecuencia": 1,
+      "lema": "calmer",
+      "sinonimos": [
+        "apaiser",
+        "tranquilliser"
+      ]
+    },
+    {
+      "definicion": "Puede ser un apellido o nombre propio de origen español o portugués. Si no es un nombre propio, es la palabra española para 'campos' (terrenos).",
+      "tipo_gramatical": "nom propre (m) / mot étranger",
+      "ejemplo_uso": "Monsieur Campos est arrivé.",
+      "palabra": "campos",
+      "frecuencia": 12,
+      "lema": "Campos",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Asiento largo y acolchado para varias personas.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "Je m'assois sur le canapé.",
+      "palabra": "canapé",
+      "frecuencia": 2,
+      "lema": "canapé",
+      "sinonimos": [
+        "sofa",
+        "divan"
+      ]
+    },
+    {
+      "definicion": "Introduce una explicación o una causa.",
+      "tipo_gramatical": "conjonction de coordination",
+      "ejemplo_uso": "Je suis fatigué car j'ai beaucoup travaillé.",
+      "palabra": "car",
+      "frecuencia": 1,
+      "lema": "car",
+      "sinonimos": [
+        "parce que",
+        "en effet"
+      ]
+    },
+    {
+      "definicion": "Cuaderno pequeño para tomar notas o dibujar.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "J'ai toujours un carnet sur moi.",
+      "palabra": "carnet",
+      "frecuencia": 3,
+      "lema": "carnet",
+      "sinonimos": [
+        "cahier",
+        "bloc-notes"
+      ]
+    },
+    {
+      "definicion": "Plural de 'carnet'.",
+      "tipo_gramatical": "nom (m, pluriel)",
+      "ejemplo_uso": "J'ai plusieurs carnets pour mes idées.",
+      "palabra": "carnets",
+      "frecuencia": 1,
+      "lema": "carnet",
+      "sinonimos": [
+        "cahiers",
+        "blocs-notes"
+      ]
+    },
+    {
+      "definicion": "Hortalizas de raíz comestible, generalmente de color naranja.",
+      "tipo_gramatical": "nom (f, pluriel)",
+      "ejemplo_uso": "J'aime manger des carottes.",
+      "palabra": "carottes",
+      "frecuencia": 3,
+      "lema": "carotte",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Representación gráfica de un territorio o documento de identificación.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "J'ai une carte d'identité.",
+      "palabra": "carte",
+      "frecuencia": 1,
+      "lema": "carte",
+      "sinonimos": [
+        "plan",
+        "document"
+      ]
+    },
+    {
+      "definicion": "Objeto que cubre y protege la cabeza, o auriculares para escuchar sonido.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "Je porte un casque pour écouter de la musique.",
+      "palabra": "casque",
+      "frecuencia": 1,
+      "lema": "casque",
+      "sinonimos": [
+        "heaume",
+        "écouteurs"
+      ]
+    },
+    {
+      "definicion": "Razón o motivo de algo.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "La cause de l'accident est inconnue.",
+      "palabra": "cause",
+      "frecuencia": 1,
+      "lema": "cause",
+      "sinonimos": [
+        "raison",
+        "motif"
+      ]
+    },
+    {
+      "definicion": "Indica algo que está cerca o se ha mencionado.",
+      "tipo_gramatical": "déterminant démonstratif (m) / pronom démonstratif",
+      "ejemplo_uso": "Ce livre est intéressant.",
+      "palabra": "ce",
+      "frecuencia": 2,
+      "lema": "ce",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Forma femenina singular del determinante demostrativo 'ce'.",
+      "tipo_gramatical": "déterminant démonstratif (f)",
+      "ejemplo_uso": "Cette fleur est belle.",
+      "palabra": "cette",
+      "frecuencia": 3,
+      "lema": "ce",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Mueble con respaldo y asiento para una persona.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "Assieds-toi sur la chaise.",
+      "palabra": "chaise",
+      "frecuencia": 3,
+      "lema": "chaise",
+      "sinonimos": [
+        "siège",
+        "tabouret"
+      ]
+    },
+    {
+      "definicion": "Plural de 'chaise'.",
+      "tipo_gramatical": "nom (f, pluriel)",
+      "ejemplo_uso": "Il y a quatre chaises autour de la table.",
+      "palabra": "chaises",
+      "frecuencia": 1,
+      "lema": "chaise",
+      "sinonimos": [
+        "sièges",
+        "tabourets"
+      ]
+    },
+    {
+      "definicion": "Modificar o transformar algo.",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "Je veux changer de voiture.",
+      "palabra": "changer",
+      "frecuencia": 1,
+      "lema": "changer",
+      "sinonimos": [
+        "modifier",
+        "transformer"
+      ]
+    },
+    {
+      "definicion": "Composición musical con letra para ser cantada.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "J'aime cette chanson.",
+      "palabra": "chanson",
+      "frecuencia": 1,
+      "lema": "chanson",
+      "sinonimos": [
+        "chant",
+        "mélodie"
+      ]
+    },
+    {
+      "definicion": "Producir sonidos melódicos con la voz.",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "J'aime chanter sous la douche.",
+      "palabra": "chanter",
+      "frecuencia": 1,
+      "lema": "chanter",
+      "sinonimos": [
+        "vocaliser",
+        "entonner"
+      ]
+    },
+    {
+      "definicion": "Animal doméstico felino.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "Mon chat dort sur le canapé.",
+      "palabra": "chat",
+      "frecuencia": 1,
+      "lema": "chat",
+      "sinonimos": [
+        "félin",
+        "minet"
+      ]
+    },
+    {
+      "definicion": "Calzado que cubre el pie.",
+      "tipo_gramatical": "nom (f, pluriel)",
+      "ejemplo_uso": "J'ai acheté de nouvelles chaussures.",
+      "palabra": "chaussures",
+      "frecuencia": 2,
+      "lema": "chaussure",
+      "sinonimos": [
+        "souliers",
+        "godasses"
+      ]
+    },
+    {
+      "definicion": "Forma del verbo 'chercher' en presente de indicativo (yo/él/ella), subjuntivo (que yo/él/ella) o imperativo (tú). Significa buscar.",
+      "tipo_gramatical": "verbe (présent/subjonctif/impératif)",
+      "ejemplo_uso": "Je cherche mes clés.",
+      "palabra": "cherche",
+      "frecuencia": 1,
+      "lema": "chercher",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Alimento dulce hecho de cacao.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "J'adore le chocolat.",
+      "palabra": "chocolat",
+      "frecuencia": 1,
+      "lema": "chocolat",
+      "sinonimos": [
+        "cacao",
+        "confiserie"
+      ]
+    },
+    {
+      "definicion": "Objeto, hecho o asunto.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "C'est une chose importante.",
+      "palabra": "chose",
+      "frecuencia": 1,
+      "lema": "chose",
+      "sinonimos": [
+        "objet",
+        "affaire"
+      ]
+    },
+    {
+      "definicion": "Plural de 'chose'.",
+      "tipo_gramatical": "nom (f, pluriel)",
+      "ejemplo_uso": "Il y a beaucoup de choses à faire.",
+      "palabra": "choses",
+      "frecuencia": 1,
+      "lema": "chose",
+      "sinonimos": [
+        "objets",
+        "affaires"
+      ]
+    },
+    {
+      "definicion": "Instrumento para cortar, compuesto por dos hojas articuladas.",
+      "tipo_gramatical": "nom (m, pluriel)",
+      "ejemplo_uso": "J'ai besoin de ciseaux pour couper le papier.",
+      "palabra": "ciseaux",
+      "frecuencia": 2,
+      "lema": "ciseaux",
+      "sinonimos": [
+        "sécateur",
+        "coupe-papier"
+      ]
+    },
+    {
+      "definicion": "Grupo de alumnos o asignatura, o categoría.",
+      "tipo_gramatical": "nom (f, pluriel)",
+      "ejemplo_uso": "J'ai trois classes aujourd'hui.",
+      "palabra": "classes",
+      "frecuencia": 1,
+      "lema": "classe",
+      "sinonimos": [
+        "cours",
+        "catégories"
+      ]
+    },
+    {
+      "definicion": "Instrumentos para abrir o cerrar cerraduras. (Variante de 'clés')",
+      "tipo_gramatical": "nom (f, pluriel)",
+      "ejemplo_uso": "Où sont mes clefs de voiture?",
+      "palabra": "clefs",
+      "frecuencia": 1,
+      "lema": "clef",
+      "sinonimos": [
+        "clés",
+        "serrures"
+      ]
+    },
+    {
+      "definicion": "Instrumentos para abrir o cerrar cerraduras. (Variante de 'clefs')",
+      "tipo_gramatical": "nom (f, pluriel)",
+      "ejemplo_uso": "J'ai perdu mes clés.",
+      "palabra": "clés",
+      "frecuencia": 1,
+      "lema": "clé",
+      "sinonimos": [
+        "clefs",
+        "serrures"
+      ]
+    },
+    {
+      "definicion": "Forma del verbo 'cocher' en imperativo (ustedes/vosotros) o presente de indicativo (ustedes). Significa marcar con una cruz o un visto.",
+      "tipo_gramatical": "verbe (impératif/présent)",
+      "ejemplo_uso": "Cochez la bonne réponse.",
+      "palabra": "cochez",
+      "frecuencia": 24,
+      "lema": "cocher",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Nombre de una banda de música británica.",
+      "tipo_gramatical": "nom propre (m)",
+      "ejemplo_uso": "J'écoute la musique de Coldplay.",
+      "palabra": "coldplay",
+      "frecuencia": 1,
+      "lema": "Coldplay",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Unir o pegar dos cosas con una sustancia adhesiva.",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "Il faut coller cette image.",
+      "palabra": "coller",
+      "frecuencia": 1,
+      "lema": "coller",
+      "sinonimos": [
+        "adhérer",
+        "fixer"
+      ]
+    },
+    {
+      "definicion": "Forma del verbo 'coller' en presente de indicativo (nosotros) o imperativo (nosotros). Significa pegar.",
+      "tipo_gramatical": "verbe (présent/impératif)",
+      "ejemplo_uso": "Collons ces photos sur le mur.",
+      "palabra": "collons",
+      "frecuencia": 1,
+      "lema": "coller",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Dar color a un dibujo o superficie.",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "Les enfants aiment colorier.",
+      "palabra": "colorier",
+      "frecuencia": 1,
+      "lema": "colorier",
+      "sinonimos": [
+        "peindre",
+        "teinter"
+      ]
+    },
+    {
+      "definicion": "Que tiene muchos colores o un color vivo.",
+      "tipo_gramatical": "adjectif (m, pluriel)",
+      "ejemplo_uso": "Les dessins sont très colorés.",
+      "palabra": "colorés",
+      "frecuencia": 2,
+      "lema": "coloré",
+      "sinonimos": [
+        "vifs",
+        "bariolés"
+      ]
+    },
+    {
+      "definicion": "Forma del verbo 'commander' que indica una acción pasada y completada. Significa haber pedido o encargado.",
+      "tipo_gramatical": "participe passé",
+      "ejemplo_uso": "J'ai commandé une pizza.",
+      "palabra": "commandé",
+      "frecuencia": 1,
+      "lema": "commander",
+      "sinonimos": [
+        "ordonné",
+        "requis"
+      ]
+    },
+    {
+      "definicion": "Forma del verbo 'commencer' en presente de indicativo (nosotros) o imperativo (nosotros). Significa empezar.",
+      "tipo_gramatical": "verbe (présent/impératif)",
+      "ejemplo_uso": "Commençons le travail!",
+      "palabra": "commençons",
+      "frecuencia": 1,
+      "lema": "commencer",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Añadir lo que falta para que algo esté completo.",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "Il faut compléter ce formulaire.",
+      "palabra": "compléter",
+      "frecuencia": 12,
+      "lema": "compléter",
+      "sinonimos": [
+        "achever",
+        "finir"
+      ]
+    },
+    {
+      "definicion": "Capacidad de entender o de ser entendido.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "La compréhension du texte est essentielle.",
+      "palabra": "compréhension",
+      "frecuencia": 12,
+      "lema": "compréhension",
+      "sinonimos": [
+        "entendement",
+        "intelligence"
+      ]
+    },
+    {
+      "definicion": "Espectáculo musical en vivo.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "J'ai acheté des billets pour le concert.",
+      "palabra": "concert",
+      "frecuencia": 1,
+      "lema": "concert",
+      "sinonimos": [
+        "récital",
+        "spectacle"
+      ]
+    },
+    {
+      "definicion": "Que siente alegría o satisfacción.",
+      "tipo_gramatical": "adjectif (f)",
+      "ejemplo_uso": "Elle est très contente de son cadeau.",
+      "palabra": "contente",
+      "frecuencia": 1,
+      "lema": "content",
+      "sinonimos": [
+        "heureuse",
+        "satisfaite"
+      ]
+    },
+    {
+      "definicion": "Hilo grueso o trenzado de fibras, usado para atar o suspender.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "J'ai besoin d'une corde pour attacher ça.",
+      "palabra": "corde",
+      "frecuencia": 2,
+      "lema": "corde",
+      "sinonimos": [
+        "ficelle",
+        "lien"
+      ]
+    },
+    {
+      "definicion": "Palabra española que significa 'correcta', es decir, que no tiene errores o es adecuada. El equivalente en francés es 'correcte'.",
+      "tipo_gramatical": "adjectif (f) / mot étranger",
+      "ejemplo_uso": "La réponse est correcta.",
+      "palabra": "correcta",
+      "frecuencia": 60,
+      "lema": "correcte (français) / correcta (espagnol)",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Propiedad de la luz que se percibe como un tono específico.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "Quelle est ta couleur préférée?",
+      "palabra": "couleur",
+      "frecuencia": 4,
+      "lema": "couleur",
+      "sinonimos": [
+        "teinte",
+        "nuance"
+      ]
+    },
+    {
+      "definicion": "Instrumentos con hoja afilada y mango, usados para cortar.",
+      "tipo_gramatical": "nom (m, pluriel)",
+      "ejemplo_uso": "Nous avons besoin de couteaux pour le repas.",
+      "palabra": "couteaux",
+      "frecuencia": 1,
+      "lema": "couteau",
+      "sinonimos": [
+        "lames",
+        "dagues"
+      ]
+    },
+    {
+      "definicion": "Prenda de cama para abrigar, o la parte exterior de un libro.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "J'ai froid, donne-moi une couverture.",
+      "palabra": "couverture",
+      "frecuencia": 2,
+      "lema": "couverture",
+      "sinonimos": [
+        "plaid",
+        "jaquette"
+      ]
+    },
+    {
+      "definicion": "Instrumentos para escribir o dibujar, con una mina de grafito o color.",
+      "tipo_gramatical": "nom (m, pluriel)",
+      "ejemplo_uso": "J'utilise des crayons de couleur.",
+      "palabra": "crayons",
+      "frecuencia": 3,
+      "lema": "crayon",
+      "sinonimos": [
+        "stylos",
+        "feutres"
+      ]
+    },
+    {
+      "definicion": "Que tiene la capacidad de crear o inventar cosas nuevas.",
+      "tipo_gramatical": "adjectif (f)",
+      "ejemplo_uso": "Elle est très créative.",
+      "palabra": "créative",
+      "frecuencia": 1,
+      "lema": "créatif",
+      "sinonimos": [
+        "inventive",
+        "imaginative"
+      ]
+    },
+    {
+      "definicion": "Habitación donde se preparan los alimentos, o el arte de cocinar.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "J'aime cuisiner dans ma cuisine.",
+      "palabra": "cuisine",
+      "frecuencia": 1,
+      "lema": "cuisine",
+      "sinonimos": [
+        "gastronomie",
+        "pièce"
+      ]
+    },
+    {
+      "definicion": "Preparar alimentos para ser comidos.",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "J'adore cuisiner des plats italiens.",
+      "palabra": "cuisiner",
+      "frecuencia": 1,
+      "lema": "cuisiner",
+      "sinonimos": [
+        "préparer",
+        "faire la cuisine"
+      ]
+    },
+    {
+      "definicion": "Parte lateral de algo, o aspecto.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "Il est à côté de moi.",
+      "palabra": "côté",
+      "frecuencia": 1,
+      "lema": "côté",
+      "sinonimos": [
+        "flanc",
+        "aspect"
+      ]
+    },
+    {
+      "definicion": "Indica ubicación dentro de un espacio o tiempo.",
+      "tipo_gramatical": "préposition",
+      "ejemplo_uso": "Le livre est dans le sac.",
+      "palabra": "dans",
+      "frecuencia": 13,
+      "lema": "dans",
+      "sinonimos": [
+        "à l'intérieur de",
+        "en"
+      ]
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "de",
+      "frecuencia": 113,
+      "lema": "de",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "dedans",
+      "frecuencia": 1,
+      "lema": "dedans",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "demander",
+      "frecuencia": 1,
+      "lema": "demander",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "demandé",
+      "frecuencia": 1,
+      "lema": "demandé",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "des",
+      "frecuencia": 34,
+      "lema": "des",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "devant",
+      "frecuencia": 1,
+      "lema": "devant",
+      "sinonimos": []
+    }
+  ],
+  "unidad": "Unité 5",
+  "tema_CO": "Identifier des objets",
+  "CO": [
+    {
+      "ruta_audio": "60.mp3",
+      "habilidad": "Compréhension de l'oral",
+      "instruccion": "Activité 60 Vous allez entendre un message. Quels objets sont donnés dans le message ? Vous entendez le nom de l'objet ? Cochez (☑) Oui. Sinon, cochez (✔) Non. Vous allez ensuite entendre à nouveau le message. Vous pouvez compléter vos réponses.",
+      "tipo": "Identification d'objets",
+      "preguntas": [
+        {
+          "respuesta_correcta": "Oui",
+          "opciones": [
+            "Oui",
+            "Non"
+          ],
+          "pregunta": "1. La guitare"
+        },
+        {
+          "respuesta_correcta": "Non",
+          "opciones": [
+            "Oui",
+            "Non"
+          ],
+          "pregunta": "2. Le piano"
+        },
+        {
+          "respuesta_correcta": "Oui",
+          "opciones": [
+            "Oui",
+            "Non"
+          ],
+          "pregunta": "3. Les chaussures"
+        },
+        {
+          "respuesta_correcta": "Non",
+          "opciones": [
+            "Oui",
+            "Non"
+          ],
+          "pregunta": "4. Le sac à main"
+        },
+        {
+          "respuesta_correcta": "Oui",
+          "opciones": [
+            "Oui",
+            "Non"
+          ],
+          "pregunta": "5. La robe"
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": null,
+      "transcripcion": "J'ai acheté une jolie robe rouge avec un nœud en soie pour la fête d'anniversaire de Margot. Sally m'a gentiment prêté ses chaussures. Je vais lui chanter une belle chanson, j'apporte ma guitare. As-tu commandé le gâteau ? Elle aime le chocolat blanc et les fruits rouges. Michel s'occupe de la décoration.",
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": "61.mp3",
+      "habilidad": "Compréhension de l'oral",
+      "instruccion": "Activité 61 Vous allez entendre un message. Quels objets sont donnés dans le message ? Vous entendez le nom de l'objet ? Cochez (☑) Oui. Sinon, cochez (✔) Non. Vous allez ensuite entendre à nouveau le message. Vous pouvez compléter vos réponses.",
+      "tipo": "Identification d'objets",
+      "preguntas": [
+        {
+          "respuesta_correcta": "Oui",
+          "opciones": [
+            "Oui",
+            "Non"
+          ],
+          "pregunta": "1. Le carnet"
+        },
+        {
+          "respuesta_correcta": "Oui",
+          "opciones": [
+            "Oui",
+            "Non"
+          ],
+          "pregunta": "2. Les stylos de couleur"
+        },
+        {
+          "respuesta_correcta": "Non",
+          "opciones": [
+            "Oui",
+            "Non"
+          ],
+          "pregunta": "3. Les feutres"
+        },
+        {
+          "respuesta_correcta": "Oui",
+          "opciones": [
+            "Oui",
+            "Non"
+          ],
+          "pregunta": "4. La règle"
+        },
+        {
+          "respuesta_correcta": "Non",
+          "opciones": [
+            "Oui",
+            "Non"
+          ],
+          "pregunta": "5. La carte"
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": null,
+      "transcripcion": "Pour le nouveau projet, je dois être organisée. Je vais acheter un carnet, des stylos de couleur et une règle. J'aimerais noter tous les événements importants ainsi que les tâches à réaliser. Il faut que tout soit parfait ! Je vais coller des images du résultat final sur les murs de mon bureau.",
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": "62.mp3",
+      "habilidad": "Compréhension de l'oral",
+      "instruccion": "Activité 62 Vous allez entendre un message. Quels objets sont donnés dans le message ? Vous entendez le nom de l'objet ? Cochez (☑) Oui. Sinon, cochez (✔) Non. Vous allez ensuite entendre à nouveau le message. Vous pouvez compléter vos réponses.",
+      "tipo": "Identification d'objets",
+      "preguntas": [
+        {
+          "respuesta_correcta": "Non",
+          "opciones": [
+            "Oui",
+            "Non"
+          ],
+          "pregunta": "1. Les ciseaux"
+        },
+        {
+          "respuesta_correcta": "Oui",
+          "opciones": [
+            "Oui",
+            "Non"
+          ],
+          "pregunta": "2. Les papiers colorés"
+        },
+        {
+          "respuesta_correcta": "Non",
+          "opciones": [
+            "Oui",
+            "Non"
+          ],
+          "pregunta": "3. Les ciseaux"
+        },
+        {
+          "respuesta_correcta": "Oui",
+          "opciones": [
+            "Oui",
+            "Non"
+          ],
+          "pregunta": "4. Le scotch"
+        },
+        {
+          "respuesta_correcta": "Oui",
+          "opciones": [
+            "Oui",
+            "Non"
+          ],
+          "pregunta": "5. Les crayons de couleur"
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": null,
+      "transcripcion": "Pour cette activité créative, il nous faut du scotch et des papiers colorés. Nous commençons par découper les formes, puis nous les collons sur du papier blanc. Les enfants adorent faire ça ! Nous pouvons également les laisser colorier les vides avec des crayons de couleur ou des feutres.",
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": "63.mp3",
+      "habilidad": "Compréhension de l'oral",
+      "instruccion": "Activité 63 Vous allez entendre un message. Quels objets sont donnés dans le message ? Vous entendez le nom de l'objet ? Cochez (☑) Oui. Sinon, cochez (✔) Non. Vous allez ensuite entendre à nouveau le message. Vous pouvez compléter vos réponses.",
+      "tipo": "Identification d'objets",
+      "preguntas": [
+        {
+          "respuesta_correcta": "Oui",
+          "opciones": [
+            "Oui",
+            "Non"
+          ],
+          "pregunta": "1. Le gâteau"
+        },
+        {
+          "respuesta_correcta": "Oui",
+          "opciones": [
+            "Oui",
+            "Non"
+          ],
+          "pregunta": "2. Le poulet rôti"
+        },
+        {
+          "respuesta_correcta": "Non",
+          "opciones": [
+            "Oui",
+            "Non"
+          ],
+          "pregunta": "3. Les navets"
+        },
+        {
+          "respuesta_correcta": "Oui",
+          "opciones": [
+            "Oui",
+            "Non"
+          ],
+          "pregunta": "4. La salade"
+        },
+        {
+          "respuesta_correcta": "Non",
+          "opciones": [
+            "Oui",
+            "Non"
+          ],
+          "pregunta": "5. Le gratin"
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": null,
+      "transcripcion": "Pour le repas de ce soir, j'ai préparé un gâteau, une salade de fruits et un poulet rôti. Je voulais rajouter des carottes et des pommes de terre, mais je n'en ai pas à la maison. Je sais que Jasmine aime les légumes. Je lui ai fait une salade pour me faire pardonner.",
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": "64.mp3",
+      "habilidad": "Compréhension de l'oral",
+      "instruccion": "Activité 64 Vous allez entendre un message. Quels objets sont donnés dans le message ? Vous entendez le nom de l'objet ? Cochez (☑) Oui. Sinon, cochez (✔) Non. Vous allez ensuite entendre à nouveau le message. Vous pouvez compléter vos réponses.",
+      "tipo": "Identification d'objets",
+      "preguntas": [
+        {
+          "respuesta_correcta": "Oui",
+          "opciones": [
+            "Oui",
+            "Non"
+          ],
+          "pregunta": "1. La chaise de bureau"
+        },
+        {
+          "respuesta_correcta": "Oui",
+          "opciones": [
+            "Oui",
+            "Non"
+          ],
+          "pregunta": "2. Le bureau"
+        },
+        {
+          "respuesta_correcta": "Non",
+          "opciones": [
+            "Oui",
+            "Non"
+          ],
+          "pregunta": "3. Les lunettes"
+        },
+        {
+          "respuesta_correcta": "Oui",
+          "opciones": [
+            "Oui",
+            "Non"
+          ],
+          "pregunta": "4. Les médicaments"
+        },
+        {
+          "respuesta_correcta": "Oui",
+          "opciones": [
+            "Oui",
+            "Non"
+          ],
+          "pregunta": "5. L'ordinateur"
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": null,
+      "transcripcion": "J'ai mal au dos à cause de mon travail. Je vais changer de chaise de bureau cette semaine, puisque la mienne est ancienne. Mon médecin m'a donné des médicaments pour calmer les douleurs. Mais je ne sens pas d'amélioration parce que je travaille tout le temps assise devant mon ordinateur.",
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": "65.mp3",
+      "habilidad": "Compréhension de l'oral",
+      "instruccion": "Activité 65 Vous allez entendre un message. Quels objets sont donnés dans le message ? Vous entendez le nom de l'objet ? Cochez (☑) Oui. Sinon, cochez (✔) Non. Vous allez ensuite entendre à nouveau le message. Vous pouvez compléter vos réponses.",
+      "tipo": "Identification d'objets",
+      "preguntas": [
+        {
+          "respuesta_correcta": "Oui",
+          "opciones": [
+            "Oui",
+            "Non"
+          ],
+          "pregunta": "1. Le cahier"
+        },
+        {
+          "respuesta_correcta": "Oui",
+          "opciones": [
+            "Oui",
+            "Non"
+          ],
+          "pregunta": "2. La corde"
+        },
+        {
+          "respuesta_correcta": "Non",
+          "opciones": [
+            "Oui",
+            "Non"
+          ],
+          "pregunta": "3. La gomme"
+        },
+        {
+          "respuesta_correcta": "Non",
+          "opciones": [
+            "Oui",
+            "Non"
+          ],
+          "pregunta": "4. Les fleurs séchées"
+        },
+        {
+          "respuesta_correcta": "Oui",
+          "opciones": [
+            "Oui",
+            "Non"
+          ],
+          "pregunta": "5. Le stylo-plume"
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": null,
+      "transcripcion": "Pour l'exposé, la maîtresse nous a demandé de fabriquer un cahier de souvenirs. J'ai préparé un carnet avec des feuilles vieillies et de la corde. Je vais demander à tous mes amis de m'écrire quelque chose dedans. Je pense que je vais acheter un stylo-plume pour qu'ils écrivent tous avec!",
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": "66.mp3",
+      "habilidad": "Compréhension de l'oral",
+      "instruccion": "Activité 66 Vous allez entendre un message. Quels objets sont donnés dans le message ? Vous entendez le nom de l'objet ? Cochez (☑) Oui. Sinon, cochez (✔) Non. Vous allez ensuite entendre à nouveau le message. Vous pouvez compléter vos réponses.",
+      "tipo": "Identification d'objets",
+      "preguntas": [
+        {
+          "respuesta_correcta": "Non",
+          "opciones": [
+            "Oui",
+            "Non"
+          ],
+          "pregunta": "1. La chaise"
+        },
+        {
+          "respuesta_correcta": "Oui",
+          "opciones": [
+            "Oui",
+            "Non"
+          ],
+          "pregunta": "2. Le canapé"
+        },
+        {
+          "respuesta_correcta": "Oui",
+          "opciones": [
+            "Oui",
+            "Non"
+          ],
+          "pregunta": "3. Les assiettes"
+        },
+        {
+          "respuesta_correcta": "Oui",
+          "opciones": [
+            "Oui",
+            "Non"
+          ],
+          "pregunta": "4. La plante verte"
+        },
+        {
+          "respuesta_correcta": "Oui",
+          "opciones": [
+            "Oui",
+            "Non"
+          ],
+          "pregunta": "5. La couverture"
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": null,
+      "transcripcion": "J'ai acheté un nouveau canapé pour mon salon. Il est magnifique. J'ai aussi pris des assiettes, des couteaux et des fourchettes, car ils étaient en promotion. J'ai acheté une nouvelle couverture pour Minou, mon chat. Mon père m'a offert une belle plante verte pour mon bureau. Je suis vraiment trop contente.",
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": "67.mp3",
+      "habilidad": "Compréhension de l'oral",
+      "instruccion": "Activité 67 Vous allez entendre un message. Quels objets sont donnés dans le message ? Vous entendez le nom de l'objet ? Cochez (☑) Oui. Sinon, cochez (✔) Non. Vous allez ensuite entendre à nouveau le message. Vous pouvez compléter vos réponses.",
+      "tipo": "Identification d'objets",
+      "preguntas": [
+        {
+          "respuesta_correcta": "Oui",
+          "opciones": [
+            "Oui",
+            "Non"
+          ],
+          "pregunta": "1. Les carottes"
+        },
+        {
+          "respuesta_correcta": "Non",
+          "opciones": [
+            "Oui",
+            "Non"
+          ],
+          "pregunta": "2. Le poisson"
+        },
+        {
+          "respuesta_correcta": "Oui",
+          "opciones": [
+            "Oui",
+            "Non"
+          ],
+          "pregunta": "3. Le sucre"
+        },
+        {
+          "respuesta_correcta": "Oui",
+          "opciones": [
+            "Oui",
+            "Non"
+          ],
+          "pregunta": "4. Le poulet"
+        },
+        {
+          "respuesta_correcta": "Oui",
+          "opciones": [
+            "Oui",
+            "Non"
+          ],
+          "pregunta": "5. Les pommes"
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": null,
+      "transcripcion": "Je dois cuisiner pour notre dîner de ce soir. Il faut que tu m'achètes plusieurs choses au marché. J'ai besoin de pommes et de sucre pour faire la tarte. Peux-tu aussi prendre un poulet et des carottes ? Je t'attends pour préparer le repas ! Tu vas m'aider aussi à mettre la table.",
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": "68.mp3",
+      "habilidad": "Compréhension de l'oral",
+      "instruccion": "Activité 68 Vous allez entendre un message. Quels objets sont donnés dans le message ? Vous entendez le nom de l'objet ? Cochez (☑) Oui. Sinon, cochez (✔) Non. Vous allez ensuite entendre à nouveau le message. Vous pouvez compléter vos réponses.",
+      "tipo": "Identification d'objets",
+      "preguntas": [
+        {
+          "respuesta_correcta": "Non",
+          "opciones": [
+            "Oui",
+            "Non"
+          ],
+          "pregunta": "1. Le cadeau"
+        },
+        {
+          "respuesta_correcta": "Non",
+          "opciones": [
+            "Oui",
+            "Non"
+          ],
+          "pregunta": "2. Les ballons"
+        },
+        {
+          "respuesta_correcta": "Oui",
+          "opciones": [
+            "Oui",
+            "Non"
+          ],
+          "pregunta": "3. Le ticket"
+        },
+        {
+          "respuesta_correcta": "Non",
+          "opciones": [
+            "Oui",
+            "Non"
+          ],
+          "pregunta": "4. Le casque audio"
+        },
+        {
+          "respuesta_correcta": "Oui",
+          "opciones": [
+            "Oui",
+            "Non"
+          ],
+          "pregunta": "5. Le gâteau"
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": null,
+      "transcripcion": "Je vais préparer une fête pour l'anniversaire de Abishek qui va avoir 30 ans. Je pense lui acheter une place de concert pour le groupe Coldplay. Il aime beaucoup leur musique. Peux-tu apporter des boissons ? Amit va faire un gâteau. Stéphanie s'occupe de la musique et Sacha des jeux.",
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": "69.mp3",
+      "habilidad": "Compréhension de l'oral",
+      "instruccion": "Activité 69 Vous allez entendre un message. Quels objets sont donnés dans le message ? Vous entendez le nom de l'objet ? Cochez (☑) Oui. Sinon, cochez (✔) Non. Vous allez ensuite entendre à nouveau le message. Vous pouvez compléter vos réponses.",
+      "tipo": "Identification d'objets",
+      "preguntas": [
+        {
+          "respuesta_correcta": "Oui",
+          "opciones": [
+            "Oui",
+            "Non"
+          ],
+          "pregunta": "1. La trousse"
+        },
+        {
+          "respuesta_correcta": "Non",
+          "opciones": [
+            "Oui",
+            "Non"
+          ],
+          "pregunta": "2. Les crayons"
+        },
+        {
+          "respuesta_correcta": "Non",
+          "opciones": [
+            "Oui",
+            "Non"
+          ],
+          "pregunta": "3. Les feutres"
+        },
+        {
+          "respuesta_correcta": "Oui",
+          "opciones": [
+            "Oui",
+            "Non"
+          ],
+          "pregunta": "4. Le sac à dos"
+        },
+        {
+          "respuesta_correcta": "Oui",
+          "opciones": [
+            "Oui",
+            "Non"
+          ],
+          "pregunta": "5. L'agenda"
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": null,
+      "transcripcion": "C'est bientôt la rentrée des classes, j'ai besoin de nouvelles affaires. As-tu un sac que tu n'utilises plus? Je cherche aussi des stylos, des carnets et une trousse. Je m'achèterai un agenda un peu plus tard. Je pense que je ne suis pas prêt pour cette rentrée. J'ai besoin de me reposer encore un peu.",
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": "70.mp3",
+      "habilidad": "Compréhension de l'oral",
+      "instruccion": "Activité 70 Vous allez entendre un message. Quels objets sont donnés dans le message ? Vous entendez le nom de l'objet ? Cochez (☑) Oui. Sinon, cochez (✔) Non. Vous allez ensuite entendre à nouveau le message. Vous pouvez compléter vos réponses.",
+      "tipo": "Identification d'objets",
+      "preguntas": [
+        {
+          "respuesta_correcta": "Non",
+          "opciones": [
+            "Oui",
+            "Non"
+          ],
+          "pregunta": "1. La lampe"
+        },
+        {
+          "respuesta_correcta": "Oui",
+          "opciones": [
+            "Oui",
+            "Non"
+          ],
+          "pregunta": "2. La poubelle"
+        },
+        {
+          "respuesta_correcta": "Oui",
+          "opciones": [
+            "Oui",
+            "Non"
+          ],
+          "pregunta": "3. Le pot de fleurs"
+        },
+        {
+          "respuesta_correcta": "Oui",
+          "opciones": [
+            "Oui",
+            "Non"
+          ],
+          "pregunta": "4. La table"
+        },
+        {
+          "respuesta_correcta": "Oui",
+          "opciones": [
+            "Oui",
+            "Non"
+          ],
+          "pregunta": "5. Les clés de voiture"
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": null,
+      "transcripcion": "Les clefs de la voiture sont posées sur la table du salon à côté du pot de fleurs. N'oublie pas de sortir la poubelle, elle est dans la cuisine à droite du frigo. Éteins toutes les lumières avant de partir et fais attention sur la route, il y a des averses.",
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": "71.mp3",
+      "habilidad": "Compréhension de l'oral",
+      "instruccion": "Activité 71 Vous allez entendre un message. Quels objets sont donnés dans le message ? Vous entendez le nom de l'objet ? Cochez (☑) Oui. Sinon, cochez (✔) Non. Vous allez ensuite entendre à nouveau le message. Vous pouvez compléter vos réponses.",
+      "tipo": "Identification d'objets",
+      "preguntas": [
+        {
+          "respuesta_correcta": "Oui",
+          "opciones": [
+            "Oui",
+            "Non"
+          ],
+          "pregunta": "1. Les fleurs blanches"
+        },
+        {
+          "respuesta_correcta": "Non",
+          "opciones": [
+            "Oui",
+            "Non"
+          ],
+          "pregunta": "2. La table"
+        },
+        {
+          "respuesta_correcta": "Oui",
+          "opciones": [
+            "Oui",
+            "Non"
+          ],
+          "pregunta": "3. Les plumes"
+        },
+        {
+          "respuesta_correcta": "Non",
+          "opciones": [
+            "Oui",
+            "Non"
+          ],
+          "pregunta": "4. La moto"
+        },
+        {
+          "respuesta_correcta": "Oui",
+          "opciones": [
+            "Oui",
+            "Non"
+          ],
+          "pregunta": "5. Le gâteau"
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": null,
+      "transcripcion": "Pour le mariage de Sophie et Lucien, nous allons mettre des fleurs blanches partout! Il y aura des draps en soie, une très grande voiture blanche et des plumes sur les chaises. Le décor va être féerique. Le gâteau sera à la vanille de Madagascar. C'est là qu'ils se sont rencontrés !",
+      "campos_formulario": null
+    }
+  ]
+}

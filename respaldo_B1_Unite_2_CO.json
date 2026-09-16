@@ -1,0 +1,1193 @@
+{
+  "diccionario_unidad": [],
+  "unidad": "Unité 2",
+  "CO": [
+    {
+      "ruta_audio": "21.mp3",
+      "habilidad": "Compréhension de l'oral",
+      "campos_formulario": null,
+      "tipo": "Opción múltiple",
+      "preguntas": [
+        {
+          "respuesta_correcta": "dans une zone difficile.",
+          "opciones": [
+            "en milieu hospitalier.",
+            "dans une zone difficile.",
+            "en centre de rééducation."
+          ],
+          "pregunta": "Le thème principal de La Vie Scolaire est l'école..."
+        },
+        {
+          "respuesta_correcta": "plus tôt.",
+          "opciones": [
+            "plus tôt.",
+            "plus tard.",
+            "en retard."
+          ],
+          "pregunta": "Les deux réalisateurs avaient sorti leur film Patients deux ans..."
+        },
+        {
+          "respuesta_correcta": "Mehdi Idir.",
+          "opciones": [
+            "Mehdi Idir.",
+            "Zinta Hanrot.",
+            "Grand Corps Malade."
+          ],
+          "pregunta": "Le film La Vie Scolaire s'inspire des souvenirs de..."
+        },
+        {
+          "respuesta_correcta": "à Saint-Denis.",
+          "opciones": [
+            "à Moisins.",
+            "à Grenoble.",
+            "à Saint-Denis."
+          ],
+          "pregunta": "Le collège des Francs-Moisins est situé dans une ZEP..."
+        },
+        {
+          "respuesta_correcta": "une jeune conseillère d'éducation.",
+          "opciones": [
+            "une habitante des Francs-Moisins.",
+            "une jeune conseillère d'éducation.",
+            "une élève agitée mais prometteuse."
+          ],
+          "pregunta": "Samia, la protagoniste est..."
+        },
+        {
+          "respuesta_correcta": "vivantes.",
+          "opciones": [
+            "vivantes.",
+            "nombreuses.",
+            "professionnelles."
+          ],
+          "pregunta": "Les scènes de groupe sont..."
+        },
+        {
+          "respuesta_correcta": "à la fois grave et drôle.",
+          "opciones": [
+            "toujours grave.",
+            "généralement drôle.",
+            "à la fois grave et drôle."
+          ],
+          "pregunta": "Le ton du film est..."
+        }
+      ],
+      "instruccion": "Activité 1 Répondez aux questions en cochant (X) la bonne réponse.",
+      "texto_lectura": null,
+      "transcripcion": "Activité 1 Le long-métrage La Vie Scolaire de Fabien Marsaud (alias Grand Corps Malade) et Mehdi Idir nous fait découvrir la réalité d'un collège en ZEP*. Après avoir révélé leur vision d'un centre de rééducation en milieu hospitalier, les deux réalisateurs s'intéressent au quotidien d'une salle de classe. Deux ans après Patients, leur film sur l'hôpital, Grand Corps Malade et Mehdi Idir s'engagent à nouveau, cette fois au bénéfice de l'école. Le film Patients s'inspirait de l'histoire de Grand Corps Malade. Le long-métrage La Vie Scolaire, lui, emprunte des souvenirs à Mehdi Idir. Il a d'ailleurs été filmé dans l'établissement où Mehdi avait étudié, enfant: le collège des Francs-Moisins, à Saint-Denis. C'est une année scolaire en ZEP, vue à travers les premiers pas d'une jeune conseillère principale d'éducation. Nouvellement arrivée de son Ardèche natale, Samia (Zita Hanrot) découvre les réalités sociales d'une zone difficile, et s'attache à Yanis, un élève agité mais au grand potentiel. La plupart des acteurs ne sont pas des professionnels et les figurants sont des habitants des Francs-Moisins, ce qui permet des scènes de groupe particulièrement vivantes. La réalisation est nerveuse, énergique, tout comme les personnages. On passe ainsi du jeune mythomane s'inventant des excuses plus formidables les unes que les autres pour justifier ses retards, au surveillant qui explique ses blagues, au prof de sport légèrement irresponsable, heureux d'avoir inventé le foot sur patins à roulettes... Comme dans Patients, les réalisateurs trouvent l'équilibre entre humour et gravité. Derrière les scènes quotidiennes, on devine des situations difficiles et on constate les limites d'une école qui, régulièrement, n'arrive pas à jouer son rôle avec succès. Et puis on y admire l'humanité des ⚫enseignants, leur engagement et leur volonté. Beaucoup de ces hommes et femmes continuent leurs efforts sans se décourager. D'autres abandonnent, finalement. Ces personnages-là créent, eux aussi, l'empathie. On les comprend. L'espoir est bien là, mais les parcours restent compliqués pour ces adolescents désavantagés au départ. Le plan aérien de la dernière scène, survolant la banlieue écrasante, transmet l'idée de la fatalité sociale et de la difficulté à s'en libérer. * ZEP: Zone d'éducation prioritaire D'après Télérama, nº 3633, 28 août 2019, Hélène Marzolf."
+    },
+    {
+      "ruta_audio": "22.mp3",
+      "habilidad": "Compréhension de l'oral",
+      "campos_formulario": null,
+      "tipo": "Opción múltiple",
+      "preguntas": [
+        {
+          "respuesta_correcta": "des propriétaires de restaurant.",
+          "opciones": [
+            "des propriétaires de restaurant.",
+            "des peintres impressionnistes.",
+            "des clients volontaires."
+          ],
+          "pregunta": "Faïza Belaïd et Benoît Argentin sont..."
+        },
+        {
+          "respuesta_correcta": "des mégots de cigarette.",
+          "opciones": [
+            "des mégots de cigarette.",
+            "des verres en plastique.",
+            "des pierres rondes et lisses."
+          ],
+          "pregunta": "Les volontaires doivent ramasser..."
+        },
+        {
+          "respuesta_correcta": "vu un reportage télévisé.",
+          "opciones": [
+            "vu un reportage télévisé.",
+            "amené leur fille à l'école.",
+            "rencontré des volontaires."
+          ],
+          "pregunta": "Faïza Belaïd et Benoît Argentin ont eu cette idée après avoir..."
+        },
+        {
+          "respuesta_correcta": "laissés à disposition.",
+          "opciones": [
+            "souvent oubliés.",
+            "laissés à disposition.",
+            "obligatoires pour tous."
+          ],
+          "pregunta": "Les gants et les verres en plastique sont..."
+        },
+        {
+          "respuesta_correcta": "irrespectueux.",
+          "opciones": [
+            "mal garés.",
+            "irrespectueux.",
+            "trop nombreux."
+          ],
+          "pregunta": "Faïza Belaïd trouve que parfois les touristes sont..."
+        },
+        {
+          "respuesta_correcta": "12 ans.",
+          "opciones": [
+            "500 ans.",
+            "14 ans.",
+            "12 ans."
+          ],
+          "pregunta": "Pour qu'un mégot de cigarette arrête de polluer, il faut attendre..."
+        },
+        {
+          "respuesta_correcta": "que l'eau est polluée.",
+          "opciones": [
+            "que l'eau est polluée.",
+            "que l'eau est propre.",
+            "qu'on peut se baigner."
+          ],
+          "pregunta": "Le drapeau violet sur la plage signifie..."
+        }
+      ],
+      "instruccion": "Activité 2 Répondez aux questions en cochant (X) la bonne réponse.",
+      "texto_lectura": null,
+      "transcripcion": "Activité 2 À Yport, en Normandie, le paysage est beau : des falaises, une plage de pierres rondes et lisses... et des restes de cigarettes. Faïza Belaïd et Benoît Argentin, les propriétaires du restaurant La Falaise, à Yport, proposent depuis trois ans une manière originale de dépolluer la plage: ils offrent, aux personnes qui acceptent de remplir de mégots* de cigarettes un verre en plastique, une bière ou un soda gratuit en échange. Faïza Belaïd raconte l'origine de cette belle idée pour sensibiliser à la pollution des plages et des océans : un reportage à la télé qui leur a donné envie de faire la même chose. L'exemple de sa fille l'a aussi inspiré : dans son école, ils font souvent des actions en faveur de l'écologie. Les personnes intéressées par cette idée peuvent retirer des gants de protection et des verres en plastique directement dans le restaurant. Puis elles vont chercher assez de mégots pour remplir le verre. Au retour, on leur sert une boisson. Faïza explique que se sont beaucoup d'enfants qui se portent volontaires. En échange, elle leur offre du coca-cola et des glaces à l'eau. Les mégots sont ensuite déposés dans des poubelles fermées dans le but d'être recyclés. La propriétaire du restaurant est triste de voir des mégots sur la jolie plage de galets d'Yport. Avant, cette plage était un lieu très apprécié des peintres impressionistes... Elle s'indigne contre les comportements peu respectueux des visiteurs. <<< Les gens fument et jettent leurs mégots par terre. L'autre jour, on a vu un van garé sur le parking, ils ont jeté le contenu de leur cendrier alors qu'il y avait une poubelle à quelques mètres ! >> Et après la fête du 14 août, c'était encore pire, d'après elle. <<< Un mégot pollue 500 litres d'eau et met douze ans à se dégrader. On a eu pas mal de drapeaux violets ces dernières années, ce qui signifie pollution de l'eau et qu'on ne peut pas se baigner. Ça fait réfléchir. >>> Faïza et Benoît espèrent bien que leur exemple servira à d'autres! *mégot (fam.): bout de cigarette restant de ce qu'on a fumé. D'après https://france3-regions.francetvinfo.fr"
+    },
+    {
+      "ruta_audio": "23.mp3",
+      "habilidad": "Compréhension de l'oral",
+      "campos_formulario": null,
+      "tipo": "Opción múltiple",
+      "preguntas": [
+        {
+          "respuesta_correcta": "Tous les 3 ans.",
+          "opciones": [
+            "Tous les ans.",
+            "Tous les 2 ans.",
+            "Tous les 3 ans."
+          ],
+          "pregunta": "Quand a lieu la journée mondiale de la diversité culturelle à La Réunion ?"
+        },
+        {
+          "respuesta_correcta": "racontant des histoires.",
+          "opciones": [
+            "animant un débat.",
+            "racontant des histoires.",
+            "jouant de la musique péi."
+          ],
+          "pregunta": "Sully Andoche participe à la journée en..."
+        },
+        {
+          "respuesta_correcta": "la culture réunionnaise.",
+          "opciones": [
+            "le bien manger.",
+            "la tradition écrite.",
+            "la culture réunionnaise."
+          ],
+          "pregunta": "L'objectif de la journée est de promouvoir..."
+        },
+        {
+          "respuesta_correcta": "le développement durable.",
+          "opciones": [
+            "le développement durable.",
+            "les difficultés sociales.",
+            "la crise économique."
+          ],
+          "pregunta": "Un autre thème abordé est..."
+        },
+        {
+          "respuesta_correcta": "la culture, de l'éducation et de l'environnement.",
+          "opciones": [
+            "la culture, des échanges et de l'éducation.",
+            "la culture, de l'éducation et de l'environnement.",
+            "l'environnement, de la culture et de la tradition orale."
+          ],
+          "pregunta": "Roger Ramchetty est président du conseil de..."
+        },
+        {
+          "respuesta_correcta": "de nombreuses cultures.",
+          "opciones": [
+            "d'une culture ancienne.",
+            "de nombreuses cultures.",
+            "de deux cultures métisses."
+          ],
+          "pregunta": "Les Réunionnais proviennent..."
+        },
+        {
+          "respuesta_correcta": "locales.",
+          "opciones": [
+            "vraies.",
+            "fausses.",
+            "locales."
+          ],
+          "pregunta": "Les contes de Grand-mère Kal ou les récits de Sitarane sont des histoires..."
+        }
+      ],
+      "instruccion": "Activité 3 Répondez aux questions en cochant (X) la bonne réponse.",
+      "texto_lectura": null,
+      "transcripcion": "Activité 3 Journée d'échanges et de partage au MoCA, ce samedi 1er juin 2024, à l'occasion de la Journée mondiale de la diversité culturelle. Depuis 3 ans, l'île de La Réunion célèbre la journée mondiale de la diversité culturelle pour le dialogue et le développement. Cette année, l'événement a lieu à Montgaillard, dans le domaine du MoCA. Ce matin, près de 400 personnes y ont participé. On peut assister à des débats sur la tradition orale et écouter des contes, racontés notamment par Sully Andoche. La musique péi, la langue créole et la cuisine traditionnelle sont, entre autres, au cœur des festivités. La journée mondiale de la diversité culturelle a pour objectif de promouvoir la culture et mettre en avant sa diversité à La Réunion. L'idée, c'est aussi de faire réfléchir au rôle de la culture dans les rapports sociaux. Comment la culture encourage-t-elle au dialogue et à la compréhension de l'autre ? Enfin, cette journée donne aussi l'occasion de s'interroger sur les aspects sociaux, environnementaux et économiques du développement durable. Roger Ramchetty, président du conseil de la culture, de l'éducation et de l'environnement rappelle que la société réunionnaise est née d'échanges entre cultures. << Il est important de rappeler que notre société est composée de personnes de divers horizons. C'est ce qui donne vie à notre créolité, ce que nous appelons kiltir zembrocal. Nous avons besoin d'un dialogue interculturel et d'échanges entre nous. >>> L'identité réunionnaise est renforcée à travers la littérature orale, les textes, contes et légendes péi. Un aspect de cette culture semble essentiel à Roger Ramchatty: les histoires. Selon lui, il est important que les jeunes continuent à connaître les contes et légendes classiques de leur île, comme les contes de Grand-Mère Kal ou les récits de Sitarane. D'après https://actus.re/societe/2024/06/01"
+    },
+    {
+      "ruta_audio": "24.mp3",
+      "habilidad": "Compréhension de l'oral",
+      "campos_formulario": null,
+      "tipo": "Opción múltiple",
+      "preguntas": [
+        {
+          "respuesta_correcta": "200 000 en moyenne.",
+          "opciones": [
+            "100 000 en moyenne.",
+            "200 000 en moyenne.",
+            "20 millions en moyenne."
+          ],
+          "pregunta": "En haute saison, combien y a-t-il de vols par an dans le monde ?"
+        },
+        {
+          "respuesta_correcta": "loin d'être atteinte.",
+          "opciones": [
+            "déjà atteinte.",
+            "presque atteinte.",
+            "loin d'être atteinte."
+          ],
+          "pregunta": "Selon Hubert Arnould, la limite au nombre d'avions dans le ciel est..."
+        },
+        {
+          "respuesta_correcta": "réduite.",
+          "opciones": [
+            "rare.",
+            "large.",
+            "réduite."
+          ],
+          "pregunta": "La distance entre deux avions en vol est plutôt..."
+        },
+        {
+          "respuesta_correcta": "on diminue les distances de sécurité habituelles.",
+          "opciones": [
+            "on garde les distances de sécurité habituelles.",
+            "on diminue les distances de sécurité habituelles.",
+            "on augmente les distances de sécurité habituelles."
+          ],
+          "pregunta": "Dans les espaces aériens très fréquentés..."
+        }
+      ],
+      "instruccion": "Activité 4 Répondez aux questions en cochant (X) la bonne réponse.",
+      "texto_lectura": null,
+      "transcripcion": "Activité 4 Combien y a-t-il d'avions dans le ciel ? D'après Atag (Groupe d'action pour le transport aérien), il y a en moyenne 100 000 vols environ par jour dans toute la planète. En haute saison, on peut atteindre 200 000 vols par jour. Mais ce n'est pas fini. En effet, d'après Boing et Airbus le nombre d'avions en circulation devrait se multiplier par deux d'ici 20 ans. Dans ce contexte, il est normal de se poser la question: le ciel a-t-il une limite? Hubert Arnould, directeur de la société de conseil laco, ne se montre pas inquiet: << s'il y a une limite au nombre d'avions, on en est encore très loin. >>> Même avec un million de vols << on resterait très loin d'un ciel saturé et embouteillé ». Pourquoi cet optimisme? Parce que le ciel est grand, que la distance accordée entre deux avions est plutôt réduite et que les rencontres accidentelles entre avions sont très rares. Il reste que certains espaces aériens sont particulièrement fréquentés, avec un nombre important d'avions dans un même espace. Autour de Londres et de New-York, par exemple. Mais, dans ce cas, les distances de sécurité entre avions diminuent, pour maximiser le nombre de vols. Et on effectue un contrôle plus précis des mouvements de chaque appareil. Dans le futur, les plus grosses lignes aériennes devraient voir passer moins d'avions. En effet, ceux-ci ont de plus en plus d'autonomie et peuvent donc voler sur de plus grandes distances. Cela permet de multiplier les liaisons. Par exemple, aujourd'hui, pour voyager à New-York, un Français peut choisir entre différents aéroports. Il n'est plus obligé de partir de Paris. Pour Hubert Arnould, ce n'est pas dans l'air qu'il y a des problèmes, mais sur terre. << Pour l'instant, les aéroports sont bien plus saturés que le ciel. >>> Certains grands aéroports, conscients de cette limite, construisent de nouvelles pistes d'atterrissage, comme London Heathrow. Cet aéroport anglais fait partie des 10 aéroports les plus utilisés au monde. Il accueille de 80 à 130 millions de voyageurs par an. L'autre solution, c'est de mettre plus de personnes dans chaque avion en augmentant la taille des appareils. D'après https://www.20minutes.fr/economie"
+    },
+    {
+      "ruta_audio": "25.mp3",
+      "habilidad": "Compréhension de l'oral",
+      "campos_formulario": null,
+      "tipo": "Opción múltiple",
+      "preguntas": [
+        {
+          "respuesta_correcta": "font partie de la communication.",
+          "opciones": [
+            "font partie de la communication.",
+            "font partie de notre personnalité.",
+            "sont plus importants que les mots."
+          ],
+          "pregunta": "D'après l'article, nos gestes et attitudes corporelles..."
+        },
+        {
+          "respuesta_correcta": "positives",
+          "opciones": [
+            "rares",
+            "positives",
+            "négatives"
+          ],
+          "pregunta": "D'après Simon Breil, on attribue des qualités... à une personne qui sourit."
+        },
+        {
+          "respuesta_correcta": "peut être influencée par son sourire.",
+          "opciones": [
+            "peut être influencée par son sourire.",
+            "ne garde aucune relation avec son sourire.",
+            "est directement liée à la beauté de son sourire."
+          ],
+          "pregunta": "D'après Simon Breil, notre perception de l'intelligence d'une personne..."
+        },
+        {
+          "respuesta_correcta": "de sociabilité.",
+          "opciones": [
+            "de sociabilité.",
+            "d'empathie.",
+            "de défense."
+          ],
+          "pregunta": "Le fait de bouger les bras en parlant est perçu comme un signe..."
+        },
+        {
+          "respuesta_correcta": "fermée et distante.",
+          "opciones": [
+            "fermée et distante.",
+            "réservée mais positive.",
+            "ouverte et chaleureuse."
+          ],
+          "pregunta": "Croiser les bras devant soi peut être interprété comme une attitude..."
+        },
+        {
+          "respuesta_correcta": "par la présence visible du téléphone.",
+          "opciones": [
+            "par l'absence du téléphone.",
+            "par la présence visible du téléphone.",
+            "par l'heure affichée sur le téléphone."
+          ],
+          "pregunta": "Selon l'article, la qualité d'une conversation peut être altérée..."
+        },
+        {
+          "respuesta_correcta": "personnel.",
+          "opciones": [
+            "intime.",
+            "personnel.",
+            "social et public."
+          ],
+          "pregunta": "Une distance de 100 cm entre deux interlocuteurs correspond à l'espace..."
+        }
+      ],
+      "instruccion": "Activité 5 Répondez aux questions en cochant (X) la bonne réponse.",
+      "texto_lectura": null,
+      "transcripcion": "Activité 5 Nous ne communiquons pas uniquement avec des mots. Nous nous exprimons également à travers le langage non verbal, constitué par l'ensemble de nos gestes et attitudes. Et, selon Simon Breil, de l'Institut de psychologie de Münster, ce type de langage a une très grande influence sur l'image que les autres se font de nous. Simon Breil s'est intéressé au lien entre les caractéristiques non verbales et la vision que la personne en face se fait de nous. D'après lui, lorsqu'une personne sourit, on évaluera plus positivement sa personnalité. <<< On part du principe que la personne est plus sociable, plus travailleuse et plus intelligente », explique-t-il. À l'inverse, certains gestes donnent de nous l'idée que nous sommes plutôt antipathiques. Croiser les bras sur la poitrine peut donner l'impression d'être sur la défensive. Avec les bras croisés devant soi, une distance se crée avec l'autre. Et puis les mains ne bougent pas. Les participants à l'étude interprétaient les mouvements des bras comme un signe de sociabilité. <<<< Parler avec les mains >> leur donnait l'impression de personnes plus extraverties et plus sympathiques. Être fixé sur son smartphone marque le désintérêt. Personne n'aime être en conversation avec une personne qui regarde constamment son téléphone portable, même si c'est pour vérifier l'heure. Une étude a montré que <<< lorsque le téléphone se trouvait à portée de vue, les qualités de la conversation était plus faible et l'empathie diminuait >>>. On pourrait penser qu'adopter une position proche crée de l'intimité avec son interlocuteur. Mais se placer trop près de l'autre peut être extrêmement désagréable pour lui. La science parle de << proxémie ». Chez l'humain, on distingue plusieurs zones distinctes: l'espace intime, qui s'étend jusqu'à une distance de 45 centimètres, l'espace personnel, qui va de 46 à 120 centimètres. Dans ce cas, les interlocuteurs entretiennent un lien personnel et ont des conversations approfondies. Viennent ensuite les espaces social et public (de 121 à 360 centimètres de distance). D'après: https://www.20min.ch/fr/story"
+    },
+    {
+      "ruta_audio": "26.mp3",
+      "habilidad": "Compréhension de l'oral",
+      "campos_formulario": null,
+      "tipo": "Opción múltiple",
+      "preguntas": [
+        {
+          "respuesta_correcta": "à Mulhouse.",
+          "opciones": [
+            "à Paris.",
+            "à Mulhouse.",
+            "au Rotary Club."
+          ],
+          "pregunta": "Ce défilé de mode a eu lieu..."
+        },
+        {
+          "respuesta_correcta": "200 personnes.",
+          "opciones": [
+            "10 personnes.",
+            "20 personnes.",
+            "200 personnes."
+          ],
+          "pregunta": "Combien de personnes ont assisté au défilé ?"
+        },
+        {
+          "respuesta_correcta": "Fatima Guerrout.",
+          "opciones": [
+            "Laura Jelsch.",
+            "Luciana Jelsch.",
+            "Fatima Guerrout."
+          ],
+          "pregunta": "Qui a réalisé les créations exposées lors du défilé ?"
+        },
+        {
+          "respuesta_correcta": "accompagnés d'un mannequin.",
+          "opciones": [
+            "complètement seuls.",
+            "accompagnés d'un mannequin.",
+            "accompagnés de leur soigneur."
+          ],
+          "pregunta": "Sur scène, les chiens participant au défilé étaient..."
+        },
+        {
+          "respuesta_correcta": "attendent depuis longtemps une famille d'adoption.",
+          "opciones": [
+            "ont déjà une famille d'adoption.",
+            "ne veulent pas d'une famille d'adoption.",
+            "attendent depuis longtemps une famille d'adoption."
+          ],
+          "pregunta": "Certains des chiens participant au défilé..."
+        },
+        {
+          "respuesta_correcta": "de trouver des adoptants.",
+          "opciones": [
+            "de trouver des adoptants.",
+            "de vendre des vêtements.",
+            "d'accélérer les démarches."
+          ],
+          "pregunta": "L'objectif pour la Société Protectrice des Animaux était..."
+        },
+        {
+          "respuesta_correcta": "sont en partie pour le refuge.",
+          "opciones": [
+            "sont rendus aux parrains.",
+            "sont en partie pour le refuge.",
+            "sont entièrement pour le refuge."
+          ],
+          "pregunta": "Les bénéfices des repas servis pendant l'événement..."
+        }
+      ],
+      "instruccion": "Activité 6 Répondez aux questions en cochant (X) la bonne réponse.",
+      "texto_lectura": null,
+      "transcripcion": "Activité 6 Si Paris a son rendez-vous de la mode avec sa fashion week... Mulhouse a décidé de son côté d'organiser un défilé tout à fait unique ! La Société Protectrice des Animaux (SPA) de Mulhouse en collaboration avec le Rotary Club a organisé un défilé de mode pour faire connaître les chiens du refuge. Le 20 janvier au soir, 200 personnes se sont réunies à l'Auberge du zoo de Mulhouse pour admirer les créations de Fatima Guerrout. Mais l'objectif du défilé ne s'arrête pas là. En plus des huit femmes mannequins, une petite dizaine de chiens du refuge sont montés sur scène. Les organisatrices, Laura et Luciana Jelsch, ont pensé ce projet dans le but d'encourager à l'adoption. Certains des chiens qui participent à l'événement ont passé déjà beaucoup de temps au refuge, dans l'attente d'une famille. Les faire monter sur scène permet de les rendre visibles pour d'éventuels adoptants. Selon Laura et Luciana Jelsch, certaines personnes pourraient vouloir adopter un chien mais n'osent pas se rendre dans un refuge parce qu'elles ont des stéréotypes négatifs sur ce genre de lieu. Le défilé est une occasion de changer leur vision sur les animaux qu'on peut rencontrer dans les refuges français. L'événement a été un vrai succès pour le public et pour les chiens. Si certains animaux cherchaient des yeux leurs soigneurs, d'autres paraissaient de vrais professionnels! La Société Protectrice des Animaux de Mulhouse a cependant précisé que son protocole habituel serait respecté : les adoptants intéressés ne sont pas repartis le soir même avec l'animal et devront remplir les documents nécessaires à toute adoption. Des pré-visites seront également organisées pour s'assurer que le lieu de vie est adapté pour chaque chien adopté. Une partie des bénéfices des repas servis au cours de la soirée servira au refuge, qui a aussi reçu quelques promesses de parrainage pour continuer ses actions. L'organisateur a également proposé une tombola. D'après https://wamiz.com/actu"
+    },
+    {
+      "ruta_audio": "27.mp3",
+      "habilidad": "Compréhension de l'oral",
+      "campos_formulario": null,
+      "tipo": "Opción múltiple",
+      "preguntas": [
+        {
+          "respuesta_correcta": "a eu lieu pour la deuxième fois en 2024.",
+          "opciones": [
+            "a eu lieu pour la première fois en 2024.",
+            "a eu lieu pour la deuxième fois en 2024.",
+            "a eu lieu pour la troisième fois en 2024."
+          ],
+          "pregunta": "La semaine francophone de la classe dehors..."
+        },
+        {
+          "respuesta_correcta": "l'enseignement dans la nature.",
+          "opciones": [
+            "la sédentarité des jeunes.",
+            "l'enseignement dans la nature.",
+            "la découverte de la Francophonie."
+          ],
+          "pregunta": "La classe dehors encourage..."
+        },
+        {
+          "respuesta_correcta": "au lycée.",
+          "opciones": [
+            "au lycée.",
+            "en primaire.",
+            "en maternelle."
+          ],
+          "pregunta": "Mettre en place cette pédagogie est plus difficile..."
+        },
+        {
+          "respuesta_correcta": "vers 1950.",
+          "opciones": [
+            "vers 1918.",
+            "vers 1950.",
+            "vers 2017."
+          ],
+          "pregunta": "La pédagogie de la classe dehors a été imaginée au Danemark..."
+        },
+        {
+          "respuesta_correcta": "a le soutien de certains.",
+          "opciones": [
+            "est largement pratiquée.",
+            "est totalement inconnue.",
+            "a le soutien de certains."
+          ],
+          "pregunta": "En France, cette pédagogie..."
+        }
+      ],
+      "instruccion": "Activité 7 Répondez aux questions en cochant (X) la bonne réponse.",
+      "texto_lectura": null,
+      "transcripcion": "Activité 7 Du 20 au 27 mai 2024, plus de 100 000 élèves participaient à la seconde édition de la semaine francophone de la classe dehors. Cette école à l'extérieur séduit de plus en plus d'éducateurs avec son modèle d'enseignement en pleine nature. Pour cette deuxième édition, 1800 établissements scolaires ont ainsi expérimenté cette méthodologie. Des parents d'élèves aussi appuient cette pratique pédagogique. Associés à des professeurs et des animateurs, ils s'exprimaient dans une tribune du journal Le Monde du 21 mai. << Nous, parents d'élèves, apportons notre soutien aux enseignants qui font classe dehors ». Une de leur motivation est de lutter contre la sédentarité des jeunes. Alarmés notamment par une enquête de 2017, ces parents constatent qu'aujourd'hui les enfants font peu d'exercice physique et passent beaucoup de temps sur les écrans. La pédagogie de la classe dehors a été imaginée au Danemark dans les années 50. À cette époque, de nombreuses femmes ont commencé à travailler à l'extérieur de la maison. Comme il n'y avait pas assez de bâtiments scolaires pour accueillir tous les enfants, on a créé de nouveaux modèles d'enseignement, comme les écoles de la forêt. Pour l'instant, les expérimentations de la classe dehors concernent l'école maternelle et l'école primaire. Pour l'enseignement secondaire, c'est plus compliqué. En effet, les professeurs ont davantage de problèmes d'emplois du temps au collège et au lycée. D'après https://www.cidj.com"
+    },
+    {
+      "ruta_audio": "28.mp3",
+      "habilidad": "Compréhension de l'oral",
+      "campos_formulario": null,
+      "tipo": "Opción múltiple",
+      "preguntas": [
+        {
+          "respuesta_correcta": "seulement aux filles.",
+          "opciones": [
+            "seulement aux filles.",
+            "aux filles et aux garçons.",
+            "aux professionnel(le)s."
+          ],
+          "pregunta": "Les séances Toutes Footballeuses s'adressent..."
+        },
+        {
+          "respuesta_correcta": "pendant 10 ans.",
+          "opciones": [
+            "dès ses 8 ans.",
+            "à partir de 10 ans.",
+            "pendant 10 ans."
+          ],
+          "pregunta": "Sabrina a joué dans un club de football..."
+        },
+        {
+          "respuesta_correcta": "sont choisies en dernier.",
+          "opciones": [
+            "sont choisies en premier.",
+            "sont choisies en dernier.",
+            "sont gardiennes de but."
+          ],
+          "pregunta": "Dans une équipe mixte, généralement les filles..."
+        },
+        {
+          "respuesta_correcta": "refusent que les filles jouent au foot.",
+          "opciones": [
+            "refusent que les filles jouent au foot.",
+            "acceptent que les filles jouent au foot.",
+            "admirent les filles qui jouent au foot."
+          ],
+          "pregunta": "Souvent, à l'école, les garçons..."
+        },
+        {
+          "respuesta_correcta": "que les filles aussi savent jouer.",
+          "opciones": [
+            "que les filles aussi savent jouer.",
+            "que les filles aussi savent perdre.",
+            "que les filles aussi jouent en club."
+          ],
+          "pregunta": "En faisant du foot, Widjene veut montrer aux garçons..."
+        },
+        {
+          "respuesta_correcta": "est satisfaite de l'activité de sa fille.",
+          "opciones": [
+            "est contre l'activité de sa fille.",
+            "est jalouse de l'activité de sa fille.",
+            "est satisfaite de l'activité de sa fille."
+          ],
+          "pregunta": "La mère de Widjene..."
+        },
+        {
+          "respuesta_correcta": "l'égalité et la confiance en soi.",
+          "opciones": [
+            "l'effort et l'individualisme.",
+            "l'égalité et la confiance en soi.",
+            "la compétition et la performance."
+          ],
+          "pregunta": "Deux des valeurs que Maxime Hatton met en avant sont..."
+        }
+      ],
+      "instruccion": "Activité 8 Répondez aux questions en cochant (X) la bonne réponse.",
+      "texto_lectura": null,
+      "transcripcion": "Activité 8 À Clichy, dans la région parisienne, l'association Football is the solution propose aux filles de participer à des séances de football loisir. Sabrina encadre ces séances, nommées Toutes footballeuses. Elle enseigne à ses joueuses des exercices de balle au pied et encourage chacune. Joueuse expérimentée, Sabrina a joué en club pendant 10 ans. Mais ça n'a pas toujours été facile. Elle se rappelle qu'à l'époque, elle n'avait pas accès à ces séances de foot loisir spéciales pour filles. Pour jouer en dehors des clubs, les filles devaient s'imposer et ça reste vrai aujourd'hui. Même quand les garçons acceptent qu'elles jouent avec eux, quand vient le moment de composer les équipes, elles sont toujours choisies en dernier, parce que considérées moins fortes. << Il faut faire sa place avant d'être choisie parmi les premiers », explique Sabrina. « C'est pour cela que les séances proposées par l'association sont très importantes », estime-t-elle. Wijdene, l'une des jeunes filles du groupe commente sa propre expérience avec Toutes footballeuses: << C'est super parce que dans la cour, à l'école, les garçons ne nous laissent pas jouer. Mais ici, on peut s'entraîner pour mieux jouer et pour les gagner. On peut montrer que le foot ce n'est pas seulement pour les garçons. Nous aussi on peut jouer. Et montrer l'égalité des filles et des garçons. >>> Sa maman semble elle aussi satisfaite de voir sa fille s'amuser. « C'est une bonne animation pour les enfants, pour les filles », affirme-t-elle. Elle-même reconnaît pourtant qu'elle n'a jamais joué au foot et n'aime pas trop ça. C'est aussi une question de générations. Maxime Hatton, responsable de l'association souligne que l'objectif n'est pas nécessairement de faire rentrer ces jeunes filles dans un club de foot. <<< Nous n'avons pas la prétention de remplacer un club >>, ajoute-t-il. C'est une offre nouvelle, alternative. On est plus sur du plaisir, du loisir, bouger, s'amuser ensemble, que vraiment la performance. Montrer que c'est un sport aussi pour les filles, que le football est une solution pour donner confiance, favoriser l'inclusion. >>> Football is the solution essaie d'organiser ces séances de rue une fois par mois. D'après https://www.radiofrance.fr/franceinter"
+    },
+    {
+      "ruta_audio": "29.mp3",
+      "habilidad": "Compréhension de l'oral",
+      "campos_formulario": null,
+      "tipo": "Opción múltiple",
+      "preguntas": [
+        {
+          "respuesta_correcta": "de printemps.",
+          "opciones": [
+            "de printemps.",
+            "d'automne.",
+            "d'hiver."
+          ],
+          "pregunta": "Cette étude sur les vacances et les voyages des Belges concerne les déplacements..."
+        },
+        {
+          "respuesta_correcta": "à des dates différentes, selon les régions.",
+          "opciones": [
+            "à des dates différentes, selon les villes.",
+            "aux mêmes dates, dans toute la Belgique.",
+            "à des dates différentes, selon les régions."
+          ],
+          "pregunta": "Selon l'étude, les vacances scolaires ont lieu..."
+        },
+        {
+          "respuesta_correcta": "l'année dernière.",
+          "opciones": [
+            "cette année.",
+            "l'année dernière.",
+            "cinq ans."
+          ],
+          "pregunta": "Le nouveau calendrier des vacances scolaires fonctionne depuis..."
+        },
+        {
+          "respuesta_correcta": "bénéficient de prix plus économiques.",
+          "opciones": [
+            "bénéficient de prix plus économiques.",
+            "paient plus cher leurs vacances.",
+            "ont moins de jours pour partir."
+          ],
+          "pregunta": "Avec le nouveau calendrier des vacances scolaires, les Wallons..."
+        },
+        {
+          "respuesta_correcta": "4,29 millions.",
+          "opciones": [
+            "1,48 million.",
+            "4,29 millions.",
+            "5,77 millions."
+          ],
+          "pregunta": "Combien de Belges sont partis à l'étranger aux dates de l'étude ?"
+        },
+        {
+          "respuesta_correcta": "à l'étranger.",
+          "opciones": [
+            "en Belgique.",
+            "à l'étranger.",
+            "à Bruxelles."
+          ],
+          "pregunta": "Aux dates de l'étude, la majorité des Belges ont choisi des vacances..."
+        },
+        {
+          "respuesta_correcta": "l'avion.",
+          "opciones": [
+            "la voiture.",
+            "l'avion.",
+            "le bus."
+          ],
+          "pregunta": "Le moyen de transport le plus utilisé a été..."
+        }
+      ],
+      "instruccion": "Activité 9 Répondez aux questions en cochant (X) la bonne réponse.",
+      "texto_lectura": null,
+      "transcripcion": "Activité 9 L'étude sur les vacances et les voyages des Belges, publiée en novembre, démontre un intérêt record pour les voyages cette année. Dans cette publication, on analyse les déplacements des Belges durant les mois d'avril, mai et juin 2023. Parmi les changements importants, on doit souligner que les vacances scolaires n'ont pas eu lieu en même temps partout en Belgique, contrairement à ce qui était habituel avant 2022. Pour la deuxième année de suite, en 2023, le calendrier des congés scolaires n'est plus le même pour toutes les régions. En Wallonie, les vacances de printemps ont commencé plus tôt, dès le 1er mai. Dans la région des Flandres, les familles ont dû attendre le 12 mai pour partir. Ce changement a eu un avantage pour les familles de Wallonie. En effet, avec moins de voyageurs en même temps, la demande touristique baisse et les prix aussi. En moyenne, ces familles ont donc payé moins cher leurs vacances. Tout le monde n'est pas parti aux mêmes dates, mais cela ne signifie pas moins de déplacements. Au contraire! On atteint un nombre record de départs avec 5,77 millions de voyages au total, d'avril à juin. Les vacances scolaires de printemps en Fédération Wallonie-Bruxelles étaient du 1er au 12 mai. Elles ont fait monter les réservations du mois de mai. Un mois qui était déjà parfait pour partir avec plusieurs jours fériés. Et, cette année, la tendance s'est renforcée car les écoliers wallons étaient en vacances les deux premières semaines de mai, leurs nouvelles vacances de printemps. L'agence de voyages TUI a enregistré des chiffres records de réservation pour cette période. De nombreux Belges ont été attirés par les vacances au soleil, cette année. Selon l'agence de voyages TUI, le mode de transport préféré a été l'avion. En nombre de déplacements, il a gagné cette année le bus et même la voiture. 4,29 millions de Belges sont partis dans d'autres pays, notamment en Espagne et en Grèce. Le tourisme national, lui, a été choisi par 1,48 million de personnes. D'après https://www.lavenir.net/actu/belgique/2023/11/14"
+    },
+    {
+      "ruta_audio": "30.mp3",
+      "habilidad": "Compréhension de l'oral",
+      "campos_formulario": null,
+      "tipo": "Opción múltiple",
+      "preguntas": [
+        {
+          "respuesta_correcta": "les entreprises.",
+          "opciones": [
+            "les entreprises.",
+            "les enquêteurs.",
+            "les consommateurs."
+          ],
+          "pregunta": "Ce document a été créé pour..."
+        },
+        {
+          "respuesta_correcta": "le calme.",
+          "opciones": [
+            "la peur.",
+            "le calme.",
+            "le bonheur."
+          ],
+          "pregunta": "Le sentiment dominant exprimé par 29% des personnes interrogées est..."
+        },
+        {
+          "respuesta_correcta": "Leur économie.",
+          "opciones": [
+            "Leur santé.",
+            "Leur économie.",
+            "Leur pouvoir d'achat."
+          ],
+          "pregunta": "D'après le document, quelle est la principale préoccupation des Français ?"
+        },
+        {
+          "respuesta_correcta": "plus de 90% des répondants.",
+          "opciones": [
+            "plus de 65% des répondants.",
+            "plus de 80% des répondants.",
+            "plus de 90% des répondants."
+          ],
+          "pregunta": "L'origine des produits est importante pour..."
+        },
+        {
+          "respuesta_correcta": "d'étiqueter les produits nationaux.",
+          "opciones": [
+            "de produire de manière plus responsable.",
+            "de réduire les prix de leurs produits.",
+            "d'étiqueter les produits nationaux."
+          ],
+          "pregunta": "65% des personnes interrogées demandent aux entreprises..."
+        },
+        {
+          "respuesta_correcta": "plutôt économes.",
+          "opciones": [
+            "plutôt dépensiers.",
+            "plutôt économes.",
+            "plutôt pauvres."
+          ],
+          "pregunta": "D'après Madeline Jouaut, au quotidien, les Français sont..."
+        },
+        {
+          "respuesta_correcta": "un besoin.",
+          "opciones": [
+            "une mode.",
+            "un besoin.",
+            "un désir."
+          ],
+          "pregunta": "Pour 80% des répondants, « se faire plaisir » est..."
+        }
+      ],
+      "instruccion": "Activité 10 Répondez aux questions en cochant (X) la bonne réponse.",
+      "texto_lectura": null,
+      "transcripcion": "Activité 10 Cette étude de MédiaVeilleG de janvier 2024 réalise une analyse approfondie sur le moral et les tendances de consommation des Français. Cette compréhension est un outil puissant pour adapter les stratégies de communication des entreprises. D'après une enquête du 20 mars 2024 sur les nouvelles tendances de consommation des Français, les sentiments positifs sont plus forts cette année. <<< Depuis 2020, le moral des Français s'améliore chaque année », affirme Mathias Dacc, auteur de l'enquête. << 29% des personnes interrogées disent que le calme est leur émotion principale. C'est très positif pour la consommation », affirme encore Mathias Dacc. Bien sûr, il reste des sujets de préoccupation. Après leur santé, c'est leur économie qui domine les préoccupations des Français. <<< La grande majorité dit être préoccupée par l'inflation économique. Les gens ont peur de la diminution de leur pouvoir d'achat. Ils entendent parler de l'augmentation de l'inflation partout en Europe. », souligne Mathias Dacc. Et puis, les Français aimeraient pouvoir consommer de manière plus responsable. Ils sont plus de 90% à trouver que l'origine des produits est importante. Ils valorisent de manière positive la production nationale des produits. Une partie importante des personnes interrogées, soit 65% des répondants, souhaitent une étiquette spéciale pour marquer les produits fabriqués en France. Madeline Jouaut, sociologue, observe par ailleurs : <<< les Français sont conscients des incertitudes de l'avenir, mais ils sont aussi assez contradictoires dans leurs comportements. D'un côté, ils font attention à leurs dépenses au jour le jour et ils gardent de l'argent pour le futur. Mais, de l'autre, ils ne résistent pas à certains plaisirs et ils utilisent finalement une partie de leurs économies pour faire des achats impulsifs. >> Et, en effet, la tendance à l'épargne augmente cette année. Mais, d'après l'enquête, cela n'empêche pas 80% des répondants de penser que « se faire plaisir de temps en temps >> est un besoin pour eux. D'après https://www.keyade.com/fr"
+    },
+    {
+      "ruta_audio": "31.mp3",
+      "habilidad": "Compréhension de l'oral",
+      "campos_formulario": null,
+      "tipo": "Opción múltiple",
+      "preguntas": [
+        {
+          "respuesta_correcta": "Il est ouvert tout le temps.",
+          "opciones": [
+            "Il est ouvert tout le temps.",
+            "Il propose des plats bio.",
+            "Il y a beaucoup de serveurs."
+          ],
+          "pregunta": "Quelle est la particularité du H24-Repas?"
+        },
+        {
+          "respuesta_correcta": "faire son choix sur un écran.",
+          "opciones": [
+            "utiliser l'application du restaurant.",
+            "demander à un employé.",
+            "faire son choix sur un écran."
+          ],
+          "pregunta": "Pour passer commande, il faut..."
+        },
+        {
+          "respuesta_correcta": "À l'extérieur du restaurant.",
+          "opciones": [
+            "Sur la carte à l'entrée.",
+            "Dans la salle à manger.",
+            "À l'extérieur du restaurant."
+          ],
+          "pregunta": "Où peut-on voir les plats disponibles ?"
+        },
+        {
+          "respuesta_correcta": "de l'eau",
+          "opciones": [
+            "du pain",
+            "de l'eau",
+            "du café"
+          ],
+          "pregunta": "Les clients peuvent consommer..."
+        },
+        {
+          "respuesta_correcta": "le matin.",
+          "opciones": [
+            "le matin.",
+            "l'après-midi.",
+            "le soir."
+          ],
+          "pregunta": "Les clients habitués viennent plutôt..."
+        },
+        {
+          "respuesta_correcta": "à l'avance avec des produits locaux.",
+          "opciones": [
+            "sur place avec des produits de qualité.",
+            "à l'avance avec des produits locaux.",
+            "tous les jours avec des produits bios."
+          ],
+          "pregunta": "Les plats sont préparés..."
+        },
+        {
+          "respuesta_correcta": "dix",
+          "opciones": [
+            "cinq",
+            "dix",
+            "douze"
+          ],
+          "pregunta": "Christine Bofani pense ouvrir environ... restaurants dans la région."
+        }
+      ],
+      "instruccion": "Activité 11 Répondez aux questions en cochant (X) la bonne réponse.",
+      "texto_lectura": null,
+      "transcripcion": "Activité 11 À Massiac, un petit village français de 1 700 habitants, un restaurant particulier a ouvert ses portes fin mars. Comme son nom l'indique, le H24-Repas est ouvert 24 heures sur 24 et 7 jours sur 7. C'est Christine Bofani, propriétaire d'un hôtel dans le village, qui en a eu l'idée. Pour elle, le problème principal rencontré par les voyageurs et les habitants était de trouver un restaurant ouvert après 21 heures. C'est aussi un moyen efficace pour lutter contre le manque de personnel, surtout en fin de semaine et le soir après 20 heures. Car l'une des particularités de cet établissement, c'est qu'il fonctionne sans serveur. Chaque jour, la propriétaire écrit les menus sur le tableau situé sur le trottoir, en face du restaurant. Pour passer leur commande, les clients choisissent leurs plats sur un écran, identique à celui que l'on utilise dans certains fast-foods. Ils retirent ensuite leurs plats dans l'une des trente-six boîtes situées dans la salle principale. Les plats sont toujours accompagnés d'une surprise comme un bonbon ou un biscuit, par exemple. Pour réchauffer les plats, les clients peuvent utiliser les micro-ondes en libre-service. Ils ont aussi accès à des distributeurs d'eau qu'ils peuvent consommer de manière illimitée et gratuitement, de pain et de boissons froides et chaudes. Contrairement aux distributeurs classiques, les plats sont préparés par un chef. Chaque jour, ce sont plusieurs dizaines d'entrées, de plats et de desserts qui sont élaborés à partir de produits locaux, puis déposés dans les distributeurs. Pour la propriétaire du H24-Repas, c'est un bon moyen de faire découvrir aux touristes la gastronomie locale et les produits de la région. Le restaurant mesure environ soixante-dix mètres carrés, une taille suffisante selon sa propriétaire qui avait peur de manquer de place pour accueillir tous ses clients. Les clients viennent principalement tard le soir quand tous les autres restaurants sont fermés. D'autres, souvent des habitués, viennent chercher des plats tôt le matin pour les manger ensuite chez eux. Satisfaite de cette première expérience, Christine Bofani va ouvrir une dizaine de nouveaux restaurants dans la région. D'après https://www.ouest-france.fr"
+    },
+    {
+      "ruta_audio": "32.mp3",
+      "habilidad": "Compréhension de l'oral",
+      "campos_formulario": null,
+      "tipo": "Opción múltiple",
+      "preguntas": [
+        {
+          "respuesta_correcta": "Au Royaume-Uni.",
+          "opciones": [
+            "En France.",
+            "Au Royaume-Uni.",
+            "Au Canada."
+          ],
+          "pregunta": "Où est né le glamping?"
+        },
+        {
+          "respuesta_correcta": "régions peu populaires.",
+          "opciones": [
+            "lieux en bord de mer.",
+            "régions peu populaires.",
+            "endroits très fréquentés."
+          ],
+          "pregunta": "Le glamping se pratique surtout dans des..."
+        },
+        {
+          "respuesta_correcta": "augmente.",
+          "opciones": [
+            "diminue.",
+            "reste stable.",
+            "augmente."
+          ],
+          "pregunta": "En France, le nombre de glampeurs..."
+        },
+        {
+          "respuesta_correcta": "équipés",
+          "opciones": [
+            "décorés",
+            "spacieux ... que ceux d'un camping traditionnel.",
+            "équipés"
+          ],
+          "pregunta": "Les logements au glamping sont plus..."
+        },
+        {
+          "respuesta_correcta": "des activités en exterior.",
+          "opciones": [
+            "des activités sportives.",
+            "des activités culturelles.",
+            "des activités en extérieur."
+          ],
+          "pregunta": "Au glamping, les vacanciers peuvent pratiquer..."
+        },
+        {
+          "respuesta_correcta": "plus cher",
+          "opciones": [
+            "moins cher",
+            "aussi cher",
+            "plus cher"
+          ],
+          "pregunta": "Le glamping coûte... que le camping traditionnel."
+        }
+      ],
+      "instruccion": "Activité 12 Répondez aux questions en cochant (X) la bonne réponse.",
+      "texto_lectura": null,
+      "transcripcion": "Activité 12 Importé du Royaume-Uni, le glamping est né en 2007. Son nom est la contraction des mots << glamour >> et << camping >> et fait référence à une nouvelle tendance du tourisme de plein air qui se développe rapidement, surtout en France. Les vacanciers qui recherchent le respect de la nature, mais sans se priver du luxe et du confort, choisissent cette option de vacances. Le glamping se développe généralement dans des lieux qui ne sont pas très attractif pour les touristes parce qu'ils sont souvent éloignés du bord de mer ou dans des régions peu connues. Pour les propriétaires, l'objectif est d'attirer plus de clients et de faire connaître leur région en proposant des offres originales et différentes. En France, on compte de plus en plus de glampeurs, c'est-à-dire de vacanciers qui choisissent cette option. Les tentes colorées et le manque de confort ont disparu dans les campings de nouvelle génération, comme au Camping du lac de l'Uby, où l'on trouve de petites cabanes en tissu, typiques du Canada à la place des tentes traditionnelles. Dans chaque hébergement, il y a une cuisine équipée, un frigo et des accessoires de cuisine pour préparer ses repas. Il y a également deux chambres séparées, de grands lits, mais surtout une salle de bains et des toilettes, ce qui est totalement différent du camping traditionnel. Pour les vacanciers, c'est une manière de profiter des avantages du camping sans renoncer au confort d'une chambre d'hôtel de luxe. Pour séduire plus de touristes, certains propriétaires de glamping proposent des logements et des activités originales. Si vous aimez la nature et les animaux, vous pouvez dormir dans des cabanes en bois dans les arbres d'où vous observerez les oiseaux. Les passionnés d'astronomie peuvent dormir sous des bulles transparentes pour observer les étoiles et profiter de merveilleux couchers de soleil. Le glamping, c'est aussi profiter de la tranquillité car ces campings de luxe sont situés loin de la foule. Plus cher que le camping, mais moins cher qu'un hôtel, le glamping est à la mode. Une nuit coûte environ 80 euros. Si vous voulez tester le glamping, des sites spécialisés vous permettent de trouver l'expérience qui vous correspond le mieux. Alors, si vous n'avez pas encore d'idées pour vos prochaines vacances, le glamping est peut-être la solution. D'après https://www.france3-regions.francetvinfo.fr"
+    },
+    {
+      "ruta_audio": "33.mp3",
+      "habilidad": "Compréhension de l'oral",
+      "campos_formulario": null,
+      "tipo": "Opción múltiple",
+      "preguntas": [
+        {
+          "respuesta_correcta": "des objets d'occasion.",
+          "opciones": [
+            "des objets neufs.",
+            "des objets d'occasion.",
+            "des objets cassés."
+          ],
+          "pregunta": "Le magasin Au Troc'quai propose..."
+        },
+        {
+          "respuesta_correcta": "de bandes dessinées.",
+          "opciones": [
+            "de musique.",
+            "d'œuvres d'art.",
+            "de bandes dessinées."
+          ],
+          "pregunta": "Sébastien est passionné..."
+        },
+        {
+          "respuesta_correcta": "De particuliers.",
+          "opciones": [
+            "De particuliers.",
+            "De boutiques.",
+            "De supermarchés."
+          ],
+          "pregunta": "D'où viennent les objets vendus dans cette boutique ?"
+        },
+        {
+          "respuesta_correcta": "De réutiliser des objets utilisés.",
+          "opciones": [
+            "De rénover des objets anciens.",
+            "De réparer des objets cassés.",
+            "De réutiliser des objets utilisés."
+          ],
+          "pregunta": "Que permet la récup' ?"
+        },
+        {
+          "respuesta_correcta": "écologique.",
+          "opciones": [
+            "écologique.",
+            "éducatif.",
+            "pratique."
+          ],
+          "pregunta": "Selon Sébastien, vendre ce type d'objets est..."
+        },
+        {
+          "respuesta_correcta": "Il a choisi d'utiliser des meubles d'occasion.",
+          "opciones": [
+            "Il a meublé son logement gratuitement.",
+            "Il a choisi d'utiliser des meubles d'occasion.",
+            "Il a rénové les meubles en mauvais état."
+          ],
+          "pregunta": "Comment Sébastien a-t-il fait des économies ?"
+        },
+        {
+          "respuesta_correcta": "trois fois",
+          "opciones": [
+            "deux fois",
+            "trois fois",
+            "quatre fois"
+          ],
+          "pregunta": "Les meubles d'occasion coûtent... moins cher qu'un meuble neuf."
+        }
+      ],
+      "instruccion": "Activité 13 Répondez aux questions en cochant (X) la bonne réponse.",
+      "texto_lectura": null,
+      "transcripcion": "Activité 13 - Aujourd'hui, nous allons Au Troc'quai, une boutique d'objets de seconde main où l'on trouve des livres, des disques mais aussi des meubles et des articles de décoration, tous sélectionnés par Sébastien, l'un des propriétaires. Arrivé il y a quelques années dans le village, il a eu l'idée d'ouvrir un magasin, avec sa femme, pour faire de la récupération et donner une nouvelle vie aux objets déjà utilisés. Nous l'avons rencontré. - Ma femme est passionnée de décoration et d'œuvres d'art et moi, je suis passionné de bandes dessinées et je collectionne les disques vinyles. Alors, on s'est demandé comment on pouvait faire pour vivre tous les deux de notre passion. Et puis, on a eu l'idée de cette boutique où les objets que l'on ne veut plus peuvent servir à d'autres personnes. Dans notre village, nous sommes les premiers à avoir créé une boutique de ce genre. Du coup, on reçoit beaucoup d'appels de particuliers pour nous demander de venir récupérer des meubles ou des objets qu'ils ne veulent plus. On va aussi sur les marchés d'occasion pour trouver de belles opportunités, comme ce tableau ou cette table. Après des mois de travaux, la boutique ouvrira dans quelques jours. Le 8 mai, elle accueillera les premiers clients, tous passionnés de récup', cette pratique qui vise à privilégier des objets d'occasion plutôt que des objets neufs. Aujourd'hui, c'est important de donner une seconde vie à tous ces objets du passé parce que ça permet de limiter la surconsommation et le gaspillage et donc de protéger l'environnement. En plus, c'est à la mode. On le voit sur les marchés de seconde main qui sont très fréquentés mais aussi dans les revues ou les émissions de télé. Aujourd'hui, il vaut mieux acheter un meuble ancien que l'on peut restaurer plutôt qu'un meuble très moderne mais de mauvaise qualité. On voit un changement de comportements, ce qui est très positif à mon avis. Et puis, cette pratique correspond parfaitement à notre mode de vie puisque nous avons fait notre maison à partir de meubles de seconde main. Ça donne beaucoup de charme à notre logement et ça nous a permis de faire des économies. Faire des économies aujourd'hui, c'est important. Un meuble de seconde main coûte en moyenne trois fois moins cher qu'un meuble neuf. D'après https://puissancetelevision.fr"
+    },
+    {
+      "ruta_audio": "34.mp3",
+      "habilidad": "Compréhension de l'oral",
+      "campos_formulario": null,
+      "tipo": "Opción múltiple",
+      "preguntas": [
+        {
+          "respuesta_correcta": "donne des conseils de jardinage.",
+          "opciones": [
+            "donne des conseils de jardinage.",
+            "parle de la mode des jardins bio.",
+            "partage sa profession d'agriculteur."
+          ],
+          "pregunta": "Sur les réseaux sociaux, Baptiste..."
+        },
+        {
+          "respuesta_correcta": "Sur internet, en autonomie.",
+          "opciones": [
+            "Avec un membre de sa famille.",
+            "Dans une école de jardinage.",
+            "Sur internet, en autonomie."
+          ],
+          "pregunta": "Comment s'est-il formé ?"
+        },
+        {
+          "respuesta_correcta": "simples.",
+          "opciones": [
+            "locaux.",
+            "simples.",
+            "à la mode."
+          ],
+          "pregunta": "Baptiste a commencé à cultiver des légumes..."
+        },
+        {
+          "respuesta_correcta": "Avec ses proches.",
+          "opciones": [
+            "Avec ses proches.",
+            "Avec des agriculteurs.",
+            "Avec tous les internautes."
+          ],
+          "pregunta": "Avec qui Baptiste partageait-il ses premières vidéos ?"
+        },
+        {
+          "respuesta_correcta": "plantes aromatiques.",
+          "opciones": [
+            "légumes de saison.",
+            "plantes aromatiques.",
+            "fruits exotiques."
+          ],
+          "pregunta": "Dans sa première vidéo professionnelle, Baptiste parlait de..."
+        }
+      ],
+      "instruccion": "Activité 14 Répondez aux questions en cochant (X) la bonne réponse.",
+      "texto_lectura": null,
+      "transcripcion": "Activité 14 - À 21 ans, Baptiste est une star des réseaux sociaux. Sa spécialité : les jardins potagers. Dans ses vidéos, il explique comment réussir à cultiver des fruits, des légumes et des plantes aromatiques de manière écologique. Nous l'avons rencontré. Baptiste, bonjour, comment est née cette passion pour le jardinage ? - J'ai découvert cette passion en 2021, pendant mes études de philosophie à l'université. On traversait une époque compliquée et je me suis vraiment demandé ce que je voulais faire plus tard. Comme j'adore la nature et la liberté, j'ai commencé à faire des recherches. Et c'est comme ça que j'ai découvert les jardins écologiques. - Quelle est votre formation ? Vous avez fait des études de jardinage? Des stages ? Pas du tout! Mon parcours n'est pas commun. Je n'ai pas suivi de formation dans une école de jardinage. Dans ma famille, il n'y a aucun agriculteur. Personne n'a donc pu m'apprendre les techniques pour planter et cultiver des fruits et des légumes. Personne n'a pu me donner de conseils. Par conséquent, je me suis formé tout seul. J'ai fait des recherches sur internet. J'ai consulté des sites spécialisés et j'ai vu des centaines de vidéos pour apprendre comment planter, comment tailler et comment s'occuper des fruits et des légumes. Six mois après, je me suis lancé et j'ai commencé à planter des salades, des carottes et des fraises qui sont simples à cultiver. - Aujourd'hui, vous avez fait des centaines de vidéos. Comment avez-vous eu cette idée ? Au début, quand j'ai commencé ce projet, j'ai créé une page internet où j'expliquais l'évolution à mes amis et à ma famille, l'évolution de mon jardin. Puis, mon amie Laurie a eu l'idée de faire des vidéos plus professionnelles. Je n'étais pas vraiment convaincu parce que je pensais que mon projet n'allait intéresser personne. Mes amis et ma famille m'ont encouragé à le faire. On a donc publié notre première vidéo sur la culture du basilic et de l'ail. Et, quelques jours après, on avait déjà des millions de vues. Il y a même des agriculteurs qui suivent mes vidéos. C'est incroyable! Vous avez de nouveaux projets ? L'année prochaine, j'aimerais ouvrir un jardin pédagogique pour faire découvrir aux enfants de la région ma passion pour le jardinage et organiser des marchés avec des producteurs de fromage et de viande de la région. J'aimerais vraiment vivre de ma passion parce que, pour le moment, ce n'est pas le cas. Merci, Baptiste, pour votre témoignage. Nous vous souhaitons beaucoup de succès dans vos projets et nous suivrons l'évolution de votre jardin écologique grâce à vos vidéos. D'après https://france3-regions.francetvinfo.fr"
+    },
+    {
+      "ruta_audio": "35.mp3",
+      "habilidad": "Compréhension de l'oral",
+      "campos_formulario": null,
+      "tipo": "Opción múltiple",
+      "preguntas": [
+        {
+          "respuesta_correcta": "français et écologiques.",
+          "opciones": [
+            "seulement écologiques.",
+            "principalement français.",
+            "français et écologiques."
+          ],
+          "pregunta": "Le Colibri Frenchy produit des vêtements..."
+        },
+        {
+          "respuesta_correcta": "recyclés.",
+          "opciones": [
+            "naturels.",
+            "recyclés.",
+            "écologiques."
+          ],
+          "pregunta": "Les t-shirts sont produits à partir de produits..."
+        },
+        {
+          "respuesta_correcta": "40 000 kilomètres.",
+          "opciones": [
+            "4 000 kilomètres.",
+            "40 000 kilomètres.",
+            "400 000 kilomètres."
+          ],
+          "pregunta": "Combien de kilomètres parcourt un t-shirt en général avant sa vente ?"
+        },
+        {
+          "respuesta_correcta": "Ils sont produits localement.",
+          "opciones": [
+            "Ils sont produits localement.",
+            "Ils sont fabriqués à la main.",
+            "Ils sont vendus sur internet."
+          ],
+          "pregunta": "Pourquoi les t-shirts de la marque Le Colibri Frenchy sont-ils moins chers ?"
+        },
+        {
+          "respuesta_correcta": "confortables.",
+          "opciones": [
+            "chauds.",
+            "résistants.",
+            "confortables."
+          ],
+          "pregunta": "Quand on fait du sport, les vêtements doivent être..."
+        },
+        {
+          "respuesta_correcta": "L'étiquette.",
+          "opciones": [
+            "La couleur.",
+            "Les dessins.",
+            "L'étiquette."
+          ],
+          "pregunta": "Qu'est-ce que l'entreprise Le Colibri Frenchy a supprimé sur ses t-shirts ?"
+        },
+        {
+          "respuesta_correcta": "de créer de nouveaux vêtements.",
+          "opciones": [
+            "de chercher de nouveaux clients.",
+            "de créer de nouveaux vêtements.",
+            "de proposer de nouvelles collections."
+          ],
+          "pregunta": "La marque Le Colibri Frenchy est en train..."
+        }
+      ],
+      "instruccion": "Activité 15 Répondez aux questions en cochant (X) la bonne réponse.",
+      "texto_lectura": null,
+      "transcripcion": "Activité 15 Bonjour et bienvenue à notre chronique monde bleu. Aujourd'hui, nous allons parler de la mode et des nouveaux vêtements de sport écologiques. Pour en parler, je reçois Abigaelle Leroy, professeur de sport dans une salle de sport et directrice de l'entreprise Le Colibri Frenchy. Abigaelle, bonjour. Parlez-nous de votre entreprise. C'est quoi Le Colibri Frenchy ? Bonjour Jean-Marc. Le Colibri Frenchy, c'est une marque de t-shirts de sport écologiques et cent pour cent française. Notre usine est située dans la région et nous utilisons des produits recyclés. Nos t-shirts sont faits à partir de bouteilles en plastique recyclées. Comment avez-vous eu cette idée de vêtements de sport écologiques? Beaucoup de marques produisent aujourd'hui des vêtements à partir de coton bio ou de tissus recyclés. Mais aucune entreprise ne produit de vêtements de sport. Je travaille dans une salle de sport. Je me suis toujours demandée pourquoi nos vêtements sont produits à des milliers de kilomètres. J'ai fait des recherches. J'ai découvert qu'un t-shirt voyage pendant plus 40 000 kilomètres avant d'arriver dans un magasin. C'est énorme ! On utilise aussi 2 700 litres d'eau, l'équivalent de 70 douches. Donc, je me suis dit qu'il fallait changer cela et revenir à une production locale et écologique. Les produits écologiques sont souvent plus chers que les produits qui ne le sont pas. Est-ce que c'est le cas chez Le Colibri Frenchy ? Non. Notre objectif est de produire des vêtements bon marché et accessibles à tous les sportifs. Pour que nos produits soient plus économiques, nous faisons des économies sur le transport. Notre usine est située dans la région. Il n'y a donc pas de transport. Vos vêtements sont donc bon marché mais est-ce qu'ils sont confortables ? Bien sûr ! Pendant une séance de sport, c'est important de porter des vêtements qui s'adaptent à nos mouvements et qui soient confortables. Nous avons supprimé les étiquettes par exemple, parce qu'elles sont gênantes quand on fait du sport. Nos vêtements sont aussi très résistants. Même après 3 500 lavages, la couleur et les dessins ne s'abîment pas. Quels sont vos futurs projets ? Nous sommes en train de développer nos premiers shorts et des chaussettes. On ne veut pas proposer beaucoup de collections car ce n'est pas écologique. On va également demander l'opinion de nos clients avec des enquêtes sur internet pour créer les vêtements dont ils ont besoin. Nous avons reçu des demandes de l'université pour créer des uniformes. Nous avons donc beaucoup de projets. Abigaelle, je vous remercie pour cette interview. Plus d'informations disponibles sur www.lecolibrifrenchy.com. D'après https://www.francebleue.fr"
+    },
+    {
+      "ruta_audio": "36.mp3",
+      "habilidad": "Compréhension de l'oral",
+      "campos_formulario": null,
+      "tipo": "Opción múltiple",
+      "preguntas": [
+        {
+          "respuesta_correcta": "En France.",
+          "opciones": [
+            "Au Luxembourg.",
+            "Aux États-Unis.",
+            "En France."
+          ],
+          "pregunta": "Où se passe cette exposition ?"
+        },
+        {
+          "respuesta_correcta": "d'un événement sportif.",
+          "opciones": [
+            "d'un événement sportif.",
+            "d'un festival de musique.",
+            "d'un événement artistique."
+          ],
+          "pregunta": "Cette exposition a été organisée à l'occasion..."
+        },
+        {
+          "respuesta_correcta": "un terrain de sport",
+          "opciones": [
+            "un terrain de sport",
+            "une salle de cinéma ... à l'intérieur du musée.",
+            "un circuit de moto"
+          ],
+          "pregunta": "Les organisateurs ont créé..."
+        },
+        {
+          "respuesta_correcta": "Les exploits des sportifs les plus célèbres.",
+          "opciones": [
+            "Les objets de compétition les plus célèbres.",
+            "Les exploits des sportifs les plus célèbres.",
+            "Les tournois sportifs les plus célèbres."
+          ],
+          "pregunta": "Qu'est-ce que les spectateurs peuvent voir sur les écrans ?"
+        },
+        {
+          "respuesta_correcta": "150.",
+          "opciones": [
+            "50.",
+            "150.",
+            "250."
+          ],
+          "pregunta": "Combien d'objets sont exposés ?"
+        },
+        {
+          "respuesta_correcta": "Ce sont tous des objets authentiques.",
+          "opciones": [
+            "Ce sont tous des objets authentiques.",
+            "Ce sont tous des copies et des maquettes.",
+            "Ce sont tous des objets fabriqués par les sportifs."
+          ],
+          "pregunta": "Quelle est la particularité des objets exposés ?"
+        },
+        {
+          "respuesta_correcta": "est interdit pendant les compétitions sportives.",
+          "opciones": [
+            "a permis de battre quelques records de vitesse.",
+            "est interdit pendant les compétitions sportives.",
+            "aide les sportifs à améliorer leurs performances."
+          ],
+          "pregunta": "Le maillot de bain créé par la NASA..."
+        }
+      ],
+      "instruccion": "Activité 16 Répondez aux questions en cochant (X) la bonne réponse.",
+      "texto_lectura": null,
+      "transcripcion": "Activité 16 - Jusqu'au 11 août, le musée du Luxembourg de Paris organise une exposition un peu particulière << Match, design et sport. >>> Les visiteurs peuvent admirer les objets emblématiques qui ont marqué les plus grandes compétitions sportives. Marie Lehavre, qui dirige l'exposition, nous présente cette exposition. Nous avons organisé cette exposition à l'occasion des Jeux olympiques de Paris. C'est pourquoi elle dure pendant toute la compétition. Nous voulions une mise en scène originale et que les visiteurs puissent vivre une expérience unique. Nous voulions qu'ils retrouvent cette ambiance de compétition sportive et qu'ils puissent se sentir comme sur un véritable terrain de sport. C'est pourquoi nous avons transformé le musée en terrain de basket urbain, avec un style qui rappelle les terrains de basket américains des années 90. On a créé des murs avec des graffitis et des gradins*, avec des sièges comme sur un véritable terrain de sport. Il y a aussi plusieurs écrans qui permettent aux visiteurs de voir ou revoir les plus grandes compétitions sportives qui ont marqué l'histoire. Difficile de reconnaître le musée du Luxembourg avec une telle mise en scène. Mais le plus important, ce sont les différents objets exposés que le visiteur peut admirer. - Au total, ce sont 150 objets qui sont exposés. Ce sont des pièces uniques et toutes originales. Nous ne voulions pas exposer de copies, ni de maquettes. Nous voulions vraiment que le visiteur voie un objet authentique. Parmi les objets les plus importants de l'exposition, il y a cette moto allemande qui a permis à Luigi Colani de battre le record du monde de vitesse, en 1986. D'autres objets ont été fabriqués par les sportifs eux-mêmes, comme cette jambe artificielle créée par le sportif Mike Schultz qui lui a permis de continuer à pratiquer le snowboard après son accident. Il y a également des objets plus polémiques, comme ce maillot de bain, créé par la Nasa, interdit depuis 2010 dans les compétitions de natation parce qu'il a permis de battre plus de cent records du monde de vitesse en quelques mois seulement. Il y a donc des objets très différents à découvrir pendant l'exposition. Alors si vous êtes à Paris, nous vous rappelons que vous pouvez profiter de cette exposition jusqu'au 11 août. *gradin: chacun des bancs disposés en étages dans un stade D'après https://www.europe1.fr"
+    },
+    {
+      "ruta_audio": "37.mp3",
+      "habilidad": "Compréhension de l'oral",
+      "campos_formulario": null,
+      "tipo": "Opción múltiple",
+      "preguntas": [
+        {
+          "respuesta_correcta": "augmentent.",
+          "opciones": [
+            "augmentent.",
+            "restent stables.",
+            "diminuent."
+          ],
+          "pregunta": "En France, les ventes de jeux de société..."
+        },
+        {
+          "respuesta_correcta": "dans les familles et sur internet.",
+          "opciones": [
+            "principalement sur internet.",
+            "exclusivement dans les familles.",
+            "dans les familles et sur internet."
+          ],
+          "pregunta": "Le Jungle Speed est célèbre..."
+        },
+        {
+          "respuesta_correcta": "Dans les années 90.",
+          "opciones": [
+            "Dans les années 70.",
+            "Dans les années 80.",
+            "Dans les années 90."
+          ],
+          "pregunta": "Quand le Jungle Speed a-t-il été inventé ?"
+        },
+        {
+          "respuesta_correcta": "une entreprise a commercialisé le jeu dans le monde.",
+          "opciones": [
+            "il y a eu la première compétition.",
+            "on pouvait jouer uniquement dans les bars.",
+            "une entreprise a commercialisé le jeu dans le monde."
+          ],
+          "pregunta": "En 2002..."
+        },
+        {
+          "respuesta_correcta": "Environ 8 millions.",
+          "opciones": [
+            "Environ 8 millions.",
+            "Environ 18 millions.",
+            "Environ 28 millions."
+          ],
+          "pregunta": "Combien de jeux ont été vendus dans le monde ?"
+        },
+        {
+          "respuesta_correcta": "attentif.",
+          "opciones": [
+            "curieux.",
+            "attentif.",
+            "patient."
+          ],
+          "pregunta": "Pour jouer au Jungle Speed, il faut être..."
+        },
+        {
+          "respuesta_correcta": "changer certaines règles.",
+          "opciones": [
+            "créer de nouvelles cartes.",
+            "changer certaines règles.",
+            "réduire la durée du jeu."
+          ],
+          "pregunta": "Pour donner un aspect plus amusant, on peut..."
+        }
+      ],
+      "instruccion": "Activité 17 Répondez aux questions en cochant (X) la bonne réponse.",
+      "texto_lectura": null,
+      "transcripcion": "Activité 17 Bonjour et bienvenue à notre chronique dédiée aux loisirs. Cette semaine nous allons parler des jeux de société à la mode. Les Français adorent les jeux de société. Ils en achètent de plus en plus et passent des après-midis entiers à jouer avec leur famille ou leurs amis. Du Trivial Poursuit, où vous devez répondre à des questions dans différentes catégories, au Time's Up, où vous devez faire deviner un mot mystère à votre équipe, il existe beaucoup de jeux de société différents. Mais connaissez-vous le Jungle Speed, ce jeu très célèbre dans les familles et sur internet ? Pour en parler, je reçois Nadège Carlin, spécialiste des jeux de société. Nadège, bonjour. C'est quoi le Jungle Speed? Le Jungle Speed est un jeu de cartes inventé dans les années 90 par deux étudiants français, passionnés de jeux de société. Au départ, ils ont fabriqué eux-mêmes tous les éléments du jeu et l'ont distribué dans les bars du nord de la France. Puis, le jeu a rencontré beaucoup de succès. À Paris, des associations de passionnés de jeux de société ont commencé à organiser des soirées Jungle Speed et des compétitions. De plus en plus de personnes ont commencé à s'affronter et à découvrir ce jeu. En 2002, une entreprise a décidé de vendre le jeu dans le monde entier. C'est à ce moment-là que le jeu a rencontré un très grand succès. Aujourd'hui, plus de 8 millions de jeux ont été vendus dans le monde entier. Et comment on joue au Jungle Speed? Les règles sont simples ? Oui, elles sont très simples. Pour jouer au Jungle Speed, il faut entre 2 et 8 personnes. C'est un jeu individuel, il n'y a donc pas d'équipe. Comme dans la plupart des jeux de société, la personne qui marque le plus de points gagne la partie. Le jeu contient 80 cartes avec 18 motifs différents. On distribue le même nombre de cartes à tous les joueurs, face cachée. Les joueurs ne voient donc pas leurs cartes. Ils placent leurs cartes devant eux et chacun leur tour, ils retournent une carte. Quand deux joueurs ont la même carte, ils doivent attraper le plus vite possible un petit totem au centre de la table. Attention, certaines cartes sont très similaires. Il faut donc être rapide et observateur pour gagner la partie. Pourquoi ce jeu a autant de succès, d'après vous ? Les règles du jeu sont simples et la durée d'une partie est très courte. C'est différent des jeux de société à la mode qui durent très longtemps. En plus, on peut modifier certaines règles si on le désire. Par exemple, au lieu de placer le totem sur la table, on peut le placer dans une autre pièce. Ça donne au jeu un aspect plus amusant. Merci Nadège pour vos explications. Je vous retrouve la semaine prochaine pour découvrir d'autres loisirs. D'après: https://www.europe1.fr"
+    }
+  ],
+  "tema_CO": "Comprendre des émissions de radio"
+}

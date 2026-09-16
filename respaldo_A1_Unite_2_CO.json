@@ -1,0 +1,1982 @@
+{
+  "diccionario_unidad": [
+    {
+      "definicion": "Indica dirección, ubicación, tiempo o pertenencia.",
+      "tipo_gramatical": "préposition",
+      "ejemplo_uso": "Je vais à Paris.",
+      "palabra": "a",
+      "frecuencia": 58,
+      "lema": "à",
+      "sinonimos": [
+        "vers",
+        "chez"
+      ]
+    },
+    {
+      "definicion": "Objetos complementarios que se usan con algo principal para mejorar su función o apariencia.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "Elle a acheté des accessoires pour son téléphone.",
+      "palabra": "accessoires",
+      "frecuencia": 1,
+      "lema": "accessoire",
+      "sinonimos": [
+        "compléments",
+        "ornements"
+      ]
+    },
+    {
+      "definicion": "La acción de recibir a alguien o el lugar donde se recibe.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "L'accueil de l'hôtel est très chaleureux.",
+      "palabra": "accueil",
+      "frecuencia": 4,
+      "lema": "accueil",
+      "sinonimos": [
+        "réception",
+        "bienvenue"
+      ]
+    },
+    {
+      "definicion": "La acción de adquirir algo a cambio de dinero.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "Mon dernier achat est un nouveau livre.",
+      "palabra": "achat",
+      "frecuencia": 1,
+      "lema": "achat",
+      "sinonimos": [
+        "acquisition",
+        "emplette"
+      ]
+    },
+    {
+      "definicion": "La acción de adquirir cosas a cambio de dinero (en plural).",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "J'ai fait mes achats au supermarché.",
+      "palabra": "achats",
+      "frecuencia": 1,
+      "lema": "achat",
+      "sinonimos": [
+        "acquisitions",
+        "emplettes"
+      ]
+    },
+    {
+      "definicion": "Adquirir algo pagando por ello.",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "Je veux acheter une nouvelle voiture.",
+      "palabra": "acheter",
+      "frecuencia": 5,
+      "lema": "acheter",
+      "sinonimos": [
+        "acquérir",
+        "se procurer"
+      ]
+    },
+    {
+      "definicion": "Acción o conjunto de acciones que realiza una persona o un grupo.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "Quelle est votre activite préférée?",
+      "palabra": "activite",
+      "frecuencia": 136,
+      "lema": "activité",
+      "sinonimos": [
+        "occupation",
+        "tâche"
+      ]
+    },
+    {
+      "definicion": "Acción o conjunto de acciones que realiza una persona o un grupo.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "Nous avons beaucoup d'activités cette semaine.",
+      "palabra": "activité",
+      "frecuencia": 21,
+      "lema": "activité",
+      "sinonimos": [
+        "occupation",
+        "tâche"
+      ]
+    },
+    {
+      "definicion": "Conjunto de eventos y noticias que ocurren en el presente.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "Je regarde les actualités tous les soirs.",
+      "palabra": "actualité",
+      "frecuencia": 1,
+      "lema": "actualité",
+      "sinonimos": [
+        "nouvelles",
+        "événements"
+      ]
+    },
+    {
+      "definicion": "Personas jóvenes que se encuentran en la etapa entre la niñez y la edad adulta.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "Les adolescents aiment écouter de la musique.",
+      "palabra": "adolescents",
+      "frecuencia": 1,
+      "lema": "adolescent",
+      "sinonimos": [
+        "jeunes",
+        "ados"
+      ]
+    },
+    {
+      "definicion": "Personas que han alcanzado la madurez física y mental.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "Ce film est pour les adultes.",
+      "palabra": "adultes",
+      "frecuencia": 1,
+      "lema": "adulte",
+      "sinonimos": [
+        "majeurs",
+        "grandes personnes"
+      ]
+    },
+    {
+      "definicion": "Abreviatura que puede referirse a 'Affaires' (negocios) o 'Air France'.",
+      "tipo_gramatical": "abréviation",
+      "ejemplo_uso": "L'AF est une compagnie aérienne.",
+      "palabra": "af",
+      "frecuencia": 5,
+      "lema": "AF",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Asuntos, negocios o pertenencias personales.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "J'ai beaucoup d'affaires à régler.",
+      "palabra": "affaires",
+      "frecuencia": 1,
+      "lema": "affaire",
+      "sinonimos": [
+        "business",
+        "choses"
+      ]
+    },
+    {
+      "definicion": "La mezcla de gases que forma la atmósfera y que respiramos.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "L'air est frais ce matin.",
+      "palabra": "air",
+      "frecuencia": 3,
+      "lema": "air",
+      "sinonimos": [
+        "atmosphère",
+        "vent"
+      ]
+    },
+    {
+      "definicion": "Relativo a Alemania, su idioma o su cultura. También, la persona de Alemania o el idioma alemán.",
+      "tipo_gramatical": "adjectif / nom (m)",
+      "ejemplo_uso": "Il parle allemand couramment.",
+      "palabra": "allemand",
+      "frecuencia": 1,
+      "lema": "allemand",
+      "sinonimos": [
+        "germanique",
+        "teuton"
+      ]
+    },
+    {
+      "definicion": "Moverse de un lugar a otro.",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "Je vais aller au cinéma ce soir.",
+      "palabra": "aller",
+      "frecuencia": 7,
+      "lema": "aller",
+      "sinonimos": [
+        "se rendre",
+        "partir"
+      ]
+    },
+    {
+      "definicion": "Relativo a Inglaterra, su idioma o su cultura. También, la persona de Inglaterra o el idioma inglés.",
+      "tipo_gramatical": "adjectif / nom (m)",
+      "ejemplo_uso": "Elle apprend l'anglais à l'école.",
+      "palabra": "anglais",
+      "frecuencia": 3,
+      "lema": "anglais",
+      "sinonimos": [
+        "britannique",
+        "anglo-saxon"
+      ]
+    },
+    {
+      "definicion": "Seres vivos que se mueven, se alimentan y se reproducen, a menudo con capacidad de sentir.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "J'aime beaucoup les animaux.",
+      "palabra": "animaux",
+      "frecuencia": 3,
+      "lema": "animal",
+      "sinonimos": [
+        "bêtes",
+        "créatures"
+      ]
+    },
+    {
+      "definicion": "Mensaje público que comunica algo, como una noticia o una oferta.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "J'ai lu une annonce pour un nouvel emploi.",
+      "palabra": "annonce",
+      "frecuencia": 9,
+      "lema": "annonce",
+      "sinonimos": [
+        "publicité",
+        "avis"
+      ]
+    },
+    {
+      "definicion": "Que ha sido comunicado o hecho público.",
+      "tipo_gramatical": "participe passé / adjectif",
+      "ejemplo_uso": "Le concert a été annoncé hier.",
+      "palabra": "annoncé",
+      "frecuencia": 1,
+      "lema": "annoncer",
+      "sinonimos": [
+        "publié",
+        "déclaré"
+      ]
+    },
+    {
+      "definicion": "Que ha sido cancelado o invalidado.",
+      "tipo_gramatical": "participe passé / adjectif",
+      "ejemplo_uso": "Le vol a été annulé à cause du mauvais temps.",
+      "palabra": "annulé",
+      "frecuencia": 1,
+      "lema": "annuler",
+      "sinonimos": [
+        "supprimé",
+        "aboli"
+      ]
+    },
+    {
+      "definicion": "Período de doce meses.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "Cette année, je vais voyager.",
+      "palabra": "année",
+      "frecuencia": 4,
+      "lema": "année",
+      "sinonimos": [
+        "an",
+        "exercice"
+      ]
+    },
+    {
+      "definicion": "Unidad de tiempo equivalente a doce meses, usada para expresar la edad.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "J'ai vingt ans.",
+      "palabra": "ans",
+      "frecuencia": 5,
+      "lema": "an",
+      "sinonimos": [
+        "années",
+        "âge"
+      ]
+    },
+    {
+      "definicion": "Instrumentos o máquinas diseñados para una función específica.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "Les appareils électroniques sont chers.",
+      "palabra": "appareils",
+      "frecuencia": 2,
+      "lema": "appareil",
+      "sinonimos": [
+        "dispositifs",
+        "machines"
+      ]
+    },
+    {
+      "definicion": "Llamar a alguien por su nombre o por teléfono.",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "Je vais appeler ma mère ce soir.",
+      "palabra": "appeler",
+      "frecuencia": 3,
+      "lema": "appeler",
+      "sinonimos": [
+        "téléphoner",
+        "nommer"
+      ]
+    },
+    {
+      "definicion": "Forma conjugada del verbo 'llamar', usada para dar una orden o para la segunda persona del plural.",
+      "tipo_gramatical": "verbe (impératif / indicatif présent)",
+      "ejemplo_uso": "Appelez-moi si vous avez besoin d'aide.",
+      "palabra": "appelez",
+      "frecuencia": 1,
+      "lema": "appeler",
+      "sinonimos": [
+        "téléphonez",
+        "nommez"
+      ]
+    },
+    {
+      "definicion": "Indica posterioridad en el tiempo o en el espacio.",
+      "tipo_gramatical": "préposition / adverbe",
+      "ejemplo_uso": "Je mangerai après le travail.",
+      "palabra": "après",
+      "frecuencia": 1,
+      "lema": "après",
+      "sinonimos": [
+        "ensuite",
+        "après coup"
+      ]
+    },
+    {
+      "definicion": "Recipiente de cristal con agua donde se crían peces y otras especies acuáticas.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "Il y a de beaux poissons dans l'aquarium.",
+      "palabra": "aquarium",
+      "frecuencia": 3,
+      "lema": "aquarium",
+      "sinonimos": [
+        "vivier",
+        "bassin"
+      ]
+    },
+    {
+      "definicion": "Forma conjugada del verbo 'llegar', para la primera o tercera persona del singular.",
+      "tipo_gramatical": "verbe (indicatif présent)",
+      "ejemplo_uso": "Le train arrive à l'heure.",
+      "palabra": "arrive",
+      "frecuencia": 1,
+      "lema": "arriver",
+      "sinonimos": [
+        "parvient",
+        "vient"
+      ]
+    },
+    {
+      "definicion": "Alcanzar un destino o un punto en el tiempo.",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "Nous allons arriver bientôt.",
+      "palabra": "arriver",
+      "frecuencia": 1,
+      "lema": "arriver",
+      "sinonimos": [
+        "parvenir",
+        "venir"
+      ]
+    },
+    {
+      "definicion": "La acción de detenerse o el lugar donde algo se detiene.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "L'arrêt de bus est juste là.",
+      "palabra": "arrêt",
+      "frecuencia": 1,
+      "lema": "arrêt",
+      "sinonimos": [
+        "pause",
+        "halte"
+      ]
+    },
+    {
+      "definicion": "Forma conjugada del verbo 'detener', usada para dar una orden o para la primera/tercera persona del singular.",
+      "tipo_gramatical": "verbe (impératif / indicatif présent)",
+      "ejemplo_uso": "Arrête de parler s'il te plaît.",
+      "palabra": "arrête",
+      "frecuencia": 1,
+      "lema": "arrêter",
+      "sinonimos": [
+        "cesse",
+        "stoppe"
+      ]
+    },
+    {
+      "definicion": "Actividad humana que busca expresar ideas, emociones o una visión del mundo a través de medios estéticos.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "J'aime visiter les musées d'art.",
+      "palabra": "art",
+      "frecuencia": 1,
+      "lema": "art",
+      "sinonimos": [
+        "création",
+        "œuvre"
+      ]
+    },
+    {
+      "definicion": "Escrito breve en una publicación, o un objeto individual de una colección. También, una parte de la gramática.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "J'ai lu un article intéressant dans le journal.",
+      "palabra": "article",
+      "frecuencia": 2,
+      "lema": "article",
+      "sinonimos": [
+        "texte",
+        "objet"
+      ]
+    },
+    {
+      "definicion": "Personas que se dedican al arte.",
+      "tipo_gramatical": "nom (m/f)",
+      "ejemplo_uso": "Les artistes exposent leurs œuvres.",
+      "palabra": "artistes",
+      "frecuencia": 1,
+      "lema": "artiste",
+      "sinonimos": [
+        "créateurs",
+        "interprètes"
+      ]
+    },
+    {
+      "definicion": "Forma conjugada del verbo 'asistir', para la tercera persona del plural.",
+      "tipo_gramatical": "verbe (indicatif présent)",
+      "ejemplo_uso": "Ils assistent à la conférence.",
+      "palabra": "assistent",
+      "frecuencia": 1,
+      "lema": "assister",
+      "sinonimos": [
+        "aident",
+        "participent"
+      ]
+    },
+    {
+      "definicion": "Estar presente en un evento o ayudar a alguien.",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "Je vais assister au concert.",
+      "palabra": "assister",
+      "frecuencia": 2,
+      "lema": "assister",
+      "sinonimos": [
+        "aider",
+        "participer"
+      ]
+    },
+    {
+      "definicion": "Concentración de la mente en algo, o un aviso para estar alerta.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "Faites attention en traversant la rue.",
+      "palabra": "attention",
+      "frecuencia": 1,
+      "lema": "attention",
+      "sinonimos": [
+        "vigilance",
+        "concentration"
+      ]
+    },
+    {
+      "definicion": "Lugares o actividades que atraen a la gente, especialmente en parques de ocio.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "Le parc a de nombreuses attractions.",
+      "palabra": "attractions",
+      "frecuencia": 1,
+      "lema": "attraction",
+      "sinonimos": [
+        "divertissements",
+        "manèges"
+      ]
+    },
+    {
+      "definicion": "Contracción de la preposición 'à' y el artículo definido masculino singular 'le'.",
+      "tipo_gramatical": "article contracté",
+      "ejemplo_uso": "Je vais au marché.",
+      "palabra": "au",
+      "frecuencia": 18,
+      "lema": "à le",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Relativo al sonido o a la audición.",
+      "tipo_gramatical": "adjectif / nom (m)",
+      "ejemplo_uso": "J'écoute un livre audio.",
+      "palabra": "audio",
+      "frecuencia": 17,
+      "lema": "audio",
+      "sinonimos": [
+        "sonore",
+        "acoustique"
+      ]
+    },
+    {
+      "definicion": "Fragmento de la palabra 'aujourd'hui', que significa 'hoy'.",
+      "tipo_gramatical": "adverbe (fragment)",
+      "ejemplo_uso": "Aujourd'hui, il fait beau.",
+      "palabra": "aujourd",
+      "frecuencia": 5,
+      "lema": "aujourd'hui",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Forma conjugada del verbo 'avoir' (tener) en futuro simple, para la tercera persona del singular.",
+      "tipo_gramatical": "verbe (futur simple)",
+      "ejemplo_uso": "Il aura une nouvelle voiture l'année prochaine.",
+      "palabra": "aura",
+      "frecuencia": 2,
+      "lema": "avoir",
+      "sinonimos": [
+        "possédera",
+        "tiendra"
+      ]
+    },
+    {
+      "definicion": "Indica igualdad, adición o énfasis. Significa 'también' o 'tan'.",
+      "tipo_gramatical": "adverbe",
+      "ejemplo_uso": "Je suis aussi fatigué que toi.",
+      "palabra": "aussi",
+      "frecuencia": 2,
+      "lema": "aussi",
+      "sinonimos": [
+        "également",
+        "de même"
+      ]
+    },
+    {
+      "definicion": "Que ha recibido permiso o aprobación.",
+      "tipo_gramatical": "participe passé / adjectif",
+      "ejemplo_uso": "Les chiens ne sont pas autorisés ici.",
+      "palabra": "autorisés",
+      "frecuencia": 1,
+      "lema": "autorisé",
+      "sinonimos": [
+        "permis",
+        "licite"
+      ]
+    },
+    {
+      "definicion": "Contracción de la preposición 'à' y el artículo definido plural 'les'.",
+      "tipo_gramatical": "article contracté",
+      "ejemplo_uso": "Je parle aux enfants.",
+      "palabra": "aux",
+      "frecuencia": 8,
+      "lema": "à les",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Indica anterioridad en el tiempo o en el espacio.",
+      "tipo_gramatical": "préposition / adverbe",
+      "ejemplo_uso": "Je me lève avant le soleil.",
+      "palabra": "avant",
+      "frecuencia": 2,
+      "lema": "avant",
+      "sinonimos": [
+        "auparavant",
+        "précédemment"
+      ]
+    },
+    {
+      "definicion": "Indica compañía, instrumento o modo.",
+      "tipo_gramatical": "préposition",
+      "ejemplo_uso": "Je vais au cinéma avec mes amis.",
+      "palabra": "avec",
+      "frecuencia": 5,
+      "lema": "avec",
+      "sinonimos": [
+        "en compagnie de",
+        "à l'aide de"
+      ]
+    },
+    {
+      "definicion": "Vehículo aéreo con alas que se utiliza para volar.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "Nous prenons l'avion pour les vacances.",
+      "palabra": "avion",
+      "frecuencia": 5,
+      "lema": "avion",
+      "sinonimos": [
+        "aéronef",
+        "appareil"
+      ]
+    },
+    {
+      "definicion": "Poseer, tener o experimentar algo. También se usa como auxiliar.",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "J'ai un chat.",
+      "palabra": "avoir",
+      "frecuencia": 2,
+      "lema": "avoir",
+      "sinonimos": [
+        "posséder",
+        "détenir"
+      ]
+    },
+    {
+      "definicion": "El cuarto mes del año.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "Mon anniversaire est en avril.",
+      "palabra": "avril",
+      "frecuencia": 2,
+      "lema": "avril",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Lugar donde los aviones aterrizan y despegan, y donde los pasajeros embarcan y desembarcan.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "Nous allons à l'aéroport pour prendre notre vol.",
+      "palabra": "aéroport",
+      "frecuencia": 1,
+      "lema": "aéroport",
+      "sinonimos": [
+        "aérogare",
+        "terrain d'aviation"
+      ]
+    },
+    {
+      "definicion": "Insignia o tarjeta de identificación.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "Il faut un badge pour entrer dans le bâtiment.",
+      "palabra": "badge",
+      "frecuencia": 2,
+      "lema": "badge",
+      "sinonimos": [
+        "insigne",
+        "carte"
+      ]
+    },
+    {
+      "definicion": "Deporte de baloncesto o zapatillas deportivas.",
+      "tipo_gramatical": "nom (m/f)",
+      "ejemplo_uso": "Je joue au basket tous les samedis.",
+      "palabra": "basket",
+      "frecuencia": 4,
+      "lema": "basket",
+      "sinonimos": [
+        "basketball",
+        "tennis"
+      ]
+    },
+    {
+      "definicion": "Que tiene poca altura o intensidad.",
+      "tipo_gramatical": "adjectif (f)",
+      "ejemplo_uso": "La musique est trop basse.",
+      "palabra": "basse",
+      "frecuencia": 1,
+      "lema": "bas",
+      "sinonimos": [
+        "faible",
+        "courte"
+      ]
+    },
+    {
+      "definicion": "Vehículo que se desplaza sobre el agua.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "Nous avons fait une promenade en bateau.",
+      "palabra": "bateau",
+      "frecuencia": 1,
+      "lema": "bateau",
+      "sinonimos": [
+        "navire",
+        "embarcation"
+      ]
+    },
+    {
+      "definicion": "Agradable a la vista, hermoso.",
+      "tipo_gramatical": "adjectif (m)",
+      "ejemplo_uso": "Il fait beau aujourd'hui.",
+      "palabra": "beau",
+      "frecuencia": 1,
+      "lema": "beau",
+      "sinonimos": [
+        "joli",
+        "magnifique"
+      ]
+    },
+    {
+      "definicion": "En gran cantidad o medida.",
+      "tipo_gramatical": "adverbe",
+      "ejemplo_uso": "J'aime beaucoup ce film.",
+      "palabra": "beaucoup",
+      "frecuencia": 3,
+      "lema": "beaucoup",
+      "sinonimos": [
+        "énormément",
+        "très"
+      ]
+    },
+    {
+      "definicion": "Cualidad de ser hermoso o atractivo.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "La beauté de ce paysage est incroyable.",
+      "palabra": "beauté",
+      "frecuencia": 1,
+      "lema": "beauté",
+      "sinonimos": [
+        "splendeur",
+        "charme"
+      ]
+    },
+    {
+      "definicion": "País de Europa occidental.",
+      "tipo_gramatical": "nom propre (f)",
+      "ejemplo_uso": "Je voyage en Belgique cet été.",
+      "palabra": "belgique",
+      "frecuencia": 1,
+      "lema": "Belgique",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Expresión de cortesía para recibir a alguien.",
+      "tipo_gramatical": "nom (f) / interjection",
+      "ejemplo_uso": "Bienvenue à la maison!",
+      "palabra": "bienvenue",
+      "frecuencia": 1,
+      "lema": "bienvenue",
+      "sinonimos": [
+        "accueil",
+        "salut"
+      ]
+    },
+    {
+      "definicion": "Que es bien recibido o deseado.",
+      "tipo_gramatical": "adjectif (m, pl)",
+      "ejemplo_uso": "Vous êtes les bienvenus ici.",
+      "palabra": "bienvenus",
+      "frecuencia": 1,
+      "lema": "bienvenu",
+      "sinonimos": [
+        "accueillis",
+        "désirés"
+      ]
+    },
+    {
+      "definicion": "Objetos de adorno personal, a menudo hechos de materiales preciosos.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "Elle porte de beaux bijoux.",
+      "palabra": "bijoux",
+      "frecuencia": 1,
+      "lema": "bijou",
+      "sinonimos": [
+        "parures",
+        "joyaux"
+      ]
+    },
+    {
+      "definicion": "Trozo de papel que da derecho a algo (como un viaje o un espectáculo) o un billete de banco.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "J'ai acheté un billet pour le concert.",
+      "palabra": "billet",
+      "frecuencia": 5,
+      "lema": "billet",
+      "sinonimos": [
+        "ticket",
+        "coupon"
+      ]
+    },
+    {
+      "definicion": "Ciudad en el centro de Francia, conocida por su castillo.",
+      "tipo_gramatical": "nom propre (f)",
+      "ejemplo_uso": "Le château de Blois est magnifique.",
+      "palabra": "blois",
+      "frecuencia": 2,
+      "lema": "Blois",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Ingerir un líquido.",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "J'aime boire de l'eau.",
+      "palabra": "boire",
+      "frecuencia": 1,
+      "lema": "boire",
+      "sinonimos": [
+        "s'abreuver",
+        "ingurgiter"
+      ]
+    },
+    {
+      "definicion": "Líquido que se bebe.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "Quelle boisson voulez-vous?",
+      "palabra": "boisson",
+      "frecuencia": 3,
+      "lema": "boisson",
+      "sinonimos": [
+        "breuvage",
+        "liquide"
+      ]
+    },
+    {
+      "definicion": "Líquidos que se beben (en plural).",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "Les boissons sont incluses dans le prix.",
+      "palabra": "boissons",
+      "frecuencia": 1,
+      "lema": "boisson",
+      "sinonimos": [
+        "breuvages",
+        "liquides"
+      ]
+    },
+    {
+      "definicion": "Que es de buena calidad, agradable o útil.",
+      "tipo_gramatical": "adjectif (m)",
+      "ejemplo_uso": "Ce gâteau est très bon.",
+      "palabra": "bon",
+      "frecuencia": 2,
+      "lema": "bon",
+      "sinonimos": [
+        "excellent",
+        "agréable"
+      ]
+    },
+    {
+      "definicion": "Saludo que se usa durante el día.",
+      "tipo_gramatical": "interjection / nom (m)",
+      "ejemplo_uso": "Bonjour, comment allez-vous?",
+      "palabra": "bonjour",
+      "frecuencia": 3,
+      "lema": "bonjour",
+      "sinonimos": [
+        "salut",
+        "coucou"
+      ]
+    },
+    {
+      "definicion": "Que es de buena calidad, agradable o útil (femenino).",
+      "tipo_gramatical": "adjectif (f)",
+      "ejemplo_uso": "J'ai une bonne nouvelle.",
+      "palabra": "bonne",
+      "frecuencia": 3,
+      "lema": "bon",
+      "sinonimos": [
+        "excellente",
+        "agréable"
+      ]
+    },
+    {
+      "definicion": "El límite o el extremo de algo, especialmente de una superficie o un cuerpo de agua.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "Nous marchons au bord de la mer.",
+      "palabra": "bord",
+      "frecuencia": 2,
+      "lema": "bord",
+      "sinonimos": [
+        "rive",
+        "lisière"
+      ]
+    },
+    {
+      "definicion": "Tienda donde se vende carne.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "J'achète ma viande à la boucherie.",
+      "palabra": "boucherie",
+      "frecuencia": 1,
+      "lema": "boucherie",
+      "sinonimos": [
+        "charcuterie",
+        "abattoir"
+      ]
+    },
+    {
+      "definicion": "Región en el noroeste de Francia.",
+      "tipo_gramatical": "nom propre (f)",
+      "ejemplo_uso": "La Bretagne est connue pour ses crêpes.",
+      "palabra": "bretagne",
+      "frecuencia": 3,
+      "lema": "Bretagne",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Tipo de queso francés, o una región histórica de Francia.",
+      "tipo_gramatical": "nom propre (m) / nom (m)",
+      "ejemplo_uso": "J'adore le fromage de Brie.",
+      "palabra": "brie",
+      "frecuencia": 1,
+      "lema": "brie",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Forma conjugada del verbo 'brillar', para la primera o tercera persona del singular.",
+      "tipo_gramatical": "verbe (indicatif présent)",
+      "ejemplo_uso": "Le soleil brille aujourd'hui.",
+      "palabra": "brille",
+      "frecuencia": 1,
+      "lema": "briller",
+      "sinonimos": [
+        "scintille",
+        "luit"
+      ]
+    },
+    {
+      "definicion": "Informe breve o publicación periódica que contiene noticias o información.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "J'ai reçu le bulletin scolaire de mon enfant.",
+      "palabra": "bulletin",
+      "frecuencia": 1,
+      "lema": "bulletin",
+      "sinonimos": [
+        "rapport",
+        "communiqué"
+      ]
+    },
+    {
+      "definicion": "Vehículo de transporte público que lleva a muchas personas.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "Je prends le bus pour aller au travail.",
+      "palabra": "bus",
+      "frecuencia": 6,
+      "lema": "bus",
+      "sinonimos": [
+        "autobus",
+        "car"
+      ]
+    },
+    {
+      "definicion": "Objetivos o metas que se desean alcanzar. También, los goles en un deporte.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "Nous avons atteint nos buts.",
+      "palabra": "buts",
+      "frecuencia": 5,
+      "lema": "but",
+      "sinonimos": [
+        "objectifs",
+        "finalités"
+      ]
+    },
+    {
+      "definicion": "Objeto que se da a alguien sin esperar nada a cambio, como muestra de afecto o celebración.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "J'ai acheté un cadeau pour son anniversaire.",
+      "palabra": "cadeau",
+      "frecuencia": 1,
+      "lema": "cadeau",
+      "sinonimos": [
+        "présent",
+        "don"
+      ]
+    },
+    {
+      "definicion": "Caja para guardar dinero o mercancías, o el lugar donde se paga en una tienda.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "Je dois passer à la caisse.",
+      "palabra": "caisse",
+      "frecuencia": 3,
+      "lema": "caisse",
+      "sinonimos": [
+        "tiroir-caisse",
+        "comptoir"
+      ]
+    },
+    {
+      "definicion": "Tipo de queso francés, originario de Normandía.",
+      "tipo_gramatical": "nom propre (m) / nom (m)",
+      "ejemplo_uso": "Le camembert est un fromage très populaire.",
+      "palabra": "camembert",
+      "frecuencia": 1,
+      "lema": "camembert",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Apellido de origen español o portugués.",
+      "tipo_gramatical": "nom propre (m/f)",
+      "ejemplo_uso": "Monsieur Campos est notre nouveau professeur.",
+      "palabra": "campos",
+      "frecuencia": 17,
+      "lema": "Campos",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Trozo de papel o plástico con información, como un mapa, una tarjeta de crédito o un menú.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "J'ai oublié ma carte d'identité.",
+      "palabra": "carte",
+      "frecuencia": 4,
+      "lema": "carte",
+      "sinonimos": [
+        "plan",
+        "document"
+      ]
+    },
+    {
+      "definicion": "Objeto que se usa para proteger la cabeza o para escuchar sonido.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "Je porte un casque pour écouter de la musique.",
+      "palabra": "casque",
+      "frecuencia": 2,
+      "lema": "casque",
+      "sinonimos": [
+        "heaume",
+        "écouteurs"
+      ]
+    },
+    {
+      "definicion": "Iglesia principal de una diócesis, a menudo grande e imponente.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "La cathédrale de Notre-Dame est magnifique.",
+      "palabra": "cathédrale",
+      "frecuencia": 1,
+      "lema": "cathédrale",
+      "sinonimos": [
+        "basilique",
+        "église"
+      ]
+    },
+    {
+      "definicion": "Razón o motivo de algo. También, un asunto por el que se lucha.",
+      "tipo_gramatical": "nom (f) / préposition (locution)",
+      "ejemplo_uso": "La cause de l'accident est inconnue.",
+      "palabra": "cause",
+      "frecuencia": 1,
+      "lema": "cause",
+      "sinonimos": [
+        "raison",
+        "motif"
+      ]
+    },
+    {
+      "definicion": "Disco compacto, un formato para almacenar audio o datos.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "J'écoute de la musique sur un CD.",
+      "palabra": "cd",
+      "frecuencia": 1,
+      "lema": "CD",
+      "sinonimos": [
+        "disque",
+        "album"
+      ]
+    },
+    {
+      "definicion": "Indica algo que está cerca o se ha mencionado.",
+      "tipo_gramatical": "déterminant démonstratif (m) / pronom démonstratif",
+      "ejemplo_uso": "Ce livre est intéressant.",
+      "palabra": "ce",
+      "frecuencia": 18,
+      "lema": "ce",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Punto medio de algo o lugar principal de una actividad.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "Le centre-ville est très animé.",
+      "palabra": "centre",
+      "frecuencia": 3,
+      "lema": "centre",
+      "sinonimos": [
+        "milieu",
+        "cœur"
+      ]
+    },
+    {
+      "definicion": "Indica varias cosas que están cerca o se han mencionado.",
+      "tipo_gramatical": "déterminant démonstratif (pl)",
+      "ejemplo_uso": "Ces fleurs sont belles.",
+      "palabra": "ces",
+      "frecuencia": 1,
+      "lema": "ce",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Indica algo femenino que está cerca o se ha mencionado.",
+      "tipo_gramatical": "déterminant démonstratif (f)",
+      "ejemplo_uso": "Cette maison est grande.",
+      "palabra": "cette",
+      "frecuencia": 17,
+      "lema": "ce",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Oportunidad favorable o buena fortuna.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "J'ai eu de la chance aujourd'hui.",
+      "palabra": "chance",
+      "frecuencia": 1,
+      "lema": "chance",
+      "sinonimos": [
+        "fortune",
+        "opportunité"
+      ]
+    },
+    {
+      "definicion": "Composición musical con letra para ser cantada.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "J'aime écouter cette chanson.",
+      "palabra": "chanson",
+      "frecuencia": 3,
+      "lema": "chanson",
+      "sinonimos": [
+        "chant",
+        "mélodie"
+      ]
+    },
+    {
+      "definicion": "Gran carpa de circo o la parte superior de una columna.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "Le cirque a installé son chapiteau.",
+      "palabra": "chapiteau",
+      "frecuencia": 2,
+      "lema": "chapiteau",
+      "sinonimos": [
+        "tente",
+        "dôme"
+      ]
+    },
+    {
+      "definicion": "Indica que se refiere a todos los elementos de un conjunto, tomados individualmente.",
+      "tipo_gramatical": "déterminant indéfini",
+      "ejemplo_uso": "Chaque jour est une nouvelle aventure.",
+      "palabra": "chaque",
+      "frecuencia": 1,
+      "lema": "chaque",
+      "sinonimos": [
+        "tout",
+        "chacun"
+      ]
+    },
+    {
+      "definicion": "Prenda que cubre y protege el pie.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "J'ai acheté de nouvelles chaussures.",
+      "palabra": "chaussures",
+      "frecuencia": 3,
+      "lema": "chaussure",
+      "sinonimos": [
+        "souliers",
+        "godasses"
+      ]
+    },
+    {
+      "definicion": "Que tiene un precio elevado o que es muy querido.",
+      "tipo_gramatical": "adjectif (m)",
+      "ejemplo_uso": "Ce restaurant est très cher.",
+      "palabra": "cher",
+      "frecuencia": 1,
+      "lema": "cher",
+      "sinonimos": [
+        "coûteux",
+        "onéreux"
+      ]
+    },
+    {
+      "definicion": "Que tiene un precio elevado o que es muy querido (plural masculino).",
+      "tipo_gramatical": "adjectif (m, pl)",
+      "ejemplo_uso": "Mes chers amis, bonjour!",
+      "palabra": "chers",
+      "frecuencia": 1,
+      "lema": "cher",
+      "sinonimos": [
+        "coûteux",
+        "onéreux"
+      ]
+    },
+    {
+      "definicion": "Alimento dulce hecho de cacao, azúcar y a menudo leche.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "J'adore le chocolat noir.",
+      "palabra": "chocolat",
+      "frecuencia": 2,
+      "lema": "chocolat",
+      "sinonimos": [
+        "cacao",
+        "tablette"
+      ]
+    }
+  ],
+  "unidad": "Unité 2",
+  "CO": [
+    {
+      "ruta_audio": "17.mp3",
+      "habilidad": "Compréhension de l'oral",
+      "instruccion": "Activité 17 Lisez les questions. Écoutez le document puis répondez. Vous écoutez ce reportage à la radio française.",
+      "tipo": "Multiple Choice",
+      "preguntas": [
+        {
+          "respuesta_correcta": "10 ans.",
+          "opciones": [
+            "6 ans.",
+            "10 ans.",
+            "20 ans."
+          ],
+          "pregunta": "Le festival fête ses..."
+        },
+        {
+          "respuesta_correcta": "en été.",
+          "opciones": [
+            "au printemps.",
+            "en été.",
+            "en hiver."
+          ],
+          "pregunta": "Le festival a lieu..."
+        },
+        {
+          "respuesta_correcta": "activite17_q3_a.png | un chapiteau de cirque",
+          "opciones": [
+            "activite17_q3_a.png | un chapiteau de cirque",
+            "activite17_q3_b.png | un stade de football",
+            "activite17_q3_c.png | une scène de concert"
+          ],
+          "pregunta": "À quoi pouvez-vous assister?"
+        },
+        {
+          "respuesta_correcta": "activite17_q4_b.png | parler au téléphone",
+          "opciones": [
+            "activite17_q4_a.png | envoyer une lettre",
+            "activite17_q4_b.png | parler au téléphone",
+            "activite17_q4_c.png | utiliser un ordinateur"
+          ],
+          "pregunta": "Comment est-ce que vous devez réserver ?"
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": null,
+      "transcripcion": "Le festival de théâtre « En val de Lugnes » fête ses dix ans le 20 juillet prochain. Au programme, il y a six pièces de théâtre. Chaque année, le festival a beaucoup de succès: 3 000 personnes assistent aux spectacles. Vous pouvez réserver vos places à partir de maintenant, par téléphone ou sur Internet.",
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": "18.mp3",
+      "habilidad": "Compréhension de l'oral",
+      "instruccion": "Activité 18 Lisez les questions. Écoutez le document puis répondez. Vous écoutez cette publicité à la radio française.",
+      "tipo": "Multiple Choice",
+      "preguntas": [
+        {
+          "respuesta_correcta": "activite18_q1_a.png | des appareils électroniques",
+          "opciones": [
+            "activite18_q1_a.png | des appareils électroniques",
+            "activite18_q1_b.png | des produits de beauté",
+            "activite18_q1_c.png | du maquillage"
+          ],
+          "pregunta": "Qu'est-ce que Mégajeux vend ?"
+        },
+        {
+          "respuesta_correcta": "10%.",
+          "opciones": [
+            "10%.",
+            "20%.",
+            "25%."
+          ],
+          "pregunta": "La réduction sur les jeux est de..."
+        },
+        {
+          "respuesta_correcta": "activite18_q3_c.png | un casque de réalité virtuelle",
+          "opciones": [
+            "activite18_q3_a.png | une télévision",
+            "activite18_q3_b.png | une tablette",
+            "activite18_q3_c.png | un casque de réalité virtuelle"
+          ],
+          "pregunta": "Quel article est concerné par la remise ?"
+        },
+        {
+          "respuesta_correcta": "lundi.",
+          "opciones": [
+            "lundi.",
+            "mercredi.",
+            "dimanche."
+          ],
+          "pregunta": "Mégajeux ouvre exceptionnellement..."
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": null,
+      "transcripcion": "Profitez de promotions exceptionnelles à Mégajeux: -10% sur les jeux vidéo et -20% sur les accessoires. Nous offrons une remise de 25 € pour tout achat supérieur à 150 € dans notre magasin, ce mercredi. Attention, pas de remise sur les télévisions et les tablettes. Ouverture exceptionnelle le lundi 29.",
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": "19.mp3",
+      "habilidad": "Compréhension de l'oral",
+      "instruccion": "Activité 19 Lisez les questions. Écoutez le document puis répondez. Vous vivez en France. Vous écoutez une émission à la radio.",
+      "tipo": "Multiple Choice",
+      "preguntas": [
+        {
+          "respuesta_correcta": "En mai.",
+          "opciones": [
+            "En avril.",
+            "En mai.",
+            "En juin."
+          ],
+          "pregunta": "Quand a lieu le festival ?"
+        },
+        {
+          "respuesta_correcta": "activite19_q2_c.png | un festival de musique",
+          "opciones": [
+            "activite19_q2_a.png | un concert de musique",
+            "activite19_q2_b.png | un spectacle de magie",
+            "activite19_q2_c.png | un festival de musique"
+          ],
+          "pregunta": "Qu'est-ce que vous pouvez gagner ?"
+        },
+        {
+          "respuesta_correcta": "activite19_q3_b.png | par téléphone",
+          "opciones": [
+            "activite19_q3_a.png | par ordinateur",
+            "activite19_q3_b.png | par téléphone",
+            "activite19_q3_c.png | par courrier"
+          ],
+          "pregunta": "Comment devez-vous contacter la radio?"
+        },
+        {
+          "respuesta_correcta": "Reconnaître une chanson.",
+          "opciones": [
+            "Donner vos coordonnées.",
+            "Répondre à un formulaire.",
+            "Reconnaître une chanson."
+          ],
+          "pregunta": "Que devez-vous faire pour gagner au jeu ?"
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": null,
+      "transcripcion": "Radio Zak, samedi 17 avril. Le festival musical Nuits sonores à Lyon est du 27 au 31 mai. Pour gagner deux places, envoyez un SMS au 3595. Vous devez écouter une chanson et trouver son titre. Bonne chance!",
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": "20.mp3",
+      "habilidad": "Compréhension de l'oral",
+      "instruccion": "Activité 20 Lisez les questions. Écoutez le document puis répondez. Vous êtes en France. Vous écoutez cette émission à la radio.",
+      "tipo": "Multiple Choice",
+      "preguntas": [
+        {
+          "respuesta_correcta": "activite20_q1_b.png | des places de cinéma",
+          "opciones": [
+            "activite20_q1_a.png | des livres et des CD",
+            "activite20_q1_b.png | des places de cinéma",
+            "activite20_q1_c.png | des places de concert"
+          ],
+          "pregunta": "Qu'est-ce que vous pouvez gagner ?"
+        },
+        {
+          "respuesta_correcta": "20 h 30.",
+          "opciones": [
+            "15 h 30.",
+            "19 h.",
+            "20 h 30."
+          ],
+          "pregunta": "À quelle heure a lieu l'événement ?"
+        },
+        {
+          "respuesta_correcta": "activite20_q3_c.png | par téléphone portable",
+          "opciones": [
+            "activite20_q3_a.png | par téléphone",
+            "activite20_q3_b.png | par ordinateur",
+            "activite20_q3_c.png | par téléphone portable"
+          ],
+          "pregunta": "Comment devez-vous contacter la radio?"
+        },
+        {
+          "respuesta_correcta": "mardi.",
+          "opciones": [
+            "mardi.",
+            "mercredi.",
+            "vendredi."
+          ],
+          "pregunta": "Vous pouvez participer jusqu'à..."
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": null,
+      "transcripcion": "Radio locale, bonjour! Aujourd'hui, gagnez deux places pour l'avant-première du film « Le Retour », vendredi prochain, à 20 h 30. Envoyez TICKET au 07 84 93 02 14 avant mardi 19 h pour participer. Le nom du gagnant sera annoncé mercredi à 15 h 30 !",
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": "21.mp3",
+      "habilidad": "Compréhension de l'oral",
+      "instruccion": "Activité 21 Lisez les questions. Écoutez le document puis répondez. Vous écoutez ce reportage à la radio.",
+      "tipo": "Multiple Choice",
+      "preguntas": [
+        {
+          "respuesta_correcta": "activite21_q1_a.png | un musée",
+          "opciones": [
+            "activite21_q1_a.png | un musée",
+            "activite21_q1_b.png | un stade",
+            "activite21_q1_c.png | un supermarché"
+          ],
+          "pregunta": "Quel endroit va ouvrir ?"
+        },
+        {
+          "respuesta_correcta": "mercredi.",
+          "opciones": [
+            "lundi.",
+            "mercredi.",
+            "dimanche."
+          ],
+          "pregunta": "Ce lieu est ouvert le..."
+        },
+        {
+          "respuesta_correcta": "17 h 30.",
+          "opciones": [
+            "17 h 30.",
+            "18 h 30.",
+            "19 h 30."
+          ],
+          "pregunta": "À quelle heure le lieu ferme-t-il le samedi ?"
+        },
+        {
+          "respuesta_correcta": "activite21_q4_c.png | appeler par téléphone",
+          "opciones": [
+            "activite21_q4_a.png | utiliser un ordinateur",
+            "activite21_q4_b.png | utiliser un téléphone portable",
+            "activite21_q4_c.png | appeler par téléphone"
+          ],
+          "pregunta": "Que devez-vous faire pour participer ?"
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": null,
+      "transcripcion": "Radio France, il est 10 h. Le nouveau musée d'art moderne va ouvrir jeudi prochain. Les horaires sont de 9 h à 19 h du mardi au vendredi et de 9 h 30 à 17 h 30 le samedi. Radio France offre vingt places. Pour participer, appelez le 0 805 15 12 15.",
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": "22.mp3",
+      "habilidad": "Compréhension de l'oral",
+      "instruccion": "Activité 22 Lisez les questions. Écoutez le document puis répondez. Vous écoutez cette émission à la radio.",
+      "tipo": "Multiple Choice",
+      "preguntas": [
+        {
+          "respuesta_correcta": "Lausanne.",
+          "opciones": [
+            "Genève.",
+            "Fribourg.",
+            "Lausanne."
+          ],
+          "pregunta": "Quelle équipe de football est éliminée de la Super Ligue ?"
+        },
+        {
+          "respuesta_correcta": "activite22_q2_a.png | un match de hockey sur glace",
+          "opciones": [
+            "activite22_q2_a.png | un match de hockey sur glace",
+            "activite22_q2_b.png | un match de basket",
+            "activite22_q2_c.png | un match de football"
+          ],
+          "pregunta": "L'équipe de Fribourg a gagné quel match ?"
+        },
+        {
+          "respuesta_correcta": "6 buts.",
+          "opciones": [
+            "5 buts.",
+            "6 buts.",
+            "7 buts."
+          ],
+          "pregunta": "L'équipe de Fribourg a marqué..."
+        },
+        {
+          "respuesta_correcta": "activite22_q4_b.png | basket",
+          "opciones": [
+            "activite22_q4_a.png | football",
+            "activite22_q4_b.png | basket",
+            "activite22_q4_c.png | pétanque"
+          ],
+          "pregunta": "Dans quel sport les Français ont-ils gagné la coupe d'Europe ?"
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": null,
+      "transcripcion": "RTS, bonjour. Suivez le sport en direct! La saison de football commence mal: l'équipe de Lausanne ne va pas participer à la Super Ligue de football. En hockey, l'équipe de Fribourg a marqué 6 buts et a gagné le match. Enfin, félicitations aux Français ! Cette année, ils gagnent la coupe d'Europe de basket. Les Français qui habitent à Genève ont célébré la victoire toute la nuit.",
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": "23.mp3",
+      "habilidad": "Compréhension de l'oral",
+      "instruccion": "Activité 23 Lisez les questions. Écoutez le document puis répondez. Vous écoutez cette émission à la radio.",
+      "tipo": "Multiple Choice",
+      "preguntas": [
+        {
+          "respuesta_correcta": "activite23_q1_c.png | un festival en plein air",
+          "opciones": [
+            "activite23_q1_a.png | un concert de musique",
+            "activite23_q1_b.png | un marché",
+            "activite23_q1_c.png | un festival en plein air"
+          ],
+          "pregunta": "De quoi parle l'émission ?"
+        },
+        {
+          "respuesta_correcta": "Vendredi.",
+          "opciones": [
+            "Mercredi.",
+            "Vendredi.",
+            "Dimanche."
+          ],
+          "pregunta": "Quel jour Solidays ouvre-t-il ses portes ?"
+        },
+        {
+          "respuesta_correcta": "170 000.",
+          "opciones": [
+            "130 000.",
+            "170 000.",
+            "190 000."
+          ],
+          "pregunta": "Combien de personnes doivent participer cette année ?"
+        },
+        {
+          "respuesta_correcta": "activite23_q4_b.png | acheter un billet",
+          "opciones": [
+            "activite23_q4_a.png | acheter un hamburger",
+            "activite23_q4_b.png | acheter un billet",
+            "activite23_q4_c.png | acheter un badge"
+          ],
+          "pregunta": "Que devez-vous faire pour réserver ?"
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": null,
+      "transcripcion": "Aujourd'hui, dans l'actualité musicale, nous parlons du festival Solidays. Cette année le festival dure 3 jours du vendredi 28 au dimanche 30 juin. Plus de 170 000 personnes vont assister aux concerts de 50 artistes. Rendez-vous sur le site web pour réserver vos places !",
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": "24.mp3",
+      "habilidad": "Compréhension de l'oral",
+      "instruccion": "Activité 24 Lisez les questions. Écoutez le document puis répondez. Vous écoutez le bulletin météo sur une radio française.",
+      "tipo": "Multiple Choice",
+      "preguntas": [
+        {
+          "respuesta_correcta": "Le matin.",
+          "opciones": [
+            "Le matin.",
+            "L'après-midi.",
+            "Le soir."
+          ],
+          "pregunta": "Quand est-ce que la radio donne la météo ?"
+        },
+        {
+          "respuesta_correcta": "20 degrés.",
+          "opciones": [
+            "18 degrés.",
+            "20 degrés.",
+            "24 degrés."
+          ],
+          "pregunta": "Quelle est la température dans le nord de la France ?"
+        },
+        {
+          "respuesta_correcta": "activite24_q3_a.png | ensoleillé",
+          "opciones": [
+            "activite24_q3_a.png | ensoleillé",
+            "activite24_q3_b.png | nuageux",
+            "activite24_q3_c.png | pluvieux"
+          ],
+          "pregunta": "Quel temps fait-il dans le sud de la France ?"
+        },
+        {
+          "respuesta_correcta": "activite24_q4_a.png | carte de la Bretagne",
+          "opciones": [
+            "activite24_q4_a.png | carte de la Bretagne",
+            "activite24_q4_b.png | carte du sud-est",
+            "activite24_q4_c.png | carte du nord-est"
+          ],
+          "pregunta": "Dans quelle partie de la France trouve-t-on la température la plus basse ?"
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": null,
+      "transcripcion": "Radio France, bonjour. Il est 11 h 17. Aujourd'hui, il fait beau en France. Le soleil brille, la température est de 20 degrés dans le nord et 24 degrés dans le sud. Mais, dans l'ouest de la France, il y a des nuages et beaucoup de vent. Et la température est fraîche: 18 degrés seulement en Bretagne. Bonne journée!",
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": "25.mp3",
+      "habilidad": "Compréhension de l'oral",
+      "instruccion": "Activité 25 Lisez les questions. Écoutez le document puis répondez. Vous écoutez cette publicité à la radio.",
+      "tipo": "Multiple Choice",
+      "preguntas": [
+        {
+          "respuesta_correcta": "2 jours par semaine.",
+          "opciones": [
+            "1 jour par semaine.",
+            "2 jours par semaine.",
+            "3 jours par semaine."
+          ],
+          "pregunta": "Le magasin ouvre sans arrêt..."
+        },
+        {
+          "respuesta_correcta": "19 h.",
+          "opciones": [
+            "10 h.",
+            "19 h.",
+            "20 h."
+          ],
+          "pregunta": "Le magasin ferme à..."
+        },
+        {
+          "respuesta_correcta": "activite25_q3_b.png | DVD",
+          "opciones": [
+            "activite25_q3_a.png | chocolat",
+            "activite25_q3_b.png | DVD",
+            "activite25_q3_c.png | vêtements"
+          ],
+          "pregunta": "Quel produit a la promotion la plus importante ?"
+        },
+        {
+          "respuesta_correcta": "activite25_q4_b.png | une clé USB",
+          "opciones": [
+            "activite25_q4_a.png | une souris d'ordinateur",
+            "activite25_q4_b.png | une clé USB",
+            "activite25_q4_c.png | un disque dur externe"
+          ],
+          "pregunta": "Qu'est-ce que le magasin peut vous offrir ?"
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": null,
+      "transcripcion": "Les magasins Super J ouvrent exceptionnellement ce samedi et ce dimanche, de 9 h à 19 h, sans interruption. Il y aura beaucoup de promotions: moins 10% sur le chocolat, moins 20% sur les vêtements et moins 25% sur les DVD. Si vous dépensez 200 euros ou plus, Super J vous offre une clé USB.",
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": "26.mp3",
+      "habilidad": "Compréhension de l'oral",
+      "instruccion": "Activité 26 Lisez les questions. Écoutez le document puis répondez. Vous êtes en France et vous entendez cette annonce.",
+      "tipo": "Multiple Choice",
+      "preguntas": [
+        {
+          "respuesta_correcta": "activite26_q1_c.png | un bus",
+          "opciones": [
+            "activite26_q1_a.png | un train",
+            "activite26_q1_b.png | une voiture",
+            "activite26_q1_c.png | un bus"
+          ],
+          "pregunta": "Quel moyen de transport utilisez-vous ?"
+        },
+        {
+          "respuesta_correcta": "Paris.",
+          "opciones": [
+            "Blois.",
+            "Paris.",
+            "Orléans."
+          ],
+          "pregunta": "Quelle est la destination finale ?"
+        },
+        {
+          "respuesta_correcta": "À 12 h 45.",
+          "opciones": [
+            "À 11 h 30.",
+            "À 12 h 45.",
+            "À 13 h 30."
+          ],
+          "pregunta": "À quelle heure devez-vous arriver à Orléans ?"
+        },
+        {
+          "respuesta_correcta": "activite26_q4_a.png | les animaux",
+          "opciones": [
+            "activite26_q4_a.png | les animaux",
+            "activite26_q4_b.png | les instruments de musique",
+            "activite26_q4_c.png | la nourriture"
+          ],
+          "pregunta": "Qu'est-ce qui est interdit?"
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": null,
+      "transcripcion": "Mesdames, messieurs, le bus à destination de Paris va partir voie numéro 5. Il s'arrête à Blois à 11 h 30, à Orléans à 12 h 45 et arrive à Paris, son terminus, à 13 h 30. Nous vous rappelons que les animaux ne sont pas autorisés à monter à bord. Bon voyage.",
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": "27.mp3",
+      "habilidad": "Compréhension de l'oral",
+      "instruccion": "Activité 27 Lisez les questions. Écoutez le document puis répondez. Vous entendez cette annonce dans un magasin en Belgique.",
+      "tipo": "Multiple Choice",
+      "preguntas": [
+        {
+          "respuesta_correcta": "activite27_q1_a.png | rayon frais",
+          "opciones": [
+            "activite27_q1_a.png | rayon frais",
+            "activite27_q1_b.png | rayon fruits et légumes",
+            "activite27_q1_c.png | rayon boucherie"
+          ],
+          "pregunta": "Dans quel rayon le magasin propose une réduction ?"
+        },
+        {
+          "respuesta_correcta": "20%.",
+          "opciones": [
+            "10%.",
+            "20%.",
+            "30%."
+          ],
+          "pregunta": "La réduction est de..."
+        },
+        {
+          "respuesta_correcta": "activite27_q3_a.png | fromage",
+          "opciones": [
+            "activite27_q3_a.png | fromage",
+            "activite27_q3_b.png | poisson",
+            "activite27_q3_c.png | viande"
+          ],
+          "pregunta": "Sur quel produit le magasin fait-il une réduction de 2 euros ?"
+        },
+        {
+          "respuesta_correcta": "15 minutes.",
+          "opciones": [
+            "5 minutes.",
+            "10 minutes.",
+            "15 minutes."
+          ],
+          "pregunta": "Les réductions se terminent dans..."
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": null,
+      "transcripcion": "Aujourd'hui, votre magasin propose une promotion exceptionnelle au rayon frais: moins 20% sur le poisson. Profitez aussi des fromages: deux euros de réduction sur le camembert, le brie et le roquefort. Dépêchez-vous, ces promotions se terminent dans quinze minutes.",
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": "28.mp3",
+      "habilidad": "Compréhension de l'oral",
+      "instruccion": "Activité 28 Lisez les questions. Écoutez le document puis répondez. Vous êtes en voyage. Vous entendez cette annonce.",
+      "tipo": "Multiple Choice",
+      "preguntas": [
+        {
+          "respuesta_correcta": "activite28_q1_b.png | un avion",
+          "opciones": [
+            "activite28_q1_a.png | un bateau",
+            "activite28_q1_b.png | un avion",
+            "activite28_q1_c.png | un train"
+          ],
+          "pregunta": "Avec quel moyen de transport voyagez-vous ?"
+        },
+        {
+          "respuesta_correcta": "354.",
+          "opciones": [
+            "253.",
+            "354.",
+            "454."
+          ],
+          "pregunta": "Quel est le numéro d'embarquement ?"
+        },
+        {
+          "respuesta_correcta": "activite28_q3_a.png | un journal",
+          "opciones": [
+            "activite28_q3_a.png | un journal",
+            "activite28_q3_b.png | une boisson",
+            "activite28_q3_c.png | un sandwich"
+          ],
+          "pregunta": "Quel article coûte le moins cher ?"
+        },
+        {
+          "respuesta_correcta": "anglais.",
+          "opciones": [
+            "anglais.",
+            "allemand.",
+            "espagnol."
+          ],
+          "pregunta": "Les journaux sont disponibles en..."
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": null,
+      "transcripcion": "Mesdames, messieurs, bienvenus à bord du vol 354 à destination de Toulouse. Vous pouvez acheter des boissons pour 2 euros et des sandwichs pour 4 euros. Nous proposons aussi des menus à 9 euros. Des journaux sont disponibles en français et en anglais. Ils coûtent 1 euro. Nous vous souhaitons un bon voyage.",
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": "29.mp3",
+      "habilidad": "Compréhension de l'oral",
+      "instruccion": "Activité 29 Lisez les questions. Écoutez le document puis répondez. Vous êtes dans un magasin en France. Vous entendez cette annonce.",
+      "tipo": "Multiple Choice",
+      "preguntas": [
+        {
+          "respuesta_correcta": "activite29_q1_a.png | des chaussures",
+          "opciones": [
+            "activite29_q1_a.png | des chaussures",
+            "activite29_q1_b.png | des lunettes",
+            "activite29_q1_c.png | des bijoux"
+          ],
+          "pregunta": "Qu'est-ce que vend le magasin ?"
+        },
+        {
+          "respuesta_correcta": "Dans 20 minutes.",
+          "opciones": [
+            "Dans 15 minutes.",
+            "Dans 20 minutes.",
+            "Dans 30 minutes."
+          ],
+          "pregunta": "Quand ferme le magasin ?"
+        },
+        {
+          "respuesta_correcta": "Aller en caisse.",
+          "opciones": [
+            "Aller en caisse.",
+            "S'inscrire à un jeu.",
+            "Se présenter à l'accueil."
+          ],
+          "pregunta": "Qu'est-ce que les clients doivent faire ?"
+        },
+        {
+          "respuesta_correcta": "activite29_q4_c.png | des réductions",
+          "opciones": [
+            "activite29_q4_a.png | des produits de nettoyage",
+            "activite29_q4_b.png | un cadeau surprise",
+            "activite29_q4_c.png | des réductions"
+          ],
+          "pregunta": "Que va offrir le magasin ?"
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": null,
+      "transcripcion": "Chers clients, votre magasin de chaussures ferme dans 20 minutes. Merci de vous présenter à la caisse pour payer vos achats. Demain matin, le magasin ouvre à 9 h 15 et ferme à 20 h. Le magasin proposera des promotions toute la journée. Merci et bonne soirée.",
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": "30.mp3",
+      "habilidad": "Compréhension de l'oral",
+      "instruccion": "Activité 30 Lisez les questions. Écoutez le document puis répondez. Vous êtes en France. Vous entendez cette annonce.",
+      "tipo": "Multiple Choice",
+      "preguntas": [
+        {
+          "respuesta_correcta": "activite30_q1_b.png | un tramway",
+          "opciones": [
+            "activite30_q1_a.png | un bus",
+            "activite30_q1_b.png | un tramway",
+            "activite30_q1_c.png | un métro"
+          ],
+          "pregunta": "Quelle ligne de transport ferme ?"
+        },
+        {
+          "respuesta_correcta": "19 h.",
+          "opciones": [
+            "19 h.",
+            "20 h.",
+            "23 h."
+          ],
+          "pregunta": "À partir de quelle heure aura lieu la fermeture ?"
+        },
+        {
+          "respuesta_correcta": "activite30_q3_b.png | travaux",
+          "opciones": [
+            "activite30_q3_a.png | inondation",
+            "activite30_q3_b.png | travaux",
+            "activite30_q3_c.png | manifestation"
+          ],
+          "pregunta": "Pourquoi la ligne ferme-t-elle ?"
+        },
+        {
+          "respuesta_correcta": "au centre-ville.",
+          "opciones": [
+            "au marché.",
+            "au centre-ville.",
+            "au stade municipal."
+          ],
+          "pregunta": "Avec le métro, vous pouvez aller..."
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": null,
+      "transcripcion": "Madame, monsieur, la ligne 4 du tramway est fermée du 20 au 23 septembre, de 19 heures à 23 heures, pour cause de travaux. Pour aller à la cathédrale, vous pouvez prendre le bus numéro 13. Pour aller au centre-ville, vous pouvez prendre la ligne 8 du métro. Merci de votre compréhension.",
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": "31.mp3",
+      "habilidad": "Compréhension de l'oral",
+      "instruccion": "Activité 31 Lisez les questions. Écoutez le document puis répondez. Vous êtes en vacances en France. Vous entendez cette annonce.",
+      "tipo": "Multiple Choice",
+      "preguntas": [
+        {
+          "respuesta_correcta": "activite31_q1_a.png | un aquarium",
+          "opciones": [
+            "activite31_q1_a.png | un aquarium",
+            "activite31_q1_b.png | un cirque",
+            "activite31_q1_c.png | un parc d'attractions"
+          ],
+          "pregunta": "Où entendez-vous cette annonce?"
+        },
+        {
+          "respuesta_correcta": "aux enfants.",
+          "opciones": [
+            "aux enfants.",
+            "aux adolescents.",
+            "aux adultes."
+          ],
+          "pregunta": "L'activité est réservée..."
+        },
+        {
+          "respuesta_correcta": "11 h.",
+          "opciones": [
+            "11 h.",
+            "11 h 45.",
+            "12 h 15."
+          ],
+          "pregunta": "À quelle heure démarre l'activité ?"
+        },
+        {
+          "respuesta_correcta": "activite31_q4_b.png | un billet",
+          "opciones": [
+            "activite31_q4_a.png | un repas",
+            "activite31_q4_b.png | un billet",
+            "activite31_q4_c.png | un badge"
+          ],
+          "pregunta": "Qu'est-ce que vous devez réserver ?"
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": null,
+      "transcripcion": "Bienvenue à l'aquarium de Lamotte. Aujourd'hui, nous proposons une activité exceptionnelle pour les enfants: donner de la nourriture aux dauphins. L'activité commence à 11 h et termine à 11 h 45. Vous pouvez réserver un ticket à partir de maintenant, c'est gratuit.",
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": "32.mp3",
+      "habilidad": "Compréhension de l'oral",
+      "instruccion": "Activité 32 Lisez les questions. Écoutez le document puis répondez. Vous êtes à Rennes, en France. Vous entendez cette annonce à la gare.",
+      "tipo": "Multiple Choice",
+      "preguntas": [
+        {
+          "respuesta_correcta": "8664.",
+          "opciones": [
+            "8554.",
+            "8664.",
+            "8774."
+          ],
+          "pregunta": "Le numéro de train à destination de Nantes est le..."
+        },
+        {
+          "respuesta_correcta": "activite32_q2_b.png | un train",
+          "opciones": [
+            "activite32_q2_a.png | un bus",
+            "activite32_q2_b.png | un train",
+            "activite32_q2_c.png | un taxi"
+          ],
+          "pregunta": "Quel moyen de transport pouvez-vous prendre à 16 h 18 ?"
+        },
+        {
+          "respuesta_correcta": "à la voie 6.",
+          "opciones": [
+            "à la voie 6.",
+            "au quai 26.",
+            "à la zone 16."
+          ],
+          "pregunta": "Pour partir, vous devez vous rendre..."
+        },
+        {
+          "respuesta_correcta": "activite32_q4_a.png | aller à l'accueil",
+          "opciones": [
+            "activite32_q4_a.png | aller à l'accueil",
+            "activite32_q4_b.png | appeler par téléphone",
+            "activite32_q4_c.png | utiliser un ordinateur"
+          ],
+          "pregunta": "Qu'est-ce que vous devez faire pour avoir un remboursement ?"
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": null,
+      "transcripcion": "Mesdames, messieurs, le train numéro 8664, à destination de Nantes, départ prévu à 14 h 27, est annulé. Vous pouvez prendre le train suivant à 16 h 18, voie numéro 6. Si vous voulez, vous pouvez demander un remboursement de votre billet à l'accueil de la gare. La SNCF vous présente ses excuses et vous remercie pour votre compréhension.",
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": "33.mp3",
+      "habilidad": "Compréhension de l'oral",
+      "instruccion": "Activité 33 Lisez les questions. Écoutez le document puis répondez. Vous entendez cette annonce à l'aéroport.",
+      "tipo": "Multiple Choice",
+      "preguntas": [
+        {
+          "respuesta_correcta": "AF717.",
+          "opciones": [
+            "AF717.",
+            "AF720.",
+            "AF817."
+          ],
+          "pregunta": "Quel est le numéro du vol?"
+        },
+        {
+          "respuesta_correcta": "15 minutes.",
+          "opciones": [
+            "15 minutes.",
+            "20 minutes.",
+            "25 minutes."
+          ],
+          "pregunta": "L'embarquement va commencer dans..."
+        },
+        {
+          "respuesta_correcta": "activite33_q3_b.png | les familles avec enfants",
+          "opciones": [
+            "activite33_q3_a.png | les personnes âgées",
+            "activite33_q3_b.png | les familles avec enfants",
+            "activite33_q3_c.png | les hommes d'affaires"
+          ],
+          "pregunta": "Qui peut monter dans l'avion en premier ?"
+        },
+        {
+          "respuesta_correcta": "activite33_q4_c.png | une boisson",
+          "opciones": [
+            "activite33_q4_a.png | de la nourriture",
+            "activite33_q4_b.png | des magazines",
+            "activite33_q4_c.png | une boisson"
+          ],
+          "pregunta": "Que peut-on avoir dans l'avion ?"
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": null,
+      "transcripcion": "Mesdames, messieurs, l'embarquement du vol Air France numéro AF717 commence dans quinze minutes. Ce vol à destination de Paris part à 8 h 20. Il dure une heure et 30 minutes. Merci de préparer votre passeport. Les passagers qui voyagent avec des enfants peuvent embarquer maintenant. Nous offrons à boire dans l'avion mais pas à manger ou de divertissement. Merci.",
+      "campos_formulario": null
+    }
+  ],
+  "tema_CO": "Identifier une activité"
+}

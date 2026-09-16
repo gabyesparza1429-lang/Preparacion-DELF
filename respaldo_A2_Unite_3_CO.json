@@ -1,0 +1,1700 @@
+{
+  "diccionario_unidad": [
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "a",
+      "frecuencia": 38,
+      "lema": "a",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "abc",
+      "frecuencia": 3,
+      "lema": "abc",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "absenter",
+      "frecuencia": 1,
+      "lema": "absenter",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "accord",
+      "frecuencia": 1,
+      "lema": "accord",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "accueil",
+      "frecuencia": 4,
+      "lema": "accueil",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "achat",
+      "frecuencia": 2,
+      "lema": "achat",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "achètera",
+      "frecuencia": 1,
+      "lema": "achètera",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "activite",
+      "frecuencia": 88,
+      "lema": "activite",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "activité",
+      "frecuencia": 15,
+      "lema": "activité",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "actuellement",
+      "frecuencia": 1,
+      "lema": "actuellement",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "adresse",
+      "frecuencia": 5,
+      "lema": "adresse",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "af",
+      "frecuencia": 1,
+      "lema": "af",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "agence",
+      "frecuencia": 2,
+      "lema": "agence",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "ai",
+      "frecuencia": 4,
+      "lema": "ai",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "aider",
+      "frecuencia": 1,
+      "lema": "aider",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "aller",
+      "frecuencia": 13,
+      "lema": "aller",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "allez",
+      "frecuencia": 1,
+      "lema": "allez",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "alors",
+      "frecuencia": 1,
+      "lema": "alors",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "amener",
+      "frecuencia": 1,
+      "lema": "amener",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "amir",
+      "frecuencia": 1,
+      "lema": "amir",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "amis",
+      "frecuencia": 1,
+      "lema": "amis",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "andré",
+      "frecuencia": 3,
+      "lema": "andré",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "animal",
+      "frecuencia": 11,
+      "lema": "animal",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "annonce",
+      "frecuencia": 1,
+      "lema": "annonce",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "annoncer",
+      "frecuencia": 1,
+      "lema": "annoncer",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "annuler",
+      "frecuencia": 4,
+      "lema": "annuler",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "annulé",
+      "frecuencia": 1,
+      "lema": "annulé",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "annulée",
+      "frecuencia": 1,
+      "lema": "annulée",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "appareil",
+      "frecuencia": 3,
+      "lema": "appareil",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "appelant",
+      "frecuencia": 3,
+      "lema": "appelant",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "appeler",
+      "frecuencia": 1,
+      "lema": "appeler",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "appelle",
+      "frecuencia": 12,
+      "lema": "appelle",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "apporter",
+      "frecuencia": 6,
+      "lema": "apporter",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "après",
+      "frecuencia": 13,
+      "lema": "après",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "argent",
+      "frecuencia": 1,
+      "lema": "argent",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "arriver",
+      "frecuencia": 1,
+      "lema": "arriver",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "arrivera",
+      "frecuencia": 2,
+      "lema": "arrivera",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "arrêt",
+      "frecuencia": 3,
+      "lema": "arrêt",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "assurance",
+      "frecuencia": 3,
+      "lema": "assurance",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "attention",
+      "frecuencia": 1,
+      "lema": "attention",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "au",
+      "frecuencia": 30,
+      "lema": "au",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "audio",
+      "frecuencia": 12,
+      "lema": "audio",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "aujourd",
+      "frecuencia": 3,
+      "lema": "aujourd",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "aura",
+      "frecuencia": 3,
+      "lema": "aura",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "aurez",
+      "frecuencia": 1,
+      "lema": "aurez",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "aussi",
+      "frecuencia": 2,
+      "lema": "aussi",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "aux",
+      "frecuencia": 1,
+      "lema": "aux",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "avant",
+      "frecuencia": 6,
+      "lema": "avant",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "avec",
+      "frecuencia": 6,
+      "lema": "avec",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "avenue",
+      "frecuencia": 1,
+      "lema": "avenue",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "avez",
+      "frecuencia": 6,
+      "lema": "avez",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "avion",
+      "frecuencia": 1,
+      "lema": "avion",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "avoir",
+      "frecuencia": 1,
+      "lema": "avoir",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "avons",
+      "frecuencia": 5,
+      "lema": "avons",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "aéroport",
+      "frecuencia": 1,
+      "lema": "aéroport",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "bancaire",
+      "frecuencia": 4,
+      "lema": "bancaire",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "beaucoup",
+      "frecuencia": 2,
+      "lema": "beaucoup",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "belgique",
+      "frecuencia": 1,
+      "lema": "belgique",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "besoin",
+      "frecuencia": 2,
+      "lema": "besoin",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "bibliothèque",
+      "frecuencia": 1,
+      "lema": "bibliothèque",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "bien",
+      "frecuencia": 1,
+      "lema": "bien",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "bientôt",
+      "frecuencia": 2,
+      "lema": "bientôt",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "boisson",
+      "frecuencia": 3,
+      "lema": "boisson",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "boissons",
+      "frecuencia": 2,
+      "lema": "boissons",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "bonjour",
+      "frecuencia": 7,
+      "lema": "bonjour",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "bureau",
+      "frecuencia": 2,
+      "lema": "bureau",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "bus",
+      "frecuencia": 6,
+      "lema": "bus",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "bénéficier",
+      "frecuencia": 1,
+      "lema": "bénéficier",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "cabinet",
+      "frecuencia": 2,
+      "lema": "cabinet",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "cadeau",
+      "frecuencia": 3,
+      "lema": "cadeau",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "café",
+      "frecuencia": 2,
+      "lema": "café",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "cahier",
+      "frecuencia": 3,
+      "lema": "cahier",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "campos",
+      "frecuencia": 12,
+      "lema": "campos",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "car",
+      "frecuencia": 2,
+      "lema": "car",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "carte",
+      "frecuencia": 11,
+      "lema": "carte",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "catalogue",
+      "frecuencia": 1,
+      "lema": "catalogue",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "ce",
+      "frecuencia": 22,
+      "lema": "ce",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "cette",
+      "frecuencia": 1,
+      "lema": "cette",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "chambre",
+      "frecuencia": 2,
+      "lema": "chambre",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "change",
+      "frecuencia": 1,
+      "lema": "change",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "changements",
+      "frecuencia": 1,
+      "lema": "changements",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "chaque",
+      "frecuencia": 1,
+      "lema": "chaque",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "chat",
+      "frecuencia": 3,
+      "lema": "chat",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "chaud",
+      "frecuencia": 1,
+      "lema": "chaud",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "chercher",
+      "frecuencia": 2,
+      "lema": "chercher",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "chez",
+      "frecuencia": 7,
+      "lema": "chez",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "chien",
+      "frecuencia": 1,
+      "lema": "chien",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "chèque",
+      "frecuencia": 1,
+      "lema": "chèque",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "cinéma",
+      "frecuencia": 3,
+      "lema": "cinéma",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "client",
+      "frecuencia": 3,
+      "lema": "client",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "code",
+      "frecuencia": 2,
+      "lema": "code",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "colis",
+      "frecuencia": 2,
+      "lema": "colis",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "combien",
+      "frecuencia": 1,
+      "lema": "combien",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "commande",
+      "frecuencia": 3,
+      "lema": "commande",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "commander",
+      "frecuencia": 2,
+      "lema": "commander",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "commence",
+      "frecuencia": 1,
+      "lema": "commence",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "comment",
+      "frecuencia": 5,
+      "lema": "comment",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "communication",
+      "frecuencia": 2,
+      "lema": "communication",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "compréhension",
+      "frecuencia": 12,
+      "lema": "compréhension",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "compétition",
+      "frecuencia": 1,
+      "lema": "compétition",
+      "sinonimos": []
+    }
+  ],
+  "unidad": "Unité 3",
+  "CO": [
+    {
+      "ruta_audio": "26.mp3",
+      "habilidad": "Compréhension de l'oral",
+      "instruccion": "Activité 26 Lisez les questions. Écoutez le document puis répondez. Vous écoutez ce message sur un répondeur téléphonique.",
+      "tipo": "QCM",
+      "preguntas": [
+        {
+          "respuesta_correcta": "2 semaines.",
+          "opciones": [
+            "1 semaine.",
+            "2 semaines.",
+            "3 semaines."
+          ],
+          "pregunta": "1 Combien de temps va s'absenter Lucie ?"
+        },
+        {
+          "respuesta_correcta": "animal_26_q2_C.png | un chat",
+          "opciones": [
+            "animal_26_q2_A.png | un chien",
+            "animal_26_q2_B.png | un lapin",
+            "animal_26_q2_C.png | un chat"
+          ],
+          "pregunta": "2 Quel animal devez-vous garder ?"
+        },
+        {
+          "respuesta_correcta": "Le matin.",
+          "opciones": [
+            "Le matin.",
+            "L'après-midi.",
+            "Le soir."
+          ],
+          "pregunta": "3 Quand devez-vous vous occuper de l'animal de Lucie ?"
+        },
+        {
+          "respuesta_correcta": "animal_26_q4_B.png | du lait",
+          "opciones": [
+            "animal_26_q4_A.png | des croquettes",
+            "animal_26_q4_B.png | du lait",
+            "animal_26_q4_C.png | de la pâtée"
+          ],
+          "pregunta": "4 Qu'est-il interdit de donner à l'animal ?"
+        },
+        {
+          "respuesta_correcta": "Dans l'entrée.",
+          "opciones": [
+            "Dans l'entrée.",
+            "Dans le salon.",
+            "Dans la cuisine."
+          ],
+          "pregunta": "5 Où est rangée la nourriture ?"
+        },
+        {
+          "respuesta_correcta": "6991.",
+          "opciones": [
+            "6271.",
+            "6691.",
+            "6991."
+          ],
+          "pregunta": "6 Quel est le code de l'immeuble de Lucie ?"
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": null,
+      "transcripcion": "Salut, c'est Lucie. Je pars en vacances deux semaines et j'ai besoin de toi pour garder mon chat. Tu pourrais venir chaque jour à 9 h pour lui donner à manger? Il mange de la pâtée et des croquettes. Il ne faut surtout pas lui donner de lait. Sa nourriture est dans le placard de l'entrée. Attention à bien fermer la porte de la cuisine. Ses jeux sont dans le salon. Voici le code de mon immeuble: 6991. C'est au deuxième étage. Merci beaucoup!",
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": "27.mp3",
+      "habilidad": "Compréhension de l'oral",
+      "instruccion": "Activité 27 Lisez les questions. Écoutez le document puis répondez. Vous écoutez ce message sur un répondeur téléphonique.",
+      "tipo": "QCM",
+      "preguntas": [
+        {
+          "respuesta_correcta": "confirmer",
+          "opciones": [
+            "annuler",
+            "refuser une sortie.",
+            "confirmer"
+          ],
+          "pregunta": "1 Max vous appelle pour..."
+        },
+        {
+          "respuesta_correcta": "activite_27_q2_B.png | un concert",
+          "opciones": [
+            "activite_27_q2_A.png | une séance de cinéma",
+            "activite_27_q2_B.png | un concert",
+            "activite_27_q2_C.png | une visite de musée"
+          ],
+          "pregunta": "2 De quelle activité parle Max ?"
+        },
+        {
+          "respuesta_correcta": "21 h.",
+          "opciones": [
+            "19 h 30.",
+            "21 h.",
+            "22 h 30."
+          ],
+          "pregunta": "3 À quelle heure débute l'activité ?"
+        },
+        {
+          "respuesta_correcta": "activite_27_q4_A.png | un restaurant",
+          "opciones": [
+            "activite_27_q4_A.png | un restaurant",
+            "activite_27_q4_B.png | un magasin de vêtements",
+            "activite_27_q4_C.png | un restaurant de sushis"
+          ],
+          "pregunta": "4 Où Max vous propose-t-il d'aller avant le début de l'événement ?"
+        },
+        {
+          "respuesta_correcta": "Chez lui.",
+          "opciones": [
+            "Chez lui.",
+            "Au métro.",
+            "Au cinéma."
+          ],
+          "pregunta": "5 Où devez-vous rejoindre Max ?"
+        },
+        {
+          "respuesta_correcta": "152",
+          "opciones": [
+            "152",
+            "158",
+            "162"
+          ],
+          "pregunta": "6 Max vit au..."
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": null,
+      "transcripcion": "Salut c'est Max. Ça va? Je t'appelle pour te confirmer le concert du samedi 18 juin. Le concert commence à 21 h, ça va se terminer vers 22 h 30. Je te propose d'aller manger avant d'aller au concert, c'est moi qui t'invite ! On peut y aller vers 19 h 30. On peut se retrouver chez moi et y aller ensemble ? Il faudra qu'on prenne le métro. J'habite au 152 avenue du Président, près du cinéma. Rappelle-moi vite ! À bientôt.",
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": "28.mp3",
+      "habilidad": "Compréhension de l'oral",
+      "instruccion": "Activité 28 Lisez les questions. Écoutez le document puis répondez. Vous écoutez ce message sur un répondeur téléphonique.",
+      "tipo": "QCM",
+      "preguntas": [
+        {
+          "respuesta_correcta": "activite_28_q1_A.png | une secrétaire médicale",
+          "opciones": [
+            "activite_28_q1_A.png | une secrétaire médicale",
+            "activite_28_q1_B.png | un dentiste",
+            "activite_28_q1_C.png | une enseignante"
+          ],
+          "pregunta": "1 Qui vous appelle ?"
+        },
+        {
+          "respuesta_correcta": "Le personnel est malade.",
+          "opciones": [
+            "Le personnel est malade.",
+            "Il y a eu une erreur dans la réservation.",
+            "Le cabinet est fermé exceptionnellement."
+          ],
+          "pregunta": "2 Pourquoi le rendez-vous est-il annulé ?"
+        },
+        {
+          "respuesta_correcta": "la semaine prochaine.",
+          "opciones": [
+            "demain.",
+            "la semaine prochaine.",
+            "le mois prochain."
+          ],
+          "pregunta": "3 On vous propose un rendez-vous..."
+        },
+        {
+          "respuesta_correcta": "L'après-midi.",
+          "opciones": [
+            "La matinée.",
+            "L'après-midi.",
+            "Le soir."
+          ],
+          "pregunta": "4 Le rendez-vous de vendredi est à quel moment ?"
+        },
+        {
+          "respuesta_correcta": "en appelant le standard.",
+          "opciones": [
+            "en répondant par SMS.",
+            "en envoyant un courriel.",
+            "en appelant le standard."
+          ],
+          "pregunta": "5 Vous devez confirmer votre rendez-vous..."
+        },
+        {
+          "respuesta_correcta": "activite_28_q6_C.png | une carte d'assurance maladie",
+          "opciones": [
+            "activite_28_q6_A.png | une carte bancaire",
+            "activite_28_q6_B.png | de l'argent liquide",
+            "activite_28_q6_C.png | une carte d'assurance maladie"
+          ],
+          "pregunta": "6 Que devez-vous apporter ?"
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": null,
+      "transcripcion": "Bonjour, ici le cabinet dentaire du docteur Molaire. Je suis désolée, mais nous sommes obligés d'annuler votre rendez-vous de 15 h 30 prévu aujourd'hui. Le docteur est souffrant. Nous vous proposons de décaler votre visite à la semaine prochaine. Nous avons une place disponible jeudi 14 à 11 h 15 ou vendredi 15 à 15 h 30. Veuillez nous rappeler pour confirmer. N'oubliez pas votre carte d'assurance maladie. À bientôt.",
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": "29.mp3",
+      "habilidad": "Compréhension de l'oral",
+      "instruccion": "Activité 29 Lisez les questions. Écoutez le document puis répondez. Vous écoutez ce message sur un répondeur téléphonique.",
+      "tipo": "QCM",
+      "preguntas": [
+        {
+          "respuesta_correcta": "d'informatique.",
+          "opciones": [
+            "de langue.",
+            "d'informatique.",
+            "de communication."
+          ],
+          "pregunta": "1 L'employé appelle pour une formation..."
+        },
+        {
+          "respuesta_correcta": "12 h.",
+          "opciones": [
+            "9 h.",
+            "12 h.",
+            "13 h 15."
+          ],
+          "pregunta": "2 Le matin, la formation finit à..."
+        },
+        {
+          "respuesta_correcta": "activite_29_q3_A.png | par carte bancaire",
+          "opciones": [
+            "activite_29_q3_A.png | par carte bancaire",
+            "activite_29_q3_B.png | en espèces",
+            "activite_29_q3_C.png | par chèque"
+          ],
+          "pregunta": "3 Comment pouvez-vous payer votre formation ?"
+        },
+        {
+          "respuesta_correcta": "de quoi écrire.",
+          "opciones": [
+            "des livres.",
+            "un ordinateur.",
+            "de quoi écrire."
+          ],
+          "pregunta": "4 Formation ABC vous donne..."
+        },
+        {
+          "respuesta_correcta": "activite_29_q5_B.png | une carte d'identité",
+          "opciones": [
+            "activite_29_q5_A.png | une carte d'étudiant",
+            "activite_29_q5_B.png | une carte d'identité",
+            "activite_29_q5_C.png | une carte de bibliothèque"
+          ],
+          "pregunta": "5 Quel document devez-vous présenter le premier jour de la formation ?"
+        },
+        {
+          "respuesta_correcta": "par téléphone.",
+          "opciones": [
+            "par SMS.",
+            "par courriel.",
+            "par téléphone."
+          ],
+          "pregunta": "6 Vous pouvez joindre Formation ABC..."
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": null,
+      "transcripcion": "Bonjour, c'est Jérôme de Formation ABC. Je vous appelle pour confirmer votre inscription à la formation d'informatique que nous organisons lundi, pendant 4 jours. La formation est le matin de 9 h à midi, puis l'après-midi de 13 h 15 à 16 h 15. Vous pouvez payer par carte bancaire sur Internet ou à l'accueil. Le premier jour, nous vous donnerons un stylo et du papier. N'oubliez pas votre pièce d'identité. Pour toute question, contactez-nous au 02 54 18 87 61. Merci.",
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": "30.mp3",
+      "habilidad": "Compréhension de l'oral",
+      "instruccion": "Activité 30 Lisez les questions. Écoutez le document puis répondez. Vous écoutez ce message sur un répondeur téléphonique.",
+      "tipo": "QCM",
+      "preguntas": [
+        {
+          "respuesta_correcta": "arrivera en retard.",
+          "opciones": [
+            "est annulée.",
+            "va arriver plus tôt.",
+            "arrivera en retard."
+          ],
+          "pregunta": "1 Le service client vous annonce que votre commande..."
+        },
+        {
+          "respuesta_correcta": "activite_30_q2_B.png | un poisson",
+          "opciones": [
+            "activite_30_q2_A.png | un poulet rôti",
+            "activite_30_q2_B.png | un poisson",
+            "activite_30_q2_C.png | de la viande rouge"
+          ],
+          "pregunta": "2 Quel produit est indisponible ?"
+        },
+        {
+          "respuesta_correcta": "Des fruits.",
+          "opciones": [
+            "Des fruits.",
+            "Des légumes.",
+            "Des pâtisseries."
+          ],
+          "pregunta": "3 Que vous offre le service client pour s'excuser ?"
+        },
+        {
+          "respuesta_correcta": "activite_30_q4_B.png | des produits laitiers",
+          "opciones": [
+            "activite_30_q4_A.png | des fruits rouges",
+            "activite_30_q4_B.png | des produits laitiers",
+            "activite_30_q4_C.png | des légumes"
+          ],
+          "pregunta": "4 Quel produit est concerné par la réduction ?"
+        },
+        {
+          "respuesta_correcta": "11 h 15.",
+          "opciones": [
+            "11 h 15.",
+            "12 h 30.",
+            "12 h 45."
+          ],
+          "pregunta": "5 À quelle heure pouvez-vous récupérer la commande ?"
+        },
+        {
+          "respuesta_correcta": "d'une livraison gratuite.",
+          "opciones": [
+            "d'une livraison gratuite.",
+            "d'un produit laitier offert.",
+            "d'une remise sur les fruits."
+          ],
+          "pregunta": "6 Pour 15 € d'achat, vous pouvez bénéficier..."
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": null,
+      "transcripcion": "Bonjour, ici le service client du marché de Rungis. Malheureusement, votre commande a pris du retard. Je vous informe aussi que nous n'avons plus de poisson. Pour nous excuser, nous vous offrons deux paquets de 500 grammes de fraises et de myrtilles. Nous vous informons que nous avons actuellement des réductions sur nos produits laitiers. Durant la semaine, vous pouvez retrouver votre colis à l'accueil de 8 h à midi. Le week-end, la livraison est gratuite pour un minimum d'achat de 15 €.",
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": "31.mp3",
+      "habilidad": "Compréhension de l'oral",
+      "instruccion": "Activité 31 Lisez les questions. Écoutez le document puis répondez. Vous écoutez ce message sur un répondeur téléphonique.",
+      "tipo": "QCM",
+      "preguntas": [
+        {
+          "respuesta_correcta": "10 h.",
+          "opciones": [
+            "10 h.",
+            "15 h.",
+            "18 h."
+          ],
+          "pregunta": "1 À quelle heure est l'examen de français ?"
+        },
+        {
+          "respuesta_correcta": "conjugaison.",
+          "opciones": [
+            "phonétique.",
+            "vocabulaire.",
+            "conjugaison."
+          ],
+          "pregunta": "2 C'est un examen de..."
+        },
+        {
+          "respuesta_correcta": "B115.",
+          "opciones": [
+            "B112.",
+            "B115.",
+            "B118."
+          ],
+          "pregunta": "3 Dans quelle salle aura lieu l'examen ?"
+        },
+        {
+          "respuesta_correcta": "demain.",
+          "opciones": [
+            "aujourd'hui.",
+            "demain.",
+            "après-demain."
+          ],
+          "pregunta": "4 Thomas vous propose d'étudier avec lui..."
+        },
+        {
+          "respuesta_correcta": "activite_31_q5_B.png | par SMS",
+          "opciones": [
+            "activite_31_q5_A.png | en appelant",
+            "activite_31_q5_B.png | par SMS",
+            "activite_31_q5_C.png | par courriel"
+          ],
+          "pregunta": "5 Comment devez-vous confirmer votre rendez-vous ?"
+        },
+        {
+          "respuesta_correcta": "activite_31_q6_A.png | un cahier et un stylo",
+          "opciones": [
+            "activite_31_q6_A.png | un cahier et un stylo",
+            "activite_31_q6_B.png | un livre",
+            "activite_31_q6_C.png | des documents"
+          ],
+          "pregunta": "6 Que devez-vous apporter ?"
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": null,
+      "transcripcion": "Salut, c'est Thomas. Tu n'es pas venu à l'université aujourd'hui. Je t'appelle parce que nous avons un examen de français dans deux jours à 10 h. Il faut réviser les pages 15 à 18 du livre : les temps du passé et les verbes irréguliers. Il y aura beaucoup d'exercices de conjugaison. L'examen sera en salle B115, au deuxième étage. Si tu veux, on se donnera rendez-vous au café à 8 h demain pour étudier ensemble. Envoie-moi un SMS pour confirmer. Et n'oublie pas mon cahier s'il te plaît ! Salut!",
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": "32.mp3",
+      "habilidad": "Compréhension de l'oral",
+      "instruccion": "Activité 32 Lisez les questions. Écoutez le document puis répondez. Vous écoutez ce message sur un répondeur téléphonique.",
+      "tipo": "QCM",
+      "preguntas": [
+        {
+          "respuesta_correcta": "S'occuper de quelqu'un.",
+          "opciones": [
+            "Apporter des courses.",
+            "S'occuper de quelqu'un.",
+            "Venir l'aider à son travail."
+          ],
+          "pregunta": "1 Qu'est-ce que Marianne vous demande de faire ?"
+        },
+        {
+          "respuesta_correcta": "Elle va travailler tard.",
+          "opciones": [
+            "Elle va travailler tard.",
+            "Elle doit faire des courses.",
+            "Elle a un rendez-vous à la poste."
+          ],
+          "pregunta": "2 Pourquoi Marianne est-elle indisponible ?"
+        },
+        {
+          "respuesta_correcta": "16 h 30.",
+          "opciones": [
+            "16 h 30.",
+            "17 h 30.",
+            "19 h."
+          ],
+          "pregunta": "3 Olga termine l'école à..."
+        },
+        {
+          "respuesta_correcta": "activite_32_q4_B.png | l'emmener à son cours de danse",
+          "opciones": [
+            "activite_32_q4_A.png | l'emmener à la maison",
+            "activite_32_q4_B.png | l'emmener à son cours de danse",
+            "activite_32_q4_C.png | l'emmener au parc"
+          ],
+          "pregunta": "4 Que devez-vous faire avec Olga après l'école ?"
+        },
+        {
+          "respuesta_correcta": "à son cours.",
+          "opciones": [
+            "à la poste.",
+            "au magasin.",
+            "à son cours."
+          ],
+          "pregunta": "5 Marianne doit récupérer Olga..."
+        },
+        {
+          "respuesta_correcta": "activite_32_q6_B.png | par téléphone",
+          "opciones": [
+            "activite_32_q6_A.png | par courriel",
+            "activite_32_q6_B.png | par téléphone",
+            "activite_32_q6_C.png | par SMS"
+          ],
+          "pregunta": "6 Comment devez-vous contacter Marianne ?"
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": null,
+      "transcripcion": "Bonjour, c'est Marianne. Je t'appelle pour te demander un petit service. Est-ce que tu pourrais aller chercher Olga à l'école mardi prochain ? J'ai une réunion qui finit tard au magasin... Elle sort de l'école à 16 h 30. Peux-tu l'amener à son cours de danse à 17 h 30? Il faut aussi prendre un colis à la poste. C'est juste à côté. J'irai la chercher après son cours vers 19 h. Rappelle-moi pour me dire si tu es d'accord au 07 77 89 20 12. Merci !",
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": "33.mp3",
+      "habilidad": "Compréhension de l'oral",
+      "instruccion": "Activité 33 Lisez les questions. Écoutez le document puis répondez. Vous écoutez ce message sur un répondeur téléphonique.",
+      "tipo": "QCM",
+      "preguntas": [
+        {
+          "respuesta_correcta": "activite_33_q1_A.png | jouer au tennis",
+          "opciones": [
+            "activite_33_q1_A.png | jouer au tennis",
+            "activite_33_q1_B.png | jouer au football",
+            "activite_33_q1_C.png | jouer au volleyball"
+          ],
+          "pregunta": "1 Qu'est-ce qu'Elsa vous propose de faire ?"
+        },
+        {
+          "respuesta_correcta": "le matin.",
+          "opciones": [
+            "le matin.",
+            "l'après-midi.",
+            "le soir."
+          ],
+          "pregunta": "2 Elsa vous donne rendez-vous..."
+        },
+        {
+          "respuesta_correcta": "activite_33_q3_B.png | faire un pique-nique",
+          "opciones": [
+            "activite_33_q3_A.png | faire une randonnée",
+            "activite_33_q3_B.png | faire un pique-nique",
+            "activite_33_q3_C.png | jouer de la musique"
+          ],
+          "pregunta": "3 Qu'est-ce qu'Elsa vous propose de faire après cette première activité ?"
+        },
+        {
+          "respuesta_correcta": "Une boisson.",
+          "opciones": [
+            "Une tarte.",
+            "Une boisson.",
+            "Une salade."
+          ],
+          "pregunta": "4 Que devez-vous apporter si vous venez ?"
+        },
+        {
+          "respuesta_correcta": "Par téléphone.",
+          "opciones": [
+            "Par SMS.",
+            "Par courriel.",
+            "Par téléphone."
+          ],
+          "pregunta": "5 Comment devez-vous contacter Elsa ?"
+        },
+        {
+          "respuesta_correcta": "Elle veut aller dans un magasin.",
+          "opciones": [
+            "Elle a un rendez-vous.",
+            "Elle doit donner un cours.",
+            "Elle veut aller dans un magasin."
+          ],
+          "pregunta": "6 Pourquoi faut-il répondre à Elsa avant 17 h ?"
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": null,
+      "transcripcion": "Salut, c'est Elsa. Veux-tu venir jouer au tennis avec mes amis et moi demain matin ? L'après-midi, nous irons nager un peu au lac à côté du parc car il va faire chaud. Mais avant, on va faire un pique-nique. Nicole va faire une salade, Amir propose de ramener des fruits, et moi, je pense faire une tarte. Tu peux apporter une boisson ? Rappelle-moi avant 17 h parce qu'après je vais aller faire les courses. À plus !",
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": "34.mp3",
+      "habilidad": "Compréhension de l'oral",
+      "instruccion": "Activité 34 Lisez les questions. Écoutez le document puis répondez. Vous écoutez ce message sur un répondeur téléphonique.",
+      "tipo": "QCM",
+      "preguntas": [
+        {
+          "respuesta_correcta": "modifier",
+          "opciones": [
+            "modifier",
+            "proposer un rendez-vous.",
+            "confirmer"
+          ],
+          "pregunta": "1 Marc-André vous appelle pour..."
+        },
+        {
+          "respuesta_correcta": "9 h 30.",
+          "opciones": [
+            "9 h 30.",
+            "10 h.",
+            "13 h 30."
+          ],
+          "pregunta": "2 À quelle heure est prévue la réunion ?"
+        },
+        {
+          "respuesta_correcta": "Vendredi.",
+          "opciones": [
+            "Mardi.",
+            "Mercredi.",
+            "Vendredi."
+          ],
+          "pregunta": "3 Quel jour a lieu la réunion ?"
+        },
+        {
+          "respuesta_correcta": "activite_34_q4_B.png | des croissants",
+          "opciones": [
+            "activite_34_q4_A.png | du café",
+            "activite_34_q4_B.png | des croissants",
+            "activite_34_q4_C.png | des sandwichs"
+          ],
+          "pregunta": "4 Que devez-vous commander ?"
+        },
+        {
+          "respuesta_correcta": "Par courriel.",
+          "opciones": [
+            "Par SMS.",
+            "Par courriel.",
+            "Par téléphone."
+          ],
+          "pregunta": "5 Comment devez-vous contacter l'accueil ?"
+        },
+        {
+          "respuesta_correcta": "activite_34_q6_C.png | un train",
+          "opciones": [
+            "activite_34_q6_A.png | une voiture",
+            "activite_34_q6_B.png | un avion",
+            "activite_34_q6_C.png | un train"
+          ],
+          "pregunta": "6 Quel moyen de transport Marc-André va-t-il utiliser pour aller au bureau ?"
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": null,
+      "transcripcion": "Bonjour, c'est Marc-André. La réunion avec Monsieur Lepetit aura lieu vendredi à 9 h 30 et non mercredi à 13 h 30. Peux-tu commander des croissants et annuler les sandwichs ? Nous avons déjà ce qu'il faut pour les boissons. Il faut réserver la salle de réunion, il faudra que tu contactes l'accueil. N'appelle pas, écris à leur adresse courriel. Je suis revenu de Belgique ce matin, mon vol a eu du retard. Je n'ai pas eu le temps de faire réparer ma voiture, alors je viendrai en train au bureau mardi.",
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": "35.mp3",
+      "habilidad": "Compréhension de l'oral",
+      "instruccion": "Activité 35 Lisez les questions. Écoutez le document puis répondez. Vous écoutez ce message sur un répondeur téléphonique.",
+      "tipo": "QCM",
+      "preguntas": [
+        {
+          "respuesta_correcta": "Le père de Sam.",
+          "opciones": [
+            "Le père de Sam.",
+            "Le frère de Sam.",
+            "Le cousin de Sam."
+          ],
+          "pregunta": "1 Qui va vous conduire au match ?"
+        },
+        {
+          "respuesta_correcta": "À l'arrêt de bus.",
+          "opciones": [
+            "Chez lui.",
+            "Au restaurant.",
+            "À l'arrêt de bus."
+          ],
+          "pregunta": "2 Où devez-vous retrouver Sam ?"
+        },
+        {
+          "respuesta_correcta": "17 h 30.",
+          "opciones": [
+            "17 h 30.",
+            "18 h 45.",
+            "20 h 15."
+          ],
+          "pregunta": "3 À quelle heure devez-vous le retrouver ?"
+        },
+        {
+          "respuesta_correcta": "activite_35_q4_B.png | une pizza",
+          "opciones": [
+            "activite_35_q4_A.png | de la viande",
+            "activite_35_q4_B.png | une pizza",
+            "activite_35_q4_C.png | du fromage"
+          ],
+          "pregunta": "4 Qu'est-ce que vous allez manger ?"
+        },
+        {
+          "respuesta_correcta": "activite_35_q5_A.png | un appareil photo",
+          "opciones": [
+            "activite_35_q5_A.png | un appareil photo",
+            "activite_35_q5_B.png | un t-shirt",
+            "activite_35_q5_C.png | des boissons"
+          ],
+          "pregunta": "5 Que devez-vous apporter ?"
+        },
+        {
+          "respuesta_correcta": "de rester chez lui.",
+          "opciones": [
+            "de rester chez lui.",
+            "de regarder un film.",
+            "de jouer aux jeux vidéo."
+          ],
+          "pregunta": "6 Après le match, Sam vous propose..."
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": null,
+      "transcripcion": "Salut, c'est Sam. Vendredi, mon père nous emmènera au stade pour le match de 20 h 15. Mon frère et mon cousin vont venir avec nous. On peut se rejoindre à l'arrêt de bus, devant chez moi, vers 17 h 30? Je voudrais aller manger une pizza avant le match. Tu penses que tu peux prendre ton super appareil photo avec toi ? On achètera des t-shirts de l'équipe au stade ! Tu pourras dormir à la maison si tu veux. Mais le lendemain, je dois me lever tôt car j'ai une compétition de jeux vidéo. Appelle-moi !",
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": "36.mp3",
+      "habilidad": "Compréhension de l'oral",
+      "instruccion": "Activité 36 Lisez les questions. Écoutez le document puis répondez. Vous écoutez ce message sur un répondeur téléphonique.",
+      "tipo": "QCM",
+      "preguntas": [
+        {
+          "respuesta_correcta": "modifier un voyage.",
+          "opciones": [
+            "annuler",
+            "modifier un voyage.",
+            "proposer"
+          ],
+          "pregunta": "1 L'agence de voyages vous appelle pour..."
+        },
+        {
+          "respuesta_correcta": "mardi 16.",
+          "opciones": [
+            "mardi 9.",
+            "mardi 13.",
+            "mardi 16."
+          ],
+          "pregunta": "2 Le départ est prévu le..."
+        },
+        {
+          "respuesta_correcta": "Le matin.",
+          "opciones": [
+            "Le matin.",
+            "L'après-midi.",
+            "Le soir."
+          ],
+          "pregunta": "3 À quel moment de la journée est prévu le vol?"
+        },
+        {
+          "respuesta_correcta": "33B.",
+          "opciones": [
+            "33B.",
+            "34B.",
+            "35B."
+          ],
+          "pregunta": "4 Quel est le numéro de la chambre ?"
+        },
+        {
+          "respuesta_correcta": "activite_36_q5_A.png | un bus",
+          "opciones": [
+            "activite_36_q5_A.png | un bus",
+            "activite_36_q5_B.png | un taxi",
+            "activite_36_q5_C.png | un métro"
+          ],
+          "pregunta": "5 Quel moyen de transport pouvez-vous utiliser pour aller à l'hôtel ?"
+        },
+        {
+          "respuesta_correcta": "activite_36_q6_B.png | par téléphone",
+          "opciones": [
+            "activite_36_q6_A.png | par courriel",
+            "activite_36_q6_B.png | par téléphone",
+            "activite_36_q6_C.png | par SMS"
+          ],
+          "pregunta": "6 Si vous avez des questions, quel moyen de communication devez-vous utiliser ?"
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": null,
+      "transcripcion": "Bonjour, ici l'agence de voyages. Je vous appelle pour vous annoncer deux changements pour votre voyage en Turquie. Pour votre vol : vous partirez mardi 16, mais le départ sera deux heures plus tôt, à 9 h 35. Le numéro ne change pas, c'est le vol AF0305. Pour l'hôtel : vous aurez la chambre 33B au lieu de la 34B. Pour aller de l'aéroport à l'hôtel, vous pouvez prendre le bus numéro 15. Les taxis sont en ce moment en grève. Si besoin, contactez-nous au 04 97 22 63 13.",
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": "37.mp3",
+      "habilidad": "Compréhension de l'oral",
+      "instruccion": "Activité 37 Lisez les questions. Écoutez le document puis répondez. Vous écoutez ce message sur un répondeur téléphonique.",
+      "tipo": "QCM",
+      "preguntas": [
+        {
+          "respuesta_correcta": "activite_37_q1_A.png | une télévision",
+          "opciones": [
+            "activite_37_q1_A.png | une télévision",
+            "activite_37_q1_B.png | une imprimante",
+            "activite_37_q1_C.png | un ordinateur portable"
+          ],
+          "pregunta": "1 Qu'est-ce que vous avez gagné ?"
+        },
+        {
+          "respuesta_correcta": "3912.",
+          "opciones": [
+            "3219.",
+            "3129.",
+            "3912."
+          ],
+          "pregunta": "2 Quel numéro devez-vous appeler pour avoir votre cadeau ?"
+        },
+        {
+          "respuesta_correcta": "activite_37_q3_B.png | une adresse postale",
+          "opciones": [
+            "activite_37_q3_A.png | une adresse courriel",
+            "activite_37_q3_B.png | une adresse postale",
+            "activite_37_q3_C.png | un numéro de téléphone"
+          ],
+          "pregunta": "3 Qu'est-ce qu'il faut donner pour récupérer le cadeau ?"
+        },
+        {
+          "respuesta_correcta": "En ligne.",
+          "opciones": [
+            "En ligne.",
+            "Au magasin.",
+            "Dans un catalogue."
+          ],
+          "pregunta": "4 Où peut-on voir les promotions ?"
+        },
+        {
+          "respuesta_correcta": "25%",
+          "opciones": [
+            "25%",
+            "30%",
+            "40%"
+          ],
+          "pregunta": "5 Vous avez..."
+        },
+        {
+          "respuesta_correcta": "jours.",
+          "opciones": [
+            "heures.",
+            "jours.",
+            "semaines."
+          ],
+          "pregunta": "6 La promotion va durer quelques..."
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": null,
+      "transcripcion": "Bonjour, c'est la société FMAC ! Vous avez participé à notre grand jeu-concours le mois dernier. Je vous informe que vous avez gagné une télévision! Félicitations! Rappelez-nous au 3912 pour nous donner votre adresse postale et récupérer votre cadeau. Vous pouvez consulter toutes nos offres promotionnelles sur notre site internet www.fmac.fr. Vous avez 30% de réduction sur les imprimantes et 25% de réduction sur les ordinateurs du 9 au 16 mars.",
+      "campos_formulario": null
+    }
+  ],
+  "tema_CO": "Comprendre un message"
+}

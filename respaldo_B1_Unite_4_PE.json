@@ -1,0 +1,1323 @@
+{
+  "diccionario_unidad": [
+    {
+      "definicion": "Forme conjuguée du verbe \"avoir\" à la troisième personne du singulier de l'indicatif présent, exprimant la possession ou servant d'auxiliaire pour les temps composés.",
+      "tipo_gramatical": "verbe (avoir)",
+      "ejemplo_uso": "Il a un nouveau projet très ambitieux.",
+      "palabra": "a",
+      "frecuencia": 12,
+      "lema": "avoir",
+      "sinonimos": [
+        "possède",
+        "détient"
+      ]
+    },
+    {
+      "definicion": "Ensemble d'actions ou d'opérations spécifiques menées par un individu ou un groupe dans un but précis, ou domaine d'action.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "L'activité physique régulière est essentielle pour maintenir une bonne santé.",
+      "palabra": "activité",
+      "frecuencia": 11,
+      "lema": "activité",
+      "sinonimos": [
+        "occupation",
+        "tâche"
+      ]
+    },
+    {
+      "definicion": "Qui a été choisi et accepté après délibération, ou qui a été pris en charge légalement comme sien.",
+      "tipo_gramatical": "participe passé (adjectif)",
+      "ejemplo_uso": "Le nouveau règlement a été adopté à l'unanimité par le conseil.",
+      "palabra": "adopté",
+      "frecuencia": 2,
+      "lema": "adopter",
+      "sinonimos": [
+        "choisi",
+        "accepté"
+      ]
+    },
+    {
+      "definicion": "Forme conjuguée du verbe \"agir\" à la troisième personne du singulier de l'indicatif présent, signifiant faire quelque chose, intervenir ou produire un effet.",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "Le gouvernement agit pour résoudre la crise économique.",
+      "palabra": "agit",
+      "frecuencia": 2,
+      "lema": "agir",
+      "sinonimos": [
+        "opère",
+        "intervient"
+      ]
+    },
+    {
+      "definicion": "Apporter son soutien, son assistance à quelqu'un ou à quelque chose pour faciliter une action, résoudre une difficulté ou améliorer une situation.",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "Nous devons aider les personnes les plus vulnérables de notre société.",
+      "palabra": "aider",
+      "frecuencia": 4,
+      "lema": "aider",
+      "sinonimos": [
+        "assister",
+        "soutenir"
+      ]
+    },
+    {
+      "definicion": "Qui a bénéficié d'une assistance, d'un soutien ou d'une aide de la part d'autrui.",
+      "tipo_gramatical": "participe passé (adjectif)",
+      "ejemplo_uso": "Il s'est senti grandement aidé par les conseils de son mentor.",
+      "palabra": "aidé",
+      "frecuencia": 2,
+      "lema": "aider",
+      "sinonimos": [
+        "soutenu",
+        "assisté"
+      ]
+    },
+    {
+      "definicion": "Forme conjuguée du verbe \"aimer\" à la deuxième personne du pluriel de l'indicatif présent ou de l'impératif, exprimant l'affection, l'appréciation ou le désir.",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "Aimez-vous voyager et découvrir de nouvelles cultures?",
+      "palabra": "aimez",
+      "frecuencia": 2,
+      "lema": "aimer",
+      "sinonimos": [
+        "appréciez",
+        "chérissez"
+      ]
+    },
+    {
+      "definicion": "Qui a été rendu meilleur, dont la qualité, l'état ou la performance a été perfectionné ou optimisé.",
+      "tipo_gramatical": "participe passé (adjectif)",
+      "ejemplo_uso": "Le nouveau logiciel a considérablement amélioré l'efficacité de notre travail.",
+      "palabra": "amélioré",
+      "frecuencia": 2,
+      "lema": "améliorer",
+      "sinonimos": [
+        "perfectionné",
+        "optimisé"
+      ]
+    },
+    {
+      "definicion": "Période de douze mois correspondant à la révolution de la Terre autour du Soleil, ou une période de temps quelconque caractérisée par des événements.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "Cette année, nous avons décidé de partir en vacances en montagne.",
+      "palabra": "année",
+      "frecuencia": 2,
+      "lema": "année",
+      "sinonimos": [
+        "an",
+        "saison"
+      ]
+    },
+    {
+      "definicion": "Pluriel du nom \"année\", désignant plusieurs périodes de douze mois ou une succession de ces périodes.",
+      "tipo_gramatical": "nom (f, pluriel)",
+      "ejemplo_uso": "Il a passé de nombreuses années à l'étranger pour ses études.",
+      "palabra": "années",
+      "frecuencia": 2,
+      "lema": "année",
+      "sinonimos": [
+        "ans",
+        "périodes"
+      ]
+    },
+    {
+      "definicion": "Action d'appliquer quelque chose, ou programme informatique conçu pour une tâche spécifique sur un appareil électronique.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "Cette application mobile est très pratique pour apprendre le vocabulaire français.",
+      "palabra": "application",
+      "frecuencia": 2,
+      "lema": "application",
+      "sinonimos": [
+        "usage",
+        "logiciel"
+      ]
+    },
+    {
+      "definicion": "Forme conjuguée du verbe \"apporter\" à la troisième personne du singulier de l'indicatif présent, signifiant amener, procurer ou contribuer à quelque chose.",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "Ce nouveau projet apporte de grandes opportunités pour l'entreprise.",
+      "palabra": "apporte",
+      "frecuencia": 4,
+      "lema": "apporter",
+      "sinonimos": [
+        "procure",
+        "fournit"
+      ]
+    },
+    {
+      "definicion": "Qui a été transporté, procuré ou contribué à un endroit, une personne ou une situation.",
+      "tipo_gramatical": "participe passé (adjectif)",
+      "ejemplo_uso": "Il a apporté des preuves irréfutables pour étayer son argumentation.",
+      "palabra": "apporté",
+      "frecuencia": 2,
+      "lema": "apporter",
+      "sinonimos": [
+        "fourni",
+        "amené"
+      ]
+    },
+    {
+      "definicion": "Acquérir des connaissances, des compétences ou des comportements par l'étude, l'expérience ou l'enseignement.",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "J'aime apprendre de nouvelles langues pour communiquer avec le monde.",
+      "palabra": "apprendre",
+      "frecuencia": 4,
+      "lema": "apprendre",
+      "sinonimos": [
+        "étudier",
+        "s'instruire"
+      ]
+    },
+    {
+      "definicion": "Processus d'acquisition de connaissances, de compétences ou de comportements par l'étude, la pratique ou l'expérience.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "L'apprentissage tout au long de la vie est devenu une nécessité dans le monde actuel.",
+      "palabra": "apprentissage",
+      "frecuencia": 2,
+      "lema": "apprentissage",
+      "sinonimos": [
+        "formation",
+        "étude"
+      ]
+    },
+    {
+      "definicion": "Qui a été acquis par l'étude, l'expérience ou l'enseignement, et qui est désormais connu ou maîtrisé.",
+      "tipo_gramatical": "participe passé (adjectif)",
+      "ejemplo_uso": "J'ai appris beaucoup de leçons précieuses de mes erreurs passées.",
+      "palabra": "appris",
+      "frecuencia": 2,
+      "lema": "apprendre",
+      "sinonimos": [
+        "assimilé",
+        "maîtrisé"
+      ]
+    },
+    {
+      "definicion": "Forme du verbe \"appuyer\" utilisée pour exprimer une action simultanée ou la manière, signifiant soutenir, prendre appui ou insister sur quelque chose.",
+      "tipo_gramatical": "gérondif",
+      "ejemplo_uso": "En s'appuyant sur des données concrètes, il a pu convaincre son auditoire.",
+      "palabra": "appuyant",
+      "frecuencia": 2,
+      "lema": "appuyer",
+      "sinonimos": [
+        "soutenant",
+        "s'adossant"
+      ]
+    },
+    {
+      "definicion": "Forme conjuguée du verbe \"appuyer\" à la deuxième personne du pluriel de l'indicatif présent ou de l'impératif, signifiant exercer une pression ou soutenir.",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "Appuyez sur le bouton vert pour confirmer votre choix.",
+      "palabra": "appuyez",
+      "frecuencia": 2,
+      "lema": "appuyer",
+      "sinonimos": [
+        "pressez",
+        "soutenez"
+      ]
+    },
+    {
+      "definicion": "Écrit publié dans un journal, une revue, un blog ou une encyclopédie, ou élément grammatical qui précède un nom pour en déterminer le genre et le nombre.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "J'ai lu un article très intéressant sur les dernières avancées technologiques.",
+      "palabra": "article",
+      "frecuencia": 22,
+      "lema": "article",
+      "sinonimos": [
+        "texte",
+        "billet"
+      ]
+    },
+    {
+      "definicion": "Groupement de personnes volontaires réunies autour d'un projet commun ou d'intérêts partagés, généralement sans but lucratif.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "Cette association caritative œuvre pour l'aide aux enfants défavorisés.",
+      "palabra": "association",
+      "frecuencia": 2,
+      "lema": "association",
+      "sinonimos": [
+        "organisation",
+        "club"
+      ]
+    },
+    {
+      "definicion": "Contraction de la préposition \"à\" et de l'article défini masculin singulier \"le\", utilisé devant un nom masculin singulier.",
+      "tipo_gramatical": "article défini contracté",
+      "ejemplo_uso": "Nous allons au cinéma ce soir pour voir le nouveau film.",
+      "palabra": "au",
+      "frecuencia": 6,
+      "lema": "à le",
+      "sinonimos": [
+        "vers le",
+        "dans le"
+      ]
+    },
+    {
+      "definicion": "Qui se rapporte au son, à l'audition ou à l'enregistrement sonore, ou qui est transmis par le son.",
+      "tipo_gramatical": "adjectif",
+      "ejemplo_uso": "J'écoute un livre audio pendant mes trajets quotidiens.",
+      "palabra": "audio",
+      "frecuencia": 11,
+      "lema": "audio",
+      "sinonimos": [
+        "sonore",
+        "acoustique"
+      ]
+    },
+    {
+      "definicion": "Préfixe signifiant \"de soi-même\" ou \"par soi-même\", ou abréviation familière de \"automobile\", désignant une voiture.",
+      "tipo_gramatical": "préfixe / nom (f, familier)",
+      "ejemplo_uso": "Il a réparé son auto lui-même après une petite panne.",
+      "palabra": "auto",
+      "frecuencia": 2,
+      "lema": "auto",
+      "sinonimos": [
+        "soi-même",
+        "voiture"
+      ]
+    },
+    {
+      "definicion": "Qui désigne des personnes ou des choses différentes de celles déjà mentionnées ou considérées, ou supplémentaires.",
+      "tipo_gramatical": "adjectif indéfini (pluriel)",
+      "ejemplo_uso": "Il y a d'autres options à considérer avant de prendre une décision.",
+      "palabra": "autres",
+      "frecuencia": 6,
+      "lema": "autre",
+      "sinonimos": [
+        "différents",
+        "supplémentaires"
+      ]
+    },
+    {
+      "definicion": "Contraction de la préposition \"à\" et de l'article défini pluriel \"les\", utilisé devant un nom pluriel.",
+      "tipo_gramatical": "article défini contracté",
+      "ejemplo_uso": "Il parle aux étudiants de l'importance de la persévérance.",
+      "palabra": "aux",
+      "frecuencia": 2,
+      "lema": "à les",
+      "sinonimos": [
+        "vers les",
+        "dans les"
+      ]
+    },
+    {
+      "definicion": "Pluriel du nom \"avantage\", désignant des bénéfices, des atouts, des points positifs ou des privilèges.",
+      "tipo_gramatical": "nom (m, pluriel)",
+      "ejemplo_uso": "Les avantages de travailler en équipe sont nombreux et variés.",
+      "palabra": "avantages",
+      "frecuencia": 12,
+      "lema": "avantage",
+      "sinonimos": [
+        "bénéfices",
+        "atouts"
+      ]
+    },
+    {
+      "definicion": "Exprime l'accompagnement, la simultanéité, le moyen, la manière ou l'instrument.",
+      "tipo_gramatical": "préposition",
+      "ejemplo_uso": "Je pars en vacances avec ma famille le mois prochain.",
+      "palabra": "avec",
+      "frecuencia": 6,
+      "lema": "avec",
+      "sinonimos": [
+        "en compagnie de",
+        "au moyen de"
+      ]
+    },
+    {
+      "definicion": "Forme conjuguée du verbe \"avoir\" à la deuxième personne du pluriel de l'indicatif présent, exprimant la possession ou servant d'auxiliaire.",
+      "tipo_gramatical": "verbe (avoir)",
+      "ejemplo_uso": "Vous avez beaucoup de talent pour la musique.",
+      "palabra": "avez",
+      "frecuencia": 10,
+      "lema": "avoir",
+      "sinonimos": [
+        "possédez",
+        "détenez"
+      ]
+    },
+    {
+      "definicion": "De manière satisfaisante, correctement, ou pour exprimer une approbation, une intensité ou une qualité.",
+      "tipo_gramatical": "adverbe",
+      "ejemplo_uso": "Il a très bien réussi son examen final.",
+      "palabra": "bien",
+      "frecuencia": 2,
+      "lema": "bien",
+      "sinonimos": [
+        "correctement",
+        "parfaitement"
+      ]
+    },
+    {
+      "definicion": "Site web personnel ou professionnel sur lequel un auteur publie régulièrement des articles, des photos ou des vidéos, souvent sur un thème spécifique.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "J'ai créé un blog pour partager mes expériences de voyage autour du monde.",
+      "palabra": "blog",
+      "frecuencia": 4,
+      "lema": "blog",
+      "sinonimos": [
+        "carnet web",
+        "journal en ligne"
+      ]
+    },
+    {
+      "definicion": "Pluriel du nom \"bénéfice\", désignant des profits, des avantages ou des gains financiers ou non financiers.",
+      "tipo_gramatical": "nom (m, pluriel)",
+      "ejemplo_uso": "L'entreprise a réalisé d'importants bénéfices grâce à sa nouvelle stratégie.",
+      "palabra": "bénéfices",
+      "frecuencia": 2,
+      "lema": "bénéfice",
+      "sinonimos": [
+        "profits",
+        "gains"
+      ]
+    },
+    {
+      "definicion": "Limite, contour d'une chose, ensemble de conditions dans lesquelles une action se déroule, ou employé de haut niveau dans une entreprise.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "Ce projet se déroule dans un cadre réglementaire très strict.",
+      "palabra": "cadre",
+      "frecuencia": 2,
+      "lema": "cadre",
+      "sinonimos": [
+        "contexte",
+        "environnement"
+      ]
+    },
+    {
+      "definicion": "Boisson stimulante préparée à partir des graines torréfiées du caféier, ou lieu public où l'on consomme cette boisson et d'autres.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "Nous prenons un café ensemble chaque matin avant de commencer le travail.",
+      "palabra": "café",
+      "frecuencia": 6,
+      "lema": "café",
+      "sinonimos": [
+        "expresso",
+        "bistrot"
+      ]
+    },
+    {
+      "definicion": "Terme espagnol signifiant \"champs\" ou \"domaines\". Il est utilisé pour désigner des étendues de terre cultivées ou des sphères d'activité.",
+      "tipo_gramatical": "nom (m, pluriel)",
+      "ejemplo_uso": "En espagnol, le mot \"campos\" fait référence aux champs agricoles.",
+      "palabra": "campos",
+      "frecuencia": 11,
+      "lema": "campo (mot espagnol)",
+      "sinonimos": [
+        "domaines",
+        "terrains"
+      ]
+    },
+    {
+      "definicion": "Ensemble des bâtiments et des terrains d'une université, d'une grande école ou d'une entreprise, formant un site unique.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "Le campus de l'université offre de nombreuses installations sportives et culturelles.",
+      "palabra": "campus",
+      "frecuencia": 2,
+      "lema": "campus",
+      "sinonimos": [
+        "site universitaire",
+        "domaine universitaire"
+      ]
+    },
+    {
+      "definicion": "Utilisé pour désigner une personne ou une chose spécifique, ou comme pronom neutre pour introduire une proposition.",
+      "tipo_gramatical": "déterminant démonstratif (m, singulier) / pronom démonstratif",
+      "ejemplo_uso": "Ce livre est particulièrement intéressant et bien écrit.",
+      "palabra": "ce",
+      "frecuencia": 14,
+      "lema": "ce",
+      "sinonimos": [
+        "cet",
+        "cela"
+      ]
+    },
+    {
+      "definicion": "Pluriel du déterminant démonstratif \"ce\", utilisé pour désigner plusieurs personnes ou choses spécifiques.",
+      "tipo_gramatical": "déterminant démonstratif (pluriel)",
+      "ejemplo_uso": "Ces idées novatrices pourraient transformer notre approche du problème.",
+      "palabra": "ces",
+      "frecuencia": 4,
+      "lema": "ce",
+      "sinonimos": [
+        "ces derniers",
+        "ceux-là"
+      ]
+    },
+    {
+      "definicion": "Forme féminine singulière du déterminant démonstratif \"ce\", utilisé pour désigner une personne ou une chose féminine spécifique.",
+      "tipo_gramatical": "déterminant démonstratif (f, singulier)",
+      "ejemplo_uso": "Cette maison ancienne possède un charme indéniable.",
+      "palabra": "cette",
+      "frecuencia": 14,
+      "lema": "ce",
+      "sinonimos": [
+        "la présente",
+        "celle-ci"
+      ]
+    },
+    {
+      "definicion": "Pluriel du nom \"changement\", désignant des modifications, des évolutions ou des transformations qui surviennent dans une situation ou un état.",
+      "tipo_gramatical": "nom (m, pluriel)",
+      "ejemplo_uso": "Les changements climatiques représentent un défi majeur pour l'humanité.",
+      "palabra": "changements",
+      "frecuencia": 2,
+      "lema": "changement",
+      "sinonimos": [
+        "modifications",
+        "évolutions"
+      ]
+    },
+    {
+      "definicion": "Forme conjuguée du verbe \"collaborer\" à la deuxième personne du pluriel de l'indicatif présent ou de l'impératif, signifiant travailler ensemble à une œuvre commune.",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "Collaborez étroitement avec vos collègues pour atteindre les objectifs fixés.",
+      "palabra": "collaborez",
+      "frecuencia": 2,
+      "lema": "collaborer",
+      "sinonimos": [
+        "coopérez",
+        "travaillez ensemble"
+      ]
+    },
+    {
+      "definicion": "Activité consistant à remplir de couleurs les contours d'un dessin, ou le dessin lui-même destiné à être colorié, souvent pour les enfants.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "Les enfants passent des heures à faire du coloriage pendant les vacances.",
+      "palabra": "coloriage",
+      "frecuencia": 4,
+      "lema": "coloriage",
+      "sinonimos": [
+        "dessin à colorier",
+        "illustration"
+      ]
+    },
+    {
+      "definicion": "Utilisé pour interroger sur la manière, le moyen, la cause, l'état ou la qualité de quelque chose.",
+      "tipo_gramatical": "adverbe interrogatif",
+      "ejemplo_uso": "Comment avez-vous réussi à résoudre ce problème complexe?",
+      "palabra": "comment",
+      "frecuencia": 4,
+      "lema": "comment",
+      "sinonimos": [
+        "de quelle manière",
+        "par quel moyen"
+      ]
+    },
+    {
+      "definicion": "Action de communiquer, d'établir une relation avec autrui, ou ensemble des moyens et techniques permettant la diffusion d'informations.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "Une communication claire et efficace est primordiale dans toute organisation.",
+      "palabra": "communication",
+      "frecuencia": 2,
+      "lema": "communication",
+      "sinonimos": [
+        "échange",
+        "information"
+      ]
+    },
+    {
+      "definicion": "Saisir le sens, la signification ou la raison de quelque chose, ou inclure, contenir un ensemble d'éléments.",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "Il est essentiel de comprendre les enjeux avant de prendre une décision.",
+      "palabra": "comprendre",
+      "frecuencia": 2,
+      "lema": "comprendre",
+      "sinonimos": [
+        "saisir",
+        "intégrer"
+      ]
+    },
+    {
+      "definicion": "Pluriel du nom \"compétence\", désignant des aptitudes, des connaissances ou des savoir-faire nécessaires pour accomplir une tâche ou exercer une fonction.",
+      "tipo_gramatical": "nom (f, pluriel)",
+      "ejemplo_uso": "Développer de nouvelles compétences est crucial pour l'évolution professionnelle.",
+      "palabra": "compétences",
+      "frecuencia": 2,
+      "lema": "compétence",
+      "sinonimos": [
+        "aptitudes",
+        "savoir-faire"
+      ]
+    },
+    {
+      "definicion": "Pluriel du nom \"conseil\", désignant des avis, des recommandations ou des suggestions donnés pour guider une action ou une décision.",
+      "tipo_gramatical": "nom (m, pluriel)",
+      "ejemplo_uso": "J'ai reçu de précieux conseils de la part de mon professeur.",
+      "palabra": "conseils",
+      "frecuencia": 4,
+      "lema": "conseil",
+      "sinonimos": [
+        "avis",
+        "recommandations"
+      ]
+    },
+    {
+      "definicion": "De manière importante, à un degré notable ou dans une mesure qui mérite d'être prise en considération.",
+      "tipo_gramatical": "adverbe",
+      "ejemplo_uso": "La qualité du service s'est considérablement améliorée ces derniers mois.",
+      "palabra": "considérablement",
+      "frecuencia": 2,
+      "lema": "considérablement",
+      "sinonimos": [
+        "grandement",
+        "notablement"
+      ]
+    },
+    {
+      "definicion": "Action de coopérer, de travailler ensemble à une œuvre commune, ou relation d'aide mutuelle entre individus ou entités.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "La coopération internationale est essentielle pour résoudre les défis mondiaux.",
+      "palabra": "coopération",
+      "frecuencia": 2,
+      "lema": "coopération",
+      "sinonimos": [
+        "collaboration",
+        "entraide"
+      ]
+    },
+    {
+      "definicion": "Mode d'organisation du travail qui permet à des travailleurs indépendants ou à des employés de différentes entreprises de partager un même espace de travail, favorisant les échanges.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "Le coworking offre un environnement stimulant pour les entrepreneurs et les freelances.",
+      "palabra": "coworking",
+      "frecuencia": 6,
+      "lema": "coworking",
+      "sinonimos": [
+        "cotravail",
+        "espace partagé"
+      ]
+    },
+    {
+      "definicion": "Indique la position à l'intérieur d'un espace, le temps, la manière, la destination ou l'appartenance.",
+      "tipo_gramatical": "préposition",
+      "ejemplo_uso": "Le livre est dans le tiroir de mon bureau.",
+      "palabra": "dans",
+      "frecuencia": 18,
+      "lema": "dans",
+      "sinonimos": [
+        "à l'intérieur de",
+        "au sein de"
+      ]
+    },
+    {
+      "definicion": "Exprime l'origine, la possession, la matière, la cause, la manière, ou sert à introduire un complément du nom ou un infinitif.",
+      "tipo_gramatical": "préposition",
+      "ejemplo_uso": "C'est la voiture de mon voisin.",
+      "palabra": "de",
+      "frecuencia": 42,
+      "lema": "de",
+      "sinonimos": [
+        "provenant de",
+        "appartenant à"
+      ]
+    },
+    {
+      "definicion": "Indique le point de départ dans le temps ou l'espace, ou la durée d'une action qui continue jusqu'au moment présent.",
+      "tipo_gramatical": "préposition",
+      "ejemplo_uso": "Je travaille dans cette entreprise depuis cinq ans.",
+      "palabra": "depuis",
+      "frecuencia": 6,
+      "lema": "depuis",
+      "sinonimos": [
+        "à partir de",
+        "dès"
+      ]
+    },
+    {
+      "definicion": "Qui vient après tous les autres dans une série, ou qui est le plus récent dans le temps.",
+      "tipo_gramatical": "adjectif (f, singulier)",
+      "ejemplo_uso": "La dernière fois que je l'ai vue, c'était la semaine dernière.",
+      "palabra": "dernière",
+      "frecuencia": 2,
+      "lema": "dernier",
+      "sinonimos": [
+        "finale",
+        "récente"
+      ]
+    },
+    {
+      "definicion": "Article indéfini pluriel, ou contraction de la préposition \"de\" et de l'article défini pluriel \"les\".",
+      "tipo_gramatical": "article indéfini (pluriel) / article défini contracté",
+      "ejemplo_uso": "J'ai acheté des fruits frais au marché ce matin.",
+      "palabra": "des",
+      "frecuencia": 34,
+      "lema": "de les",
+      "sinonimos": [
+        "quelques",
+        "certains"
+      ]
+    },
+    {
+      "definicion": "Qui n'est pas le même, qui présente des particularités distinctes ou des caractéristiques variées.",
+      "tipo_gramatical": "adjectif (m, pluriel)",
+      "ejemplo_uso": "Nous avons exploré différents aspects de cette problématique complexe.",
+      "palabra": "différents",
+      "frecuencia": 2,
+      "lema": "différent",
+      "sinonimos": [
+        "distincts",
+        "variés"
+      ]
+    },
+    {
+      "definicion": "Échanger des idées, des opinions ou des informations avec une ou plusieurs personnes, ou débattre d'un sujet.",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "Il est important de discuter ouvertement pour résoudre les malentendus.",
+      "palabra": "discuter",
+      "frecuencia": 4,
+      "lema": "discuter",
+      "sinonimos": [
+        "converser",
+        "débattre"
+      ]
+    },
+    {
+      "definicion": "Lieu où une personne habite de façon stable et permanente, sa résidence principale ou secondaire.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "Le travail à domicile a connu un essor considérable ces dernières années.",
+      "palabra": "domicile",
+      "frecuencia": 2,
+      "lema": "domicile",
+      "sinonimos": [
+        "résidence",
+        "habitation"
+      ]
+    },
+    {
+      "definicion": "Forme conjuguée du verbe \"donner\" à la deuxième personne du pluriel de l'indicatif présent ou de l'impératif, signifiant offrir, céder ou attribuer.",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "Donnez-moi votre avis sincère sur cette proposition.",
+      "palabra": "donnez",
+      "frecuencia": 4,
+      "lema": "donner",
+      "sinonimos": [
+        "offrez",
+        "cédez"
+      ]
+    },
+    {
+      "definicion": "Contraction de la préposition \"de\" et de l'article défini masculin singulier \"le\", ou article partitif indiquant une quantité indéterminée.",
+      "tipo_gramatical": "article défini contracté / article partitif",
+      "ejemplo_uso": "Il boit du café noir chaque matin pour se réveiller.",
+      "palabra": "du",
+      "frecuencia": 6,
+      "lema": "de le",
+      "sinonimos": [
+        "de ce",
+        "une partie de"
+      ]
+    },
+    {
+      "definicion": "Forme conjuguée du verbe \"décider\" à la deuxième personne du pluriel de l'indicatif présent ou de l'impératif, signifiant prendre une résolution ou faire un choix.",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "Décidez rapidement de la meilleure stratégie à adopter.",
+      "palabra": "décidez",
+      "frecuencia": 2,
+      "lema": "décider",
+      "sinonimos": [
+        "choisissez",
+        "optez"
+      ]
+    },
+    {
+      "definicion": "Trouver quelque chose qui était caché ou inconnu, ou apprendre l'existence de quelque chose de nouveau.",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "J'adore découvrir de nouveaux paysages et cultures lors de mes voyages.",
+      "palabra": "découvrir",
+      "frecuencia": 2,
+      "lema": "découvrir",
+      "sinonimos": [
+        "trouver",
+        "révéler"
+      ]
+    },
+    {
+      "definicion": "Forme conjuguée du verbe \"décrire\" à la deuxième personne du pluriel de l'indicatif présent ou de l'impératif, signifiant représenter par des mots ou des images.",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "Décrivez-nous en détail les événements de cette journée mémorable.",
+      "palabra": "décrivez",
+      "frecuencia": 2,
+      "lema": "décrire",
+      "sinonimos": [
+        "représentez",
+        "dépeignez"
+      ]
+    },
+    {
+      "definicion": "Qui est consacré ou réservé à un usage, une personne ou un objectif spécifique, souvent avec une intention particulière.",
+      "tipo_gramatical": "participe passé (adjectif)",
+      "ejemplo_uso": "Cet espace de travail est entièrement dédié à la recherche scientifique.",
+      "palabra": "dédié",
+      "frecuencia": 2,
+      "lema": "dédier",
+      "sinonimos": [
+        "consacré",
+        "réservé"
+      ]
+    },
+    {
+      "definicion": "Repas pris à midi, ou action de prendre ce repas, généralement le deuxième repas de la journée.",
+      "tipo_gramatical": "nom (m) / verbe",
+      "ejemplo_uso": "Nous allons déjeuner dans un petit restaurant italien très sympathique.",
+      "palabra": "déjeuner",
+      "frecuencia": 4,
+      "lema": "déjeuner",
+      "sinonimos": [
+        "repas de midi",
+        "dîner (Belgique/Suisse)"
+      ]
+    },
+    {
+      "definicion": "Forme conjuguée du verbe \"détailler\" à la deuxième personne du pluriel de l'indicatif présent ou de l'impératif, signifiant exposer avec précision et minutie.",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "Détaillez toutes les étapes du processus pour que chacun puisse comprendre.",
+      "palabra": "détaillez",
+      "frecuencia": 2,
+      "lema": "détailler",
+      "sinonimos": [
+        "précisez",
+        "expliquez"
+      ]
+    },
+    {
+      "definicion": "Rendre moins tendu, relâcher une tension physique ou mentale, ou se relaxer, se reposer.",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "Il est important de prendre le temps de se détendre après une longue semaine de travail.",
+      "palabra": "détendre",
+      "frecuencia": 2,
+      "lema": "détendre",
+      "sinonimos": [
+        "relaxer",
+        "décontracter"
+      ]
+    },
+    {
+      "definicion": "Qui est exigible, légitime, ou participe passé du verbe \"devoir\", indiquant une obligation ou une cause.",
+      "tipo_gramatical": "participe passé (adjectif)",
+      "ejemplo_uso": "Son succès est dû à son travail acharné et à sa persévérance.",
+      "palabra": "dû",
+      "frecuencia": 2,
+      "lema": "devoir",
+      "sinonimos": [
+        "exigible",
+        "légitime"
+      ]
+    },
+    {
+      "definicion": "Qui produit l'effet attendu, qui atteint son but avec succès et sans gaspillage de moyens.",
+      "tipo_gramatical": "adjectif",
+      "ejemplo_uso": "Cette nouvelle stratégie s'est avérée très efficace pour augmenter les ventes.",
+      "palabra": "efficace",
+      "frecuencia": 2,
+      "lema": "efficace",
+      "sinonimos": [
+        "efficient",
+        "performant"
+      ]
+    },
+    {
+      "definicion": "Pluriel de l'adjectif \"efficace\", désignant ce qui produit les effets attendus avec succès.",
+      "tipo_gramatical": "adjectif (pluriel)",
+      "ejemplo_uso": "Ces méthodes de travail sont particulièrement efficaces pour optimiser la productivité.",
+      "palabra": "efficaces",
+      "frecuencia": 2,
+      "lema": "efficace",
+      "sinonimos": [
+        "efficients",
+        "performants"
+      ]
+    },
+    {
+      "definicion": "Pluriel du nom \"employé\", désignant des personnes qui travaillent pour un employeur en échange d'un salaire ou d'une rémunération.",
+      "tipo_gramatical": "nom (m, pluriel)",
+      "ejemplo_uso": "Les employés de l'entreprise ont participé à une formation continue.",
+      "palabra": "employés",
+      "frecuencia": 2,
+      "lema": "employé",
+      "sinonimos": [
+        "salariés",
+        "collaborateurs"
+      ]
+    },
+    {
+      "definicion": "Indique le lieu, le temps, la matière, la manière, ou remplace un complément introduit par \"de\" ou une quantité.",
+      "tipo_gramatical": "préposition / pronom",
+      "ejemplo_uso": "Il est en France pour les vacances d'été.",
+      "palabra": "en",
+      "frecuencia": 14,
+      "lema": "en",
+      "sinonimos": [
+        "dans",
+        "au cours de"
+      ]
+    },
+    {
+      "definicion": "Qui a été perçu par l'ouïe, ou qui a été compris et accepté par plusieurs personnes.",
+      "tipo_gramatical": "participe passé (adjectif, m, pluriel)",
+      "ejemplo_uso": "Les bruits étranges entendus dans la nuit ont inquiété les habitants.",
+      "palabra": "entendus",
+      "frecuencia": 2,
+      "lema": "entendre",
+      "sinonimos": [
+        "perçus",
+        "compris"
+      ]
+    },
+    {
+      "definicion": "Indique une position intermédiaire, une relation réciproque, une répartition ou un choix parmi plusieurs éléments.",
+      "tipo_gramatical": "préposition",
+      "ejemplo_uso": "Le dialogue entre les différentes parties est essentiel pour trouver un accord.",
+      "palabra": "entre",
+      "frecuencia": 2,
+      "lema": "entre",
+      "sinonimos": [
+        "parmi",
+        "au milieu de"
+      ]
+    },
+    {
+      "definicion": "Organisation économique et sociale qui produit des biens ou des services pour les vendre sur un marché, dans un but lucratif ou non.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "Mon père travaille dans une grande entreprise multinationale.",
+      "palabra": "entreprise",
+      "frecuencia": 12,
+      "lema": "entreprise",
+      "sinonimos": [
+        "société",
+        "firme"
+      ]
+    },
+    {
+      "definicion": "Ensemble des éléments naturels et artificiels qui entourent un individu ou un groupe, et dont il dépend pour sa survie et son développement.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "La protection de l'environnement est une priorité absolue pour les générations futures.",
+      "palabra": "environnement",
+      "frecuencia": 2,
+      "lema": "environnement",
+      "sinonimos": [
+        "milieu",
+        "cadre"
+      ]
+    },
+    {
+      "definicion": "Forme conjuguée du verbe \"être\" à la troisième personne du singulier de l'indicatif présent, exprimant l'existence, l'état, l'identité ou servant d'auxiliaire.",
+      "tipo_gramatical": "verbe (être)",
+      "ejemplo_uso": "Il est très important de rester positif face aux défis.",
+      "palabra": "est",
+      "frecuencia": 2,
+      "lema": "être",
+      "sinonimos": [
+        "existe",
+        "se trouve"
+      ]
+    },
+    {
+      "definicion": "Sert à joindre deux mots, deux groupes de mots ou deux propositions, indiquant une addition, une succession ou une simultanéité.",
+      "tipo_gramatical": "conjonction de coordination",
+      "ejemplo_uso": "J'aime lire des romans et regarder des films documentaires.",
+      "palabra": "et",
+      "frecuencia": 34,
+      "lema": "et",
+      "sinonimos": [
+        "plus",
+        "aussi"
+      ]
+    },
+    {
+      "definicion": "Terme anglais signifiant \"exercices\". En français, il désigne des activités physiques ou intellectuelles destinées à l'entraînement ou à l'apprentissage.",
+      "tipo_gramatical": "nom (m, pluriel)",
+      "ejemplo_uso": "Les exercises de grammaire sont essentiels pour maîtriser une langue étrangère.",
+      "palabra": "exercises",
+      "frecuencia": 1,
+      "lema": "exercice",
+      "sinonimos": [
+        "entraînements",
+        "pratiques"
+      ]
+    },
+    {
+      "definicion": "Personnes qui résident dans un pays étranger, loin de leur patrie d'origine, souvent pour des raisons professionnelles ou personnelles.",
+      "tipo_gramatical": "nom (m, pluriel) / adjectif (pluriel)",
+      "ejemplo_uso": "De nombreux expatriés se sont installés à Dubaï pour des opportunités de carrière.",
+      "palabra": "expatriés",
+      "frecuencia": 2,
+      "lema": "expatrié",
+      "sinonimos": [
+        "émigrés",
+        "résidents étrangers"
+      ]
+    },
+    {
+      "definicion": "Rendre clair, intelligible, faire comprendre quelque chose à quelqu'un en fournissant des détails ou des raisons.",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "Pouvez-vous m'expliquer le fonctionnement de cette machine complexe?",
+      "palabra": "expliquer",
+      "frecuencia": 2,
+      "lema": "expliquer",
+      "sinonimos": [
+        "éclaircir",
+        "élucider"
+      ]
+    },
+    {
+      "definicion": "Forme conjuguée du verbe \"expliquer\" à la deuxième personne du pluriel de l'indicatif présent ou de l'impératif, signifiant rendre clair ou intelligible.",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "Expliquez-moi les raisons de votre décision afin que je puisse comprendre.",
+      "palabra": "expliquez",
+      "frecuencia": 6,
+      "lema": "expliquer",
+      "sinonimos": [
+        "éclaircissez",
+        "élucidez"
+      ]
+    },
+    {
+      "definicion": "Présentation orale ou écrite d'un sujet, ou qui est mis à découvert, visible ou soumis à une influence.",
+      "tipo_gramatical": "nom (m) / participe passé (adjectif)",
+      "ejemplo_uso": "J'ai préparé un exposé détaillé sur l'histoire de l'art moderne.",
+      "palabra": "exposé",
+      "frecuencia": 4,
+      "lema": "exposer",
+      "sinonimos": [
+        "présentation",
+        "exposé oral"
+      ]
+    },
+    {
+      "definicion": "Connaissance acquise par la pratique, l'observation ou le vécu, ou événement vécu qui marque et enrichit.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "Son expérience professionnelle dans ce domaine est très vaste et précieuse.",
+      "palabra": "expérience",
+      "frecuencia": 18,
+      "lema": "expérience",
+      "sinonimos": [
+        "vécu",
+        "pratique"
+      ]
+    },
+    {
+      "definicion": "Pluriel du nom \"faiblesse\", désignant des manques de force, des défauts, des points vulnérables ou des insuffisances.",
+      "tipo_gramatical": "nom (f, pluriel)",
+      "ejemplo_uso": "Il doit travailler sur ses faiblesses pour améliorer ses performances.",
+      "palabra": "faiblesses",
+      "frecuencia": 2,
+      "lema": "faiblesse",
+      "sinonimos": [
+        "défauts",
+        "lacunes"
+      ]
+    },
+    {
+      "definicion": "Accomplir une action, créer, produire, causer, ou exécuter une tâche.",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "Je dois faire mes devoirs avant de pouvoir sortir jouer.",
+      "palabra": "faire",
+      "frecuencia": 4,
+      "lema": "faire",
+      "sinonimos": [
+        "réaliser",
+        "exécuter"
+      ]
+    },
+    {
+      "definicion": "Forme conjuguée du verbe \"faire\" à la deuxième personne du pluriel de l'indicatif présent ou de l'impératif, signifiant accomplir ou exécuter.",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "Faites attention en traversant la route, la circulation est dense.",
+      "palabra": "faites",
+      "frecuencia": 2,
+      "lema": "faire",
+      "sinonimos": [
+        "réalisez",
+        "exécutez"
+      ]
+    },
+    {
+      "definicion": "Groupe de personnes unies par des liens de parenté, de mariage ou d'adoption, vivant généralement sous le même toit ou ayant des liens étroits.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "Ma famille se réunit chaque année pour célébrer Noël ensemble.",
+      "palabra": "famille",
+      "frecuencia": 2,
+      "lema": "famille",
+      "sinonimos": [
+        "foyer",
+        "parenté"
+      ]
+    },
+    {
+      "definicion": "Action de former, d'instruire, ou ensemble des connaissances et compétences acquises par un processus d'apprentissage.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "J'ai suivi une formation intensive pour acquérir de nouvelles compétences techniques.",
+      "palabra": "formation",
+      "frecuencia": 4,
+      "lema": "formation",
+      "sinonimos": [
+        "éducation",
+        "apprentissage"
+      ]
+    },
+    {
+      "definicion": "Terme espagnol signifiant \"formulaire\". Il désigne un document à remplir avec des informations spécifiques.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "Veuillez remplir le formulario d'inscription avant la date limite.",
+      "palabra": "formulario",
+      "frecuencia": 11,
+      "lema": "formulario (mot espagnol)",
+      "sinonimos": [
+        "formulaire",
+        "questionnaire"
+      ]
+    },
+    {
+      "definicion": "Pluriel de l'adjectif \"fort\", désignant ce qui a de la puissance, de la résistance, de l'intensité ou de la compétence.",
+      "tipo_gramatical": "adjectif (m, pluriel)",
+      "ejemplo_uso": "Ils sont très forts en mathématiques et en physique.",
+      "palabra": "forts",
+      "frecuencia": 2,
+      "lema": "fort",
+      "sinonimos": [
+        "puissants",
+        "robustes"
+      ]
+    },
+    {
+      "definicion": "Pays d'Europe de l'Ouest, membre de l'Union européenne, connu pour sa culture, son histoire et sa gastronomie.",
+      "tipo_gramatical": "nom propre (f)",
+      "ejemplo_uso": "La France est une destination touristique très prisée pour ses paysages variés.",
+      "palabra": "france",
+      "frecuencia": 6,
+      "lema": "France",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Qui parle français, ou qui est relatif aux pays, aux régions ou aux communautés où le français est parlé.",
+      "tipo_gramatical": "adjectif / nom (m/f)",
+      "ejemplo_uso": "Le Canada est un pays bilingue avec une importante population francophone.",
+      "palabra": "francophone",
+      "frecuencia": 2,
+      "lema": "francophone",
+      "sinonimos": [
+        "gallophone",
+        "de langue française"
+      ]
+    },
+    {
+      "definicion": "Qui doit arriver, qui est à venir, ou les personnes qui représentent l'avenir ou qui sont destinées à le devenir.",
+      "tipo_gramatical": "adjectif (m, pluriel) / nom (m, pluriel)",
+      "ejemplo_uso": "Nous devons préparer les générations futures aux défis de demain.",
+      "palabra": "futurs",
+      "frecuencia": 2,
+      "lema": "futur",
+      "sinonimos": [
+        "à venir",
+        "prochains"
+      ]
+    },
+    {
+      "definicion": "Action de gérer, d'administrer, d'organiser des ressources, des affaires ou des projets de manière efficace.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "La gestion de projet est une compétence clé dans le monde professionnel actuel.",
+      "palabra": "gestion",
+      "frecuencia": 2,
+      "lema": "gestion",
+      "sinonimos": [
+        "administration",
+        "management"
+      ]
+    },
+    {
+      "definicion": "Faveur accordée, élégance, ou dans la locution \"grâce à\", indique la cause favorable d'un événement.",
+      "tipo_gramatical": "nom (f) / locution prépositionnelle",
+      "ejemplo_uso": "Grâce à son travail acharné, il a obtenu d'excellents résultats.",
+      "palabra": "grâce",
+      "frecuencia": 2,
+      "lema": "grâce",
+      "sinonimos": [
+        "faveur",
+        "élégance"
+      ]
+    },
+    {
+      "definicion": "Administrer, diriger, organiser des affaires, des biens, des ressources ou des personnes de manière efficace.",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "Il doit gérer une équipe de dix personnes et plusieurs projets simultanément.",
+      "palabra": "gérer",
+      "frecuencia": 2,
+      "lema": "gérer",
+      "sinonimos": [
+        "administrer",
+        "diriger"
+      ]
+    },
+    {
+      "definicion": "Terme espagnol signifiant \"habileté\" ou \"compétence\". Il désigne la capacité à faire quelque chose avec dextérité.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "En espagnol, \"habilidad\" est un synonyme de \"capacidad\" ou \"destreza\".",
+      "palabra": "habilidad",
+      "frecuencia": 11,
+      "lema": "habilidad (mot espagnol)",
+      "sinonimos": [
+        "habileté",
+        "compétence"
+      ]
+    },
+    {
+      "definicion": "Qui présente une harmonie, un équilibre agréable entre ses différentes parties, ou qui est en accord, en bonne entente.",
+      "tipo_gramatical": "adjectif (m, singulier)",
+      "ejemplo_uso": "Ils vivent dans un environnement familial très harmonieux et serein.",
+      "palabra": "harmonieux",
+      "frecuencia": 2,
+      "lema": "harmonieux",
+      "sinonimos": [
+        "équilibré",
+        "agréable"
+      ]
+    },
+    {
+      "definicion": "Pluriel du nom \"icône\", désignant des images symboliques, des représentations graphiques sur un écran ou des figures emblématiques.",
+      "tipo_gramatical": "nom (f, pluriel)",
+      "ejemplo_uso": "Les icônes de cette application sont très intuitives et faciles à comprendre.",
+      "palabra": "icônes",
+      "frecuencia": 2,
+      "lema": "icône",
+      "sinonimos": [
+        "symboles",
+        "images"
+      ]
+    },
+    {
+      "definicion": "Pronom personnel de la troisième personne du singulier, sujet d'un verbe, désignant une personne ou une chose masculine.",
+      "tipo_gramatical": "pronom personnel (m, singulier)",
+      "ejemplo_uso": "Il lit un livre passionnant dans le jardin.",
+      "palabra": "il",
+      "frecuencia": 2,
+      "lema": "il",
+      "sinonimos": []
+    }
+  ],
+  "PE": [
+    {
+      "ruta_audio": null,
+      "habilidad": "Production écrite",
+      "instruccion": "Activité 2 Vous travaillez dans une petite entreprise qui a récemment adopté une nouvelle méthode de travail en équipe. Cette méthode a considérablement amélioré la communication et la coopération entre les employés. Les projets ont été plus efficaces et plus harmonieux. Vous souhaitez partager cette expérience positive avec d'autres professionnels. Vous écrivez un article pour expliquer comment cette nouvelle méthode de travail a aidé votre entreprise. Vous en détaillez les bénéfices. (160 mots minimum.)",
+      "tipo": "texto",
+      "preguntas": null,
+      "texto_lectura_modular": null,
+      "texto_lectura": "Vous travaillez dans une petite entreprise qui a récemment adopté une nouvelle méthode de travail en équipe. Cette méthode a considérablement amélioré la communication et la coopération entre les employés. Les projets ont été plus efficaces et plus harmonieux. Vous souhaitez partager cette expérience positive avec d'autres professionnels. Vous écrivez un article pour expliquer comment cette nouvelle méthode de travail a aidé votre entreprise. Vous en détaillez les bénéfices. (160 mots minimum.)",
+      "transcripcion": null,
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": null,
+      "habilidad": "Production écrite",
+      "instruccion": "Activité 3 Vous êtes journaliste et avez récemment testé le télétravail depuis un café coworking au lieu de travailler à domicile. Cette expérience vous a permis de découvrir comment un environnement de travail pouvait influencer la productivité et le bien-être. Vous souhaitez partager les avantages de télétravailler depuis un café coworking. Vous écrivez un article pour discuter des avantages du télétravail depuis un café coworking. Vous donnez des conseils pour travailler dans ce cadre. (160 mots minimum.)",
+      "tipo": "texto",
+      "preguntas": null,
+      "texto_lectura_modular": null,
+      "texto_lectura": "Vous êtes journaliste et avez récemment testé le télétravail depuis un café coworking au lieu de travailler à domicile. Cette expérience vous a permis de découvrir comment un environnement de travail pouvait influencer la productivité et le bien-être. Vous souhaitez partager les avantages de télétravailler depuis un café coworking. Vous écrivez un article pour discuter des avantages du télétravail depuis un café coworking. Vous donnez des conseils pour travailler dans ce cadre. (160 mots minimum.)",
+      "transcripcion": null,
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": null,
+      "habilidad": "Production écrite",
+      "instruccion": "Activité 4 Vous avez récemment participé à un stage de formation sur la gestion du temps au travail. Grâce à cette formation, vous avez appris à mieux organiser vos journées et à être plus efficace dans vos tâches quotidiennes. Vous souhaitez partager ces nouvelles compétences avec d'autres professionnels. Vous écrivez un article pour aider d'autres personnes à mieux gérer leur temps au travail et vous partagez vos techniques. (160 mots minimum.)",
+      "tipo": "texto",
+      "preguntas": null,
+      "texto_lectura_modular": null,
+      "texto_lectura": "Vous avez récemment participé à un stage de formation sur la gestion du temps au travail. Grâce à cette formation, vous avez appris à mieux organiser vos journées et à être plus efficace dans vos tâches quotidiennes. Vous souhaitez partager ces nouvelles compétences avec d'autres professionnels. Vous écrivez un article pour aider d'autres personnes à mieux gérer leur temps au travail et vous partagez vos techniques. (160 mots minimum.)",
+      "transcripcion": null,
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": null,
+      "habilidad": "Production écrite",
+      "instruccion": "Activité 5 Vous avez utilisé une application pour apprendre une langue étrangère. Vous décidez de publier un article sur un site internet spécialisé dans l'apprentissage des langues. Vous racontez votre expérience et vous parlez des avantages et des inconvénients d'apprendre une langue étrangère de cette manière. (160 mots minimum.)",
+      "tipo": "texto",
+      "preguntas": null,
+      "texto_lectura_modular": null,
+      "texto_lectura": "Vous avez utilisé une application pour apprendre une langue étrangère. Vous décidez de publier un article sur un site internet spécialisé dans l'apprentissage des langues. Vous racontez votre expérience et vous parlez des avantages et des inconvénients d'apprendre une langue étrangère de cette manière. (160 mots minimum.)",
+      "transcripcion": null,
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": null,
+      "habilidad": "Production écrite",
+      "instruccion": "Activité 6 Pendant la pause-déjeuner, vous aimez faire du coloriage pour vous détendre. Vous partagez votre expérience dans un article publié dans le journal de l'entreprise. Vous parlez de ce que vous apporte le coloriage et les points positifs de pratiquer ce loisir pendant la pause-déjeuner. (160 mots minimum.)",
+      "tipo": "texto",
+      "preguntas": null,
+      "texto_lectura_modular": null,
+      "texto_lectura": "Pendant la pause-déjeuner, vous aimez faire du coloriage pour vous détendre. Vous partagez votre expérience dans un article publié dans le journal de l'entreprise. Vous parlez de ce que vous apporte le coloriage et les points positifs de pratiquer ce loisir pendant la pause-déjeuner. (160 mots minimum.)",
+      "transcripcion": null,
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": null,
+      "habilidad": "Production écrite",
+      "instruccion": "Activité 7 Votre entreprise a obtenu, l'année dernière, le label vert, un moyen de montrer qu'il s'agit d'une entreprise écologique. Vous expliquez dans un article les moyens mis en place pour obtenir ce label et vous parlez des différents avantages que ce label apporte. (160 mots minimum.)",
+      "tipo": "texto",
+      "preguntas": null,
+      "texto_lectura_modular": null,
+      "texto_lectura": "Votre entreprise a obtenu, l'année dernière, le label vert, un moyen de montrer qu'il s'agit d'une entreprise écologique. Vous expliquez dans un article les moyens mis en place pour obtenir ce label et vous parlez des différents avantages que ce label apporte. (160 mots minimum.)",
+      "transcripcion": null,
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": null,
+      "habilidad": "Production écrite",
+      "instruccion": "Activité 8 Pour votre travail, vous avez dû vivre à l'étranger pendant plusieurs années avec votre famille. Vous racontez votre expérience dans un article pour un blog dédié aux changements de vie. Vous expliquez ce que cette expérience vous a apporté et vous donnez des conseils pour les futurs expatriés. (160 mots minimum.)",
+      "tipo": "texto",
+      "preguntas": null,
+      "texto_lectura_modular": null,
+      "texto_lectura": "Pour votre travail, vous avez dû vivre à l'étranger pendant plusieurs années avec votre famille. Vous racontez votre expérience dans un article pour un blog dédié aux changements de vie. Vous expliquez ce que cette expérience vous a apporté et vous donnez des conseils pour les futurs expatriés. (160 mots minimum.)",
+      "transcripcion": null,
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": null,
+      "habilidad": "Production écrite",
+      "instruccion": "Activité 9 Vous collaborez à un journal étudiant, en France. Vous écrivez un article sur « Quelle est la place de l'image dans une présentation d'un exposé ? ». En vous appuyant sur votre expérience personnelle, vous expliquez les points positifs et négatifs de l'utilisation des visuels (photos, icônes...) pour un exposé à l'université. (160 mots minimum.)",
+      "tipo": "texto",
+      "preguntas": null,
+      "texto_lectura_modular": null,
+      "texto_lectura": "Vous collaborez à un journal étudiant, en France. Vous écrivez un article sur « Quelle est la place de l'image dans une présentation d'un exposé ? ». En vous appuyant sur votre expérience personnelle, vous expliquez les points positifs et négatifs de l'utilisation des visuels (photos, icônes...) pour un exposé à l'université. (160 mots minimum.)",
+      "transcripcion": null,
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": null,
+      "habilidad": "Production écrite",
+      "instruccion": "Activité 10 Pour faire la promotion de votre entreprise, vous écrivez un article pour un magazine économique francophone. Vous y parlez des avantages et des inconvénients des voyages professionnels pour le salarié. Vous vous appuyez sur votre propre expérience ou sur des témoignages vus ou entendus. (160 mots minimum.)",
+      "tipo": "texto",
+      "preguntas": null,
+      "texto_lectura_modular": null,
+      "texto_lectura": "Pour faire la promotion de votre entreprise, vous écrivez un article pour un magazine économique francophone. Vous y parlez des avantages et des inconvénients des voyages professionnels pour le salarié. Vous vous appuyez sur votre propre expérience ou sur des témoignages vus ou entendus. (160 mots minimum.)",
+      "transcripcion": null,
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": null,
+      "habilidad": "Production écrite",
+      "instruccion": "Activité 11 Vous êtes étudiant(e) en France. Vous préparez un article pour une association écologique étudiante. Vous y décrivez la situation de la pollution par les plastiques sur le campus et vous faites des propositions pour trouver des solutions à ce problème. (160 mots minimum.)",
+      "tipo": "texto",
+      "preguntas": null,
+      "texto_lectura_modular": null,
+      "texto_lectura": "Vous êtes étudiant(e) en France. Vous préparez un article pour une association écologique étudiante. Vous y décrivez la situation de la pollution par les plastiques sur le campus et vous faites des propositions pour trouver des solutions à ce problème. (160 mots minimum.)",
+      "transcripcion": null,
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": null,
+      "habilidad": "Production écrite",
+      "instruccion": "Activité 12 Vous êtes étudiant(e) en France. L'un de vos professeurs utilise des outils d'auto-évaluation pour vous aider à comprendre vos points forts et vos faiblesses. Intéressé(e), vous écrivez un article sur le blog de l'université pour discuter des avantages et des limites de ces outils et pour partager votre expérience. (160 mots minimum.)",
+      "tipo": "texto",
+      "preguntas": null,
+      "texto_lectura_modular": null,
+      "texto_lectura": "Vous êtes étudiant(e) en France. L'un de vos professeurs utilise des outils d'auto-évaluation pour vous aider à comprendre vos points forts et vos faiblesses. Intéressé(e), vous écrivez un article sur le blog de l'université pour discuter des avantages et des limites de ces outils et pour partager votre expérience. (160 mots minimum.)",
+      "transcripcion": null,
+      "campos_formulario": null
+    }
+  ],
+  "tema_PE": "Rédirigé un article",
+  "unidad": "Unité 4"
+}

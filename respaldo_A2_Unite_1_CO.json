@@ -1,0 +1,1991 @@
+{
+  "diccionario_unidad": [
+    {
+      "definicion": "Indica dirección, lugar, tiempo, posesión o propósito.",
+      "tipo_gramatical": "préposition",
+      "ejemplo_uso": "Je vais à Paris.",
+      "palabra": "a",
+      "frecuencia": 99,
+      "lema": "à",
+      "sinonimos": [
+        "vers",
+        "chez"
+      ]
+    },
+    {
+      "definicion": "El primer contacto o la primera aproximación a algo.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "D'abord, nous allons manger.",
+      "palabra": "abord",
+      "frecuencia": 1,
+      "lema": "abord",
+      "sinonimos": [
+        "approche",
+        "début"
+      ]
+    },
+    {
+      "definicion": "Que no está presente en un lugar o en un momento determinado.",
+      "tipo_gramatical": "adjectif (m, pl)",
+      "ejemplo_uso": "Les élèves absents doivent rattraper les cours.",
+      "palabra": "absents",
+      "frecuencia": 2,
+      "lema": "absent",
+      "sinonimos": [
+        "manquant",
+        "parti"
+      ]
+    },
+    {
+      "definicion": "Recibir o admitir algo, o estar de acuerdo con ello.",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "Nous acceptons votre proposition.",
+      "palabra": "acceptons",
+      "frecuencia": 2,
+      "lema": "accepter",
+      "sinonimos": [
+        "admettre",
+        "recevoir"
+      ]
+    },
+    {
+      "definicion": "Que han sido recibidas o admitidas, o con las que se ha estado de acuerdo.",
+      "tipo_gramatical": "verbe (participe passé f, pl)",
+      "ejemplo_uso": "Les conditions ont été acceptées par tous.",
+      "palabra": "acceptées",
+      "frecuencia": 1,
+      "lema": "accepter",
+      "sinonimos": [
+        "admises",
+        "reçues"
+      ]
+    },
+    {
+      "definicion": "Objeto complementario que no es esencial pero que añade algo a la función principal o al aspecto.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "Cet accessoire est très utile pour mon téléphone.",
+      "palabra": "accessoire",
+      "frecuencia": 1,
+      "lema": "accessoire",
+      "sinonimos": [
+        "complément",
+        "gadget"
+      ]
+    },
+    {
+      "definicion": "Que ha ido o ha estado con alguien o algo.",
+      "tipo_gramatical": "verbe (participe passé m, sg)",
+      "ejemplo_uso": "Il est accompagné de son chien.",
+      "palabra": "accompagné",
+      "frecuencia": 1,
+      "lema": "accompagner",
+      "sinonimos": [
+        "suivi",
+        "escorté"
+      ]
+    },
+    {
+      "definicion": "La acción de recibir a alguien o la manera en que se le recibe.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "L'accueil à l'hôtel était chaleureux.",
+      "palabra": "accueil",
+      "frecuencia": 15,
+      "lema": "accueil",
+      "sinonimos": [
+        "réception",
+        "bienvenue"
+      ]
+    },
+    {
+      "definicion": "La acción de adquirir algo a cambio de dinero.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "Mon dernier achat est un nouveau livre.",
+      "palabra": "achat",
+      "frecuencia": 6,
+      "lema": "achat",
+      "sinonimos": [
+        "acquisition",
+        "emplette"
+      ]
+    },
+    {
+      "definicion": "Las acciones de adquirir cosas a cambio de dinero.",
+      "tipo_gramatical": "nom (m, pl)",
+      "ejemplo_uso": "Nous faisons nos achats au supermarché.",
+      "palabra": "achats",
+      "frecuencia": 1,
+      "lema": "achat",
+      "sinonimos": [
+        "acquisitions",
+        "emplettes"
+      ]
+    },
+    {
+      "definicion": "Adquirir algo pagando por ello.",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "Je veux acheter une nouvelle voiture.",
+      "palabra": "acheter",
+      "frecuencia": 8,
+      "lema": "acheter",
+      "sinonimos": [
+        "acquérir",
+        "se procurer"
+      ]
+    },
+    {
+      "definicion": "Que ha sido adquirida pagando por ella.",
+      "tipo_gramatical": "verbe (participe passé f, sg)",
+      "ejemplo_uso": "La robe a été achetée hier.",
+      "palabra": "achetée",
+      "frecuencia": 1,
+      "lema": "acheter",
+      "sinonimos": [
+        "acquise",
+        "payée"
+      ]
+    },
+    {
+      "definicion": "Que han sido adquiridos pagando por ellos.",
+      "tipo_gramatical": "verbe (participe passé m, pl)",
+      "ejemplo_uso": "Les billets ont été achetés en ligne.",
+      "palabra": "achetés",
+      "frecuencia": 1,
+      "lema": "acheter",
+      "sinonimos": [
+        "acquis",
+        "payés"
+      ]
+    },
+    {
+      "definicion": "Personas que realizan ejercicios de equilibrio, agilidad y destreza física.",
+      "tipo_gramatical": "nom (m/f, pl)",
+      "ejemplo_uso": "Les acrobates du cirque sont impressionnants.",
+      "palabra": "acrobates",
+      "frecuencia": 1,
+      "lema": "acrobate",
+      "sinonimos": [
+        "gymnastes",
+        "funambules"
+      ]
+    },
+    {
+      "definicion": "Conjunto de operaciones o tareas propias de una persona o entidad.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "Nous avons beaucoup d'activités prévues pour le week-end.",
+      "palabra": "activité",
+      "frecuencia": 13,
+      "lema": "activité",
+      "sinonimos": [
+        "occupation",
+        "action"
+      ]
+    },
+    {
+      "definicion": "Personas que se encuentran en la etapa de la adolescencia, entre la niñez y la edad adulta.",
+      "tipo_gramatical": "nom (m, pl)",
+      "ejemplo_uso": "Les adolescents aiment passer du temps avec leurs amis.",
+      "palabra": "adolescents",
+      "frecuencia": 4,
+      "lema": "adolescent",
+      "sinonimos": [
+        "jeunes",
+        "ados"
+      ]
+    },
+    {
+      "definicion": "Conjunto de datos que permiten localizar un lugar o a una persona.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "Quelle est votre adresse e-mail ?",
+      "palabra": "adresse",
+      "frecuencia": 2,
+      "lema": "adresse",
+      "sinonimos": [
+        "domicile",
+        "coordonnées"
+      ]
+    },
+    {
+      "definicion": "Persona que ha alcanzado la madurez física y mental.",
+      "tipo_gramatical": "nom (m/f)",
+      "ejemplo_uso": "Un adulte doit être responsable.",
+      "palabra": "adulte",
+      "frecuencia": 1,
+      "lema": "adulte",
+      "sinonimos": [
+        "majeur",
+        "grand"
+      ]
+    },
+    {
+      "definicion": "Personas que han alcanzado la madurez física y mental.",
+      "tipo_gramatical": "nom (m/f, pl)",
+      "ejemplo_uso": "Les adultes ont payé le prix plein.",
+      "palabra": "adultes",
+      "frecuencia": 5,
+      "lema": "adulte",
+      "sinonimos": [
+        "majeurs",
+        "grands"
+      ]
+    },
+    {
+      "definicion": "Acción de mostrar información públicamente, o el resultado de esta acción.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "L'affichage des résultats est prévu pour demain.",
+      "palabra": "affichage",
+      "frecuencia": 2,
+      "lema": "affichage",
+      "sinonimos": [
+        "exposition",
+        "présentation"
+      ]
+    },
+    {
+      "definicion": "Uno de los continentes de la Tierra.",
+      "tipo_gramatical": "nom propre (f)",
+      "ejemplo_uso": "L'Afrique est un continent riche en cultures.",
+      "palabra": "afrique",
+      "frecuencia": 1,
+      "lema": "Afrique",
+      "sinonimos": [
+        "continent africain"
+      ]
+    },
+    {
+      "definicion": "Abreviatura de 'Assemblée Générale' o 'Agence'.",
+      "tipo_gramatical": "abréviation (f)",
+      "ejemplo_uso": "L'AG aura lieu le mois prochain.",
+      "palabra": "ag",
+      "frecuencia": 1,
+      "lema": "AG",
+      "sinonimos": [
+        "réunion",
+        "bureau"
+      ]
+    },
+    {
+      "definicion": "Que es agradable, cortés y fácil de querer.",
+      "tipo_gramatical": "adjectif",
+      "ejemplo_uso": "Elle est toujours très aimable avec tout le monde.",
+      "palabra": "aimable",
+      "frecuencia": 1,
+      "lema": "aimable",
+      "sinonimos": [
+        "gentil",
+        "sympathique"
+      ]
+    },
+    {
+      "definicion": "Mezcla de gases que forma la atmósfera terrestre y que respiran los seres vivos.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "L'air frais est agréable en été.",
+      "palabra": "air",
+      "frecuencia": 2,
+      "lema": "air",
+      "sinonimos": [
+        "atmosphère",
+        "vent"
+      ]
+    },
+    {
+      "definicion": "Relacionado con los alimentos o la alimentación.",
+      "tipo_gramatical": "adjectif (pl)",
+      "ejemplo_uso": "Nous achetons des produits alimentaires au marché.",
+      "palabra": "alimentaires",
+      "frecuencia": 1,
+      "lema": "alimentaire",
+      "sinonimos": [
+        "comestibles",
+        "nutritifs"
+      ]
+    },
+    {
+      "definicion": "Moverse de un lugar a otro.",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "Je dois aller au travail.",
+      "palabra": "aller",
+      "frecuencia": 13,
+      "lema": "aller",
+      "sinonimos": [
+        "partir",
+        "se rendre"
+      ]
+    },
+    {
+      "definicion": "Forma conjugada del verbo 'aller' para la segunda persona del plural (ustedes/vosotros) o formal singular (usted).",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "Allez-y, je vous attends.",
+      "palabra": "allez",
+      "frecuencia": 7,
+      "lema": "aller",
+      "sinonimos": [
+        "partez",
+        "rendez-vous"
+      ]
+    },
+    {
+      "definicion": "En ese momento, o para introducir una consecuencia o una conclusión.",
+      "tipo_gramatical": "adverbe",
+      "ejemplo_uso": "Il pleut, alors je prends mon parapluie.",
+      "palabra": "alors",
+      "frecuencia": 1,
+      "lema": "alors",
+      "sinonimos": [
+        "donc",
+        "ensuite"
+      ]
+    },
+    {
+      "definicion": "Nombre propio de persona.",
+      "tipo_gramatical": "nom propre (m)",
+      "ejemplo_uso": "Ambroise est un prénom ancien.",
+      "palabra": "ambroise",
+      "frecuencia": 2,
+      "lema": "Ambroise",
+      "sinonimos": [
+        "prénom"
+      ]
+    },
+    {
+      "definicion": "Personas con las que se tiene una relación de amistad.",
+      "tipo_gramatical": "nom (m, pl)",
+      "ejemplo_uso": "J'ai beaucoup d'amis fidèles.",
+      "palabra": "amis",
+      "frecuencia": 1,
+      "lema": "ami",
+      "sinonimos": [
+        "copains",
+        "camarades"
+      ]
+    },
+    {
+      "definicion": "Edificio o sala con asientos dispuestos en gradas semicirculares, utilizado para espectáculos o conferencias.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "La conférence aura lieu dans l'amphithéâtre principal.",
+      "palabra": "amphithéâtre",
+      "frecuencia": 2,
+      "lema": "amphithéâtre",
+      "sinonimos": [
+        "auditorium",
+        "arènes"
+      ]
+    },
+    {
+      "definicion": "Relacionado con los animales.",
+      "tipo_gramatical": "adjectif (f, pl)",
+      "ejemplo_uso": "Les espèces animales sont très diverses.",
+      "palabra": "animales",
+      "frecuencia": 1,
+      "lema": "animal",
+      "sinonimos": [
+        "bestiales",
+        "fauniques"
+      ]
+    },
+    {
+      "definicion": "Relacionado con los animales, especialmente en el contexto de su cuidado o representación.",
+      "tipo_gramatical": "adjectif (m)",
+      "ejemplo_uso": "C'est un parc animalier magnifique.",
+      "palabra": "animalier",
+      "frecuencia": 2,
+      "lema": "animalier",
+      "sinonimos": [
+        "zoologique",
+        "bestiaire"
+      ]
+    },
+    {
+      "definicion": "Seres vivos que se mueven por sí mismos, se alimentan de otros seres vivos y tienen sensibilidad.",
+      "tipo_gramatical": "nom (m, pl)",
+      "ejemplo_uso": "Les animaux sauvages vivent dans la forêt.",
+      "palabra": "animaux",
+      "frecuencia": 2,
+      "lema": "animal",
+      "sinonimos": [
+        "bêtes",
+        "créatures"
+      ]
+    },
+    {
+      "definicion": "Dar vida, movimiento o alegría a algo o a alguien.",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "Il aime animer les soirées.",
+      "palabra": "animer",
+      "frecuencia": 1,
+      "lema": "animer",
+      "sinonimos": [
+        "égayer",
+        "stimuler"
+      ]
+    },
+    {
+      "definicion": "Mensaje público que comunica una noticia, un evento o una oferta.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "J'ai vu une annonce pour un nouvel emploi.",
+      "palabra": "annonce",
+      "frecuencia": 10,
+      "lema": "annonce",
+      "sinonimos": [
+        "publicité",
+        "avis"
+      ]
+    },
+    {
+      "definicion": "Comunicar o hacer saber algo públicamente.",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "Il va annoncer les résultats demain.",
+      "palabra": "annoncer",
+      "frecuencia": 1,
+      "lema": "annoncer",
+      "sinonimos": [
+        "informer",
+        "déclarer"
+      ]
+    },
+    {
+      "definicion": "Mensajes públicos que comunican noticias, eventos u ofertas.",
+      "tipo_gramatical": "nom (f, pl)",
+      "ejemplo_uso": "Il y a beaucoup d'annonces immobilières.",
+      "palabra": "annonces",
+      "frecuencia": 12,
+      "lema": "annonce",
+      "sinonimos": [
+        "publicités",
+        "avis"
+      ]
+    },
+    {
+      "definicion": "Acción de dejar sin efecto un acto, un contrato o un evento.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "L'annulation du vol a causé des retards.",
+      "palabra": "annulation",
+      "frecuencia": 1,
+      "lema": "annulation",
+      "sinonimos": [
+        "suppression",
+        "résiliation"
+      ]
+    },
+    {
+      "definicion": "Que ha sido dejado sin efecto o sin validez.",
+      "tipo_gramatical": "verbe (participe passé m, sg)",
+      "ejemplo_uso": "Le concert a été annulé à cause de la pluie.",
+      "palabra": "annulé",
+      "frecuencia": 2,
+      "lema": "annuler",
+      "sinonimos": [
+        "supprimé",
+        "invalidé"
+      ]
+    },
+    {
+      "definicion": "Período de doce meses, desde el 1 de enero hasta el 31 de diciembre.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "Cette année, je vais voyager beaucoup.",
+      "palabra": "année",
+      "frecuencia": 2,
+      "lema": "année",
+      "sinonimos": [
+        "an",
+        "exercice"
+      ]
+    },
+    {
+      "definicion": "Unidades de tiempo que equivalen a doce meses, usadas para expresar la edad o la duración.",
+      "tipo_gramatical": "nom (m, pl)",
+      "ejemplo_uso": "Mon frère a dix ans.",
+      "palabra": "ans",
+      "frecuencia": 2,
+      "lema": "an",
+      "sinonimos": [
+        "années",
+        "périodes"
+      ]
+    },
+    {
+      "definicion": "El octavo mes del año.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "Nous partons en vacances en août.",
+      "palabra": "août",
+      "frecuencia": 2,
+      "lema": "août",
+      "sinonimos": [
+        "huitième mois"
+      ]
+    },
+    {
+      "definicion": "Forma conjugada del verbo 'appeler' para la segunda persona del plural (ustedes/vosotros) o formal singular (usted).",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "Appelez-moi si vous avez des questions.",
+      "palabra": "appelez",
+      "frecuencia": 1,
+      "lema": "appeler",
+      "sinonimos": [
+        "téléphonez",
+        "contactez"
+      ]
+    },
+    {
+      "definicion": "Actos de llamar a alguien, especialmente por teléfono.",
+      "tipo_gramatical": "nom (m, pl)",
+      "ejemplo_uso": "J'ai reçu plusieurs appels aujourd'hui.",
+      "palabra": "appels",
+      "frecuencia": 1,
+      "lema": "appel",
+      "sinonimos": [
+        "communications",
+        "coups de fil"
+      ]
+    },
+    {
+      "definicion": "Llevar o traer algo a un lugar o a una persona.",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "N'oubliez pas d'apporter votre passeport.",
+      "palabra": "apporter",
+      "frecuencia": 2,
+      "lema": "apporter",
+      "sinonimos": [
+        "amener",
+        "porter"
+      ]
+    },
+    {
+      "definicion": "Forma conjugada del verbo 'apporter' para la segunda persona del plural (ustedes/vosotros) o formal singular (usted).",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "Apportez-moi un verre d'eau, s'il vous plaît.",
+      "palabra": "apportez",
+      "frecuencia": 2,
+      "lema": "apporter",
+      "sinonimos": [
+        "amenez",
+        "portez"
+      ]
+    },
+    {
+      "definicion": "Indica posterioridad en el tiempo o en el espacio.",
+      "tipo_gramatical": "préposition",
+      "ejemplo_uso": "Nous irons au cinéma après le dîner.",
+      "palabra": "après",
+      "frecuencia": 4,
+      "lema": "après",
+      "sinonimos": [
+        "suite à",
+        "derrière"
+      ]
+    },
+    {
+      "definicion": "Relacionado con el agua o que vive en ella.",
+      "tipo_gramatical": "adjectif",
+      "ejemplo_uso": "Les sports aquatiques sont très populaires en été.",
+      "palabra": "aquatique",
+      "frecuencia": 3,
+      "lema": "aquatique",
+      "sinonimos": [
+        "marin",
+        "fluvial"
+      ]
+    },
+    {
+      "definicion": "Metal precioso de color blanco brillante, o moneda y bienes que se utilizan como medio de pago.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "J'ai besoin d'argent pour acheter un cadeau.",
+      "palabra": "argent",
+      "frecuencia": 1,
+      "lema": "argent",
+      "sinonimos": [
+        "monnaie",
+        "espèces"
+      ]
+    },
+    {
+      "definicion": "Acción de llegar a un lugar, o el momento en que esto ocurre.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "L'heure d'arrivée est prévue à 10h.",
+      "palabra": "arrivée",
+      "frecuencia": 2,
+      "lema": "arrivée",
+      "sinonimos": [
+        "venue",
+        "atteinte"
+      ]
+    },
+    {
+      "definicion": "Acción de detenerse o el lugar donde algo se detiene.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "Le bus fait un arrêt devant l'école.",
+      "palabra": "arrêt",
+      "frecuencia": 2,
+      "lema": "arrêt",
+      "sinonimos": [
+        "halte",
+        "pause"
+      ]
+    },
+    {
+      "definicion": "Forma conjugada del verbo 'arrêter' en futuro simple, tercera persona del singular (él/ella).",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "Le train s'arrêtera à la prochaine gare.",
+      "palabra": "arrêtera",
+      "frecuencia": 1,
+      "lema": "arrêter",
+      "sinonimos": [
+        "cessera",
+        "stoppera"
+      ]
+    },
+    {
+      "definicion": "Conjunto de disciplinas o actividades que requieren habilidad y creatividad para producir obras estéticas.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "L'art est une forme d'expression humaine.",
+      "palabra": "art",
+      "frecuencia": 1,
+      "lema": "art",
+      "sinonimos": [
+        "création",
+        "talent"
+      ]
+    },
+    {
+      "definicion": "Cada una de las partes de un escrito, un contrato o una ley, o un objeto que se vende.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "J'ai lu un article intéressant dans le journal.",
+      "palabra": "article",
+      "frecuencia": 3,
+      "lema": "article",
+      "sinonimos": [
+        "élément",
+        "produit"
+      ]
+    },
+    {
+      "definicion": "Cada una de las partes de un escrito, un contrato o una ley, o los objetos que se venden.",
+      "tipo_gramatical": "nom (m, pl)",
+      "ejemplo_uso": "Les articles de sport sont en promotion.",
+      "palabra": "articles",
+      "frecuencia": 2,
+      "lema": "article",
+      "sinonimos": [
+        "éléments",
+        "produits"
+      ]
+    },
+    {
+      "definicion": "Conjunto de disciplinas o actividades que requieren habilidad y creatividad para producir obras estéticas.",
+      "tipo_gramatical": "nom (m, pl)",
+      "ejemplo_uso": "Les beaux-arts incluent la peinture et la sculpture.",
+      "palabra": "arts",
+      "frecuencia": 1,
+      "lema": "art",
+      "sinonimos": [
+        "créations",
+        "talents"
+      ]
+    },
+    {
+      "definicion": "Contrato por el cual una persona o empresa se compromete a indemnizar a otra en caso de un daño o riesgo.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "J'ai souscrit une assurance voyage.",
+      "palabra": "assurance",
+      "frecuencia": 1,
+      "lema": "assurance",
+      "sinonimos": [
+        "garantie",
+        "protection"
+      ]
+    },
+    {
+      "definicion": "Personaje principal de una famosa serie de cómics francesa.",
+      "tipo_gramatical": "nom propre (m)",
+      "ejemplo_uso": "Astérix est un Gaulois courageux.",
+      "palabra": "astérix",
+      "frecuencia": 1,
+      "lema": "Astérix",
+      "sinonimos": [
+        "personnage de BD"
+      ]
+    },
+    {
+      "definicion": "Lugar donde se realiza un trabajo manual o artístico, o una sesión de trabajo práctico.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "Nous allons participer à un atelier de peinture.",
+      "palabra": "atelier",
+      "frecuencia": 1,
+      "lema": "atelier",
+      "sinonimos": [
+        "studio",
+        "séminaire"
+      ]
+    },
+    {
+      "definicion": "Nombre de una marca o empresa, posiblemente relacionada con precios bajos.",
+      "tipo_gramatical": "nom propre (m)",
+      "ejemplo_uso": "J'ai trouvé de bonnes affaires chez Atoutprix.",
+      "palabra": "atoutprix",
+      "frecuencia": 1,
+      "lema": "Atoutprix",
+      "sinonimos": [
+        "enseigne",
+        "marque"
+      ]
+    },
+    {
+      "definicion": "Forma conjugada del verbo 'attendre' para la segunda persona del plural (ustedes/vosotros) o formal singular (usted).",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "Attendez-moi ici, je reviens tout de suite.",
+      "palabra": "attendez",
+      "frecuencia": 1,
+      "lema": "attendre",
+      "sinonimos": [
+        "patientez",
+        "espérez"
+      ]
+    },
+    {
+      "definicion": "Forma conjugada del verbo 'attendre' para la primera persona del plural (nosotros).",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "Nous attendons le bus depuis vingt minutes.",
+      "palabra": "attendons",
+      "frecuencia": 1,
+      "lema": "attendre",
+      "sinonimos": [
+        "patientons",
+        "espérons"
+      ]
+    },
+    {
+      "definicion": "Permanecer en un lugar hasta que llegue alguien o algo, o hasta que suceda algo.",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "Je dois attendre mon tour.",
+      "palabra": "attendre",
+      "frecuencia": 1,
+      "lema": "attendre",
+      "sinonimos": [
+        "patienter",
+        "espérer"
+      ]
+    },
+    {
+      "definicion": "Aplicación voluntaria de la actividad mental a un objeto o a un estímulo.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "Faites attention en traversant la rue.",
+      "palabra": "attention",
+      "frecuencia": 10,
+      "lema": "attention",
+      "sinonimos": [
+        "vigilance",
+        "concentration"
+      ]
+    },
+    {
+      "definicion": "Fuerza que atrae, o un lugar o espectáculo que atrae a la gente.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "La nouvelle attraction du parc est très populaire.",
+      "palabra": "attraction",
+      "frecuencia": 1,
+      "lema": "attraction",
+      "sinonimos": [
+        "attrait",
+        "divertissement"
+      ]
+    },
+    {
+      "definicion": "Contracción de la preposición 'à' y el artículo definido 'le'.",
+      "tipo_gramatical": "article contracté (m, sg)",
+      "ejemplo_uso": "Je vais au marché.",
+      "palabra": "au",
+      "frecuencia": 43,
+      "lema": "au",
+      "sinonimos": [
+        "à le"
+      ]
+    },
+    {
+      "definicion": "Indica la ausencia total de algo o de alguien.",
+      "tipo_gramatical": "déterminant indéfini (m, sg)",
+      "ejemplo_uso": "Je n'ai aucun problème.",
+      "palabra": "aucun",
+      "frecuencia": 1,
+      "lema": "aucun",
+      "sinonimos": [
+        "nul",
+        "pas un"
+      ]
+    },
+    {
+      "definicion": "Relacionado con el sonido o la audición.",
+      "tipo_gramatical": "adjectif",
+      "ejemplo_uso": "Ce livre audio est très intéressant.",
+      "palabra": "audio",
+      "frecuencia": 12,
+      "lema": "audio",
+      "sinonimos": [
+        "sonore",
+        "acoustique"
+      ]
+    },
+    {
+      "definicion": "Que ha sido incrementado o hecho más grande en cantidad o intensidad.",
+      "tipo_gramatical": "verbe (participe passé m, sg)",
+      "ejemplo_uso": "Le prix a augmenté de 10%.",
+      "palabra": "augmenté",
+      "frecuencia": 1,
+      "lema": "augmenter",
+      "sinonimos": [
+        "accru",
+        "élevé"
+      ]
+    },
+    {
+      "definicion": "Parte de la palabra 'aujourd'hui', que significa 'hoy'.",
+      "tipo_gramatical": "adverbe (partie de)",
+      "ejemplo_uso": "Aujourd'hui, il fait beau.",
+      "palabra": "aujourd",
+      "frecuencia": 22,
+      "lema": "aujourd'hui",
+      "sinonimos": [
+        "ce jour"
+      ]
+    },
+    {
+      "definicion": "Forma conjugada del verbo 'avoir' en futuro simple, tercera persona del singular (él/ella).",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "Il aura une nouvelle voiture l'année prochaine.",
+      "palabra": "aura",
+      "frecuencia": 5,
+      "lema": "avoir",
+      "sinonimos": [
+        "possédera",
+        "disposera"
+      ]
+    },
+    {
+      "definicion": "Forma conjugada del verbo 'avoir' en futuro simple, primera persona del plural (nosotros).",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "Nous aurons le temps de visiter.",
+      "palabra": "aurons",
+      "frecuencia": 1,
+      "lema": "avoir",
+      "sinonimos": [
+        "posséderons",
+        "disposerons"
+      ]
+    },
+    {
+      "definicion": "Indica igualdad o adición, significando 'también' o 'tan'.",
+      "tipo_gramatical": "adverbe",
+      "ejemplo_uso": "Je viens aussi à la fête.",
+      "palabra": "aussi",
+      "frecuencia": 2,
+      "lema": "aussi",
+      "sinonimos": [
+        "également",
+        "de même"
+      ]
+    },
+    {
+      "definicion": "Persona que ha creado una obra literaria, artística o científica.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "L'auteur de ce livre est très célèbre.",
+      "palabra": "auteur",
+      "frecuencia": 2,
+      "lema": "auteur",
+      "sinonimos": [
+        "écrivain",
+        "créateur"
+      ]
+    },
+    {
+      "definicion": "Que funciona por sí mismo, sin intervención humana directa.",
+      "tipo_gramatical": "adjectif",
+      "ejemplo_uso": "La porte est automatique.",
+      "palabra": "automatique",
+      "frecuencia": 1,
+      "lema": "automatique",
+      "sinonimos": [
+        "mécanique",
+        "robotisé"
+      ]
+    },
+    {
+      "definicion": "Que funcionan por sí mismos, sin intervención humana directa.",
+      "tipo_gramatical": "adjectif (pl)",
+      "ejemplo_uso": "Les distributeurs automatiques sont très pratiques.",
+      "palabra": "automatiques",
+      "frecuencia": 1,
+      "lema": "automatique",
+      "sinonimos": [
+        "mécaniques",
+        "robotisés"
+      ]
+    },
+    {
+      "definicion": "Que han recibido permiso o aprobación para hacer algo.",
+      "tipo_gramatical": "verbe (participe passé f, pl)",
+      "ejemplo_uso": "Les visites sont autorisées jusqu'à 18h.",
+      "palabra": "autorisées",
+      "frecuencia": 1,
+      "lema": "autoriser",
+      "sinonimos": [
+        "permises",
+        "approuvées"
+      ]
+    },
+    {
+      "definicion": "Indica la posición o el movimiento que rodea algo o a alguien.",
+      "tipo_gramatical": "préposition",
+      "ejemplo_uso": "Il y a des arbres autour de la maison.",
+      "palabra": "autour",
+      "frecuencia": 1,
+      "lema": "autour",
+      "sinonimos": [
+        "environ",
+        "alentour"
+      ]
+    },
+    {
+      "definicion": "Indica que hay más elementos o personas además de los mencionados.",
+      "tipo_gramatical": "déterminant indéfini (pl)",
+      "ejemplo_uso": "Nous avons d'autres options.",
+      "palabra": "autres",
+      "frecuencia": 2,
+      "lema": "autre",
+      "sinonimos": [
+        "différents",
+        "restants"
+      ]
+    },
+    {
+      "definicion": "Contracción de la preposición 'à' y el artículo definido 'les'.",
+      "tipo_gramatical": "article contracté (pl)",
+      "ejemplo_uso": "Je parle aux enfants.",
+      "palabra": "aux",
+      "frecuencia": 3,
+      "lema": "aux",
+      "sinonimos": [
+        "à les"
+      ]
+    },
+    {
+      "definicion": "Progreso o adelanto en el tiempo o en el espacio.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "Nous avons pris de l'avance sur le projet.",
+      "palabra": "avance",
+      "frecuencia": 1,
+      "lema": "avance",
+      "sinonimos": [
+        "progrès",
+        "précocité"
+      ]
+    },
+    {
+      "definicion": "Indica anterioridad en el tiempo o en el espacio.",
+      "tipo_gramatical": "préposition",
+      "ejemplo_uso": "Il faut arriver avant 8h.",
+      "palabra": "avant",
+      "frecuencia": 2,
+      "lema": "avant",
+      "sinonimos": [
+        "préalablement",
+        "devant"
+      ]
+    },
+    {
+      "definicion": "Indica compañía, instrumento o modo.",
+      "tipo_gramatical": "préposition",
+      "ejemplo_uso": "Je vais au cinéma avec mes amis.",
+      "palabra": "avec",
+      "frecuencia": 10,
+      "lema": "avec",
+      "sinonimos": [
+        "en compagnie de",
+        "moyennant"
+      ]
+    },
+    {
+      "definicion": "Forma conjugada del verbo 'avoir' para la segunda persona del plural (ustedes/vosotros) o formal singular (usted).",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "Vous avez de la chance.",
+      "palabra": "avez",
+      "frecuencia": 1,
+      "lema": "avoir",
+      "sinonimos": [
+        "possédez",
+        "disposez"
+      ]
+    },
+    {
+      "definicion": "Vehículo aéreo con alas que se utiliza para transportar personas o mercancías.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "Nous voyageons en avion pour les longues distances.",
+      "palabra": "avion",
+      "frecuencia": 6,
+      "lema": "avion",
+      "sinonimos": [
+        "aéronef",
+        "appareil"
+      ]
+    },
+    {
+      "definicion": "Poseer, tener o experimentar algo.",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "J'ai un chat.",
+      "palabra": "avoir",
+      "frecuencia": 6,
+      "lema": "avoir",
+      "sinonimos": [
+        "posséder",
+        "disposer de"
+      ]
+    },
+    {
+      "definicion": "Conjunto de maletas y objetos que se llevan en un viaje.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "Mon bagage est trop lourd.",
+      "palabra": "bagage",
+      "frecuencia": 1,
+      "lema": "bagage",
+      "sinonimos": [
+        "valise",
+        "affaires"
+      ]
+    },
+    {
+      "definicion": "Conjunto de maletas y objetos que se llevan en un viaje.",
+      "tipo_gramatical": "nom (m, pl)",
+      "ejemplo_uso": "Nous avons beaucoup de bagages.",
+      "palabra": "bagages",
+      "frecuencia": 1,
+      "lema": "bagage",
+      "sinonimos": [
+        "valises",
+        "affaires"
+      ]
+    },
+    {
+      "definicion": "Acción de bañarse en el agua, especialmente en un lugar natural.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "La baignade est interdite ici.",
+      "palabra": "baignade",
+      "frecuencia": 1,
+      "lema": "baignade",
+      "sinonimos": [
+        "bain",
+        "plongée"
+      ]
+    },
+    {
+      "definicion": "Paseo tranquilo y relajado, generalmente a pie o en bicicleta.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "Nous avons fait une belle balade en forêt.",
+      "palabra": "balade",
+      "frecuencia": 1,
+      "lema": "balade",
+      "sinonimos": [
+        "promenade",
+        "excursion"
+      ]
+    },
+    {
+      "definicion": "Paseos tranquilos y relajados, generalmente a pie o en bicicleta.",
+      "tipo_gramatical": "nom (f, pl)",
+      "ejemplo_uso": "Les balades à vélo sont très agréables.",
+      "palabra": "balades",
+      "frecuencia": 1,
+      "lema": "balade",
+      "sinonimos": [
+        "promenades",
+        "excursions"
+      ]
+    },
+    {
+      "definicion": "Relacionado con los bancos o las operaciones bancarias.",
+      "tipo_gramatical": "adjectif",
+      "ejemplo_uso": "J'ai un compte bancaire.",
+      "palabra": "bancaire",
+      "frecuencia": 2,
+      "lema": "bancaire",
+      "sinonimos": [
+        "financier",
+        "monétaire"
+      ]
+    },
+    {
+      "definicion": "Relacionado con los bancos o las operaciones bancarias.",
+      "tipo_gramatical": "adjectif (pl)",
+      "ejemplo_uso": "Les transactions bancaires sont sécurisées.",
+      "palabra": "bancaires",
+      "frecuencia": 1,
+      "lema": "bancaire",
+      "sinonimos": [
+        "financiers",
+        "monétaires"
+      ]
+    },
+    {
+      "definicion": "Tiras largas y estrechas de material, o grupos de personas.",
+      "tipo_gramatical": "nom (f, pl)",
+      "ejemplo_uso": "Les bandes dessinées sont très populaires.",
+      "palabra": "bandes",
+      "frecuencia": 1,
+      "lema": "bande",
+      "sinonimos": [
+        "rubans",
+        "groupes"
+      ]
+    },
+    {
+      "definicion": "Deporte de equipo en el que dos equipos intentan introducir un balón en la canasta del contrario.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "Il joue au basketball tous les samedis.",
+      "palabra": "basketball",
+      "frecuencia": 1,
+      "lema": "basketball",
+      "sinonimos": [
+        "basket",
+        "ballon-panier"
+      ]
+    },
+    {
+      "definicion": "Recipiente grande para contener agua, o una zona geográfica deprimida.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "Les enfants jouent dans le bassin de la piscine.",
+      "palabra": "bassin",
+      "frecuencia": 1,
+      "lema": "bassin",
+      "sinonimos": [
+        "cuvette",
+        "réservoir"
+      ]
+    },
+    {
+      "definicion": "Vehículo que flota y se desplaza sobre el agua.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "Nous avons fait une excursion en bateau.",
+      "palabra": "bateau",
+      "frecuencia": 1,
+      "lema": "bateau",
+      "sinonimos": [
+        "navire",
+        "embarcation"
+      ]
+    },
+    {
+      "definicion": "Apellido o nombre propio de persona o lugar.",
+      "tipo_gramatical": "nom propre (m)",
+      "ejemplo_uso": "Monsieur Baubien est notre nouveau voisin.",
+      "palabra": "baubien",
+      "frecuencia": 3,
+      "lema": "Baubien",
+      "sinonimos": [
+        "patronyme"
+      ]
+    },
+    {
+      "definicion": "Capital de Alemania.",
+      "tipo_gramatical": "nom propre (f)",
+      "ejemplo_uso": "Berlin est une ville historique.",
+      "palabra": "berlin",
+      "frecuencia": 2,
+      "lema": "Berlin",
+      "sinonimos": [
+        "capitale allemande"
+      ]
+    }
+  ],
+  "unidad": "Unité 1",
+  "CO": [
+    {
+      "ruta_audio": "02.mp3",
+      "habilidad": "Compréhension de l'oral",
+      "instruccion": "Activité 2 Lisez la question. Écoutez le document puis répondez. Vous écoutez des annonces publiques.",
+      "tipo": "Choix multiple",
+      "preguntas": [
+        {
+          "respuesta_correcta": "C avoir la bonne taille.",
+          "opciones": [
+            "A être accompagné.",
+            "B valider votre billet.",
+            "C avoir la bonne taille."
+          ],
+          "pregunta": "1 Pour monter dans le manège, vous devez..."
+        },
+        {
+          "respuesta_correcta": "Image B | Une salle de concert ou de spectacle",
+          "opciones": [
+            "Image A | Une galerie d'art avec des tableaux",
+            "Image B | Une salle de concert ou de spectacle",
+            "Image C | Une salle de cinéma"
+          ],
+          "pregunta": "2 Où est-il interdit de prendre des photos ?"
+        },
+        {
+          "respuesta_correcta": "B Dans l'après-midi.",
+          "opciones": [
+            "A En fin de matinée.",
+            "B Dans l'après-midi.",
+            "C En début de soirée."
+          ],
+          "pregunta": "3 À quel moment ferme la bibliothèque ?"
+        },
+        {
+          "respuesta_correcta": "Image A | Un réfrigérateur",
+          "opciones": [
+            "Image A | Un réfrigérateur",
+            "Image B | Un lit avec de la literie",
+            "Image C | Un canapé"
+          ],
+          "pregunta": "4 Quel article est concerné par la promotion ?"
+        },
+        {
+          "respuesta_correcta": "C organiser un événement.",
+          "opciones": [
+            "A nettoyer les locaux.",
+            "B réorganiser les rayons.",
+            "C organiser un événement."
+          ],
+          "pregunta": "5 La bibliothèque ferme ses portes plus tard pour..."
+        },
+        {
+          "respuesta_correcta": "Image B | Des bonbons",
+          "opciones": [
+            "Image A | Une canette de soda",
+            "Image B | Des bonbons",
+            "Image C | Un sandwich"
+          ],
+          "pregunta": "6 Sur quoi le cinéma propose-t-il une promotion ?"
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": null,
+      "transcripcion": "Document 1 Bienvenue au Parc Astérix. Vous allez bientôt entrer dans l'attraction du train rapide. Il ya quelques règles à respecter pour votre sécurité. Il faut mesurer au moins 1 m 20 pour pouvoir monter dans le manège.Document 2 Chers spectateurs, nous vous rappelons qu'il est interdit de prendre des photos durant le concert. Merci pour votre compréhension. Profitez bien de votre soirée !Document 3 Bonjour mesdames et messieurs, je vous rappelle que la bibliothèque ferme exceptionnellement ses portes à 15 h 30. Il vous reste 15 minutes avant la fermeture.Document 4 Chers clients, profitez de notre offre exceptionnelle sur tout l'électroménager aujourd'hui ! 50% sur les téléviseurs, réfrigérateurs, fours et machines à laver. N'attendez plus !Document 5 La bibliothèque ferme dans 5 minutes. Nous vous rappelons que demain jeudi 18, en raison d'une conférence, la bibliothèque fermera exceptionnellement à 21 h au lieu de 19 h.Document 6 Votre cinéma préféré a décidé de vous faire plaisir. Aujourd'hui, pour une place achetée, vous avez 50% de réduction sur les bonbons.",
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": "03.mp3",
+      "habilidad": "Compréhension de l'oral",
+      "instruccion": "Activité 3 Lisez la question. Écoutez le document puis répondez. Vous écoutez des annonces publiques.",
+      "tipo": "Choix multiple",
+      "preguntas": [
+        {
+          "respuesta_correcta": "B Monter dans l'avion.",
+          "opciones": [
+            "A Attendre l'avion.",
+            "B Monter dans l'avion.",
+            "C Descendre de l'avion."
+          ],
+          "pregunta": "1 Que doivent faire les passagers ?"
+        },
+        {
+          "respuesta_correcta": "Image B | Station de métro République",
+          "opciones": [
+            "Image A | Station de métro Strasbourg-St-Denis",
+            "Image B | Station de métro République",
+            "Image C | Station de métro Saint-Ambroise"
+          ],
+          "pregunta": "2 Quelle station est fermée ?"
+        },
+        {
+          "respuesta_correcta": "B La caisse prioritaire.",
+          "opciones": [
+            "A La caisse rapide.",
+            "B La caisse prioritaire.",
+            "C La caisse automatique."
+          ],
+          "pregunta": "3 Quelle caisse est fermée ?"
+        },
+        {
+          "respuesta_correcta": "Image A | Une carte d'étudiant",
+          "opciones": [
+            "Image A | Une carte d'étudiant",
+            "Image B | Une carte d'identité",
+            "Image C | Une carte de bibliothèque"
+          ],
+          "pregunta": "4 Quel document devez-vous présenter pour rentrer à l'université ?"
+        },
+        {
+          "respuesta_correcta": "C Essayer de descendre.",
+          "opciones": [
+            "A Téléphoner.",
+            "B Regarder un film.",
+            "C Essayer de descendre."
+          ],
+          "pregunta": "5 Qu'est-il interdit de faire dans le train ?"
+        },
+        {
+          "respuesta_correcta": "Image A | Un ticket de cinéma",
+          "opciones": [
+            "Image A | Un ticket de cinéma",
+            "Image B | Un livre",
+            "Image C | Un CD"
+          ],
+          "pregunta": "6 Qu'est-ce que le magasin propose de vous faire gagner ?"
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": null,
+      "transcripcion": "Document 1 Les passagers du vol Air France numéro 4568 à destination de Berlin sont priés d'aller à la porte d'embarquement numéro 45.Document 2 Votre attention, s'il vous plaît. La ligne 9 du métro sera fermée exceptionnellement le 22 novembre à la station République pour cause de travaux entre les stations Strasbourg-Saint-Denis et Saint-Ambroise.Document 3 Chers clients, suite à un problème technique, nous vous rappelons que la caisse prioritaire pour les personnes handicapées est fermée. Veuillez vous rediriger vers les caisses rapides ou les caisses automatiques.Document 4 Chers étudiants, pour des raisons de sécurité, vous devez présenter votre carte d'étudiant à l'entrée de l'université. Les cartes nationales d'identité ou les cartes de bibliothèque ne sont pas acceptées.Document 5 Chers voyageurs, pour votre sécurité, il est strictement interdit d'ouvrir les portes du train. Merci de passer vos appels uniquement dans les couloirs. Des films sont à votre disposition.Document 6 Chers clients, aujourd'hui, jusqu'à 19h30, pour tout achat d'un livre ou de deux CDs, votre magasin préféré vous fera profiter d'une place de cinéma.",
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": "04.mp3",
+      "habilidad": "Compréhension de l'oral",
+      "instruccion": "Activité 4 Lisez la question. Écoutez le document puis répondez. Vous écoutez des annonces publiques.",
+      "tipo": "Choix multiple",
+      "preguntas": [
+        {
+          "respuesta_correcta": "Image A | Un dompteur de lion dans un cirque",
+          "opciones": [
+            "Image A | Un dompteur de lion dans un cirque",
+            "Image B | Des musiciens jouant d'instruments",
+            "Image C | Des personnes à une fête"
+          ],
+          "pregunta": "1 Cette annonce concerne..."
+        },
+        {
+          "respuesta_correcta": "A plus tôt",
+          "opciones": [
+            "A plus tôt",
+            "B à la même heure qu'en semaine.",
+            "C plus tard"
+          ],
+          "pregunta": "2 Le week-end, le magasin ferme..."
+        },
+        {
+          "respuesta_correcta": "B d'un changement de voie.",
+          "opciones": [
+            "A d'un retard du train.",
+            "B d'un changement de voie.",
+            "C de l'annulation du voyage."
+          ],
+          "pregunta": "3 L'annonce parle..."
+        },
+        {
+          "respuesta_correcta": "Image C | Un téléviseur",
+          "opciones": [
+            "Image A | Un smartphone",
+            "Image B | Un ordinateur portable",
+            "Image C | Un téléviseur"
+          ],
+          "pregunta": "4 Aujourd'hui, sur quel article le magasin fait-il une offre ?"
+        },
+        {
+          "respuesta_correcta": "B Au deuxième étage.",
+          "opciones": [
+            "A Au premier étage.",
+            "B Au deuxième étage.",
+            "C Au troisième étage."
+          ],
+          "pregunta": "5 À quel étage du magasin pouvez-vous trouver des vêtements ?"
+        },
+        {
+          "respuesta_correcta": "Image A | Une salle de cours ou amphithéâtre",
+          "opciones": [
+            "Image A | Une salle de cours ou amphithéâtre",
+            "Image B | Un supermarché",
+            "Image C | Une bibliothèque"
+          ],
+          "pregunta": "6 Cette annonce concerne quel lieu public ?"
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": null,
+      "transcripcion": "Document 1 Mesdames et messieurs, le cirque Pindet vous invite à nous retrouver pour un spectacle extraordinaire d'1 h 30. Venez voir des animaux, des clowns, des acrobates. Rendez-vous mardi 14 à 18 h.Document 2 Bonjour, nous vous rappelons que, le week-end, le magasin ferme ses portes à 12 h 15, au lieu de 20 h 30 en semaine. Bonne journée.Document 3 Chers voyageurs, en raison d'un incident technique, le train n°55 à destination du Luxembourg partira sur la voie 12 au lieu de la voie 15. Veuillez nous excuser pour la gêne occasionnée.Document 4 Chers clients, aujourd'hui dans votre magasin Atoutprix, ne manquez pas les promotions exceptionnelles sur les télévisions. Jusqu'à 40% de réduction! Demain, nous aurons d'autres surprises sur les téléphones et les ordinateurs.Document 5 Chers clients, vous retrouverez tous les produits alimentaires au premier étage du magasin. Au deuxième étage, les articles de la maison et la mode. Au troisième, le multimédia. Bonne visite.Document 6 Chers étudiants, nous vous rappelons que l'établissement sera fermé du 23 décembre au 8 janvier inclus. Il réouvrira le 9 janvier à partir de 8 h 30. Bonnes vacances à tous.",
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": "05.mp3",
+      "habilidad": "Compréhension de l'oral",
+      "instruccion": "Activité 5 Lisez la question. Écoutez le document puis répondez. Vous écoutez des annonces publiques.",
+      "tipo": "Choix multiple",
+      "preguntas": [
+        {
+          "respuesta_correcta": "B Des livres de cuisine.",
+          "opciones": [
+            "A Des magazines.",
+            "B Des livres de cuisine.",
+            "C Des bandes dessinées."
+          ],
+          "pregunta": "1 Quel type de livre est concerné par l'annonce ?"
+        },
+        {
+          "respuesta_correcta": "Image C | Une moto",
+          "opciones": [
+            "Image A | Une voiture",
+            "Image B | Un vélo",
+            "Image C | Une moto"
+          ],
+          "pregunta": "2 De quel véhicule parle-t-on dans l'annonce ?"
+        },
+        {
+          "respuesta_correcta": "B adolescents.",
+          "opciones": [
+            "A enfants.",
+            "B adolescents.",
+            "C adultes."
+          ],
+          "pregunta": "3 Aujourd'hui, le centre aquatique propose une réduction pour les..."
+        },
+        {
+          "respuesta_correcta": "Image A | Une piscine",
+          "opciones": [
+            "Image A | Une piscine",
+            "Image B | Un terrain de basketball",
+            "Image C | Une bibliothèque"
+          ],
+          "pregunta": "4 Quel lieu public est concerné par l'annonce ?"
+        },
+        {
+          "respuesta_correcta": "B une semaine.",
+          "opciones": [
+            "A une journée.",
+            "B une semaine.",
+            "C un mois."
+          ],
+          "pregunta": "5 La poste sera fermée pendant..."
+        },
+        {
+          "respuesta_correcta": "Image A | Des clés",
+          "opciones": [
+            "Image A | Des clés",
+            "Image B | Un ours en peluche",
+            "Image C | Un sac à dos"
+          ],
+          "pregunta": "6 Qu'est-ce qui a été retrouvé dans le magasin ?"
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": null,
+      "transcripcion": "Document 1 Chers clients, ne manquez pas aujourd'hui notre promotion sur nos derniers livres de recettes ! Il n'y en aura pas pour tout le monde, alors dépêchez-vous!Document 2 Le propriétaire de la moto immatriculée AG56KL est prié de bien vouloir déplacer son véhicule tout de suite et le garer près des vélos. Merci pour votre compréhension.Document 3 Le centre aquatique vous informe que les tarifs pour les adultes ont augmenté de 2 €, mais les entrées sont gratuites pour les enfants. Nous offrons aussi une remise de 25% pour les adolescents.Document 4 Nous vous rappelons qu'il est interdit de courir ou de consommer de la nourriture autour du grand bassin sous peine d'exclusion. Merci de votre compréhension.Document 5 Nous rappelons à notre aimable clientèle qu'en raison de travaux, la poste sera fermée pour une semaine, à partir de demain. Elle rouvrira au début du mois. Merci pour votre compréhension.Document 6 Mesdames, messieurs, votre attention s'il vous plaît ! Le personnel du magasin a trouvé des clés. Merci à leur propriétaire de venir les récupérer à l'accueil avant la fermeture.",
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": "06.mp3",
+      "habilidad": "Compréhension de l'oral",
+      "instruccion": "Activité 6 Lisez la question. Écoutez le document puis répondez. Vous écoutez des annonces publiques.",
+      "tipo": "Choix multiple",
+      "preguntas": [
+        {
+          "respuesta_correcta": "B Mairie de Bruges.",
+          "opciones": [
+            "A Poste central.",
+            "B Mairie de Bruges.",
+            "C Piscine municipale."
+          ],
+          "pregunta": "1 Quelle est la destination finale du bus ?"
+        },
+        {
+          "respuesta_correcta": "Image B | Des vêtements sur cintres",
+          "opciones": [
+            "Image A | Un sac à main",
+            "Image B | Des vêtements sur cintres",
+            "Image C | Des bijoux"
+          ],
+          "pregunta": "2 Quel article faut-il acheter pour bénéficier d'une remise ?"
+        },
+        {
+          "respuesta_correcta": "B à la plage.",
+          "opciones": [
+            "A en forêt.",
+            "B à la plage.",
+            "C à la montagne."
+          ],
+          "pregunta": "3 Cette annonce concerne un voyage..."
+        },
+        {
+          "respuesta_correcta": "Image C | Des viennoiseries",
+          "opciones": [
+            "Image A | Un sandwich",
+            "Image B | Des chips",
+            "Image C | Des viennoiseries"
+          ],
+          "pregunta": "4 Que devez-vous commander pour avoir une boisson gratuite ?"
+        },
+        {
+          "respuesta_correcta": "B votre lessive.",
+          "opciones": [
+            "A vos courses.",
+            "B votre lessive.",
+            "C votre ménage."
+          ],
+          "pregunta": "5 Cette annonce vous propose de faire..."
+        },
+        {
+          "respuesta_correcta": "Image A | Un parc animalier ou un zoo",
+          "opciones": [
+            "Image A | Un parc animalier ou un zoo",
+            "Image B | Un parc aquatique",
+            "Image C | Un atelier ou une salle de classe"
+          ],
+          "pregunta": "6 Où peut-on entendre ce message ?"
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": null,
+      "transcripcion": "Document 1 Mesdames et messieurs, le bus 160 en direction de Mairie de Bruges ne marquera pas l'arrêt aux stations Parc du Château et Piscine municipale. Prochain arrêt: Poste central.Document 2 Chères clientes, à l'occasion de la journée de la femme, pour deux vêtements achetés, bénéficiez d'une remise de 70% sur nos bijoux. Allez vite découvrir nos nouveaux sacs à main.Document 3 À l'occasion du salon du tourisme, venez découvrir nos derniers séjours au soleil! Balades en bord de mer, baignade, palmiers... Découvrez nos destinations 100% relaxantes!Document 4 Chers clients, après une offre sur les sandwichs la semaine dernière, nous vous proposons aujourd'hui une offre spéciale petit déjeuner! Pour l'achat de trois viennoiseries, un grand café vous est offert !Document 5 Découvrez notre dernier service de laverie! On s'occupe de votre linge: on nettoie, on repasse et on plie! Passez commande en ligne sur notre site internet.Document 6 Chers visiteurs, ne manquez pas à 14 h aujourd'hui le spectacle incroyable des félins! Venez donner à manger aux girafes et aux éléphants et découvrir plein d'espèces animales incroyables!",
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": "07.mp3",
+      "habilidad": "Compréhension de l'oral",
+      "instruccion": "Activité 7 Lisez la question. Écoutez le document puis répondez. Vous écoutez des annonces publiques.",
+      "tipo": "Choix multiple",
+      "preguntas": [
+        {
+          "respuesta_correcta": "A Reims.",
+          "opciones": [
+            "A Reims.",
+            "B Zurich.",
+            "C Strasbourg."
+          ],
+          "pregunta": "1 Le train s'arrêtera d'abord à la gare de..."
+        },
+        {
+          "respuesta_correcta": "Image C | Prendre des photos",
+          "opciones": [
+            "Image A | Manger",
+            "Image B | Courir",
+            "Image C | Prendre des photos"
+          ],
+          "pregunta": "2 Qu'est-il possible de faire dans le musée ?"
+        },
+        {
+          "respuesta_correcta": "C plus de 150 €.",
+          "opciones": [
+            "A moins de 10 €.",
+            "B moins de 150 €.",
+            "C plus de 150 €."
+          ],
+          "pregunta": "3 La livraison est gratuite pour les paniers de..."
+        },
+        {
+          "respuesta_correcta": "Image C | Des disques de musique",
+          "opciones": [
+            "Image A | Un ordinateur portable",
+            "Image B | Des livres",
+            "Image C | Des disques de musique"
+          ],
+          "pregunta": "4 Quel produit bénéficie d'une remise de 15% ?"
+        },
+        {
+          "respuesta_correcta": "C 10,50 €.",
+          "opciones": [
+            "A 5,50 €.",
+            "B 7,50 €.",
+            "C 10,50 €."
+          ],
+          "pregunta": "5 Combien coûte une place adulte sans réduction ?"
+        },
+        {
+          "respuesta_correcta": "Image B | Un smartphone",
+          "opciones": [
+            "Image A | Une carte de crédit",
+            "Image B | Un smartphone",
+            "Image C | De l'argent liquide"
+          ],
+          "pregunta": "6 Avec quoi le magasin vous propose-t-il de payer ?"
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": null,
+      "transcripcion": "Document 1 Bienvenue à bord du train 6749 au départ de Paris à destination de la Suisse. Ce train desservira les gares de Reims, Strasbourg et Zurich, sa gare d'arrivée. Bon voyage!Document 2 Nous rappelons à nos visiteurs qu'il est interdit de consommer de la nourriture à l'intérieur du musée. Il est également interdit de courir. Les photos sont autorisées.Document 3 Chers clients, nous vous rappelons qu'il est maintenant possible de vous faire livrer vos courses pour moins de 10 €. Pour tout panier supérieur à 150 €, bénéficiez de la livraison gratuite.Document 4 Aujourd'hui ne manquez pas nos offres incroyables! 10% de réduction sur nos livres, 15% de réduction sur l'univers de la musique et 20% de réduction sur tous les articles multimédia.Document 5 À l'occasion du printemps du cinéma, les places sont au prix de 5,50 € pour les moins de 18 ans et 7,50 € pour les adultes, au lieu de 10,50 €.Document 6 Chers clients, votre magasin vous informe qu'à partir d'aujourd'hui, un nouveau moyen de paiement est possible. Vous pouvez maintenant régler vos achats avec votre téléphone portable.",
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": "08.mp3",
+      "habilidad": "Compréhension de l'oral",
+      "instruccion": "Activité 8 Lisez la question. Écoutez le document puis répondez. Vous écoutez des annonces publiques.",
+      "tipo": "Choix multiple",
+      "preguntas": [
+        {
+          "respuesta_correcta": "B en retard.",
+          "opciones": [
+            "A à l'heure.",
+            "B en retard.",
+            "C en avance."
+          ],
+          "pregunta": "1 Le train est..."
+        },
+        {
+          "respuesta_correcta": "Image A | Jouer au tennis de table",
+          "opciones": [
+            "Image A | Jouer au tennis de table",
+            "Image B | Faire de l'équitation",
+            "Image C | Jouer au rugby"
+          ],
+          "pregunta": "2 Quelle activité pouvez-vous faire ?"
+        },
+        {
+          "respuesta_correcta": "Image B | Utiliser un ordinateur",
+          "opciones": [
+            "Image A | Consulter un panneau d'affichage des trains",
+            "Image B | Utiliser un ordinateur",
+            "Image C | Utiliser un smartphone"
+          ],
+          "pregunta": "3 Que devez-vous faire pour connaître les horaires des trains ?"
+        },
+        {
+          "respuesta_correcta": "Image B | Des travaux de construction",
+          "opciones": [
+            "Image A | Des personnes manifestant",
+            "Image B | Des travaux de construction",
+            "Image C | Une cuisine de restaurant"
+          ],
+          "pregunta": "4 Pourquoi les restaurants ferment cette fin de semaine ?"
+        },
+        {
+          "respuesta_correcta": "B Une écharpe.",
+          "opciones": [
+            "A Une jupe.",
+            "B Une écharpe.",
+            "C Une chemise."
+          ],
+          "pregunta": "5 Qu'est-ce que vous pouvez avoir gratuitement ?"
+        },
+        {
+          "respuesta_correcta": "B le jeudi.",
+          "opciones": [
+            "A le lundi.",
+            "B le jeudi.",
+            "C le dimanche."
+          ],
+          "pregunta": "6 La bibliothèque est ouverte..."
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": null,
+      "transcripcion": "Document 1 Bonjour, le train numéro 4785 à destination de Paris partira à 13 h 05 et non à 12 h 30. Veuillez nous excuser pour la gêne occasionnée.Document 2 À cause de la pluie, il n'y aura pas de balade à cheval ou de rugby ce matin. Nous vous proposons de faire une partie de ping-pong en salle.Document 3 Chers voyageurs, les guichets sont fermés aujourd'hui à cause de la grève et le panneau d'affichage est en panne. Veuillez aller sur notre site internet pour consulter les horaires des trains.Document 4 Chers visiteurs, les restaurants du centre commercial ne seront pas ouverts ce week-end pour travaux. Attention, la semaine prochaine, tout le centre sera fermé car les employés feront grève.Document 5 Chers clients, aujourd'hui, pour tout achat d'une chemise ou d'une jupe de plus de 30 €, une écharpe de la couleur de votre choix vous sera offerte.Document 6 En août, la bibliothèque sera fermée le dimanche et le lundi. Attention, les heures d'ouverture changent aussi! Nous serons ouverts de 10 h à 17 h 30. Bonne visite !",
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": "09.mp3",
+      "habilidad": "Compréhension de l'oral",
+      "instruccion": "Activité 9 Lisez la question. Écoutez le document puis répondez. Vous écoutez des annonces publiques.",
+      "tipo": "Choix multiple",
+      "preguntas": [
+        {
+          "respuesta_correcta": "B à l'heure.",
+          "opciones": [
+            "A annulé.",
+            "B à l'heure.",
+            "C en retard."
+          ],
+          "pregunta": "1 Le train en direction de Paris est..."
+        },
+        {
+          "respuesta_correcta": "Image A | Un sac à main",
+          "opciones": [
+            "Image A | Un sac à main",
+            "Image B | Des lunettes de soleil",
+            "Image C | Un chapeau"
+          ],
+          "pregunta": "2 Qu'est-ce que le magasin peut vous donner ?"
+        },
+        {
+          "respuesta_correcta": "C au deuxième étage.",
+          "opciones": [
+            "A au rez-de-chaussée.",
+            "B au premier étage.",
+            "C au deuxième étage."
+          ],
+          "pregunta": "3 Pour dîner au restaurant, il faut aller..."
+        },
+        {
+          "respuesta_correcta": "Image C | Un métro",
+          "opciones": [
+            "Image A | Un bus",
+            "Image B | Un taxi",
+            "Image C | Un métro"
+          ],
+          "pregunta": "4 Quel moyen de transport est en panne ?"
+        },
+        {
+          "respuesta_correcta": "Image A | Acheter en ligne sur un ordinateur",
+          "opciones": [
+            "Image A | Acheter en ligne sur un ordinateur",
+            "Image B | Acheter à un guichet",
+            "Image C | Aller à un bureau d'information"
+          ],
+          "pregunta": "5 Où devez-vous aller pour acheter un billet ?"
+        },
+        {
+          "respuesta_correcta": "B mercredi.",
+          "opciones": [
+            "A lundi.",
+            "B mercredi.",
+            "C vendredi."
+          ],
+          "pregunta": "6 Il est possible d'avoir une réduction sur les livres..."
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": null,
+      "transcripcion": "Document 1 Chers voyageurs, le train à destination de Paris partira voie 7 à 14 h. Attention, le train en direction de Perpignan partira avec 30 minutes de retard. Le train à destination de Tours est annulé.Document 2 Chers clients, ce sont les soldes d'été ! -20% sur les chapeaux et lunettes de soleil. Pour un achat de 100 € ou plus, on vous offre un sac de marque.Document 3 Bienvenue à bord de notre bateau. La piscine, au premier étage, est ouverte tous les jours. Les restaurants se trouvent au deuxième étage. Pour réserver, allez à l'accueil situé au rez-de-chaussée.Document 4 Chers voyageurs, la ligne B du métro ne fonctionne pas aujourd'hui. Nous vous proposons de prendre le bus 145 ou bien de louer un vélo gratuitement.Document 5 Chers spectateurs, nous vous rappelons que vous devez acheter vos billets sur notre site internet. Il n'est plus possible de les acheter au guichet. Pour toute question, veuillez aller à l'accueil.Document 6 À l'occasion du festival du livre, la librairie vous offre 25% de réduction sur les romans et livres de poésie du mardi au jeudi. Dépêchez-vous !",
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": "10.mp3",
+      "habilidad": "Compréhension de l'oral",
+      "instruccion": "Activité 10 Lisez la question. Écoutez le document puis répondez. Vous écoutez des annonces publiques.",
+      "tipo": "Choix multiple",
+      "preguntas": [
+        {
+          "respuesta_correcta": "Image B | Un avion",
+          "opciones": [
+            "Image A | Un train",
+            "Image B | Un avion",
+            "Image C | Un bus"
+          ],
+          "pregunta": "1 Quel moyen de transport allez-vous prendre ?"
+        },
+        {
+          "respuesta_correcta": "C photographier.",
+          "opciones": [
+            "A manger.",
+            "B téléphoner.",
+            "C photographier."
+          ],
+          "pregunta": "2 Dans la salle de spectacle, il est possible de..."
+        },
+        {
+          "respuesta_correcta": "Image B | Commander sur internet",
+          "opciones": [
+            "Image A | Téléphoner",
+            "Image B | Commander sur internet",
+            "Image C | Aller à l'accueil du magasin"
+          ],
+          "pregunta": "3 Que faut-il faire pour faire livrer ses courses à la maison ?"
+        },
+        {
+          "respuesta_correcta": "A Baubien.",
+          "opciones": [
+            "A Baubien.",
+            "B Maisonneuve.",
+            "C Saint-Dominique."
+          ],
+          "pregunta": "4 Quelle sortie de la station Namur est fermée aujourd'hui ?"
+        },
+        {
+          "respuesta_correcta": "A Les enfants.",
+          "opciones": [
+            "A Les enfants.",
+            "B Les adultes.",
+            "C Les personnes âgées."
+          ],
+          "pregunta": "5 Qui peut bénéficier d'une réduction ?"
+        },
+        {
+          "respuesta_correcta": "Image B | Une piscine",
+          "opciones": [
+            "Image A | Un sauna",
+            "Image B | Une piscine",
+            "Image C | Une salle de sport"
+          ],
+          "pregunta": "6 Qu'est-ce qui reste ouvert ?"
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": null,
+      "transcripcion": "Document 1 Les passagers du vol Air France numéro 4568, à destination de Berlin, doivent aller à la porte d'embarquement numéro 45.Document 2 Chers spectateurs, nous vous rappelons qu'il est interdit d'apporter boisson ou nourriture et de téléphoner dans la salle. Vous pouvez prendre des photos et filmer le spectacle de ce soir. Bonne séance!Document 3 Chers clients, il est maintenant possible de faire livrer vos courses chez vous. Rendez-vous sur notre site internet pour commander. Pour toute question, allez à l'accueil du magasin ou téléphonez au 01 34 83 29 40.Document 4 Métro station Namur: attention, les sorties Baubien et Sainte-Catherine sont fermées aujourd'hui à cause des travaux. Vous devez prendre la sortie Maisonneuve pour aller au boulevard Saint-Dominique ou à la rue Robin.Document 5 Aujourd'hui, le stade propose exceptionnellement une réduction de 10% sur les menus des spectateurs de moins de 12 ans. Apportez une carte d'identité pour profiter de cette offre.Document 6 Chers clients, la salle de sport et le sauna seront fermés ce week-end, mais il sera possible de profiter de la piscine jusqu'à 23 h 30 et non 20 h !",
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": "11.mp3",
+      "habilidad": "Compréhension de l'oral",
+      "instruccion": "Activité 11 Lisez la question. Écoutez le document puis répondez. Vous écoutez des annonces publiques.",
+      "tipo": "Choix multiple",
+      "preguntas": [
+        {
+          "respuesta_correcta": "B À l'accueil.",
+          "opciones": [
+            "A Au café.",
+            "B À l'accueil.",
+            "C À la pharmacie."
+          ],
+          "pregunta": "1 Où peut-on aller chercher les clés ?"
+        },
+        {
+          "respuesta_correcta": "Image A | Une carte d'étudiant",
+          "opciones": [
+            "Image A | Une carte d'étudiant",
+            "Image B | Une carte d'identité",
+            "Image C | Une carte d'assurance maladie"
+          ],
+          "pregunta": "2 Que devez-vous apporter pour avoir une réduction ?"
+        },
+        {
+          "respuesta_correcta": "A Paris.",
+          "opciones": [
+            "A Paris.",
+            "B Brest.",
+            "C Nantes."
+          ],
+          "pregunta": "3 Le train est en direction de..."
+        },
+        {
+          "respuesta_correcta": "C septembre.",
+          "opciones": [
+            "A mai.",
+            "B juillet.",
+            "C septembre."
+          ],
+          "pregunta": "4 L'exposition Les métiers de demain aura lieu en..."
+        },
+        {
+          "respuesta_correcta": "Image B | Une plante",
+          "opciones": [
+            "Image A | Un parasol",
+            "Image B | Une plante",
+            "Image C | Une chaise longue"
+          ],
+          "pregunta": "5 Qu'est-ce que le magasin propose de vous offrir ?"
+        },
+        {
+          "respuesta_correcta": "Image B | Par carte bancaire",
+          "opciones": [
+            "Image A | En espèces",
+            "Image B | Par carte bancaire",
+            "Image C | Par paiement mobile"
+          ],
+          "pregunta": "6 Comment est-il possible de payer ?"
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": null,
+      "transcripcion": "Document 1 Attention, une personne a oublié ses clés au café Le Comptoir du centre commercial. Vous pouvez venir les récupérer à l'accueil, juste à côté de la pharmacie.Document 2 Chers spectateurs, n'oubliez pas, pour profiter de la réduction de 10% sur votre place de cinéma, apportez votre carte d'étudiant pour la présenter au guichet!Document 3 Le train numéro 3128 au départ de Brest et à destination de Paris va entrer en gare de Nantes, voie C, dans quelques minutes. N'oubliez aucun bagage.Document 4 Le centre culturel est heureux de vous annoncer deux nouvelles expositions: Les animaux d'Afrique en mai et Les métiers de demain en septembre. Pour rappel, le centre sera fermé en juillet et août.Document 5 Chers clients, avec l'arrivée du printemps, nous vous offrons une plante de votre choix pour tout achat d'accessoire pour décorer votre jardin.Document 6 À partir d'aujourd'hui, il n'est plus possible de payer vos places de concert en monnaie ou par chèque. Nous n'acceptons que les cartes bancaires avec pièce d'identité.",
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": "12.mp3",
+      "habilidad": "Compréhension de l'oral",
+      "instruccion": "Activité 12 Lisez la question. Écoutez le document puis répondez. Vous écoutez des annonces publiques.",
+      "tipo": "Choix multiple",
+      "preguntas": [
+        {
+          "respuesta_correcta": "Image A | Jouer à des jeux de société",
+          "opciones": [
+            "Image A | Jouer à des jeux de société",
+            "Image B | Lire un livre en famille",
+            "Image C | Discuter entre amis"
+          ],
+          "pregunta": "1 Que vous demande-t-on de faire ?"
+        },
+        {
+          "respuesta_correcta": "Image B | Un bus",
+          "opciones": [
+            "Image A | Un train",
+            "Image B | Un bus",
+            "Image C | Une voiture"
+          ],
+          "pregunta": "2 Quel moyen de transport allez-vous prendre ?"
+        },
+        {
+          "respuesta_correcta": "Image A | Aller à l'accueil",
+          "opciones": [
+            "Image A | Aller à l'accueil",
+            "Image B | S'inscrire par téléphone",
+            "Image C | S'inscrire en ligne"
+          ],
+          "pregunta": "3 Que devez-vous faire pour vous inscrire ?"
+        },
+        {
+          "respuesta_correcta": "B un déménagement.",
+          "opciones": [
+            "A une fermeture.",
+            "B un déménagement.",
+            "C des offres spéciales."
+          ],
+          "pregunta": "4 Le magasin annonce..."
+        },
+        {
+          "respuesta_correcta": "B consulter Internet.",
+          "opciones": [
+            "A téléphoner.",
+            "B consulter Internet.",
+            "C aller à l'accueil de l'hôtel."
+          ],
+          "pregunta": "5 Si vous être intéressé par une visite guidée, vous devez..."
+        },
+        {
+          "respuesta_correcta": "C de musique.",
+          "opciones": [
+            "A de théâtre.",
+            "B de peinture.",
+            "C de musique."
+          ],
+          "pregunta": "6 L'école recherche un enseignant..."
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": null,
+      "transcripcion": "Document 1 La bibliothèque cherche des volontaires pour animer des séances de jeux de société pour les enfants et adolescents le mercredi après-midi. Allez à l'accueil pour vous inscrire !Document 2 Attention, les bus en direction de Paris et Bruxelles quitteront la gare de Bordeaux dans 15 minutes. Préparez vos billets. N'oubliez pas vos bagages derrière vous.Document 3 Pour vous inscrire au cours de sport de votre choix, veuillez vous rendre à l'accueil du centre sportif. Nous n'acceptons pas les inscriptions en ligne ou par téléphone cette année.Document 4 Votre attention chers clients, votre magasin va changer d'adresse! Nous nous installons au 108 boulevard Notre-Dame à partir du 1er septembre. Nous vous attendons nombreux!Document 5 Bienvenue à l'hôtel Mondoré. Pour réserver une table à notre restaurant, veuillez vous rendre à l'accueil. Besoin de renseignements sur nos visites guidées ? Consultez notre site en ligne ! Pour toute urgence, appelez le 05 39 02 47 10.Document 6 L'école des Arts cherche son futur professeur de guitare pour adultes. Si vous êtes intéressé, écrivez à l'adresse professeur@ecoledesarts.fr. Pour rappel, il n'y aura pas de cours de peinture ce trimestre.",
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": "13.mp3",
+      "habilidad": "Compréhension de l'oral",
+      "instruccion": "Activité 13 Lisez la question. Écoutez le document puis répondez. Vous écoutez des annonces publiques.",
+      "tipo": "Choix multiple",
+      "preguntas": [
+        {
+          "respuesta_correcta": "A des employés absents.",
+          "opciones": [
+            "A des employés absents.",
+            "B un changement d'horaires.",
+            "C une fermeture exceptionnelle."
+          ],
+          "pregunta": "1 Le musée annonce..."
+        },
+        {
+          "respuesta_correcta": "Image B | Une boisson",
+          "opciones": [
+            "Image A | Des viennoiseries",
+            "Image B | Une boisson",
+            "Image C | Un sandwich"
+          ],
+          "pregunta": "2 Qu'est-ce qui est offert aujourd'hui ?"
+        },
+        {
+          "respuesta_correcta": "Image C | Un smartphone",
+          "opciones": [
+            "Image A | Une valise",
+            "Image B | Un livre",
+            "Image C | Un smartphone"
+          ],
+          "pregunta": "3 Qu'est-ce qui a été trouvé dans le bus ?"
+        },
+        {
+          "respuesta_correcta": "Image A | Du poisson",
+          "opciones": [
+            "Image A | Du poisson",
+            "Image B | Des fruits",
+            "Image C | De la viande"
+          ],
+          "pregunta": "4 Cette semaine, quel produit est concerné par la réduction ?"
+        },
+        {
+          "respuesta_correcta": "C troisième étage.",
+          "opciones": [
+            "A premier étage.",
+            "B deuxième étage.",
+            "C troisième étage."
+          ],
+          "pregunta": "5 La librairie se trouve au..."
+        },
+        {
+          "respuesta_correcta": "B un rendez-vous avec un auteur.",
+          "opciones": [
+            "A un livre signé.",
+            "B un rendez-vous avec un auteur.",
+            "C une place pour l'année prochaine."
+          ],
+          "pregunta": "6 Vous pouvez gagner..."
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": null,
+      "transcripcion": "Document 1 Chers visiteurs, il n'y aura pas de visite guidée car les guides sont en grève aujourd'hui. Pour nous excuser, nous vous offrons une réduction de 20% sur votre billet.Document 2 Aujourd'hui, pour tout achat d'un menu sandwich et viennoiserie, nous vous offrons une boisson! Profitez également d'une remise de 5% sur nos pâtisseries.Document 3 Chers voyageurs, un passager a oublié un téléphone portable et un sac à main dans le bus numéro 8374 en provenance de Marseille. Veuillez vous rendre à l'accueil de la gare, merci.Document 4 Chers clients, jusqu'à dimanche, profitez d'une réduction exceptionnelle de 50 % au rayon poissonnerie. La semaine prochaine, nous vous proposerons des offres sur les viandes, fruits et légumes.Document 5 Attention, les toilettes du premier étage sont fermées pour travaux. Vous pourrez trouver d'autres toilettes au troisième étage, à côté du magasin de livres. Au deuxième étage se trouvent les cafés et restaurants.Document 6 À l'occasion de la fête du livre, gagnez une rencontre privée avec votre écrivain préféré ! Il suffit d'acheter aujourd'hui votre billet pour le prochain festival pour tenter votre chance!",
+      "campos_formulario": null
+    }
+  ],
+  "tema_CO": "Comprendre une annonce"
+}

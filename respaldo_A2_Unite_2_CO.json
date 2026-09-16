@@ -1,0 +1,2432 @@
+{
+  "diccionario_unidad": [
+    {
+      "definicion": "Indica la ubicación, el tiempo, la dirección, el propósito o la posesión.",
+      "tipo_gramatical": "préposition",
+      "ejemplo_uso": "Je vais à Paris.",
+      "palabra": "a",
+      "frecuencia": 14,
+      "lema": "à",
+      "sinonimos": [
+        "vers",
+        "en"
+      ]
+    },
+    {
+      "definicion": "Forma femenina singular del participio pasado del verbo 'acompañar', que significa ir con alguien o algo.",
+      "tipo_gramatical": "participe passé (f.s.)",
+      "ejemplo_uso": "Elle est accompagnée de son ami.",
+      "palabra": "accompagnée",
+      "frecuencia": 3,
+      "lema": "accompagner",
+      "sinonimos": [
+        "suivie",
+        "conjointe"
+      ]
+    },
+    {
+      "definicion": "Acción de recibir a alguien o la manera en que se le recibe.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "L'accueil était très chaleureux.",
+      "palabra": "accueil",
+      "frecuencia": 1,
+      "lema": "accueil",
+      "sinonimos": [
+        "réception",
+        "bienvenue"
+      ]
+    },
+    {
+      "definicion": "Forma del futuro simple del verbo 'acoger' o 'recibir' a alguien.",
+      "tipo_gramatical": "verbe (futur simple)",
+      "ejemplo_uso": "Le musée accueillera de nouveaux visiteurs.",
+      "palabra": "accueillera",
+      "frecuencia": 2,
+      "lema": "accueillir",
+      "sinonimos": [
+        "recevra",
+        "hébergera"
+      ]
+    },
+    {
+      "definicion": "Adquirir algo a cambio de dinero.",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "Je veux acheter un nouveau livre.",
+      "palabra": "acheter",
+      "frecuencia": 1,
+      "lema": "acheter",
+      "sinonimos": [
+        "acquérir",
+        "se procurer"
+      ]
+    },
+    {
+      "definicion": "Personas que interpretan un papel en una obra de teatro, película o serie.",
+      "tipo_gramatical": "nom (m.pl.)",
+      "ejemplo_uso": "Les acteurs ont reçu des applaudissements.",
+      "palabra": "acteurs",
+      "frecuencia": 1,
+      "lema": "acteur",
+      "sinonimos": [
+        "comédiens",
+        "artistes"
+      ]
+    },
+    {
+      "definicion": "Hecho de hacer algo, o el resultado de ese hecho.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "Il faut passer à l'action.",
+      "palabra": "action",
+      "frecuencia": 1,
+      "lema": "action",
+      "sinonimos": [
+        "acte",
+        "activité"
+      ]
+    },
+    {
+      "definicion": "Conjunto de operaciones o tareas que realiza una persona o un grupo.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "La lecture est une activité relaxante.",
+      "palabra": "activité",
+      "frecuencia": 16,
+      "lema": "activité",
+      "sinonimos": [
+        "occupation",
+        "travail"
+      ]
+    },
+    {
+      "definicion": "Plural de 'actividad', conjunto de operaciones o tareas que realiza una persona o un grupo.",
+      "tipo_gramatical": "nom (f.pl.)",
+      "ejemplo_uso": "Nous avons beaucoup d'activités ce week-end.",
+      "palabra": "activités",
+      "frecuencia": 1,
+      "lema": "activité",
+      "sinonimos": [
+        "occupations",
+        "loisirs"
+      ]
+    },
+    {
+      "definicion": "Forma del imperativo o presente del verbo 'admirar', que significa contemplar con asombro o respeto.",
+      "tipo_gramatical": "verbe (impératif/présent)",
+      "ejemplo_uso": "Admirez ce magnifique paysage!",
+      "palabra": "admirez",
+      "frecuencia": 1,
+      "lema": "admirer",
+      "sinonimos": [
+        "contemplez",
+        "appréciez"
+      ]
+    },
+    {
+      "definicion": "Personas que se encuentran en la etapa de la adolescencia, entre la niñez y la edad adulta.",
+      "tipo_gramatical": "nom (m.pl.)",
+      "ejemplo_uso": "Les adolescents aiment écouter de la musique.",
+      "palabra": "adolescents",
+      "frecuencia": 3,
+      "lema": "adolescent",
+      "sinonimos": [
+        "jeunes",
+        "ados"
+      ]
+    },
+    {
+      "definicion": "Empresa que ofrece servicios especializados, como viajes o publicidad.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "J'ai réservé mes vacances à l'agence de voyages.",
+      "palabra": "agence",
+      "frecuencia": 1,
+      "lema": "agence",
+      "sinonimos": [
+        "bureau",
+        "succursale"
+      ]
+    },
+    {
+      "definicion": "Forma del presente del verbo 'actuar' o 'obrar'.",
+      "tipo_gramatical": "verbe (présent)",
+      "ejemplo_uso": "Il agit toujours avec prudence.",
+      "palabra": "agit",
+      "frecuencia": 1,
+      "lema": "agir",
+      "sinonimos": [
+        "fait",
+        "opère"
+      ]
+    },
+    {
+      "definicion": "Prestar apoyo o asistencia a alguien.",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "Je voudrais aider mon prochain.",
+      "palabra": "aider",
+      "frecuencia": 1,
+      "lema": "aider",
+      "sinonimos": [
+        "assister",
+        "secourir"
+      ]
+    },
+    {
+      "definicion": "Mezcla de gases que forma la atmósfera terrestre y que respiran los seres vivos.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "L'air est frais ce matin.",
+      "palabra": "air",
+      "frecuencia": 3,
+      "lema": "air",
+      "sinonimos": [
+        "atmosphère",
+        "vent"
+      ]
+    },
+    {
+      "definicion": "Moverse de un lugar a otro.",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "Nous allons au cinéma.",
+      "palabra": "aller",
+      "frecuencia": 4,
+      "lema": "aller",
+      "sinonimos": [
+        "partir",
+        "se rendre"
+      ]
+    },
+    {
+      "definicion": "Forma de la primera persona del plural del presente o imperativo del verbo 'ir'.",
+      "tipo_gramatical": "verbe (présent/impératif)",
+      "ejemplo_uso": "Allons-y, il est tard!",
+      "palabra": "allons",
+      "frecuencia": 2,
+      "lema": "aller",
+      "sinonimos": [
+        "partons",
+        "marchons"
+      ]
+    },
+    {
+      "definicion": "Continente que se extiende desde el Ártico hasta el Cabo de Hornos.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "L'Amérique du Sud est très diverse.",
+      "palabra": "amérique",
+      "frecuencia": 1,
+      "lema": "Amérique",
+      "sinonimos": [
+        "Nouveau Monde",
+        "continent américain"
+      ]
+    },
+    {
+      "definicion": "Período de doce meses, que es el tiempo que tarda la Tierra en dar una vuelta completa alrededor del Sol.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "J'ai un an de plus.",
+      "palabra": "an",
+      "frecuencia": 1,
+      "lema": "an",
+      "sinonimos": [
+        "année",
+        "exercice"
+      ]
+    },
+    {
+      "definicion": "Nombre propio femenino de origen griego, que significa 'valiente' o 'viril'.",
+      "tipo_gramatical": "nom propre (f)",
+      "ejemplo_uso": "Andrée est une amie fidèle.",
+      "palabra": "andrée",
+      "frecuencia": 1,
+      "lema": "Andrée",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Comunicación pública de una noticia o un evento.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "J'ai lu l'annonce dans le journal.",
+      "palabra": "annonce",
+      "frecuencia": 8,
+      "lema": "annonce",
+      "sinonimos": [
+        "nouvelle",
+        "avis"
+      ]
+    },
+    {
+      "definicion": "Forma masculina plural del participio pasado del verbo 'anunciar', que significa dar a conocer algo.",
+      "tipo_gramatical": "participe passé (m.pl.)",
+      "ejemplo_uso": "Les résultats sont annoncés.",
+      "palabra": "annoncés",
+      "frecuencia": 1,
+      "lema": "annoncer",
+      "sinonimos": [
+        "publiés",
+        "déclarés"
+      ]
+    },
+    {
+      "definicion": "Plural de 'año', período de doce meses.",
+      "tipo_gramatical": "nom (m.pl.)",
+      "ejemplo_uso": "Il a vingt ans.",
+      "palabra": "ans",
+      "frecuencia": 3,
+      "lema": "an",
+      "sinonimos": [
+        "années",
+        "périodes"
+      ]
+    },
+    {
+      "definicion": "Nombrar a alguien o algo, o contactar a alguien por teléfono.",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "Je vais appeler ma mère.",
+      "palabra": "appeler",
+      "frecuencia": 1,
+      "lema": "appeler",
+      "sinonimos": [
+        "nommer",
+        "téléphoner"
+      ]
+    },
+    {
+      "definicion": "Forma del imperativo o presente del verbo 'llamar'.",
+      "tipo_gramatical": "verbe (impératif/présent)",
+      "ejemplo_uso": "Appelez-moi si vous avez besoin d'aide.",
+      "palabra": "appelez",
+      "frecuencia": 3,
+      "lema": "appeler",
+      "sinonimos": [
+        "téléphonez",
+        "nommez"
+      ]
+    },
+    {
+      "definicion": "Forma del presente del verbo 'llamar'.",
+      "tipo_gramatical": "verbe (présent)",
+      "ejemplo_uso": "Il s'appelle Jean.",
+      "palabra": "appelle",
+      "frecuencia": 1,
+      "lema": "appeler",
+      "sinonimos": [
+        "nomme",
+        "téléphone"
+      ]
+    },
+    {
+      "definicion": "Forma del presente del verbo 'traer' o 'aportar'.",
+      "tipo_gramatical": "verbe (présent)",
+      "ejemplo_uso": "Elle apporte des fleurs.",
+      "palabra": "apporte",
+      "frecuencia": 1,
+      "lema": "apporter",
+      "sinonimos": [
+        "amène",
+        "fournit"
+      ]
+    },
+    {
+      "definicion": "Adquirir conocimientos o habilidades.",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "J'aime apprendre de nouvelles langues.",
+      "palabra": "apprendre",
+      "frecuencia": 1,
+      "lema": "apprendre",
+      "sinonimos": [
+        "étudier",
+        "s'instruire"
+      ]
+    },
+    {
+      "definicion": "Proceso de adquirir conocimientos, habilidades, valores o actitudes.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "L'apprentissage est une étape importante.",
+      "palabra": "apprentissage",
+      "frecuencia": 3,
+      "lema": "apprentissage",
+      "sinonimos": [
+        "étude",
+        "formation"
+      ]
+    },
+    {
+      "definicion": "Manera de abordar un problema o una situación, o acción de acercarse.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "Son approche est très originale.",
+      "palabra": "approche",
+      "frecuencia": 1,
+      "lema": "approche",
+      "sinonimos": [
+        "méthode",
+        "rapprochement"
+      ]
+    },
+    {
+      "definicion": "Indica posterioridad en el tiempo o en el espacio.",
+      "tipo_gramatical": "préposition",
+      "ejemplo_uso": "Après le travail, je rentre chez moi.",
+      "palabra": "après",
+      "frecuencia": 5,
+      "lema": "après",
+      "sinonimos": [
+        "suite à",
+        "derrière"
+      ]
+    },
+    {
+      "definicion": "Forma del futuro simple del verbo 'llegar' o 'suceder'.",
+      "tipo_gramatical": "verbe (futur simple)",
+      "ejemplo_uso": "Le train arrivera à l'heure.",
+      "palabra": "arrivera",
+      "frecuencia": 3,
+      "lema": "arriver",
+      "sinonimos": [
+        "parviendra",
+        "surviendra"
+      ]
+    },
+    {
+      "definicion": "Actividad humana que busca expresar ideas, emociones o una visión del mundo a través de medios estéticos.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "L'art est une forme d'expression.",
+      "palabra": "art",
+      "frecuencia": 2,
+      "lema": "art",
+      "sinonimos": [
+        "création",
+        "talent"
+      ]
+    },
+    {
+      "definicion": "Escrito breve en un periódico o revista, o una parte de un contrato o ley.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "J'ai lu un article intéressant.",
+      "palabra": "article",
+      "frecuencia": 1,
+      "lema": "article",
+      "sinonimos": [
+        "texte",
+        "paragraphe"
+      ]
+    },
+    {
+      "definicion": "Persona que se dedica al arte o que tiene talento para ello.",
+      "tipo_gramatical": "nom (m/f)",
+      "ejemplo_uso": "Cet artiste est très talentueux.",
+      "palabra": "artiste",
+      "frecuencia": 1,
+      "lema": "artiste",
+      "sinonimos": [
+        "créateur",
+        "interprète"
+      ]
+    },
+    {
+      "definicion": "El continente más grande y poblado de la Tierra.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "L'Asie est un continent fascinant.",
+      "palabra": "asie",
+      "frecuencia": 1,
+      "lema": "Asie",
+      "sinonimos": [
+        "continent asiatique",
+        "Orient"
+      ]
+    },
+    {
+      "definicion": "Personaje principal de una famosa serie de cómics franceses.",
+      "tipo_gramatical": "nom propre (m)",
+      "ejemplo_uso": "Astérix est un héros gaulois.",
+      "palabra": "astérix",
+      "frecuencia": 1,
+      "lema": "Astérix",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Persona que practica deportes, especialmente los de competición.",
+      "tipo_gramatical": "nom (m/f)",
+      "ejemplo_uso": "Cet athlète a gagné la médaille d'or.",
+      "palabra": "athlète",
+      "frecuencia": 2,
+      "lema": "athlète",
+      "sinonimos": [
+        "sportif",
+        "champion"
+      ]
+    },
+    {
+      "definicion": "Forma masculina singular del participio pasado del verbo 'esperar'.",
+      "tipo_gramatical": "participe passé (m.s.)",
+      "ejemplo_uso": "Le colis est attendu demain.",
+      "palabra": "attendu",
+      "frecuencia": 2,
+      "lema": "attendre",
+      "sinonimos": [
+        "espéré",
+        "prévu"
+      ]
+    },
+    {
+      "definicion": "Facultad de aplicar voluntariamente el entendimiento a un objeto o la acción de prestar cuidado.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "Faites attention en traversant la rue.",
+      "palabra": "attention",
+      "frecuencia": 2,
+      "lema": "attention",
+      "sinonimos": [
+        "vigilance",
+        "concentration"
+      ]
+    },
+    {
+      "definicion": "Contracción de la preposición 'à' y el artículo definido masculino singular 'le'.",
+      "tipo_gramatical": "article contracté",
+      "ejemplo_uso": "Je vais au marché.",
+      "palabra": "au",
+      "frecuencia": 28,
+      "lema": "à le",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Indica la ausencia total de algo, 'ninguno'.",
+      "tipo_gramatical": "adjectif indéfini",
+      "ejemplo_uso": "Je n'ai aucun problème.",
+      "palabra": "aucun",
+      "frecuencia": 2,
+      "lema": "aucun",
+      "sinonimos": [
+        "nul",
+        "pas un"
+      ]
+    },
+    {
+      "definicion": "Relativo al sonido o a la audición.",
+      "tipo_gramatical": "adjectif",
+      "ejemplo_uso": "J'écoute un livre audio.",
+      "palabra": "audio",
+      "frecuencia": 12,
+      "lema": "audio",
+      "sinonimos": [
+        "sonore",
+        "acoustique"
+      ]
+    },
+    {
+      "definicion": "Hacer que algo sea más grande en cantidad, tamaño o intensidad.",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "Les prix vont augmenter.",
+      "palabra": "augmenter",
+      "frecuencia": 2,
+      "lema": "augmenter",
+      "sinonimos": [
+        "accroître",
+        "accroître"
+      ]
+    },
+    {
+      "definicion": "Forma masculina singular del participio pasado del verbo 'aumentar', que significa haber hecho algo más grande.",
+      "tipo_gramatical": "participe passé (m.s.)",
+      "ejemplo_uso": "Le volume a augmenté.",
+      "palabra": "augmenté",
+      "frecuencia": 1,
+      "lema": "augmenter",
+      "sinonimos": [
+        "accru",
+        "élevé"
+      ]
+    },
+    {
+      "definicion": "Parte inicial de la palabra 'aujourd'hui', que significa 'hoy' y se utiliza para indicar el día actual.",
+      "tipo_gramatical": "adverbe (partie de mot)",
+      "ejemplo_uso": "Aujourd'hui, il fait beau.",
+      "palabra": "aujourd",
+      "frecuencia": 30,
+      "lema": "aujourd'hui",
+      "sinonimos": [
+        "maintenant",
+        "ce jour"
+      ]
+    },
+    {
+      "definicion": "Cerca de, junto a, o en la presencia de.",
+      "tipo_gramatical": "préposition",
+      "ejemplo_uso": "Il travaille auprès des enfants.",
+      "palabra": "auprès",
+      "frecuencia": 1,
+      "lema": "auprès",
+      "sinonimos": [
+        "près de",
+        "chez"
+      ]
+    },
+    {
+      "definicion": "Forma del futuro simple del verbo 'tener' o 'haber'.",
+      "tipo_gramatical": "verbe (futur simple)",
+      "ejemplo_uso": "Il aura une nouvelle voiture.",
+      "palabra": "aura",
+      "frecuencia": 3,
+      "lema": "avoir",
+      "sinonimos": [
+        "possédera",
+        "existera"
+      ]
+    },
+    {
+      "definicion": "Indica igualdad o adición, 'también' o 'tan'.",
+      "tipo_gramatical": "adverbe",
+      "ejemplo_uso": "Moi aussi, je viens.",
+      "palabra": "aussi",
+      "frecuencia": 4,
+      "lema": "aussi",
+      "sinonimos": [
+        "également",
+        "de même"
+      ]
+    },
+    {
+      "definicion": "Firma de una persona famosa o manuscrito original.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "J'ai demandé un autographe à l'acteur.",
+      "palabra": "autographe",
+      "frecuencia": 2,
+      "lema": "autographe",
+      "sinonimos": [
+        "signature",
+        "dédicace"
+      ]
+    },
+    {
+      "definicion": "Estación del año que sigue al verano y precede al invierno.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "Les feuilles tombent en automne.",
+      "palabra": "automne",
+      "frecuencia": 1,
+      "lema": "automne",
+      "sinonimos": [
+        "arrière-saison",
+        "chute des feuilles"
+      ]
+    },
+    {
+      "definicion": "Indica algo o alguien diferente o adicional.",
+      "tipo_gramatical": "adjectif indéfini",
+      "ejemplo_uso": "Je voudrais un autre café.",
+      "palabra": "autre",
+      "frecuencia": 4,
+      "lema": "autre",
+      "sinonimos": [
+        "différent",
+        "supplémentaire"
+      ]
+    },
+    {
+      "definicion": "Contracción de la preposición 'à' y el artículo definido plural 'les'.",
+      "tipo_gramatical": "article contracté",
+      "ejemplo_uso": "Je parle aux enfants.",
+      "palabra": "aux",
+      "frecuencia": 7,
+      "lema": "à les",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Indica anterioridad en el tiempo o en el espacio.",
+      "tipo_gramatical": "préposition",
+      "ejemplo_uso": "Je me lève avant le soleil.",
+      "palabra": "avant",
+      "frecuencia": 3,
+      "lema": "avant",
+      "sinonimos": [
+        "préalablement",
+        "devant"
+      ]
+    },
+    {
+      "definicion": "Indica compañía, instrumento o modo.",
+      "tipo_gramatical": "préposition",
+      "ejemplo_uso": "Je vais au cinéma avec mes amis.",
+      "palabra": "avec",
+      "frecuencia": 12,
+      "lema": "avec",
+      "sinonimos": [
+        "en compagnie de",
+        "moyennant"
+      ]
+    },
+    {
+      "definicion": "Plural de 'avión', aeronave con alas que vuela propulsada por motores.",
+      "tipo_gramatical": "nom (m.pl.)",
+      "ejemplo_uso": "Les avions décollent de l'aéroport.",
+      "palabra": "avions",
+      "frecuencia": 2,
+      "lema": "avion",
+      "sinonimos": [
+        "aéronefs",
+        "appareils"
+      ]
+    },
+    {
+      "definicion": "Poseer, tener, o como auxiliar para formar tiempos compuestos.",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "J'ai un chat.",
+      "palabra": "avoir",
+      "frecuencia": 4,
+      "lema": "avoir",
+      "sinonimos": [
+        "posséder",
+        "détenir"
+      ]
+    },
+    {
+      "definicion": "Cuarto mes del año en el calendario gregoriano.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "Mon anniversaire est en avril.",
+      "palabra": "avril",
+      "frecuencia": 2,
+      "lema": "avril",
+      "sinonimos": [
+        "quatrième mois",
+        "printemps"
+      ]
+    },
+    {
+      "definicion": "Disminución o reducción de algo.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "Il y a une baisse des températures.",
+      "palabra": "baisse",
+      "frecuencia": 1,
+      "lema": "baisse",
+      "sinonimos": [
+        "diminution",
+        "chute"
+      ]
+    },
+    {
+      "definicion": "Disminuir, reducir o hacer descender algo.",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "Il faut baisser le volume.",
+      "palabra": "baisser",
+      "frecuencia": 1,
+      "lema": "baisser",
+      "sinonimos": [
+        "diminuer",
+        "descendre"
+      ]
+    },
+    {
+      "definicion": "Término inglés que significa 'pelota', usado a menudo en francés en contextos deportivos.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "Il joue au baseball avec une batte et une ball.",
+      "palabra": "ball",
+      "frecuencia": 1,
+      "lema": "ball",
+      "sinonimos": [
+        "balle",
+        "ballon"
+      ]
+    },
+    {
+      "definicion": "Deporte de equipo que se juega con una pelota y dos canastas, o tipo de calzado deportivo.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "J'adore jouer au basket.",
+      "palabra": "basket",
+      "frecuencia": 1,
+      "lema": "basket",
+      "sinonimos": [
+        "basketball",
+        "chaussure de sport"
+      ]
+    },
+    {
+      "definicion": "Conjunto de tambores y platillos, o dispositivo que almacena energía eléctrica.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "Le batteur joue de la batterie.",
+      "palabra": "batterie",
+      "frecuencia": 1,
+      "lema": "batterie",
+      "sinonimos": [
+        "percussion",
+        "accumulateur"
+      ]
+    },
+    {
+      "definicion": "Músico que toca la batería.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "Le batteur est très talentueux.",
+      "palabra": "batteur",
+      "frecuencia": 1,
+      "lema": "batteur",
+      "sinonimos": [
+        "percussionniste",
+        "tambourineur"
+      ]
+    },
+    {
+      "definicion": "Que agrada a la vista o al oído, o que es de buena calidad.",
+      "tipo_gramatical": "adjectif",
+      "ejemplo_uso": "Il fait beau aujourd'hui.",
+      "palabra": "beau",
+      "frecuencia": 1,
+      "lema": "beau",
+      "sinonimos": [
+        "magnifique",
+        "joli"
+      ]
+    },
+    {
+      "definicion": "En gran cantidad o medida, 'mucho'.",
+      "tipo_gramatical": "adverbe",
+      "ejemplo_uso": "J'aime beaucoup ce film.",
+      "palabra": "beaucoup",
+      "frecuencia": 5,
+      "lema": "beaucoup",
+      "sinonimos": [
+        "énormément",
+        "abondamment"
+      ]
+    },
+    {
+      "definicion": "Relativo a Bélgica o a sus habitantes.",
+      "tipo_gramatical": "adjectif (m.pl./f.pl.)",
+      "ejemplo_uso": "Les frites belges sont délicieuses.",
+      "palabra": "belges",
+      "frecuencia": 1,
+      "lema": "belge",
+      "sinonimos": [
+        "flamands",
+        "wallons"
+      ]
+    },
+    {
+      "definicion": "En poco tiempo, 'pronto'.",
+      "tipo_gramatical": "adverbe",
+      "ejemplo_uso": "À bientôt!",
+      "palabra": "bientôt",
+      "frecuencia": 4,
+      "lema": "bientôt",
+      "sinonimos": [
+        "prochainement",
+        "sous peu"
+      ]
+    },
+    {
+      "definicion": "Saludo que se da a alguien que llega, o acción de recibir con agrado.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "Soyez les bienvenus chez nous.",
+      "palabra": "bienvenue",
+      "frecuencia": 8,
+      "lema": "bienvenue",
+      "sinonimos": [
+        "accueil",
+        "salut"
+      ]
+    },
+    {
+      "definicion": "Plural de 'billete', trozo de papel que da derecho a entrar a un lugar o a viajar, o papel moneda.",
+      "tipo_gramatical": "nom (m.pl.)",
+      "ejemplo_uso": "J'ai acheté des billets pour le concert.",
+      "palabra": "billets",
+      "frecuencia": 2,
+      "lema": "billet",
+      "sinonimos": [
+        "tickets",
+        "places"
+      ]
+    },
+    {
+      "definicion": "Ingerir un líquido.",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "Il faut boire de l'eau.",
+      "palabra": "boire",
+      "frecuencia": 2,
+      "lema": "boire",
+      "sinonimos": [
+        "s'abreuver",
+        "ingurgiter"
+      ]
+    },
+    {
+      "definicion": "Que tiene buenas cualidades, que es agradable o útil.",
+      "tipo_gramatical": "adjectif",
+      "ejemplo_uso": "C'est un bon livre.",
+      "palabra": "bon",
+      "frecuencia": 2,
+      "lema": "bon",
+      "sinonimos": [
+        "excellent",
+        "agréable"
+      ]
+    },
+    {
+      "definicion": "Saludo que se utiliza durante el día.",
+      "tipo_gramatical": "interjection",
+      "ejemplo_uso": "Bonjour, comment allez-vous?",
+      "palabra": "bonjour",
+      "frecuencia": 7,
+      "lema": "bonjour",
+      "sinonimos": [
+        "salut",
+        "hello"
+      ]
+    },
+    {
+      "definicion": "Extremo o límite de una superficie o de un objeto.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "Je suis au bord de la mer.",
+      "palabra": "bord",
+      "frecuencia": 1,
+      "lema": "bord",
+      "sinonimos": [
+        "côté",
+        "lisière"
+      ]
+    },
+    {
+      "definicion": "Plural de 'ramo', conjunto de flores o hierbas atadas.",
+      "tipo_gramatical": "nom (m.pl.)",
+      "ejemplo_uso": "J'ai reçu de beaux bouquets de fleurs.",
+      "palabra": "bouquets",
+      "frecuencia": 1,
+      "lema": "bouquet",
+      "sinonimos": [
+        "gerbes",
+        "assemblages"
+      ]
+    },
+    {
+      "definicion": "Tienda pequeña donde se venden productos específicos.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "J'ai acheté un souvenir dans une boutique.",
+      "palabra": "boutique",
+      "frecuencia": 3,
+      "lema": "boutique",
+      "sinonimos": [
+        "magasin",
+        "échoppe"
+      ]
+    },
+    {
+      "definicion": "Antiguo nombre de Gran Bretaña, o personificación femenina de Gran Bretaña.",
+      "tipo_gramatical": "nom propre",
+      "ejemplo_uso": "Britannia est un symbole du Royaume-Uni.",
+      "palabra": "britannia",
+      "frecuencia": 1,
+      "lema": "Britannia",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Variante ortográfica de 'Britannia', antiguo nombre de Gran Bretaña o personificación femenina de Gran Bretaña.",
+      "tipo_gramatical": "nom propre",
+      "ejemplo_uso": "Le navire s'appelait Brittania.",
+      "palabra": "brittania",
+      "frecuencia": 1,
+      "lema": "Brittania",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Informe breve o comunicado oficial, o documento con calificaciones escolares.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "J'ai reçu mon bulletin scolaire.",
+      "palabra": "bulletin",
+      "frecuencia": 2,
+      "lema": "bulletin",
+      "sinonimos": [
+        "rapport",
+        "communiqué"
+      ]
+    },
+    {
+      "definicion": "Vehículo de transporte público de pasajeros.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "Je prends le bus pour aller au travail.",
+      "palabra": "bus",
+      "frecuencia": 3,
+      "lema": "bus",
+      "sinonimos": [
+        "autobus",
+        "car"
+      ]
+    },
+    {
+      "definicion": "Plural de 'camión', vehículo grande para transportar mercancías.",
+      "tipo_gramatical": "nom (m.pl.)",
+      "ejemplo_uso": "Les camions transportent des marchandises.",
+      "palabra": "camions",
+      "frecuencia": 1,
+      "lema": "camion",
+      "sinonimos": [
+        "poids lourds",
+        "véhicules de transport"
+      ]
+    },
+    {
+      "definicion": "Zona rural, fuera de la ciudad, o conjunto de operaciones militares o publicitarias.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "J'aime me promener à la campagne.",
+      "palabra": "campagne",
+      "frecuencia": 1,
+      "lema": "campagne",
+      "sinonimos": [
+        "ruralité",
+        "opération"
+      ]
+    },
+    {
+      "definicion": "Apellido o nombre de lugar de origen español o portugués.",
+      "tipo_gramatical": "nom propre",
+      "ejemplo_uso": "Monsieur Campos est arrivé.",
+      "palabra": "campos",
+      "frecuencia": 12,
+      "lema": "Campos",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Introduce una explicación o una causa, 'porque'.",
+      "tipo_gramatical": "conjonction de coordination",
+      "ejemplo_uso": "Je suis fatigué, car j'ai beaucoup travaillé.",
+      "palabra": "car",
+      "frecuencia": 1,
+      "lema": "car",
+      "sinonimos": [
+        "parce que",
+        "en effet"
+      ]
+    },
+    {
+      "definicion": "Representación gráfica de un territorio, o documento de identificación, o menú en un restaurante.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "J'ai besoin d'une carte pour trouver mon chemin.",
+      "palabra": "carte",
+      "frecuencia": 9,
+      "lema": "carte",
+      "sinonimos": [
+        "plan",
+        "document"
+      ]
+    },
+    {
+      "definicion": "Indica algo o alguien que está cerca o que ya ha sido mencionado, 'este' o 'ese'.",
+      "tipo_gramatical": "déterminant démonstratif",
+      "ejemplo_uso": "Ce livre est intéressant.",
+      "palabra": "ce",
+      "frecuencia": 16,
+      "lema": "ce",
+      "sinonimos": [
+        "cet",
+        "celui-ci"
+      ]
+    },
+    {
+      "definicion": "Punto equidistante de los extremos de una figura, o lugar principal de una ciudad o actividad.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "Le centre-ville est très animé.",
+      "palabra": "centre",
+      "frecuencia": 3,
+      "lema": "centre",
+      "sinonimos": [
+        "milieu",
+        "cœur"
+      ]
+    },
+    {
+      "definicion": "Forma femenina singular del determinante demostrativo 'este' o 'ese'.",
+      "tipo_gramatical": "déterminant démonstratif (f.s.)",
+      "ejemplo_uso": "Cette maison est belle.",
+      "palabra": "cette",
+      "frecuencia": 6,
+      "lema": "ce",
+      "sinonimos": [
+        "celle-ci",
+        "la présente"
+      ]
+    },
+    {
+      "definicion": "Nombre de un barrio y una colina en París, conocido por el Palais de Chaillot.",
+      "tipo_gramatical": "nom propre",
+      "ejemplo_uso": "Le Théâtre de Chaillot est célèbre.",
+      "palabra": "chaillot",
+      "frecuencia": 2,
+      "lema": "Chaillot",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Mueble con respaldo y patas, diseñado para sentarse una persona.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "Assieds-toi sur cette chaise.",
+      "palabra": "chaise",
+      "frecuencia": 1,
+      "lema": "chaise",
+      "sinonimos": [
+        "siège",
+        "tabouret"
+      ]
+    },
+    {
+      "definicion": "Plural de 'canción', composición musical con letra para ser cantada.",
+      "tipo_gramatical": "nom (f.pl.)",
+      "ejemplo_uso": "J'aime écouter des chansons françaises.",
+      "palabra": "chansons",
+      "frecuencia": 2,
+      "lema": "chanson",
+      "sinonimos": [
+        "mélodies",
+        "airs"
+      ]
+    },
+    {
+      "definicion": "Producir sonidos melódicos con la voz.",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "Elle aime chanter sous la douche.",
+      "palabra": "chanter",
+      "frecuencia": 2,
+      "lema": "chanter",
+      "sinonimos": [
+        "entonner",
+        "vocaliser"
+      ]
+    },
+    {
+      "definicion": "Persona que canta profesionalmente o por afición.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "Le chanteur a une belle voix.",
+      "palabra": "chanteur",
+      "frecuencia": 5,
+      "lema": "chanteur",
+      "sinonimos": [
+        "vocaliste",
+        "interprète"
+      ]
+    },
+    {
+      "definicion": "Mujer que canta profesionalmente o por afición.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "La chanteuse a conquis le public.",
+      "palabra": "chanteuse",
+      "frecuencia": 2,
+      "lema": "chanteuse",
+      "sinonimos": [
+        "vocaliste",
+        "interprète"
+      ]
+    },
+    {
+      "definicion": "Nombre propio, diminutivo de Charles o Charlotte.",
+      "tipo_gramatical": "nom propre (m/f)",
+      "ejemplo_uso": "Charlie est mon meilleur ami.",
+      "palabra": "charlie",
+      "frecuencia": 2,
+      "lema": "Charlie",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Que tiene una temperatura elevada.",
+      "tipo_gramatical": "adjectif",
+      "ejemplo_uso": "Il fait chaud aujourd'hui.",
+      "palabra": "chaud",
+      "frecuencia": 2,
+      "lema": "chaud",
+      "sinonimos": [
+        "brûlant",
+        "tiède"
+      ]
+    },
+    {
+      "definicion": "Plural de 'conductor', persona que maneja un vehículo.",
+      "tipo_gramatical": "nom (m.pl.)",
+      "ejemplo_uso": "Les chauffeurs de bus sont en grève.",
+      "palabra": "chauffeurs",
+      "frecuencia": 1,
+      "lema": "chauffeur",
+      "sinonimos": [
+        "conducteurs",
+        "pilotes"
+      ]
+    },
+    {
+      "definicion": "Plural masculino de 'caro' (de precio elevado) o 'querido' (apreciado).",
+      "tipo_gramatical": "adjectif (m.pl.)",
+      "ejemplo_uso": "Mes chers amis, bienvenue!",
+      "palabra": "chers",
+      "frecuencia": 2,
+      "lema": "cher",
+      "sinonimos": [
+        "coûteux",
+        "aimés"
+      ]
+    },
+    {
+      "definicion": "Plural de 'caballo', mamífero équido domesticado.",
+      "tipo_gramatical": "nom (m.pl.)",
+      "ejemplo_uso": "Les chevaux courent dans le pré.",
+      "palabra": "chevaux",
+      "frecuencia": 3,
+      "lema": "cheval",
+      "sinonimos": [
+        "montures",
+        "équidés"
+      ]
+    },
+    {
+      "definicion": "Indica el lugar donde vive o trabaja una persona, o el establecimiento de alguien.",
+      "tipo_gramatical": "préposition",
+      "ejemplo_uso": "Je vais chez mon ami.",
+      "palabra": "chez",
+      "frecuencia": 3,
+      "lema": "chez",
+      "sinonimos": [
+        "à la maison de",
+        "au domicile de"
+      ]
+    },
+    {
+      "definicion": "Derribar, tumbar o hacer caer algo o a alguien.",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "Il faut abattre cet arbre malade.",
+      "palabra": "abattre",
+      "frecuencia": 1,
+      "lema": "abattre",
+      "sinonimos": [
+        "faire tomber",
+        "démolir"
+      ]
+    },
+    {
+      "definicion": "Apoyo o asistencia que se presta a alguien.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "J'ai besoin d'aide pour ce travail.",
+      "palabra": "aide",
+      "frecuencia": 1,
+      "lema": "aide",
+      "sinonimos": [
+        "soutien",
+        "assistance"
+      ]
+    },
+    {
+      "definicion": "Conjunto de sustancias que se ingieren para vivir y nutrirse.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "Une bonne alimentation est essentielle pour la santé.",
+      "palabra": "alimentation",
+      "frecuencia": 1,
+      "lema": "alimentation",
+      "sinonimos": [
+        "nourriture",
+        "subsistance"
+      ]
+    },
+    {
+      "definicion": "País de Europa Central.",
+      "tipo_gramatical": "nom propre (f)",
+      "ejemplo_uso": "L'Allemagne est un grand pays européen.",
+      "palabra": "allemagne",
+      "frecuencia": 1,
+      "lema": "Allemagne",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Forma conjugada del verbo 'aller' (ir) en segunda persona del plural del presente de indicativo o imperativo.",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "Allez-y, n'hésitez pas!",
+      "palabra": "allez",
+      "frecuencia": 1,
+      "lema": "aller",
+      "sinonimos": [
+        "partez",
+        "marchez"
+      ]
+    },
+    {
+      "definicion": "Que siente amor por alguien.",
+      "tipo_gramatical": "adjectif (m) / nom (m)",
+      "ejemplo_uso": "Il est amoureux de sa petite amie.",
+      "palabra": "amoureux",
+      "frecuencia": 1,
+      "lema": "amoureux",
+      "sinonimos": [
+        "épris",
+        "énamouré"
+      ]
+    },
+    {
+      "definicion": "Que ha sido comunicado o hecho público.",
+      "tipo_gramatical": "participe passé (m) / adjectif (m)",
+      "ejemplo_uso": "Le résultat a été annoncé.",
+      "palabra": "annoncé",
+      "frecuencia": 1,
+      "lema": "annoncer",
+      "sinonimos": [
+        "communiqué",
+        "déclaré"
+      ]
+    },
+    {
+      "definicion": "Período de doce meses, con énfasis en la duración o el transcurso.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "Cette année a été très bonne.",
+      "palabra": "année",
+      "frecuencia": 2,
+      "lema": "année",
+      "sinonimos": [
+        "an",
+        "période"
+      ]
+    },
+    {
+      "definicion": "Arte y técnica de proyectar y construir edificios.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "L'architecture de cette ville est magnifique.",
+      "palabra": "architecture",
+      "frecuencia": 1,
+      "lema": "architecture",
+      "sinonimos": [
+        "bâtiment",
+        "construction"
+      ]
+    },
+    {
+      "definicion": "Plato llano o hondo donde se sirve la comida.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "Mets la nourriture dans l'assiette.",
+      "palabra": "assiette",
+      "frecuencia": 1,
+      "lema": "assiette",
+      "sinonimos": [
+        "plat",
+        "vaisselle"
+      ]
+    },
+    {
+      "definicion": "Permanecer en un lugar hasta que algo suceda o alguien llegue.",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "Je dois attendre le bus.",
+      "palabra": "attendre",
+      "frecuencia": 1,
+      "lema": "attendre",
+      "sinonimos": [
+        "patienter",
+        "espérer"
+      ]
+    },
+    {
+      "definicion": "Personas que escuchan, especialmente un programa de radio o un concierto.",
+      "tipo_gramatical": "nom (m, pl)",
+      "ejemplo_uso": "Les auditeurs ont apprécié l'émission.",
+      "palabra": "auditeurs",
+      "frecuencia": 3,
+      "lema": "auditeur",
+      "sinonimos": [
+        "spectateurs",
+        "public"
+      ]
+    },
+    {
+      "definicion": "Carretera de varios carriles para la circulación rápida de vehículos.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "L'autoroute est très fréquentée.",
+      "palabra": "autoroute",
+      "frecuencia": 2,
+      "lema": "autoroute",
+      "sinonimos": [
+        "voie rapide",
+        "autopiste"
+      ]
+    },
+    {
+      "definicion": "País de Europa Occidental.",
+      "tipo_gramatical": "nom propre (f)",
+      "ejemplo_uso": "La Belgique est un pays multilingue.",
+      "palabra": "belgique",
+      "frecuencia": 1,
+      "lema": "Belgique",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Forma femenina de 'beau', que tiene belleza o es agradable a la vista.",
+      "tipo_gramatical": "adjectif (f)",
+      "ejemplo_uso": "C'est une belle fleur.",
+      "palabra": "belle",
+      "frecuencia": 1,
+      "lema": "beau",
+      "sinonimos": [
+        "jolie",
+        "magnifique"
+      ]
+    },
+    {
+      "definicion": "Forma conjugada del verbo 'boire' (beber) en tercera persona del singular del presente de indicativo.",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "Il boit du café.",
+      "palabra": "boit",
+      "frecuencia": 2,
+      "lema": "boire",
+      "sinonimos": [
+        "s'abreuve",
+        "ingère"
+      ]
+    },
+    {
+      "definicion": "Razón o motivo de algo.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "La cause de l'accident est inconnue.",
+      "palabra": "cause",
+      "frecuencia": 1,
+      "lema": "cause",
+      "sinonimos": [
+        "raison",
+        "motif"
+      ]
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "baignant",
+      "frecuencia": 1,
+      "lema": "baignant",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "buvant",
+      "frecuencia": 2,
+      "lema": "buvant",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "chaleur",
+      "frecuencia": 1,
+      "lema": "chaleur",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "choix",
+      "frecuencia": 10,
+      "lema": "choix",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "chris",
+      "frecuencia": 4,
+      "lema": "chris",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "ciel",
+      "frecuencia": 1,
+      "lema": "ciel",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "cinéma",
+      "frecuencia": 3,
+      "lema": "cinéma",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "circulera",
+      "frecuencia": 1,
+      "lema": "circulera",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "cité",
+      "frecuencia": 1,
+      "lema": "cité",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "com",
+      "frecuencia": 2,
+      "lema": "com",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "combien",
+      "frecuencia": 1,
+      "lema": "combien",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "comme",
+      "frecuencia": 1,
+      "lema": "comme",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "commençons",
+      "frecuencia": 1,
+      "lema": "commençons",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "commerce",
+      "frecuencia": 1,
+      "lema": "commerce",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "commerces",
+      "frecuencia": 1,
+      "lema": "commerces",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "compréhension",
+      "frecuencia": 9,
+      "lema": "compréhension",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "compétition",
+      "frecuencia": 1,
+      "lema": "compétition",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "comédie",
+      "frecuencia": 4,
+      "lema": "comédie",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "concert",
+      "frecuencia": 2,
+      "lema": "concert",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "concerts",
+      "frecuencia": 3,
+      "lema": "concerts",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "concours",
+      "frecuencia": 1,
+      "lema": "concours",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "conditions",
+      "frecuencia": 1,
+      "lema": "conditions",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "activite",
+      "frecuencia": 1,
+      "lema": "activite",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "appareils",
+      "frecuencia": 1,
+      "lema": "appareils",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "arbres",
+      "frecuencia": 3,
+      "lema": "arbres",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "articles",
+      "frecuencia": 1,
+      "lema": "articles",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "ballet",
+      "frecuencia": 1,
+      "lema": "ballet",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "bleue",
+      "frecuencia": 1,
+      "lema": "bleue",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "bois",
+      "frecuencia": 1,
+      "lema": "bois",
+      "sinonimos": []
+    }
+  ],
+  "unidad": "Unité 2",
+  "CO": [
+    {
+      "ruta_audio": "14.mp3",
+      "habilidad": "Compréhension de l'oral",
+      "instruccion": "Activité 14 Lisez les questions. Écoutez le document puis répondez. Vous écoutez la radio.",
+      "tipo": "Choix multiple",
+      "preguntas": [
+        {
+          "respuesta_correcta": "imageB.png | Carte de France avec soleil",
+          "opciones": [
+            "imageA.png | Carte de France avec pluie",
+            "imageB.png | Carte de France avec soleil",
+            "imageC.png | Carte de France avec nuages et soleil"
+          ],
+          "pregunta": "1 Quel temps fait-il aujourd'hui ?"
+        },
+        {
+          "respuesta_correcta": "augmenter.",
+          "opciones": [
+            "baisser.",
+            "rester fixe.",
+            "augmenter."
+          ],
+          "pregunta": "2 La semaine prochaine, la température va..."
+        },
+        {
+          "respuesta_correcta": "un documentaire.",
+          "opciones": [
+            "une comédie.",
+            "un film d'horreur.",
+            "un documentaire."
+          ],
+          "pregunta": "3 « La maison de papier » est..."
+        },
+        {
+          "respuesta_correcta": "L'après-midi.",
+          "opciones": [
+            "Le matin.",
+            "L'après-midi.",
+            "Le soir."
+          ],
+          "pregunta": "4 À quel moment le public rencontre-t-il les acteurs ?"
+        },
+        {
+          "respuesta_correcta": "imageB.png | Un train",
+          "opciones": [
+            "imageA.png | Un bus",
+            "imageB.png | Un train",
+            "imageC.png | Un taxi"
+          ],
+          "pregunta": "5 Quel transport est concerné par la grève ?"
+        },
+        {
+          "respuesta_correcta": "2 jours.",
+          "opciones": [
+            "2 jours.",
+            "2 semaines.",
+            "2 mois."
+          ],
+          "pregunta": "6 Combien de temps va durer la grève ?"
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": null,
+      "transcripcion": "Document 33: Tout de suite, les prévisions météo. Aujourd'hui, le temps sera magnifique, avec un grand soleil et des températures douces. Mais demain, la pluie arrivera, accompagnée de vents très forts. Il faudra sortir son parapluie ! Document 19: Bienvenue sur Radio ciné. C'est bientôt le printemps du cinéma, événement très attendu. Pendant 3 jours, du 1er au 3 avril, tous les films sont au tarif exceptionnel de 3,50 € dans tous les cinémas de France. Document 26: Radio France, il est 8 h. La grève des transports continue dans toute la France. Au niveau national, 1 train sur 3 circulera. Pour connaître le programme des trains, consultez le site internet de la SNCF, rubrique « grève nationale ». Document 17: Bonjour à tous. On nous annonce ce matin un problème de circulation dans le métro parisien. Le personnel organise une grève aujourd'hui et demain, seuls 2 trains sur 3 sont annoncés sur l'ensemble des lignes. Bon courage !",
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": "15.mp3",
+      "habilidad": "Compréhension de l'oral",
+      "instruccion": "Activité 15 Lisez les questions. Écoutez le document puis répondez. Vous écoutez la radio.",
+      "tipo": "Choix multiple",
+      "preguntas": [
+        {
+          "respuesta_correcta": "Le matin.",
+          "opciones": [
+            "Le matin.",
+            "L'après-midi.",
+            "Le soir."
+          ],
+          "pregunta": "1 À quel moment est donnée l'information ?"
+        },
+        {
+          "respuesta_correcta": "imageA.png | Route endommagée",
+          "opciones": [
+            "imageA.png | Route endommagée",
+            "imageB.png | Route enneigée",
+            "imageC.png | Route dégagée"
+          ],
+          "pregunta": "2 Quel est l'état général des routes à Orléans ?"
+        },
+        {
+          "respuesta_correcta": "Printemps.",
+          "opciones": [
+            "Printemps.",
+            "Été.",
+            "Hiver."
+          ],
+          "pregunta": "3 À quelle saison a lieu cette fête du cinéma ?"
+        },
+        {
+          "respuesta_correcta": "quelques jours.",
+          "opciones": [
+            "quelques jours.",
+            "un mois entier.",
+            "toute la saison."
+          ],
+          "pregunta": "4 La baisse du prix est proposée..."
+        },
+        {
+          "respuesta_correcta": "imageB.png | Guitare électrique",
+          "opciones": [
+            "imageA.png | Batterie",
+            "imageB.png | Guitare électrique",
+            "imageC.png | Clavier électronique"
+          ],
+          "pregunta": "5 De quel instrument joue l'artiste ?"
+        },
+        {
+          "respuesta_correcta": "Écrire un message.",
+          "opciones": [
+            "Écrire un message.",
+            "Envoyer un courriel.",
+            "Appeler le standard."
+          ],
+          "pregunta": "6 Que devez-vous faire pour gagner des places ?"
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": null,
+      "transcripcion": "Document 18: Radio Orléans, il est 7 heures. Aujourd'hui il fait -7°. Attention, beaucoup de neige sur les routes. Ne prenez pas votre voiture aujourd'hui, les routes sont très dangereuses. Dans le centre d'Orléans, aucun bus ne circulera. Document 19: Bienvenue sur Radio ciné. C'est bientôt le printemps du cinéma, événement très attendu. Pendant 3 jours, du 1er au 3 avril, tous les films sont au tarif exceptionnel de 3,50 € dans tous les cinémas de France. Document 20: Bienvenue sur RockFM. Ce soir a lieu le dernier concert du guitariste Paul Durand à l'Olympia. Nous allons vous faire gagner des places. Envoyez un SMS au 65050 pour tenter de remporter deux places pour le concert.",
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": "16.mp3",
+      "habilidad": "Compréhension de l'oral",
+      "instruccion": "Activité 16 Lisez les questions. Écoutez le document puis répondez. Vous écoutez la radio.",
+      "tipo": "Choix multiple",
+      "preguntas": [
+        {
+          "respuesta_correcta": "imageC.png | Cuisine de restaurant",
+          "opciones": [
+            "imageA.png | Salle de classe",
+            "imageB.png | Pharmacie",
+            "imageC.png | Cuisine de restaurant"
+          ],
+          "pregunta": "1 Quel domaine est souvent concerné par l'apprentissage?"
+        },
+        {
+          "respuesta_correcta": "Ils peuvent avoir de l'expérience.",
+          "opciones": [
+            "Les examens sont faciles.",
+            "Il y a peu de cours à l'école.",
+            "Ils peuvent avoir de l'expérience."
+          ],
+          "pregunta": "2 Selon la journaliste, pourquoi les étudiants choisissent-ils l'apprentissage ?"
+        },
+        {
+          "respuesta_correcta": "grands-parents.",
+          "opciones": [
+            "enfants.",
+            "mères.",
+            "grands-parents."
+          ],
+          "pregunta": "3 Dans l'annonce, on parle de la fête des..."
+        },
+        {
+          "respuesta_correcta": "utiliser un code.",
+          "opciones": [
+            "utiliser un code.",
+            "écrire un courriel.",
+            "téléphoner au magasin."
+          ],
+          "pregunta": "4 Pour profiter de la réduction, vous devez..."
+        },
+        {
+          "respuesta_correcta": "imageA.png | Portrait de femme",
+          "opciones": [
+            "imageA.png | Portrait de femme",
+            "imageB.png | Paysage urbain",
+            "imageC.png | Paysage de forêt"
+          ],
+          "pregunta": "5 Qu'est-ce que Stéphanie Roncin a beaucoup peint ?"
+        },
+        {
+          "respuesta_correcta": "Le 12 février.",
+          "opciones": [
+            "Le 20 janvier.",
+            "Le 12 février.",
+            "Le 30 mars."
+          ],
+          "pregunta": "6 Quand débute l'exposition ?"
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": null,
+      "transcripcion": "Document 21: France reportage s'intéresse aujourd'hui aux études des jeunes en apprentissage. Cette formation permet d'étudier et de travailler. L'hôtellerie-restauration utilise beaucoup cette formule. De plus en plus d'étudiants choisissent cette façon d'apprendre, car elle apporte des connaissances théoriques, mais aussi de l'expérience pratique. Document 22: Et maintenant, quelques publicités. Petits-enfants et parents faites plaisir à vos proches aujourd'hui pour la journée des grands-parents. Profitez d'une remise exceptionnelle de 25 % sur tous nos bouquets de fleurs avec le code FLEURSENFÊTE sur notre site fleursenfete.fr. Document 23: Bienvenue dans l'émission « C'est de l'art ». Aujourd'hui, nous parlerons de l'exposition de Stéphanie Roncin, la célèbre peintre. Elle a peint des portraits de femmes du vingtième siècle. Admirez les 30 tableaux de cette exposition à partir du 12 février au musée Monet à Paris.",
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": "17.mp3",
+      "habilidad": "Compréhension de l'oral",
+      "instruccion": "Activité 17 Lisez les questions. Écoutez le document puis répondez. Vous écoutez la radio.",
+      "tipo": "Choix multiple",
+      "preguntas": [
+        {
+          "respuesta_correcta": "La santé.",
+          "opciones": [
+            "La santé.",
+            "Le travail.",
+            "Les voyages."
+          ],
+          "pregunta": "1 Quel est le thème du reportage ?"
+        },
+        {
+          "respuesta_correcta": "imageA.png | Personne qui court",
+          "opciones": [
+            "imageA.png | Personne qui court",
+            "imageB.png | Personne qui nage",
+            "imageC.png | Personne qui joue au tennis"
+          ],
+          "pregunta": "2 Quelle activité la journaliste recommande-t-elle ?"
+        },
+        {
+          "respuesta_correcta": "le matin.",
+          "opciones": [
+            "le matin.",
+            "l'après-midi.",
+            "le soir."
+          ],
+          "pregunta": "3 Le bulletin d'information est diffusé..."
+        },
+        {
+          "respuesta_correcta": "Les horaires.",
+          "opciones": [
+            "Les horaires.",
+            "Les promotions.",
+            "La liste des gares."
+          ],
+          "pregunta": "4 Quelles informations pouvez-vous trouver sur Internet ?"
+        },
+        {
+          "respuesta_correcta": "sportifs.",
+          "opciones": [
+            "sportifs.",
+            "de la loterie.",
+            "des élections."
+          ],
+          "pregunta": "5 Le journaliste annonce les résultats..."
+        },
+        {
+          "respuesta_correcta": "imageA.png | Course de chevaux",
+          "opciones": [
+            "imageA.png | Course de chevaux",
+            "imageB.png | Course de voitures",
+            "imageC.png | Course à pied"
+          ],
+          "pregunta": "6 Qu'est-ce qui commence demain ?"
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": null,
+      "transcripcion": "Document 32: À la une aujourd'hui : la santé. Une nouvelle carte pour les frais médicaux est maintenant disponible. Tous les Français vont la recevoir bientôt. Autre nouvelle, la hausse des tarifs des consultations de 12 %, passant de 25 € à 28 €. Document 24: Bonjour à l'approche de l'automne, restez en forme en faisant une promenade de 20 minutes. L'effort physique est très bon pour le moral. Document 26: Radio France, il est 8 h. La grève des transports continue dans toute la France. Au niveau national, 1 train sur 3 circulera. Pour connaître le programme des trains, consultez le site internet de la SNCF, rubrique « grève nationale ». Document 27: Aujourd'hui sur SportRadio, les derniers résultats sportifs. Côté foot, Paris gagne contre Monaco 3 à 1. Au basket-ball, l'équipe de Nanterre a perdu d'un point contre Limoges. Et pour terminer, la saison de courses de chevaux commence demain à 13 h !",
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": "18.mp3",
+      "habilidad": "Compréhension de l'oral",
+      "instruccion": "Activité 18 Lisez les questions. Écoutez le document puis répondez. Vous écoutez la radio.",
+      "tipo": "Choix multiple",
+      "preguntas": [
+        {
+          "respuesta_correcta": "un mois.",
+          "opciones": [
+            "une semaine.",
+            "un mois.",
+            "un an."
+          ],
+          "pregunta": "1 La nouvelle fromagerie ouvre dans environ..."
+        },
+        {
+          "respuesta_correcta": "locaux.",
+          "opciones": [
+            "locaux.",
+            "nationaux.",
+            "internationaux."
+          ],
+          "pregunta": "2 La boutique va proposer des produits..."
+        },
+        {
+          "respuesta_correcta": "imageC.png | Avions",
+          "opciones": [
+            "imageA.png | Camions",
+            "imageB.png | Train à grande vitesse",
+            "imageC.png | Avions"
+          ],
+          "pregunta": "3 Quel transport est concerné par l'annonce ?"
+        },
+        {
+          "respuesta_correcta": "Plus de jours de repos.",
+          "opciones": [
+            "Plus de jours de repos.",
+            "Un meilleur service de santé.",
+            "Une réduction des heures de travail."
+          ],
+          "pregunta": "4 Que veulent les employées ?"
+        },
+        {
+          "respuesta_correcta": "imageC.png | Plats gastronomiques",
+          "opciones": [
+            "imageA.png | Concert",
+            "imageB.png | Cinéma en plein air",
+            "imageC.png | Plats gastronomiques"
+          ],
+          "pregunta": "5 De quel festival parle l'annonce ?"
+        },
+        {
+          "respuesta_correcta": "sur Internet.",
+          "opciones": [
+            "à l'accueil.",
+            "sur Internet.",
+            "par téléphone."
+          ],
+          "pregunta": "6 Vous pouvez acheter vos billets..."
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": null,
+      "transcripcion": "Document 28: Bonjour ! Une nouvelle fromagerie ouvrira dans la petite ville de Sainte Ernestine dans 5 semaines. La boutique vendra uniquement des produits frais de la région et vous accueillera tous les jours de 9 h à 18 h 30, sauf le week-end. Document 29: Bonjour aux infos aujourd'hui : une nouvelle semaine de grève à prévoir chez les hôtesses de l'air. Elles réclament toujours auprès du gouvernement un meilleur salaire et des jours de congés supplémentaires. Le ministère des transports n'a pas encore répondu. Document 30: Ne manquez pas ce week-end le plus grand festival de gastronomie du monde qui aura lieu à Paris du 20 au 22 juillet. Vous pouvez dès à présent réserver vos billets en ligne sur www.festivalculinaire.fr.",
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": "19.mp3",
+      "habilidad": "Compréhension de l'oral",
+      "instruccion": "Activité 19 Lisez les questions. Écoutez le document puis répondez. Vous écoutez la radio.",
+      "tipo": "Choix multiple",
+      "preguntas": [
+        {
+          "respuesta_correcta": "Les adolescents.",
+          "opciones": [
+            "Les enfants.",
+            "Les adolescents.",
+            "Les personnes âgées."
+          ],
+          "pregunta": "1 À quel public est destinée cette radio ?"
+        },
+        {
+          "respuesta_correcta": "écrivain.",
+          "opciones": [
+            "écrivain.",
+            "musicien.",
+            "journaliste."
+          ],
+          "pregunta": "2 Charlie Chaillot est..."
+        },
+        {
+          "respuesta_correcta": "imageB.png | Carte Vitale",
+          "opciones": [
+            "imageA.png | Permis de conduire",
+            "imageB.png | Carte Vitale",
+            "imageC.png | Carte d'identité"
+          ],
+          "pregunta": "3 Quel document les Français vont-ils recevoir ?"
+        },
+        {
+          "respuesta_correcta": "12 %.",
+          "opciones": [
+            "12 %.",
+            "25 %.",
+            "28 %."
+          ],
+          "pregunta": "4 Les tarifs des consultations ont augmenté de..."
+        },
+        {
+          "respuesta_correcta": "du soleil.",
+          "opciones": [
+            "du soleil.",
+            "de la pluie.",
+            "des orages."
+          ],
+          "pregunta": "5 Aujourd'hui, il y aura..."
+        },
+        {
+          "respuesta_correcta": "imageC.png | Parapluie",
+          "opciones": [
+            "imageA.png | Veste",
+            "imageB.png | Lunettes de soleil",
+            "imageC.png | Parapluie"
+          ],
+          "pregunta": "6 Demain, quel objet devrez-vous avoir avec vous ?"
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": null,
+      "transcripcion": "Document 31: Bienvenue sur FunFM, la radio des 12-18 ans. Aujourd'hui, nous recevons Charlie Chaillot qui vient nous présenter son dernier ouvrage qui s'appelle « Toute ma vie » et qui nous raconte ses différents voyages à travers l'Europe. Document 32: À la une aujourd'hui : la santé. Une nouvelle carte pour les frais médicaux est maintenant disponible. Tous les Français vont la recevoir bientôt. Autre nouvelle, la hausse des tarifs des consultations de 12 %, passant de 25 € à 28 €. Document 33: Tout de suite, les prévisions météo. Aujourd'hui, le temps sera magnifique, avec un grand soleil et des températures douces. Mais demain, la pluie arrivera, accompagnée de vents très forts. Il faudra sortir son parapluie !",
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": "20.mp3",
+      "habilidad": "Compréhension de l'oral",
+      "instruccion": "Activité 20 Lisez les questions. Écoutez le document puis répondez. Vous écoutez la radio.",
+      "tipo": "Choix multiple",
+      "preguntas": [
+        {
+          "respuesta_correcta": "le sud.",
+          "opciones": [
+            "le nord.",
+            "le centre.",
+            "le sud."
+          ],
+          "pregunta": "1 Aujourd'hui, en France, il fera plus chaud dans..."
+        },
+        {
+          "respuesta_correcta": "imageA.png | Boire de l'eau",
+          "opciones": [
+            "imageA.png | Boire de l'eau",
+            "imageB.png | Faire du sport",
+            "imageC.png | Nager"
+          ],
+          "pregunta": "2 Que vous conseille le journaliste ?"
+        },
+        {
+          "respuesta_correcta": "imageB.png | Concert",
+          "opciones": [
+            "imageA.png | Exposition d'art",
+            "imageB.png | Concert",
+            "imageC.png | Spectacle de danse"
+          ],
+          "pregunta": "3 Qu'est-ce qui sera organisé ce week-end ?"
+        },
+        {
+          "respuesta_correcta": "À la salle des fêtes.",
+          "opciones": [
+            "À la mairie.",
+            "À la salle des fêtes.",
+            "Dans un commerce local."
+          ],
+          "pregunta": "4 Où a lieu l'événement ?"
+        },
+        {
+          "respuesta_correcta": "aux conditions météorologiques.",
+          "opciones": [
+            "à une panne de voiture.",
+            "aux conditions météorologiques.",
+            "à une grève des chauffeurs routiers."
+          ],
+          "pregunta": "5 Le problème sur la route est dû..."
+        },
+        {
+          "respuesta_correcta": "Prendre une autre route.",
+          "opciones": [
+            "Être patient.",
+            "Faire demi-tour.",
+            "Prendre une autre route."
+          ],
+          "pregunta": "6 Qu'est-ce que le journaliste vous conseille de faire ?"
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": null,
+      "transcripcion": "Document 33: Tout de suite, les prévisions météo. Aujourd'hui, le temps sera magnifique, avec un grand soleil et des températures douces. Mais demain, la pluie arrivera, accompagnée de vents très forts. Il faudra sortir son parapluie ! Document 34: Aujourd'hui journée exceptionnelle pour les fans de rugby! Pour la fête de la musique, le groupe RockNBalles jouera au stade juste avant le match de ce soir. La radio vous offre également un repas pour deux personnes au restaurant de votre choix. Vite, appelez-nous! Document 18: Radio Orléans, il est 7 heures. Aujourd'hui il fait -7°. Attention, beaucoup de neige sur les routes. Ne prenez pas votre voiture aujourd'hui, les routes sont très dangereuses. Dans le centre d'Orléans, aucun bus ne circulera.",
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": "21.mp3",
+      "habilidad": "Compréhension de l'oral",
+      "instruccion": "Activité 21 Lisez les questions. Écoutez le document puis répondez. Vous écoutez la radio.",
+      "tipo": "Choix multiple",
+      "preguntas": [
+        {
+          "respuesta_correcta": "Non spécifié",
+          "opciones": [
+            "d'Asie.",
+            "d'Europe.",
+            "d'Amérique."
+          ],
+          "pregunta": "1 La majorité des visiteurs viennent..."
+        },
+        {
+          "respuesta_correcta": "Non spécifié",
+          "opciones": [
+            "gentils.",
+            "sérieux.",
+            "superficiels."
+          ],
+          "pregunta": "2 Selon les touristes, les Belges sont..."
+        },
+        {
+          "respuesta_correcta": "imageA.png | Télévision",
+          "opciones": [
+            "imageA.png | Télévision",
+            "imageB.png | Téléphone portable",
+            "imageC.png | Ordinateur portable"
+          ],
+          "pregunta": "3 Que pouvez-vous gagner ?"
+        },
+        {
+          "respuesta_correcta": "Un magasin.",
+          "opciones": [
+            "Un magasin.",
+            "Un restaurant.",
+            "Une agence de voyages."
+          ],
+          "pregunta": "4 Qui organise l'événement ?"
+        },
+        {
+          "respuesta_correcta": "imageA.png | Visite de musée",
+          "opciones": [
+            "imageA.png | Visite de musée",
+            "imageB.png | Activité de plein air",
+            "imageC.png | Natation"
+          ],
+          "pregunta": "5 Quelle activité est gratuite ?"
+        },
+        {
+          "respuesta_correcta": "aller à la mairie.",
+          "opciones": [
+            "aller à la mairie.",
+            "écrire à la mairie.",
+            "téléphoner à la mairie."
+          ],
+          "pregunta": "6 Pour vous inscrire, vous devez..."
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": null,
+      "transcripcion": "Contenu non trouvé dans les transcriptions fournies pour les questions 1 et 2. Document 39: Chers fans de Lola, notre émission vous propose de gagner une photo avec autographe de la célèbre chanteuse ! Pour participer, envoyez une vidéo de vous en train de chanter une de vos chansons préférées de Lola ! Document 40: Le musée Vrégin a décidé d'offrir des places gratuites aux moins de 18 ans le dimanche. Les personnes âgées, elles, ont le droit à une réduction de 10 %. Le musée, aussi annonce qu'il sera fermé le vendredi de septembre à décembre.",
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": "22.mp3",
+      "habilidad": "Compréhension de l'oral",
+      "instruccion": "Activité 22 Lisez les questions. Écoutez le document puis répondez. Vous écoutez la radio.",
+      "tipo": "Choix multiple",
+      "preguntas": [
+        {
+          "respuesta_correcta": "le matin.",
+          "opciones": [
+            "le matin.",
+            "l'après-midi.",
+            "le soir."
+          ],
+          "pregunta": "1 Le bulletin d'informations est diffusé..."
+        },
+        {
+          "respuesta_correcta": "Les horaires.",
+          "opciones": [
+            "Les horaires.",
+            "Les promotions.",
+            "La liste des gares."
+          ],
+          "pregunta": "2 Quelle information pouvez-vous trouver sur www.sncf.com ?"
+        },
+        {
+          "respuesta_correcta": "Un athlète.",
+          "opciones": [
+            "Un athlète.",
+            "Un cuisinier.",
+            "Un médecin."
+          ],
+          "pregunta": "3 Qui est l'invité de l'émission ?"
+        },
+        {
+          "respuesta_correcta": "imageB.png | Utiliser un téléphone portable",
+          "opciones": [
+            "imageA.png | Taper sur un ordinateur portable",
+            "imageB.png | Utiliser un téléphone portable",
+            "imageC.png | Écouter au téléphone"
+          ],
+          "pregunta": "4 Que devez-vous faire pour poser une question à l'invité ?"
+        },
+        {
+          "respuesta_correcta": "Le sport.",
+          "opciones": [
+            "Le sport.",
+            "Le théâtre.",
+            "La gastronomie."
+          ],
+          "pregunta": "5 Quel est le thème de l'émission ?"
+        },
+        {
+          "respuesta_correcta": "imageC.png | Repas au restaurant",
+          "opciones": [
+            "imageA.png | Concert",
+            "imageB.png | Fête",
+            "imageC.png | Repas au restaurant"
+          ],
+          "pregunta": "6 Qu'est-ce que vous pouvez gagner ?"
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": null,
+      "transcripcion": "Document 26: Radio France, il est 8 h. La grève des transports continue dans toute la France. Au niveau national, 1 train sur 3 circulera. Pour connaître le programme des trains, consultez le site internet de la SNCF, rubrique « grève nationale ». Document 38: Bienvenue sur Radio Muzik. Nous recevons aujourd'hui le chanteur guyanais Chris Lombrette. Il a donné des concerts en Guyane, en Martinique... 14 concerts en tout en seulement 2 mois ! Il sera en concert chez nous le 7 septembre. Bonjour Chris ! Racontez-nous... Document 34: Aujourd'hui journée exceptionnelle pour les fans de rugby! Pour la fête de la musique, le groupe RockNBalles jouera au stade juste avant le match de ce soir. La radio vous offre également un repas pour deux personnes au restaurant de votre choix. Vite, appelez-nous!",
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": "23.mp3",
+      "habilidad": "Compréhension de l'oral",
+      "instruccion": "Activité 23 Lisez les questions. Écoutez le document puis répondez. Vous écoutez la radio.",
+      "tipo": "Choix multiple",
+      "preguntas": [
+        {
+          "respuesta_correcta": "imageA.png | Plage tropicale",
+          "opciones": [
+            "imageA.png | Plage tropicale",
+            "imageB.png | Montagnes",
+            "imageC.png | Campagne"
+          ],
+          "pregunta": "1 Le site « Voyages + » vous propose des promotions pour aller..."
+        },
+        {
+          "respuesta_correcta": "40%.",
+          "opciones": [
+            "15%.",
+            "20%.",
+            "40%."
+          ],
+          "pregunta": "2 La réduction maximale est de..."
+        },
+        {
+          "respuesta_correcta": "En ligne.",
+          "opciones": [
+            "En ligne.",
+            "Au cinéma.",
+            "À la télévision."
+          ],
+          "pregunta": "3 Où peut-on voir le film ?"
+        },
+        {
+          "respuesta_correcta": "Les loisirs.",
+          "opciones": [
+            "Le travail.",
+            "La famille.",
+            "Les loisirs."
+          ],
+          "pregunta": "4 Quel est le thème du film ?"
+        },
+        {
+          "respuesta_correcta": "Un parapluie.",
+          "opciones": [
+            "Des lunettes de soleil.",
+            "Un pull.",
+            "Un parapluie."
+          ],
+          "pregunta": "5 Que devez-vous prendre avec vous aujourd'hui ?"
+        },
+        {
+          "respuesta_correcta": "imageC.png | Soleil",
+          "opciones": [
+            "imageA.png | Ciel nuageux",
+            "imageB.png | Pluie",
+            "imageC.png | Soleil"
+          ],
+          "pregunta": "6 Quel temps fera-t-il en France mercredi ?"
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": null,
+      "transcripcion": "Document 35: Bienvenue dans notre émission consacrée aux vacances. Aujourd'hui, nous allons vous parler du site internet « Voyages + » qui propose des prix très intéressants pour voyager au bord de la mer! Jusqu'au 20 mai, profitez de réductions jusqu'à moins 40 % ! Document 36: Aujourd'hui, nous recevons Andrée Grondin, réalisatrice qui a décidé de proposer un court film, qui sortira le 2 septembre sur internet sur l'importance d'avoir des activités en dehors du travail comme aller au cinéma, au théâtre, etc. Document 37: Aujourd'hui, il y aura beaucoup de pluie. N'oubliez pas votre parapluie si vous sortez! Le beau temps reviendra mercredi, il fera aussi très chaud, mais ce week-end, le temps sera plutôt nuageux et froid, il faudra sortir les pulls !",
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": "24.mp3",
+      "habilidad": "Compréhension de l'oral",
+      "instruccion": "Activité 24 Lisez les questions. Écoutez le document puis répondez. Vous écoutez la radio.",
+      "tipo": "Choix multiple",
+      "preguntas": [
+        {
+          "respuesta_correcta": "imageB.png | Chanteur/Guitariste",
+          "opciones": [
+            "imageA.png | Batteur",
+            "imageB.png | Chanteur/Guitariste",
+            "imageC.png | Chanteur"
+          ],
+          "pregunta": "1 Quel est le métier de Chris ?"
+        },
+        {
+          "respuesta_correcta": "14.",
+          "opciones": [
+            "2.",
+            "7.",
+            "14."
+          ],
+          "pregunta": "2 Combien de concerts Chris a-t-il fait ?"
+        },
+        {
+          "respuesta_correcta": "imageC.png | Photo dédicacée",
+          "opciones": [
+            "imageA.png | T-shirt Lola",
+            "imageB.png | T-shirt Lola",
+            "imageC.png | Photo dédicacée"
+          ],
+          "pregunta": "3 Qu'est-ce que vous pouvez gagner ?"
+        },
+        {
+          "respuesta_correcta": "une vidéo.",
+          "opciones": [
+            "une vidéo.",
+            "une photo.",
+            "un message."
+          ],
+          "pregunta": "4 Pour participer, vous devez envoyer..."
+        },
+        {
+          "respuesta_correcta": "les enfants.",
+          "opciones": [
+            "les enfants.",
+            "les adolescents.",
+            "les personnes âgées."
+          ],
+          "pregunta": "5 L'entrée est gratuite pour..."
+        },
+        {
+          "respuesta_correcta": "vendredi.",
+          "opciones": [
+            "lundi.",
+            "vendredi.",
+            "dimanche."
+          ],
+          "pregunta": "6 Le musée ferme le..."
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": null,
+      "transcripcion": "Document 38: Bienvenue sur Radio Muzik. Nous recevons aujourd'hui le chanteur guyanais Chris Lombrette. Il a donné des concerts en Guyane, en Martinique... 14 concerts en tout en seulement 2 mois ! Il sera en concert chez nous le 7 septembre. Bonjour Chris ! Racontez-nous... Document 39: Chers fans de Lola, notre émission vous propose de gagner une photo avec autographe de la célèbre chanteuse ! Pour participer, envoyez une vidéo de vous en train de chanter une de vos chansons préférées de Lola ! Document 40: Le musée Vrégin a décidé d'offrir des places gratuites aux moins de 18 ans le dimanche. Les personnes âgées, elles, ont le droit à une réduction de 10 %. Le musée, aussi annonce qu'il sera fermé le vendredi de septembre à décembre.",
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": "25.mp3",
+      "habilidad": "Compréhension de l'oral",
+      "instruccion": "Activité 25 Lisez les questions. Écoutez le document puis répondez. Vous écoutez la radio.",
+      "tipo": "Choix multiple",
+      "preguntas": [
+        {
+          "respuesta_correcta": "Le Royaume-Uni.",
+          "opciones": [
+            "La France.",
+            "L'Espagne.",
+            "Le Royaume-Uni."
+          ],
+          "pregunta": "1 À quel pays d'aujourd'hui correspond Brittania ?"
+        },
+        {
+          "respuesta_correcta": "Une comédie.",
+          "opciones": [
+            "Une comédie.",
+            "Une romance.",
+            "Un documentaire."
+          ],
+          "pregunta": "2 De quel genre de film s'agit-il?"
+        },
+        {
+          "respuesta_correcta": "imageA.png | Concert",
+          "opciones": [
+            "imageA.png | Concert",
+            "imageB.png | Théâtre",
+            "imageC.png | Cinéma"
+          ],
+          "pregunta": "3 De quelle activité parle la journaliste ?"
+        },
+        {
+          "respuesta_correcta": "1 jour.",
+          "opciones": [
+            "1 jour.",
+            "1 semaine.",
+            "1 mois."
+          ],
+          "pregunta": "4 Combien de temps dure l'événement ?"
+        },
+        {
+          "respuesta_correcta": "l'ouverture d'un magasin.",
+          "opciones": [
+            "l'ouverture d'un magasin.",
+            "la fermeture d'un magasin.",
+            "le déménagement d'un magasin."
+          ],
+          "pregunta": "5 L'émission annonce..."
+        },
+        {
+          "respuesta_correcta": "imageA.png | Commode",
+          "opciones": [
+            "imageA.png | Commode",
+            "imageB.png | Chaise",
+            "imageC.png | Machine à laver"
+          ],
+          "pregunta": "6 La promotion concerne quel article ?"
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": null,
+      "transcripcion": "Document 41: Astérix et Obélix sort le 17 octobre en France. Dans ce film, les héros vont aider un village de Britannia, qui correspond au Royaume-Uni aujourd'hui. Ce film plein d'humour et d'action est parfait pour toute la famille ! Document 34: Aujourd'hui journée exceptionnelle pour les fans de rugby! Pour la fête de la musique, le groupe RockNBalles jouera au stade juste avant le match de ce soir. La radio vous offre également un repas pour deux personnes au restaurant de votre choix. Vite, appelez-nous! Document 28: Bonjour ! Une nouvelle fromagerie ouvrira dans la petite ville de Sainte Ernestine dans 5 semaines. La boutique vendra uniquement des produits frais de la région et vous accueillera tous les jours de 9 h à 18 h 30, sauf le week-end.",
+      "campos_formulario": null
+    }
+  ],
+  "tema_CO": "Comprendres une émission de radio"
+}

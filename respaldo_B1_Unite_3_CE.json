@@ -1,0 +1,3170 @@
+{
+  "tema_CO": "Comprendre des émissions de radio Domaine professionnel",
+  "diccionario_unidad": [
+    {
+      "definicion": "Forme conjuguée du verbe \"avoir\" à la troisième personne du singulier du présent de l'indicatif, exprimant la possession, l'existence ou servant d'auxiliaire dans les temps composés.",
+      "tipo_gramatical": "verbe (avoir, 3e pers. sing. présent de l'indicatif)",
+      "ejemplo_uso": "Il a une nouvelle voiture et beaucoup d'expérience.",
+      "palabra": "a",
+      "frecuencia": 26,
+      "lema": "avoir",
+      "sinonimos": [
+        "possède",
+        "détient"
+      ]
+    },
+    {
+      "definicion": "Manque de tact ou de délicatesse dans la manière d'aborder quelqu'un ou une situation; première approche ou contact.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "Au premier abord, la proposition semblait complexe, mais elle s'est avérée simple.",
+      "palabra": "abord",
+      "frecuencia": 1,
+      "lema": "abord",
+      "sinonimos": [
+        "approche",
+        "contact"
+      ]
+    },
+    {
+      "definicion": "Qui est complet, total, sans restriction ni limite; qui ne dépend de rien d'autre et est parfait en son genre.",
+      "tipo_gramatical": "adjectif (f)",
+      "ejemplo_uso": "Elle a une confiance absolue en ses capacités à réussir ce défi.",
+      "palabra": "absolue",
+      "frecuencia": 13,
+      "lema": "absolu",
+      "sinonimos": [
+        "totale",
+        "entière"
+      ]
+    },
+    {
+      "definicion": "Recevoir favorablement quelque chose, consentir à une proposition, ou reconnaître la validité d'une idée ou d'une situation.",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "Il est essentiel d'accepter les critiques constructives pour progresser.",
+      "palabra": "accepter",
+      "frecuencia": 1,
+      "lema": "accepter",
+      "sinonimos": [
+        "admettre",
+        "agréer"
+      ]
+    },
+    {
+      "definicion": "Action d'accompagner, de se joindre à quelqu'un pour l'assister ou le soutenir; soutien ou assistance fourni dans un processus.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "Le projet nécessite un accompagnement personnalisé pour chaque participant afin de garantir son succès.",
+      "palabra": "accompagnement",
+      "frecuencia": 1,
+      "lema": "accompagnement",
+      "sinonimos": [
+        "soutien",
+        "assistance"
+      ]
+    },
+    {
+      "definicion": "Fixer quelque chose à un support par un crochet ou un lien; attirer l'attention de quelqu'un ou retenir son intérêt.",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "N'oubliez pas d'accrocher votre tableau au mur avec précaution.",
+      "palabra": "accrocher",
+      "frecuencia": 1,
+      "lema": "accrocher",
+      "sinonimos": [
+        "suspendre",
+        "fixer"
+      ]
+    },
+    {
+      "definicion": "Parvenir à un lieu, à un état, à une fonction, ou obtenir l'accès à une ressource ou une information.",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "Les étudiants peuvent accéder à la bibliothèque numérique 24h/24 via leur portail.",
+      "palabra": "accéder",
+      "frecuencia": 1,
+      "lema": "accéder",
+      "sinonimos": [
+        "atteindre",
+        "parvenir"
+      ]
+    },
+    {
+      "definicion": "Augmenter la vitesse de quelque chose ou le rythme d'un processus, le rendre plus rapide.",
+      "tipo_gramatical": "verbe (3e pers. sing. présent de l'indicatif ou impératif)",
+      "ejemplo_uso": "Le conducteur accélère pour dépasser le camion en toute sécurité.",
+      "palabra": "accélère",
+      "frecuencia": 1,
+      "lema": "accélérer",
+      "sinonimos": [
+        "hâte",
+        "presse"
+      ]
+    },
+    {
+      "definicion": "Qui a été rendu plus rapide, dont la vitesse ou le rythme a été augmenté de manière significative.",
+      "tipo_gramatical": "adjectif (f)",
+      "ejemplo_uso": "La croissance économique est en phase accélérée, stimulant l'emploi.",
+      "palabra": "accélérée",
+      "frecuencia": 1,
+      "lema": "accéléré",
+      "sinonimos": [
+        "rapide",
+        "précipitée"
+      ]
+    },
+    {
+      "definicion": "Action d'acquérir un bien ou un service en échange d'une somme d'argent; le bien ou le service ainsi acquis.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "L'achat de produits locaux soutient l'économie régionale et réduit l'empreinte carbone.",
+      "palabra": "achat",
+      "frecuencia": 1,
+      "lema": "achat",
+      "sinonimos": [
+        "acquisition",
+        "emplette"
+      ]
+    },
+    {
+      "definicion": "Forme du verbe \"acheter\" au participe présent, indiquant une action en cours ou une manière d'agir simultanée.",
+      "tipo_gramatical": "verbe (participe présent)",
+      "ejemplo_uso": "En achetant en gros, les entreprises réalisent souvent des économies substantielles.",
+      "palabra": "achetant",
+      "frecuencia": 1,
+      "lema": "acheter",
+      "sinonimos": [
+        "acquérant",
+        "se procurant"
+      ]
+    },
+    {
+      "definicion": "Acquérir quelque chose en échange d'une somme d'argent, en devenir propriétaire.",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "Je dois acheter du pain frais pour le dîner ce soir.",
+      "palabra": "acheter",
+      "frecuencia": 1,
+      "lema": "acheter",
+      "sinonimos": [
+        "acquérir",
+        "se procurer"
+      ]
+    },
+    {
+      "definicion": "Forme conjuguée du verbe \"acheter\" à la première ou troisième personne du singulier du présent de l'indicatif ou du subjonctif.",
+      "tipo_gramatical": "verbe (1re/3e pers. sing. présent de l'indicatif ou subjonctif)",
+      "ejemplo_uso": "Il achète toujours des fruits et légumes de saison au marché.",
+      "palabra": "achète",
+      "frecuencia": 2,
+      "lema": "acheter",
+      "sinonimos": [
+        "acquiert",
+        "se procure"
+      ]
+    },
+    {
+      "definicion": "Obtenir quelque chose par un effort, un travail, un apprentissage ou par un achat, en devenir possesseur.",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "Il souhaite acquérir de nouvelles compétences professionnelles pour évoluer dans sa carrière.",
+      "palabra": "acquérir",
+      "frecuencia": 1,
+      "lema": "acquérir",
+      "sinonimos": [
+        "obtenir",
+        "acheter"
+      ]
+    },
+    {
+      "definicion": "Fait d'agir, de faire quelque chose; mouvement, activité; ou part de capital d'une entreprise donnant droit à une partie des bénéfices.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "Son action a eu un impact positif et durable sur la communauté locale.",
+      "palabra": "action",
+      "frecuencia": 2,
+      "lema": "action",
+      "sinonimos": [
+        "acte",
+        "initiative"
+      ]
+    },
+    {
+      "definicion": "État de ce qui est actif; ensemble des opérations ou des travaux effectués par une personne ou une entité dans un but précis.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "La lecture est une activité relaxante qui stimule l'imagination.",
+      "palabra": "activité",
+      "frecuencia": 17,
+      "lema": "activité",
+      "sinonimos": [
+        "occupation",
+        "besogne"
+      ]
+    },
+    {
+      "definicion": "Pluriel du nom \"activité\", désignant plusieurs occupations, travaux ou domaines d'action distincts.",
+      "tipo_gramatical": "nom (f, pluriel)",
+      "ejemplo_uso": "Les activités parascolaires enrichissent le parcours des élèves et favorisent leur développement.",
+      "palabra": "activités",
+      "frecuencia": 5,
+      "lema": "activité",
+      "sinonimos": [
+        "occupations",
+        "tâches"
+      ]
+    },
+    {
+      "definicion": "Au moment présent, à l'heure actuelle; en ce moment précis.",
+      "tipo_gramatical": "adverbe",
+      "ejemplo_uso": "Actuellement, le projet est en phase de test avant son lancement officiel.",
+      "palabra": "actuellement",
+      "frecuencia": 1,
+      "lema": "actuellement",
+      "sinonimos": [
+        "maintenant",
+        "présentement"
+      ]
+    },
+    {
+      "definicion": "Qui convient parfaitement à une situation, à un usage ou à une personne, en étant ajusté à ses besoins ou contraintes.",
+      "tipo_gramatical": "adjectif (m)",
+      "ejemplo_uso": "Ce programme est adapté aux besoins spécifiques des débutants en informatique.",
+      "palabra": "adapté",
+      "frecuencia": 3,
+      "lema": "adapté",
+      "sinonimos": [
+        "approprié",
+        "adéquat"
+      ]
+    },
+    {
+      "definicion": "Pluriel du nom \"adolescent\", désignant des jeunes personnes en période de transition entre l'enfance et l'âge adulte, caractérisée par des changements physiques et psychologiques.",
+      "tipo_gramatical": "nom (m, pluriel)",
+      "ejemplo_uso": "Les adolescents ont besoin de soutien et de compréhension pour développer leur identité.",
+      "palabra": "adolescents",
+      "frecuencia": 2,
+      "lema": "adolescent",
+      "sinonimos": [
+        "jeunes",
+        "pubères"
+      ]
+    },
+    {
+      "definicion": "Prendre légalement pour enfant celui qui ne l'est pas naturellement; faire sien, choisir une attitude, une opinion ou une solution.",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "Le conseil municipal va adopter de nouvelles mesures de sécurité pour la ville.",
+      "palabra": "adopter",
+      "frecuencia": 1,
+      "lema": "adopter",
+      "sinonimos": [
+        "choisir",
+        "prendre"
+      ]
+    },
+    {
+      "definicion": "Forme conjuguée du verbe \"adopter\" à la deuxième personne du pluriel, souvent utilisée pour donner un conseil, un ordre ou une suggestion.",
+      "tipo_gramatical": "verbe (2e pers. plur. impératif ou présent de l'indicatif/subjonctif)",
+      "ejemplo_uso": "Adoptez un mode de vie plus sain pour améliorer votre bien-être général.",
+      "palabra": "adoptez",
+      "frecuencia": 1,
+      "lema": "adopter",
+      "sinonimos": [
+        "choisissez",
+        "prenez"
+      ]
+    },
+    {
+      "definicion": "Personne ayant atteint la maturité physique et mentale; qui est parvenu à son plein développement et est responsable de ses actes.",
+      "tipo_gramatical": "nom (m/f) ou adjectif",
+      "ejemplo_uso": "Chaque adulte a le droit de voter et de participer à la vie démocratique.",
+      "palabra": "adulte",
+      "frecuencia": 1,
+      "lema": "adulte",
+      "sinonimos": [
+        "majeur",
+        "mûr"
+      ]
+    },
+    {
+      "definicion": "Pluriel du nom ou de l'adjectif \"adulte\", désignant plusieurs personnes ayant atteint la maturité physique et mentale.",
+      "tipo_gramatical": "nom (m/f, pluriel) ou adjectif (pluriel)",
+      "ejemplo_uso": "Les adultes sont responsables de l'éducation et de la protection des enfants.",
+      "palabra": "adultes",
+      "frecuencia": 4,
+      "lema": "adulte",
+      "sinonimos": [
+        "majeurs",
+        "personnes mûres"
+      ]
+    },
+    {
+      "definicion": "Pluriel du nom \"adversaire\", désignant des personnes qui s'opposent à d'autres dans un combat, une discussion, une compétition ou un conflit.",
+      "tipo_gramatical": "nom (m/f, pluriel)",
+      "ejemplo_uso": "Les deux équipes se sont affrontées avec respect, malgré leur statut d'adversaires.",
+      "palabra": "adversaires",
+      "frecuencia": 1,
+      "lema": "adversaire",
+      "sinonimos": [
+        "opposants",
+        "concurrents"
+      ]
+    },
+    {
+      "definicion": "Qui manifeste de l'affection, de la tendresse; qui est plein de douceur, de gentillesse et de chaleur humaine.",
+      "tipo_gramatical": "adjectif (f)",
+      "ejemplo_uso": "Elle est une personne très affectueuse avec ses proches et ses animaux de compagnie.",
+      "palabra": "affectueuse",
+      "frecuencia": 1,
+      "lema": "affectueux",
+      "sinonimos": [
+        "tendre",
+        "câline"
+      ]
+    },
+    {
+      "definicion": "Grand avis imprimé ou manuscrit destiné à être placardé pour informer ou faire de la publicité; ou forme conjuguée du verbe \"afficher\".",
+      "tipo_gramatical": "nom (f) ou verbe (1re/3e pers. sing. présent de l'indicatif/subjonctif)",
+      "ejemplo_uso": "L'affiche du concert est très colorée et attire l'attention des passants.",
+      "palabra": "affiche",
+      "frecuencia": 1,
+      "lema": "affiche",
+      "sinonimos": [
+        "poster",
+        "placard"
+      ]
+    },
+    {
+      "definicion": "Forme conjuguée du verbe \"afficher\" à la deuxième personne du pluriel, signifiant montrer, exposer publiquement ou rendre visible.",
+      "tipo_gramatical": "verbe (2e pers. plur. impératif ou présent de l'indicatif/subjonctif)",
+      "ejemplo_uso": "Affichez vos résultats sur le tableau d'honneur pour inspirer les autres.",
+      "palabra": "affichez",
+      "frecuencia": 1,
+      "lema": "afficher",
+      "sinonimos": [
+        "exposez",
+        "montrez"
+      ]
+    },
+    {
+      "definicion": "Forme conjuguée du verbe \"affirmer\" à la troisième personne du pluriel, signifiant déclarer avec assurance, soutenir une opinion ou une vérité.",
+      "tipo_gramatical": "verbe (3e pers. plur. présent de l'indicatif)",
+      "ejemplo_uso": "Les experts affirment que le climat change rapidement et nécessite une action urgente.",
+      "palabra": "affirment",
+      "frecuencia": 2,
+      "lema": "affirmer",
+      "sinonimos": [
+        "déclarent",
+        "soutiennent"
+      ]
+    },
+    {
+      "definicion": "Forme conjuguée du verbe \"affirmer\" à la deuxième personne du pluriel, utilisée pour donner un ordre ou exprimer une déclaration avec conviction.",
+      "tipo_gramatical": "verbe (2e pers. plur. impératif ou présent de l'indicatif/subjonctif)",
+      "ejemplo_uso": "Affirmez vos convictions avec courage et ne craignez pas le débat.",
+      "palabra": "affirmez",
+      "frecuencia": 1,
+      "lema": "affirmer",
+      "sinonimos": [
+        "déclarez",
+        "soutenez"
+      ]
+    },
+    {
+      "definicion": "Faire quelque chose, exercer une action, se comporter d'une certaine manière ou produire un effet.",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "Il est temps d'agir concrètement pour protéger l'environnement et ses ressources.",
+      "palabra": "agir",
+      "frecuencia": 1,
+      "lema": "agir",
+      "sinonimos": [
+        "faire",
+        "opérer"
+      ]
+    },
+    {
+      "definicion": "Forme conjuguée du verbe \"agir\" à la troisième personne du singulier du présent de l'indicatif, indiquant une action en cours ou un effet produit.",
+      "tipo_gramatical": "verbe (3e pers. sing. présent de l'indicatif)",
+      "ejemplo_uso": "Le médicament agit rapidement contre la douleur, apportant un soulagement immédiat.",
+      "palabra": "agit",
+      "frecuencia": 1,
+      "lema": "agir",
+      "sinonimos": [
+        "fait",
+        "opère"
+      ]
+    },
+    {
+      "definicion": "Soutien, assistance apportée à quelqu'un pour l'aider à surmonter une difficulté; ou forme conjuguée du verbe \"aider\".",
+      "tipo_gramatical": "nom (f) ou verbe (1re/3e pers. sing. présent de l'indicatif/subjonctif)",
+      "ejemplo_uso": "Elle a besoin d'aide pour déménager ses affaires lourdes.",
+      "palabra": "aide",
+      "frecuencia": 8,
+      "lema": "aide",
+      "sinonimos": [
+        "assistance",
+        "soutien"
+      ]
+    },
+    {
+      "definicion": "Apporter son soutien, son assistance à quelqu'un ou à quelque chose pour faciliter une tâche ou résoudre un problème.",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "Nous devons aider les personnes dans le besoin et les plus vulnérables.",
+      "palabra": "aider",
+      "frecuencia": 11,
+      "lema": "aider",
+      "sinonimos": [
+        "assister",
+        "secourir"
+      ]
+    },
+    {
+      "definicion": "Forme conjuguée du verbe \"aider\" à la troisième personne du singulier du conditionnel présent, exprimant une hypothèse, une possibilité ou un souhait.",
+      "tipo_gramatical": "verbe (3e pers. sing. conditionnel présent)",
+      "ejemplo_uso": "Un peu de repos supplémentaire lui aiderait grandement à récupérer de sa fatigue.",
+      "palabra": "aiderait",
+      "frecuencia": 1,
+      "lema": "aider",
+      "sinonimos": [
+        "assisterait",
+        "secourrait"
+      ]
+    },
+    {
+      "definicion": "Dans un autre lieu, en un autre endroit; indique un déplacement ou une localisation différente.",
+      "tipo_gramatical": "adverbe",
+      "ejemplo_uso": "Il est parti vivre ailleurs pour changer d'air et découvrir de nouvelles cultures.",
+      "palabra": "ailleurs",
+      "frecuencia": 4,
+      "lema": "ailleurs",
+      "sinonimos": [
+        "autre part",
+        "autre endroit"
+      ]
+    },
+    {
+      "definicion": "Forme conjuguée du verbe \"aimer\" à la troisième personne du pluriel du présent de l'indicatif, exprimant l'affection, le goût ou le plaisir.",
+      "tipo_gramatical": "verbe (3e pers. plur. présent de l'indicatif)",
+      "ejemplo_uso": "Les enfants aiment jouer dehors quand il fait beau et ensoleillé.",
+      "palabra": "aiment",
+      "frecuencia": 1,
+      "lema": "aimer",
+      "sinonimos": [
+        "adorent",
+        "apprécient"
+      ]
+    },
+    {
+      "definicion": "Éprouver de l'affection, de l'amour pour quelqu'un ou quelque chose; apprécier, trouver du plaisir à une activité ou une personne.",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "J'aime lire des romans policiers pour me détendre le soir.",
+      "palabra": "aimer",
+      "frecuencia": 2,
+      "lema": "aimer",
+      "sinonimos": [
+        "adorer",
+        "apprécier"
+      ]
+    },
+    {
+      "definicion": "Forme du verbe \"aimer\" au participe passé, ou adjectif qualifiant ce qui est l'objet d'affection, d'estime ou de préférence.",
+      "tipo_gramatical": "verbe (participe passé) ou adjectif (m)",
+      "ejemplo_uso": "Ce livre a été très aimé par le public et a remporté plusieurs prix littéraires.",
+      "palabra": "aimé",
+      "frecuencia": 1,
+      "lema": "aimer",
+      "sinonimos": [
+        "apprécié",
+        "chéri"
+      ]
+    },
+    {
+      "definicion": "De cette manière, de cette façon; par conséquent, en conséquence de ce qui précède.",
+      "tipo_gramatical": "adverbe",
+      "ejemplo_uso": "Il a travaillé dur toute l'année, ainsi il a réussi son examen avec brio.",
+      "palabra": "ainsi",
+      "frecuencia": 4,
+      "lema": "ainsi",
+      "sinonimos": [
+        "de cette façon",
+        "par conséquent"
+      ]
+    },
+    {
+      "definicion": "Forme conjuguée du verbe \"ajouter\" à la première ou troisième personne du singulier du présent de l'indicatif ou du subjonctif, signifiant mettre en plus, augmenter.",
+      "tipo_gramatical": "verbe (1re/3e pers. sing. présent de l'indicatif/subjonctif)",
+      "ejemplo_uso": "Il ajoute du sucre à son café pour adoucir l'amertume.",
+      "palabra": "ajoute",
+      "frecuencia": 2,
+      "lema": "ajouter",
+      "sinonimos": [
+        "insère",
+        "complète"
+      ]
+    },
+    {
+      "definicion": "Qui concerne l'alimentation, les aliments; qui sert à nourrir ou est relatif à la nutrition.",
+      "tipo_gramatical": "adjectif (m/f)",
+      "ejemplo_uso": "La sécurité alimentaire est une préoccupation mondiale majeure pour les populations.",
+      "palabra": "alimentaire",
+      "frecuencia": 8,
+      "lema": "alimentaire",
+      "sinonimos": [
+        "nutritif",
+        "comestible"
+      ]
+    },
+    {
+      "definicion": "Action de s'alimenter, de se nourrir; ensemble des aliments consommés par un être vivant; ou système d'approvisionnement en énergie.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "Une alimentation équilibrée est essentielle pour maintenir une bonne santé et vitalité.",
+      "palabra": "alimentation",
+      "frecuencia": 1,
+      "lema": "alimentation",
+      "sinonimos": [
+        "nourriture",
+        "régime"
+      ]
+    },
+    {
+      "definicion": "Pluriel du nom \"aliment\", désignant des substances que l'on mange ou boit pour se nourrir et maintenir les fonctions vitales.",
+      "tipo_gramatical": "nom (m, pluriel)",
+      "ejemplo_uso": "Il est important de varier les aliments pour avoir une alimentation équilibrée et diversifiée.",
+      "palabra": "aliments",
+      "frecuencia": 1,
+      "lema": "aliment",
+      "sinonimos": [
+        "nourritures",
+        "denrées"
+      ]
+    },
+    {
+      "definicion": "À ce moment-là, à cette époque; dans ce cas, par conséquent, en conséquence.",
+      "tipo_gramatical": "adverbe",
+      "ejemplo_uso": "Il a plu toute la journée, alors nous sommes restés à l'intérieur.",
+      "palabra": "alors",
+      "frecuencia": 1,
+      "lema": "alors",
+      "sinonimos": [
+        "ensuite",
+        "donc"
+      ]
+    },
+    {
+      "definicion": "Succession régulière de deux choses différentes; système d'études combinant périodes de formation théorique et pratique en entreprise.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "L'alternance est un excellent moyen d'acquérir de l'expérience professionnelle tout en étudiant.",
+      "palabra": "alternance",
+      "frecuencia": 1,
+      "lema": "alternance",
+      "sinonimos": [
+        "succession",
+        "rotation"
+      ]
+    },
+    {
+      "definicion": "Pluriel de l'adjectif \"alternatif\", désignant des options ou des méthodes qui offrent un choix différent des solutions habituelles ou conventionnelles.",
+      "tipo_gramatical": "adjectif (m, pluriel)",
+      "ejemplo_uso": "Nous explorons des modes de transport alternatifs pour réduire notre empreinte carbone.",
+      "palabra": "alternatifs",
+      "frecuencia": 2,
+      "lema": "alternatif",
+      "sinonimos": [
+        "différents",
+        "autres"
+      ]
+    },
+    {
+      "definicion": "Choix entre deux ou plusieurs possibilités; ou qui offre un choix différent, une autre option.",
+      "tipo_gramatical": "nom (f) ou adjectif (f)",
+      "ejemplo_uso": "Face à ce dilemme, il n'y a pas d'alternative simple.",
+      "palabra": "alternative",
+      "frecuencia": 1,
+      "lema": "alternative",
+      "sinonimos": [
+        "option",
+        "solution"
+      ]
+    },
+    {
+      "definicion": "Personne qui aime une activité sans en faire sa profession, qui la pratique par plaisir et non par obligation.",
+      "tipo_gramatical": "nom (m/f) ou adjectif",
+      "ejemplo_uso": "C'est un photographe amateur très talentueux, ses clichés sont magnifiques.",
+      "palabra": "amateur",
+      "frecuencia": 1,
+      "lema": "amateur",
+      "sinonimos": [
+        "passionné",
+        "non-professionnel"
+      ]
+    },
+    {
+      "definicion": "Atmosphère générale d'un lieu, d'un groupe, ou d'une situation; ensemble des éléments qui créent un climat psychologique ou sensoriel.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "L'ambiance de la fête était très agréable et conviviale, tout le monde s'amusait.",
+      "palabra": "ambiance",
+      "frecuencia": 1,
+      "lema": "ambiance",
+      "sinonimos": [
+        "atmosphère",
+        "climat"
+      ]
+    },
+    {
+      "definicion": "Pluriel du nom \"ami\", désignant des personnes liées par l'amitié, la confiance et l'affection mutuelle.",
+      "tipo_gramatical": "nom (m, pluriel)",
+      "ejemplo_uso": "J'ai passé le week-end avec mes amis à la campagne, c'était très reposant.",
+      "palabra": "amis",
+      "frecuencia": 2,
+      "lema": "ami",
+      "sinonimos": [
+        "copains",
+        "camarades"
+      ]
+    },
+    {
+      "definicion": "Sentiment intense d'affection et d'attachement envers quelqu'un ou quelque chose, souvent accompagné d'un désir de bienveillance et de partage.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "L'amour est un sentiment puissant qui peut transformer des vies.",
+      "palabra": "amour",
+      "frecuencia": 1,
+      "lema": "amour",
+      "sinonimos": [
+        "affection",
+        "tendresse"
+      ]
+    },
+    {
+      "definicion": "Forme du verbe \"améliorer\" au participe présent, indiquant une action en cours de rendre meilleur, de perfectionner ou d'optimiser.",
+      "tipo_gramatical": "verbe (participe présent)",
+      "ejemplo_uso": "En améliorant constamment nos services, nous fidélisons nos clients et augmentons leur satisfaction.",
+      "palabra": "améliorant",
+      "frecuencia": 1,
+      "lema": "améliorer",
+      "sinonimos": [
+        "perfectionnant",
+        "optimisant"
+      ]
+    },
+    {
+      "definicion": "Action de rendre meilleur, de perfectionner; résultat de cette action, se traduisant par un progrès ou un gain de qualité.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "Nous constatons une nette amélioration de la situation économique du pays.",
+      "palabra": "amélioration",
+      "frecuencia": 2,
+      "lema": "amélioration",
+      "sinonimos": [
+        "perfectionnement",
+        "progrès"
+      ]
+    },
+    {
+      "definicion": "Forme conjuguée du verbe \"améliorer\" à la première ou troisième personne du singulier du présent de l'indicatif ou du subjonctif.",
+      "tipo_gramatical": "verbe (1re/3e pers. sing. présent de l'indicatif/subjonctif)",
+      "ejemplo_uso": "Ce nouveau logiciel améliore considérablement notre productivité au quotidien.",
+      "palabra": "améliore",
+      "frecuencia": 2,
+      "lema": "améliorer",
+      "sinonimos": [
+        "perfectionne",
+        "optimise"
+      ]
+    },
+    {
+      "definicion": "Rendre quelque chose meilleur, plus performant, plus agréable ou de meilleure qualité.",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "Il faut améliorer la qualité de l'air en ville pour la santé des habitants.",
+      "palabra": "améliorer",
+      "frecuencia": 8,
+      "lema": "améliorer",
+      "sinonimos": [
+        "perfectionner",
+        "optimiser"
+      ]
+    },
+    {
+      "definicion": "Disposer, organiser un espace ou un lieu pour un usage spécifique, en l'adaptant aux besoins et aux fonctions.",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "Nous allons aménager le jardin pour l'été afin de créer un espace de détente.",
+      "palabra": "aménager",
+      "frecuencia": 1,
+      "lema": "aménager",
+      "sinonimos": [
+        "organiser",
+        "agencer"
+      ]
+    },
+    {
+      "definicion": "Forme conjuguée du verbe \"aménager\" à la deuxième personne du pluriel, souvent utilisée pour donner un conseil ou un ordre.",
+      "tipo_gramatical": "verbe (2e pers. plur. impératif ou présent de l'indicatif/subjonctif)",
+      "ejemplo_uso": "Aménagez votre espace de travail pour favoriser la concentration et l'efficacité.",
+      "palabra": "aménagez",
+      "frecuencia": 1,
+      "lema": "aménager",
+      "sinonimos": [
+        "organisez",
+        "agencez"
+      ]
+    },
+    {
+      "definicion": "Continent ou ensemble de continents comprenant l'Amérique du Nord, l'Amérique centrale et l'Amérique du Sud, caractérisé par une grande diversité géographique et culturelle.",
+      "tipo_gramatical": "nom propre (f)",
+      "ejemplo_uso": "L'Amérique est un continent vaste et diversifié, riche en histoire et en paysages.",
+      "palabra": "amérique",
+      "frecuencia": 1,
+      "lema": "Amérique",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Examiner en détail les différentes parties d'un tout pour en comprendre la nature, les relations et le fonctionnement, en vue d'une interprétation.",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "Il est essentiel d'analyser les données avant de prendre une décision stratégique.",
+      "palabra": "analyser",
+      "frecuencia": 1,
+      "lema": "analyser",
+      "sinonimos": [
+        "étudier",
+        "décortiquer"
+      ]
+    },
+    {
+      "definicion": "Pluriel de l'adjectif ou du nom \"ancien\", désignant ce qui est vieux, qui a existé auparavant, ou des personnes qui ont occupé une fonction ou un lieu dans le passé.",
+      "tipo_gramatical": "adjectif (m, pluriel) ou nom (m, pluriel)",
+      "ejemplo_uso": "Les anciens élèves se sont retrouvés pour une réunion annuelle pleine de nostalgie.",
+      "palabra": "anciens",
+      "frecuencia": 1,
+      "lema": "ancien",
+      "sinonimos": [
+        "vieux",
+        "passés"
+      ]
+    },
+    {
+      "definicion": "Ville située dans l'ouest de la France, préfecture du département de Maine-et-Loire, connue pour son patrimoine historique et sa douceur de vivre.",
+      "tipo_gramatical": "nom propre (f)",
+      "ejemplo_uso": "Angers est réputée pour son château médiéval et sa tapisserie de l'Apocalypse.",
+      "palabra": "angers",
+      "frecuencia": 3,
+      "lema": "Angers",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Qui est relatif à l'Angleterre, à sa langue, à sa culture; ou la langue germanique parlée en Angleterre et dans de nombreux pays du monde.",
+      "tipo_gramatical": "adjectif (m) ou nom (m)",
+      "ejemplo_uso": "Il parle couramment l'anglais et l'utilise quotidiennement dans son travail.",
+      "palabra": "anglais",
+      "frecuencia": 1,
+      "lema": "anglais",
+      "sinonimos": [
+        "britannique",
+        "langue anglaise"
+      ]
+    },
+    {
+      "definicion": "Période de douze mois, correspondant à une révolution de la Terre autour du Soleil, ou à une période de temps déterminée.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "Cette année, nous voyagerons en Asie pour découvrir de nouvelles cultures.",
+      "palabra": "année",
+      "frecuencia": 1,
+      "lema": "année",
+      "sinonimos": [
+        "an",
+        "exercice"
+      ]
+    },
+    {
+      "definicion": "Pluriel du nom \"année\", désignant plusieurs périodes de douze mois ou des périodes de temps prolongées.",
+      "tipo_gramatical": "nom (f, pluriel)",
+      "ejemplo_uso": "J'ai vécu de nombreuses années à l'étranger avant de revenir dans mon pays natal.",
+      "palabra": "années",
+      "frecuencia": 3,
+      "lema": "année",
+      "sinonimos": [
+        "ans",
+        "périodes"
+      ]
+    },
+    {
+      "definicion": "Pluriel du nom \"an\", utilisé pour exprimer l'âge ou la durée en nombre d'années.",
+      "tipo_gramatical": "nom (m, pluriel)",
+      "ejemplo_uso": "Mon frère a vingt ans et étudie à l'université.",
+      "palabra": "ans",
+      "frecuencia": 13,
+      "lema": "an",
+      "sinonimos": [
+        "années",
+        "lustres"
+      ]
+    },
+    {
+      "definicion": "Prévoir et agir en conséquence avant qu'un événement ne se produise; devancer une situation ou une action.",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "Il est important d'anticiper les problèmes potentiels pour mieux les gérer.",
+      "palabra": "anticiper",
+      "frecuencia": 1,
+      "lema": "anticiper",
+      "sinonimos": [
+        "prévoir",
+        "devancer"
+      ]
+    },
+    {
+      "definicion": "Forme conjuguée du verbe \"appartenir\" à la troisième personne du singulier du présent de l'indicatif, signifiant être la propriété de, faire partie de ou être lié à.",
+      "tipo_gramatical": "verbe (3e pers. sing. présent de l'indicatif)",
+      "ejemplo_uso": "Ce livre appartient à la bibliothèque municipale et doit être rendu à temps.",
+      "palabra": "appartient",
+      "frecuencia": 2,
+      "lema": "appartenir",
+      "sinonimos": [
+        "est à",
+        "fait partie de"
+      ]
+    },
+    {
+      "definicion": "Action d'appliquer; mise en œuvre d'une règle ou d'une méthode; programme informatique conçu pour une tâche spécifique.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "J'utilise une application mobile pour apprendre les langues étrangères chaque jour.",
+      "palabra": "application",
+      "frecuencia": 12,
+      "lema": "application",
+      "sinonimos": [
+        "mise en œuvre",
+        "logiciel"
+      ]
+    },
+    {
+      "definicion": "Forme conjuguée du verbe \"apporter\" à la première ou troisième personne du singulier du présent de l'indicatif ou du subjonctif, signifiant porter vers, procurer ou causer.",
+      "tipo_gramatical": "verbe (1re/3e pers. sing. présent de l'indicatif/subjonctif)",
+      "ejemplo_uso": "Ce projet apporte de nouvelles opportunités de développement pour la région.",
+      "palabra": "apporte",
+      "frecuencia": 1,
+      "lema": "apporter",
+      "sinonimos": [
+        "procure",
+        "amène"
+      ]
+    },
+    {
+      "definicion": "Pluriel du nom \"apport\", désignant ce qui est apporté, contribution, ou éléments nutritifs essentiels à l'organisme.",
+      "tipo_gramatical": "nom (m, pluriel)",
+      "ejemplo_uso": "Les apports nutritionnels sont essentiels pour une bonne santé et un bon fonctionnement du corps.",
+      "palabra": "apports",
+      "frecuencia": 1,
+      "lema": "apport",
+      "sinonimos": [
+        "contributions",
+        "éléments"
+      ]
+    },
+    {
+      "definicion": "Acquérir des connaissances, des compétences par l'étude, l'expérience, l'enseignement ou l'observation.",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "J'aime apprendre de nouvelles choses chaque jour pour élargir mes horizons.",
+      "palabra": "apprendre",
+      "frecuencia": 5,
+      "lema": "apprendre",
+      "sinonimos": [
+        "étudier",
+        "s'instruire"
+      ]
+    },
+    {
+      "definicion": "Forme conjuguée du verbe \"apprendre\" à la troisième personne du pluriel du présent de l'indicatif.",
+      "tipo_gramatical": "verbe (3e pers. plur. présent de l'indicatif)",
+      "ejemplo_uso": "Les enfants apprennent vite de leurs erreurs et s'adaptent rapidement.",
+      "palabra": "apprennent",
+      "frecuencia": 1,
+      "lema": "apprendre",
+      "sinonimos": [
+        "étudient",
+        "s'instruisent"
+      ]
+    },
+    {
+      "definicion": "Action d'apprendre un métier, une technique ou une connaissance; période durant laquelle on acquiert des compétences.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "L'apprentissage d'une langue étrangère demande de la persévérance et de la pratique régulière.",
+      "palabra": "apprentissage",
+      "frecuencia": 6,
+      "lema": "apprentissage",
+      "sinonimos": [
+        "formation",
+        "étude"
+      ]
+    },
+    {
+      "definicion": "Action de s'approcher, de se rapprocher; manière d'aborder un problème ou une situation; ou forme conjuguée du verbe \"approcher\".",
+      "tipo_gramatical": "nom (f) ou verbe (1re/3e pers. sing. présent de l'indicatif/subjonctif)",
+      "ejemplo_uso": "Son approche du problème est très innovante et a conduit à des solutions efficaces.",
+      "palabra": "approche",
+      "frecuencia": 1,
+      "lema": "approche",
+      "sinonimos": [
+        "méthode",
+        "tactique"
+      ]
+    },
+    {
+      "definicion": "Qui convient parfaitement à une situation, à un usage ou à une personne, étant juste et pertinent.",
+      "tipo_gramatical": "adjectif (m)",
+      "ejemplo_uso": "Il a donné une réponse appropriée à la question, démontrant sa compréhension.",
+      "palabra": "approprié",
+      "frecuencia": 1,
+      "lema": "approprié",
+      "sinonimos": [
+        "adéquat",
+        "pertinent"
+      ]
+    },
+    {
+      "definicion": "Forme du verbe \"apprécier\" au participe passé, ou adjectif qualifiant ce qui est estimé, aimé ou dont la valeur est reconnue.",
+      "tipo_gramatical": "verbe (participe passé) ou adjectif (m)",
+      "ejemplo_uso": "Son travail est très apprécié par ses collègues et sa hiérarchie.",
+      "palabra": "apprécié",
+      "frecuencia": 1,
+      "lema": "apprécier",
+      "sinonimos": [
+        "estimé",
+        "aimé"
+      ]
+    },
+    {
+      "definicion": "Acronyme dont la signification dépend du contexte spécifique, souvent utilisé pour désigner une entité, un programme ou un concept technique ou administratif (ex: Assurance de la Qualité des Produits).",
+      "tipo_gramatical": "sigle (m)",
+      "ejemplo_uso": "Le service APQ est responsable du contrôle qualité des nouveaux produits avant leur commercialisation.",
+      "palabra": "apq",
+      "frecuencia": 7,
+      "lema": "APQ",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Indique la postériorité dans le temps ou l'espace; à la suite de, derrière.",
+      "tipo_gramatical": "préposition ou adverbe",
+      "ejemplo_uso": "Après le travail, je vais faire du sport pour me détendre.",
+      "palabra": "après",
+      "frecuencia": 17,
+      "lema": "après",
+      "sinonimos": [
+        "suite à",
+        "ensuite"
+      ]
+    },
+    {
+      "definicion": "Parvenir à un lieu, à un point; se produire, survenir, advenir.",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "Nous espérons arriver à l'heure pour le début du spectacle.",
+      "palabra": "arriver",
+      "frecuencia": 2,
+      "lema": "arriver",
+      "sinonimos": [
+        "parvenir",
+        "survenir"
+      ]
+    },
+    {
+      "definicion": "Ensemble des créations humaines visant à exprimer une vision esthétique ou émotionnelle; savoir-faire, technique ou habileté.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "L'art est une forme d'expression universelle qui transcende les cultures.",
+      "palabra": "art",
+      "frecuencia": 1,
+      "lema": "art",
+      "sinonimos": [
+        "création",
+        "technique"
+      ]
+    },
+    {
+      "definicion": "Texte publié dans un journal ou une revue; élément d'un contrat ou d'une loi; ou mot grammatical (défini, indéfini, partitif).",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "J'ai lu un article intéressant sur l'intelligence artificielle dans une revue scientifique.",
+      "palabra": "article",
+      "frecuencia": 3,
+      "lema": "article",
+      "sinonimos": [
+        "texte",
+        "élément"
+      ]
+    },
+    {
+      "definicion": "Le plus grand et le plus peuplé des continents, situé principalement dans l'hémisphère oriental, caractérisé par une immense diversité géographique et culturelle.",
+      "tipo_gramatical": "nom propre (f)",
+      "ejemplo_uso": "La Chine est un pays d'Asie avec une histoire millénaire et une culture riche.",
+      "palabra": "asie",
+      "frecuencia": 1,
+      "lema": "Asie",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Pluriel du nom \"aspiration\", désignant des désirs profonds, des ambitions, des souhaits ou des objectifs que l'on cherche à atteindre.",
+      "tipo_gramatical": "nom (f, pluriel)",
+      "ejemplo_uso": "Les jeunes ont de grandes aspirations pour leur avenir professionnel et personnel.",
+      "palabra": "aspirations",
+      "frecuencia": 1,
+      "lema": "aspiration",
+      "sinonimos": [
+        "ambitions",
+        "désirs"
+      ]
+    },
+    {
+      "definicion": "En quantité suffisante, en mesure suffisante; plutôt, passablement, pour indiquer un degré modéré.",
+      "tipo_gramatical": "adverbe",
+      "ejemplo_uso": "J'ai assez mangé, merci, je n'ai plus faim.",
+      "palabra": "assez",
+      "frecuencia": 5,
+      "lema": "assez",
+      "sinonimos": [
+        "suffisamment",
+        "plutôt"
+      ]
+    },
+    {
+      "definicion": "Pluriel du nom \"assiette\", désignant des ustensiles de table plats ou creux, généralement ronds, utilisés pour servir les aliments.",
+      "tipo_gramatical": "nom (f, pluriel)",
+      "ejemplo_uso": "Il faut laver les assiettes après le repas pour maintenir la cuisine propre.",
+      "palabra": "assiettes",
+      "frecuencia": 1,
+      "lema": "assiette",
+      "sinonimos": [
+        "plats",
+        "vaisselle"
+      ]
+    },
+    {
+      "definicion": "Forme conjuguée du verbe \"assurer\" à la première ou troisième personne du singulier du présent de l'indicatif ou du subjonctif, signifiant garantir, affirmer avec certitude ou prendre en charge.",
+      "tipo_gramatical": "verbe (1re/3e pers. sing. présent de l'indicatif/subjonctif)",
+      "ejemplo_uso": "Il assure la sécurité de l'événement avec professionnalisme et vigilance.",
+      "palabra": "assure",
+      "frecuencia": 1,
+      "lema": "assurer",
+      "sinonimos": [
+        "garantit",
+        "affirme"
+      ]
+    },
+    {
+      "definicion": "Engager un combat contre quelqu'un ou quelque chose; critiquer vivement, s'en prendre à.",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "L'équipe adverse va attaquer dès le début du match pour marquer un but.",
+      "palabra": "attaquer",
+      "frecuencia": 1,
+      "lema": "attaquer",
+      "sinonimos": [
+        "agresser",
+        "critiquer"
+      ]
+    },
+    {
+      "definicion": "Parvenir à un but, à un objectif; toucher, frapper une cible; arriver à un certain niveau ou état.",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "Il est difficile d'atteindre le sommet de la montagne sans un entraînement rigoureux.",
+      "palabra": "atteindre",
+      "frecuencia": 1,
+      "lema": "atteindre",
+      "sinonimos": [
+        "parvenir à",
+        "toucher"
+      ]
+    },
+    {
+      "definicion": "Pluriel du nom \"attente\", désignant des espoirs, des prévisions, ce que l'on attend de quelqu'un ou de quelque chose en termes de résultats ou de comportement.",
+      "tipo_gramatical": "nom (f, pluriel)",
+      "ejemplo_uso": "Le projet a dépassé toutes nos attentes en termes de succès et de rentabilité.",
+      "palabra": "attentes",
+      "frecuencia": 1,
+      "lema": "attente",
+      "sinonimos": [
+        "espérances",
+        "prévisions"
+      ]
+    },
+    {
+      "definicion": "Fait de concentrer son esprit sur quelque chose; sollicitude, soin, ou avertissement pour prévenir un danger.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "Faites attention en traversant la rue, la circulation est dense.",
+      "palabra": "attention",
+      "frecuencia": 2,
+      "lema": "attention",
+      "sinonimos": [
+        "concentration",
+        "vigilance"
+      ]
+    },
+    {
+      "definicion": "Pluriel féminin de l'adjectif \"attentif\", qualifiant des personnes qui écoutent ou observent avec concentration, soin et intérêt.",
+      "tipo_gramatical": "adjectif (f, pluriel)",
+      "ejemplo_uso": "Les étudiantes étaient très attentives pendant le cours, prenant des notes détaillées.",
+      "palabra": "attentives",
+      "frecuencia": 1,
+      "lema": "attentif",
+      "sinonimos": [
+        "concentrées",
+        "vigilantes"
+      ]
+    },
+    {
+      "definicion": "Faire venir à soi, exercer une attraction sur; susciter l'intérêt, la curiosité ou l'attention de quelqu'un.",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "Les nouvelles boutiques du centre-ville attirent de nombreux clients chaque jour.",
+      "palabra": "attirer",
+      "frecuencia": 2,
+      "lema": "attirer",
+      "sinonimos": [
+        "séduire",
+        "capter"
+      ]
+    },
+    {
+      "definicion": "Forme du verbe \"attirer\" au participe passé, ou adjectif qualifiant ce qui est l'objet d'une attraction, d'un intérêt ou d'une séduction.",
+      "tipo_gramatical": "verbe (participe passé) ou adjectif (m)",
+      "ejemplo_uso": "Il a été attiré par la beauté du paysage et a décidé de s'y installer.",
+      "palabra": "attiré",
+      "frecuencia": 2,
+      "lema": "attirer",
+      "sinonimos": [
+        "séduit",
+        "captivé"
+      ]
+    },
+    {
+      "definicion": "Pluriel de l'adjectif \"attractif\", qualifiant ce qui attire, ce qui plaît, ce qui est séduisant ou intéressant.",
+      "tipo_gramatical": "adjectif (m, pluriel)",
+      "ejemplo_uso": "Les salaires proposés sont très attractifs pour les jeunes diplômés.",
+      "palabra": "attractifs",
+      "frecuencia": 1,
+      "lema": "attractif",
+      "sinonimos": [
+        "séduisants",
+        "attrayants"
+      ]
+    },
+    {
+      "definicion": "Contraction de la préposition \"à\" et de l'article défini \"le\", utilisé devant un nom masculin singulier.",
+      "tipo_gramatical": "article contracté (m, singulier)",
+      "ejemplo_uso": "Je vais au marché pour acheter des légumes frais.",
+      "palabra": "au",
+      "frecuencia": 13,
+      "lema": "à le",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Pas un seul, zéro; exprime la négation ou l'absence totale de quelque chose.",
+      "tipo_gramatical": "adjectif indéfini (m) ou pronom indéfini (m)",
+      "ejemplo_uso": "Il n'y a aucun problème à signaler, tout est en ordre.",
+      "palabra": "aucun",
+      "frecuencia": 2,
+      "lema": "aucun",
+      "sinonimos": [
+        "nul",
+        "pas un"
+      ]
+    },
+    {
+      "definicion": "Qui concerne le son, l'audition; ou un enregistrement sonore, un fichier contenant du son.",
+      "tipo_gramatical": "adjectif (m/f) ou nom (m)",
+      "ejemplo_uso": "J'écoute un livre audio pendant mes trajets quotidiens en transport en commun.",
+      "palabra": "audio",
+      "frecuencia": 13,
+      "lema": "audio",
+      "sinonimos": [
+        "sonore",
+        "acoustique"
+      ]
+    },
+    {
+      "definicion": "Qui se rapporte à l'ouïe, au sens de l'audition, ou aux organes qui y sont liés.",
+      "tipo_gramatical": "adjectif (f)",
+      "ejemplo_uso": "Elle a une excellente mémoire auditive, elle retient facilement les informations entendues.",
+      "palabra": "auditive",
+      "frecuencia": 2,
+      "lema": "auditif",
+      "sinonimos": [
+        "sonore",
+        "acoustique"
+      ]
+    },
+    {
+      "definicion": "Action d'augmenter, de rendre plus grand en quantité, en intensité, en valeur; résultat de cette action, se traduisant par une hausse.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "Nous avons obtenu une augmentation de salaire après une évaluation positive de notre travail.",
+      "palabra": "augmentation",
+      "frecuencia": 2,
+      "lema": "augmentation",
+      "sinonimos": [
+        "accroissement",
+        "hausse"
+      ]
+    }
+  ],
+  "tema_CE": "Lire pour s'informer et discuter",
+  "unidad": "Unité 3",
+  "CO": [
+    {
+      "ruta_audio": "38.mp3",
+      "habilidad": "Compréhension de l'oral",
+      "campos_formulario": null,
+      "tipo": "Preguntas de opción múltiple",
+      "preguntas": [
+        {
+          "respuesta_correcta": "il y a un an.",
+          "opciones": [
+            "cette année.",
+            "il y a un an.",
+            "en septembre."
+          ],
+          "pregunta": "1. Johan Pinel a créé son entreprise..."
+        },
+        {
+          "respuesta_correcta": "des objets de décoration.",
+          "opciones": [
+            "des bouteilles en verre.",
+            "des objets de décoration.",
+            "des vêtements recyclés."
+          ],
+          "pregunta": "2. L'entreprise de Johan Pinel fabrique..."
+        },
+        {
+          "respuesta_correcta": "du sport et de la mode.",
+          "opciones": [
+            "du sport et de la mode.",
+            "de l'art et de la mode.",
+            "du sport et de l'art."
+          ],
+          "pregunta": "3. Avant de créer son entreprise, Johan Pinel travaillait dans le domaine..."
+        },
+        {
+          "respuesta_correcta": "utilise des matériaux écologiques.",
+          "opciones": [
+            "utilise des matériaux écologiques.",
+            "fait appel à des entreprises locales.",
+            "embauche des personnes handicapées."
+          ],
+          "pregunta": "4. Dans son entreprise, Johan..."
+        },
+        {
+          "respuesta_correcta": "Elles contiennent des graines de fleurs.",
+          "opciones": [
+            "Elles permettent de faire de la publicité.",
+            "Elles sont recyclables de nombreuses fois.",
+            "Elles contiennent des graines de fleurs."
+          ],
+          "pregunta": "5. Quelle est la particularité des cartes de visite de Johan ?"
+        },
+        {
+          "respuesta_correcta": "Il leur reverse une partie de ses ventes.",
+          "opciones": [
+            "Il organise des collectes d'argent.",
+            "Il participe à des projets collaboratifs.",
+            "Il leur reverse une partie de ses ventes."
+          ],
+          "pregunta": "6. Comment Johan aide-t-il les associations ?"
+        },
+        {
+          "respuesta_correcta": "Exclusivement en magasin.",
+          "opciones": [
+            "Principalement sur internet.",
+            "Exclusivement en magasin.",
+            "Sur internet et en magasin."
+          ],
+          "pregunta": "7. Où sont vendues les pièces uniques ?"
+        }
+      ],
+      "instruccion": "Activité 1 Répondez aux questions en cochant (X) la bonne réponse.",
+      "texto_lectura": null,
+      "transcripcion": "Comme chaque samedi, avec Anne Tourraine, nous vous présentons des personnes qui ont choisi de vivre de leur passion. Cette semaine, Johan Pinel, ancien professeur de sport, a créé l'année dernière l'entreprise Septembre. - Septembre, c'est une entreprise qui recycle et transforme les bouteilles en verre en lampes et en bougies décoratives. Son fondateur, Johan Pinel, a exercé plusieurs métiers avant de créer son entreprise. Professeur de sport puis directeur de plusieurs entreprises de vêtements, il a rapidement pris conscience de l'importance de protéger l'environnement. Il a eu alors l'idée de donner une seconde vie aux objets du quotidien que l'on jette souvent à la poubelle. En septembre, il fabrique son premier objet de décoration à partir d'une bouteille en verre et un mois plus tard, il crée son entreprise. Spécialisé dans les objets de décoration, Johan Pinel travaille actuellement sur de nouveaux projets, comme cette jardinière en verre qu'il pense pouvoir commercialiser à partir de l'année prochaine. - Septembre, c'est aussi une entreprise solidaire et respectueuse de l'environnement. - En effet. Pour Johan Pinel, le plus important c'est de protéger l'environnement. C'est pour cela que les bouteilles utilisées pour ses créations parcourent moins de 200 kilomètres. Il travaille aussi avec des entreprises locales pour réduire le transport et la pollution. Une autre idée intéressante, les cartes de visites de Johan qui contiennent des graines de plantes. Les clients peuvent donc les planter dans leur jardin et avoir de belles fleurs quelques semaines plus tard. Cela permet de donner une deuxième vie à un objet qui termine souvent à la poubelle. La carte de visite n'est donc plus un objet pour faire de la publicité mais a une véritable utilité. Septembre, c'est aussi une entreprise solidaire. Johan Pinel travaille avec des centres de formation professionnelle et pour les personnes en situation de handicap qui lui fournissent les matières premières. Il organise également des ventes solidaires pour aider les associations locales. Cette semaine, il donnera 5% de ses ventes à l'association La cravate solidaire qui lutte contre les discriminations au travail. Alors, si vous aussi vous voulez aider cette association, vous pouvez acheter l'un des objets sur internet ou dans l'un des 10 magasins en France. Attention, car certains objets sont des pièces uniques et sont disponibles uniquement en magasin. - Merci Anne Tourraine. On se retrouve la semaine prochaine pour une nouvelle émission. D'après https:///www.rtl.fr"
+    },
+    {
+      "ruta_audio": "39.mp3",
+      "habilidad": "Compréhension de l'oral",
+      "campos_formulario": null,
+      "tipo": "Preguntas de opción múltiple",
+      "preguntas": [
+        {
+          "respuesta_correcta": "dirige une entreprise de formation professionnelle.",
+          "opciones": [
+            "a suivi une formation professionnelle il y a plus de 10 ans.",
+            "dirige une entreprise de formation professionnelle.",
+            "est conseiller en formation professionnelle."
+          ],
+          "pregunta": "1. François Wilson..."
+        },
+        {
+          "respuesta_correcta": "Pour actualiser leurs compétences.",
+          "opciones": [
+            "Pour obtenir un poste à responsabilités.",
+            "Pour actualiser leurs compétences.",
+            "Pour améliorer leur salaire."
+          ],
+          "pregunta": "2. Pourquoi les employés suivent-ils une formation professionnelle ?"
+        },
+        {
+          "respuesta_correcta": "Le secteur de la restauration.",
+          "opciones": [
+            "Le secteur de la restauration.",
+            "Le secteur de l'informatique.",
+            "Le secteur du commerce."
+          ],
+          "pregunta": "3. Quel secteur privilégient les employés qui veulent changer de métier ?"
+        },
+        {
+          "respuesta_correcta": "390 000 formations.",
+          "opciones": [
+            "3 090 formations.",
+            "13 990 formations.",
+            "390 000 formations."
+          ],
+          "pregunta": "4. Les plateformes de formation proposent plus de..."
+        },
+        {
+          "respuesta_correcta": "Pilote de drone.",
+          "opciones": [
+            "Pilote de drone.",
+            "Agriculteur urbain.",
+            "Créateur d'applications."
+          ],
+          "pregunta": "5. Quelle formation originale peut-on suivre ?"
+        },
+        {
+          "respuesta_correcta": "en présentiel et en ligne.",
+          "opciones": [
+            "principalement en présentiel.",
+            "uniquement en ligne.",
+            "en présentiel et en ligne."
+          ],
+          "pregunta": "6. Les formations sont..."
+        },
+        {
+          "respuesta_correcta": "lire l'expérience d'anciens stagiaires.",
+          "opciones": [
+            "chercher des informations sur Internet.",
+            "lire l'expérience d'anciens stagiaires.",
+            "rencontrer des employés du secteur."
+          ],
+          "pregunta": "7. Pour bien choisir sa formation, il faut..."
+        }
+      ],
+      "instruccion": "Activité 2 Répondez aux questions en cochant (X) la bonne réponse.",
+      "texto_lectura": null,
+      "transcripcion": "- Si vous êtes secrétaire dans une entreprise et que vous voulez devenir pâtissier ou informaticien, c'est aujourd'hui possible grâce à la formation professionnelle en entreprise. Pour en parler, je reçois Florian Wilson, directeur d'une entreprise spécialisée dans la formation professionnelle en entreprise depuis plus de 10 ans. Florian, bonjour. On parle beaucoup de l'importance de la formation professionnelle en entreprise aujourd'hui. Mais pouvez-vous nous expliquer à quoi ça sert exactement ? - Les entreprises évoluent rapidement et les employés doivent s'adapter. Et ce n'est pas simple. Ils ont parfois besoin ou envie d'obtenir de nouvelles compétences. Par exemple, je reçois souvent des demandes pour apprendre à utiliser l'intelligence artificielle. D'autres personnes veulent changer de profession et apprendre un nouveau métier, surtout dans le secteur de la restauration. - Je suppose que se former dans une entreprise ce n'est pas gratuit. Combien coûte une formation comme celle-ci ? - Quand on travaille dans une entreprise, l'employeur crée un compte pour chaque employé sur une plateforme de formation comme la nôtre et dépose chaque mois de l'argent. Si l'employé désire une formation, il peut se connecter à ce compte et utiliser cet argent. - Quelles formations sont disponibles sur ces plateformes ? - Il y a plus de 390 000 formations disponibles dans tous les domaines. Les employés peuvent se former de l'agriculture à la création de sites web. Il y a même des formations plus originales comme pour devenir pilote de drone. Il est possible de demander des formations dans tous les domaines. - Donc, je suis commercial et je veux devenir pâtissier, c'est possible ? - Oui. Vous devez simplement faire une demande sur internet. Il y a des formations plus ou moins longues, qui vont de quelques semaines à quelques années et à des prix différents. Sur notre plateforme, les employés peuvent suivre des formations dans des centres de formation ou à distance sur internet. En France, il y a déjà eu 3 millions de formations réalisées et 39 millions de comptes créés. - Un conseil pour bien choisir sa formation ? - Le premier, lire les témoignages d'anciens stagiaires pour savoir si la formation que vous voulez suivre correspond exactement à vos attentes. Le deuxième, demander l'aide d'un conseiller. Ils sont là pour vous aider et pourront identifier la formation qui correspond le mieux à vos besoins. - Merci Florian Wilson pour tous ces conseils. - Avec plaisir! D'après https://politiques-sociales.caissedesdepots.fr"
+    },
+    {
+      "ruta_audio": "40.mp3",
+      "habilidad": "Compréhension de l'oral",
+      "campos_formulario": null,
+      "tipo": "Preguntas de opción múltiple",
+      "preguntas": [
+        {
+          "respuesta_correcta": "organise un atelier de recrutement.",
+          "opciones": [
+            "propose des formations en recrutement.",
+            "organise un atelier de recrutement.",
+            "dirige une école de recrutement."
+          ],
+          "pregunta": "1. Rose-Marie Lambert..."
+        },
+        {
+          "respuesta_correcta": "La restauration.",
+          "opciones": [
+            "L'enseignement.",
+            "La restauration.",
+            "Le tourisme."
+          ],
+          "pregunta": "2. Dans quel secteur les candidats vont-ils travailler?"
+        },
+        {
+          "respuesta_correcta": "Les recruteurs ne posent pas de questions aux candidats.",
+          "opciones": [
+            "Les recruteurs ne posent pas de questions aux candidats.",
+            "Les recruteurs ne reçoivent pas les CV des candidats éventuels.",
+            "Les recruteurs ne donnent pas d'informations sur leur entreprise."
+          ],
+          "pregunta": "3. Quelle est la caractéristique d'un job dating inversé ?"
+        },
+        {
+          "respuesta_correcta": "de réduire le stress d'un entretien.",
+          "opciones": [
+            "d'augmenter la confiance en eux.",
+            "de limiter les risques d'être éliminé.",
+            "de réduire le stress d'un entretien."
+          ],
+          "pregunta": "4. Pour les candidats, le job dating inversé permet..."
+        },
+        {
+          "respuesta_correcta": "plus avantageux pour les candidats que pour les recruteurs.",
+          "opciones": [
+            "moins",
+            "aussi",
+            "plus avantageux pour les candidats que pour les recruteurs."
+          ],
+          "pregunta": "5. Le job dating inversé est..."
+        },
+        {
+          "respuesta_correcta": "Absolument tout le monde.",
+          "opciones": [
+            "Uniquement des personnes au chômage.",
+            "Principalement des étudiants.",
+            "Absolument tout le monde."
+          ],
+          "pregunta": "6. Qui peut participer à un job dating inversé ?"
+        },
+        {
+          "respuesta_correcta": "sur internet.",
+          "opciones": [
+            "par téléphone.",
+            "sur internet.",
+            "par mail."
+          ],
+          "pregunta": "7. Les inscriptions se réalisent..."
+        }
+      ],
+      "instruccion": "Activité 3 Répondez aux questions en cochant (X) la bonne réponse.",
+      "texto_lectura": null,
+      "transcripcion": "Et on continue notre chronique sur l'emploi avec Rose-Marie Lambert. Vous êtes directrice d'un organisme de recrutement. Vous allez proposer, mardi prochain, à de futurs candidats un atelier un peu particulier pour embaucher des serveurs et des cuisiniers à temps partiel et à temps plein. Avec les vacances, il y a beaucoup d'offres surtout dans les zones touristiques mais peu de candidats. Les entreprises ont donc du mal à trouver du personnel. Donc vous avez eu l'idée de proposer un job dating inversé. Je connaissais le job dating, cette pratique qui permet aux candidats de rencontrer plusieurs recruteurs dans un même lieu et de leur montrer en 2 mn 30 qu'ils correspondent parfaitement au poste recherché. Mais, en quoi consiste le job dating inversé ? - Le principe est le même qu'un job dating traditionnel à la différence que ce sont les candidats qui vont recruter leur patron. Les rôles sont complètement inversés car les candidats vont poser les questions à leur futurs patrons et ce sont eux qui décideront finalement dans quelle entreprise ils aimeraient travailler. - Quel est l'intérêt pour les candidats et pour les recruteurs de participer à ce type d'événement? - Pour les candidats, c'est un bon moyen d'éviter les tensions pendant les entretiens. Ici, ce sont eux qui posent les questions qui leur semblent intéressantes et importantes. Pour les employeurs, c'est un moyen de mettre en avant leur entreprise et de convaincre les personnes qu'ils veulent recruter de venir travailler avec eux et pas ailleurs. Les avantages sont identiques pour les deux parties. - Comment vous préparez les candidats ? - Pendant plusieurs jours, nos conseillers les aident à préparer les questions. Ils seront ensuite installés dans des stands et les recruteurs passeront de stand en stand pour convaincre les candidats de venir travailler avec eux. On change complètement les rôles. - Quel est le profil des candidats qui vont participer à ce job dating inversé ? - Il y a des étudiants qui cherchent un job pour financer leurs études, des personnes qui sont au chômage depuis longtemps et d'anciens salariés qui ont changé de métier. Il n'y a donc pas vraiment de profil type chez nos candidats. - Pour s'inscrire, qu'est-ce qu'il faut faire ? - C'est simple. L'événement a lieu le mardi 28 février. Il faut donc vous inscrire avant le 27 février sur notre site. - Merci Rose-Marie. Si vous êtes intéressé, n'oubliez pas de vous connecter avant le 27 février. Plus d'infos par téléphone. D'après France Bleue"
+    },
+    {
+      "ruta_audio": "41.mp3",
+      "habilidad": "Compréhension de l'oral",
+      "campos_formulario": null,
+      "tipo": "Preguntas de opción múltiple",
+      "preguntas": [
+        {
+          "respuesta_correcta": "Pour diminuer les coûts immobiliers.",
+          "opciones": [
+            "Pour diminuer les coûts immobiliers.",
+            "Pour agrandir les espaces de travail.",
+            "Pour interchanger les postes de travail."
+          ],
+          "pregunta": "1. Pourquoi les entreprises ont-elles créé les open spaces?"
+        },
+        {
+          "respuesta_correcta": "jeunes que les travailleurs classiques.",
+          "opciones": [
+            "âgés",
+            "jeunes que les travailleurs classiques.",
+            "motivés"
+          ],
+          "pregunta": "2. Les travailleurs en open space sont plus..."
+        },
+        {
+          "respuesta_correcta": "Télévendeur.",
+          "opciones": [
+            "Opérateur.",
+            "Télévendeur.",
+            "Développeur."
+          ],
+          "pregunta": "3. Quel métier a le plus de travailleurs en open space?"
+        },
+        {
+          "respuesta_correcta": "Celles du secteur privé.",
+          "opciones": [
+            "Celles du secteur public.",
+            "Celles du secteur privé.",
+            "Celles de 50 salariés."
+          ],
+          "pregunta": "4. Quelles entreprises travaillent le plus en open space?"
+        },
+        {
+          "respuesta_correcta": "moins bonnes que celles des travailleurs classiques.",
+          "opciones": [
+            "égales à",
+            "meilleures que",
+            "moins bonnes que celles des travailleurs classiques."
+          ],
+          "pregunta": "5. Comment sont les conditions de travail en open space?"
+        },
+        {
+          "respuesta_correcta": "La grande solidarité entre les collègues.",
+          "opciones": [
+            "La grande solidarité entre les collègues.",
+            "Le partage des repas pendant la pause.",
+            "La plus grande propreté des espaces."
+          ],
+          "pregunta": "6. Quel est l'avantage du travail en open space?"
+        },
+        {
+          "respuesta_correcta": "décidé de créer des zones individuelles.",
+          "opciones": [
+            "fait l'acquisition de casques antibruit.",
+            "interdit les appels privés en open space.",
+            "décidé de créer des zones individuelles."
+          ],
+          "pregunta": "7. Pour réduire les nuisances sonores, certaines entreprises ont..."
+        }
+      ],
+      "instruccion": "Activité 4 Répondez aux questions en cochant (X) la bonne réponse.",
+      "texto_lectura": null,
+      "transcripcion": "Chers auditeurs, bonjour et bienvenue à notre chronique consacrée au bien-être au travail. Aujourd'hui, je vous propose de parler du travail en open space. En effet, celui-ci concerne deux salariés de bureau sur cinq et une question se pose: le travail en open space est-il un enfer ou une chance ? Rappelons tout d'abord qu'il s'agit d'un aménagement de plusieurs bureaux individuels regroupés sans mur de séparation qui s'est développé dans la seconde partie du XXe siècle. À l'origine, les entreprises voulaient optimiser leurs coûts immobiliers, mais aussi améliorer la productivité. Mais quel est le profil des salariés concernés ? Les travailleurs en open space sont plus jeunes que les autres travailleurs de bureau et ils habitent principalement dans des grandes villes. Le métier de télévendeur est le métier qui a le plus grand nombre de salariés en open space. Ces travailleurs exercent le plus souvent des postes qui nécessitent un travail en équipe et peu de contact avec le public. Le secteur privé et les entreprises de plus de 500 salariés sont les entreprises qui travaillent le plus en open space. Les conditions de travail en open space sont généralement moins bonnes que celles des travailleurs classiques. En effet, ils sont plus exposés au bruit et à la chaleur, mais sont aussi plus souvent interrompus dans leur travail par leurs collègues. C'est la raison pour laquelle la plupart d'entre eux préfèrent télétravailler. Mais le travail en open space comporte aussi de nombreux avantages comme une plus grande solidarité entre les collègues. Alors, quelles sont les solutions possibles pour réduire les nuisances des open space, tout en conservant les avantages de la productivité et du travail en équipe ? Certaines entreprises ont décidé de réaménager leurs bureaux en créant des zones individuelles pour passer des appels téléphoniques ou pour mieux se concentrer. Elles ont aussi créé des lieux de convivialité pour se détendre entre collègues. L'aménagement des bureaux est donc essentiel car 69% des personnes le prennent en compte lorsqu'elles recherchent un emploi. Le bien-être des salariés doit être une priorité ! D'après https://www.helloworkplace.fr"
+    },
+    {
+      "ruta_audio": "42.mp3",
+      "habilidad": "Compréhension de l'oral",
+      "campos_formulario": null,
+      "tipo": "Preguntas de opción múltiple",
+      "preguntas": [
+        {
+          "respuesta_correcta": "améliorer les conditions de travail de leurs salariés.",
+          "opciones": [
+            "augmenter la productivité annuelle",
+            "préparer la reconversion future",
+            "améliorer les conditions de travail de leurs salariés."
+          ],
+          "pregunta": "1. Les entreprises mettent en place des plans pour..."
+        },
+        {
+          "respuesta_correcta": "la qualité de vie au travail.",
+          "opciones": [
+            "la promotion de la diversité.",
+            "la qualité de vie au travail.",
+            "la mobilité professionnelle."
+          ],
+          "pregunta": "2. Tous les ans, une agence organise une semaine pour..."
+        },
+        {
+          "respuesta_correcta": "Se sentir bien au travail.",
+          "opciones": [
+            "Se sentir bien au travail.",
+            "Gagner plus d'argent.",
+            "Varier leurs missions."
+          ],
+          "pregunta": "3. Que veulent les salariés ?"
+        },
+        {
+          "respuesta_correcta": "sont plus heureux que leurs voisins européens.",
+          "opciones": [
+            "sont plus déprimés",
+            "ont plus d'opportunités",
+            "sont plus heureux que leurs voisins européens."
+          ],
+          "pregunta": "4. Au travail, les salariés français..."
+        },
+        {
+          "respuesta_correcta": "L'intérêt pour le travail.",
+          "opciones": [
+            "La proximité du lieu de travail.",
+            "L'intérêt pour le travail.",
+            "Les opportunités de carrière."
+          ],
+          "pregunta": "5. Qu'est-ce qui, pour eux, est plus important que le salaire ?"
+        },
+        {
+          "respuesta_correcta": "importantes pour l'esprit d'équipe.",
+          "opciones": [
+            "importantes pour l'esprit d'équipe.",
+            "fondamentales pour la productivité.",
+            "bénéfiques pour la créativité."
+          ],
+          "pregunta": "6. Les bonnes relations avec les collègues sont..."
+        },
+        {
+          "respuesta_correcta": "un bon espace de travail bien aéré.",
+          "opciones": [
+            "un bon espace de travail bien aéré.",
+            "des pauses régulières rémunérées.",
+            "une charge de travail raisonnable."
+          ],
+          "pregunta": "7. Pour réduire le stress, il faut..."
+        }
+      ],
+      "instruccion": "Activité 5 Répondez aux questions en cochant (X) la bonne réponse.",
+      "texto_lectura": null,
+      "transcripcion": "Bonjour à tous ! Nous recevons aujourd'hui Jérôme, responsable RH, pour nous parler du bien-être au travail. Jérôme, bonjour, en quoi le bien-être au travail est-il un sujet d'actualité ? - Selon l'agence nationale pour l'amélioration des conditions de travail, les entreprises prennent en compte le bien-être de leurs salariés et mettent en place des plans pour améliorer leurs conditions de travail. Cette agence organise tous les ans une semaine pour la qualité de vie au travail. Aujourd'hui, le travail ne peut plus être considéré comme un simple moyen de gagner sa vie. Il a pris une place très importante dans la société et les salariés veulent s'y sentir bien. - Qu'entend-on exactement par << bien-être au travail >> ? - L'organisation mondiale de la santé le définit comme : << un état d'esprit dynamique, caractérisé par une harmonie satisfaisante entre les aptitudes, les besoins et les aspirations du travailleur, d'une part, et les contraintes et les possibilités du milieu de travail, d'autre part >>. Cela concerne donc la santé, la sécurité, le salaire et la lutte contre le stress. - Les Français sont-ils heureux au travail ? - Selon une enquête, 41% des salariés français sont souvent joyeux au travail, ils le sont plus que leurs voisins européens dont la moyenne est de 38%. Mais seulement 32% des Français pensent avoir une bonne qualité de vie au travail, contre 38% en Europe. La France est au 10º rang sur 14 pays pour la qualité de vie au travail. - Et comment peut-on améliorer le bien-être des salariés ? - De nombreux facteurs influencent la qualité de vie au travail. Avant le salaire, l'intérêt pour le travail est très important. Les salariés veulent donner un sens à leur travail et faire des tâches intéressantes. Le sentiment d'appartenance à l'entreprise est aussi essentiel. Les salariés doivent se sentir utiles et reconnus. Cela passe par le salaire et les encouragements. Les bonnes relations au travail sont également fondamentales. Chaque salarié doit avoir de l'autonomie et un soutien de la hiérarchie. Un cadre de travail clair et de bons managers améliorent le bien-être. Les relations avec les collègues sont importantes pour l'esprit d'équipe. Enfin, l'environnement de travail est essentiel. Un espace de travail confortable et bien aéré réduit le stress. D'autres facteurs influencent la qualité de vie, comme l'équilibre vie professionnelle/vie privée, le temps de transport, les perspectives d'évolution et la sécurité de l'emploi. - En effet, tout cela est essentiel, merci beaucoup pour cet échange, Jérôme ! - C'était un plaisir, merci à vous pour votre invitation! D'après https://www.topformation.fr"
+    },
+    {
+      "ruta_audio": "43.mp3",
+      "habilidad": "Compréhension de l'oral",
+      "campos_formulario": null,
+      "tipo": "Preguntas de opción múltiple",
+      "preguntas": [
+        {
+          "respuesta_correcta": "rend les salariés plus productifs.",
+          "opciones": [
+            "rend les salariés plus productifs.",
+            "permet un contrôle des salariés.",
+            "simplifie la gestion des tâches."
+          ],
+          "pregunta": "1. On dit souvent que la présence physique en entreprise..."
+        },
+        {
+          "respuesta_correcta": "Il éloigne les collègues.",
+          "opciones": [
+            "Il limite les opportunités.",
+            "Il éloigne les collègues.",
+            "Il demande de la rigueur."
+          ],
+          "pregunta": "2. Quel est l'inconvénient du travail à distance ?"
+        },
+        {
+          "respuesta_correcta": "renforce les liens entre collègues.",
+          "opciones": [
+            "renforce les liens entre collègues.",
+            "réduit le stress de leurs salariés.",
+            "crée un sentiment d'appartenance."
+          ],
+          "pregunta": "3. Des employeurs pensent que la machine à café..."
+        },
+        {
+          "respuesta_correcta": "craignaient une baisse de créativité avec le travail à distance.",
+          "opciones": [
+            "étaient préoccupés par l'isolement du travail à distance.",
+            "avaient des doutes sur l'efficacité du travail à distance.",
+            "craignaient une baisse de créativité avec le travail à distance."
+          ],
+          "pregunta": "4. La moitié des directeurs des ressources humaines..."
+        },
+        {
+          "respuesta_correcta": "coopération.",
+          "opciones": [
+            "coopération.",
+            "productivité.",
+            "motivation."
+          ],
+          "pregunta": "5. La présence au bureau ne garantit pas toujours plus de..."
+        },
+        {
+          "respuesta_correcta": "La collaboration entre collègues.",
+          "opciones": [
+            "La continuité du travail à distance.",
+            "La collaboration entre collègues.",
+            "La qualité des réunions virtuelles."
+          ],
+          "pregunta": "6. Qu'est-ce que les outils numériques ont permis d'améliorer ?"
+        },
+        {
+          "respuesta_correcta": "de l'influence de la machine à café.",
+          "opciones": [
+            "des impacts du travail à distance.",
+            "de leurs relations professionnelles.",
+            "de l'influence de la machine à café."
+          ],
+          "pregunta": "7. Le journaliste demande aux auditeurs ce qu'ils pensent..."
+        }
+      ],
+      "instruccion": "Activité 6 Répondez aux questions en cochant (X) la bonne réponse.",
+      "texto_lectura": null,
+      "transcripcion": "Chers auditeurs, une question pour vous ce matin : la machine à café au travail a-t-elle vraiment des << pouvoirs magiques >> ? Eh oui, on entend souvent dire que la présence en entreprise rend les travailleurs plus performants que ceux qui travaillent à distance, mais on peut se demander si la bonne entente entre les collègues est vraiment toujours garantie par leur présence physique au bureau. Si d'un côté le travail à distance a indubitablement de nombreux avantages, d'un autre, il éloigne les collègues. On se rend compte que de nombreux employeurs préfèrent que leurs salariés viennent travailler au bureau parce qu'ils pensent aussi que la machine à café aurait certains pouvoirs magiques, comme celui de créer de meilleurs rapports entre les salariés en échangeant sur des sujets variés autour de celle-ci! Beaucoup d'employeurs pensent aussi que la coopération est meilleure au bureau et un sondage a mis en évidence que plus de la moitié des directeurs des ressources humaines en France avaient peur d'une baisse de créativité en laissant leurs salariés travailler chez eux. Pourtant, des recherches montrent aussi que des équipes travaillant à distance peuvent être plus productives que celles au bureau. La présence physique ne garantit donc pas toujours une meilleure coopération. On a souvent pu constater que les équipes à distance organisaient mieux leur travail et communiquaient plus efficacement. De plus, le travail à distance peut lui aussi améliorer les relations entre collègues. En effet, un sondage montre que 52% des salariés ont trouvé que la collaboration avec leurs collègues s'était améliorée grâce aux outils numériques. On peut donc en conclure que la présence physique au bureau ne signifie pas toujours avoir de bons liens sociaux car le manque de temps ou la focalisation sur les tâches de travail ne permettent pas toujours des échanges d'informations informelles ou personnelles. Certes, les discussions autour de la machine à café restent précieuses pour la convivialité et la naissance de nouvelles idées, mais elles ne font pas tout. Et vous, que pensez-vous des pouvoirs de la machine à café ? D'après https://start.lesechos.fr"
+    },
+    {
+      "ruta_audio": "44.mp3",
+      "habilidad": "Compréhension de l'oral",
+      "campos_formulario": null,
+      "tipo": "Preguntas de opción múltiple",
+      "preguntas": [
+        {
+          "respuesta_correcta": "d'un métier qui se développe.",
+          "opciones": [
+            "du métier qu'elle a exercé.",
+            "d'un métier qui va disparaître.",
+            "d'un métier qui se développe."
+          ],
+          "pregunta": "1. Solène est venue parler..."
+        },
+        {
+          "respuesta_correcta": "faire preuve de créativité.",
+          "opciones": [
+            "recruter de nouveaux talents.",
+            "faire preuve de créativité.",
+            "voyager souvent à l'étranger."
+          ],
+          "pregunta": "2. Ce métier permet de..."
+        },
+        {
+          "respuesta_correcta": "séduit de plus en plus de professionnels.",
+          "opciones": [
+            "nécessite des compétences spécifiques.",
+            "rémunère de moins en moins bien.",
+            "séduit de plus en plus de professionnels."
+          ],
+          "pregunta": "3. C'est un métier qui..."
+        },
+        {
+          "respuesta_correcta": "d'avoir un diplôme spécifique.",
+          "opciones": [
+            "de posséder du matériel technique.",
+            "d'avoir un diplôme spécifique.",
+            "de parler plusieurs langues."
+          ],
+          "pregunta": "4. Pour l'exercer, on n'a pas besoin..."
+        },
+        {
+          "respuesta_correcta": "commercial.",
+          "opciones": [
+            "commercial.",
+            "créatif.",
+            "physique."
+          ],
+          "pregunta": "5. C'est un métier plutôt..."
+        },
+        {
+          "respuesta_correcta": "ressources humaines.",
+          "opciones": [
+            "ressources humaines.",
+            "professionnels de santé.",
+            "experts linguistiques."
+          ],
+          "pregunta": "6. C'est un métier qui vient en aide aux..."
+        },
+        {
+          "respuesta_correcta": "Les contrats peuvent s'arrêter d'un coup.",
+          "opciones": [
+            "Le stress peut être extrêmement élevé.",
+            "Les contrats peuvent s'arrêter d'un coup.",
+            "Les horaires peuvent être imprévisibles."
+          ],
+          "pregunta": "7. Quel est le problème principal de ce métier ?"
+        }
+      ],
+      "instruccion": "Activité 7 Répondez aux questions en cochant (X) la bonne réponse.",
+      "texto_lectura": null,
+      "transcripcion": "Bonjour à tous, nous recevons ce matin Solène Delage pour nous parler d'un métier qui se développe de plus en plus, celui de recruteur indépendant. Solène, bonjour, pouvez-vous nous dire ce qu'est ce métier ? - Bonjour et merci de me recevoir. Les recruteurs indépendants sont des consultants en recrutement. Après avoir travaillé dans les ressources humaines, ils se reconvertissent et se mettent à leur compte pour rechercher de nouveaux talents. Ils veulent trouver le candidat idéal que recherchent toutes les entreprises, celui qui non seulement possède les compétences techniques requises, mais aussi une personnalité qui est parfaitement alignée avec la culture et les objectifs de l'entreprise. C'est un métier qui attire de plus en plus de professionnels. - Et quelles en sont les raisons ? - Dans le contexte actuel pour trouver les meilleurs talents, ces professionnels sont de plus en plus sollicités ces dernières années et c'est surtout un métier qui ne demande pas de diplôme spécifique. Cela le rend attractif car il n'est pas obligatoire d'avoir fait des études en ressources humaines pour l'exercer. - Et qu'est-ce qui plaît dans ce métier ? - Généralement, c'est son côté dynamique et non répétitif, mais aussi l'autonomie qu'il permet. Ce métier est différent du métier de responsable des ressources humaines. C'est plutôt un métier de commercial qui, d'un côté, vend un candidat à une entreprise et, de l'autre, vend une entreprise à un candidat. Il provoque la rencontre parfaite. Ces recruteurs utilisent le plus souvent l'application LinkedIn et viennent aider les départements de ressources humaines des entreprises qui, en plus du recrutement, doivent s'occuper des rémunérations, de la formation et de l'amélioration des conditions de travail des salariés. - Il y a des risques à exercer ce métier ? - Oui, le risque principal est que, en tant qu'indépendant, les contrats peuvent s'arrêter du jour au lendemain. Mais ce métier a de l'avenir car certains secteurs comme le bâtiment manquent de main-d'œuvre et les recruteurs indépendants n'ont pas de difficultés à leur trouver de bons candidats. Les entreprises font de plus en plus appel à eux car elles savent que mal recruter peut leur coûter encore plus cher ! D'après https://start.lesechos.fr"
+    },
+    {
+      "ruta_audio": "45.mp3",
+      "habilidad": "Compréhension de l'oral",
+      "campos_formulario": null,
+      "tipo": "Preguntas de opción múltiple",
+      "preguntas": [
+        {
+          "respuesta_correcta": "18 ans.",
+          "opciones": [
+            "18 ans.",
+            "20 ans.",
+            "22 ans."
+          ],
+          "pregunta": "1. Quel âge avait Alexandre lorsqu'il a commencé à travailler ?"
+        },
+        {
+          "respuesta_correcta": "Une Licence de droit.",
+          "opciones": [
+            "Une Licence de droit.",
+            "Un Master en gestion.",
+            "Un BTS en comptabilité."
+          ],
+          "pregunta": "2. Quelles études suivait-il?"
+        },
+        {
+          "respuesta_correcta": "Pour avoir de l'argent de poche.",
+          "opciones": [
+            "Pour valider son stage d'études.",
+            "Pour faire plaisir à sa mère.",
+            "Pour avoir de l'argent de poche."
+          ],
+          "pregunta": "3. Pourquoi Alexandre a-t-il commencé à travailler chez Picard?"
+        },
+        {
+          "respuesta_correcta": "20 heures par semaine.",
+          "opciones": [
+            "15 heures",
+            "20 heures par semaine.",
+            "25 heures"
+          ],
+          "pregunta": "4. Pendant ses études, il a travaillé..."
+        },
+        {
+          "respuesta_correcta": "L'organisation et les commandes.",
+          "opciones": [
+            "L'organisation et les commandes.",
+            "La formation et la planification.",
+            "La relation clientèle et les stocks."
+          ],
+          "pregunta": "5. Quelles sont ses tâches quotidiennes ?"
+        },
+        {
+          "respuesta_correcta": "Son responsable régional.",
+          "opciones": [
+            "Son professeur de droit.",
+            "Son directeur national.",
+            "Son responsable régional."
+          ],
+          "pregunta": "6. Qui vient aider Alexandre une fois par mois ?"
+        },
+        {
+          "respuesta_correcta": "Obtenir un poste au niveau régional.",
+          "opciones": [
+            "Devenir formateur pour l'enseigne.",
+            "Obtenir un poste au niveau régional.",
+            "Ouvrir son propre magasin de surgelés."
+          ],
+          "pregunta": "7. Quel est le rêve d'Alexandre ?"
+        }
+      ],
+      "instruccion": "Activité 8 Répondez aux questions en cochant (X) la bonne réponse.",
+      "texto_lectura": null,
+      "transcripcion": "Bonjour à tous nos auditeurs, nous recevons ce matin Alexandre Loudini, l'un des plus jeunes responsables de magasin Picard. Alexandre, pouvez-vous nous détailler votre parcours ? - Bien sûr. J'ai commencé à travailler pour cette enseigne française de surgelés pendant mes études. J'avais 18 ans et j'étais étudiant en première année de licence de droit à l'université. Ma mère, qui allait de temps en temps faire ses courses dans un magasin Picard, près de chez nous, a vu une affiche indiquant que le magasin recrutait. J'ai donc déposé mon CV, dans le but de me faire un peu d'argent de poche pendant mes vacances de Noël. Finalement, j'ai obtenu un court contrat à durée déterminée de trois jours. Ces trois jours se sont bien passés et j'ai décidé de continuer à travailler chez Picard en parallèle de mes cours pour financer mon permis de conduire et mes sorties. Les cours de droit ne me plaisaient plus trop alors j'ai décidé de commencer un BTS en communication et commerce. Deux ans d'études pendant lesquelles j'ai travaillé chez Picard, le vendredi après-midi et le week-end, 20 heures par semaine. Après l'obtention de mon BTS, l'enseigne m'a proposé un poste de responsable adjoint avec un contrat à durée indéterminée de 35 heures par semaine. Et puis à 22 ans, l'enseigne m'a proposé de prendre les fonctions de responsable de magasin en Seine-Saint-Denis, en région parisienne. - Quel beau parcours ! Et pouvez-vous nous parler de vos fonctions au quotidien ? - Oui, je manage quatre salariés, tous plus âgés que moi. Ce n'était pas facile au début. Je m'occupe de l'organisation des rayons et des commandes. Picard m'accompagne en m'offrant des formations à suivre en ligne. Je suis aussi aidé par mon responsable régional, un homme de 40 ans qui vient me voir au moins une fois par mois. - Et qu'est-ce qui vous plaît le plus dans votre travail ? - J'aime innover, faire vivre le magasin et satisfaire la clientèle. J'aime aussi motiver mes salariés. À 23 ans, je suis aujourd'hui l'un des plus jeunes responsables de magasin Picard. - Et ensuite ? - Ensuite, je rêve d'un poste au niveau régional ou au siège social de l'enseigne, à Issy-les-Moulineaux. L'enseigne est présente dans 21 pays, je suis aussi prêt à vivre une expérience à l'étranger. - On vous le souhaite, Alexandre ! - Merci ! D'après https://start.lesechos.fr"
+    },
+    {
+      "ruta_audio": "46.mp3",
+      "habilidad": "Compréhension de l'oral",
+      "campos_formulario": null,
+      "tipo": "Preguntas de opción múltiple",
+      "preguntas": [
+        {
+          "respuesta_correcta": "est bénéfique pour la communication entre les employés.",
+          "opciones": [
+            "augmente les performances de l'entreprise.",
+            "est bénéfique pour la communication entre les employés.",
+            "réduit le nombre de réunions professionnelles."
+          ],
+          "pregunta": "1. Le travail d'équipe..."
+        },
+        {
+          "respuesta_correcta": "d'organiser des jeux de groupe.",
+          "opciones": [
+            "de faire de plus longues pauses.",
+            "d'organiser des jeux de groupe.",
+            "de suivre des ateliers créatifs."
+          ],
+          "pregunta": "2. Pour favoriser la créativité, on peut proposer..."
+        },
+        {
+          "respuesta_correcta": "des outils informatiques de gestion.",
+          "opciones": [
+            "des outils informatiques de gestion.",
+            "des rapports de réunion plus réguliers.",
+            "des horaires de travail flexibles."
+          ],
+          "pregunta": "3. Le travail peut être mieux organisé grâce à..."
+        },
+        {
+          "respuesta_correcta": "Il offre une résolution rapide des problèmes.",
+          "opciones": [
+            "Il offre une résolution rapide des problèmes.",
+            "Il développe les compétences individuelles.",
+            "Il augmente le nombre de projets collectifs."
+          ],
+          "pregunta": "4. Quelle est la force du travail d'équipe ?"
+        },
+        {
+          "respuesta_correcta": "à la confiance.",
+          "opciones": [
+            "à la compétition.",
+            "à la confiance.",
+            "aux confidences."
+          ],
+          "pregunta": "5. Le travail d'équipe favorise un climat propice..."
+        },
+        {
+          "respuesta_correcta": "promouvoir les activités sociales.",
+          "opciones": [
+            "célébrer les réussites collectives.",
+            "fournir des espaces de détente.",
+            "promouvoir les activités sociales."
+          ],
+          "pregunta": "6. Pour renforcer le sentiment de communauté, il faut..."
+        },
+        {
+          "respuesta_correcta": "bien coordonnée.",
+          "opciones": [
+            "bien coordonnée.",
+            "peu nombreuse.",
+            "très organisée."
+          ],
+          "pregunta": "7. Pour réussir des projets plus rapides, il faut une équipe..."
+        }
+      ],
+      "instruccion": "Activité 9 Répondez aux questions en cochant (X) la bonne réponse.",
+      "texto_lectura": null,
+      "transcripcion": "Bienvenue à notre chronique, consacrée aux professionnels, pour parler du travail d'équipe. Travailler en groupe est essentiel pour atteindre des objectifs communs de manière efficace. Il offre de nombreux avantages pour les entreprises et nous allons vous présenter ce matin les principaux. Tout d'abord, le travail d'équipe améliore la communication entre les employés. En partageant des idées et en résolvant des problèmes ensemble, les équipes peuvent accomplir leurs tâches plus efficacement. Il est aussi possible de proposer des activités de cohésion, comme des jeux de groupe, qui peuvent favoriser la créativité. Organiser des ateliers de réflexion ou des sessions de travail en groupe permet également d'encourager l'échange d'idées et de renforcer les liens entre les membres de l'équipe. On peut aussi utiliser des outils informatiques de gestion de projet car cela aide les équipes à mieux organiser leur travail et à suivre les progrès. Ces outils permettent une meilleure planification, assurent une répartition équitable des tâches et facilitent la gestion du temps. Une autre force du travail d'équipe, c'est la capacité à résoudre des problèmes plus rapidement. Toutes les idées des membres d'une équipe permettent souvent de trouver des solutions plus efficaces. Par exemple, pendant une réunion, une équipe peut trouver une solution à un problème complexe en moins de temps qu'un individu seul, grâce à la diversité des points de vue et des expériences. Le travail en équipe offre aussi un climat de confiance, et c'est essentiel pour une bonne coopération entre les employés. Les membres d'une équipe qui se font confiance ont plus de chances de partager leurs idées et de soutenir leurs collègues. La confiance permet également de renforcer l'engagement de chacun et de favoriser un environnement où les membres se sentent valorisés et motivés. Une autre chose très importante, c'est la culture d'entreprise. Le travail d'équipe améliore les relations et contribue à une atmosphère de travail positive. Passer du temps ensemble, même pendant des réunions informelles, aide à créer un environnement de travail agréable et contribue donc à travailler dans une bonne ambiance. Encourager des activités sociales et des événements d'équipe peut renforcer ce sentiment de communauté et d'appartenance. Et puis, pour finir, le travail d'équipe augmente l'efficacité en permettant une meilleure répartition des tâches et une gestion plus rapide des projets. Une équipe bien coordonnée peut réaliser des projets plus vite et avec de meilleurs résultats. Alors, vous attendez quoi pour créer vos équipes ? D'après https://asana.com/fr"
+    },
+    {
+      "ruta_audio": "47.mp3",
+      "habilidad": "Compréhension de l'oral",
+      "campos_formulario": null,
+      "tipo": "Preguntas de opción múltiple",
+      "preguntas": [
+        {
+          "respuesta_correcta": "Que le journalisme devient moins important.",
+          "opciones": [
+            "Que le journalisme devient moins important.",
+            "Que les journalistes travaillent plus vite.",
+            "Que les journaux deviennent plus cher."
+          ],
+          "pregunta": "1. Que pensent certaines personnes de l'arrivée de l'IA?"
+        },
+        {
+          "respuesta_correcta": "Les gens utilisent plus leur téléphone.",
+          "opciones": [
+            "Les gens achètent plus de journaux.",
+            "Les gens regardent plus la télévision.",
+            "Les gens utilisent plus leur téléphone."
+          ],
+          "pregunta": "2. Comment a changé la façon d'obtenir des informations ?"
+        },
+        {
+          "respuesta_correcta": "vérifier l'exactitude des faits.",
+          "opciones": [
+            "écrire leurs articles plus vite.",
+            "vérifier l'exactitude des faits.",
+            "choisir les titres des articles."
+          ],
+          "pregunta": "3. L'intelligence artificielle peut aider les journalistes à..."
+        },
+        {
+          "respuesta_correcta": "Un scandale financier.",
+          "opciones": [
+            "Un scandale écologique.",
+            "Un scandale financier.",
+            "Un scandale politique."
+          ],
+          "pregunta": "4. Quel genre de scandale des journalistes ont dénoncé en utilisant l'IA ?"
+        },
+        {
+          "respuesta_correcta": "rigoureux.",
+          "opciones": [
+            "rigoureux.",
+            "rapides.",
+            "ambitieux."
+          ],
+          "pregunta": "5. L'IA oblige les journalistes à être plus..."
+        },
+        {
+          "respuesta_correcta": "moins utile.",
+          "opciones": [
+            "moins précis.",
+            "plus coûteux.",
+            "moins utile."
+          ],
+          "pregunta": "6. L'intelligence artificielle ne rend pas le journalisme..."
+        },
+        {
+          "respuesta_correcta": "d'avenir.",
+          "opciones": [
+            "d'avenir.",
+            "en déclin.",
+            "de routine."
+          ],
+          "pregunta": "7. Le journalisme est un métier..."
+        }
+      ],
+      "instruccion": "Activité 10 Répondez aux questions en cochant (X) la bonne réponse.",
+      "texto_lectura": null,
+      "transcripcion": "Avec l'arrivée de l'intelligence artificielle, certaines personnes pensent que le journalisme est devenu moins important. Ils ont peur que les nouvelles technologies remplacent les journalistes et que l'information puisse perdre de sa valeur. Mais ce n'est pas vrai. En réalité, l'intelligence artificielle peut aider les journalistes et rendre leur travail encore plus précieux. Il y a vingt ans, les journaux gratuits et internet ont changé la façon dont nous obtenons les informations. Avant, nous devions acheter un journal pour lire les nouvelles mais, aujourd'hui, nous recevons des informations directement sur nos téléphones portables. Ce changement a modifié notre relation à l'information. Nous avons l'impression que les informations sont gratuites mais, en réalité, elles sont souvent financées par la publicité et par les données que nous partageons. L'IA est souvent utilisée sur les réseaux sociaux. Sur ces plateformes, elle peut aider à diffuser des informations très rapidement, mais parfois aussi de fausses informations. Pourtant, l'IA est un outil précieux pour les journalistes. Elle peut les aider à collecter des données, à vérifier leur exactitude et à trier les informations importantes. Par exemple, elle peut analyser de grandes quantités de données en peu de temps, ce qui permet aux journalistes de trouver des informations qu'ils n'auraient pas pu découvrir autrement. L'IA aide également à la vérification des faits. Les journalistes peuvent utiliser des algorithmes pour vérifier la véracité des informations en croisant différentes sources. Cela permet de lutter contre les fausses nouvelles et les rumeurs. Pour vous donner un exemple, une équipe de journalistes a utilisé l'IA pour enquêter et dénoncer un grand scandale financier. Cela fait aussi partie du rôle des journalistes: rendre les nouvelles claires et précises. Contrairement aux réseaux sociaux, où les informations peuvent être modifiées, les journalistes s'assurent que les informations sont fiables et bien vérifiées. L'IA les oblige à être plus rigoureux et à offrir une meilleure qualité d'information. Ils doivent expliquer les faits de manière simple et compréhensible pour tous. En résumé, même si l'IA change notre accès à l'information, elle ne rend pas le journalisme inutile. Au contraire, elle aide les journalistes à faire leur travail de manière plus efficace et à fournir des nouvelles plus fiables au public. Le journalisme reste un métier d'avenir, car il garantit que l'information est vérifiée, compréhensible et accessible à tous. Les journalistes doivent continuer à s'adapter aux nouvelles technologies pour rester pertinents et continuer à jouer leur rôle essentiel dans la société. Le journalisme est un métier d'avenir! D'après https://amp.la-croix.com"
+    },
+    {
+      "ruta_audio": "48.mp3",
+      "habilidad": "Compréhension de l'oral",
+      "campos_formulario": null,
+      "tipo": "Preguntas de opción múltiple",
+      "preguntas": [
+        {
+          "respuesta_correcta": "En 2021.",
+          "opciones": [
+            "En 2019.",
+            "En 2021.",
+            "En 2023."
+          ],
+          "pregunta": "1. Quand Anikop a-t-elle introduit les « congés illimités » ?"
+        },
+        {
+          "respuesta_correcta": "Améliorer l'équilibre de vie.",
+          "opciones": [
+            "Augmenter les profits.",
+            "Améliorer l'équilibre de vie.",
+            "Réduire les heures de travail."
+          ],
+          "pregunta": "2. Quel est l'objectif principal des « congés illimités » ?"
+        },
+        {
+          "respuesta_correcta": "En s'assurant que cela n'affecte personne.",
+          "opciones": [
+            "En s'assurant que cela n'affecte personne.",
+            "En demandant l'autorisation du directeur.",
+            "En suivant un calendrier fixé annuellement."
+          ],
+          "pregunta": "3. Comment les salariés d'Anikop peuvent-ils prendre des congés ?"
+        },
+        {
+          "respuesta_correcta": "Parce qu'elle améliore son équilibre de vie.",
+          "opciones": [
+            "Parce qu'elle peut voyager plus souvent.",
+            "Parce qu'elle a la possibilité de travailler moins.",
+            "Parce qu'elle améliore son équilibre de vie."
+          ],
+          "pregunta": "4. Pourquoi une cheffe de projet trouve-t-elle les « congés illimités » utiles ?"
+        },
+        {
+          "respuesta_correcta": "Ils augmentent la motivation.",
+          "opciones": [
+            "Ils renforcent l'esprit d'équipe.",
+            "Ils augmentent la motivation.",
+            "Ils favorisent la communication."
+          ],
+          "pregunta": "5. Quel est l'effet des « congés illimités » sur les employés ?"
+        },
+        {
+          "respuesta_correcta": "Trois.",
+          "opciones": [
+            "Trois.",
+            "Cinq.",
+            "Dix."
+          ],
+          "pregunta": "6. Combien d'entreprises en France ont adopté les « congés illimités » ?"
+        },
+        {
+          "respuesta_correcta": "De la semaine de quatre jours.",
+          "opciones": [
+            "Du travail durant le week-end.",
+            "Du choix des horaires flexibles.",
+            "De la semaine de quatre jours."
+          ],
+          "pregunta": "7. De quelle autre tendance parle le journaliste à la fin de l'émission ?"
+        }
+      ],
+      "instruccion": "Activité 11 Répondez aux questions en cochant (X) la bonne réponse.",
+      "texto_lectura": null,
+      "transcripcion": "Qui n'a pas un jour rêvé d'avoir des << congés illimités >> ? Travailler et partir en vacances quand on en ressent le besoin. Un rêve qui est devenu réalité pour les employés de l'entreprise Anikop, basée près de Lyon. En effet, depuis 2021, celle-ci propose à ses salariés des « congés illimités ». Trois ans après l'instauration de ce système, les résultats sont très positifs, on peut parler d'un véritable succès! Nicolas Perroud, le directeur d'Anikop, a voulu améliorer l'équilibre entre la vie professionnelle et personnelle de ses employés. Cette initiative repose sur la confiance. Les employés peuvent prendre des congés quand ils en ont besoin, tant que cela n'affecte pas leur travail ni leurs collègues. Une cheffe de projet, interrogée par France 3, a expliqué que cette flexibilité l'a beaucoup aidée, surtout en tant que jeune maman. Elle peut prendre des jours de congé pendant les vacances scolaires, ce qui réduit son stress et améliore son équilibre de vie. Nicolas Perroud est très content du succès de ce système. Il note que les salariés sont plus épanouis et que les contraintes administratives ont diminué. Les employés peuvent prendre des jours de congé pour des urgences, ce qui renforce l'esprit d'équipe. Une salariée a ajouté que ce système la motive davantage. Elle apprécie la possibilité de prendre quelques jours de repos après une période intense de travail. Elle trouve que ce modèle de congés illimités est bien meilleur qu'un cadre plus classique. Nicolas Perroud confirme que, malgré l'absence de contrôles stricts, l'entreprise continue de bien fonctionner. Cette initiative a attiré l'attention d'autres entreprises en France. Actuellement, seules trois entreprises en France proposent des << congés illimités », et Anikop est l'une des premières à avoir pris cette initiative. Une autre tendance intéressante est la semaine de quatre jours. Selon une enquête, 71% des Français sont favorables à ce rythme de travail. Le ministère du Travail estime qu'environ 10 000 salariés en France travaillent déjà quatre jours par semaine. La plupart de ces entreprises sont des petites structures ou des start-up. En conclusion, les << congés illimités » et la semaine de quatre jours sont des initiatives qui montrent qu'il est possible de réinventer le modèle de travail traditionnel. Anikop prouve que la confiance entre employeurs et employés peut améliorer le bien-être et l'efficacité au travail. Ces idées pourraient inspirer d'autres entreprises à adopter des pratiques similaires. D'après https://www.capital.fr"
+    },
+    {
+      "ruta_audio": "49.mp3",
+      "habilidad": "Compréhension de l'oral",
+      "campos_formulario": null,
+      "tipo": "Preguntas de opción múltiple",
+      "preguntas": [
+        {
+          "respuesta_correcta": "80%",
+          "opciones": [
+            "60%",
+            "70%",
+            "80%"
+          ],
+          "pregunta": "1. Quel pourcentage des handicaps sont invisibles?"
+        },
+        {
+          "respuesta_correcta": "Il peut choisir de le dire ou pas.",
+          "opciones": [
+            "Il doit en informer ses collègues.",
+            "Il doit prévenir son employeur.",
+            "Il peut choisir de le dire ou pas."
+          ],
+          "pregunta": "2. Quelle est l'obligation pour un salarié en ce qui concerne son handicap ?"
+        },
+        {
+          "respuesta_correcta": "Les impacts du handicap sur l'emploi.",
+          "opciones": [
+            "La nature précise du handicap.",
+            "Les impacts du handicap sur l'emploi.",
+            "Les traitements médicaux à suivre."
+          ],
+          "pregunta": "3. Qu'est-ce que les entreprises aiment savoir ?"
+        },
+        {
+          "respuesta_correcta": "De garder une approche réaliste.",
+          "opciones": [
+            "De garder une approche réaliste.",
+            "De s'inscrire à un stage spécifique.",
+            "De s'informer auprès d'un médecin."
+          ],
+          "pregunta": "4. Quel conseil donne Jessica Thébault ?"
+        },
+        {
+          "respuesta_correcta": "s'exposer à des préjugés.",
+          "opciones": [
+            "s'exposer à des préjugés.",
+            "intégrer une équipe spéciale.",
+            "risquer de perdre son emploi."
+          ],
+          "pregunta": "5. En nommant son handicap, on peut..."
+        },
+        {
+          "respuesta_correcta": "les collègues peuvent mal interpréter des absences.",
+          "opciones": [
+            "les collègues peuvent mal interpréter des absences.",
+            "l'employeur peut proposer un travail inadapté.",
+            "le salarié concerné peut se sentir incompris."
+          ],
+          "pregunta": "6. Si le handicap n'est pas nommé, ..."
+        },
+        {
+          "respuesta_correcta": "en l'ajoutant tout en bas de son CV.",
+          "opciones": [
+            "en l'indiquant tout en haut de son CV.",
+            "en l'ajoutant tout en bas de son CV.",
+            "en l'écrivant dans sa lettre de motivation."
+          ],
+          "pregunta": "7. Lors de la candidature, on peut mentionner son handicap..."
+        }
+      ],
+      "instruccion": "Activité 12 Répondez aux questions en cochant (X) la bonne réponse.",
+      "texto_lectura": null,
+      "transcripcion": "Bonjour à tous, nous recevons ce matin Jessica Thébault pour nous parler d'un sujet important qui est celui du handicap invisible. Jessica, bonjour, pouvez-vous vous présenter ? - Oui, bonjour, je m'appelle Jessica Thébault et je suis référente dans un dispositif d'emploi accompagné où j'aide les personnes handicapées à s'intégrer et à se sentir bien dans leur environnement de travail. Je m'occupe plus spécifiquement des personnes dont le handicap est dit << invisible >>. - Qu'entend-on par handicap << invisible >> ? - Un handicap invisible est une condition de santé que les autres ne peuvent pas voir, comme des douleurs chroniques ou des troubles mentaux. Les personnes qui en souffrent peuvent avoir besoin de soutien, même si cela ne se voit pas. - Et doit-on en parler à son employeur ou à ses collègues ? - En entreprise, parler d'un handicap invisible, qui représente 80% des formes de handicap, peut être délicat. Ce n'est pas évident pour les autres, sauf si la personne concernée en parle. De plus en plus d'entreprises sensibilisent leurs employés à l'intégration des personnes handicapées et mettent en place des dispositifs d'accompagnement, comme celui dont je m'occupe. Cependant, révéler son handicap peut aussi créer des inquiétudes. Il n'est pas obligatoire pour un candidat ou un salarié d'en parler, c'est lui qui choisit d'en parler ou pas. Mais les entreprises aiment connaître les conséquences de ce handicap sur l'emploi car cela peut favoriser un dialogue positif pour une meilleure intégration. Cela peut aussi permettre de faire les aménagements de poste nécessaires. - Et quels conseils pouvez-vous donner ? - Je conseille toujours de garder une approche réaliste en se concentrant sur les conséquences concrètes du handicap sur l'emploi occupé. Si d'un côté, nommer le handicap peut entraîner des préjugés de la part des collègues, qui pourraient rechercher des informations en ligne et comparer avec ce qu'ils observent chez la personne, ne pas en parler peut aussi entraîner des malentendus. Par exemple, si les collègues ne sont pas informés, ils pourraient trouver étrange que la personne s'absente souvent et penser qu'elle est privilégiée. - Et concernant la candidature? - Pour la candidature, il n'y a pas de règle générale. Cela peut être mentionné en fin de CV, surtout si l'entreprise que l'on contacte a une politique active en matière d'inclusion. Il faut faire progresser la culture d'inclusion des entreprises. Plus elles envoient des signaux rassurants sur ce sujet, plus les personnes handicapées pourront s'intégrer durablement dans un emploi et cela conduira à plus d'égalité. - Jessica, merci beaucoup ! - C'était un plaisir ! D'après https://www.francetravail.fr"
+    },
+    {
+      "ruta_audio": "50.mp3",
+      "habilidad": "Compréhension de l'oral",
+      "campos_formulario": null,
+      "tipo": "Preguntas de opción múltiple",
+      "preguntas": [
+        {
+          "respuesta_correcta": "passe beaucoup de temps au bureau.",
+          "opciones": [
+            "passe beaucoup de temps au bureau.",
+            "parce qu'on a envie de plaire aux autres.",
+            "parce qu'on partage le même emploi."
+          ],
+          "pregunta": "1. L'amitié au travail est possible parce qu'on..."
+        },
+        {
+          "respuesta_correcta": "de garder une distance appropriée.",
+          "opciones": [
+            "de garder une distance appropriée.",
+            "de partager des secrets personnels.",
+            "d'organiser des fêtes régulières."
+          ],
+          "pregunta": "2. L'un des défis majeurs est..."
+        },
+        {
+          "respuesta_correcta": "rapidement.",
+          "opciones": [
+            "calmement.",
+            "rapidement.",
+            "amicalement."
+          ],
+          "pregunta": "3. Pour Véronique, il est nécessaire de gérer les conflits..."
+        },
+        {
+          "respuesta_correcta": "aller déjeuner chaque jour avec la même personne.",
+          "opciones": [
+            "partir en vacances l'été avec ses collègues.",
+            "inviter ses collègues dans des fêtes de famille.",
+            "aller déjeuner chaque jour avec la même personne."
+          ],
+          "pregunta": "4. Véronique recommande de ne pas..."
+        },
+        {
+          "respuesta_correcta": "Parce qu'il y a une différence de pouvoir.",
+          "opciones": [
+            "Parce qu'il y a une différence de pouvoir.",
+            "Car le patron est très souvent absent.",
+            "Parce que les rôles sont trop différents."
+          ],
+          "pregunta": "5. Pourquoi une amitié avec un patron peut-elle être difficile ?"
+        },
+        {
+          "respuesta_correcta": "des objectifs similaires.",
+          "opciones": [
+            "des intérêts communs.",
+            "des objectifs similaires.",
+            "des postes différents."
+          ],
+          "pregunta": "6. Une amitié est plus facile si les collègues ont..."
+        },
+        {
+          "respuesta_correcta": "riche et positive.",
+          "opciones": [
+            "simple et drôle.",
+            "sincère et durable.",
+            "riche et positive."
+          ],
+          "pregunta": "7. En conclusion, l'amitié au travail peut être..."
+        }
+      ],
+      "instruccion": "Activité 13 Répondez aux questions en cochant (X) la bonne réponse.",
+      "texto_lectura": null,
+      "transcripcion": "Bonjour à tous ! Aujourd'hui, nous explorons un sujet qui touche beaucoup de personnes: l'amitié au travail. Pour en parler, nous avons le plaisir d'accueillir Véronique Malbrancke, psychologue et coach d'entreprise. Bonjour, Véronique ! - Bonjour! - Alors, l'amitié au travail, est-ce possible ? - Oui, l'amitié au travail est possible, mais elle peut être complexe. Nous passons beaucoup de temps au bureau avec nos collègues, ce qui peut effectivement mener à des relations amicales. Cependant, ces amitiés sont souvent plus compliquées que celles que nous formons en dehors du cadre professionnel. - Quels sont les principaux défis de l'amitié au travail ? - L'un des principaux défis est de maintenir une certaine distance. Il est important de ne pas trop mélanger la vie personnelle et la vie professionnelle. Par exemple, éviter de partager des détails trop personnels peut aider à maintenir un équilibre. De plus, il est nécessaire de savoir gérer les conflits rapidement. La transparence et l'honnêteté jouent un rôle clé pour éviter les malentendus et maintenir des relations saines. - Avez-vous des conseils pour que l'amitié au travail fonctionne bien ? - Oui, absolument. Premièrement, il est important de garder une certaine distance physique et émotionnelle. Par exemple, il est recommandé de ne pas déjeuner tous les jours avec la même personne si vous travaillez dans le même bureau. Deuxièmement, il est essentiel d'être honnête et ouvert dès qu'un problème survient. Il faut discuter des conflits dès qu'ils apparaissent pour les résoudre rapidement et efficacement. - Que dire des amitiés avec des patrons ou des subordonnés ? - Les amitiés avec des patrons peuvent être délicates en raison de la différence de pouvoir. Un patron doit maintenir une certaine distance pour conserver son autorité et être respecté. En revanche, une amitié entre collègues est généralement plus facile à gérer si les personnes partagent les mêmes objectifs. - Merci beaucoup, Véronique, pour ces précieux conseils. En résumé, l'amitié au travail est possible, mais elle nécessite une gestion attentive pour rester équilibrée et bénéfique pour tous. - Exactement. On peut conclure en disant que l'amitié au travail peut être enrichissante et positive. - Merci à tous nos auditeurs. Nous espérons que vous avez trouvé cette chronique utile. À bientôt pour un nouveau sujet ! D'après https://www.marieclaire.fr"
+    },
+    {
+      "ruta_audio": "51.mp3",
+      "habilidad": "Compréhension de l'oral",
+      "campos_formulario": null,
+      "tipo": "Preguntas de opción múltiple",
+      "preguntas": [
+        {
+          "respuesta_correcta": "Psychologue.",
+          "opciones": [
+            "Vétérinaire.",
+            "Psychologue.",
+            "Dresseuse."
+          ],
+          "pregunta": "1. Quelle est la profession de Pia Simon ?"
+        },
+        {
+          "respuesta_correcta": "l'employeur l'autorise.",
+          "opciones": [
+            "on paye une contribution.",
+            "l'employeur l'autorise.",
+            "on a un problème de santé."
+          ],
+          "pregunta": "2. On peut emmener son animal au travail si..."
+        },
+        {
+          "respuesta_correcta": "sont en cage.",
+          "opciones": [
+            "ont un coussin.",
+            "sont vaccinés.",
+            "sont en cage."
+          ],
+          "pregunta": "3. Les lapins ou les hamsters sont acceptés s'ils..."
+        },
+        {
+          "respuesta_correcta": "tous les employés acceptent cette situation.",
+          "opciones": [
+            "tous les employés acceptent cette situation.",
+            "les animaux sont bien éduqués.",
+            "les bureaux sont bien ventilés."
+          ],
+          "pregunta": "4. L'entreprise doit vérifier que..."
+        },
+        {
+          "respuesta_correcta": "tenir leur carnet de santé à jour.",
+          "opciones": [
+            "tenir leur carnet de santé à jour.",
+            "respecter leur moment de calme.",
+            "mettre des jouets à disposition."
+          ],
+          "pregunta": "5. Pour les chats, il est important de..."
+        },
+        {
+          "respuesta_correcta": "réduire la tension au travail.",
+          "opciones": [
+            "rapprocher les collègues.",
+            "prendre plus de pauses.",
+            "réduire la tension au travail."
+          ],
+          "pregunta": "6. Emmener son animal au travail permet de..."
+        },
+        {
+          "respuesta_correcta": "convivialité des employés.",
+          "opciones": [
+            "productivité",
+            "convivialité des employés.",
+            "créativité"
+          ],
+          "pregunta": "7. Un animal au bureau peut améliorer la..."
+        }
+      ],
+      "instruccion": "Activité 14 Répondez aux questions en cochant (X) la bonne réponse.",
+      "texto_lectura": null,
+      "transcripcion": "Bonjour, chers auditeurs ! Aujourd'hui, nous allons découvrir une nouvelle tendance: emmener son animal au travail. Et pour en parler, nous accueillons Pia Simon, psychologue et coach d'entreprise. Bonjour Pia ! - Bonjour! - Peut-on vraiment emmener son animal au travail, en France ? - Oui, c'est possible mais cela dépend de l'employeur. En France, les employeurs peuvent autoriser ou interdire les animaux dans les bureaux. - Quels types d'animaux sont généralement acceptés au bureau ? - Les chiens et les chats sont les plus courants. Les petits rongeurs comme les lapins ou les hamsters sont acceptés seulement s'ils sont en cage. Par contre, les oiseaux qui sont trop bruyants et les animaux volumineux, comme certains reptiles, sont à éviter. - Quels sont les conseils pour assurer une bonne cohabitation entre les salariés et les animaux ? - L'entreprise doit vérifier que tous les employés sont d'accord. Une charte peut être établie, demandant aux propriétaires de vacciner leurs animaux et de les traiter contre les parasites. Il est aussi fondamental de sortir les chiens régulièrement pour leurs besoins et de maintenir une hygiène adéquate pour les chats. - Justement, quelles sont les règles spécifiques pour les chats ? - Pour les chats, il est important de tenir leur carnet de santé à jour. Les propriétaires doivent fournir une litière propre et la nettoyer régulièrement pour éviter les mauvaises odeurs. Il est aussi conseillé d'apporter un coussin sur lequel le chat peut se reposer. - Quels sont les avantages d'avoir des animaux au travail ? - Les animaux permettent de réduire le stress au travail. Par exemple, le ronronnement d'un chat est apaisant et la jovialité d'un chien apporte du dynamisme. Pendant la crise sanitaire, beaucoup de gens ont trouvé du soutien auprès de leurs animaux. En les autorisant au bureau, on peut améliorer la productivité des employés. - Merci beaucoup, Pia, pour toutes ces informations. En résumé, emmener son animal au travail est possible et peut être bénéfique, mais cela nécessite une bonne organisation et des règles claires. - Exactement, cela peut être une expérience enrichissante pour tous ! - Merci à tous nos auditeurs pour votre attention et à la prochaine pour une nouvelle chronique ! D'après https://www.axa-assurancescollectives.fr"
+    },
+    {
+      "ruta_audio": "52.mp3",
+      "habilidad": "Compréhension de l'oral",
+      "campos_formulario": null,
+      "tipo": "Preguntas de opción múltiple",
+      "preguntas": [
+        {
+          "respuesta_correcta": "en mettant son bureau près d'une fenêtre.",
+          "opciones": [
+            "en mettant son bureau près d'une fenêtre.",
+            "en créant un espace de travail à l'extérieur.",
+            "en interdisant tous les éclairages artificiels."
+          ],
+          "pregunta": "1. On peut profiter de la lumière naturelle..."
+        },
+        {
+          "respuesta_correcta": "assurer une excellente ventilation.",
+          "opciones": [
+            "utiliser des régulateurs thermiques.",
+            "placer les bureaux loin des murs.",
+            "assurer une excellente ventilation."
+          ],
+          "pregunta": "2. Pour éviter les problèmes de température, il faut..."
+        },
+        {
+          "respuesta_correcta": "pouvez installer des poubelles de tri.",
+          "opciones": [
+            "pouvez installer des poubelles de tri.",
+            "devez faire appel à des spécialistes.",
+            "devez organiser des journées de tri."
+          ],
+          "pregunta": "3. Pour bien gérer les déchets, vous..."
+        },
+        {
+          "respuesta_correcta": "En plaçant de petites affiches.",
+          "opciones": [
+            "En proposant des formations.",
+            "En distribuant des brochures.",
+            "En plaçant de petites affiches."
+          ],
+          "pregunta": "4. Comment faire de la prévention ?"
+        },
+        {
+          "respuesta_correcta": "d'éviter le gaspillage.",
+          "opciones": [
+            "de faire des économies.",
+            "de partager ses repas.",
+            "d'éviter le gaspillage."
+          ],
+          "pregunta": "5. Un frigo partagé au bureau permet..."
+        },
+        {
+          "respuesta_correcta": "participer à des événements.",
+          "opciones": [
+            "participer à des événements.",
+            "créer des jeux écologiques.",
+            "faire gagner des récompenses."
+          ],
+          "pregunta": "6. Une manière d'impliquer toute l'entreprise, c'est de..."
+        },
+        {
+          "respuesta_correcta": "Un parking à vélos.",
+          "opciones": [
+            "Une cantine bio.",
+            "Un parking à vélos.",
+            "Un concours écolo."
+          ],
+          "pregunta": "7. Quelle initiative peut être proposée à votre direction?"
+        }
+      ],
+      "instruccion": "Activité 15 Répondez aux questions en cochant (X) la bonne réponse.",
+      "texto_lectura": null,
+      "transcripcion": "Chers auditeurs, une nouvelle question pour vous cet après-midi: comment devenir plus écologique au bureau et comment motiver vos collègues à adopter des comportements respectueux de l'environnement ? Avec environ 200 jours de travail par an dans un bureau, pour de nombreux Français, il est fondamental d'agir ensemble pour un environnement plus vert. La première chose qu'il faut repenser, c'est l'emplacement des postes de travail. Pour cela, on vous conseille de placer les bureaux près des fenêtres pour profiter de la lumière naturelle, ce qui réduit la consommation d'électricité pendant la journée. Mais attention à ne pas les mettre trop près des murs pour éviter les problèmes de température ! La deuxième chose importante pour agir afin de devenir plus écolo, c'est la gestion des déchets ; pour cela, nous vous conseillons d'installer des poubelles de tri pour les papiers, le verre, le carton et les emballages plastiques. Mais le vrai secret, c'est de faire de la prévention. Pour cela, il peut être utile de placer des petites affiches dans les endroits stratégiques comme près de la machine à café, de l'imprimante et dans la cuisine partagée. Ces petites affiches rappellent les gestes écologiques à adopter. Nous vous conseillons également de communiquer régulièrement les résultats de vos efforts, comme la réduction de la consommation de papier ou les économies d'énergie, afin d'encourager vos collègues à suivre ces bonnes pratiques. Une notion qu'il faut toujours avoir en tête, c'est la notion de partage. Par exemple, on peut partager son véhicule en proposant du covoiturage entre collègues pour réduire les émissions de CO₂. Cela a l'avantage de créer des liens tout en étant plus écologique. Un de nos auditeurs vient de proposer une idée intéressante: avoir un frigo partagé pour éviter de jeter des produits alimentaires. Ainsi, les aliments non consommés peuvent être rapportés au bureau pour qu'ils ne finissent pas à la poubelle. Pour mobiliser toute l'entreprise, participez à des événements comme la semaine du développement durable ou la semaine européenne de réduction des déchets. Ces moments sont des occasions idéales pour sensibiliser et changer les habitudes au bureau. Enfin, n'oubliez pas également de proposer des initiatives à votre direction, comme un parking à vélos. Chaque petite action compte pour avoir un bureau plus écologique ! D'après https://agirpourlatransition.ademe.fr"
+    }
+  ],
+  "CE": [
+    {
+      "ruta_audio": null,
+      "habilidad": "Compréhension des écrits",
+      "instruccion": "Activité 1 Lisez le texte puis répondez aux questions en cochant (x) la bonne réponse.",
+      "tipo": "Preguntas de opción múltiple",
+      "preguntas": [
+        {
+          "respuesta_correcta": "complet.",
+          "opciones": [
+            "méconnu.",
+            "complet.",
+            "d'équipe."
+          ],
+          "pregunta": "Dans le texte, on dit que le judo est un sport..."
+        },
+        {
+          "respuesta_correcta": "Faux",
+          "opciones": [
+            "Vrai",
+            "Faux"
+          ],
+          "pregunta": "Ce sport fait travailler peu de muscles du corps."
+        },
+        {
+          "respuesta_correcta": "éviter de se blesser dans son quotidien.",
+          "opciones": [
+            "éviter de se blesser dans son quotidien.",
+            "améliorer sa vitesse de déplacement.",
+            "développer la force de ses jambes."
+          ],
+          "pregunta": "C'est un sport qui peut aussi aider à..."
+        },
+        {
+          "respuesta_correcta": "Faux",
+          "opciones": [
+            "Vrai",
+            "Faux"
+          ],
+          "pregunta": "Le judo empêche le contrôle sur ses émotions."
+        },
+        {
+          "respuesta_correcta": "sont plus modestes.",
+          "opciones": [
+            "sont plus modestes.",
+            "sont plus tolérantes.",
+            "ont plus de succès."
+          ],
+          "pregunta": "Les judokas sont des personnes qui..."
+        },
+        {
+          "respuesta_correcta": "Le respect de l'autre et la franchise.",
+          "opciones": [
+            "L'esprit de compétition et la fierté.",
+            "L'esprit d'équipe et la coopération.",
+            "Le respect de l'autre et la franchise."
+          ],
+          "pregunta": "Quelles valeurs sont transmises par ce sport ?"
+        },
+        {
+          "respuesta_correcta": "Vrai",
+          "opciones": [
+            "Vrai",
+            "Faux"
+          ],
+          "pregunta": "On peut commencer le judo à partir de quatre ans."
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": "Le judo: un sport bénéfique pour le corps et l'esprit\nLe judo est un sport complet qui apporte de nombreux avantages pour le corps et l'esprit. Ce sport, d'origine japonaise, est pratiqué dans le monde entier et est connu pour ses effets positifs sur la santé et sur le bien-être personnel.\nPhysiquement, le judo fait travailler tous les muscles du corps. Il aide à renforcer les bras, les jambes, le dos et les épaules grâce à des mouvements et des techniques spécifiques. En plus, le judo améliore la condition physique générale, renforce le cœur et aide à maintenir un bon équilibre. Cela peut aussi aider à mieux se déplacer et à éviter les blessures dans la vie quotidienne.\nMentalement, le judo joue un rôle important dans le développement personnel. Il enseigne aux pratiquants à contrôler leurs émotions, à rester calmes même en situation stressante et à être réactifs. Cette capacité à gérer le stress et à rester serein aide à renforcer la confiance en soi et à améliorer l'estime de soi. Les judokas apprennent aussi à accepter la défaite avec humilité et à célébrer les succès avec modestie, ce qui contribue à un esprit plus équilibré.\nLe judo repose aussi sur des valeurs morales importantes. Ces valeurs sont le respect, la modestie, l'honneur et la sincérité. Le respect est essentiel envers les autres, les partenaires d'entraînement, les adversaires et les entraîneurs. La modestie est encouragée, même en cas de victoire, pour rester humble. L'honneur signifie pratiquer le sport avec intégrité, et la sincérité implique d'être honnête avec soi-même et les autres. Ces valeurs sont importantes pendant les entraînements, mais aussi dans la vie quotidienne.\nLes bénéfices de la pratique du judo sont nombreux. C'est un sport qui peut être commencé dès l'âge de quatre ou cinq ans. Cela va aider à développer la coordination et la motricité. Le judo, c'est bien plus qu'un simple sport, c'est une véritable école de vie qui aide à former des personnes responsables et bienveillantes. Pour découvrir cette pratique enrichissante, visitez www.judoleboulou.fr.\nD'après https://www.judoleboulou.fr",
+      "transcripcion": null,
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": null,
+      "habilidad": "Compréhension des écrits",
+      "instruccion": "Activité 2 Lisez le texte puis répondez aux questions en cochant (x) la bonne réponse.",
+      "tipo": "Preguntas de opción múltiple",
+      "preguntas": [
+        {
+          "respuesta_correcta": "suivre un emploi du temps.",
+          "opciones": [
+            "travailler notre concentration.",
+            "suivre un emploi du temps.",
+            "améliorer notre productivité."
+          ],
+          "pregunta": "Pour une meilleure gestion du temps, il faut..."
+        },
+        {
+          "respuesta_correcta": "Vrai",
+          "opciones": [
+            "Vrai",
+            "Faux"
+          ],
+          "pregunta": "La prise de décision est moins fatigante si on a des horaires fixes."
+        },
+        {
+          "respuesta_correcta": "En la répétant.",
+          "opciones": [
+            "En l'écrivant.",
+            "En la planifiant.",
+            "En la répétant."
+          ],
+          "pregunta": "Comment parvient-on à changer une action en habitude ?"
+        },
+        {
+          "respuesta_correcta": "efficaces.",
+          "opciones": [
+            "autonomes.",
+            "efficaces.",
+            "tranquilles."
+          ],
+          "pregunta": "Avoir des repères dans la journée nous permet d'être plus..."
+        },
+        {
+          "respuesta_correcta": "Vrai",
+          "opciones": [
+            "Vrai",
+            "Faux"
+          ],
+          "pregunta": "Se relaxer développe l'imagination."
+        },
+        {
+          "respuesta_correcta": "En ayant des horaires fixes.",
+          "opciones": [
+            "En éteignant les écrans le soir.",
+            "En faisant du sport au réveil.",
+            "En ayant des horaires fixes."
+          ],
+          "pregunta": "Comment avoir un meilleur sommeil ?"
+        },
+        {
+          "respuesta_correcta": "Faux",
+          "opciones": [
+            "Vrai",
+            "Faux"
+          ],
+          "pregunta": "Il ne faut pas tenir compte de sa manière de vivre pour organiser son emploi du temps."
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": "Les bienfaits de la routine\nAvoir une routine peut sembler monotone et sans intérêt, mais elle offre de nombreux avantages pour notre bien-être mental et physique. Un emploi du temps structuré peut améliorer notre concentration et notre productivité. Suivre un emploi du temps permet de mieux gérer notre temps et d'anticiper les tâches à faire. Par exemple, fixer des horaires de travail clairs et prendre des pauses régulières nous aide à rester concentrés. De plus, avoir des horaires fixes au quotidien libère notre esprit de la fatigue décisionnelle.\nRépéter régulièrement une action nous aide à l'intégrer comme habitude. Même si le chiffre de vingt et un jours pour instaurer une habitude est contesté, la répétition est essentielle pour adopter des comportements bénéfiques. Une organisation bien planifiée augmente nos chances de maintenir des habitudes saines comme l'exercice régulier ou une alimentation équilibrée. Il est important d'avoir des repères dans notre journée car cela nous rend plus efficaces. Moins de temps passé à décider quoi faire nous permet de nous concentrer sur des tâches importantes et d'être plus productifs. Les moments prévus pour se détendre, comme les promenades, favorisent la créativité. Des périodes de repos bien planifiées diminuent le stress et laissent place à des idées nouvelles.\nNous vous conseillons aussi de maintenir des horaires réguliers pour le coucher et pour le réveil pour améliorer la qualité du sommeil. En effet, un sommeil régulier favorise l'endormissement et assure un repos réparateur. De plus, une organisation structurée nous aide à consacrer du temps à des activités bénéfiques comme la cuisine maison ou le sport.\nPour bénéficier de ces avantages, il est important de planifier son emploi du temps en tenant compte de votre style de vie et de vos préférences. Adoptez de nouvelles habitudes progressivement et restez flexible. Si vous avez du mal à suivre une organisation, n'hésitez pas à demander l'aide d'un professionnel.\nD'après https://www.psychologue.net",
+      "transcripcion": null,
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": null,
+      "habilidad": "Compréhension des écrits",
+      "instruccion": "Activité 3 Lisez le texte puis répondez aux questions en cochant (x) la bonne réponse.",
+      "tipo": "Preguntas de opción múltiple",
+      "preguntas": [
+        {
+          "respuesta_correcta": "Vrai",
+          "opciones": [
+            "Vrai",
+            "Faux"
+          ],
+          "pregunta": "L'enfant à haut potentiel intellectuel a besoin d'un cadre adapté."
+        },
+        {
+          "respuesta_correcta": "isolés et différents.",
+          "opciones": [
+            "tristes et démotivés.",
+            "isolés et différents.",
+            "indifférents et seuls."
+          ],
+          "pregunta": "Les enfants HPI se sentent souvent..."
+        },
+        {
+          "respuesta_correcta": "d'entretenir des échanges ouverts.",
+          "opciones": [
+            "d'éviter les sources de désaccord.",
+            "d'entretenir des échanges ouverts.",
+            "de programmer des défis quotidiens."
+          ],
+          "pregunta": "Pour les aider du mieux possible, il est important..."
+        },
+        {
+          "respuesta_correcta": "Faux",
+          "opciones": [
+            "Vrai",
+            "Faux"
+          ],
+          "pregunta": "Ces enfants n'ont pas de besoins éducatifs particuliers."
+        },
+        {
+          "respuesta_correcta": "les inscrire dans une école spéciale.",
+          "opciones": [
+            "leur acheter plus de livres scolaires.",
+            "les laisser jouer aux jeux de société.",
+            "les inscrire dans une école spéciale."
+          ],
+          "pregunta": "Pour leur éviter de s'ennuyer, il est possible de..."
+        },
+        {
+          "respuesta_correcta": "Faux",
+          "opciones": [
+            "Vrai",
+            "Faux"
+          ],
+          "pregunta": "Les parents doivent éviter de stimuler les interactions sociales."
+        },
+        {
+          "respuesta_correcta": "Prendre rendez-vous chez un spécialiste.",
+          "opciones": [
+            "Prendre rendez-vous chez un spécialiste.",
+            "Demander à parler au directeur de l'école.",
+            "Consulter en ligne des forums de parents."
+          ],
+          "pregunta": "Que peuvent faire les parents en cas de difficultés ?"
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": "Comment soutenir un enfant à haut potentiel intellectuel ?\nAccompagner un enfant récemment diagnostiqué avec un haut potentiel intellectuel (HPI) peut être un défi pour les parents. Pour offrir le meilleur soutien à son enfant, il est essentiel de comprendre ses besoins spécifiques et de lui fournir un environnement approprié. Un enfant HPI se distingue souvent par une grande sensibilité et une capacité d'apprentissage rapide. Il peut vivre ses émotions de manière intense, se sentir différent des autres enfants de son âge et avoir du mal à se faire des amis. Ses capacités intellectuelles élevées lui permettent d'apprendre rapidement et de développer une grande soif de connaissances. Pour l'aider au mieux, il est fondamental de maintenir une communication ouverte et bienveillante. Il est possible de lui expliquer sa différence avec sincérité et de l'encourager à exprimer ses sentiments. Il faut favoriser son estime de lui et le rassurer sur ses capacités, en lui montrant qu'il est soutenu et compris. Une relation parent-enfant solide et affectueuse est particulièrement bénéfique pour son bien-être émotionnel et social.\nEn matière scolaire, il est important de choisir un cadre adapté. Les enfants HPI sont souvent reconnus comme ayant des besoins éducatifs particuliers. Il peut être nécessaire de les inscrire dans une école spécialisée ou de demander des changements dans leur programme pour éviter l'ennui. Par exemple, on peut choisir de lui faire sauter une classe ou bien de demander l'enrichissement du programme avec des activités plus stimulantes.\nEn outre, pour éviter l'isolement, les parents devraient encourager les interactions sociales en organisant des activités avec des camarades et en offrant des opportunités de jeu. Pour répondre à leur soif d'apprendre, l'achat de livres sur leurs centres d'intérêt peut également être très bénéfique.\nSi les parents rencontrent des difficultés dans l'accompagnement de leur enfant, consulter un spécialiste du haut potentiel intellectuel peut offrir des conseils précieux et un soutien adapté.\nD'après https://www.ecolegalilee.fr",
+      "transcripcion": null,
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": null,
+      "habilidad": "Compréhension des écrits",
+      "instruccion": "Activité 4 Lisez le texte puis répondez aux questions en cochant (x) la bonne réponse.",
+      "tipo": "Preguntas de opción múltiple",
+      "preguntas": [
+        {
+          "respuesta_correcta": "d'écouter ses propres souhaits.",
+          "opciones": [
+            "d'écouter ses propres souhaits.",
+            "de suivre l'avis de ses parents.",
+            "de voir un conseiller d'orientation."
+          ],
+          "pregunta": "La première étape pour choisir son métier est..."
+        },
+        {
+          "respuesta_correcta": "écouter ses peurs.",
+          "opciones": [
+            "sauter les étapes.",
+            "s'inspirer des autres.",
+            "écouter ses peurs."
+          ],
+          "pregunta": "Il est important de ne pas..."
+        },
+        {
+          "respuesta_correcta": "découvrir des métiers.",
+          "opciones": [
+            "découvrir des métiers.",
+            "connaître ses qualités.",
+            "choisir une formation."
+          ],
+          "pregunta": "Les outils en ligne peuvent aider à..."
+        },
+        {
+          "respuesta_correcta": "Vrai",
+          "opciones": [
+            "Vrai",
+            "Faux"
+          ],
+          "pregunta": "Un bilan de compétences peut être profitable."
+        },
+        {
+          "respuesta_correcta": "Faux",
+          "opciones": [
+            "Vrai",
+            "Faux"
+          ],
+          "pregunta": "Pour réussir, il faut se tourner vers les vieux métiers."
+        },
+        {
+          "respuesta_correcta": "Faux",
+          "opciones": [
+            "Vrai",
+            "Faux"
+          ],
+          "pregunta": "Si on a des doutes, les formations plus générales sont déconseillées."
+        },
+        {
+          "respuesta_correcta": "revient à la personne concernée.",
+          "opciones": [
+            "appartient aux deux parents.",
+            "doit être prise par un conseiller.",
+            "revient à la personne concernée."
+          ],
+          "pregunta": "La décision finale sur le choix du métier..."
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": "Comment choisir son métier : 10 conseils importants\nTrouver sa voie professionnelle peut sembler complexe, mais il est important de suivre quelques étapes pour faire le bon choix. Tout d'abord, il faut se libérer des attentes de votre entourage et écouter vos désirs. Même si vos parents ou professeurs ont des idées pour vous, suivez avant tout vos propres aspirations. Ensuite, ne vous laissez pas guider par vos peurs. Inspirez-vous de ceux qui ont réussi dans des domaines similaires et laissez votre passion vous guider. Comprendre votre personnalité peut également vous guider pour trouver le métier qui vous convient. Des outils en ligne peuvent aussi vous aider à découvrir vos points forts et à envisager des carrières compatibles.\nPar ailleurs, un bilan de compétences peut s'avérer très utile. Il vous permet d'explorer vos souhaits et vos compétences en profondeur, même si ce service est souvent payant. Heureusement, il peut être financé par votre compte personnel de formation. En outre, il est recommandé de lister vos intérêts et d'essayer plusieurs domaines pour trouver le bon. Nous vous conseillons également d'étudier le marché : choisissez un secteur en croissance pour augmenter vos chances de succès.\nEnsuite, planifiez votre formation. Réfléchissez à la durée et au type de formation nécessaires pour accéder au métier de vos rêves. Certaines professions nécessitent des études longues, tandis que d'autres favorisent l'alternance. Une fois que vous aurez une idée claire, lancez-vous. Explorez les formations disponibles et classez vos options par ordre de préférence. N'hésitez pas à choisir des formations généralistes si vous êtes indécis. Parlez avec des professionnels et des conseillers d'orientation pour obtenir des avis éclairés. Cependant, souvenez-vous que la décision finale vous appartient. Enfin, projetez-vous dans l'avenir. Définissez des étapes concrètes pour atteindre votre objectif professionnel. Et, surtout, soyez prêt à changer de parcours si nécessaire pour réaliser vos rêves !\nD'après https://www.20minutes.fr",
+      "transcripcion": null,
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": null,
+      "habilidad": "Compréhension des écrits",
+      "instruccion": "Activité 5 Lisez le texte puis répondez aux questions en cochant (x) la bonne réponse.",
+      "tipo": "Preguntas de opción múltiple",
+      "preguntas": [
+        {
+          "respuesta_correcta": "de laisser parler sa personnalité.",
+          "opciones": [
+            "de suivre la mode du moment.",
+            "de laisser parler sa personnalité.",
+            "de lire des livres sur la décoration."
+          ],
+          "pregunta": "Pour décorer sa maison, la journaliste conseille..."
+        },
+        {
+          "respuesta_correcta": "Vrai",
+          "opciones": [
+            "Vrai",
+            "Faux"
+          ],
+          "pregunta": "Pour Gabrielle Quillai, nos choix de décoration révèlent nos émotions."
+        },
+        {
+          "respuesta_correcta": "La décoration des émotions.",
+          "opciones": [
+            "La déco-psycho.",
+            "La décoration des émotions.",
+            "Une maison qui nous ressemble."
+          ],
+          "pregunta": "Le titre du livre de Gabrielle Quillai est..."
+        },
+        {
+          "respuesta_correcta": "améliorer notre moral.",
+          "opciones": [
+            "diminuer notre fatigue.",
+            "améliorer notre moral.",
+            "améliorer notre physique."
+          ],
+          "pregunta": "Refaire la décoration d'intérieur peut..."
+        },
+        {
+          "respuesta_correcta": "rendre visibles ses loisirs préférés.",
+          "opciones": [
+            "pratiquer ses loisirs préférés.",
+            "rendre visibles ses loisirs préférés.",
+            "créer un musée de ses loisirs préférés."
+          ],
+          "pregunta": "Pour se sentir bien chez soi, la journaliste conseille d'y..."
+        },
+        {
+          "respuesta_correcta": "Vrai",
+          "opciones": [
+            "Vrai",
+            "Faux"
+          ],
+          "pregunta": "D'après l'article, il faut connaître ses envies pour réussir sa décoration d'intérieur."
+        },
+        {
+          "respuesta_correcta": "Faux",
+          "opciones": [
+            "Vrai",
+            "Faux"
+          ],
+          "pregunta": "L'article conseille de jeter tous ses objets anciens."
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": "Une déco pour se sentir bien chez soi\nPour vous sentir bien chez vous, n'aménagez pas votre maison en suivant les tendances du moment, mais en fonction de votre personnalité et de votre état d'esprit ! On vous explique tout grâce aux idées de la déco-psycho.\nPour Gabrielle Quillai, décoratrice d'intérieur, le décor de chaque pièce que nous avons choisi décrit, à sa façon, ce que nous ressentons, nos tristesses ou nos joies. Et c'est très bien ! La décoratrice d'intérieur conseille de laisser s'exprimer nos sentiments dans nos idées décoration. Elle a d'ailleurs écrit un livre pour nous aider à vivre mieux, à vivre « beau », où elle explique comment faire pour que notre maison nous ressemble.\nGabrielle Quillai évoque ainsi les principes de la déco-psycho en introduction de son livre, La décoration des émotions. L'objectif ? Aménager une maison à son image. Une approche aujourd'hui très en vogue et qui permet à chacun de créer une harmonie entre son intérieur et son moi intérieur. Surprenant mais vrai, refaire votre déco peut vous aider à vous sentir mieux en mettant de l'ordre aussi bien dans votre tête que dans votre maison!\nLa première étape pour y arriver, c'est de prendre le temps de penser. Comment influencer de manière positive votre humeur et votre bien-être grâce à des changements dans votre lieu de vie? De quoi avez-vous besoin ? Quelles sont vos envies?\nPour cela, affirmez votre style. Que vous soyez musicien amateur, passioné de dessin ou fou de football, rendez visibles vos loisirs et vos passions. Vous pouvez, par exemple, accrocher une affiche de votre film ou série préférée. Si vous avez de l'espace, vous pouvez même remplir une pièce entière avec vos passions – sport, cuisine, danse, loisirs créatifs, etc.\nDe même, affichez des photos de vous et de votre passé, de vos amis, de votre famille... Si vous avez des meubles ou des objets de vos parents, mettez-les dans votre salon, avec votre décoration ou vos objets du quotidien. Si nécessaire, réparez-les ou changez-les avec des techniques comme l'art du kintsugi pour donner une seconde vie aux assiettes de votre grand-mère!\nD'après https://ideesaulogis.fr",
+      "transcripcion": null,
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": null,
+      "habilidad": "Compréhension des écrits",
+      "instruccion": "Activité 6 Lisez le texte puis répondez aux questions en cochant (x) la bonne réponse.",
+      "tipo": "Preguntas de opción múltiple",
+      "preguntas": [
+        {
+          "respuesta_correcta": "Vrai",
+          "opciones": [
+            "Vrai",
+            "Faux"
+          ],
+          "pregunta": "Une personne sur 10 000 a l'oreille absolue."
+        },
+        {
+          "respuesta_correcta": "la totalité des notes.",
+          "opciones": [
+            "une seule note.",
+            "une majorité de notes.",
+            "la totalité des notes."
+          ],
+          "pregunta": "Les personnes qui ont l'oreille absolue peuvent identifier dans les sons..."
+        },
+        {
+          "respuesta_correcta": "du cerveau.",
+          "opciones": [
+            "du cerveau.",
+            "de l'oreille.",
+            "du ventre."
+          ],
+          "pregunta": "Les caractéristiques liées à l'oreille absolue se trouvent au niveau..."
+        },
+        {
+          "respuesta_correcta": "Faux",
+          "opciones": [
+            "Vrai",
+            "Faux"
+          ],
+          "pregunta": "Notre type de mémoire influence peu notre capacité à reconnaître des notes."
+        },
+        {
+          "respuesta_correcta": "Faux",
+          "opciones": [
+            "Vrai",
+            "Faux"
+          ],
+          "pregunta": "Les enfants ne peuvent pas avoir l'oreille absolue."
+        },
+        {
+          "respuesta_correcta": "de la hauteur du son.",
+          "opciones": [
+            "du contexte.",
+            "de la hauteur du son.",
+            "de l'émotion exprimée."
+          ],
+          "pregunta": "Dans les langues tonales, la signification d'un mot dépend..."
+        },
+        {
+          "respuesta_correcta": "les sons se traduisent en notes.",
+          "opciones": [
+            "la musique est ennuyeuse.",
+            "les écoles sont peu bruyantes.",
+            "les sons se traduisent en notes."
+          ],
+          "pregunta": "Pour les personnes qui ont l'oreille absolue..."
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": "Des notes de musique plein les oreilles\nTout le monde n'a pas l'oreille musicale. Certains sont capables de reconnaître une fausse note, d'autres, non. Mais encore moins de personnes dans le monde ont l'oreille absolue. Bach et Mozart avaient l'oreille absolue. C'est une capacité très peu fréquente. Seulement une personne sur dix mille l'a!\nMais qu'est-ce ça signifie vraiment « avoir l'oreille absolue » ? Cette expression désigne « la capacité à identifier une note et à la nommer sans avoir un son de référence, typiquement le “la” d'un diapason battant à 440 hertz », explique le Pr Jean-Marc Luer, professeur à l'université de Montpellier.\nLes personnes qui ont une oreille absolue peuvent identifier plus de soixante notes. « Elles entendent par exemple une moto qui passe dans la rue, et sont capables de dire quelle note c'était. Mais on parle d'oreille absolue alors, qu'en fait, il s'agit d'une capacité de mémorisation. Ces personnes ont une excellente mémoire auditive et se rappellent les hauteurs des sons, indique le Pr. Luer. Elles ont des connexions assez particulières dans le cerveau. »\nMais, d'après lui, la génétique n'est pas toute seule à agir dans l'oreille absolue. « Il faut une éducation musicale pour la développer » précise-t-il. Idéalement, avant l'âge de 3 ou 7 ans. Il est quasiment impossible d'acquérir l'oreille absolue à l'âge adulte. Le fait de parler une langue tonale développe aussi cette capacité parce que cela favorise le développement de la mémoire auditive. En effet, dans les langues tonales, comme le mandarin, la hauteur du son employé change la signification des mots. Ce n'est donc pas uniquement les syllabes utilisées qui forment le sens d'un mot mais aussi sa « note ».\nMais avoir l'oreille absolue n'a pas que des avantages. Elle rend les personnes « trop » attentives à tous les bruits environnants. Ce qui distrait les enfants en classe, car ils auront tendance à analyser le plus petit son dans le couloir. C'est vrai aussi pour les adultes : ils ne peuvent pas s'empêcher de traduire les sons en notes de musique, même quand ils voulaient juste en profiter !\nD'après https://www.mmj.fr",
+      "transcripcion": null,
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": null,
+      "habilidad": "Compréhension des écrits",
+      "instruccion": "Activité 7 Lisez le texte puis répondez aux questions en cochant (x) la bonne réponse.",
+      "tipo": "Preguntas de opción múltiple",
+      "preguntas": [
+        {
+          "respuesta_correcta": "moins qu'avant.",
+          "opciones": [
+            "plus qu'avant.",
+            "moins qu'avant.",
+            "autant qu'avant."
+          ],
+          "pregunta": "En 2024, les enfants et adolescents lisent..."
+        },
+        {
+          "respuesta_correcta": "Vrai",
+          "opciones": [
+            "Vrai",
+            "Faux"
+          ],
+          "pregunta": "En 2024, les jeunes lisent plus pour leurs études que pour leurs loisirs."
+        },
+        {
+          "respuesta_correcta": "23 minutes par jour pour leurs loisirs.",
+          "opciones": [
+            "17 minutes par jour pour leurs loisirs.",
+            "19 minutes par jour pour leurs loisirs.",
+            "23 minutes par jour pour leurs loisirs."
+          ],
+          "pregunta": "D'après l'étude précédente sur la lecture, en 2022, les jeunes lisaient..."
+        },
+        {
+          "respuesta_correcta": "surtout des mangas.",
+          "opciones": [
+            "surtout des mangas.",
+            "surtout des livres d'horreur.",
+            "surtout de la science-fiction."
+          ],
+          "pregunta": "Pour le plaisir, les garçons de 13-15 ans lisent..."
+        },
+        {
+          "respuesta_correcta": "les réseaux sociaux.",
+          "opciones": [
+            "les réseaux sociaux.",
+            "la famille.",
+            "la publicité."
+          ],
+          "pregunta": "Les choix de lecture des jeunes en 2024 est plus influencée qu'avant par..."
+        },
+        {
+          "respuesta_correcta": "Vrai",
+          "opciones": [
+            "Vrai",
+            "Faux"
+          ],
+          "pregunta": "En 2024, de plus en plus de jeunes écoutent des livres numériques."
+        },
+        {
+          "respuesta_correcta": "Faux",
+          "opciones": [
+            "Vrai",
+            "Faux"
+          ],
+          "pregunta": "Un tiers des jeunes Français affirment ne pas aimer lire."
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": "La lecture chez les jeunes\nLe Centre national du livre (CNL) a publié les résultats de son étude 2024 « Les jeunes Français et la lecture ».\nSi on compare les chiffres de 2024 avec ceux des années précédentes, on remarque que le goût des jeunes pour la lecture est en diminution.\nD'après cette enquête, 84 % des jeunes de 7 à 19 ans lisent pour l'école, leurs études ou leur travail. Dans le cadre de leurs loisirs, ils sont 81% à lire au total.\nLes jeunes consacrent 19 minutes par jour à la lecture pour leurs loisirs, soit 4 minutes de moins qu'en 2022. En revanche, ils passent en moyenne 3 h 11 par jour sur les écrans. De plus, au moins la moitié d'entre eux font autre chose sur un écran en même temps qu'ils lisent.\nPour leurs loisirs, les jeunes lisent toujours pour se faire plaisir, se détendre, s'évader, s'occuper et aussi apprendre.\nPour tous les âges, les mangas sont l'une des lectures de loisir préférées des jeunes. C'est vrai en particulier pour les garçons de 13-15 ans dont les trois quarts des lectures personnelles sont des mangas. Les jeunes Français lisent aussi des romans, surtout d'amour et, plus récemment, de la dark romance, notamment chez les 16-19 ans.\nL'espoir pour la lecture viendra-t-il des nouvelles technologies ? 44% des jeunes ont désormais déjà lu un livre numérique. Cela fait une nette augmentation depuis l'étude de 2022 (+ 11 pts).\nIls sont également 42 % à avoir déjà écouté un livre audio (+ 4 pts).\nLa majorité des jeunes gardent des souvenirs d'enfance positifs de moments de lecture partagés avec leurs parents. S'ils ont aimé un livre, ils n'hésitent pas à en parler ou à le prêter. Par ailleurs, 10% des jeunes ont déjà eu envie de lire un livre parce qu'il avait été conseillé par une personnalité vue sur les réseaux sociaux ou par un influenceur livre.\nMais 39% des jeunes préfèrent consacrer leur temps libre à d'autres activités et 19 % affirment ne pas aimer lire, ce qui représente une augmentation de 3 points par rapport à l'étude de 2022.\nD'après https://www.lepoint.fr",
+      "transcripcion": null,
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": null,
+      "habilidad": "Compréhension des écrits",
+      "instruccion": "Activité 8 Lisez le texte puis répondez aux questions en cochant (X) la bonne réponse.",
+      "tipo": "Preguntas de opción múltiple",
+      "preguntas": [
+        {
+          "respuesta_correcta": "ne bougent pas assez.",
+          "opciones": [
+            "ne font aucun sport.",
+            "ne bougent pas assez.",
+            "n'aiment pas le sport à l'école."
+          ],
+          "pregunta": "En France, plus de 80 % des enfants de 6 à 11 ans..."
+        },
+        {
+          "respuesta_correcta": "d'activité physique quotidienne.",
+          "opciones": [
+            "d'apports physiques quotidiens.",
+            "d'activités pour le quotidien.",
+            "d'activité physique quotidienne."
+          ],
+          "pregunta": "30'APQ signifie 30 minutes..."
+        },
+        {
+          "respuesta_correcta": "s'ajoute aux heures d'éducation sportive à l'école.",
+          "opciones": [
+            "réduit les heures d'éducation sportive à l'école.",
+            "s'ajoute aux heures d'éducation sportive à l'école.",
+            "remplace les heures d'éducation sportive à l'école."
+          ],
+          "pregunta": "La mise en place des 30’APQ..."
+        },
+        {
+          "respuesta_correcta": "Vrai",
+          "opciones": [
+            "Vrai",
+            "Faux"
+          ],
+          "pregunta": "L'un des objectifs visés par les 30'APQ est d'apprendre aux enfants à sauter."
+        },
+        {
+          "respuesta_correcta": "plus de 7 000 écoles volontaires.",
+          "opciones": [
+            "plus de 7 000 écoles volontaires.",
+            "plus de 21 000 écoles volontaires.",
+            "plus de 500 000 écoles volontaires."
+          ],
+          "pregunta": "Depuis 2020, le dispositif des 30'APQ a été lancé dans..."
+        },
+        {
+          "respuesta_correcta": "Faux",
+          "opciones": [
+            "Vrai",
+            "Faux"
+          ],
+          "pregunta": "La majorité des professeurs volontaires n'ont pas été satisfaits par les 30’APQ."
+        },
+        {
+          "respuesta_correcta": "Faux",
+          "opciones": [
+            "Vrai",
+            "Faux"
+          ],
+          "pregunta": "Il est obligatoire de faire les 30 minutes d'activité en une seule fois."
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": "Le sport, c'est bon pour la santé !\nLes enfants français ne bougent pas assez ! Selon les chiffres de 2021, plus de 80% des garçons et des filles de 6 à 11 ans ne font pas assez d'exercice en France.\nFace à ces chiffres inquiétants, le ministère de L'Éducation nationale lance un programme de 30 minutes d'activité physique quotidienne, nommé 30'APQ, pensé pour les écoles. Le ministère considère qu'il est nécessaire d'être en bonne santé pour bien apprendre.\nLe programme consiste à proposer aux élèves de bouger, d'une manière ou d'une autre en mobilisant les compétences suivantes : savoir courir, savoir lancer, savoir sauter, savoir danser. Il n'y a pas de bonnes ou de mauvaises notes, le but n'étant pas d'évaluer les élèves, mais de les faire bouger et développer leurs capacités physiques.\nLe programme est en complément de l'Éducation Physique et Sportive (nom donné au sport à l'école), qui a lieu 3 heures par semaine à l'école primaire.\nDepuis la rentrée 2020, plus de 7 000 écoles volontaires ont mis le dispositif en place, soit plus de 21 000 classes concernées et près de 500 000 élèves.\nLes enseignants volontaires ont remarqué un certain nombre d'intérêts du 30’APQ pour leurs élèves et pour leur classe. Parmi ces bienfaits, ils ont cité notamment l'amélioration de l'ambiance en cours, une meilleure concentration et le développement physique des élèves.\nLe dispositif des 30 minutes de sport par jour se fait selon les préférences des enseignants. Ils peuvent ainsi répartir le temps total en deux ou trois fois dans la journée. Par exemple, commencer la journée d'école avec des exercices de réveil musculaire, plus tard faire du yoga entre une séance de mathématiques et une séance d'anglais, terminer les dernières minutes de cours avec des jeux dynamiques, etc. Le but est de faire bouger les enfants 30 minutes tous les jours.\nD'après https://www.decathlonpro.fr",
+      "transcripcion": null,
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": null,
+      "habilidad": "Compréhension des écrits",
+      "instruccion": "Activité 9 Lisez le texte puis répondez aux questions en cochant (x) la bonne réponse.",
+      "tipo": "Preguntas de opción múltiple",
+      "preguntas": [
+        {
+          "respuesta_correcta": "une croyance populaire.",
+          "opciones": [
+            "une croyance populaire.",
+            "un fait scientifique vérifié.",
+            "une invention d'un politique."
+          ],
+          "pregunta": "L'« effet Mozart » est..."
+        },
+        {
+          "respuesta_correcta": "Faux",
+          "opciones": [
+            "Vrai",
+            "Faux"
+          ],
+          "pregunta": "L'étude à l'origine de l'« effet Mozart » a été faite en 1990."
+        },
+        {
+          "respuesta_correcta": "favorise l'apprentissage.",
+          "opciones": [
+            "accélère l'apprentissage.",
+            "simplifie l'apprentissage.",
+            "favorise l'apprentissage."
+          ],
+          "pregunta": "Aujourd'hui, il est scientifiquement prouvé que la musique classique..."
+        },
+        {
+          "respuesta_correcta": "Faux",
+          "opciones": [
+            "Vrai",
+            "Faux"
+          ],
+          "pregunta": "De nos jours, les scientifiques pensent qu'écouter de la musique rend plus intelligent."
+        },
+        {
+          "respuesta_correcta": "réduit le stress.",
+          "opciones": [
+            "rend nerveux.",
+            "réduit le stress.",
+            "empêche de dormir."
+          ],
+          "pregunta": "Écouter de la musique classique..."
+        },
+        {
+          "respuesta_correcta": "Faux",
+          "opciones": [
+            "Vrai",
+            "Faux"
+          ],
+          "pregunta": "Tous les genres de musique ont un effet calmant sur les battements de notre cœur."
+        },
+        {
+          "respuesta_correcta": "du piano seul.",
+          "opciones": [
+            "du piano seul.",
+            "des opéras célèbres.",
+            "de la guitare électrique."
+          ],
+          "pregunta": "Pour étudier, la journaliste conseille d'écouter plutôt..."
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": "Quel effet a la musique sur notre cerveau ?\nAu début des années 90, un Gouverneur de Géorgie offrait de la musique classique à chaque bébé né dans son État. Pourquoi ? Ce cadeau surprenant a son origine dans une étude de 1993. D'après cette étude, écouter de la musique de Mozart suffisait à augmenter votre Quotient Intellectuel et vos capacités d'apprentissage !\nLes résultats de cette étude, largement critiquée depuis, a donné lieu à une croyance populaire selon laquelle écouter de la musique classique rendait plus intelligent. Cette idée, reprise sous le nom d'« effet Mozart », a attiré l'attention des chercheurs et provoqué une grande réflexion sur l'impact de la musique classique, et de la musique en général, sur notre cerveau.\nEn examinant les résultats de l'étude, certains chercheurs ont suggéré que la musique classique améliore plutôt le moral que les capacités intellectuelles. Ainsi, écouter de la musique classique pendant ses études ne rendrait pas plus intelligents, mais nous aiderait à avoir un esprit positif. Ce qui a une bonne influence sur notre capacité à travailler et sur nos résultats.\nDes études ont également démontré que cela peut aider les élèves de diverses autres façons, notamment en améliorant les habitudes de sommeil, en stimulant le système immunitaire et en réduisant le niveau de stress.\nDes chercheurs ont trouvé d'autres preuves sur les capacités d'amélioration de l'humeur avec la musique, en particulier avec la musique classique. Ils se sont intéressés à ses effets sur l'activité de notre cœur. Ils ont ainsi observé que les participants qui écoutaient de la musique classique avaient la tension plus basse que ceux qui n'écoutaient pas de musique. Il semble cependant que le style de musique soit important. L'écoute de jazz ou de musique pop n'ont aucun effet.\nAttention, toutes les musiques classiques ne sont pas pareilles. Pour vous concentrer et étudier dans de bonnes conditions, évitez les grandes œuvres d'orchestres et privilégiez les morceaux de musique avec du piano, de la guitare ou des instruments à cordes.\nD'après calmradio.com",
+      "transcripcion": null,
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": null,
+      "habilidad": "Compréhension des écrits",
+      "instruccion": "Activité 10 Lisez le texte puis répondez aux questions en cochant (x) la bonne réponse.",
+      "tipo": "Preguntas de opción múltiple",
+      "preguntas": [
+        {
+          "respuesta_correcta": "plus propres.",
+          "opciones": [
+            "plus modernes.",
+            "plus propres.",
+            "plus sûrs."
+          ],
+          "pregunta": "À Angers, les habitants préfèrent utiliser des moyens de transports..."
+        },
+        {
+          "respuesta_correcta": "Les salariés.",
+          "opciones": [
+            "Les lycéens.",
+            "Les retraités.",
+            "Les salariés."
+          ],
+          "pregunta": "Qui utilise principalement le vélo électrique ?"
+        },
+        {
+          "respuesta_correcta": "Elles sont plus faciles à ranger ... que les vélos.",
+          "opciones": [
+            "Elles sont plus confortables",
+            "Elles sont plus faciles à ranger ... que les vélos.",
+            "Elles sont plus économiques"
+          ],
+          "pregunta": "Quel est l'avantage des trottinettes ?"
+        },
+        {
+          "respuesta_correcta": "Vrai",
+          "opciones": [
+            "Vrai",
+            "Faux"
+          ],
+          "pregunta": "La trottinette est utile pour parcourir peu de kilomètres."
+        },
+        {
+          "respuesta_correcta": "Vrai",
+          "opciones": [
+            "Vrai",
+            "Faux"
+          ],
+          "pregunta": "Selon Léon, les bus sont souvent sales."
+        },
+        {
+          "respuesta_correcta": "Faux",
+          "opciones": [
+            "Vrai",
+            "Faux"
+          ],
+          "pregunta": "L'hoverboard est surtout utilisé par les adultes."
+        },
+        {
+          "respuesta_correcta": "continuer à se développer.",
+          "opciones": [
+            "se moderniser dans le futur.",
+            "continuer à se développer.",
+            "rapidement disparaître."
+          ],
+          "pregunta": "Selon Yannick Fontaine, les transports alternatifs vont..."
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": "De nouvelles manières de se déplacer en ville\nNos habitudes de déplacement en ville ont changé. Dans la ville d'Angers, les habitants choisissent des moyens de transport alternatifs, plus pratiques, plus économiques et plus écologiques. Avec les centres-villes souvent saturés par les véhicules, ces nouvelles options deviennent une solution. À une, deux ou trois roues, à moteur électrique ou mécanique, ils se développent rapidement.\nÀ Angers, cette tendance s'est accélérée avec les travaux sur la nouvelle ligne de tramway, qui compliquent la circulation en centre-ville. Le vélo électrique, en libre-service et sans station fixe, est une alternative intéressante et très pratique à la voiture et aux transports en commun classiques. Il est d'ailleurs très utilisé par les travailleurs qui désirent arriver rapidement au bureau et éviter les embouteillages ou les problèmes dans les transports en commun.\nAutre solution, les trottinettes et les skateboards : ils sont encore plus pratiques et ont l'avantage de pouvoir être facilement rangés au bureau. Contrairement au vélo, on peut les garder près de soi, ce qui évite les vols, expliquent Francis et Camille Dubourget, propriétaires d'un magasin de véhicules électriques. La trottinette, longtemps considérée comme un jouet pour enfants, est aujourd'hui populaire chez les adultes, surtout pour les trajets courts. C'est aussi un moyen de transport apprécié des commerciaux qui peuvent se déplacer plus rapidement d'un point de la ville à l'autre. Autre avantage, elle est très légère et a une autonomie de plusieurs kilomètres.\nChez les jeunes, c'est le skateboard qui est populaire. Pour Léon, un jeune lycéen de 15 ans, c'est le moyen de transport le plus écologique et le plus fiable. Il préfère l'utiliser plutôt que le bus qu'il considère bruyant et peu hygiénique. Enfin, des innovations comme l'hoverboard, une sorte de skateboard électrique, ont aussi eu du succès, surtout chez les adolescents, même si certains pensent que c'est surtout une mode passagère. Pourtant, Yannick Fontaine, un expert, croit que ces nouveaux modes de transport sont là pour durer, car les gens commencent à repenser leur façon de se déplacer.\nD'après https://www.ouest-france.fr",
+      "transcripcion": null,
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": null,
+      "habilidad": "Compréhension des écrits",
+      "instruccion": "Activité 11 Lisez le texte puis répondez aux questions en cochant (x) la bonne réponse.",
+      "tipo": "Preguntas de opción múltiple",
+      "preguntas": [
+        {
+          "respuesta_correcta": "profiter d'une réduction sur une place de théâtre.",
+          "opciones": [
+            "profiter d'une réduction sur une place de théâtre.",
+            "réserver une place de théâtre longtemps à l'avance.",
+            "vendre à un prix réduit une place de théâtre non utilisée."
+          ],
+          "pregunta": "Avec l'application ShopTaPlace, vous pouvez..."
+        },
+        {
+          "respuesta_correcta": "alimentaire.",
+          "opciones": [
+            "médical.",
+            "alimentaire.",
+            "culturel."
+          ],
+          "pregunta": "ShopTaPlace s'est inspirée d'une application du secteur..."
+        },
+        {
+          "respuesta_correcta": "Vrai",
+          "opciones": [
+            "Vrai",
+            "Faux"
+          ],
+          "pregunta": "L'application a été créée par des étudiants de théâtre."
+        },
+        {
+          "respuesta_correcta": "Vrai",
+          "opciones": [
+            "Vrai",
+            "Faux"
+          ],
+          "pregunta": "L'application a eu beaucoup de succès."
+        },
+        {
+          "respuesta_correcta": "quelques minutes avant le début du spectacle.",
+          "opciones": [
+            "pour un spectacle qui doit être dans votre ville.",
+            "dans une salle avec un minimum de public.",
+            "quelques minutes avant le début du spectacle."
+          ],
+          "pregunta": "Sur ShopTaPlace, vous pouvez obtenir une place..."
+        },
+        {
+          "respuesta_correcta": "Faux",
+          "opciones": [
+            "Vrai",
+            "Faux"
+          ],
+          "pregunta": "L'application est destinée à un public de moins de 50 ans."
+        },
+        {
+          "respuesta_correcta": "partiellement",
+          "opciones": [
+            "très",
+            "partiellement",
+            "peu"
+          ],
+          "pregunta": "Selon Stéphane Leblanc, l'application est..."
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": "ShopTaPlace, l'application qui vous permet de faire des économies\nUne nouvelle application, ShopTaPlace, permet de lutter contre le problème des places qui ne sont pas vendues dans les salles de concert et de théâtre en les proposant à des prix réduits, jusqu'à moins 70 %. Inspirée par le concept de « Too Good to Go », une application qui permet de lutter contre le gaspillage alimentaire dans les restaurants et les commerces en proposant des repas ou des produits frais à petit prix, ShopTaPlace a été créée par Rose Chevalier et Yannis Benjelloun, deux étudiants passionnés de théâtre, pour lutter contre le gaspillage culturel. Leur idée est de vendre les places non vendues à des prix attractifs, ce qui permet aux théâtres, cinémas et salles de spectacles de remplir leurs salles.\nShopTaPlace a débuté avec le théâtre. Rose et Yannis avaient remarqué que nombreuses salles étaient à moitié vides, même lors des soirées de fin de semaine. À Paris, 300 000 places de théâtre seraient perdues chaque mois. Un chiffre qui continue d'augmenter. En seulement quelques mois, l'application a attiré une dizaine d'établissements, et compte déjà plus de 10 000 utilisateurs. Les places sont disponibles à prix réduit jusqu'à cinq minutes avant la représentation. L'application est gratuite pour les salles de spectacles, ce qui représente un véritable avantage.\nL'application veut séduire principalement les jeunes adultes âgés de 20 à 35 ans, un groupe qui fréquente moins les salles de spectacles traditionnelles mais qui est très présent sur des plateformes comme TikTok. Cette stratégie pourrait permettre d'attirer des personnes plus jeunes dans les salles de spectacles qui sont actuellement fréquentées par des spectateurs qui ont entre 50 et 80 ans.\nCependant, certains, comme Stéphane Leblanc, directeur d'un théâtre à Paris, pense que si ShopTaPlace peut aider à remplir les salles, elle ne résout pourtant pas le problème le plus important: attirer un public stable.\nD'après https://www.challenges.fr",
+      "transcripcion": null,
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": null,
+      "habilidad": "Compréhension des écrits",
+      "instruccion": "Activité 12 Lisez le texte puis répondez aux questions en cochant (X) la bonne réponse.",
+      "tipo": "Preguntas de opción múltiple",
+      "preguntas": [
+        {
+          "respuesta_correcta": "écologique.",
+          "opciones": [
+            "économique.",
+            "éducative.",
+            "écologique."
+          ],
+          "pregunta": "Cet article présente une mesure..."
+        },
+        {
+          "respuesta_correcta": "Faux",
+          "opciones": [
+            "Vrai",
+            "Faux"
+          ],
+          "pregunta": "Le doggy bag a du mal à se mettre en place en France."
+        },
+        {
+          "respuesta_correcta": "Vrai",
+          "opciones": [
+            "Vrai",
+            "Faux"
+          ],
+          "pregunta": "En général, les clients consomment les restes rapportés chez eux."
+        },
+        {
+          "respuesta_correcta": "de bien gérer les quantités que l'on achète.",
+          "opciones": [
+            "d'utiliser des produits frais et de saison.",
+            "de bien gérer les quantités que l'on achète.",
+            "d'inventer de nouvelles recettes avec des restes."
+          ],
+          "pregunta": "Selon Frank Chemin, il est important..."
+        },
+        {
+          "respuesta_correcta": "Limiter le nombre de plats dans leurs menus.",
+          "opciones": [
+            "Proposer des plats moins grands.",
+            "Laisser le client choisir la taille du plat.",
+            "Limiter le nombre de plats dans leurs menus."
+          ],
+          "pregunta": "Quelle décision certains restaurants ont-ils prise ?"
+        },
+        {
+          "respuesta_correcta": "Vrai",
+          "opciones": [
+            "Vrai",
+            "Faux"
+          ],
+          "pregunta": "En France, le gaspillage alimentaire coûte plusieurs milliards d'euros."
+        },
+        {
+          "respuesta_correcta": "supérieure",
+          "opciones": [
+            "inférieure",
+            "égale",
+            "supérieure"
+          ],
+          "pregunta": "La pollution provoquée par le gaspillage alimentaire est..."
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": "Le doggy bag pour lutter contre le gaspillage alimentaire\nDepuis le 1er juillet, les restaurants en France sont obligés de proposer des doggy bags, des boîtes ou des sacs réutilisables ou recyclables pour permettre aux clients de ramener chez eux les repas non consommés.\nTrès populaire en Amérique du Nord et en Asie, le concept du doggy bag se développe depuis quelques années en France et les professionnels de la restauration répondent positivement à cette initiative. Dans certains restaurants, les recettes et les portions ont été pensées pour être réchauffées et consommées à la maison. De cette manière, les plats que les clients ramènent chez eux sont vraiment consommés et ne terminent pas à la poubelle.\nMême si l'obligation du doggy bag est une étape importante dans la lutte contre le gaspillage alimentaire, pour les restaurateurs, il est important de s'attaquer à l'origine de ce problème. Selon Franck Chemin, propriétaire d'un restaurant, il faut faire attention aux quantités en achetant uniquement ce dont on a besoin. Il est également important de valoriser tous les ingrédients, y compris les restes (qui sont rarement réutilisés) comme les épluchures* des fruits et des légumes.\nCertains restaurants vont encore plus loin et ont choisi de réduire leurs menus et proposent des aliments de saison pour réduire le transport.\nLimiter le gaspillage est un véritable défi pour notre société. Selon une étude, les Français jettent environ 10 millions de tonnes de nourriture chaque année, ce qui représente 16 milliards d'euros. Cette étude révèle que le gaspillage alimentaire dans les restaurants et les supermarchés est quatre fois supérieur à celui des particuliers. En moyenne, ce sont 130 grammes de nourriture par personne qui termine à la poubelle dans les restaurants contre 32 grammes chez les particuliers. Ces chiffres représentent 3 % des émissions nationales totales de CO₂, c'est-à-dire cinq fois les émissions du trafic aérien intérieur.\n*épluchures: peaux\nD'après https://www.linfordurable.fr",
+      "transcripcion": null,
+      "campos_formulario": null
+    }
+  ]
+}

@@ -1,0 +1,4679 @@
+{
+  "CO": [
+    {
+      "ruta_audio": "02.mp3",
+      "habilidad": "Compréhension de l'oral",
+      "instruccion": "Activité 2 Lisez les questions. Écoutez le document puis répondez. Votre amie québécoise laisse un message sur votre répondeur.",
+      "tipo": "QCM",
+      "preguntas": [
+        {
+          "respuesta_correcta": "Laëtitia.",
+          "opciones": [
+            "Davy.",
+            "Laëtitia.",
+            "Geneviève."
+          ],
+          "pregunta": "Qui vous appelle ?"
+        },
+        {
+          "respuesta_correcta": "12 h 15.",
+          "opciones": [
+            "11 h 15.",
+            "12 h 15.",
+            "13 h 15."
+          ],
+          "pregunta": "À quelle heure a lieu le rendez-vous ?"
+        },
+        {
+          "respuesta_correcta": "A.png | une personne qui parle au téléphone",
+          "opciones": [
+            "A.png | une personne qui parle au téléphone",
+            "B.png | une personne qui utilise un ordinateur pour envoyer un email",
+            "C.png | une personne qui utilise un téléphone portable"
+          ],
+          "pregunta": "Comment devez-vous contacter vos amis ?"
+        },
+        {
+          "respuesta_correcta": "A.png | des lunettes de soleil",
+          "opciones": [
+            "A.png | des lunettes de soleil",
+            "B.png | une serviette",
+            "C.png | des boissons"
+          ],
+          "pregunta": "Qu'est-ce que vous devez apporter ?"
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": null,
+      "transcripcion": "Coucou, c'est Laëtitia ! J'ai rendez-vous avec Davy et Geneviève à midi et quart. On mange chez moi et après, nous allons à la piscine pour nager et bronzer sur la pelouse. Si tu veux venir avec nous, appelle-moi. Si tu viens, n'oublie pas de prendre tes lunettes de soleil. Bisous!",
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": "03.mp3",
+      "habilidad": "Compréhension de l'oral",
+      "instruccion": "Activité 3 Lisez les questions. Écoutez le document puis répondez. Vous vivez à Toulouse. Votre ami laisse un message sur votre répondeur.",
+      "tipo": "QCM",
+      "preguntas": [
+        {
+          "respuesta_correcta": "La Thaïlande.",
+          "opciones": [
+            "La Chine.",
+            "La France.",
+            "La Thaïlande."
+          ],
+          "pregunta": "De quel pays arrive Florian ?"
+        },
+        {
+          "respuesta_correcta": "4 jours.",
+          "opciones": [
+            "2 jours.",
+            "4 jours.",
+            "6 jours."
+          ],
+          "pregunta": "Il est à Toulouse pendant combien de jours ?"
+        },
+        {
+          "respuesta_correcta": "jeudi.",
+          "opciones": [
+            "mardi.",
+            "jeudi.",
+            "samedi."
+          ],
+          "pregunta": "Hugo vous invite..."
+        },
+        {
+          "respuesta_correcta": "B.png | des tomates",
+          "opciones": [
+            "A.png | une tarte aux pommes",
+            "B.png | des tomates",
+            "C.png | du riz"
+          ],
+          "pregunta": "Qu'est-ce que vous devez apporter ?"
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": null,
+      "transcripcion": "Salut, c'est Hugo. Florian est revenu de Thaïlande mardi. Il reste à Toulouse pendant 4 jours avant de partir en vacances en Chine pour 6 jours. Il veut nous voir ! Viens dîner chez moi jeudi 2 octobre. Si tu es d'accord, tu pourrais apporter des tomates pour la salade ? Appelle-moi !",
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": "04.mp3",
+      "habilidad": "Compréhension de l'oral",
+      "instruccion": "Activité 4 Lisez les questions. Écoutez le document puis répondez. Une amie française vous laisse un message sur votre répondeur.",
+      "tipo": "QCM",
+      "preguntas": [
+        {
+          "respuesta_correcta": "B.png | une pizzeria",
+          "opciones": [
+            "A.png | un restaurant asiatique",
+            "B.png | une pizzeria",
+            "C.png | un restaurant de hamburgers"
+          ],
+          "pregunta": "Où est-ce que Rose a réservé ?"
+        },
+        {
+          "respuesta_correcta": "le midi.",
+          "opciones": [
+            "le matin.",
+            "le midi.",
+            "le soir."
+          ],
+          "pregunta": "Vous avez rendez-vous..."
+        },
+        {
+          "respuesta_correcta": "sa sœur.",
+          "opciones": [
+            "sa mère.",
+            "sa sœur.",
+            "sa cousine."
+          ],
+          "pregunta": "Rose a invité..."
+        },
+        {
+          "respuesta_correcta": "par téléphone.",
+          "opciones": [
+            "par SMS.",
+            "par courriel.",
+            "par téléphone."
+          ],
+          "pregunta": "Vous devez répondre..."
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": null,
+      "transcripcion": "Bonjour, c'est Rose. Tu vas bien? J'ai fait une réservation à la pizzeria « Giovanni ». Nous avons rendez-vous à midi et demi. Il y a des menus à 14 euros ou à 17 euros. Je te donne l'adresse: 15 rue des Peupliers. Nous serons trois personnes, j'ai invité ma sœur. Appelle-moi pour confirmer. À demain !",
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": "05.mp3",
+      "habilidad": "Compréhension de l'oral",
+      "instruccion": "Activité 5 Lisez les questions. Écoutez le document puis répondez. Vous écoutez ce message sur votre messagerie vocale.",
+      "tipo": "QCM",
+      "preguntas": [
+        {
+          "respuesta_correcta": "changer",
+          "opciones": [
+            "annuler",
+            "changer",
+            "confirmer"
+          ],
+          "pregunta": "Votre ami appelle pour..."
+        },
+        {
+          "respuesta_correcta": "A.png | un bus",
+          "opciones": [
+            "A.png | un bus",
+            "B.png | un taxi",
+            "C.png | un métro"
+          ],
+          "pregunta": "Quel moyen de transport devez-vous utiliser ?"
+        },
+        {
+          "respuesta_correcta": "C.png | un ticket de cinéma",
+          "opciones": [
+            "A.png | une boisson",
+            "B.png | des bonbons",
+            "C.png | un ticket de cinéma"
+          ],
+          "pregunta": "Qu'est-ce que vous devez acheter ?"
+        },
+        {
+          "respuesta_correcta": "7 euros.",
+          "opciones": [
+            "3 euros.",
+            "7 euros.",
+            "16 euros."
+          ],
+          "pregunta": "Combien coûte une place de cinéma ?"
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": null,
+      "transcripcion": "Salut, c'est Alex. Je ne peux pas passer chez toi finalement. Je te donne rendez-vous au cinéma. Prends le bus 16 et descends à l'arrêt Cinéma. Il est rue de la Gare, au numéro 3. Tu peux acheter les tickets, s'il te plaît? La place coûte 7 euros. Je ramène des bonbons. Bises !",
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": "06.mp3",
+      "habilidad": "Compréhension de l'oral",
+      "instruccion": "Activité 6 Lisez les questions. Écoutez le document puis répondez. Votre ami laisse un message sur votre répondeur.",
+      "tipo": "QCM",
+      "preguntas": [
+        {
+          "respuesta_correcta": "En août.",
+          "opciones": [
+            "En août.",
+            "En septembre.",
+            "En octobre."
+          ],
+          "pregunta": "Quel mois Sylvain vous propose de visiter Strasbourg ?"
+        },
+        {
+          "respuesta_correcta": "B.png | un train",
+          "opciones": [
+            "A.png | un bus",
+            "B.png | un train",
+            "C.png | un avion"
+          ],
+          "pregunta": "Quel transport est-ce que vous allez prendre ?"
+        },
+        {
+          "respuesta_correcta": "C.png | des lunettes de soleil",
+          "opciones": [
+            "A.png | un chapeau",
+            "B.png | de la crème solaire",
+            "C.png | des lunettes de soleil"
+          ],
+          "pregunta": "Qu'est-ce que vous devez apporter ?"
+        },
+        {
+          "respuesta_correcta": "téléphone.",
+          "opciones": [
+            "SMS.",
+            "courriel.",
+            "téléphone."
+          ],
+          "pregunta": "Vous devez confirmer l'invitation par..."
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": null,
+      "transcripcion": "Salut, c'est Sylvain. Je vais visiter Strasbourg fin août avec mes parents avant de retourner à l'école en septembre. Tu veux venir? Nous allons prendre le train parce que la voiture ne marche plus. N'oublie pas ton appareil photo et tes lunettes de soleil! Rappelle-moi au 07 56 13 88 42.",
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": "07.mp3",
+      "habilidad": "Compréhension de l'oral",
+      "instruccion": "Activité 7 Lisez les questions. Écoutez le document puis répondez. Votre ami laisse un message sur votre répondeur.",
+      "tipo": "QCM",
+      "preguntas": [
+        {
+          "respuesta_correcta": "B.png | un cinéma",
+          "opciones": [
+            "A.png | un théâtre",
+            "B.png | un cinéma",
+            "C.png | un musée"
+          ],
+          "pregunta": "Où est-ce qu'Anthony vous propose d'aller ?"
+        },
+        {
+          "respuesta_correcta": "15 h.",
+          "opciones": [
+            "15 h.",
+            "16 h.",
+            "18 h."
+          ],
+          "pregunta": "À quelle heure Anthony termine le travail ?"
+        },
+        {
+          "respuesta_correcta": "B.png | chez le dentiste",
+          "opciones": [
+            "A.png | chez le coiffeur",
+            "B.png | chez le dentiste",
+            "C.png | à une réunion"
+          ],
+          "pregunta": "Où Anthony a-t-il rendez-vous ?"
+        },
+        {
+          "respuesta_correcta": "regarder.",
+          "opciones": [
+            "faire.",
+            "manger.",
+            "regarder."
+          ],
+          "pregunta": "Vous devez choisir ce que vous allez..."
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": null,
+      "transcripcion": "Salut, c'est Anthony. J'ai deux invitations pour le cinéma. Tu veux venir ? C'est gratuit. Je finis le travail à 15 heures mais je vais chez le dentiste à 16 heures. Alors, je te propose d'aller à la séance de 18 heures. Rappelle-moi quand tu as choisi le film. Après, je vais faire la réservation sur Internet. À plus tard.",
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": "08.mp3",
+      "habilidad": "Compréhension de l'oral",
+      "instruccion": "Activité 8 Lisez les questions. Écoutez le document puis répondez. Votre amie laisse un message sur votre répondeur.",
+      "tipo": "QCM",
+      "preguntas": [
+        {
+          "respuesta_correcta": "Samedi.",
+          "opciones": [
+            "Vendredi.",
+            "Samedi.",
+            "Dimanche."
+          ],
+          "pregunta": "Quel jour votre amie est-elle disponible ?"
+        },
+        {
+          "respuesta_correcta": "13 h.",
+          "opciones": [
+            "9 h 30.",
+            "13 h.",
+            "20 h."
+          ],
+          "pregunta": "À quelle heure est-elle disponible ?"
+        },
+        {
+          "respuesta_correcta": "C.png | au restaurant",
+          "opciones": [
+            "A.png | au cinéma",
+            "B.png | au musée",
+            "C.png | au restaurant"
+          ],
+          "pregunta": "Où est-ce qu'elle vous propose d'aller le soir ?"
+        },
+        {
+          "respuesta_correcta": "Aujourd'hui.",
+          "opciones": [
+            "Aujourd'hui.",
+            "Demain midi.",
+            "Demain soir."
+          ],
+          "pregunta": "Quand est-ce que vous devez téléphoner à votre amie ?"
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": null,
+      "transcripcion": "Bonjour, c'est Mégane. Je ne suis pas disponible dimanche, mais samedi oui. Je suis libre à partir de 13 h, mais je dois rentrer à 20 h. Je veux faire une activité culturelle. On peut aller au musée ou au cinéma. Si tu ne peux pas, nous pouvons dîner au restaurant vers 19 h. Rappelle-moi aujourd'hui.",
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": "09.mp3",
+      "habilidad": "Compréhension de l'oral",
+      "instruccion": "Activité 9 Lisez les questions. Écoutez le document puis répondez. Vous entendez ce message sur votre messagerie vocale.",
+      "tipo": "QCM",
+      "preguntas": [
+        {
+          "respuesta_correcta": "En début",
+          "opciones": [
+            "En début",
+            "En milieu",
+            "En fin"
+          ],
+          "pregunta": "Quand est-ce qu'Adil part en vacances ?"
+        },
+        {
+          "respuesta_correcta": "B.png | du ski",
+          "opciones": [
+            "A.png | du football",
+            "B.png | du ski",
+            "C.png | de la natation"
+          ],
+          "pregunta": "Quel sport Adil va-t-il faire ?"
+        },
+        {
+          "respuesta_correcta": "A.png | de la fondue au fromage",
+          "opciones": [
+            "A.png | de la fondue au fromage",
+            "B.png | des gaufres",
+            "C.png | de la glace"
+          ],
+          "pregunta": "Que va manger Adil ?"
+        },
+        {
+          "respuesta_correcta": "Une montre.",
+          "opciones": [
+            "Du fromage.",
+            "Du chocolat.",
+            "Une montre."
+          ],
+          "pregunta": "Que va vous offrir Adil ?"
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": null,
+      "transcripcion": "Salut, c'est Adil. Je pars en voyage le lundi 5. J'adore la Suisse. C'est un très beau pays. Je vais faire du ski tous les jours. La nourriture est délicieuse. Je vais manger beaucoup de chocolat et de fondue au fromage, évidemment! Mais je déteste les röstis! On se voit ce week-end? J'ai un cadeau pour toi : c'est une montre ! À bientôt.",
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": "10.mp3",
+      "habilidad": "Compréhension de l'oral",
+      "instruccion": "Activité 10 Lisez les questions. Écoutez le document puis répondez. Votre amie laisse un message sur votre répondeur.",
+      "tipo": "QCM",
+      "preguntas": [
+        {
+          "respuesta_correcta": "B.png | une exposition de peinture",
+          "opciones": [
+            "A.png | un concert",
+            "B.png | une exposition de peinture",
+            "C.png | une bibliothèque"
+          ],
+          "pregunta": "Où est-ce que Christina vous propose d'aller ?"
+        },
+        {
+          "respuesta_correcta": "16 h.",
+          "opciones": [
+            "14 h 20.",
+            "16 h.",
+            "17 h."
+          ],
+          "pregunta": "À quelle heure est le rendez-vous ?"
+        },
+        {
+          "respuesta_correcta": "le bus.",
+          "opciones": [
+            "le bus.",
+            "le taxi.",
+            "le vélo."
+          ],
+          "pregunta": "Pour aller à l'espace Matisse, vous prenez..."
+        },
+        {
+          "respuesta_correcta": "SMS.",
+          "opciones": [
+            "SMS.",
+            "courriel.",
+            "téléphone."
+          ],
+          "pregunta": "Vous devez contacter votre amie par..."
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": null,
+      "transcripcion": "Bonsoir, c'est Christina. Je vais à une exposition de peinture avec Armelle jeudi soir. Tu veux venir avec nous ? On peut se retrouver devant l'espace Matisse à 16 h. Pour venir, tu peux prendre le bus 114. Je vais venir en taxi. L'entrée coûte 7 €. Envoie-moi un message au 06 79 30 78 49. Bises.",
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": "11.mp3",
+      "habilidad": "Compréhension de l'oral",
+      "instruccion": "Activité 11 Lisez les questions. Écoutez le document puis répondez. Vous écoutez ce message sur votre répondeur.",
+      "tipo": "QCM",
+      "preguntas": [
+        {
+          "respuesta_correcta": "voiture.",
+          "opciones": [
+            "moto.",
+            "voiture.",
+            "camion."
+          ],
+          "pregunta": "Le garagiste termine les réparations de votre..."
+        },
+        {
+          "respuesta_correcta": "13 h 30.",
+          "opciones": [
+            "13 h.",
+            "13 h 15.",
+            "13 h 30."
+          ],
+          "pregunta": "À quelle heure ouvre le garage l'après-midi ?"
+        },
+        {
+          "respuesta_correcta": "223 euros.",
+          "opciones": [
+            "153 euros.",
+            "223 euros.",
+            "703 euros."
+          ],
+          "pregunta": "Les réparations coûtent..."
+        },
+        {
+          "respuesta_correcta": "B.png | par carte bancaire",
+          "opciones": [
+            "A.png | en espèces",
+            "B.png | par carte bancaire",
+            "C.png | par chèque"
+          ],
+          "pregunta": "Comment devez-vous payer?"
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": null,
+      "transcripcion": "Bonjour, ici le garage Bolide. Votre voiture est prête. Vous pouvez venir la chercher aujourd'hui. Le garage ouvre de huit heures à midi, puis de une heure et demie à sept heures et demie. Les réparations sont de 223 euros. Nous vous demandons de payer par carte bancaire. Merci. Au revoir.",
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": "12.mp3",
+      "habilidad": "Compréhension de l'oral",
+      "instruccion": "Activité 12 Lisez les questions. Écoutez le document puis répondez. Vous écoutez ce message sur votre répondeur.",
+      "tipo": "QCM",
+      "preguntas": [
+        {
+          "respuesta_correcta": "confirmer une réunion.",
+          "opciones": [
+            "annuler un contrat.",
+            "vendre une voiture.",
+            "confirmer une réunion."
+          ],
+          "pregunta": "M. Dujardin vous appelle pour..."
+        },
+        {
+          "respuesta_correcta": "10 h.",
+          "opciones": [
+            "10 h.",
+            "14 h.",
+            "15 h."
+          ],
+          "pregunta": "À quelle heure est le rendez-vous ?"
+        },
+        {
+          "respuesta_correcta": "La directrice.",
+          "opciones": [
+            "La directrice.",
+            "L'employé d'accueil.",
+            "Le responsable des publicités."
+          ],
+          "pregunta": "Qui participe à la réunion ?"
+        },
+        {
+          "respuesta_correcta": "A.png | par téléphone",
+          "opciones": [
+            "A.png | par téléphone",
+            "B.png | par email",
+            "C.png | par courrier"
+          ],
+          "pregunta": "Comment pouvez-vous contacter M. Dujardin ?"
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": null,
+      "transcripcion": "Bonjour, ici monsieur Dujardin de l'accueil de la compagnie de publicités. Je vous confirme l'heure de la réunion de demain à 10 h pour signer le contrat. La directrice commerciale et la comptable vont suivre la réunion. Vous pouvez venir en voiture, nous avons un parking. S'il y a un problème, vous pouvez m'appeler au 04 15 96 12 14.",
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": "13.mp3",
+      "habilidad": "Compréhension de l'oral",
+      "instruccion": "Activité 13 Lisez les questions. Écoutez le document puis répondez. Vous habitez en France. Vous écoutez ce message sur votre répondeur.",
+      "tipo": "QCM",
+      "preguntas": [
+        {
+          "respuesta_correcta": "A.png | un appartement",
+          "opciones": [
+            "A.png | un appartement",
+            "B.png | une exposition d'art",
+            "C.png | une maison"
+          ],
+          "pregunta": "Qu'est-ce que Mme Lara vous propose de visiter ?"
+        },
+        {
+          "respuesta_correcta": "A.png | une bibliothèque",
+          "opciones": [
+            "A.png | une bibliothèque",
+            "B.png | un théâtre",
+            "C.png | une mairie"
+          ],
+          "pregunta": "Qu'est-ce qui se trouve à côté de ce lieu ?"
+        },
+        {
+          "respuesta_correcta": "mercredi.",
+          "opciones": [
+            "lundi.",
+            "mercredi.",
+            "samedi."
+          ],
+          "pregunta": "Vous devez répondre à Mme Lara avant..."
+        },
+        {
+          "respuesta_correcta": "courriel.",
+          "opciones": [
+            "SMS.",
+            "courriel.",
+            "téléphone."
+          ],
+          "pregunta": "Vous pouvez contacter Mme Lara par..."
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": null,
+      "transcripcion": "Bonjour, ici madame Lara de l'agence immobilière. Je vous appelle pour votre recherche de logement. Nous avons un loft à vous proposer samedi. Il est situé près de la bibliothèque municipale. Si vous voulez le visiter, écrivez-moi avant mercredi, 18 heures, à l'adresse immo@services.fr. Merci, au revoir!",
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": "14.mp3",
+      "habilidad": "Compréhension de l'oral",
+      "instruccion": "Activité 14 Lisez les questions. Écoutez le document puis répondez. Vous écoutez ce message sur votre répondeur.",
+      "tipo": "QCM",
+      "preguntas": [
+        {
+          "respuesta_correcta": "40 euros.",
+          "opciones": [
+            "40 euros.",
+            "80 euros.",
+            "140 euros."
+          ],
+          "pregunta": "Combien coûte un abonnement ?"
+        },
+        {
+          "respuesta_correcta": "B.png | une salle de fitness",
+          "opciones": [
+            "A.png | un terrain de football",
+            "B.png | une salle de fitness",
+            "C.png | une piscine"
+          ],
+          "pregunta": "À quoi est-ce que vous pouvez accéder ?"
+        },
+        {
+          "respuesta_correcta": "vous présenter à l'accueil.",
+          "opciones": [
+            "téléphoner au club.",
+            "envoyer un courriel.",
+            "vous présenter à l'accueil."
+          ],
+          "pregunta": "Pour avoir des renseignements, vous devez..."
+        },
+        {
+          "respuesta_correcta": "21 h.",
+          "opciones": [
+            "18 h.",
+            "19 h.",
+            "21 h."
+          ],
+          "pregunta": "Le vendredi, à quelle heure ferme le club ?"
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": null,
+      "transcripcion": "Bonjour, ici le club de sports « Formule + ». Je vous appelle pour vous proposer un abonnement à 40 euros par mois. Avec ce tarif, vous pouvez utiliser la salle de fitness et la piscine, du lundi au samedi. Si cette offre spéciale vous intéresse, venez me voir au club vendredi ou samedi. Nous fermons à 21 heures tous les soirs de la semaine et à 19 heures le week-end. Merci. Au revoir.",
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": "15.mp3",
+      "habilidad": "Compréhension de l'oral",
+      "instruccion": "Activité 15 Lisez les questions. Écoutez le document puis répondez. Vous partez en voyage à Bruxelles. Vous écoutez ce message sur votre répondeur.",
+      "tipo": "QCM",
+      "preguntas": [
+        {
+          "respuesta_correcta": "modifier",
+          "opciones": [
+            "modifier",
+            "proposer",
+            "confirmer"
+          ],
+          "pregunta": "L'agence vous appelle pour..."
+        },
+        {
+          "respuesta_correcta": "jeudi.",
+          "opciones": [
+            "lundi.",
+            "jeudi.",
+            "dimanche."
+          ],
+          "pregunta": "Vous devez arriver à l'hôtel..."
+        },
+        {
+          "respuesta_correcta": "A.png | un petit déjeuner",
+          "opciones": [
+            "A.png | un petit déjeuner",
+            "B.png | un coffre-fort",
+            "C.png | un minibar"
+          ],
+          "pregunta": "Qu'est-ce qui est inclus ?"
+        },
+        {
+          "respuesta_correcta": "A.png | un taxi",
+          "opciones": [
+            "A.png | un taxi",
+            "B.png | un bus",
+            "C.png | un train"
+          ],
+          "pregunta": "L'agence vous conseille d'utiliser quel transport pour aller à l'hôtel ?"
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": null,
+      "transcripcion": "Bonjour, c'est l'agence de voyage. Nous devons changer votre réservation. Vous allez loger à l'hôtel Gamma, à Bruxelles, du jeudi 25 au dimanche 28. Le petit déjeuner et Internet sont inclus. Je vous conseille d'aller à l'hôtel en taxi. Si vous avez des questions, appelez-moi au 01 57 32 32 33 avant lundi. Bonne journée.",
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": "16.mp3",
+      "habilidad": "Compréhension de l'oral",
+      "instruccion": "Activité 16 Lisez les questions. Écoutez le document puis répondez. Votre amie laisse un message sur votre répondeur.",
+      "tipo": "QCM",
+      "preguntas": [
+        {
+          "respuesta_correcta": "C.png | un jeu vidéo",
+          "opciones": [
+            "A.png | un jeu de société",
+            "B.png | un jeu de cartes",
+            "C.png | un jeu vidéo"
+          ],
+          "pregunta": "Qu'est-ce que vous pouvez récupérer au magasin ?"
+        },
+        {
+          "respuesta_correcta": "vendredi.",
+          "opciones": [
+            "lundi.",
+            "mercredi.",
+            "vendredi."
+          ],
+          "pregunta": "Vous pouvez récupérer votre commande..."
+        },
+        {
+          "respuesta_correcta": "9 h.",
+          "opciones": [
+            "8 h.",
+            "9 h.",
+            "10 h."
+          ],
+          "pregunta": "Le magasin ouvre à..."
+        },
+        {
+          "respuesta_correcta": "B.png | un passeport",
+          "opciones": [
+            "A.png | une carte bancaire",
+            "B.png | un passeport",
+            "C.png | une carte de fidélité"
+          ],
+          "pregunta": "Qu'est-ce que vous devez apporter ?"
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": null,
+      "transcripcion": "Bonjour, ici le magasin « Méga J ». Vous avez commandé un jeu vidéo la semaine dernière. Il est arrivé dans notre magasin. Vous pouvez venir le chercher à partir de vendredi au 23 rue des Clochetons. Le magasin est ouvert de 9 h à 19 h non-stop. N'oubliez pas votre pièce d'identité. Merci et bonne journée.",
+      "campos_formulario": null
+    }
+  ],
+  "diccionario_unidad": [
+    {
+      "definicion": "Contrato o acuerdo para recibir un servicio o producto regularmente durante un período determinado, a cambio de un pago.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "J'ai pris un abonnement annuel à la salle de sport.",
+      "palabra": "abonnement",
+      "frecuencia": 2,
+      "lema": "abonnement",
+      "sinonimos": [
+        "souscription",
+        "forfait"
+      ]
+    },
+    {
+      "definicion": "Suscribirse a un servicio, revista o plataforma para recibir contenido o acceso regularmente.",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "Je vais m'abonner à cette chaîne YouTube.",
+      "palabra": "abonner",
+      "frecuencia": 2,
+      "lema": "abonner",
+      "sinonimos": [
+        "souscrire",
+        "s'inscrire"
+      ]
+    },
+    {
+      "definicion": "Adquirir algo a cambio de dinero.",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "Nous devons acheter du pain pour le dîner.",
+      "palabra": "acheter",
+      "frecuencia": 2,
+      "lema": "acheter",
+      "sinonimos": [
+        "acquérir",
+        "se procurer"
+      ]
+    },
+    {
+      "definicion": "Acción o conjunto de acciones que realiza una persona o un grupo, o el estado de estar activo.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "Quelle est votre activité préférée le week-end ?",
+      "palabra": "activité",
+      "frecuencia": 13,
+      "lema": "activité",
+      "sinonimos": [
+        "occupation",
+        "action"
+      ]
+    },
+    {
+      "definicion": "Conjunto de eventos, noticias o hechos que ocurren en el presente y son de interés público.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "Je lis le journal pour me tenir informé de l'actualité.",
+      "palabra": "actualité",
+      "frecuencia": 1,
+      "lema": "actualité",
+      "sinonimos": [
+        "nouvelles",
+        "événements"
+      ]
+    },
+    {
+      "definicion": "Tomar legalmente a alguien como hijo, o elegir y aceptar una idea, método o comportamiento.",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "Ils ont décidé d'adopter un enfant.",
+      "palabra": "adopter",
+      "frecuencia": 2,
+      "lema": "adopter",
+      "sinonimos": [
+        "choisir",
+        "approuver"
+      ]
+    },
+    {
+      "definicion": "Indicación del lugar exacto donde se encuentra una persona o cosa, incluyendo calle, número, ciudad, etc.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "Quelle est votre adresse postale ?",
+      "palabra": "adresse",
+      "frecuencia": 14,
+      "lema": "adresse",
+      "sinonimos": [
+        "domicile",
+        "coordonnées"
+      ]
+    },
+    {
+      "definicion": "Forma conjugada del verbo 'ir', utilizada para expresar movimiento o para animar a alguien.",
+      "tipo_gramatical": "verbe (impératif/présent)",
+      "ejemplo_uso": "Allez, on y va ! Dépêchez-vous !",
+      "palabra": "allez",
+      "frecuencia": 1,
+      "lema": "aller",
+      "sinonimos": [
+        "marchez",
+        "avancez"
+      ]
+    },
+    {
+      "definicion": "Ser vivo que se mueve por sí mismo, se alimenta de otros seres vivos y pertenece al reino animal.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "Mon animal de compagnie est un chat.",
+      "palabra": "animal",
+      "frecuencia": 6,
+      "lema": "animal",
+      "sinonimos": [
+        "bête",
+        "créature"
+      ]
+    },
+    {
+      "definicion": "Vivienda que forma parte de un edificio más grande y que generalmente consta de varias habitaciones.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "J'habite dans un petit appartement au centre-ville.",
+      "palabra": "appartement",
+      "frecuencia": 4,
+      "lema": "appartement",
+      "sinonimos": [
+        "logement",
+        "studio"
+      ]
+    },
+    {
+      "definicion": "Adquirir conocimientos o habilidades mediante el estudio, la práctica o la experiencia.",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "J'aime apprendre de nouvelles langues.",
+      "palabra": "apprendre",
+      "frecuencia": 1,
+      "lema": "apprendre",
+      "sinonimos": [
+        "étudier",
+        "s'instruire"
+      ]
+    },
+    {
+      "definicion": "Acción de llegar a un lugar o el momento en que esto ocurre.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "L'heure d'arrivée du train est 10h00.",
+      "palabra": "arrivée",
+      "frecuencia": 2,
+      "lema": "arrivée",
+      "sinonimos": [
+        "venue",
+        "débarquement"
+      ]
+    },
+    {
+      "definicion": "Contrato por el cual una persona o empresa se compromete a indemnizar a otra en caso de un daño o riesgo específico.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "Il faut souscrire une assurance voyage avant de partir.",
+      "palabra": "assurance",
+      "frecuencia": 2,
+      "lema": "assurance",
+      "sinonimos": [
+        "garantie",
+        "protection"
+      ]
+    },
+    {
+      "definicion": "Relacionado con el sonido o la audición.",
+      "tipo_gramatical": "adjectif",
+      "ejemplo_uso": "J'écoute un livre audio pendant mon trajet.",
+      "palabra": "audio",
+      "frecuencia": 10,
+      "lema": "audio",
+      "sinonimos": [
+        "sonore",
+        "acoustique"
+      ]
+    },
+    {
+      "definicion": "Forma conjugada del verbo 'tener' o 'haber', utilizada para expresar posesión o como auxiliar en tiempos compuestos.",
+      "tipo_gramatical": "verbe (présent)",
+      "ejemplo_uso": "Vous avez un nouveau vélo ?",
+      "palabra": "avez",
+      "frecuencia": 1,
+      "lema": "avoir",
+      "sinonimos": [
+        "possédez",
+        "détenez"
+      ]
+    },
+    {
+      "definicion": "Verbo que significa 'tener' (posesión) o 'haber' (auxiliar para formar tiempos compuestos).",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "J'ai faim, je voudrais avoir un sandwich.",
+      "palabra": "avoir",
+      "frecuencia": 2,
+      "lema": "avoir",
+      "sinonimos": [
+        "posséder",
+        "détenir"
+      ]
+    },
+    {
+      "definicion": "Palabra en español que significa 'terrenos' o 'áreas abiertas'.",
+      "tipo_gramatical": "nom (m) (español)",
+      "ejemplo_uso": "Les étudiants espagnols parlent des 'campos' pour désigner les champs.",
+      "palabra": "campos",
+      "frecuencia": 10,
+      "lema": "campo",
+      "sinonimos": [
+        "champs",
+        "terrains"
+      ]
+    },
+    {
+      "definicion": "Documento de identificación, un plano geográfico o un medio de pago.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "J'ai oublié ma carte d'identité à la maison.",
+      "palabra": "carte",
+      "frecuencia": 5,
+      "lema": "carte",
+      "sinonimos": [
+        "plan",
+        "document"
+      ]
+    },
+    {
+      "definicion": "Determinante que se usa para señalar algo o a alguien, indicando proximidad o referencia.",
+      "tipo_gramatical": "déterminant démonstratif",
+      "ejemplo_uso": "Ce livre est très intéressant.",
+      "palabra": "ce",
+      "frecuencia": 18,
+      "lema": "ce",
+      "sinonimos": [
+        "cet",
+        "cette"
+      ]
+    },
+    {
+      "definicion": "Puntos equidistantes de los extremos o lugares principales de una ciudad o actividad.",
+      "tipo_gramatical": "nom (m, pl)",
+      "ejemplo_uso": "Il y a de nombreux centres commerciaux dans cette ville.",
+      "palabra": "centres",
+      "frecuencia": 1,
+      "lema": "centre",
+      "sinonimos": [
+        "milieux",
+        "foyers"
+      ]
+    },
+    {
+      "definicion": "Determinante demostrativo femenino singular, usado para señalar un sustantivo femenino.",
+      "tipo_gramatical": "déterminant démonstratif (f)",
+      "ejemplo_uso": "Cette maison est très belle.",
+      "palabra": "cette",
+      "frecuencia": 2,
+      "lema": "ce",
+      "sinonimos": [
+        "ce",
+        "ces"
+      ]
+    },
+    {
+      "definicion": "Habitación de una casa, especialmente la destinada a dormir.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "Ma chambre est au deuxième étage.",
+      "palabra": "chambre",
+      "frecuencia": 2,
+      "lema": "chambre",
+      "sinonimos": [
+        "pièce",
+        "alcôve"
+      ]
+    },
+    {
+      "definicion": "Varias habitaciones de una casa, especialmente las destinadas a dormir.",
+      "tipo_gramatical": "nom (f, pl)",
+      "ejemplo_uso": "Cet appartement a trois chambres.",
+      "palabra": "chambres",
+      "frecuencia": 1,
+      "lema": "chambre",
+      "sinonimos": [
+        "pièces",
+        "alcôves"
+      ]
+    },
+    {
+      "definicion": "Conjunto de reglas o símbolos que se utilizan para representar información o para regular una conducta.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "J'ai oublié le code de ma carte bancaire.",
+      "palabra": "code",
+      "frecuencia": 1,
+      "lema": "code",
+      "sinonimos": [
+        "règles",
+        "système"
+      ]
+    },
+    {
+      "definicion": "Adverbio que se usa para preguntar por la cantidad o el precio de algo.",
+      "tipo_gramatical": "adverbe interrogatif",
+      "ejemplo_uso": "Combien coûte ce livre ?",
+      "palabra": "combien",
+      "frecuencia": 2,
+      "lema": "combien",
+      "sinonimos": [
+        "quel prix",
+        "quelle quantité"
+      ]
+    },
+    {
+      "definicion": "Que pertenece o se relaciona con varias personas o cosas, o que es frecuente y ordinario.",
+      "tipo_gramatical": "adjectif",
+      "ejemplo_uso": "Nous avons un ami en commun.",
+      "palabra": "commun",
+      "frecuencia": 3,
+      "lema": "commun",
+      "sinonimos": [
+        "partagé",
+        "fréquent"
+      ]
+    },
+    {
+      "definicion": "Presencia de una o varias personas, o una empresa o sociedad comercial.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "J'aime la compagnie de mes amis.",
+      "palabra": "compagnie",
+      "frecuencia": 3,
+      "lema": "compagnie",
+      "sinonimos": [
+        "société",
+        "entreprise"
+      ]
+    },
+    {
+      "definicion": "Prueba o competición en la que varias personas compiten por un premio o un puesto.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "Elle a participé à un concours de chant.",
+      "palabra": "concours",
+      "frecuencia": 2,
+      "lema": "concours",
+      "sinonimos": [
+        "compétition",
+        "examen"
+      ]
+    },
+    {
+      "definicion": "Propiedad de la luz que se percibe como un tono específico, como rojo, azul o verde.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "Quelle est votre couleur préférée ?",
+      "palabra": "couleur",
+      "frecuencia": 3,
+      "lema": "couleur",
+      "sinonimos": [
+        "teinte",
+        "nuance"
+      ]
+    },
+    {
+      "definicion": "Sistema de envío y recepción de cartas y paquetes, o las cartas y paquetes mismos.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "J'attends un courrier important.",
+      "palabra": "courrier",
+      "frecuencia": 1,
+      "lema": "courrier",
+      "sinonimos": [
+        "poste",
+        "lettres"
+      ]
+    },
+    {
+      "definicion": "Preposición que indica ubicación (dentro de), tiempo (en un período) o modo.",
+      "tipo_gramatical": "préposition",
+      "ejemplo_uso": "Le livre est dans le sac.",
+      "palabra": "dans",
+      "frecuencia": 4,
+      "lema": "dans",
+      "sinonimos": [
+        "à l'intérieur de",
+        "en"
+      ]
+    },
+    {
+      "definicion": "Día, mes y año en que ocurre o se fija un evento.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "Quelle est la date de votre anniversaire ?",
+      "palabra": "date",
+      "frecuencia": 13,
+      "lema": "date",
+      "sinonimos": [
+        "jour",
+        "époque"
+      ]
+    },
+    {
+      "definicion": "Preposición que indica origen, posesión, materia, causa o parte de un todo.",
+      "tipo_gramatical": "préposition",
+      "ejemplo_uso": "C'est le livre de mon ami.",
+      "palabra": "de",
+      "frecuencia": 45,
+      "lema": "de",
+      "sinonimos": [
+        "à partir de",
+        "appartenant à"
+      ]
+    },
+    {
+      "definicion": "Petición o solicitud de algo.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "J'ai fait une demande de visa.",
+      "palabra": "demande",
+      "frecuencia": 2,
+      "lema": "demande",
+      "sinonimos": [
+        "requête",
+        "sollicitation"
+      ]
+    },
+    {
+      "definicion": "Artículo indefinido plural que indica una cantidad indeterminada de sustantivos contables.",
+      "tipo_gramatical": "article indéfini (pl)",
+      "ejemplo_uso": "J'ai acheté des pommes.",
+      "palabra": "des",
+      "frecuencia": 1,
+      "lema": "un/une",
+      "sinonimos": [
+        "quelques",
+        "plusieurs"
+      ]
+    },
+    {
+      "definicion": "Que está libre para ser usado, utilizado o contactado.",
+      "tipo_gramatical": "adjectif",
+      "ejemplo_uso": "Je suis disponible pour une réunion cet après-midi.",
+      "palabra": "disponible",
+      "frecuencia": 1,
+      "lema": "disponible",
+      "sinonimos": [
+        "libre",
+        "accessible"
+      ]
+    },
+    {
+      "definicion": "Contracción de la preposición 'de' y el artículo definido masculino singular 'le'.",
+      "tipo_gramatical": "article défini contracté",
+      "ejemplo_uso": "Je viens du supermarché.",
+      "palabra": "du",
+      "frecuencia": 1,
+      "lema": "de le",
+      "sinonimos": [
+        "de le",
+        "certain"
+      ]
+    },
+    {
+      "definicion": "Período de tiempo que dura algo.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "La durée du film est de deux heures.",
+      "palabra": "durée",
+      "frecuencia": 1,
+      "lema": "durée",
+      "sinonimos": [
+        "temps",
+        "période"
+      ]
+    },
+    {
+      "definicion": "Principio o primera parte de algo.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "Au début du film, il pleuvait.",
+      "palabra": "début",
+      "frecuencia": 1,
+      "lema": "début",
+      "sinonimos": [
+        "commencement",
+        "origine"
+      ]
+    },
+    {
+      "definicion": "Adverbio que indica que algo ha ocurrido antes de lo esperado o en un momento anterior.",
+      "tipo_gramatical": "adverbe",
+      "ejemplo_uso": "Tu as déjà mangé ?",
+      "palabra": "déjà",
+      "frecuencia": 1,
+      "lema": "déjà",
+      "sinonimos": [
+        "préalablement",
+        "antérieurement"
+      ]
+    },
+    {
+      "definicion": "Forma conjugada del verbo 'mudarse', que significa cambiar de domicilio.",
+      "tipo_gramatical": "verbe (présent/impératif)",
+      "ejemplo_uso": "Vous déménagez le mois prochain ?",
+      "palabra": "déménagez",
+      "frecuencia": 2,
+      "lema": "déménager",
+      "sinonimos": [
+        "changez de domicile",
+        "transférez"
+      ]
+    },
+    {
+      "definicion": "Puesto de trabajo o la acción de utilizar algo.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "Je cherche un nouvel emploi.",
+      "palabra": "emploi",
+      "frecuencia": 1,
+      "lema": "emploi",
+      "sinonimos": [
+        "travail",
+        "poste"
+      ]
+    },
+    {
+      "definicion": "Preposición que indica lugar, tiempo o modo, o pronombre que reemplaza un complemento de lugar o de cantidad.",
+      "tipo_gramatical": "préposition/pronom",
+      "ejemplo_uso": "Je vais en France cet été. J'en viens.",
+      "palabra": "en",
+      "frecuencia": 23,
+      "lema": "en",
+      "sinonimos": [
+        "dedans",
+        "là"
+      ]
+    },
+    {
+      "definicion": "Acción de entrar, el lugar por donde se entra o el primer plato de una comida.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "L'entrée du musée est gratuite.",
+      "palabra": "entrée",
+      "frecuencia": 1,
+      "lema": "entrée",
+      "sinonimos": [
+        "accès",
+        "plat"
+      ]
+    },
+    {
+      "definicion": "Forma conjugada del verbo 'ser' o 'estar', utilizada para describir, identificar o indicar un estado.",
+      "tipo_gramatical": "verbe (présent)",
+      "ejemplo_uso": "Il est très gentil.",
+      "palabra": "est",
+      "frecuencia": 3,
+      "lema": "être",
+      "sinonimos": [
+        "se trouve",
+        "existe"
+      ]
+    },
+    {
+      "definicion": "Conjunción que une dos elementos, ideas o frases, indicando adición.",
+      "tipo_gramatical": "conjonction de coordination",
+      "ejemplo_uso": "J'aime le café et le thé.",
+      "palabra": "et",
+      "frecuencia": 6,
+      "lema": "et",
+      "sinonimos": [
+        "plus",
+        "ainsi que"
+      ]
+    },
+    {
+      "definicion": "Participio pasado del verbo 'avoir' (tener/haber), utilizado para formar tiempos compuestos.",
+      "tipo_gramatical": "participe passé",
+      "ejemplo_uso": "J'ai eu de la chance.",
+      "palabra": "eu",
+      "frecuencia": 1,
+      "lema": "avoir",
+      "sinonimos": [
+        "obtenu",
+        "possédé"
+      ]
+    },
+    {
+      "definicion": "Actividades o tareas que se realizan para practicar o desarrollar una habilidad (la ortografía correcta en francés es 'exercices').",
+      "tipo_gramatical": "nom (m, pl)",
+      "ejemplo_uso": "Nous faisons des exercices de grammaire.",
+      "palabra": "exercises",
+      "frecuencia": 1,
+      "lema": "exercice",
+      "sinonimos": [
+        "entraînements",
+        "pratiques"
+      ]
+    },
+    {
+      "definicion": "Realizar una acción, producir algo o causar un efecto.",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "Je dois faire mes devoirs.",
+      "palabra": "faire",
+      "frecuencia": 1,
+      "lema": "faire",
+      "sinonimos": [
+        "réaliser",
+        "exécuter"
+      ]
+    },
+    {
+      "definicion": "Relacionado con la familia o propio de ella.",
+      "tipo_gramatical": "adjectif (f)",
+      "ejemplo_uso": "C'est une réunion familiale importante.",
+      "palabra": "familiale",
+      "frecuencia": 1,
+      "lema": "familial",
+      "sinonimos": [
+        "parentale",
+        "domestique"
+      ]
+    },
+    {
+      "definicion": "Obra cinematográfica que narra una historia o presenta un tema, proyectada en una pantalla.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "Nous allons voir un bon film ce soir.",
+      "palabra": "film",
+      "frecuencia": 1,
+      "lema": "film",
+      "sinonimos": [
+        "cinéma",
+        "long-métrage"
+      ]
+    },
+    {
+      "definicion": "Documento con espacios en blanco para rellenar con información específica.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "Veuillez remplir ce formulaire d'inscription.",
+      "palabra": "formulaire",
+      "frecuencia": 18,
+      "lema": "formulaire",
+      "sinonimos": [
+        "imprimé",
+        "fiche"
+      ]
+    },
+    {
+      "definicion": "Palabra en español que significa 'documento con espacios para rellenar'.",
+      "tipo_gramatical": "nom (m) (español)",
+      "ejemplo_uso": "Le 'formulario' en espagnol est un document à remplir.",
+      "palabra": "formulario",
+      "frecuencia": 20,
+      "lema": "formulario",
+      "sinonimos": [
+        "formulaire",
+        "imprimé"
+      ]
+    },
+    {
+      "definicion": "País de Europa occidental, conocido por su cultura, gastronomía y capital, París.",
+      "tipo_gramatical": "nom propre (f)",
+      "ejemplo_uso": "La France est un beau pays.",
+      "palabra": "france",
+      "frecuencia": 20,
+      "lema": "France",
+      "sinonimos": [
+        "Hexagone",
+        "République française"
+      ]
+    },
+    {
+      "definicion": "Relacionado con Francia, su idioma o su cultura, o el idioma hablado en Francia.",
+      "tipo_gramatical": "adjectif/nom (m)",
+      "ejemplo_uso": "Je parle français couramment.",
+      "palabra": "français",
+      "frecuencia": 2,
+      "lema": "français",
+      "sinonimos": [
+        "gaulois",
+        "langue française"
+      ]
+    },
+    {
+      "definicion": "Obtener una victoria en una competición, recibir dinero por un trabajo o adquirir algo.",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "Il espère gagner la loterie.",
+      "palabra": "gagner",
+      "frecuencia": 2,
+      "lema": "gagner",
+      "sinonimos": [
+        "remporter",
+        "obtenir"
+      ]
+    },
+    {
+      "definicion": "De color entre blanco y negro, como el de las nubes antes de una tormenta.",
+      "tipo_gramatical": "adjectif (f)",
+      "ejemplo_uso": "La souris est grise.",
+      "palabra": "grise",
+      "frecuencia": 2,
+      "lema": "gris",
+      "sinonimos": [
+        "cendrée",
+        "terne"
+      ]
+    },
+    {
+      "definicion": "Palabra en español que significa 'capacidad' o 'destreza' para hacer algo.",
+      "tipo_gramatical": "nom (f) (español)",
+      "ejemplo_uso": "En espagnol, on dit 'habilidad' pour une compétence.",
+      "palabra": "habilidad",
+      "frecuencia": 10,
+      "lema": "habilidad",
+      "sinonimos": [
+        "capacité",
+        "compétence"
+      ]
+    },
+    {
+      "definicion": "Forma conjugada del verbo 'habitar', que significa vivir en un lugar.",
+      "tipo_gramatical": "verbe (présent)",
+      "ejemplo_uso": "Où habitez-vous ?",
+      "palabra": "habitez",
+      "frecuencia": 2,
+      "lema": "habiter",
+      "sinonimos": [
+        "résidez",
+        "demeurez"
+      ]
+    },
+    {
+      "definicion": "Unidad de tiempo equivalente a sesenta minutos, o el momento específico del día.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "Quelle heure est-il ?",
+      "palabra": "heure",
+      "frecuencia": 1,
+      "lema": "heure",
+      "sinonimos": [
+        "moment",
+        "instant"
+      ]
+    },
+    {
+      "definicion": "Varias unidades de tiempo, cada una equivalente a sesenta minutos.",
+      "tipo_gramatical": "nom (f, pl)",
+      "ejemplo_uso": "Le vol dure trois heures.",
+      "palabra": "heures",
+      "frecuencia": 1,
+      "lema": "heure",
+      "sinonimos": [
+        "moments",
+        "instants"
+      ]
+    },
+    {
+      "definicion": "Establecimiento que ofrece alojamiento y servicios a viajeros.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "Nous avons réservé une chambre dans un hôtel de luxe.",
+      "palabra": "hôtel",
+      "frecuencia": 2,
+      "lema": "hôtel",
+      "sinonimos": [
+        "auberge",
+        "établissement"
+      ]
+    },
+    {
+      "definicion": "Conjunto de características que distinguen a una persona o cosa de las demás.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "J'ai besoin de ma carte d'identité pour voyager.",
+      "palabra": "identité",
+      "frecuencia": 1,
+      "lema": "identité",
+      "sinonimos": [
+        "personnalité",
+        "caractère"
+      ]
+    },
+    {
+      "definicion": "Acción de registrarse o apuntarse en una lista, curso o evento.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "Les inscriptions pour le cours sont ouvertes.",
+      "palabra": "inscription",
+      "frecuencia": 8,
+      "lema": "inscription",
+      "sinonimos": [
+        "enregistrement",
+        "adhésion"
+      ]
+    },
+    {
+      "definicion": "Registrar o apuntar el nombre de alguien en una lista, o grabar algo en una superficie.",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "Je vais m'inscrire à la bibliothèque.",
+      "palabra": "inscrire",
+      "frecuencia": 2,
+      "lema": "inscrire",
+      "sinonimos": [
+        "enregistrer",
+        "noter"
+      ]
+    },
+    {
+      "definicion": "Palabra en español que significa 'enseñanza', 'educación' o 'indicación'.",
+      "tipo_gramatical": "nom (f) (español)",
+      "ejemplo_uso": "Les 'instrucciones' sont importantes pour comprendre le jeu.",
+      "palabra": "instruccion",
+      "frecuencia": 10,
+      "lema": "instrucción",
+      "sinonimos": [
+        "enseignement",
+        "directive"
+      ]
+    },
+    {
+      "definicion": "Atención o curiosidad que algo despierta, o beneficio económico que se obtiene de un capital.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "Ce sujet présente un grand intérêt pour moi.",
+      "palabra": "intérêt",
+      "frecuencia": 1,
+      "lema": "intérêt",
+      "sinonimos": [
+        "curiosité",
+        "bénéfice"
+      ]
+    },
+    {
+      "definicion": "Período de 24 horas, o la parte del día en que hay luz solar.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "Je travaille tous les jours.",
+      "palabra": "jour",
+      "frecuencia": 1,
+      "lema": "jour",
+      "sinonimos": [
+        "journée",
+        "lumière"
+      ]
+    },
+    {
+      "definicion": "Artículo definido femenino singular, que precede a un sustantivo femenino singular.",
+      "tipo_gramatical": "article défini (f sing)",
+      "ejemplo_uso": "La voiture est rouge.",
+      "palabra": "la",
+      "frecuencia": 3,
+      "lema": "la",
+      "sinonimos": [
+        "une",
+        "cette"
+      ]
+    },
+    {
+      "definicion": "Órgano muscular en la boca, o sistema de comunicación verbal propio de una comunidad humana.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "J'apprends la langue française.",
+      "palabra": "langue",
+      "frecuencia": 4,
+      "lema": "langue",
+      "sinonimos": [
+        "idiome",
+        "parler"
+      ]
+    },
+    {
+      "definicion": "Artículo definido masculino singular, que precede a un sustantivo masculino singular.",
+      "tipo_gramatical": "article défini (m sing)",
+      "ejemplo_uso": "Le chien dort.",
+      "palabra": "le",
+      "frecuencia": 1,
+      "lema": "le",
+      "sinonimos": [
+        "un",
+        "ce"
+      ]
+    },
+    {
+      "definicion": "Palabra en español que significa 'acción de leer' o 'material leído'.",
+      "tipo_gramatical": "nom (f) (español)",
+      "ejemplo_uso": "La 'lectura' est une activité très appréciée en Espagne.",
+      "palabra": "lectura",
+      "frecuencia": 20,
+      "lema": "lectura",
+      "sinonimos": [
+        "lecture",
+        "liseuse"
+      ]
+    },
+    {
+      "definicion": "Conjunto de hojas de papel impresas y encuadernadas, que forman una obra.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "J'ai lu un très bon livre hier.",
+      "palabra": "livre",
+      "frecuencia": 1,
+      "lema": "livre",
+      "sinonimos": [
+        "ouvrage",
+        "bouquin"
+      ]
+    },
+    {
+      "definicion": "Ceder el uso de algo a cambio de un pago, o tomar algo en alquiler.",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "Nous allons louer une voiture pour les vacances.",
+      "palabra": "louer",
+      "frecuencia": 2,
+      "lema": "louer",
+      "sinonimos": [
+        "mettre en location",
+        "prendre en location"
+      ]
+    },
+    {
+      "definicion": "Publicación periódica con artículos, fotos y anuncios sobre diversos temas.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "J'achète un magazine de mode chaque mois.",
+      "palabra": "magazine",
+      "frecuencia": 2,
+      "lema": "magazine",
+      "sinonimos": [
+        "revue",
+        "journal"
+      ]
+    },
+    {
+      "definicion": "Señal o distintivo que identifica un producto o empresa, o una huella o señal visible.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "Quelle est la marque de votre téléphone ?",
+      "palabra": "marque",
+      "frecuencia": 1,
+      "lema": "marque",
+      "sinonimos": [
+        "enseigne",
+        "trace"
+      ]
+    },
+    {
+      "definicion": "Relacionado con la madre o la maternidad, o la escuela para niños pequeños.",
+      "tipo_gramatical": "adjectif (f)",
+      "ejemplo_uso": "Mon enfant va à l'école maternelle.",
+      "palabra": "maternelle",
+      "frecuencia": 1,
+      "lema": "maternel",
+      "sinonimos": [
+        "maternelle",
+        "préscolaire"
+      ]
+    },
+    {
+      "definicion": "Que puede ser modificado o adaptado en sus partes o estructura.",
+      "tipo_gramatical": "adjectif",
+      "ejemplo_uso": "Ce système est très modulaire, on peut ajouter des éléments.",
+      "palabra": "modular",
+      "frecuencia": 10,
+      "lema": "modular",
+      "sinonimos": [
+        "adaptable",
+        "flexible"
+      ]
+    },
+    {
+      "definicion": "Cada una de las doce partes en que se divide el año.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "Nous partons en vacances le mois prochain.",
+      "palabra": "mois",
+      "frecuencia": 1,
+      "lema": "mois",
+      "sinonimos": [
+        "mensualité",
+        "période"
+      ]
+    },
+    {
+      "definicion": "Recurso o instrumento para lograr algo, o que está en el punto intermedio entre dos extremos.",
+      "tipo_gramatical": "nom (m)/adjectif",
+      "ejemplo_uso": "Quel est le meilleur moyen de transport ?",
+      "palabra": "moyen",
+      "frecuencia": 1,
+      "lema": "moyen",
+      "sinonimos": [
+        "méthode",
+        "intermédiaire"
+      ]
+    },
+    {
+      "definicion": "Relacionado con la medicina o la salud.",
+      "tipo_gramatical": "adjectif (m, pl)",
+      "ejemplo_uso": "Il a des problèmes médicaux.",
+      "palabra": "médicaux",
+      "frecuencia": 1,
+      "lema": "médical",
+      "sinonimos": [
+        "sanitaires",
+        "thérapeutiques"
+      ]
+    },
+    {
+      "definicion": "Acto de nacer o el origen de algo.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "La date de naissance est importante pour l'identité.",
+      "palabra": "naissance",
+      "frecuencia": 12,
+      "lema": "naissance",
+      "sinonimos": [
+        "début",
+        "origine"
+      ]
+    },
+    {
+      "definicion": "Condición de pertenecer a una nación, con los derechos y deberes que ello implica.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "Quelle est votre nationalité ?",
+      "palabra": "nationalité",
+      "frecuencia": 4,
+      "lema": "nationalité",
+      "sinonimos": [
+        "citoyenneté",
+        "appartenance"
+      ]
+    },
+    {
+      "definicion": "Palabra que designa personas, animales, cosas o ideas, o el apellido de una persona.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "Quel est votre nom de famille ?",
+      "palabra": "nom",
+      "frecuencia": 10,
+      "lema": "nom",
+      "sinonimos": [
+        "appellation",
+        "patronyme"
+      ]
+    },
+    {
+      "definicion": "Cantidad o cifra que representa una magnitud.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "Quel est votre numéro de téléphone ?",
+      "palabra": "nombre",
+      "frecuencia": 3,
+      "lema": "nombre",
+      "sinonimos": [
+        "quantité",
+        "chiffre"
+      ]
+    },
+    {
+      "definicion": "Que existe o se produce por primera vez, o una noticia o información reciente.",
+      "tipo_gramatical": "adjectif (f)/nom (f)",
+      "ejemplo_uso": "J'ai une bonne nouvelle à vous annoncer.",
+      "palabra": "nouvelle",
+      "frecuencia": 2,
+      "lema": "nouveau",
+      "sinonimos": [
+        "récente",
+        "information"
+      ]
+    },
+    {
+      "definicion": "Períodos de oscuridad entre el atardecer y el amanecer.",
+      "tipo_gramatical": "nom (f, pl)",
+      "ejemplo_uso": "Nous avons passé trois nuits à l'hôtel.",
+      "palabra": "nuits",
+      "frecuencia": 1,
+      "lema": "nuit",
+      "sinonimos": [
+        "soirées",
+        "obscurités"
+      ]
+    },
+    {
+      "definicion": "Palabra de origen inglés que significa 'nulo', 'sin valor' o 'inexistente'. En francés, se usa 'nul'.",
+      "tipo_gramatical": "adjectif",
+      "ejemplo_uso": "En informatique, 'null' indique l'absence de valeur.",
+      "palabra": "null",
+      "frecuencia": 40,
+      "lema": "nul",
+      "sinonimos": [
+        "nul",
+        "zéro"
+      ]
+    },
+    {
+      "definicion": "Cifra o conjunto de cifras que identifica algo o su posición en una serie.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "Quel est votre numéro de téléphone ?",
+      "palabra": "numéro",
+      "frecuencia": 14,
+      "lema": "numéro",
+      "sinonimos": [
+        "chiffre",
+        "identifiant"
+      ]
+    },
+    {
+      "definicion": "Acción de pagar una deuda o una cantidad de dinero.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "Le paiement doit être effectué avant le 15 du mois.",
+      "palabra": "paiement",
+      "frecuencia": 1,
+      "lema": "paiement",
+      "sinonimos": [
+        "règlement",
+        "versement"
+      ]
+    },
+    {
+      "definicion": "Preposición que indica agente, medio, lugar por donde, o distribución.",
+      "tipo_gramatical": "préposition",
+      "ejemplo_uso": "Le livre a été écrit par un auteur célèbre.",
+      "palabra": "par",
+      "frecuencia": 2,
+      "lema": "par",
+      "sinonimos": [
+        "au moyen de",
+        "à travers"
+      ]
+    },
+    {
+      "definicion": "Capital de Francia, conocida como la 'Ciudad de la Luz'.",
+      "tipo_gramatical": "nom propre (m)",
+      "ejemplo_uso": "Je rêve de visiter Paris un jour.",
+      "palabra": "paris",
+      "frecuencia": 2,
+      "lema": "Paris",
+      "sinonimos": [
+        "Ville Lumière",
+        "Paname"
+      ]
+    },
+    {
+      "definicion": "Tomar parte en una actividad o evento.",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "Je vais participer à la réunion.",
+      "palabra": "participer",
+      "frecuencia": 2,
+      "lema": "participer",
+      "sinonimos": [
+        "prendre part",
+        "contribuer"
+      ]
+    },
+    {
+      "definicion": "Documento oficial de identidad y viaje que permite a una persona salir y entrar de un país.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "N'oubliez pas votre passeport pour le voyage.",
+      "palabra": "passeport",
+      "frecuencia": 1,
+      "lema": "passeport",
+      "sinonimos": [
+        "document de voyage",
+        "pièce d'identité"
+      ]
+    },
+    {
+      "definicion": "Territorio que constituye una unidad geográfica, política y cultural.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "Quel est votre pays d'origine ?",
+      "palabra": "pays",
+      "frecuencia": 3,
+      "lema": "pays",
+      "sinonimos": [
+        "nation",
+        "état"
+      ]
+    },
+    {
+      "definicion": "Seres humanos, individuos.",
+      "tipo_gramatical": "nom (f, pl)",
+      "ejemplo_uso": "Il y a beaucoup de personnes dans la rue.",
+      "palabra": "personnes",
+      "frecuencia": 2,
+      "lema": "personne",
+      "sinonimos": [
+        "individus",
+        "gens"
+      ]
+    },
+    {
+      "definicion": "Fuerza con la que la Tierra atrae un cuerpo, o la masa de un objeto.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "Quel est le poids de cette valise ?",
+      "palabra": "poids",
+      "frecuencia": 1,
+      "lema": "poids",
+      "sinonimos": [
+        "masse",
+        "charge"
+      ]
+    },
+    {
+      "definicion": "Relacionado con el correo o el servicio de correos.",
+      "tipo_gramatical": "adjectif",
+      "ejemplo_uso": "J'ai envoyé une carte postale à mes parents.",
+      "palabra": "postal",
+      "frecuencia": 1,
+      "lema": "postal",
+      "sinonimos": [
+        "courrier",
+        "postale"
+      ]
+    },
+    {
+      "definicion": "Preposición que indica finalidad, destino, causa o duración.",
+      "tipo_gramatical": "préposition",
+      "ejemplo_uso": "Ce cadeau est pour toi.",
+      "palabra": "pour",
+      "frecuencia": 3,
+      "lema": "pour",
+      "sinonimos": [
+        "afin de",
+        "en faveur de"
+      ]
+    },
+    {
+      "definicion": "Realizar o ejercer una actividad, deporte o profesión de forma habitual.",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "Je pratique le tennis tous les week-ends.",
+      "palabra": "pratiquer",
+      "frecuencia": 2,
+      "lema": "pratiquer",
+      "sinonimos": [
+        "exercer",
+        "s'entraîner"
+      ]
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "a",
+      "frecuencia": 14,
+      "lema": "a",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "accès",
+      "frecuencia": 3,
+      "lema": "accès",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "achat",
+      "frecuencia": 1,
+      "lema": "achat",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "achetez",
+      "frecuencia": 2,
+      "lema": "achetez",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "adolescents",
+      "frecuencia": 1,
+      "lema": "adolescents",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "adultes",
+      "frecuencia": 2,
+      "lema": "adultes",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "affiche",
+      "frecuencia": 1,
+      "lema": "affiche",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "agit",
+      "frecuencia": 1,
+      "lema": "agit",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "ai",
+      "frecuencia": 7,
+      "lema": "ai",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "aille",
+      "frecuencia": 1,
+      "lema": "aille",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "aime",
+      "frecuencia": 1,
+      "lema": "aime",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "aller",
+      "frecuencia": 6,
+      "lema": "aller",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "allons",
+      "frecuencia": 2,
+      "lema": "allons",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "amandes",
+      "frecuencia": 1,
+      "lema": "amandes",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "amener",
+      "frecuencia": 1,
+      "lema": "amener",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "ami",
+      "frecuencia": 1,
+      "lema": "ami",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "amie",
+      "frecuencia": 2,
+      "lema": "amie",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "amis",
+      "frecuencia": 5,
+      "lema": "amis",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "animateur",
+      "frecuencia": 1,
+      "lema": "animateur",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "anniversaire",
+      "frecuencia": 4,
+      "lema": "anniversaire",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "annonce",
+      "frecuencia": 7,
+      "lema": "annonce",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "année",
+      "frecuencia": 1,
+      "lema": "année",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "ans",
+      "frecuencia": 20,
+      "lema": "ans",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "appel",
+      "frecuencia": 2,
+      "lema": "appel",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "appeler",
+      "frecuencia": 4,
+      "lema": "appeler",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "appelle",
+      "frecuencia": 3,
+      "lema": "appelle",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "apporte",
+      "frecuencia": 2,
+      "lema": "apporte",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "apporter",
+      "frecuencia": 5,
+      "lema": "apporter",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "apportez",
+      "frecuencia": 1,
+      "lema": "apportez",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "après",
+      "frecuencia": 9,
+      "lema": "après",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "apéritifs",
+      "frecuencia": 1,
+      "lema": "apéritifs",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "arrive",
+      "frecuencia": 3,
+      "lema": "arrive",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "arriver",
+      "frecuencia": 2,
+      "lema": "arriver",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "arrivera",
+      "frecuencia": 1,
+      "lema": "arrivera",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "arrêt",
+      "frecuencia": 3,
+      "lema": "arrêt",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "art",
+      "frecuencia": 1,
+      "lema": "art",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "artiste",
+      "frecuencia": 2,
+      "lema": "artiste",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "aspirateur",
+      "frecuencia": 1,
+      "lema": "aspirateur",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "assister",
+      "frecuencia": 3,
+      "lema": "assister",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "assistez",
+      "frecuencia": 6,
+      "lema": "assistez",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "association",
+      "frecuencia": 2,
+      "lema": "association",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "atterrit",
+      "frecuencia": 1,
+      "lema": "atterrit",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "au",
+      "frecuencia": 18,
+      "lema": "au",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "aussi",
+      "frecuencia": 5,
+      "lema": "aussi",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "aux",
+      "frecuencia": 27,
+      "lema": "aux",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "avant",
+      "frecuencia": 3,
+      "lema": "avant",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "avec",
+      "frecuencia": 6,
+      "lema": "avec",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "aventurier",
+      "frecuencia": 4,
+      "lema": "aventurier",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "aéroport",
+      "frecuencia": 2,
+      "lema": "aéroport",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "bancaire",
+      "frecuencia": 1,
+      "lema": "bancaire",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "bas",
+      "frecuencia": 1,
+      "lema": "bas",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "baskets",
+      "frecuencia": 3,
+      "lema": "baskets",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "basse",
+      "frecuencia": 2,
+      "lema": "basse",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "bastille",
+      "frecuencia": 3,
+      "lema": "bastille",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "beaucoup",
+      "frecuencia": 1,
+      "lema": "beaucoup",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "ben",
+      "frecuencia": 1,
+      "lema": "ben",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "besoin",
+      "frecuencia": 2,
+      "lema": "besoin",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "beurre",
+      "frecuencia": 1,
+      "lema": "beurre",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "bientôt",
+      "frecuencia": 2,
+      "lema": "bientôt",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "bienvenue",
+      "frecuencia": 1,
+      "lema": "bienvenue",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "billet",
+      "frecuencia": 2,
+      "lema": "billet",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "biscuits",
+      "frecuencia": 3,
+      "lema": "biscuits",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "bises",
+      "frecuencia": 1,
+      "lema": "bises",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "bloque",
+      "frecuencia": 8,
+      "lema": "bloque",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "boire",
+      "frecuencia": 4,
+      "lema": "boire",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "boissons",
+      "frecuencia": 2,
+      "lema": "boissons",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "bon",
+      "frecuencia": 1,
+      "lema": "bon",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "bonjour",
+      "frecuencia": 1,
+      "lema": "bonjour",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "bord",
+      "frecuencia": 4,
+      "lema": "bord",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "bottines",
+      "frecuencia": 2,
+      "lema": "bottines",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "bouteille",
+      "frecuencia": 1,
+      "lema": "bouteille",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "bureau",
+      "frecuencia": 1,
+      "lema": "bureau",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "bus",
+      "frecuencia": 5,
+      "lema": "bus",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "cadeau",
+      "frecuencia": 1,
+      "lema": "cadeau",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "cadeaux",
+      "frecuencia": 1,
+      "lema": "cadeaux",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "café",
+      "frecuencia": 3,
+      "lema": "café",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "cagnotte",
+      "frecuencia": 1,
+      "lema": "cagnotte",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "campagne",
+      "frecuencia": 1,
+      "lema": "campagne",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "canada",
+      "frecuencia": 1,
+      "lema": "canada",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "candidats",
+      "frecuencia": 2,
+      "lema": "candidats",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "car",
+      "frecuencia": 3,
+      "lema": "car",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "cassé",
+      "frecuencia": 1,
+      "lema": "cassé",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "certificat",
+      "frecuencia": 4,
+      "lema": "certificat",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "change",
+      "frecuencia": 1,
+      "lema": "change",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "chant",
+      "frecuencia": 1,
+      "lema": "chant",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "chanteur",
+      "frecuencia": 2,
+      "lema": "chanteur",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "chaussures",
+      "frecuencia": 2,
+      "lema": "chaussures",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "chef",
+      "frecuencia": 1,
+      "lema": "chef",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "chercher",
+      "frecuencia": 3,
+      "lema": "chercher",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Convenio o pacto entre dos o más partes; también, armonía o conformidad.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "Nous sommes tombés d'accord sur le prix.",
+      "palabra": "accord",
+      "frecuencia": 1,
+      "lema": "accord",
+      "sinonimos": [
+        "entente",
+        "pacte"
+      ]
+    },
+    {
+      "definicion": "Acción de recibir a alguien o la manera en que se le recibe; también, el lugar donde se recibe.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "L'accueil à l'hôtel était très chaleureux.",
+      "palabra": "accueil",
+      "frecuencia": 4,
+      "lema": "accueil",
+      "sinonimos": [
+        "réception",
+        "bienvenue"
+      ]
+    },
+    {
+      "definicion": "Llegar a un lugar o a una posición; tener acceso a algo.",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "Vous pouvez accéder à internet gratuitement ici.",
+      "palabra": "accéder",
+      "frecuencia": 1,
+      "lema": "accéder",
+      "sinonimos": [
+        "atteindre",
+        "parvenir"
+      ]
+    },
+    {
+      "definicion": "Nombre propio masculino.",
+      "tipo_gramatical": "nom propre (m)",
+      "ejemplo_uso": "Adil est mon ami.",
+      "palabra": "adil",
+      "frecuencia": 5,
+      "lema": "Adil",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Sentir un amor o una admiración muy grande por algo o alguien; gustar mucho.",
+      "tipo_gramatical": "verbe (1re/3e pers. sing. présent)",
+      "ejemplo_uso": "J'adore le chocolat.",
+      "palabra": "adore",
+      "frecuencia": 1,
+      "lema": "adorer",
+      "sinonimos": [
+        "aimer",
+        "chérir"
+      ]
+    },
+    {
+      "definicion": "Empresa o sucursal que ofrece servicios específicos, como viajes, inmobiliaria o publicidad.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "Je travaille dans une agence de voyages.",
+      "palabra": "agence",
+      "frecuencia": 4,
+      "lema": "agence",
+      "sinonimos": [
+        "bureau",
+        "succursale"
+      ]
+    },
+    {
+      "definicion": "Nombre propio, diminutivo de Alexandre o Alexandra.",
+      "tipo_gramatical": "nom propre (m/f)",
+      "ejemplo_uso": "Alex est parti en vacances.",
+      "palabra": "alex",
+      "frecuencia": 1,
+      "lema": "Alex",
+      "sinonimos": []
+    },
+    {
+      "definicion": "En ese momento; por consiguiente, en consecuencia.",
+      "tipo_gramatical": "adverbe",
+      "ejemplo_uso": "J'étais fatigué, alors je suis allé me coucher.",
+      "palabra": "alors",
+      "frecuencia": 1,
+      "lema": "alors",
+      "sinonimos": [
+        "donc",
+        "puis"
+      ]
+    },
+    {
+      "definicion": "Dejar sin efecto un acto, un contrato o una cita.",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "Nous devons annuler notre rendez-vous.",
+      "palabra": "annuler",
+      "frecuencia": 2,
+      "lema": "annuler",
+      "sinonimos": [
+        "supprimer",
+        "abroger"
+      ]
+    },
+    {
+      "definicion": "Nombre propio masculino.",
+      "tipo_gramatical": "nom propre (m)",
+      "ejemplo_uso": "Anthony est un bon cuisinier.",
+      "palabra": "anthony",
+      "frecuencia": 4,
+      "lema": "Anthony",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Octavo mes del año.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "Je pars en vacances en août.",
+      "palabra": "août",
+      "frecuencia": 3,
+      "lema": "août",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Objeto o máquina diseñada para una función específica.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "J'ai acheté un nouvel appareil photo.",
+      "palabra": "appareil",
+      "frecuencia": 1,
+      "lema": "appareil",
+      "sinonimos": [
+        "instrument",
+        "machine"
+      ]
+    },
+    {
+      "definicion": "Forma conjugada del verbo \"appeler\" (llamar) en segunda persona del plural del presente de indicativo o imperativo.",
+      "tipo_gramatical": "verbe (2e pers. plur. présent/impératif)",
+      "ejemplo_uso": "Appelez-moi si vous avez besoin d'aide.",
+      "palabra": "appelez",
+      "frecuencia": 1,
+      "lema": "appeler",
+      "sinonimos": [
+        "téléphonez",
+        "nommez"
+      ]
+    },
+    {
+      "definicion": "Nombre propio femenino.",
+      "tipo_gramatical": "nom propre (f)",
+      "ejemplo_uso": "Armelle est une amie de ma sœur.",
+      "palabra": "armelle",
+      "frecuencia": 1,
+      "lema": "Armelle",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Participio pasado del verbo \"arriver\" (llegar); también puede funcionar como adjetivo que significa \"llegado\".",
+      "tipo_gramatical": "participe passé / adjectif",
+      "ejemplo_uso": "Il est arrivé en retard.",
+      "palabra": "arrivé",
+      "frecuencia": 1,
+      "lema": "arriver",
+      "sinonimos": [
+        "parvenu",
+        "venu"
+      ]
+    },
+    {
+      "definicion": "Forma conjugada del verbo \"avoir\" (tener) en segunda persona del singular del presente de indicativo.",
+      "tipo_gramatical": "verbe (2e pers. sing. présent)",
+      "ejemplo_uso": "Tu as un chat?",
+      "palabra": "as",
+      "frecuencia": 1,
+      "lema": "avoir",
+      "sinonimos": [
+        "possèdes",
+        "détiens"
+      ]
+    },
+    {
+      "definicion": "Relativo o perteneciente a Asia.",
+      "tipo_gramatical": "adjectif",
+      "ejemplo_uso": "J'aime la cuisine asiatique.",
+      "palabra": "asiatique",
+      "frecuencia": 1,
+      "lema": "asiatique",
+      "sinonimos": [
+        "oriental"
+      ]
+    },
+    {
+      "definicion": "Parte de la palabra \"aujourd'hui\" (hoy).",
+      "tipo_gramatical": "adverbe (partie de mot)",
+      "ejemplo_uso": "Aujourd'hui, il fait beau.",
+      "palabra": "aujourd",
+      "frecuencia": 4,
+      "lema": "aujourd'hui",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Aeronave con alas que se propulsa por motores y es capaz de volar.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "Je prends l'avion pour Paris.",
+      "palabra": "avion",
+      "frecuencia": 1,
+      "lema": "avion",
+      "sinonimos": [
+        "aéronef",
+        "appareil"
+      ]
+    },
+    {
+      "definicion": "Forma conjugada del verbo \"avoir\" (tener) en primera persona del plural del presente de indicativo.",
+      "tipo_gramatical": "verbe (1re pers. plur. présent)",
+      "ejemplo_uso": "Nous avons un nouveau projet.",
+      "palabra": "avons",
+      "frecuencia": 3,
+      "lema": "avoir",
+      "sinonimos": [
+        "possédons",
+        "détenons"
+      ]
+    },
+    {
+      "definicion": "Que agrada a la vista o al oído; de buena apariencia.",
+      "tipo_gramatical": "adjectif (m)",
+      "ejemplo_uso": "Il fait beau aujourd'hui.",
+      "palabra": "beau",
+      "frecuencia": 1,
+      "lema": "beau",
+      "sinonimos": [
+        "joli",
+        "magnifique"
+      ]
+    },
+    {
+      "definicion": "Lugar donde se guardan y consultan libros; también, mueble para guardar libros.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "Je vais à la bibliothèque pour étudier.",
+      "palabra": "bibliothèque",
+      "frecuencia": 4,
+      "lema": "bibliothèque",
+      "sinonimos": [
+        "librairie",
+        "médiathèque"
+      ]
+    },
+    {
+      "definicion": "De manera correcta o satisfactoria; también, con buena salud.",
+      "tipo_gramatical": "adverbe",
+      "ejemplo_uso": "Je me sens bien.",
+      "palabra": "bien",
+      "frecuencia": 1,
+      "lema": "bien",
+      "sinonimos": [
+        "correctement",
+        "agréablement"
+      ]
+    },
+    {
+      "definicion": "Besos, generalmente informales, que se dan en la mejilla como saludo o despedida.",
+      "tipo_gramatical": "nom (m, pluriel)",
+      "ejemplo_uso": "Bisous à toute la famille!",
+      "palabra": "bisous",
+      "frecuencia": 1,
+      "lema": "bisou",
+      "sinonimos": [
+        "bises",
+        "embrassades"
+      ]
+    },
+    {
+      "definicion": "Líquido que se bebe para calmar la sed o por placer.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "Quelle boisson voulez-vous?",
+      "palabra": "boisson",
+      "frecuencia": 1,
+      "lema": "boisson",
+      "sinonimos": [
+        "breuvage",
+        "liquide"
+      ]
+    },
+    {
+      "definicion": "Automóvil muy rápido, generalmente deportivo.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "Il a acheté un nouveau bolide.",
+      "palabra": "bolide",
+      "frecuencia": 1,
+      "lema": "bolide",
+      "sinonimos": [
+        "voiture de course",
+        "bol"
+      ]
+    },
+    {
+      "definicion": "Dulces pequeños, generalmente de azúcar.",
+      "tipo_gramatical": "nom (m, pluriel)",
+      "ejemplo_uso": "Les enfants aiment les bonbons.",
+      "palabra": "bonbons",
+      "frecuencia": 2,
+      "lema": "bonbon",
+      "sinonimos": [
+        "friandises",
+        "sucreries"
+      ]
+    },
+    {
+      "definicion": "Forma femenina del adjetivo \"bon\", que significa bueno, de calidad o agradable.",
+      "tipo_gramatical": "adjectif (f)",
+      "ejemplo_uso": "Passe une bonne journée!",
+      "palabra": "bonne",
+      "frecuencia": 2,
+      "lema": "bon",
+      "sinonimos": [
+        "excellente",
+        "agréable"
+      ]
+    },
+    {
+      "definicion": "Saludo que se usa al anochecer o por la noche.",
+      "tipo_gramatical": "interjection / nom (m)",
+      "ejemplo_uso": "Bonsoir, Madame.",
+      "palabra": "bonsoir",
+      "frecuencia": 1,
+      "lema": "bonsoir",
+      "sinonimos": [
+        "salut (soir)"
+      ]
+    },
+    {
+      "definicion": "Tomar el sol para que la piel adquiera un tono más oscuro.",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "J'aime bronzer à la plage.",
+      "palabra": "bronzer",
+      "frecuencia": 1,
+      "lema": "bronzer",
+      "sinonimos": [
+        "hâler",
+        "dorer"
+      ]
+    },
+    {
+      "definicion": "Capital de Bélgica.",
+      "tipo_gramatical": "nom propre (f)",
+      "ejemplo_uso": "Je vais à Bruxelles la semaine prochaine.",
+      "palabra": "bruxelles",
+      "frecuencia": 2,
+      "lema": "Bruxelles",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vehículo grande destinado al transporte de mercancías.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "Le camion livre les marchandises.",
+      "palabra": "camion",
+      "frecuencia": 1,
+      "lema": "camion",
+      "sinonimos": [
+        "poids lourd",
+        "véhicule utilitaire"
+      ]
+    },
+    {
+      "definicion": "Plural de \"carte\", documentos de identificación, mapas o medios de pago.",
+      "tipo_gramatical": "nom (f, pluriel)",
+      "ejemplo_uso": "Nous jouons aux cartes.",
+      "palabra": "cartes",
+      "frecuencia": 1,
+      "lema": "carte",
+      "sinonimos": [
+        "plans",
+        "documents"
+      ]
+    },
+    {
+      "definicion": "Modificar, transformar o sustituir algo por otra cosa.",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "Je veux changer de voiture.",
+      "palabra": "changer",
+      "frecuencia": 3,
+      "lema": "changer",
+      "sinonimos": [
+        "modifier",
+        "transformer"
+      ]
+    },
+    {
+      "definicion": "Prenda de vestir que cubre la cabeza.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "Il porte un chapeau élégant.",
+      "palabra": "chapeau",
+      "frecuencia": 1,
+      "lema": "chapeau",
+      "sinonimos": [
+        "couvre-chef",
+        "coiffe"
+      ]
+    },
+    {
+      "definicion": "Indica el lugar donde vive o trabaja una persona, o el establecimiento de un profesional.",
+      "tipo_gramatical": "préposition",
+      "ejemplo_uso": "Je vais chez mon ami.",
+      "palabra": "chez",
+      "frecuencia": 7,
+      "lema": "chez",
+      "sinonimos": [
+        "à la maison de",
+        "auprès de"
+      ]
+    },
+    {
+      "definicion": "País de Asia Oriental.",
+      "tipo_gramatical": "nom propre (f)",
+      "ejemplo_uso": "La Chine est un grand pays.",
+      "palabra": "chine",
+      "frecuencia": 2,
+      "lema": "Chine",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Alimento dulce hecho de cacao, azúcar y a menudo leche.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "J'aime le chocolat noir.",
+      "palabra": "chocolat",
+      "frecuencia": 2,
+      "lema": "chocolat",
+      "sinonimos": [
+        "cacao",
+        "tablette"
+      ]
+    },
+    {
+      "definicion": "Participio pasado del verbo \"choisir\" (elegir); también puede funcionar como adjetivo que significa \"elegido\".",
+      "tipo_gramatical": "participe passé / adjectif",
+      "ejemplo_uso": "J'ai choisi la robe bleue.",
+      "palabra": "choisi",
+      "frecuencia": 1,
+      "lema": "choisir",
+      "sinonimos": [
+        "sélectionné",
+        "élu"
+      ]
+    },
+    {
+      "definicion": "Seleccionar una opción entre varias.",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "Il faut choisir un plat.",
+      "palabra": "choisir",
+      "frecuencia": 1,
+      "lema": "choisir",
+      "sinonimos": [
+        "sélectionner",
+        "opter"
+      ]
+    },
+    {
+      "definicion": "Nombre propio femenino.",
+      "tipo_gramatical": "nom propre (f)",
+      "ejemplo_uso": "Christina est très gentille.",
+      "palabra": "christina",
+      "frecuencia": 2,
+      "lema": "Christina",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Documento bancario que ordena a un banco pagar una cantidad de dinero a una persona.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "Je paie par chèque.",
+      "palabra": "chèque",
+      "frecuencia": 1,
+      "lema": "chèque",
+      "sinonimos": [
+        "mandat",
+        "traite"
+      ]
+    },
+    {
+      "definicion": "Arte de proyectar imágenes en movimiento; también, el lugar donde se proyectan películas.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "Nous allons au cinéma ce soir.",
+      "palabra": "cinéma",
+      "frecuencia": 10,
+      "lema": "cinéma",
+      "sinonimos": [
+        "film",
+        "salle de projection"
+      ]
+    },
+    {
+      "definicion": "Pequeñas campanas o campanarios decorativos, a menudo en arquitectura.",
+      "tipo_gramatical": "nom (m, pluriel)",
+      "ejemplo_uso": "Les clochetons de l'église sont très jolis.",
+      "palabra": "clochetons",
+      "frecuencia": 1,
+      "lema": "clocheton",
+      "sinonimos": [
+        "campanules",
+        "petits clochers"
+      ]
+    },
+    {
+      "definicion": "Asociación de personas con intereses comunes; también, un lugar de ocio nocturno.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "Je suis membre d'un club de lecture.",
+      "palabra": "club",
+      "frecuencia": 4,
+      "lema": "club",
+      "sinonimos": [
+        "association",
+        "cercle"
+      ]
+    },
+    {
+      "definicion": "Caja fuerte o baúl para guardar objetos de valor; también, el maletero de un coche.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "J'ai mis mes valises dans le coffre de la voiture.",
+      "palabra": "coffre",
+      "frecuencia": 1,
+      "lema": "coffre",
+      "sinonimos": [
+        "malle",
+        "malle arrière"
+      ]
+    },
+    {
+      "definicion": "Persona que corta, peina y arregla el cabello.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "Je vais chez le coiffeur demain.",
+      "palabra": "coiffeur",
+      "frecuencia": 1,
+      "lema": "coiffeur",
+      "sinonimos": [
+        "barbier",
+        "styliste capillaire"
+      ]
+    },
+    {
+      "definicion": "Petición de un producto o servicio; también, orden o instrucción.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "J'ai passé une commande en ligne.",
+      "palabra": "commande",
+      "frecuencia": 1,
+      "lema": "commande",
+      "sinonimos": [
+        "ordre",
+        "requête"
+      ]
+    },
+    {
+      "definicion": "Participio pasado del verbo \"commander\" (pedir, ordenar); también puede funcionar como adjetivo que significa \"pedido\" u \"ordenado\".",
+      "tipo_gramatical": "participe passé / adjectif",
+      "ejemplo_uso": "J'ai commandé une pizza.",
+      "palabra": "commandé",
+      "frecuencia": 1,
+      "lema": "commander",
+      "sinonimos": [
+        "ordonné",
+        "requis"
+      ]
+    },
+    {
+      "definicion": "Pregunta sobre la manera, el modo o la forma.",
+      "tipo_gramatical": "adverbe interrogatif",
+      "ejemplo_uso": "Comment allez-vous?",
+      "palabra": "comment",
+      "frecuencia": 3,
+      "lema": "comment",
+      "sinonimos": [
+        "de quelle manière",
+        "par quel moyen"
+      ]
+    },
+    {
+      "definicion": "Forma femenina del adjetivo \"commercial\", relativo al comercio o a las ventas.",
+      "tipo_gramatical": "adjectif (f)",
+      "ejemplo_uso": "C'est une zone commerciale.",
+      "palabra": "commerciale",
+      "frecuencia": 1,
+      "lema": "commercial",
+      "sinonimos": [
+        "marchande",
+        "de vente"
+      ]
+    },
+    {
+      "definicion": "Capacidad de entender o de captar el significado de algo.",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "J'ai une bonne compréhension du français.",
+      "palabra": "compréhension",
+      "frecuencia": 15,
+      "lema": "compréhension",
+      "sinonimos": [
+        "entendement",
+        "intelligence"
+      ]
+    },
+    {
+      "definicion": "Persona que se encarga de la contabilidad; también, relativo a la contabilidad.",
+      "tipo_gramatical": "nom (m/f) / adjectif",
+      "ejemplo_uso": "Mon comptable gère mes finances.",
+      "palabra": "comptable",
+      "frecuencia": 1,
+      "lema": "comptable",
+      "sinonimos": [
+        "expert-comptable",
+        "teneur de livres"
+      ]
+    },
+    {
+      "definicion": "Espectáculo musical en vivo.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "J'ai acheté des billets pour le concert.",
+      "palabra": "concert",
+      "frecuencia": 1,
+      "lema": "concert",
+      "sinonimos": [
+        "récital",
+        "représentation"
+      ]
+    },
+    {
+      "definicion": "Forma conjugada del verbo \"confirmer\" (confirmar) en primera o tercera persona del singular del presente de indicativo.",
+      "tipo_gramatical": "verbe (1re/3e pers. sing. présent)",
+      "ejemplo_uso": "Je confirme ma réservation.",
+      "palabra": "confirme",
+      "frecuencia": 1,
+      "lema": "confirmer",
+      "sinonimos": [
+        "valide",
+        "atteste"
+      ]
+    },
+    {
+      "definicion": "Asegurar la verdad o certeza de algo; ratificar.",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "Pouvez-vous confirmer votre présence?",
+      "palabra": "confirmer",
+      "frecuencia": 6,
+      "lema": "confirmer",
+      "sinonimos": [
+        "valider",
+        "attester"
+      ]
+    },
+    {
+      "definicion": "Forma conjugada del verbo \"conseiller\" (aconsejar) en primera o tercera persona del singular del presente de indicativo.",
+      "tipo_gramatical": "verbe (1re/3e pers. sing. présent)",
+      "ejemplo_uso": "Je te conseille de lire ce livre.",
+      "palabra": "conseille",
+      "frecuencia": 2,
+      "lema": "conseiller",
+      "sinonimos": [
+        "recommande",
+        "suggère"
+      ]
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "activite",
+      "frecuencia": 84,
+      "lema": "activite",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "contacter",
+      "frecuencia": 4,
+      "lema": "contacter",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "contrat",
+      "frecuencia": 2,
+      "lema": "contrat",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "correcta",
+      "frecuencia": 56,
+      "lema": "correcta",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Vocabulaire de l'unité.",
+      "tipo_gramatical": "mot",
+      "ejemplo_uso": "",
+      "palabra": "coucou",
+      "frecuencia": 1,
+      "lema": "coucou",
+      "sinonimos": []
+    },
+    {
+      "definicion": "Palabra inglesa que significa 'elección' o 'opción', a veces usada en francés.",
+      "tipo_gramatical": "nom (m) (anglicisme)",
+      "ejemplo_uso": "C'est un bon choice pour le dîner.",
+      "palabra": "choice",
+      "frecuencia": 15,
+      "lema": "choice",
+      "sinonimos": [
+        "choix",
+        "option"
+      ]
+    },
+    {
+      "definicion": "Mensaje electrónico enviado a través de internet.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "J'ai reçu un courriel important.",
+      "palabra": "courriel",
+      "frecuencia": 4,
+      "lema": "courriel",
+      "sinonimos": [
+        "e-mail",
+        "mél"
+      ]
+    },
+    {
+      "definicion": "Hija de un tío o una tía (femenino).",
+      "tipo_gramatical": "nom (f)",
+      "ejemplo_uso": "Ma cousine habite à Lyon.",
+      "palabra": "cousine",
+      "frecuencia": 1,
+      "lema": "cousin",
+      "sinonimos": [
+        "parente",
+        "famille"
+      ]
+    },
+    {
+      "definicion": "Forma conjugada del verbo 'coûter' (costar) en primera o tercera persona del singular del presente de indicativo.",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "Ce livre coûte 15 euros.",
+      "palabra": "coûte",
+      "frecuencia": 4,
+      "lema": "coûter",
+      "sinonimos": [
+        "vaut",
+        "revient à"
+      ]
+    },
+    {
+      "definicion": "Forma conjugada del verbo 'coûter' (costar) en tercera persona del plural del presente de indicativo.",
+      "tipo_gramatical": "verbe",
+      "ejemplo_uso": "Ces chaussures coûtent cher.",
+      "palabra": "coûtent",
+      "frecuencia": 1,
+      "lema": "coûter",
+      "sinonimos": [
+        "valent",
+        "reviennent à"
+      ]
+    },
+    {
+      "definicion": "Relacionado con la cultura (forma femenina).",
+      "tipo_gramatical": "adjectif (f)",
+      "ejemplo_uso": "C'est une activité culturelle intéressante.",
+      "palabra": "culturelle",
+      "frecuencia": 1,
+      "lema": "culturel",
+      "sinonimos": [
+        "artistique",
+        "intellectuelle"
+      ]
+    },
+    {
+      "definicion": "Cada una de las partes en que se divide un objeto o un espacio.",
+      "tipo_gramatical": "nom (m)",
+      "ejemplo_uso": "De quel côté est la porte?",
+      "palabra": "côté",
+      "frecuencia": 1,
+      "lema": "côté",
+      "sinonimos": [
+        "flanc",
+        "bord"
+      ]
+    },
+    {
+      "definicion": "Nombre propio de persona.",
+      "tipo_gramatical": "nom propre",
+      "ejemplo_uso": "Davy est un ami de mon frère.",
+      "palabra": "davy",
+      "frecuencia": 2,
+      "lema": "Davy",
+      "sinonimos": []
+    }
+  ],
+  "PE": [
+    {
+      "ruta_audio": null,
+      "habilidad": "Production écrite",
+      "instruccion": "Activité 3 Vous souhaitez vous inscrire dans une école de langue en France. Remplissez ce formulaire d'inscription.",
+      "tipo": "formulario",
+      "preguntas": null,
+      "texto_lectura_modular": null,
+      "texto_lectura": "Vous souhaitez vous inscrire dans une école de langue en France. Remplissez ce formulaire d'inscription.",
+      "transcripcion": null,
+      "campos_formulario": [
+        "Nom",
+        "Prénom",
+        "Date de naissance",
+        "Pays de naissance",
+        "Langue maternelle",
+        "Adresse en France (numéro et rue)",
+        "Ville",
+        "Numéro de téléphone",
+        "Adresse électronique",
+        "Langue que vous voulez apprendre",
+        "Combien d'heures par semaine êtes-vous disponible"
+      ]
+    },
+    {
+      "ruta_audio": null,
+      "habilidad": "Production écrite",
+      "instruccion": "Activité 4 Vous voulez pratiquer une activité sportive en France. Vous remplissez ce formulaire.",
+      "tipo": "formulario",
+      "preguntas": null,
+      "texto_lectura_modular": null,
+      "texto_lectura": "Vous voulez pratiquer une activité sportive en France. Vous remplissez ce formulaire.",
+      "transcripcion": null,
+      "campos_formulario": [
+        "Nom",
+        "Prénom",
+        "Date de naissance",
+        "Adresse en France (numéro et rue)",
+        "Ville",
+        "Numéro de téléphone",
+        "Courrier électronique",
+        "Taille",
+        "Poids",
+        "Problèmes médicaux",
+        "Activité souhaitée",
+        "Jour préféré pour faire du sport"
+      ]
+    },
+    {
+      "ruta_audio": null,
+      "habilidad": "Production écrite",
+      "instruccion": "Activité 5 Vous souhaitez participer à un concours pour gagner un voyage en France. Vous remplissez ce formulaire d'inscription.",
+      "tipo": "formulario",
+      "preguntas": null,
+      "texto_lectura_modular": null,
+      "texto_lectura": "Vous souhaitez participer à un concours pour gagner un voyage en France. Vous remplissez ce formulaire d'inscription.",
+      "transcripcion": null,
+      "campos_formulario": [
+        "Nom",
+        "Prénom",
+        "Date de naissance",
+        "Situation familiale",
+        "Ville",
+        "Téléphone",
+        "Profession",
+        "Quel est votre pays préféré ?",
+        "Quel est votre film préféré ?",
+        "Quel est votre livre préféré ?",
+        "Centres d'intérêt"
+      ]
+    },
+    {
+      "ruta_audio": null,
+      "habilidad": "Production écrite",
+      "instruccion": "Activité 6 Vous souhaitez vous abonner à un magazine français. Remplissez ce formulaire d'inscription.",
+      "tipo": "formulario",
+      "preguntas": null,
+      "texto_lectura_modular": null,
+      "texto_lectura": "Vous souhaitez vous abonner à un magazine français. Remplissez ce formulaire d'inscription.",
+      "transcripcion": null,
+      "campos_formulario": [
+        "Nom",
+        "Prénom",
+        "Date de naissance",
+        "Âge",
+        "Adresse",
+        "Téléphone",
+        "Adresse électronique",
+        "Emploi / études",
+        "Moyen de paiement",
+        "Sujet d'actualité préféré",
+        "Date de début de l'abonnement"
+      ]
+    },
+    {
+      "ruta_audio": null,
+      "habilidad": "Production écrite",
+      "instruccion": "Activité 7 Vous réservez une chambre à l'hôtel en France. Vous remplissez ce formulaire d'inscription.",
+      "tipo": "formulario",
+      "preguntas": null,
+      "texto_lectura_modular": null,
+      "texto_lectura": "Vous réservez une chambre à l'hôtel en France. Vous remplissez ce formulaire d'inscription.",
+      "transcripcion": null,
+      "campos_formulario": [
+        "Nom",
+        "Prénom",
+        "Date de naissance",
+        "Nationalité",
+        "Numéro de téléphone",
+        "Adresse électronique",
+        "Numéro de passeport",
+        "Date d'arrivée",
+        "Heure d'arrivée",
+        "Nombre de personnes",
+        "Combien de nuits voulez-vous réserver ?"
+      ]
+    },
+    {
+      "ruta_audio": null,
+      "habilidad": "Production écrite",
+      "instruccion": "Activité 8 Vous habitez en France. Vous voulez avoir une nouvelle assurance de santé. Remplissez ce formulaire.",
+      "tipo": "formulario",
+      "preguntas": null,
+      "texto_lectura_modular": null,
+      "texto_lectura": "Vous habitez en France. Vous voulez avoir une nouvelle assurance de santé. Remplissez ce formulaire.",
+      "transcripcion": null,
+      "campos_formulario": [
+        "Nom",
+        "Prénom(s)",
+        "Date de naissance",
+        "Nationalité",
+        "Adresse (numéro et rue)",
+        "Ville",
+        "Pays",
+        "Numéro de téléphone",
+        "Adresse électronique",
+        "Taille",
+        "Couleur des yeux"
+      ]
+    },
+    {
+      "ruta_audio": null,
+      "habilidad": "Production écrite",
+      "instruccion": "Activité 9 Vous êtes en France. Vous voulez acheter une carte de transports en commun. Remplissez ce formulaire.",
+      "tipo": "formulario",
+      "preguntas": null,
+      "texto_lectura_modular": null,
+      "texto_lectura": "Vous êtes en France. Vous voulez acheter une carte de transports en commun. Remplissez ce formulaire.",
+      "transcripcion": null,
+      "campos_formulario": [
+        "Nom",
+        "Prénom",
+        "Date de naissance",
+        "Adresse (numéro, rue)",
+        "Ville",
+        "Nationalité",
+        "Numéro de téléphone",
+        "Adresse électronique",
+        "Numéro de carte d'identité",
+        "Durée de l'abonnement",
+        "Quels transports en commun allez-vous utiliser?"
+      ]
+    },
+    {
+      "ruta_audio": null,
+      "habilidad": "Production écrite",
+      "instruccion": "Activité 10 Vous déménagez en France. Vous voulez louer un appartement à Paris. Remplissez ce formulaire.",
+      "tipo": "formulario",
+      "preguntas": null,
+      "texto_lectura_modular": null,
+      "texto_lectura": "Vous déménagez en France. Vous voulez louer un appartement à Paris. Remplissez ce formulaire.",
+      "transcripcion": null,
+      "campos_formulario": [
+        "Nom",
+        "Prénom",
+        "Date de naissance",
+        "Nationalité",
+        "Numéro de téléphone",
+        "Adresse électronique",
+        "Profession",
+        "Salaire (par mois)",
+        "Nombre de chambres souhaité",
+        "Date d'entrée dans l'appartement",
+        "Nombre de personnes dans l'appartement"
+      ]
+    },
+    {
+      "ruta_audio": null,
+      "habilidad": "Production écrite",
+      "instruccion": "Activité 11 Vous êtes en France. Vous voulez adopter un animal de compagnie. Remplissez ce formulaire.",
+      "tipo": "formulario",
+      "preguntas": null,
+      "texto_lectura_modular": null,
+      "texto_lectura": "Vous êtes en France. Vous voulez adopter un animal de compagnie. Remplissez ce formulaire.",
+      "transcripcion": null,
+      "campos_formulario": [
+        "Nom",
+        "Prénom",
+        "Date de naissance",
+        "Adresse (numéro et rue)",
+        "Ville",
+        "Numéro de téléphone",
+        "Adresse électronique",
+        "Animal souhaité",
+        "Prénom de l'animal",
+        "Couleur de l'animal",
+        "Avez-vous déjà eu un animal de compagnie ?"
+      ]
+    },
+    {
+      "ruta_audio": null,
+      "habilidad": "Production écrite",
+      "instruccion": "Activité 12 Vous vivez en France et vous remplissez cette demande de carte grise*.",
+      "tipo": "formulario",
+      "preguntas": null,
+      "texto_lectura_modular": null,
+      "texto_lectura": "Vous vivez en France et vous remplissez cette demande de carte grise*.",
+      "transcripcion": null,
+      "campos_formulario": [
+        "Nom",
+        "Prénom",
+        "Date de naissance",
+        "Ville de naissance",
+        "Profession",
+        "Adresse",
+        "Code postal",
+        "Ville",
+        "Marque de la voiture",
+        "Couleur de la voiture",
+        "Êtes-vous le propriétaire de la voiture"
+      ]
+    }
+  ],
+  "unidad": "Unité 1",
+  "tema_CO": "1identifier un événement",
+  "tema_PE": "Donner des informations",
+  "tema_CE": "Comprendre des instructions",
+  "CE": [
+    {
+      "ruta_audio": null,
+      "habilidad": "lecture",
+      "instruccion": "Activité 2 - Répondez aux questions.",
+      "tipo": "choix multiple",
+      "preguntas": [
+        {
+          "respuesta_correcta": "1.png | des ordinateurs",
+          "opciones": [
+            "1.png | des ordinateurs",
+            "2.png | des gâteaux",
+            "3.png | des livres"
+          ],
+          "pregunta": "Quel est le thème de la réunion ?"
+        },
+        {
+          "respuesta_correcta": "La courgette.",
+          "opciones": [
+            "Le piment.",
+            "La courgette.",
+            "Le parmesan."
+          ],
+          "pregunta": "Quel est l'ingrédient principal du plat d'Estelle?"
+        },
+        {
+          "respuesta_correcta": "1.png | du parmesan",
+          "opciones": [
+            "1.png | du parmesan",
+            "2.png | de la farine",
+            "3.png | de l'huile"
+          ],
+          "pregunta": "Que devez-vous acheter?"
+        },
+        {
+          "respuesta_correcta": "19 heures.",
+          "opciones": [
+            "18 heures.",
+            "19 heures.",
+            "20 heures."
+          ],
+          "pregunta": "À quelle heure devez-vous aller chez Estelle?"
+        },
+        {
+          "respuesta_correcta": "La famille d'Estelle.",
+          "opciones": [
+            "Les amis d'Estelle.",
+            "La famille d'Estelle.",
+            "Les collègues d'Estelle."
+          ],
+          "pregunta": "Qui vient dîner ce soir?"
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": "Salut, J'ai une réunion importante au bureau sur le matériel informatique. Je ne peux pas acheter les ingrédients pour faire la tarte aux courgettes. Peux-tu acheter du parmesan, deux piments et de l'huile ? Je rentre du travail à 18 h, est-ce que tu peux venir à 19 h ? Nous serons 4 ce soir. Mes cousines Fabienne et Félicie viennent dîner à 20 h. Merci. Estelle",
+      "transcripcion": null,
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": null,
+      "habilidad": "lecture",
+      "instruccion": "Activité 3 - Répondez aux questions.",
+      "tipo": "choix multiple",
+      "preguntas": [
+        {
+          "respuesta_correcta": "3.png | un short et un t-shirt",
+          "opciones": [
+            "1.png | un costume",
+            "2.png | un pantalon de jogging",
+            "3.png | un short et un t-shirt"
+          ],
+          "pregunta": "Comment devez-vous vous habiller?"
+        },
+        {
+          "respuesta_correcta": "Des baskets.",
+          "opciones": [
+            "Des talons.",
+            "Des baskets.",
+            "Des bottines."
+          ],
+          "pregunta": "Que pouvez-vous porter dans la salle ?"
+        },
+        {
+          "respuesta_correcta": "3.png | l'accès aux douches",
+          "opciones": [
+            "1.png | une serviette",
+            "2.png | une bouteille d'eau",
+            "3.png | l'accès aux douches"
+          ],
+          "pregunta": "Que pouvez-vous avoir pour 3 € ?"
+        },
+        {
+          "respuesta_correcta": "21 h.",
+          "opciones": [
+            "7 h.",
+            "13 h.",
+            "21 h."
+          ],
+          "pregunta": "À quelle heure ferme la salle le vendredi ?"
+        },
+        {
+          "respuesta_correcta": "Le gérant.",
+          "opciones": [
+            "Le gérant.",
+            "L'employé.",
+            "L'entraîneur."
+          ],
+          "pregunta": "Qui est M. Picot?"
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": "Bienvenue au club de sport ! Pour utiliser la salle, vous devez avoir l'équipement suivant: - Un haut (t-shirt, débardeur); - Un bas (short, jogging); - Des baskets propres. Nous vous rappelons que les chaussures de ville (bottines, talons...) sont interdites dans la salle. Apportez de l'eau et votre serviette. Accès aux douches pour 3 €. La salle ouvre tous les jours de 7 h à 21 h, sauf le dimanche : fermeture à 13 h. Thomas Picot Responsable du club",
+      "transcripcion": null,
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": null,
+      "habilidad": "lecture",
+      "instruccion": "Activité 4 - Répondez aux questions.",
+      "tipo": "choix multiple",
+      "preguntas": [
+        {
+          "respuesta_correcta": "1.png | un croque-monsieur",
+          "opciones": [
+            "1.png | un croque-monsieur",
+            "2.png | une crêpe",
+            "3.png | une pizza"
+          ],
+          "pregunta": "Qu'est-ce que vos amis vous proposent de manger?"
+        },
+        {
+          "respuesta_correcta": "un spectacle humoristique.",
+          "opciones": [
+            "un film au cinéma.",
+            "une pièce de théâtre.",
+            "un spectacle humoristique."
+          ],
+          "pregunta": "Vos amis veulent voir..."
+        },
+        {
+          "respuesta_correcta": "place de la Bastille.",
+          "opciones": [
+            "place des Ternes.",
+            "rue de la Victoire.",
+            "place de la Bastille."
+          ],
+          "pregunta": "La salle se trouve..."
+        },
+        {
+          "respuesta_correcta": "2.png | réserver en ligne",
+          "opciones": [
+            "1.png | acheter un billet au guichet",
+            "2.png | réserver en ligne",
+            "3.png | acheter un billet par téléphone"
+          ],
+          "pregunta": "Qu'est-ce que vous devez faire pour réserver?"
+        },
+        {
+          "respuesta_correcta": "19 h.",
+          "opciones": [
+            "10 h.",
+            "19 h.",
+            "20 h 30."
+          ],
+          "pregunta": "À quelle heure avez-vous rendez-vous?"
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": "Salut! Nous allons manger un croque-monsieur chez Mamie's, rue de la Victoire. Après, nous allons assister au spectacle de Dany B. Tu sais, l'humoriste très connu ! Ça commence à 20 h 30. La salle de spectacle est à côté du musée d'art contemporain, sur la place de la Bastille. Tu peux réserver une place en ligne. Elle coûte 10 €. Si tu viens, rendez-vous place des Ternes vers 19 h. À plus ! Ben et Nacera",
+      "transcripcion": null,
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": null,
+      "habilidad": "lecture",
+      "instruccion": "Activité 5 - Répondez aux questions.",
+      "tipo": "choix multiple",
+      "preguntas": [
+        {
+          "respuesta_correcta": "son anniversaire.",
+          "opciones": [
+            "son anniversaire.",
+            "l'achat de son appartement.",
+            "la naissance de son premier enfant."
+          ],
+          "pregunta": "Claire vous invite pour fêter..."
+        },
+        {
+          "respuesta_correcta": "30 janvier.",
+          "opciones": [
+            "3 janvier.",
+            "30 janvier.",
+            "1er février."
+          ],
+          "pregunta": "La fête a lieu le..."
+        },
+        {
+          "respuesta_correcta": "3.png | des jus de fruits",
+          "opciones": [
+            "1.png | des macarons",
+            "2.png | une pizza",
+            "3.png | des jus de fruits"
+          ],
+          "pregunta": "Qu'est-ce que vous pouvez apporter?"
+        },
+        {
+          "respuesta_correcta": "d'un arrêt de bus.",
+          "opciones": [
+            "de la gare.",
+            "d'un arrêt de bus.",
+            "de la station de métro."
+          ],
+          "pregunta": "Claire habite près..."
+        },
+        {
+          "respuesta_correcta": "1.png | envoyer un SMS",
+          "opciones": [
+            "1.png | envoyer un SMS",
+            "2.png | appeler",
+            "3.png | envoyer un courriel"
+          ],
+          "pregunta": "Qu'est-ce que vous devez faire pour confirmer votre présence?"
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": "Paris, le 3 janvier Salut, j'ai bientôt 20 ans, le 1er février. J'organise une fête le 30 janvier chez moi pour célébrer ça, à partir de 20 h. Tu peux venir? Tu peux apporter du jus ou des gâteaux apéritifs. Voici mon adresse : 17, rue de la Paix. J'habite juste à côté d'un arrêt du bus 166. Le métro est un peu loin... Tu m'envoies un SMS pour me confirmer ta présence ? Bises Claire",
+      "transcripcion": null,
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": null,
+      "habilidad": "lecture",
+      "instruccion": "Activité 6 - Répondez aux questions.",
+      "tipo": "choix multiple",
+      "preguntas": [
+        {
+          "respuesta_correcta": "ses copains.",
+          "opciones": [
+            "sa famille.",
+            "ses copains.",
+            "ses collègues."
+          ],
+          "pregunta": "Votre ami organise un repas pour..."
+        },
+        {
+          "respuesta_correcta": "3.png | au bord de la mer",
+          "opciones": [
+            "1.png | à la campagne",
+            "2.png | au bord d'un lac",
+            "3.png | au bord de la mer"
+          ],
+          "pregunta": "Où est-ce qu'a lieu l'événement?"
+        },
+        {
+          "respuesta_correcta": "l'après-midi.",
+          "opciones": [
+            "le matin.",
+            "l'après-midi.",
+            "le soir."
+          ],
+          "pregunta": "Vous devez venir..."
+        },
+        {
+          "respuesta_correcta": "3.png | à boire",
+          "opciones": [
+            "1.png | une salade",
+            "2.png | des jeux",
+            "3.png | à boire"
+          ],
+          "pregunta": "Qu'est-ce que vous devez apporter?"
+        },
+        {
+          "respuesta_correcta": "envoyer un courriel.",
+          "opciones": [
+            "appeler",
+            "écrire un SMS.",
+            "envoyer un courriel."
+          ],
+          "pregunta": "Pour confirmer votre présence, vous devez..."
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": "Bonjour! L'été arrive ! J'organise un déjeuner entre amis au bord de la mer samedi à 14 h. Tu peux apporter à boire ? J'apporte à manger. On va organiser des jeux avec des équipes. Des surprises sont à gagner ! Tu peux me confirmer ta présence par courriel s'il te plaît ? Ne m'appelle pas ou n'envoie pas de SMS, mon téléphone est cassé ! Marc",
+      "transcripcion": null,
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": null,
+      "habilidad": "lecture",
+      "instruccion": "Activité 7 - Répondez aux questions.",
+      "tipo": "choix multiple",
+      "preguntas": [
+        {
+          "respuesta_correcta": "un anniversaire.",
+          "opciones": [
+            "un mariage.",
+            "un anniversaire.",
+            "un pot de départ."
+          ],
+          "pregunta": "Élisa fait un gâteau pour..."
+        },
+        {
+          "respuesta_correcta": "3.png | des fruits",
+          "opciones": [
+            "1.png | du chocolat",
+            "2.png | des noisettes",
+            "3.png | des fruits"
+          ],
+          "pregunta": "Quel est l'ingrédient principal?"
+        },
+        {
+          "respuesta_correcta": "3.png | des œufs",
+          "opciones": [
+            "1.png | du beurre",
+            "2.png | des amandes",
+            "3.png | des œufs"
+          ],
+          "pregunta": "Que devez-vous acheter?"
+        },
+        {
+          "respuesta_correcta": "Du jus.",
+          "opciones": [
+            "Du jus.",
+            "Du soda.",
+            "De l'eau."
+          ],
+          "pregunta": "Quel liquide Élisa vous demande-t-elle d'acheter?"
+        },
+        {
+          "respuesta_correcta": "19 heures.",
+          "opciones": [
+            "17 heures.",
+            "18 heures.",
+            "19 heures."
+          ],
+          "pregunta": "L'événement commence à..."
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": "Pour les 18 ans de Guillaume, je fais un gâteau aux fruits. Est-ce que tu peux acheter : - de la farine; - 6 œufs ; - 1 litre de lait; - du sucre vanillé. Tu peux prendre aussi du jus s'il te plaît? Je te rappelle qu'on a rendez-vous à 19 h ! Il faut que tu sois là avant 17 h car je dois préparer le gâteau juste avant la fête. Élisa",
+      "transcripcion": null,
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": null,
+      "habilidad": "lecture",
+      "instruccion": "Activité 8 - Répondez aux questions.",
+      "tipo": "choix multiple",
+      "preguntas": [
+        {
+          "respuesta_correcta": "Dans les rues du village.",
+          "opciones": [
+            "À la mairie.",
+            "À la salle des fêtes.",
+            "Dans les rues du village."
+          ],
+          "pregunta": "Où a lieu la fête?"
+        },
+        {
+          "respuesta_correcta": "3.png | le café",
+          "opciones": [
+            "1.png | des jus de fruits",
+            "2.png | des pâtisseries",
+            "3.png | le café"
+          ],
+          "pregunta": "Qu'est-ce qui est gratuit?"
+        },
+        {
+          "respuesta_correcta": "12 h.",
+          "opciones": [
+            "12 h.",
+            "15 h.",
+            "23 h."
+          ],
+          "pregunta": "La fête débute à..."
+        },
+        {
+          "respuesta_correcta": "1 jour.",
+          "opciones": [
+            "1 jour.",
+            "2 jours.",
+            "3 jours."
+          ],
+          "pregunta": "L'événement dure..."
+        },
+        {
+          "respuesta_correcta": "1.png | envoyer un courriel",
+          "opciones": [
+            "1.png | envoyer un courriel",
+            "2.png | appeler",
+            "3.png | aller à la mairie"
+          ],
+          "pregunta": "Que devez-vous faire pour avoir plus de renseignements?"
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": "Le week-end prochain, c'est la fête du quartier ! Venez rencontrer vos voisins et partager un bon moment. L'événement a lieu dans les rues du village. Il y a à boire et à manger : jus, pâtisseries, salades... Le café est offert par la mairie. La fête commence à midi et se termine à 23 h. Les jeux commencent à 15 h. Besoin de renseignements? Écrivez à mairie@village.fr.",
+      "transcripcion": null,
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": null,
+      "habilidad": "lecture",
+      "instruccion": "Activité 9 - Répondez aux questions.",
+      "tipo": "choix multiple",
+      "preguntas": [
+        {
+          "respuesta_correcta": "1.png | une course à pied",
+          "opciones": [
+            "1.png | une course à pied",
+            "2.png | un concert",
+            "3.png | un marché"
+          ],
+          "pregunta": "MARATHON DE PARIS - De quoi s'agit-il sur ce site?"
+        },
+        {
+          "respuesta_correcta": "17 heures.",
+          "opciones": [
+            "15 heures.",
+            "16 heures.",
+            "17 heures."
+          ],
+          "pregunta": "MARATHON DE PARIS - Les inscriptions se terminent à..."
+        },
+        {
+          "respuesta_correcta": "17 ans.",
+          "opciones": [
+            "15 ans.",
+            "17 ans.",
+            "19 ans."
+          ],
+          "pregunta": "MARATHON DE PARIS - Un participant peut s'inscrire avec la permission de ses parents s'il a..."
+        },
+        {
+          "respuesta_correcta": "3.png | un certificat médical",
+          "opciones": [
+            "1.png | un passeport",
+            "2.png | une carte bancaire",
+            "3.png | un certificat médical"
+          ],
+          "pregunta": "MARATHON DE PARIS - Quel document faut-il donner?"
+        },
+        {
+          "respuesta_correcta": "Par courriel.",
+          "opciones": [
+            "Par fax.",
+            "Par courriel.",
+            "Par courrier."
+          ],
+          "pregunta": "MARATHON DE PARIS - Comment devez-vous transmettre les documents?"
+        }
+      ],
+      "texto_lectura_modular": {
+        "MARATHON DE PARIS": "Le prochain marathon de Paris a lieu le samedi 4 juillet. Les inscriptions se terminent le 15 février à 17 h. Les participants doivent avoir au moins 18 ans. Les mineurs de 16 ans ou plus doivent avoir la permission écrite de leurs parents. La compétition est interdite aux moins de 16 ans. Pour s'inscrire, veuillez envoyer votre certificat médical à l'adresse suivante : mairie@op.fr."
+      },
+      "texto_lectura": "Le prochain marathon de Paris a lieu le samedi 4 juillet. Les inscriptions se terminent le 15 février à 17 h. Les participants doivent avoir au moins 18 ans. Les mineurs de 16 ans ou plus doivent avoir la permission écrite de leurs parents. La compétition est interdite aux moins de 16 ans. Pour s'inscrire, veuillez envoyer votre certificat médical à l'adresse suivante : mairie@op.fr.",
+      "transcripcion": null,
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": null,
+      "habilidad": "lecture",
+      "instruccion": "Activité 10 - Répondez aux questions.",
+      "tipo": "choix multiple",
+      "preguntas": [
+        {
+          "respuesta_correcta": "2.png | des cours de musique",
+          "opciones": [
+            "1.png | des cours de peinture",
+            "2.png | des cours de musique",
+            "3.png | des cours de chant"
+          ],
+          "pregunta": "Musicien propose ses services - De quoi parle l'annonce?"
+        },
+        {
+          "respuesta_correcta": "étudiant.",
+          "opciones": [
+            "salarié.",
+            "étudiant.",
+            "au chômage."
+          ],
+          "pregunta": "Musicien propose ses services - Éric est..."
+        },
+        {
+          "respuesta_correcta": "adultes.",
+          "opciones": [
+            "enfants.",
+            "adolescents.",
+            "adultes."
+          ],
+          "pregunta": "Musicien propose ses services - Il propose ses services aux..."
+        },
+        {
+          "respuesta_correcta": "20 €.",
+          "opciones": [
+            "15 €.",
+            "18 €.",
+            "20 €."
+          ],
+          "pregunta": "Musicien propose ses services - Combien coûte une heure de cours?"
+        },
+        {
+          "respuesta_correcta": "2.png | par courriel",
+          "opciones": [
+            "1.png | par téléphone",
+            "2.png | par courriel",
+            "3.png | par SMS"
+          ],
+          "pregunta": "Musicien propose ses services - Comment pouvez-vous contacter Éric?"
+        }
+      ],
+      "texto_lectura_modular": {
+        "Musicien propose ses services": "Je fais des études de musique à l'université et je propose des cours de guitare ou de basse. J'enseigne aux plus de 18 ans. Je suis disponible le mercredi et les week-ends, de 15 h à 19 h. Je me déplace chez vous ! Je propose une heure de cours pour 20 €. Écrivez-moi à l'adresse : prof@music.fr. Éric"
+      },
+      "texto_lectura": "Je fais des études de musique à l'université et je propose des cours de guitare ou de basse. J'enseigne aux plus de 18 ans. Je suis disponible le mercredi et les week-ends, de 15 h à 19 h. Je me déplace chez vous ! Je propose une heure de cours pour 20 €. Écrivez-moi à l'adresse : prof@music.fr. Éric",
+      "transcripcion": null,
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": null,
+      "habilidad": "lecture",
+      "instruccion": "Activité 11 - Répondez aux questions.",
+      "tipo": "choix multiple",
+      "preguntas": [
+        {
+          "respuesta_correcta": "1.png | à l'aéroport",
+          "opciones": [
+            "1.png | à l'aéroport",
+            "2.png | à la gare",
+            "3.png | au port"
+          ],
+          "pregunta": "Où devez-vous récupérer votre amie?"
+        },
+        {
+          "respuesta_correcta": "14 h 30.",
+          "opciones": [
+            "14 h 30.",
+            "16 h.",
+            "17 h."
+          ],
+          "pregunta": "Elle arrive à Paris à...."
+        },
+        {
+          "respuesta_correcta": "1.png | en voiture",
+          "opciones": [
+            "1.png | en voiture",
+            "2.png | en métro",
+            "3.png | en bus"
+          ],
+          "pregunta": "Comment Julia souhaite-t-elle rentrer?"
+        },
+        {
+          "respuesta_correcta": "Chez le coiffeur.",
+          "opciones": [
+            "Chez le coiffeur.",
+            "Chez le dentiste.",
+            "Chez le médecin."
+          ],
+          "pregunta": "Où votre amie a-t-elle rendez-vous?"
+        },
+        {
+          "respuesta_correcta": "De voir une exposition.",
+          "opciones": [
+            "De manger avec elle.",
+            "D'acheter ses places.",
+            "De voir une exposition."
+          ],
+          "pregunta": "Qu'est-ce que Julia vous propose?"
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": "Salut! Mon vol atterrit à Paris le jeudi 12 à 14 h 30. Tu peux venir me chercher en voiture ? J'ai deux grosses valises avec moi. Je ne veux pas prendre le métro ou le bus. J'ai rendez-vous le jour même pour couper mes cheveux à 17 h. Ça te dit qu'on aille voir l'expo Dali le 16 ? Je peux avoir des places moins chères. Appelle-moi ! Julia",
+      "transcripcion": null,
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": null,
+      "habilidad": "lecture",
+      "instruccion": "Activité 12 - Répondez aux questions.",
+      "tipo": "choix multiple",
+      "preguntas": [
+        {
+          "respuesta_correcta": "faire des courses.",
+          "opciones": [
+            "travailler.",
+            "voir des amis.",
+            "faire des courses."
+          ],
+          "pregunta": "Julia est partie..."
+        },
+        {
+          "respuesta_correcta": "3.png | faire la lessive",
+          "opciones": [
+            "1.png | passer l'aspirateur",
+            "2.png | faire la vaisselle",
+            "3.png | faire la lessive"
+          ],
+          "pregunta": "Qu'est-ce que Julia vous demande de faire rapidement?"
+        },
+        {
+          "respuesta_correcta": "3.png | des biscuits",
+          "opciones": [
+            "1.png | une pomme",
+            "2.png | une tartine",
+            "3.png | des biscuits"
+          ],
+          "pregunta": "Que mange Marie pour le goûter?"
+        },
+        {
+          "respuesta_correcta": "À 19 h.",
+          "opciones": [
+            "À 16 h 30.",
+            "À 19 h.",
+            "À 19 h 30."
+          ],
+          "pregunta": "À quelle heure revient Julia?"
+        },
+        {
+          "respuesta_correcta": "de jouer à un jeu.",
+          "opciones": [
+            "de jouer à un jeu.",
+            "de regarder un film.",
+            "de préparer un plat."
+          ],
+          "pregunta": "Julia vous propose..."
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": "Salut, je suis partie acheter des fruits et du pain. J'ai besoin que tu mettes le linge sale à laver, c'est urgent ! Marie doit arriver vers 16 h 30. Il faut lui préparer son goûter. Elle prend des biscuits avec du lait. Je dois rentrer vers 19 h. On peut commander des pizzas vers 19 h 30 et se faire un jeu de société tous ensemble ? Envoie-moi un texto pour me dire quand tu rentres. Julia",
+      "transcripcion": null,
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": null,
+      "habilidad": "lecture",
+      "instruccion": "Activité 13 - Répondez aux questions.",
+      "tipo": "choix multiple",
+      "preguntas": [
+        {
+          "respuesta_correcta": "Elle part vivre à l'étranger.",
+          "opciones": [
+            "Elle change de travail.",
+            "Elle organise une fête.",
+            "Elle part vivre à l'étranger."
+          ],
+          "pregunta": "Que va faire Sophie?"
+        },
+        {
+          "respuesta_correcta": "3.png | un guide de voyage",
+          "opciones": [
+            "1.png | un pull",
+            "2.png | des chaussures",
+            "3.png | un guide de voyage"
+          ],
+          "pregunta": "Quel cadeau allez-vous offrir à Sophie?"
+        },
+        {
+          "respuesta_correcta": "2.png | un gâteau",
+          "opciones": [
+            "1.png | des boissons",
+            "2.png | un gâteau",
+            "3.png | une salade"
+          ],
+          "pregunta": "Que devez-vous apporter?"
+        },
+        {
+          "respuesta_correcta": "19 h.",
+          "opciones": [
+            "19 h.",
+            "19 h 30.",
+            "20 h."
+          ],
+          "pregunta": "À quelle heure devez-vous arriver?"
+        },
+        {
+          "respuesta_correcta": "Elle doit voir le médecin.",
+          "opciones": [
+            "Elle finit tard le travail.",
+            "Elle va faire des courses.",
+            "Elle doit voir le médecin."
+          ],
+          "pregunta": "Pourquoi Marie va-t-elle avoir du retard?"
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": "Salut ! On célèbre le départ de Sophie au Canada, le 20 février. On va lui offrir quelques cadeaux pratiques : un guide et un gros manteau. On va faire une cagnotte aussi. Éric apporte des boissons et moi une salade. Tu peux amener un dessert ? Rendez-vous à 19 h. Lola arrivera vers 19 h 30 car elle travaille tard. Je risque d'être un peu en retard aussi car j'ai rendez-vous chez le médecin. À bientôt ! Marie",
+      "transcripcion": null,
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": null,
+      "habilidad": "lecture",
+      "instruccion": "Activité 14 - Répondez aux questions.",
+      "tipo": "choix multiple",
+      "preguntas": [
+        {
+          "respuesta_correcta": "de cuisine.",
+          "opciones": [
+            "de cuisine.",
+            "de théâtre.",
+            "de musique."
+          ],
+          "pregunta": "Tatiana vous propose de participer à un concours..."
+        },
+        {
+          "respuesta_correcta": "3.png | un ordinateur portable",
+          "opciones": [
+            "1.png | un livre de recettes",
+            "2.png | une valise",
+            "3.png | un ordinateur portable"
+          ],
+          "pregunta": "Que peut-on gagner?"
+        },
+        {
+          "respuesta_correcta": "à la mairie.",
+          "opciones": [
+            "à la mairie.",
+            "dans un restaurant.",
+            "dans une association."
+          ],
+          "pregunta": "Le concours a lieu..."
+        },
+        {
+          "respuesta_correcta": "13 h 45.",
+          "opciones": [
+            "13 h 15.",
+            "13 h 30.",
+            "13 h 45."
+          ],
+          "pregunta": "À quelle heure commence le concours?"
+        },
+        {
+          "respuesta_correcta": "1.png | par courriel",
+          "opciones": [
+            "1.png | par courriel",
+            "2.png | par téléphone",
+            "3.png | sur un site internet"
+          ],
+          "pregunta": "Comment pouvez-vous vous inscrire?"
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": "Salut ! Je vais participer à un concours de recettes salées. Tu veux venir avec moi ? Le premier prix est un voyage dans un château dans les montagnes ! L'année dernière, j'ai gagné un ordinateur. On doit être à la salle des fêtes de la mairie à 13 h 45. Je viens te chercher entre 13 h 15 et 13 h 30. Sylvain Saymar, le chef de l'association Restaurants de France, sera là ! N'oublie pas de t'inscrire à l'adresse concours@miam.fr. Tatiana",
+      "transcripcion": null,
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": null,
+      "habilidad": "lecture",
+      "instruccion": "Activité 15 - Répondez aux questions.",
+      "tipo": "choix multiple",
+      "preguntas": [
+        {
+          "respuesta_correcta": "3.png | un DVD, un poster et un jeu vidéo",
+          "opciones": [
+            "1.png | un DVD et un poster",
+            "2.png | un jeu vidéo",
+            "3.png | un DVD, un poster et un jeu vidéo"
+          ],
+          "pregunta": "ANNONCE - Que vend Florian?"
+        },
+        {
+          "respuesta_correcta": "40 euros.",
+          "opciones": [
+            "20 euros.",
+            "30 euros.",
+            "40 euros."
+          ],
+          "pregunta": "ANNONCE - Combien coûtent l'affiche et le DVD?"
+        },
+        {
+          "respuesta_correcta": "3.png | une statue",
+          "opciones": [
+            "1.png | une épée",
+            "2.png | un jeu vidéo",
+            "3.png | une statue"
+          ],
+          "pregunta": "ANNONCE - Qu'est-ce que vous pouvez avoir gratuitement?"
+        },
+        {
+          "respuesta_correcta": "Par SMS.",
+          "opciones": [
+            "Par SMS.",
+            "Par courriel.",
+            "Par téléphone."
+          ],
+          "pregunta": "ANNONCE - Comment devez-vous contacter Florian?"
+        },
+        {
+          "respuesta_correcta": "Vendredi.",
+          "opciones": [
+            "Lundi.",
+            "Mercredi.",
+            "Vendredi."
+          ],
+          "pregunta": "ANNONCE - Quel jour pouvez-vous contacter Florian?"
+        }
+      ],
+      "texto_lectura_modular": {
+        "ANNONCE": "Je vends le DVD de L'Aventurier — épisode 3 et un poster en édition limitée pour 40 euros. Je vends aussi le jeu vidéo L'Aventurier pour 20 euros. Je peux vous offrir une petite statue du film si vous achetez tous les objets. Voici mon numéro : 07 64 82 92 03, envoyez-moi un message ! Pas d'appel ! Je suis disponible tous les soirs après 18 h 30 sauf le lundi et mercredi. Florian"
+      },
+      "texto_lectura": "Je vends le DVD de L'Aventurier — épisode 3 et un poster en édition limitée pour 40 euros. Je vends aussi le jeu vidéo L'Aventurier pour 20 euros. Je peux vous offrir une petite statue du film si vous achetez tous les objets. Voici mon numéro : 07 64 82 92 03, envoyez-moi un message ! Pas d'appel ! Je suis disponible tous les soirs après 18 h 30 sauf le lundi et mercredi. Florian",
+      "transcripcion": null,
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": null,
+      "habilidad": "lecture",
+      "instruccion": "Activité 16 - Répondez aux questions.",
+      "tipo": "choix multiple",
+      "preguntas": [
+        {
+          "respuesta_correcta": "2.png | la musique",
+          "opciones": [
+            "1.png | la cuisine",
+            "2.png | la musique",
+            "3.png | le sport"
+          ],
+          "pregunta": "ASSISTEZ À L'ÉMISSION PLATINE 78 - Quel est le thème de l'émission?"
+        },
+        {
+          "respuesta_correcta": "En octobre.",
+          "opciones": [
+            "En septembre.",
+            "En octobre.",
+            "En novembre."
+          ],
+          "pregunta": "ASSISTEZ À L'ÉMISSION PLATINE 78 - Quand a lieu l'émission?"
+        },
+        {
+          "respuesta_correcta": "1.png | remplir un formulaire en ligne",
+          "opciones": [
+            "1.png | remplir un formulaire en ligne",
+            "2.png | envoyer un courriel",
+            "3.png | appeler"
+          ],
+          "pregunta": "ASSISTEZ À L'ÉMISSION PLATINE 78 - Comment devez-vous vous inscrire?"
+        },
+        {
+          "respuesta_correcta": "18 ans.",
+          "opciones": [
+            "14 ans.",
+            "15 ans.",
+            "18 ans."
+          ],
+          "pregunta": "ASSISTEZ À L'ÉMISSION PLATINE 78 - Vous pouvez participer si vous avez..."
+        },
+        {
+          "respuesta_correcta": "Un artiste.",
+          "opciones": [
+            "Un artiste.",
+            "Un animateur.",
+            "Un producteur."
+          ],
+          "pregunta": "ASSISTEZ À L'ÉMISSION PLATINE 78 - Qui est Dave Ranskis?"
+        }
+      ],
+      "texto_lectura_modular": {
+        "ASSISTEZ À L'ÉMISSION PLATINE 78": "Pour assister à l'émission musicale PLATINE 78 du 18 octobre, vous devez : - remplir le formulaire en ligne sur www.platine78.fr/concours ; - raconter votre passion pour la musique ; - avoir 16 ans ou plus. Dates d'inscription : du 21 au 31 septembre. PARTICIPEZ VITE! Les cinq premiers candidats sélectionnés rencontreront le chanteur Dave Ranskis après l'émission télévisée."
+      },
+      "texto_lectura": "Pour assister à l'émission musicale PLATINE 78 du 18 octobre, vous devez : - remplir le formulaire en ligne sur www.platine78.fr/concours ; - raconter votre passion pour la musique ; - avoir 16 ans ou plus. Dates d'inscription : du 21 au 31 septembre. PARTICIPEZ VITE! Les cinq premiers candidats sélectionnés rencontreront le chanteur Dave Ranskis après l'émission télévisée.",
+      "transcripcion": null,
+      "campos_formulario": null
+    },
+    {
+      "ruta_audio": null,
+      "habilidad": "lecture",
+      "instruccion": "Activité 17 - Répondez aux questions.",
+      "tipo": "choix multiple",
+      "preguntas": [
+        {
+          "respuesta_correcta": "Elle a un rendez-vous médical.",
+          "opciones": [
+            "Elle veut aller au parc.",
+            "Elle doit travailler tard.",
+            "Elle a un rendez-vous médical."
+          ],
+          "pregunta": "Pourquoi Cynthia vous écrit-elle?"
+        },
+        {
+          "respuesta_correcta": "À l'école.",
+          "opciones": [
+            "Au parc.",
+            "À l'école.",
+            "À la maison."
+          ],
+          "pregunta": "Où devez-vous récupérer Elen?"
+        },
+        {
+          "respuesta_correcta": "1.png | se promener dans la nature",
+          "opciones": [
+            "1.png | se promener dans la nature",
+            "2.png | jouer aux jeux vidéo",
+            "3.png | lire des histoires"
+          ],
+          "pregunta": "Qu'est-ce qu'Elen préfère faire?"
+        },
+        {
+          "respuesta_correcta": "18 h 30.",
+          "opciones": [
+            "15 h.",
+            "16 h 30.",
+            "18 h 30."
+          ],
+          "pregunta": "À quelle heure rentre Cynthia?"
+        },
+        {
+          "respuesta_correcta": "1.png | par SMS",
+          "opciones": [
+            "1.png | par SMS",
+            "2.png | par téléphone",
+            "3.png | par courriel"
+          ],
+          "pregunta": "Comment devez-vous contacter Cynthia?"
+        }
+      ],
+      "texto_lectura_modular": null,
+      "texto_lectura": "Salut, Tu es là en fin d'après-midi ? Je dois aller chez le dentiste après le travail. Tu peux aller chercher ma fille à son école à 16 h 30 ? Vous pouvez aller marcher dans le parc ou lire des histoires, Elen aime ça. J'arrive à la maison à 18 h 30. Envoie-moi un message sur mon téléphone avant 15 h pour confirmer, n'appelle pas, je ne peux pas répondre. Merci beaucoup ! Cynthia",
+      "transcripcion": null,
+      "campos_formulario": null
+    }
+  ]
+}
