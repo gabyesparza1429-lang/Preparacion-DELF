@@ -3064,5 +3064,50 @@ window.renderExerciseStructure = async function() {
 })();
 </script>
 
+
+<script>
+(function() {
+    // Parche para dibujar el texto corregido en PE y PO 
+    const originalRender = window.renderGrilleOfficielleDELF;
+    if (originalRender && !window.renderGrilleOfficielleDELF_patched) {
+        window.renderGrilleOfficielleDELF_patched = true;
+        window.renderGrilleOfficielleDELF = function(data, typeSkill, consigneTexto) {
+            
+            // Generar la matriz oficial
+            let htmlOriginal = originalRender(data, typeSkill, consigneTexto);
+            
+            // Obtener el texto corregido (dependiendo de si es PE o PO)
+            let textoCorregido = data.texto_html || data.transcription_html;
+            
+            if (textoCorregido) {
+                // Inyectar la caja de texto corregido justo debajo de la matriz
+                let cajaTexto = `
+                <div style="background:#fff; border:1px solid #ddd; padding:20px; border-radius:8px; margin-bottom:25px; box-shadow:0 2px 5px rgba(0,0,0,0.05);">
+                    <h4 style="margin:0 0 15px 0; color:#002244; font-size:1.1rem; border-bottom:2px solid #1a73e8; padding-bottom:8px;">
+                        <i class="fas fa-spell-check" style="color:#1a73e8;"></i> Transcription & Corrections (En rouge)
+                    </h4>
+                    <div style="font-size:1rem; line-height:1.7; color:#333; font-family:'Montserrat', sans-serif;">
+                        ${textoCorregido}
+                    </div>
+                </div>`;
+                
+                // Insertar antes del bloque de Verificación de Consigna o al final
+                if (htmlOriginal.includes('<!-- Sección de verificación de instrucciones (Consigne) -->')) {
+                    htmlOriginal = htmlOriginal.replace(
+                        '<!-- Sección de verificación de instrucciones (Consigne) -->', 
+                        cajaTexto + '
+<!-- Sección de verificación de instrucciones (Consigne) -->'
+                    );
+                } else {
+                    htmlOriginal += cajaTexto;
+                }
+            }
+            
+            return htmlOriginal;
+        };
+    }
+})();
+</script>
+
 </body>
 </html>
