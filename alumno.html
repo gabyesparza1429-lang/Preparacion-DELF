@@ -2974,7 +2974,7 @@ window.renderExerciseStructure = async function() {
         }
 
         var html = '<div style="background:#002244; color:#fff; border-radius:10px 10px 0 0; padding:20px; margin-top:30px;">' +
-            '<h2 style="margin:0; font-size:1.4rem; color:#fff;">Rapport d'Évaluation Officiel DELF - Niveau B1</h2>' +
+            '<h2 style="margin:0; font-size:1.4rem; color:#fff;">Rapport d\'Évaluation Officiel DELF - Niveau B1</h2>' +
             '<div style="margin-top:10px; font-size:1.1rem; color:#e0e0e0;">' +
             '<strong>Élève :</strong> ' + (window.alumnoData ? (window.alumnoData.nombre || 'Constanza') : 'Constanza') + '<br>' +
             '<strong>Note Finale :</strong> <span style="color:#f39c12; font-weight:bold; font-size:1.3rem;">' + scoreGlobal + '</span>' +
@@ -2983,7 +2983,7 @@ window.renderExerciseStructure = async function() {
             '<div style="overflow-x:auto; background:#fff; border:1px solid #002244; border-top:none; border-radius:0 0 10px 10px; margin-bottom:25px;">' +
             '<table style="width:100%; border-collapse:collapse; font-size:0.9rem; text-align:left;">' +
             '<thead><tr style="background:#002244; color:#fff;">' +
-            '<th style="padding:12px; width:28%;">Critères d'évaluation</th>' +
+            '<th style="padding:12px; width:28%;">Critères d\'évaluation</th>' +
             '<th style="padding:12px; width:24%; text-align:center;">INSUFFISANT / SOUS<br><small style="color:#ffaaaa;">(0 - 35% des pts)</small></th>' +
             '<th style="padding:12px; width:24%; text-align:center;">AU NIVEAU<br><small style="color:#aaffaa;">(36% - 75% des pts)</small></th>' +
             '<th style="padding:12px; width:24%; text-align:center;">SUPRA<br><small style="color:#ffd700;">(76% - 100% des pts)</small></th>' +
@@ -3028,7 +3028,7 @@ window.renderExerciseStructure = async function() {
             '<div style="background:#f4f6f9; border-left:5px solid #002244; padding:15px; border-radius:6px; margin-bottom:20px;">' +
             '<h4 style="margin:0 0 8px 0; color:#002244;"><i class="fas fa-tasks"></i> Vérification de la Consigne (Réalisation de la tâche)</h4>' +
             '<p style="margin:0; font-size:0.95rem; color:#333;">' +
-            (data.consigne_validation || 'Sophia a vérifié la production par rapport aux consignes de l'exercice. Les éléments demandés ont été traités correctement.') +
+            (data.consigne_validation || 'Sophia a vérifié la production par rapport aux consignes de l\'exercice. Les éléments demandés ont été traités correctement.') +
             '</p></div>' +
             '<div style="background:#fff3cd; border-left:5px solid #ffc107; padding:15px; border-radius:6px; margin-bottom:20px;">' +
             '<h4 style="margin:0 0 8px 0; color:#856404;"><i class="fas fa-exclamation-circle"></i> Remarques et points à corriger</h4>' +
@@ -3036,7 +3036,7 @@ window.renderExerciseStructure = async function() {
             erroresComentarios.map(function(e){ return '<li style="margin-bottom:5px;">' + e + '</li>'; }).join('') +
             '</ul></div>' +
             '<div style="background:#e3f2fd; border-left:5px solid #2196f3; padding:15px; border-radius:6px; margin-bottom:25px;">' +
-            '<h4 style="margin:0 0 8px 0; color:#0d47a1;"><i class="fas fa-star"></i> Ce qu'il faut pour atteindre le niveau SUPRA</h4>' +
+            '<h4 style="margin:0 0 8px 0; color:#0d47a1;"><i class="fas fa-star"></i> Ce qu\'il faut pour atteindre le niveau SUPRA</h4>' +
             '<ul style="margin:0; padding-left:20px; font-size:0.9rem; color:#0d47a1;">' +
             todosSupra.map(function(s){ return '<li style="margin-bottom:5px;">' + s + '</li>'; }).join('') +
             '</ul></div>';
