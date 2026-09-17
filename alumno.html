@@ -3746,5 +3746,91 @@ window.renderExerciseStructure = async function() {
 })();
 </script>
 
+
+<script>
+(function() {
+    function reconectarBotonPE() {
+        // Buscar el botón de envío
+        let btnPE = document.getElementById('btn-submit-pe') || 
+                    Array.from(document.querySelectorAll('button')).find(b => b.textContent.includes('Soumettre la production'));
+        
+        // Si no existe o ya lo arreglamos, no hacemos nada
+        if (!btnPE || btnPE.dataset.arreglado === 'true') return;
+        
+        // CLONAR EL BOTÓN: Esta es la técnica maestra para borrarle cualquier conexión vieja
+        let botonLimpio = btnPE.cloneNode(true);
+        botonLimpio.dataset.arreglado = 'true';
+        btnPE.parentNode.replaceChild(botonLimpio, btnPE);
+        
+        // CONECTAR LA NUEVA TUBERÍA
+        botonLimpio.addEventListener('click', async function(e) {
+            e.preventDefault();
+            
+            // 1. Obtener el texto del alumno
+            let textArea = document.getElementById('pe-student-response') || 
+                           document.getElementById('texto-pe-input') || 
+                           document.querySelector('textarea');
+            let texto = textArea ? textArea.value.trim() : '';
+            
+            if (!texto) {
+                alert('Veuillez écrire votre texte avant de soumettre.');
+                return;
+            }
+            
+            // 2. Cambiar estado del botón
+            botonLimpio.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Analyse par l\'IA (Jury officiel)...';
+            botonLimpio.disabled = true;
+            
+            try {
+                // 3. Obtener la consigne
+                let consigneDiv = document.querySelector('.consigne-text') || document.querySelector('.exercise-instruction');
+                let consigneTexto = consigneDiv ? consigneDiv.innerText : 'Production écrite';
+                
+                // 4. Enviar a la NUEVA Cloud Function de Firebase
+                let res = await fetch('https://us-central1-objectif-reussite-delf.cloudfunctions.net/procesarTextoPE', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        texto: texto,
+                        nivel: window.currentLevel || 'B1',
+                        consigne: consigneTexto
+                    })
+                });
+                
+                let data = await res.json();
+                
+                // 5. Guardar en el Historial para el Acordeón
+                if (window.db && window.urlId && window.currentUnitId && window.currentExerciseIndex !== undefined) {
+                    await window.db.collection("Usuarios").doc(window.urlId).collection("HistorialSophia").add({
+                        unidad: window.currentUnitId,
+                        actividad: window.currentExerciseIndex,
+                        habilidad: 'PE',
+                        texto_alumno: texto,
+                        respuesta_ia: JSON.stringify(data),
+                        timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                    });
+                }
+                
+                // 6. Dibujar EXCLUSIVAMENTE la tabla nueva
+                if (window.mostrarEvaluacionSophia) {
+                    window.mostrarEvaluacionSophia(data, 'PE', consigneTexto);
+                }
+                
+            } catch (err) {
+                console.error("Error en evaluación PE:", err);
+                alert('Erreur de connexion au jury IA. Veuillez réessayer.');
+            } finally {
+                botonLimpio.innerHTML = '<i class="fas fa-paper-plane"></i> Soumettre la production';
+                botonLimpio.disabled = false;
+            }
+        });
+    }
+    
+    // Ejecutar inmediatamente y proteger contra recargas visuales
+    document.addEventListener('DOMContentLoaded', reconectarBotonPE);
+    setInterval(reconectarBotonPE, 1000); 
+})();
+</script>
+
 </body>
 </html>
