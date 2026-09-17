@@ -2596,5 +2596,64 @@ window.renderExerciseStructure = async function() {
         
         init();
     </script>
+
+<script>
+(function() {
+    // Interceptar la seleccion de ejercicio para renderizar feedback previo
+    const originalRender = window.renderExerciseStructure;
+    
+    window.autoCargarRetroalimentacionExistente = function() {
+        let uId = window.currentUnitId || (typeof currentUnitId !== 'undefined' ? currentUnitId : 'Unite_2');
+        let idx = (typeof currentExerciseIndex !== 'undefined' && currentExerciseIndex !== null) ? currentExerciseIndex : 0;
+        let skill = window.currentSkill || (typeof currentSkill !== 'undefined' ? currentSkill : 'PE');
+        
+        // Buscar en la memoria de respuestas cargadas del alumno
+        if (!window.respuestasAlumnoCache && window.alumnoData) {
+            window.respuestasAlumnoCache = window.alumnoData.respuestas || {};
+        }
+
+        let cache = window.respuestasAlumnoCache || {};
+        let claveRespuesta = `${uId}_${skill}_${idx}`;
+        let datosGuardados = cache[claveRespuesta] || (window.obtenerRespuestaGuardada ? window.obtenerRespuestaGuardada(uId, skill, idx) : null);
+
+        if (datosGuardados) {
+            // 1. Cargar el texto del alumno si existe
+            let textarea = document.getElementById('texto-pe-input') || document.querySelector('textarea');
+            if (textarea && datosGuardados.texto) {
+                textarea.value = datosGuardados.texto;
+            }
+
+            // 2. Renderizar el reporte de evaluacion automaticamente
+            let targetFeedback = document.getElementById('feedback-container') || document.getElementById('reporte-evaluacion-container') || document.querySelector('.feedback-section');
+            
+            if (datosGuardados.html_evaluacion || datosGuardados.evaluacion) {
+                let htmlReporte = datosGuardados.html_evaluacion || datosGuardados.evaluacion;
+                if (targetFeedback) {
+                    targetFeedback.style.display = 'block';
+                    targetFeedback.innerHTML = htmlReporte;
+                } else {
+                    // Si no existe un contenedor fijos, inyectarlo debajo del boton de envio
+                    let btnSubmit = document.getElementById('btn-submit-pe') || document.querySelector('.btn-submit') || document.querySelector('button[type="submit"]');
+                    if (btnSubmit && btnSubmit.parentElement) {
+                        let div = document.createElement('div');
+                        div.id = 'feedback-container';
+                        div.style.marginTop = '20px';
+                        div.innerHTML = htmlReporte;
+                        btnSubmit.parentElement.appendChild(div);
+                    }
+                }
+            }
+        }
+    };
+
+    // Vincular la ejecucion a la seleccion de cualquier actividad en la barra lateral
+    document.addEventListener('click', function(e) {
+        if (e.target && (e.target.closest('.activity-item') || e.target.closest('.nav-item') || e.target.classList.contains('activity-link'))) {
+            setTimeout(window.autoCargarRetroalimentacionExistente, 300);
+        }
+    });
+})();
+</script>
+
 </body>
 </html>
