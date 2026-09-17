@@ -3598,5 +3598,45 @@ window.renderExerciseStructure = async function() {
 })();
 </script>
 
+
+<script>
+(function() {
+    // Redefinir mostrarEvaluacionSophia para renderizar DENTRO del formulario/tarjeta del ejercicio activo
+    window.mostrarEvaluacionSophia = function(evalData, skill, consigne) {
+        if (!evalData) return;
+        
+        let skillType = skill || window.currentSkill || 'PE';
+        let dataObj = evalData;
+        if (typeof evalData === 'string') {
+            try {
+                dataObj = JSON.parse(evalData);
+            } catch(e) {
+                dataObj = { score_global: 'N/A', texto_html: evalData };
+            }
+        }
+
+        let htmlGrille = window.renderGrilleOfficielleDELF(dataObj, skillType, consigne);
+
+        // Buscar la tarjeta activa del ejercicio (.exercise-card)
+        let exerciseCard = document.querySelector('.exercise-card') || document.getElementById('dynamic-workspace-target');
+        
+        if (exerciseCard) {
+            // Eliminar cualquier reporte de evaluación o bloque residual previo
+            document.querySelectorAll('#feedback-container, #reporte-evaluacion-container, .old-eval-box').forEach(el => el.remove());
+
+            // Crear el contenedor de feedback dentro de la tarjeta del ejercicio
+            let target = document.createElement('div');
+            target.id = 'feedback-container';
+            target.style.cssText = 'width:100%; margin-top:25px; clear:both;';
+            target.innerHTML = htmlGrille;
+
+            // Insertar directamente dentro del formulario del ejercicio
+            exerciseCard.appendChild(target);
+            document.body.classList.add('evaluado');
+        }
+    };
+})();
+</script>
+
 </body>
 </html>
