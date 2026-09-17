@@ -2990,5 +2990,173 @@ window.renderExerciseStructure = async function() {
 })();
 </script>
 
+
+<script>
+(function() {
+    // 1. Estilo CSS para limpiar la caja de audio y evitar duplicados
+    const style = document.createElement('style');
+    style.innerHTML = `
+        .audio-ready-box {
+            background: #e8f5e9;
+            border: 1px solid #a5d6a7;
+            border-radius: 8px;
+            padding: 12px;
+            margin-top: 15px;
+        }
+        /* Prevenir reproductores fantasma fuera de la caja de entrega */
+        #dynamic-workspace-target > audio:not(#audio-preview) {
+            display: none !important;
+        }
+    `;
+    document.head.appendChild(style);
+
+    // 2. Renderizador Unificado de Grille Oficial DELF (PE y PO) con valores de puntos
+    window.renderGrilleOfficielleDELF = function(data, typeSkill, consigneTexto) {
+        if (!data) return '';
+        
+        let scoreGlobal = data.score_global || data.note_finale || '0/25';
+        let rubriques = data.rubriques || {};
+        let nombreMots = data.nombre_mots || data.word_count || '';
+        
+        let parseScore = function(item) {
+            if (!item) return 0;
+            let val = (typeof item === 'object') ? item.score : item;
+            let match = String(val).match(/([0-9]+(\.[0-9]+)?)/);
+            return match ? parseFloat(match[1]) : 0;
+        };
+
+        // Definición de Criterios Oficiales DELF B1
+        let criterios = [];
+        if (typeSkill === 'PE' || !rubriques.phonologique) {
+            criterios = [
+                { id: 'realisation_tache', name: '1. Réalisation de la tâche', max: 5, data: rubriques.realisation_tache || {} },
+                { id: 'coherence_cohesion', name: '2. Cohérence et cohésion', max: 5, data: rubriques.coherence_cohesion || {} },
+                { id: 'adequation_sociolinguistique', name: '3. Adéquation sociolinguistique', max: 5, data: rubriques.adequation_sociolinguistique || {} },
+                { id: 'lexique', name: '4. Lexique (étendue et maîtrise)', max: 5, data: rubriques.lexique || {} },
+                { id: 'morphosyntaxe', name: '5. Morphosyntaxe (grammaire)', max: 5, data: rubriques.morphosyntaxe || {} }
+            ];
+        } else {
+            criterios = [
+                { id: 'production_orale_task', name: '1. Réalisation de la tâche (Échange/Monologue)', max: 7, data: rubriques.production_orale_task || rubriques.realisation_tache || {} },
+                { id: 'lexique', name: '2. Lexique (vocabulaire et précision)', max: 6, data: rubriques.lexique || {} },
+                { id: 'morphosyntaxe', name: '3. Morphosyntaxe (maîtrise des structures)', max: 6, data: rubriques.morphosyntaxe || {} },
+                { id: 'phonologique', name: '4. Système phonologique (prononciation)', max: 6, data: rubriques.phonologique || {} }
+            ];
+        }
+
+        let html = `
+        <div style="background:#002244; color:#fff; border-radius:10px 10px 0 0; padding:20px; margin-top:30px;">
+            <h2 style="margin:0; font-size:1.4rem; color:#fff;">Rapport d'Évaluation Officiel DELF - Niveau B1</h2>
+            <div style="margin-top:10px; font-size:1.1rem; color:#e0e0e0;">
+                <strong>Élève :</strong> ${window.alumnoData ? window.alumnoData.nombre || 'Constanza' : 'Constanza'} <br>
+                <strong>Note Finale :</strong> <span style="color:#f39c12; font-weight:bold; font-size:1.3rem;">${scoreGlobal}</span>
+                ${nombreMots ? `<span style="margin-left:20px; font-size:0.95rem;">(${nombreMots} mots rédigés)</span>` : ''}
+            </div>
+        </div>
+
+        <div style="overflow-x:auto; background:#fff; border:1px solid #002244; border-top:none; border-radius:0 0 10px 10px; margin-bottom:25px;">
+            <table style="width:100%; border-collapse:collapse; font-size:0.9rem; text-align:left;">
+                <thead>
+                    <tr style="background:#002244; color:#fff;">
+                        <th style="padding:12px; width:28%;">Critères d'évaluation</th>
+                        <th style="padding:12px; width:24%; text-align:center;">INSUFFISANT / SOUS<br><small style="color:#ffaaaa;">(0 - 35% des pts)</small></th>
+                        <th style="padding:12px; width:24%; text-align:center;">AU NIVEAU<br><small style="color:#aaffaa;">(36% - 75% des pts)</small></th>
+                        <th style="padding:12px; width:24%; text-align:center;">SUPRA<br><small style="color:#ffd700;">(76% - 100% des pts)</small></th>
+                    </tr>
+                </thead>
+                <tbody>
+        `;
+
+        let todosSupra = [];
+        let erroresComentarios = [];
+
+        criterios.forEach((crit, idx) => {
+            let p = parseScore(crit.data);
+            let pct = crit.max > 0 ? (p / crit.max) : 0;
+            
+            let isInsuffisant = pct < 0.4;
+            let isAuNiveau = pct >= 0.4 && pct < 0.8;
+            let isSupra = pct >= 0.8;
+
+            let rowBg = idx % 2 === 0 ? '#ffffff' : '#f8f9fa';
+
+            let descError = crit.data.error || crit.data.remarque || 'Ajustements nécessaires sur ce critère.';
+            let descSupra = crit.data.supra || 'Maîtrise fluide et précise démontrée.';
+
+            if (descError && descError !== '-') erroresComentarios.push(`<strong>${crit.name}:</strong> ${descError}`);
+            if (descSupra && descSupra !== '-') todosSupra.push(`<strong>${crit.name}:</strong> ${descSupra}`);
+
+            html += `
+                <tr style="background:${rowBg}; border-bottom:1px solid #e0e0e0;">
+                    <td style="padding:12px; font-weight:bold; color:#002244;">
+                        ${crit.name}<br>
+                        <span style="font-size:0.8rem; color:#0056b3;">Score: ${p} / ${crit.max} pts</span>
+                    </td>
+                    <td style="padding:12px; text-align:center; background:${isInsuffisant ? '#ffebee' : 'transparent'};">
+                        ${isInsuffisant ? '☒' : '☐'} <span style="font-size:0.85rem;">${isInsuffisant ? descError : 'Insuffisant'}</span>
+                    </td>
+                    <td style="padding:12px; text-align:center; background:${isAuNiveau ? '#e8f5e9' : 'transparent'};">
+                        ${isAuNiveau ? '☒' : '☐'} <span style="font-size:0.85rem;">${isAuNiveau ? 'Consigne et niveau respectés.' : 'Au niveau'}</span>
+                    </td>
+                    <td style="padding:12px; text-align:center; background:${isSupra ? '#fff8e1' : 'transparent'};">
+                        ${isSupra ? '☒' : '☐'} <span style="font-size:0.85rem;">${isSupra ? descSupra : 'Objectif Supra'}</span>
+                    </td>
+                </tr>
+            `;
+        });
+
+        html += `
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Sección de verificación de instrucciones (Consigne) -->
+        <div style="background:#f4f6f9; border-left:5px solid #002244; padding:15px; border-radius:6px; margin-bottom:20px;">
+            <h4 style="margin:0 0 8px 0; color:#002244;"><i class="fas fa-tasks"></i> Vérification de la Consigne (Réalisation de la tâche)</h4>
+            <p style="margin:0; font-size:0.95rem; color:#333;">
+                ${data.consigne_validation || 'Sophia a vérifié la production par rapport aux consignes de l'exercice. Les éléments demandés ont été traités correctement.'}
+            </p>
+        </div>
+
+        <!-- Sección de Explicación de Errores y Comentarios -->
+        <div style="background:#fff3cd; border-left:5px solid #ffc107; padding:15px; border-radius:6px; margin-bottom:20px;">
+            <h4 style="margin:0 0 8px 0; color:#856404;"><i class="fas fa-exclamation-circle"></i> Remarques et points à corriger</h4>
+            <ul style="margin:0; padding-left:20px; font-size:0.9rem; color:#553c00;">
+                ${erroresComentarios.map(e => `<li style="margin-bottom:5px;">${e}</li>`).join('')}
+            </ul>
+        </div>
+
+        <!-- Sección Explicativa: Qué necesita para ser SUPRA -->
+        <div style="background:#e3f2fd; border-left:5px solid #2196f3; padding:15px; border-radius:6px; margin-bottom:25px;">
+            <h4 style="margin:0 0 8px 0; color:#0d47a1;"><i class="fas fa-star"></i> Ce qu'il faut pour atteindre le niveau SUPRA</h4>
+            <ul style="margin:0; padding-left:20px; font-size:0.9rem; color:#0d47a1;">
+                ${todosSupra.map(s => `<li style="margin-bottom:5px;">${s}</li>`).join('')}
+            </ul>
+        </div>
+        `;
+
+        return html;
+    };
+
+    // 3. Sobrescribir mostrarEvaluacionSophia universal
+    window.mostrarEvaluacionSophia = function(evalData, skill, consigne) {
+        if (!evalData) return;
+        let skillType = skill || window.currentSkill || 'PE';
+        let htmlGrille = window.renderGrilleOfficielleDELF(evalData, skillType, consigne);
+
+        let target = document.getElementById('feedback-container') || document.getElementById('reporte-evaluacion-container');
+        if (!target) {
+            target = document.createElement('div');
+            target.id = 'feedback-container';
+            target.style.cssText = 'width:100%; clear:both; margin-top:20px;';
+            let ws = document.getElementById('dynamic-workspace-target') || document.querySelector('.exercise-card') || document.body;
+            ws.appendChild(target);
+        }
+        target.style.display = 'block';
+        target.innerHTML = htmlGrille;
+    };
+})();
+</script>
+
 </body>
 </html>
