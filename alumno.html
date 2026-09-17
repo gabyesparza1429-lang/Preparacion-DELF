@@ -2092,7 +2092,7 @@ window.renderExerciseStructure = async function() {
                     let anunciosAgrupados = {};
                     ej.preguntas.forEach((p, pIdx) => {
                         let textCriterio = p.pregunta;
-                        let nombreAnuncio = "Critères d'évaluation"; 
+                        let nombreAnuncio = "Critères d\'évaluation"; 
                         
                         if (p.pregunta.includes(" - ")) {
                             let partes = p.pregunta.split(" - ");
@@ -2362,7 +2362,7 @@ window.renderExerciseStructure = async function() {
                                 await calcularTodasLasNotasHabilidades();
                             } else if (snapshot.exists() && snapshot.data().status?.state === "ERROR") {
                                 desvincularEscucha();
-                                document.getElementById('sophia-verdict-text').innerHTML = "<span style='color:red;'>Erreur d'évaluation par l'IA.</span>";
+                                document.getElementById('sophia-verdict-text').innerHTML = "<span style='color:red;'>Erreur d'évaluation par l\'IA.</span>";
                             }
                         });
                     } catch (e) {
@@ -2712,7 +2712,7 @@ window.renderExerciseStructure = async function() {
         let html = `
             <div style="background:#fff; border:2px solid #1b2a4a; border-radius:10px; padding:25px; margin-top:25px; width:100%; box-sizing:border-box; clear:both; box-shadow:0 4px 15px rgba(0,0,0,0.08);">
                 <div style="background:#1b2a4a; color:#fff; padding:15px 20px; border-radius:6px; margin-bottom:20px;">
-                    <h3 style="margin:0; font-size:1.2rem; color:#fff;">Rapport d'Évaluation Officiel DELF</h3>
+                    <h3 style="margin:0; font-size:1.2rem; color:#fff;">Rapport d\'Évaluation Officiel DELF</h3>
                     <div style="margin-top:8px; font-size:1.05rem;">
                         <strong>Note Finale :</strong> <span style="color:#c5a059; font-weight:bold; font-size:1.2rem;">${score}</span>
                         <span style="margin-left:15px; background:#fff3cd; color:#856404; padding:3px 8px; border-radius:4px; font-size:0.85rem;">${status}</span>
@@ -2734,7 +2734,7 @@ window.renderExerciseStructure = async function() {
                 <table style="width:100%; border-collapse:collapse; font-size:0.9rem; text-align:left;">
                     <thead>
                         <tr style="background:#1b2a4a; color:#fff;">
-                            <th style="padding:10px 12px; width:25%;">Critères d'évaluation</th>
+                            <th style="padding:10px 12px; width:25%;">Critères d\'évaluation</th>
                             <th style="padding:10px 12px; width:15%; text-align:center;">Score</th>
                             <th style="padding:10px 12px; width:35%;">Diagnostic / Remarques</th>
                             <th style="padding:10px 12px; width:25%;">Objectif Supra</th>
@@ -2989,7 +2989,7 @@ window.renderExerciseStructure = async function() {
 
         let html = `
             <div style="background:#002244; color:#fff; border-radius:10px 10px 0 0; padding:20px; margin-top:30px;">
-                <h2 style="margin:0; font-size:1.4rem; color:#fff;">Rapport d'Évaluation Officiel DELF - Niveau B1</h2>
+                <h2 style="margin:0; font-size:1.4rem; color:#fff;">Rapport d\'Évaluation Officiel DELF - Niveau B1</h2>
                 <div style="margin-top:10px; font-size:1.1rem; color:#e0e0e0;">
                     <strong>Élève :</strong> Constanza <br>
                     <strong>Note Finale :</strong> <span style="color:#f39c12; font-weight:bold; font-size:1.3rem;">${scoreGlobal}</span>
@@ -3000,7 +3000,7 @@ window.renderExerciseStructure = async function() {
                 <table style="width:100%; border-collapse:collapse; font-size:0.9rem; text-align:left;">
                     <thead>
                         <tr style="background:#002244; color:#fff;">
-                            <th style="padding:12px; width:28%;">Critères d'évaluation</th>
+                            <th style="padding:12px; width:28%;">Critères d\'évaluation</th>
                             ${headers}
                         </tr>
                     </thead>
@@ -3145,7 +3145,7 @@ window.renderExerciseStructure = async function() {
 
         let html = `
             <div style="background:#002244; color:#fff; border-radius:10px 10px 0 0; padding:20px; margin-top:30px;">
-                <h2 style="margin:0; font-size:1.4rem; color:#fff;">Rapport d'Évaluation Officiel DELF - Niveau B1</h2>
+                <h2 style="margin:0; font-size:1.4rem; color:#fff;">Rapport d\'Évaluation Officiel DELF - Niveau B1</h2>
                 <div style="margin-top:10px; font-size:1.1rem; color:#e0e0e0;">
                     <strong>Note Finale :</strong> <span style="color:#f39c12; font-weight:bold; font-size:1.3rem;">${scoreGlobal}</span>
                     ${nombreMots ? `<span style="margin-left:20px; font-size:0.95rem;">(${nombreMots} mots rédigés)</span>` : ''}
@@ -3155,7 +3155,7 @@ window.renderExerciseStructure = async function() {
                 <table style="width:100%; border-collapse:collapse; font-size:0.9rem; text-align:left;">
                     <thead>
                         <tr style="background:#002244; color:#fff;">
-                            <th style="padding:12px; width:28%;">Critères d'évaluation</th>
+                            <th style="padding:12px; width:28%;">Critères d\'évaluation</th>
                             ${headers}
                         </tr>
                     </thead>
@@ -3264,7 +3264,7 @@ window.renderExerciseStructure = async function() {
                     mainBtn.style.cursor = "not-allowed";
                 } else {
                     mainBtn.disabled = false;
-                    mainBtn.innerHTML = skill === 'PO' ? "<i class='fas fa-microphone'></i> Commencer l'enregistrement" : "<i class='fas fa-paper-plane'></i> Soumettre la production";
+                    mainBtn.innerHTML = skill === 'PO' ? "<i class='fas fa-microphone'></i> Commencer l\'enregistrement" : "<i class='fas fa-paper-plane'></i> Soumettre la production";
                     mainBtn.style.opacity = "1";
                     mainBtn.style.cursor = "pointer";
                 }
@@ -3436,7 +3436,7 @@ window.renderExerciseStructure = async function() {
 
         let html = `
             <div style="background:#002244; color:#fff; border-radius:10px 10px 0 0; padding:20px; margin-top:30px;">
-                <h2 style="margin:0; font-size:1.4rem; color:#fff;">Rapport d'Évaluation Officiel DELF</h2>
+                <h2 style="margin:0; font-size:1.4rem; color:#fff;">Rapport d\'Évaluation Officiel DELF</h2>
                 <div style="margin-top:10px; font-size:1.1rem; color:#e0e0e0;">
                     <strong>Note Finale :</strong> <span style="color:#f39c12; font-weight:bold; font-size:1.3rem;">${scoreGlobal}</span>
                 </div>
@@ -3445,7 +3445,7 @@ window.renderExerciseStructure = async function() {
                 <table style="width:100%; border-collapse:collapse; font-size:0.9rem; text-align:left;">
                     <thead>
                         <tr style="background:#002244; color:#fff;">
-                            <th style="padding:12px; width:28%;">Critères d'évaluation <small style="color:#ffd700;">(Cliquez pour détails)</small></th>
+                            <th style="padding:12px; width:28%;">Critères d\'évaluation <small style="color:#ffd700;">(Cliquez pour détails)</small></th>
                             ${headers}
                         </tr>
                     </thead>
@@ -3533,7 +3533,7 @@ window.renderExerciseStructure = async function() {
                     mainBtn.style.cursor = "not-allowed";
                 } else {
                     mainBtn.disabled = false;
-                    mainBtn.innerHTML = skill === 'PO' ? "<i class='fas fa-microphone'></i> Commencer l'enregistrement" : "<i class='fas fa-paper-plane'></i> Soumettre la production";
+                    mainBtn.innerHTML = skill === 'PO' ? "<i class='fas fa-microphone'></i> Commencer l\'enregistrement" : "<i class='fas fa-paper-plane'></i> Soumettre la production";
                     mainBtn.style.opacity = "1";
                     mainBtn.style.cursor = "pointer";
                 }
@@ -3679,7 +3679,7 @@ window.renderExerciseStructure = async function() {
             '<th style="padding:12px; width:24%; text-align:center;">SUPRA<br><span style="color:#ffd700; font-size:0.85rem; font-weight:bold;">(5 - 7 pts)</span></th>';
 
         var html = '<div style="background:#002244; color:#fff; border-radius:10px 10px 0 0; padding:20px; margin-top:20px;">' +
-            '<h2 style="margin:0; font-size:1.3rem; color:#fff;">Rapport d'Évaluation Officiel DELF - B1</h2>' +
+            '<h2 style="margin:0; font-size:1.3rem; color:#fff;">Rapport d\'Évaluation Officiel DELF - B1</h2>' +
             '<div style="margin-top:8px; font-size:1rem; color:#e0e0e0;">' +
             '<strong>Note Finale :</strong> <span style="color:#f39c12; font-weight:bold; font-size:1.2rem;">' + scoreGlobal + '</span>' +
             (nombreMots ? ' <span style="margin-left:15px; font-size:0.9rem;">(' + nombreMots + ' mots)</span>' : '') +
@@ -3687,7 +3687,7 @@ window.renderExerciseStructure = async function() {
             '<div style="overflow-x:auto; background:#fff; border:1px solid #002244; border-top:none; border-radius:0 0 10px 10px; margin-bottom:20px;">' +
             '<table style="width:100%; border-collapse:collapse; font-size:0.88rem; text-align:left;">' +
             '<thead><tr style="background:#002244; color:#fff;">' +
-            '<th style="padding:10px; width:28%;">Critères d'évaluation <small style="color:#ffd700;">(Cliquer pour détails)</small></th>' + headers +
+            '<th style="padding:10px; width:28%;">Critères d\'évaluation <small style="color:#ffd700;">(Cliquer pour détails)</small></th>' + headers +
             '</tr></thead><tbody>';
 
         for (var i = 0; i < criterios.length; i++) {
