@@ -3462,7 +3462,7 @@ window.renderExerciseStructure = async function() {
             let rowBg = (i % 2 === 0) ? '#ffffff' : '#f8f9fa';
             let descError = crit.data.error || crit.data.remarque || 'Aucune erreur majeure détectée.';
             // Limpiar saltos de línea para el HTML
-            descError = descError.replace(/\n/g, '<br>');
+            descError = descError.split('\\n').join('<br>');
             let rowId = 'det-err-' + i;
 
             html += `
@@ -3698,8 +3698,7 @@ window.renderExerciseStructure = async function() {
             var isAuNiveau = pct >= 0.4 && pct < 0.8;
             var isSupra = pct >= 0.8;
             var rowBg = (i % 2 === 0) ? '#ffffff' : '#f8f9fa';
-            var descError = (crit.data.error || crit.data.remarque || 'Ajustements nécessaires.').replace(/
-/g, '<br>');
+            var descError = (crit.data.error || crit.data.remarque || 'Ajustements nécessaires.').split('\\n').join('<br>');
             var rowId = 'crit-det-' + i;
 
             html += '<tr style="background:' + rowBg + '; border-bottom:1px solid #e0e0e0; cursor:pointer;" onclick="let el=document.getElementById('' + rowId + ''); el.style.display=(el.style.display==='none')?'table-row':'none';">' +
