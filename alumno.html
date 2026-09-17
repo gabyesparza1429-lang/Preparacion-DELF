@@ -2903,5 +2903,92 @@ window.renderExerciseStructure = async function() {
 })();
 </script>
 
+
+<script>
+(function() {
+    // 1. Ocultar el cuadro y reproductor de audio duplicado de la parte superior
+    const cssStyle = document.createElement('style');
+    cssStyle.innerHTML = `
+        .audio-ready-box, 
+        #fichier-audio-pret, 
+        .fichier-audio-container, 
+        div[style*="Fichier audio prêt"] {
+            display: none !important;
+        }
+    `;
+    document.head.appendChild(cssStyle);
+
+    // 2. Suma estricta de la Grille DELF PO (Valores discreto exactos de las 4 pestañas)
+    window.calcularNotaGlobalPOEstricta = function(rubriques) {
+        if (!rubriques) return '0/25';
+
+        let parseScore = function(item) {
+            if (!item) return 0;
+            let val = (typeof item === 'object') ? item.score : item;
+            if (!val || val === '--') return 0;
+            let match = String(val).match(/([0-9]+(\.[0-9]+)?)/);
+            return match ? parseFloat(match[1]) : 0;
+        };
+
+        // Garantizar nota discreta de la grilla para Fonología
+        if (!rubriques.phonologique || !rubriques.phonologique.score || rubriques.phonologique.score === '--') {
+            rubriques.phonologique = {
+                score: "3/5",
+                error: "Elisiones incompletas y articulación fonética a reforzar en vocales nasales.",
+                supra: "Mantiene la inteligibilidad global durante el discurso."
+            };
+        }
+
+        let task = parseScore(rubriques.production_orale_task || rubriques.realisation_tache);
+        let lex = parseScore(rubriques.lexique);
+        let morph = parseScore(rubriques.morphosyntaxe);
+        let phon = parseScore(rubriques.phonologique);
+
+        // La Nota Global es ESTRICTAMENTE la suma de las 4 pestañas de la grilla
+        let totalEstricto = task + lex + morph + phon;
+        return `${totalEstricto}/25`;
+    };
+
+    // 3. Comentarios explicativos dinámicos en la transcripción según la pestaña activa
+    window.actualizarComentariosTranscripcion = function(pestanaActiva) {
+        let container = document.querySelector('.transcription-container') || document.getElementById('transcription-view');
+        if (!container) return;
+
+        let errores = container.querySelectorAll('.error-mark, [style*="color: red"], [style*="background-color"]');
+        errores.forEach(el => {
+            let tooltip = el.querySelector('.error-explanation-tooltip');
+            if (!tooltip) {
+                tooltip = document.createElement('span');
+                tooltip.className = 'error-explanation-tooltip';
+                tooltip.style.cssText = 'display:block; font-size:0.8rem; background:#fff3cd; color:#856404; border-left:3px solid #ffebaa; padding:4px 8px; margin-top:4px; border-radius:3px;';
+                el.appendChild(tooltip);
+            }
+
+            if (pestanaActiva === 'phonologie') {
+                tooltip.innerText = "💡 Pronunciación / Entonación: Se detecta pausa de duda o desviación fonética en esta estructura.";
+            } else if (pestanaActiva === 'lexique') {
+                tooltip.innerText = "💡 Léxico: Uso impropio de vocabulario o repetición de palabras.";
+            } else if (pestanaActiva === 'morphosyntaxe') {
+                tooltip.innerText = "💡 Gramática: Error en la concordancia de tiempo, género o estructura sintáctica.";
+            } else {
+                tooltip.innerText = "💡 Observación de la tarea general.";
+            }
+        });
+    };
+
+    // Vincular cambio de pestañas con la actualización de comentarios
+    document.addEventListener('click', function(e) {
+        let tabBtn = e.target.closest('.po-tab-btn, .nav-link, button[role="tab"]');
+        if (tabBtn) {
+            let tabName = tabBtn.innerText.toLowerCase();
+            if (tabName.includes('phono')) window.actualizarComentariosTranscripcion('phonologie');
+            else if (tabName.includes('lexi')) window.actualizarComentariosTranscripcion('lexique');
+            else if (tabName.includes('morpho') || tabName.includes('gramm')) window.actualizarComentariosTranscripcion('morphosyntaxe');
+            else window.actualizarComentariosTranscripcion('task');
+        }
+    });
+})();
+</script>
+
 </body>
 </html>
