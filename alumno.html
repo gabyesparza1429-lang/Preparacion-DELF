@@ -2677,5 +2677,161 @@ window.renderExerciseStructure = async function() {
 })();
 </script>
 
+
+<script>
+(function() {
+    // 1. Formateador universal de JSON a Tabla de Evaluación DELF
+    window.convertirJSONaTablaDELF = function(rawData) {
+        if (!rawData) return '';
+        let data = rawData;
+        
+        if (typeof rawData === 'string') {
+            let trimmed = rawData.trim();
+            if (trimmed.startsWith('[')) trimmed = trimmed.substring(1, trimmed.length - 1).trim();
+            try {
+                data = JSON.parse(trimmed);
+            } catch (e) {
+                if (!trimmed.includes('"score_global"')) return rawData;
+            }
+        }
+
+        if (Array.isArray(data)) data = data[0] || {};
+        if (!data || typeof data !== 'object' || (!data.score_global && !data.rubriques)) return rawData;
+
+        let score = data.score_global || 'N/A';
+        let status = data.status || 'Évalué';
+        let textoHtml = data.texto_html || data.transcription_html || '';
+        let r = data.rubriques || {};
+
+        let getRub = function(key) {
+            return r[key] || { score: '-', error: '-', supra: '-' };
+        };
+
+        let isPE = r.realisation_tache || r.coherence_cohesion || r.adequation_sociolinguistique;
+
+        let html = `
+            <div style="background:#fff; border:2px solid #1b2a4a; border-radius:10px; padding:25px; margin-top:25px; width:100%; box-sizing:border-box; clear:both; box-shadow:0 4px 15px rgba(0,0,0,0.08);">
+                <div style="background:#1b2a4a; color:#fff; padding:15px 20px; border-radius:6px; margin-bottom:20px;">
+                    <h3 style="margin:0; font-size:1.2rem; color:#fff;">Rapport d'Évaluation Officiel DELF</h3>
+                    <div style="margin-top:8px; font-size:1.05rem;">
+                        <strong>Note Finale :</strong> <span style="color:#c5a059; font-weight:bold; font-size:1.2rem;">${score}</span>
+                        <span style="margin-left:15px; background:#fff3cd; color:#856404; padding:3px 8px; border-radius:4px; font-size:0.85rem;">${status}</span>
+                    </div>
+                </div>
+        `;
+
+        if (textoHtml) {
+            html += `
+                <div style="background:#f8f9fa; border-left:4px solid #1a73e8; padding:15px; margin-bottom:20px; border-radius:4px; font-size:0.95rem; line-height:1.6; color:#222;">
+                    <strong><i class="fas fa-search"></i> Remarques et Corrections :</strong>
+                    <div style="margin-top:8px;">${textoHtml}</div>
+                </div>
+            `;
+        }
+
+        html += `
+            <div style="overflow-x:auto;">
+                <table style="width:100%; border-collapse:collapse; font-size:0.9rem; text-align:left;">
+                    <thead>
+                        <tr style="background:#1b2a4a; color:#fff;">
+                            <th style="padding:10px 12px; width:25%;">Critères d'évaluation</th>
+                            <th style="padding:10px 12px; width:15%; text-align:center;">Score</th>
+                            <th style="padding:10px 12px; width:35%;">Diagnostic / Remarques</th>
+                            <th style="padding:10px 12px; width:25%;">Objectif Supra</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+        `;
+
+        let filas = [];
+        if (isPE) {
+            filas = [
+                { nombre: "1. Réalisation de la tâche", data: getRub('realisation_tache') },
+                { nombre: "2. Cohérence et cohésion", data: getRub('coherence_cohesion') },
+                { nombre: "3. Adéquation sociolinguistique", data: getRub('adequation_sociolinguistique') },
+                { nombre: "4. Lexique (étendue et maîtrise)", data: getRub('lexique') },
+                { nombre: "5. Morphosyntaxe (grammaire)", data: getRub('morphosyntaxe') }
+            ];
+        } else {
+            filas = [
+                { nombre: "1. Respect de la consigne / Tâche", data: getRub('production_orale_task') },
+                { nombre: "2. Lexique (étendue et maîtrise)", data: getRub('lexique') },
+                { nombre: "3. Morphosyntaxe (grammaire)", data: getRub('morphosyntaxe') },
+                { nombre: "4. Phonologique (prononciation)", data: getRub('phonologique') }
+            ];
+        }
+
+        filas.forEach(function(f, idx) {
+            let bg = idx % 2 === 0 ? '#ffffff' : '#f9fafb';
+            html += `
+                <tr style="background:${bg}; border-bottom:1px solid #e0e6ed;">
+                    <td style="padding:10px 12px; font-weight:bold; color:#1b2a4a;">${f.nombre}</td>
+                    <td style="padding:10px 12px; text-align:center; font-weight:bold; color:#1a73e8;">${f.data.score || '-'}</td>
+                    <td style="padding:10px 12px; color:#333; line-height:1.4;">${f.data.error || '-'}</td>
+                    <td style="padding:10px 12px; color:#856404; background:#fff3cd; line-height:1.4;">${f.data.supra || '-'}</td>
+                </tr>
+            `;
+        });
+
+        html += `
+                    </tbody>
+                </table>
+            </div>
+        </div>`;
+
+        return html;
+    };
+
+    // 2. Sobrescribir mostrarEvaluacionSophia con contenedor bien ubicado
+    window.mostrarEvaluacionSophia = function(evalContent) {
+        if (!evalContent) return;
+        
+        let htmlFinal = window.convertirJSONaTablaDELF(evalContent);
+
+        let container = document.getElementById('feedback-container');
+        if (!container) {
+            container = document.createElement('div');
+            container.id = 'feedback-container';
+            container.style.cssText = 'width:100%; clear:both; margin-top:25px; display:block;';
+            
+            let workspace = document.getElementById('dynamic-workspace-target') || document.querySelector('.exercise-card') || document.body;
+            workspace.appendChild(container);
+        }
+
+        container.style.display = 'block';
+        container.innerHTML = htmlFinal;
+    };
+
+    // 3. Auto-cargar retroalimentacion al hacer clic en cualquier actividad
+    window.autoCargarRetroalimentacionExistente = function() {
+        let uId = window.currentUnitId || (typeof currentUnitId !== 'undefined' ? currentUnitId : 'Unite_2');
+        let idx = (typeof currentExerciseIndex !== 'undefined' && currentExerciseIndex !== null) ? currentExerciseIndex : 0;
+        let skill = window.currentSkill || (typeof currentSkill !== 'undefined' ? currentSkill : 'PE');
+
+        let cache = window.respuestasAlumnoCache || (window.alumnoData ? window.alumnoData.respuestas : {}) || {};
+        let clave = `${uId}_${skill}_${idx}`;
+        let datos = cache[clave] || (window.obtenerRespuestaGuardada ? window.obtenerRespuestaGuardada(uId, skill, idx) : null);
+
+        if (datos) {
+            if (datos.texto) {
+                let ta = document.getElementById('texto-pe-input') || document.querySelector('textarea');
+                if (ta) ta.value = datos.texto;
+            }
+
+            let evalContent = datos.html_evaluacion || datos.evaluacion || datos.feedback;
+            if (evalContent) {
+                window.mostrarEvaluacionSophia(evalContent);
+            }
+        }
+    };
+
+    document.addEventListener('click', function(e) {
+        if (e.target && (e.target.closest('.activity-item') || e.target.closest('.nav-item') || e.target.classList.contains('activity-link'))) {
+            setTimeout(window.autoCargarRetroalimentacionExistente, 300);
+        }
+    });
+})();
+</script>
+
 </body>
 </html>
