@@ -942,6 +942,28 @@ window.evaluarPO = window.enviarAudioAIA;
     margin-bottom: 12px !important;
 }
 </style>
+
+<script>
+window.mostrarEvaluacionSophia = function(htmlReporte) {
+    if (!htmlReporte) return;
+    let container = document.getElementById('feedback-container') || document.getElementById('reporte-evaluacion-container');
+    if (!container) {
+        container = document.createElement('div');
+        container.id = 'feedback-container';
+        container.style.marginTop = '20px';
+        let btnSubmit = document.getElementById('btn-submit-pe') || document.querySelector('.btn-submit') || document.querySelector('button[type="submit"]');
+        if (btnSubmit && btnSubmit.parentElement) {
+            btnSubmit.parentElement.appendChild(container);
+        } else {
+            let workspace = document.getElementById('dynamic-workspace-target') || document.body;
+            workspace.appendChild(container);
+        }
+    }
+    container.style.display = 'block';
+    container.innerHTML = htmlReporte;
+};
+</script>
+
 </head>
 <body>
 
