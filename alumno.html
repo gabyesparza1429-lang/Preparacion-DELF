@@ -3638,5 +3638,113 @@ window.renderExerciseStructure = async function() {
 })();
 </script>
 
+
+<script>
+(function() {
+    // Sobrescribir cualquier interceptor previo
+    window.renderGrilleOfficielleDELF = function(data, typeSkill, consigneTexto) {
+        if (!data) return '';
+        
+        var scoreGlobal = data.score_global || data.note_finale || '0/25';
+        var rubriques = data.rubriques || {};
+        var nombreMots = data.nombre_mots || data.word_count || '';
+        var isPE = (typeSkill === 'PE' || !rubriques.phonologique);
+        
+        var parseScore = function(item) {
+            if (!item) return 0;
+            var val = (typeof item === 'object') ? item.score : item;
+            var match = String(val).match(/([0-9]+(\.[0-9]+)?)/);
+            return match ? parseFloat(match[1]) : 0;
+        };
+
+        var criterios = isPE ? [
+            { name: '1. Réalisation de la tâche', max: 5, data: rubriques.realisation_tache || {} },
+            { name: '2. Cohérence et cohésion', max: 5, data: rubriques.coherence_cohesion || {} },
+            { name: '3. Adéquation sociolinguistique', max: 5, data: rubriques.adequation_sociolinguistique || {} },
+            { name: '4. Lexique (étendue et maîtrise)', max: 5, data: rubriques.lexique || {} },
+            { name: '5. Morphosyntaxe (grammaire)', max: 5, data: rubriques.morphosyntaxe || {} }
+        ] : [
+            { name: '1. Réalisation de la tâche', max: 7, data: rubriques.production_orale_task || rubriques.realisation_tache || {} },
+            { name: '2. Lexique', max: 6, data: rubriques.lexique || {} },
+            { name: '3. Morphosyntaxe', max: 6, data: rubriques.morphosyntaxe || {} },
+            { name: '4. Système phonologique', max: 6, data: rubriques.phonologique || {} }
+        ];
+
+        var headers = isPE ?
+            '<th style="padding:12px; width:24%; text-align:center;">INSUFFISANT / SOUS<br><span style="color:#ffaaaa; font-size:0.85rem; font-weight:bold;">(0 ou 1 pt)</span></th>' +
+            '<th style="padding:12px; width:24%; text-align:center;">AU NIVEAU<br><span style="color:#aaffaa; font-size:0.85rem; font-weight:bold;">(3 pts)</span></th>' +
+            '<th style="padding:12px; width:24%; text-align:center;">SUPRA<br><span style="color:#ffd700; font-size:0.85rem; font-weight:bold;">(5 pts)</span></th>' :
+            '<th style="padding:12px; width:24%; text-align:center;">INSUFFISANT / SOUS<br><span style="color:#ffaaaa; font-size:0.85rem; font-weight:bold;">(0 - 2 pts)</span></th>' +
+            '<th style="padding:12px; width:24%; text-align:center;">AU NIVEAU<br><span style="color:#aaffaa; font-size:0.85rem; font-weight:bold;">(3 - 4.5 pts)</span></th>' +
+            '<th style="padding:12px; width:24%; text-align:center;">SUPRA<br><span style="color:#ffd700; font-size:0.85rem; font-weight:bold;">(5 - 7 pts)</span></th>';
+
+        var html = '<div style="background:#002244; color:#fff; border-radius:10px 10px 0 0; padding:20px; margin-top:20px;">' +
+            '<h2 style="margin:0; font-size:1.3rem; color:#fff;">Rapport d'Évaluation Officiel DELF - B1</h2>' +
+            '<div style="margin-top:8px; font-size:1rem; color:#e0e0e0;">' +
+            '<strong>Note Finale :</strong> <span style="color:#f39c12; font-weight:bold; font-size:1.2rem;">' + scoreGlobal + '</span>' +
+            (nombreMots ? ' <span style="margin-left:15px; font-size:0.9rem;">(' + nombreMots + ' mots)</span>' : '') +
+            '</div></div>' +
+            '<div style="overflow-x:auto; background:#fff; border:1px solid #002244; border-top:none; border-radius:0 0 10px 10px; margin-bottom:20px;">' +
+            '<table style="width:100%; border-collapse:collapse; font-size:0.88rem; text-align:left;">' +
+            '<thead><tr style="background:#002244; color:#fff;">' +
+            '<th style="padding:10px; width:28%;">Critères d'évaluation <small style="color:#ffd700;">(Cliquer pour détails)</small></th>' + headers +
+            '</tr></thead><tbody>';
+
+        for (var i = 0; i < criterios.length; i++) {
+            var crit = criterios[i];
+            var p = parseScore(crit.data);
+            var pct = crit.max > 0 ? (p / crit.max) : 0;
+            var isInsuffisant = pct < 0.4;
+            var isAuNiveau = pct >= 0.4 && pct < 0.8;
+            var isSupra = pct >= 0.8;
+            var rowBg = (i % 2 === 0) ? '#ffffff' : '#f8f9fa';
+            var descError = (crit.data.error || crit.data.remarque || 'Ajustements nécessaires.').replace(/
+/g, '<br>');
+            var rowId = 'crit-det-' + i;
+
+            html += '<tr style="background:' + rowBg + '; border-bottom:1px solid #e0e0e0; cursor:pointer;" onclick="let el=document.getElementById('' + rowId + ''); el.style.display=(el.style.display==='none')?'table-row':'none';">' +
+                '<td style="padding:10px; font-weight:bold; color:#002244;">' + crit.name + '<br><span style="font-size:0.8rem; color:#0056b3;">Score: ' + p + ' / ' + crit.max + ' pts</span></td>' +
+                '<td style="padding:10px; text-align:center; background:' + (isInsuffisant ? '#ffebee' : 'transparent') + ';">' + (isInsuffisant ? '☒' : '☐') + '</td>' +
+                '<td style="padding:10px; text-align:center; background:' + (isAuNiveau ? '#e8f5e9' : 'transparent') + ';">' + (isAuNiveau ? '☒' : '☐') + '</td>' +
+                '<td style="padding:10px; text-align:center; background:' + (isSupra ? '#fff8e1' : 'transparent') + ';">' + (isSupra ? '☒' : '☐') + '</td>' +
+                '</tr>' +
+                '<tr id="' + rowId + '" style="display:none; background:#fff3cd;"><td colspan="4" style="padding:12px; color:#856404;"><strong>Détail :</strong> ' + descError + '</td></tr>';
+        }
+
+        html += '</tbody></table></div>';
+
+        var textoCorregido = data.texto_html || data.transcription_html;
+        if (textoCorregido && typeof textoCorregido === 'string' && textoCorregido !== '[object Object]') {
+            html += '<div style="background:#fff; border:1px solid #ddd; padding:15px; border-radius:8px; margin-bottom:20px;">' +
+                '<h4 style="margin:0 0 10px 0; color:#002244;"><i class="fas fa-spell-check" style="color:#1a73e8;"></i> Corrections (En rouge)</h4>' +
+                '<div style="font-size:0.95rem; line-height:1.6;">' + textoCorregido + '</div></div>';
+        }
+        return html;
+    };
+
+    // Forzar reemplazo total en la interfaz
+    window.mostrarEvaluacionSophia = function(evalData, skill, consigne) {
+        if (!evalData) return;
+        var dataObj = evalData;
+        if (typeof evalData === 'string') {
+            try { dataObj = JSON.parse(evalData); }
+            catch(e) { dataObj = { score_global: 'N/A', texto_html: evalData }; }
+        }
+
+        var htmlGrille = window.renderGrilleOfficielleDELF(dataObj, skill || 'PE', consigne);
+        var exerciseCard = document.querySelector('.exercise-card') || document.getElementById('dynamic-workspace-target') || document.body;
+        
+        // Destruir cualquier reporte viejo previo en el DOM
+        document.querySelectorAll('#feedback-container, #reporte-evaluacion-container, .old-eval-box').forEach(function(el) { el.remove(); });
+
+        var target = document.createElement('div');
+        target.id = 'feedback-container';
+        target.style.cssText = 'width:100%; margin-top:20px; clear:both;';
+        target.innerHTML = htmlGrille;
+        exerciseCard.appendChild(target);
+    };
+})();
+</script>
+
 </body>
 </html>
