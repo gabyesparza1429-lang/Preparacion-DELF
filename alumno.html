@@ -3387,5 +3387,216 @@ window.renderExerciseStructure = async function() {
 })();
 </script>
 
+
+<script>
+(function() {
+    // 1. Ocultar textos viejos residuales que se cargan de la DB antigua
+    setInterval(function() {
+        document.querySelectorAll('div').forEach(d => {
+            if (d.innerText && (d.innerText.startsWith('Verdict du niveau') || d.innerText.startsWith('Points à améliorer'))) {
+                d.style.display = 'none';
+            }
+        });
+    }, 500);
+
+    // 2. Grille DELF interactiva (Clic para ver errores específicos)
+    window.renderGrilleOfficielleDELF = function(data, typeSkill, consigneTexto) {
+        if (!data) return '';
+        let scoreGlobal = data.score_global || data.note_finale || '0/25';
+        let rubriques = data.rubriques || {};
+        let isPE = (typeSkill === 'PE' || !rubriques.phonologique);
+
+        let parseScore = (item) => {
+            if (!item) return 0;
+            let val = (typeof item === 'object') ? item.score : item;
+            let match = String(val).match(/([0-9]+(\.[0-9]+)?)/);
+            return match ? parseFloat(match[1]) : 0;
+        };
+
+        let criterios = isPE ? [
+            { name: '1. Réalisation de la tâche', max: 5, data: rubriques.realisation_tache || {} },
+            { name: '2. Cohérence et cohésion', max: 5, data: rubriques.coherence_cohesion || {} },
+            { name: '3. Adéquation sociolinguistique', max: 5, data: rubriques.adequation_sociolinguistique || {} },
+            { name: '4. Lexique (étendue et maîtrise)', max: 5, data: rubriques.lexique || {} },
+            { name: '5. Morphosyntaxe (grammaire)', max: 5, data: rubriques.morphosyntaxe || {} }
+        ] : [
+            { name: '1. Réalisation de la tâche', max: 7, data: rubriques.production_orale_task || rubriques.realisation_tache || {} },
+            { name: '2. Lexique', max: 6, data: rubriques.lexique || {} },
+            { name: '3. Morphosyntaxe', max: 6, data: rubriques.morphosyntaxe || {} },
+            { name: '4. Phonologique', max: 6, data: rubriques.phonologique || {} }
+        ];
+
+        let headers = isPE ?
+            `<th style="padding:12px; width:24%; text-align:center;">INSUFFISANT / SOUS<br><small style="color:#ffaaaa; font-weight:bold;">(0 ou 1 pt)</small></th>
+             <th style="padding:12px; width:24%; text-align:center;">AU NIVEAU<br><small style="color:#aaffaa; font-weight:bold;">(3 pts)</small></th>
+             <th style="padding:12px; width:24%; text-align:center;">SUPRA<br><small style="color:#ffd700; font-weight:bold;">(5 pts)</small></th>` :
+            `<th style="padding:12px; width:24%; text-align:center;">INSUFFISANT / SOUS<br><small style="color:#ffaaaa; font-weight:bold;">(0 - 2 pts)</small></th>
+             <th style="padding:12px; width:24%; text-align:center;">AU NIVEAU<br><small style="color:#aaffaa; font-weight:bold;">(3 - 4.5 pts)</small></th>
+             <th style="padding:12px; width:24%; text-align:center;">SUPRA<br><small style="color:#ffd700; font-weight:bold;">(5 - 7 pts)</small></th>`;
+
+        let html = `
+            <div style="background:#002244; color:#fff; border-radius:10px 10px 0 0; padding:20px; margin-top:30px;">
+                <h2 style="margin:0; font-size:1.4rem; color:#fff;">Rapport d'Évaluation Officiel DELF</h2>
+                <div style="margin-top:10px; font-size:1.1rem; color:#e0e0e0;">
+                    <strong>Note Finale :</strong> <span style="color:#f39c12; font-weight:bold; font-size:1.3rem;">${scoreGlobal}</span>
+                </div>
+            </div>
+            <div style="overflow-x:auto; background:#fff; border:1px solid #002244; border-top:none; border-radius:0 0 10px 10px; margin-bottom:25px;">
+                <table style="width:100%; border-collapse:collapse; font-size:0.9rem; text-align:left;">
+                    <thead>
+                        <tr style="background:#002244; color:#fff;">
+                            <th style="padding:12px; width:28%;">Critères d'évaluation <small style="color:#ffd700;">(Cliquez pour détails)</small></th>
+                            ${headers}
+                        </tr>
+                    </thead>
+                    <tbody>
+        `;
+
+        criterios.forEach((crit, i) => {
+            let p = parseScore(crit.data);
+            let pct = crit.max > 0 ? (p / crit.max) : 0;
+            let isInsuffisant = pct < 0.4;
+            let isAuNiveau = pct >= 0.4 && pct < 0.8;
+            let isSupra = pct >= 0.8;
+
+            let rowBg = (i % 2 === 0) ? '#ffffff' : '#f8f9fa';
+            let descError = crit.data.error || crit.data.remarque || 'Aucune erreur majeure détectée.';
+            // Limpiar saltos de línea para el HTML
+            descError = descError.replace(/\n/g, '<br>');
+            let rowId = 'det-err-' + i;
+
+            html += `
+                <tr style="background:${rowBg}; border-bottom:1px solid #e0e0e0; cursor:pointer; transition: background 0.2s;"
+                    onclick="let el = document.getElementById('${rowId}'); el.style.display = (el.style.display === 'none') ? 'table-row' : 'none';"
+                    onmouseover="this.style.background='#e3f2fd'" onmouseout="this.style.background='${rowBg}'">
+                    <td style="padding:12px; font-weight:bold; color:#002244;">
+                        ${crit.name}<br><span style="font-size:0.8rem; color:#0056b3;">Score: ${p} / ${crit.max} pts</span>
+                        <div style="font-size:0.75rem; color:#d93025; margin-top:4px;"><i class="fas fa-hand-pointer"></i> Voir ce qui a échoué</div>
+                    </td>
+                    <td style="padding:12px; text-align:center; background:${isInsuffisant ? '#ffebee' : 'transparent'};">${isInsuffisant ? '☒' : '☐'}</td>
+                    <td style="padding:12px; text-align:center; background:${isAuNiveau ? '#e8f5e9' : 'transparent'};">${isAuNiveau ? '☒' : '☐'}</td>
+                    <td style="padding:12px; text-align:center; background:${isSupra ? '#fff8e1' : 'transparent'};">${isSupra ? '☒' : '☐'}</td>
+                </tr>
+                <tr id="${rowId}" style="display:none; background:#fff3cd; border-bottom:2px solid #ffc107;">
+                    <td colspan="4" style="padding:15px; color:#856404; font-size:0.95rem; line-height:1.5;">
+                        <strong><i class="fas fa-exclamation-triangle"></i> Détail pour ${crit.name} :</strong><br>
+                        ${descError}
+                    </td>
+                </tr>
+            `;
+        });
+
+        html += `</tbody></table></div>`;
+
+        let textoCorregido = data.texto_html || data.transcription_html;
+        if (textoCorregido && textoCorregido !== '[object Object]') {
+            html += `
+                <div style="background:#fff; border:1px solid #ddd; padding:20px; border-radius:8px; margin-bottom:25px;">
+                    <h4 style="margin:0 0 15px 0; color:#002244; font-size:1.1rem; border-bottom:2px solid #1a73e8; padding-bottom:8px;">
+                        <i class="fas fa-spell-check" style="color:#1a73e8;"></i> Transcription & Corrections (En rouge)
+                    </h4>
+                    <div style="font-size:1rem; line-height:1.7; color:#333;">${textoCorregido}</div>
+                </div>
+            `;
+        }
+        return html;
+    };
+
+    // 3. RECUPERAR HISTORIAL (Tolerante a fallos + Límite 3 intentos)
+    window.recuperarEvaluacionGuardada = async function(uId, eIdx, skill) {
+        if (!window.urlId || !window.db) return;
+        try {
+            const { collection, query, where, getDocs } = window.firebaseFirestore || window;
+            if (!collection) return;
+
+            const q = query(
+                collection(window.db, "Usuarios", window.urlId, "HistorialSophia"),
+                where("unidad", "==", uId),
+                where("habilidad", "==", skill),
+                where("actividad", "==", eIdx)
+            );
+            
+            const snap = await getDocs(q);
+            let docsData = [];
+            snap.forEach(d => docsData.push(d.data()));
+            docsData.sort((a, b) => (a.timestamp || 0) - (b.timestamp || 0));
+
+            let container = document.getElementById('feedback-container') || document.getElementById('reporte-evaluacion-container');
+            let ta = document.getElementById('texto-pe-input') || document.querySelector('textarea');
+            let mainBtn = document.getElementById('btn-submit-pe') || document.querySelector('.btn-submit') || document.getElementById('btn-record-po');
+
+            if (mainBtn) {
+                if (docsData.length >= 3) {
+                    mainBtn.disabled = true;
+                    mainBtn.innerHTML = "<i class='fas fa-lock'></i> Limite de 3 tentatives atteint";
+                    mainBtn.style.opacity = "0.5";
+                    mainBtn.style.cursor = "not-allowed";
+                } else {
+                    mainBtn.disabled = false;
+                    mainBtn.innerHTML = skill === 'PO' ? "<i class='fas fa-microphone'></i> Commencer l'enregistrement" : "<i class='fas fa-paper-plane'></i> Soumettre la production";
+                    mainBtn.style.opacity = "1";
+                    mainBtn.style.cursor = "pointer";
+                }
+            }
+
+            if (docsData.length > 0) {
+                let latestDoc = docsData[docsData.length - 1];
+                let evalData;
+                try {
+                    // INTENTO DE LECTURA SEGURA: Evita el colapso si la DB tiene texto plano viejo
+                    evalData = typeof latestDoc.respuesta_ia === 'string' ? JSON.parse(latestDoc.respuesta_ia) : latestDoc.respuesta_ia;
+                } catch(e) {
+                    evalData = { score_global: 'N/A', texto_html: latestDoc.respuesta_ia };
+                }
+                
+                window.mostrarEvaluacionSophia(evalData, skill, "");
+                if (ta && latestDoc.texto_alumno) ta.value = latestDoc.texto_alumno;
+
+                // Crear el ACORDEÓN DE HISTORIAL
+                if (docsData.length > 1 && container) {
+                    let historyHtml = `<div style="margin-top: 40px; border-top: 2px dashed #ccc; padding-top: 20px;">
+                        <h3 style="color:#002244; font-size:1.2rem; margin-bottom:15px;"><i class="fas fa-history"></i> Historique (Tentatives précédentes)</h3>`;
+                    
+                    for (let i = 0; i < docsData.length - 1; i++) {
+                        let doc = docsData[i];
+                        let prevEval;
+                        try { prevEval = typeof doc.respuesta_ia === 'string' ? JSON.parse(doc.respuesta_ia) : doc.respuesta_ia; }
+                        catch(e) { prevEval = { score_global: 'N/A', texto_html: doc.respuesta_ia }; }
+                        
+                        let score = prevEval.score_global || 'N/A';
+                        historyHtml += `
+                        <details style="background:#f8f9fa; border:1px solid #002244; padding:12px; border-radius:6px; margin-bottom:10px; cursor:pointer;">
+                            <summary style="font-weight:bold; color:#002244; outline:none; font-size:1.05rem;">
+                                Tentative ${i + 1} <span style="float:right; color:#d93025;">Score: ${score}</span>
+                            </summary>
+                            <div style="margin-top:15px; font-size:0.95rem; line-height:1.6; border-top:1px solid #ccc; padding-top:10px;">
+                                <strong>Production :</strong><br>
+                                <div style="background:#fff; padding:10px; border-radius:4px; border:1px solid #ddd; margin-bottom:15px;">${doc.texto_alumno || 'Audio enregistré'}</div>
+                                <strong>Feedback (Dernière table ou erreurs) :</strong><br>
+                                <div style="background:#fff3cd; padding:10px; border-radius:4px; border:1px solid #ffeeba;">
+                                    ${prevEval.texto_html || prevEval.transcription_html || 'Voir les erreurs majeures ci-dessus.'}
+                                </div>
+                            </div>
+                        </details>`;
+                    }
+                    historyHtml += `</div>`;
+                    
+                    let histDiv = document.getElementById('historial-intentos');
+                    if (!histDiv) {
+                        histDiv = document.createElement('div');
+                        histDiv.id = 'historial-intentos';
+                        container.appendChild(histDiv);
+                    }
+                    histDiv.innerHTML = historyHtml;
+                }
+            } else {
+                if (container) container.style.display = 'none';
+                if (ta) ta.value = '';
+            }
+        } catch (e) { console.error("Error al leer historial:", e); }
+    };
+})();
+</script>
+
 </body>
 </html>
