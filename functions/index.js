@@ -8,38 +8,21 @@ exports.procesarTextoPE = onRequest({ cors: true, timeoutSeconds: 60 }, async (r
 
   try {
     const apiKey = process.env.GEMINI_API_KEY;
-    if (!apiKey) return res.status(500).json({ error: "API Key no encontrada." });
+    if (!apiKey) return res.status(500).json({ error: "Clave API no configurada" });
 
     const { texto, consigne, nivel } = req.body || {};
-    if (!texto) return res.status(400).json({ error: "Falta el texto a evaluar." });
+    if (!texto) return res.status(400).json({ error: "No hay texto enviado" });
 
     const genAI = new GoogleGenerativeAI(apiKey);
     const model = genAI.getGenerativeAIModel({ model: "gemini-1.5-flash" });
 
-    const prompt = `Tu es un examinateur officiel du DELF ${nivel || "B1"}. 
-Évalue cette production écrite selon la grille officielle DELF B1 (25 pts max).
-Consigne: ${consigne || "Production écrite"}
-Texte: "${texto}"
-
-Réponds EXCLUSIVEMENT par un objet JSON valide, sans balises markdown :
-{
-  "score_global": "15/25",
-  "nombre_mots": "${texto.split(/\s+/).filter(Boolean).length} mots",
-  "rubriques": {
-    "realisation_tache": { "score": 3, "remarque": "Analyse de la consigne et respect de la longueur." },
-    "coherence_cohesion": { "score": 3, "remarque": "Organisation et connecteurs logiques." },
-    "adequation_sociolinguistique": { "score": 3, "remarque": "Respect du registre de langue." },
-    "lexique": { "score": 3, "remarque": "Richesse et précision du vocabulaire." },
-    "morphosyntaxe": { "score": 3, "remarque": "Maîtrise de la grammaire et orthographe." }
-  },
-  "texto_html": "Texte corrigé avec fautes soulignées"
-}`;
+    const prompt = `Tu es Sophia, évaluatrice experte du DELF ${nivel || "B1"}. Évalue ce texte en HTML sans markdown: Note sur 25, remarques et corrections. Consigne: ${consigne || "PE"}. Texte: "${texto}"`;
 
     const result = await model.generateContent(prompt);
-    let rawText = result.response.text().trim().replace(/```json/gi, "").replace(/```/g, "").trim();
-    return res.status(200).json(JSON.parse(rawText));
+    let htmlContent = result.response.text().replace(/```html/gi, "").replace(/```/g, "").trim();
+
+    return res.status(200).json({ texto_html: htmlContent });
   } catch (error) {
-    console.error("Error backend:", error);
-    return res.status(500).json({ error: error.message || "Error interno" });
+    return res.status(500).json({ error: error.message });
   }
 });
