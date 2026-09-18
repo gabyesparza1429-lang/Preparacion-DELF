@@ -2640,178 +2640,34 @@ window.renderExerciseStructure = async function() {
 
 
 
+
 <script>
-(function() {
-    function reconectarBotonPE() {
-        // Buscar el botón de envío
-        let btnPE = document.getElementById('btn-submit-pe') || 
-                    Array.from(document.querySelectorAll('button')).find(b => b.textContent.includes('Soumettre la production'));
-        
-        // Si no existe o ya lo arreglamos, no hacemos nada
-        if (!btnPE || btnPE.dataset.arreglado === 'true') return;
-        
-        // CLONAR EL BOTÓN: Esta es la técnica maestra para borrarle cualquier conexión vieja
-        let botonLimpio = btnPE.cloneNode(true);
-        botonLimpio.dataset.arreglado = 'true';
-        btnPE.parentNode.replaceChild(botonLimpio, btnPE);
-        
-        // CONECTAR LA NUEVA TUBERÍA
-        botonLimpio.addEventListener('click', async function(e) {
-            e.preventDefault();
-            
-            // 1. Obtener el texto del alumno
-            let textArea = document.getElementById('pe-student-response') || 
-                           document.getElementById('texto-pe-input') || 
-                           document.querySelector('textarea');
-            let texto = textArea ? textArea.value.trim() : '';
-            
-            if (!texto) {
-                alert('Veuillez écrire votre texte avant de soumettre.');
-                return;
-            }
-            
-            // 2. Cambiar estado del botón
-            botonLimpio.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Analyse par l\'IA (Jury officiel)...';
-            botonLimpio.disabled = true;
-            
-            try {
-                // 3. Obtener la consigne
-                let consigneDiv = document.querySelector('.consigne-text') || document.querySelector('.exercise-instruction');
-                let consigneTexto = consigneDiv ? consigneDiv.innerText : 'Production écrite';
-                
-                // 4. Enviar a la NUEVA Cloud Function de Firebase
-                let res = await fetch('https://us-central1-objectif-reussite-delf.cloudfunctions.net/procesarTextoPE', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        texto: texto,
-                        nivel: window.currentLevel || 'B1',
-                        consigne: consigneTexto
-                    })
-                });
-                
-                let data = await res.json();
-                
-                // 5. Guardar en el Historial para el Acordeón
-                if (window.db && window.urlId && window.currentUnitId && window.currentExerciseIndex !== undefined) {
-                    await window.db.collection("Usuarios").doc(window.urlId).collection("HistorialSophia").add({
-                        unidad: window.currentUnitId,
-                        actividad: window.currentExerciseIndex,
-                        habilidad: 'PE',
-                        texto_alumno: texto,
-                        respuesta_ia: JSON.stringify(data),
-                        timestamp: firebase.firestore.FieldValue.serverTimestamp()
-                    });
-                }
-                
-                // 6. Dibujar EXCLUSIVAMENTE la tabla nueva
-                if (window.mostrarEvaluacionSophia) {
-                    window.mostrarEvaluacionSophia(data, 'PE', consigneTexto);
-                }
-                
-            } catch (err) {
-                console.error("Error en evaluación PE:", err);
-                alert('Erreur de connexion au jury IA. Veuillez réessayer.');
-            } finally {
-                botonLimpio.innerHTML = '<i class="fas fa-paper-plane"></i> Soumettre la production';
-                botonLimpio.disabled = false;
-            }
-        });
+window.mostrarEvaluacionSophia = function(evalData, skill, consigne) {
+    let target = document.getElementById('feedback-container') || document.getElementById('reporte-evaluacion-container');
+    
+    if (!target) {
+        let card = document.querySelector('.exercise-card') || document.getElementById('dynamic-workspace-target') || document.body;
+        target = document.createElement('div');
+        target.id = 'feedback-container';
+        target.style.cssText = 'margin-top:20px; padding:0; border-radius:8px; overflow:hidden; clear:both;';
+        card.appendChild(target);
     }
     
-    // Ejecutar inmediatamente y proteger contra recargas visuales
-    document.addEventListener('DOMContentLoaded', reconectarBotonPE);
-    setInterval(reconectarBotonPE, 1000); 
-})();
-</script>
-
-
-
-
-
-<script>
-(function() {
-    setInterval(function() {
-        document.querySelectorAll('div, p').forEach(el => {
-            if (el.innerText && (el.innerText.includes("Verdict du niveau") || el.innerText.includes("Niveau B1 Non Atteint"))) {
-                let parentCard = el.closest('div[style*="background"]');
-                if (parentCard && !parentCard.querySelector('table')) parentCard.remove();
-            }
-        });
-    }, 1000);
-
-    window.renderGrilleOfficielleDELF = function(data, typeSkill, consigneTexto) {
-        if (!data) return '';
-        let scoreGlobal = data.score_global || data.note_finale || '0/25';
-        let rubriques = data.rubriques || {};
-        let isPE = (typeSkill === 'PE' || !rubriques.phonologique);
-        
-        let parseScore = (item) => {
-            if (!item) return 0;
-            let val = (typeof item === 'object') ? item.score : item;
-            let match = String(val).match(/([0-9]+(\.[0-9]+)?)/);
-            return match ? parseFloat(match[1]) : 0;
-        };
-
-        let criterios = isPE ? [
-            { name: '1. Réalisation de la tâche', max: 5, data: rubriques.realisation_tache || {} },
-            { name: '2. Cohérence et cohésion', max: 5, data: rubriques.coherence_cohesion || {} },
-            { name: '3. Adéquation sociolinguistique', max: 5, data: rubriques.adequation_sociolinguistique || {} },
-            { name: '4. Lexique (étendue et maîtrise)', max: 5, data: rubriques.lexique || {} },
-            { name: '5. Morphosyntaxe (grammaire)', max: 5, data: rubriques.morphosyntaxe || {} }
-        ] : [
-            { name: '1. Réalisation de la tâche', max: 7, data: rubriques.production_orale_task || rubriques.realisation_tache || {} },
-            { name: '2. Lexique', max: 6, data: rubriques.lexique || {} },
-            { name: '3. Morphosyntaxe', max: 6, data: rubriques.morphosyntaxe || {} },
-            { name: '4. Phonologie', max: 6, data: rubriques.phonologique || {} }
-        ];
-
-        let headers = isPE ?
-            '<th style="padding:12px; width:24%; text-align:center;">INSUFFISANT / SOUS<br><small style="color:#ffaaaa; font-weight:bold;">(0 ou 1 pt)</small></th><th style="padding:12px; width:24%; text-align:center;">AU NIVEAU<br><small style="color:#aaffaa; font-weight:bold;">(3 pts)</small></th><th style="padding:12px; width:24%; text-align:center;">SUPRA<br><small style="color:#ffd700; font-weight:bold;">(5 pts)</small></th>' :
-            '<th style="padding:12px; width:24%; text-align:center;">INSUFFISANT / SOUS<br><small style="color:#ffaaaa; font-weight:bold;">(0 - 2 pts)</small></th><th style="padding:12px; width:24%; text-align:center;">AU NIVEAU<br><small style="color:#aaffaa; font-weight:bold;">(3 - 4.5 pts)</small></th><th style="padding:12px; width:24%; text-align:center;">SUPRA<br><small style="color:#ffd700; font-weight:bold;">(5 - 7 pts)</small></th>';
-
-        let html = '<div style="background:#002244; color:#fff; border-radius:10px 10px 0 0; padding:20px; margin-top:20px;"><h2 style="margin:0; font-size:1.3rem; color:#fff;">Rapport d\'Évaluation Officiel DELF</h2><div style="margin-top:8px; font-size:1rem; color:#e0e0e0;"><strong>Note Finale :</strong> <span style="color:#f39c12; font-weight:bold; font-size:1.2rem;">' + scoreGlobal + '</span></div></div><div style="overflow-x:auto; background:#fff; border:1px solid #002244; border-top:none; border-radius:0 0 10px 10px; margin-bottom:20px;"><table style="width:100%; border-collapse:collapse; font-size:0.88rem; text-align:left;"><thead><tr style="background:#002244; color:#fff;"><th style="padding:10px; width:28%;">Critères d\'évaluation <small style="color:#ffd700;">(Cliquer pour détails)</small></th>' + headers + '</tr></thead><tbody>';
-
-        for (let i = 0; i < criterios.length; i++) {
-            let crit = criterios[i];
-            let p = parseScore(crit.data);
-            let pct = crit.max > 0 ? (p / crit.max) : 0;
-            let isInsuffisant = pct < 0.4;
-            let isAuNiveau = pct >= 0.4 && pct < 0.8;
-            let isSupra = pct >= 0.8;
-            let rowBg = (i % 2 === 0) ? '#ffffff' : '#f8f9fa';
-            
-            let descError = crit.data.error || crit.data.remarque || 'Ajustements nécessaires.';
-            // Blindaje contra errores de comillas
-            descError = String(descError).split('\n').join('<br>').replace(/'/g, '’').replace(/"/g, '”');
-            let rowId = 'crit-det-' + i;
-
-            html += '<tr style="background:' + rowBg + '; border-bottom:1px solid #e0e0e0; cursor:pointer;" onclick="let el=document.getElementById(\'' + rowId + '\'); el.style.display=(el.style.display===\'none\')?\'table-row\':\'none\';"><td style="padding:10px; font-weight:bold; color:#002244;">' + crit.name + '<br><span style="font-size:0.8rem; color:#0056b3;">Score: ' + p + ' / ' + crit.max + ' pts</span></td><td style="padding:10px; text-align:center; background:' + (isInsuffisant ? '#ffebee' : 'transparent') + ';">' + (isInsuffisant ? '☒' : '☐') + '</td><td style="padding:10px; text-align:center; background:' + (isAuNiveau ? '#e8f5e9' : 'transparent') + ';">' + (isAuNiveau ? '☒' : '☐') + '</td><td style="padding:10px; text-align:center; background:' + (isSupra ? '#fff8e1' : 'transparent') + ';">' + (isSupra ? '☒' : '☐') + '</td></tr><tr id="' + rowId + '" style="display:none; background:#fff3cd;"><td colspan="4" style="padding:12px; color:#856404;"><strong>Détail :</strong> ' + descError + '</td></tr>';
-        }
-
-        html += '</tbody></table></div>';
-        return html;
-    };
-
-    window.mostrarEvaluacionSophia = function(evalData, skill, consigne) {
-        if (!evalData) return;
-        let dataObj = evalData;
-        if (typeof evalData === 'string') {
-            try { dataObj = JSON.parse(evalData); }
-            catch(e) { dataObj = { score_global: 'N/A', texto_html: evalData }; }
-        }
-        let htmlGrille = window.renderGrilleOfficielleDELF(dataObj, skill || 'PE', consigne);
-        let exerciseCard = document.querySelector('.exercise-card') || document.getElementById('dynamic-workspace-target') || document.body;
-        
-        document.querySelectorAll('#feedback-container, #reporte-evaluacion-container, .old-eval-box').forEach(el => el.remove());
-        
-        let target = document.createElement('div');
-        target.id = 'feedback-container';
-        target.style.cssText = 'width:100%; margin-top:20px; clear:both;';
-        target.innerHTML = htmlGrille;
-        exerciseCard.appendChild(target);
-    };
-})();
+    let contenido = evalData;
+    if (typeof evalData === 'object') {
+        contenido = evalData.texto_html || evalData.respuesta_ia || JSON.stringify(evalData, null, 2);
+    }
+    
+    target.innerHTML = `
+        <div style="background:#002244; color:#fff; padding:15px 20px;">
+            <h3 style="margin:0; font-size:1.2rem;"><i class="fas fa-robot"></i> Évaluation de Sophia</h3>
+        </div>
+        <div style="padding:20px; background:#fff; border:1px solid #002244; border-top:none; border-radius:0 0 8px 8px; line-height:1.7; font-size:1rem; color:#222;">
+            ${contenido}
+        </div>
+    `;
+    target.style.display = 'block';
+};
 </script>
 
 </body>
