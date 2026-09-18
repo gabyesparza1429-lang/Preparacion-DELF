@@ -599,21 +599,25 @@
 
 
 
+
+
+<div id="feedback-container" style="margin-top:20px; padding:20px; background:#fff; border:1px solid #002244; border-radius:8px; line-height:1.7; font-size:1rem; color:#222; display:none;"></div>
+
 <script>
 window.mostrarEvaluacionSophia = function(evalData) {
-    var container = document.getElementById("feedback-container") || document.getElementById("reporte-evaluacion-container");
+    var container = document.getElementById("feedback-container");
     if (!container) {
         var card = document.querySelector(".exercise-card") || document.body;
         container = document.createElement("div");
         container.id = "feedback-container";
-        container.style.cssText = "margin-top:20px; padding:25px; background:#fff; border:1px solid #002244; border-radius:10px; font-size:1rem; line-height:1.7; color:#222; box-shadow:0 4px 12px rgba(0,0,0,0.08);";
+        container.style.cssText = "margin-top:20px; padding:20px; background:#fff; border:1px solid #002244; border-radius:8px; line-height:1.7; font-size:1rem; color:#222;";
         card.appendChild(container);
     }
-    
-    var res = (typeof evalData === "object" && evalData !== null) ? (evalData.texto_html || evalData.error) : evalData;
-    container.innerHTML = res;
+    var contenido = (typeof evalData === "object" && evalData !== null) ? (evalData.texto_html || evalData.error) : evalData;
+    container.innerHTML = contenido;
     container.style.display = "block";
 };
 </script>
+
 </body>
 </html>
