@@ -1,149 +1,45 @@
 const { onRequest } = require("firebase-functions/v2/https");
-const cors = require("cors")({ origin: true });
-const { GoogleGenAI } = require("@google/genai");
-const admin = require("firebase-admin");
-if (!admin.apps?.length) { admin.initializeApp(); }
+const { GoogleGenerativeAI } = require("@google/generative-ai");
 
-if (!admin.apps?.length) {
-  admin.initializeApp();
-}
-const db = admin.firestore();
+exports.procesarTextoPE = onRequest({ cors: true, timeoutSeconds: 60 }, async (req, res) => {
+  res.set("Access-Control-Allow-Origin", "*");
+  res.set("Access-Control-Allow-Headers", "Content-Type");
+  if (req.method === "OPTIONS") return res.status(204).send("");
 
-exports.procesarAudioPO = onRequest({
-  cors: true,
-  bodyParserOptions: { json: { limit: "50mb" } }
-}, (req, res) => {
-  return cors(req, res, async () => {
-    if (req.method === "OPTIONS") {
-      return res.status(204).send("");
-    }
+  try {
+    const apiKey = process.env.GEMINI_API_KEY;
+    if (!apiKey) return res.status(500).json({ error: "API Key no encontrada." });
 
-    if (req.method !== "POST") {
-      return res.status(405).json({ error: "Méthode non autorisée" });
-    }
+    const { texto, consigne, nivel } = req.body || {};
+    if (!texto) return res.status(400).json({ error: "Falta el texto a evaluar." });
 
-    try {
-      let { audioBase64, mimeType, nivel, apiKey: clientApiKey } = req.body || {};
-      if (!audioBase64) {
-        return res.status(400).json({ error: "Aucun fichier audio reçu." });
-      }
+    const genAI = new GoogleGenerativeAI(apiKey);
+    const model = genAI.getGenerativeAIModel({ model: "gemini-1.5-flash" });
 
-      if (audioBase64.includes(",")) {
-        audioBase64 = audioBase64.split(",")[1];
-      }
+    const prompt = `Tu es un examinateur officiel du DELF ${nivel || "B1"}. 
+Évalue cette production écrite selon la grille officielle DELF B1 (25 pts max).
+Consigne: ${consigne || "Production écrite"}
+Texte: "${texto}"
 
-      const currentNivel = nivel || "B1";
-
-      let apiKey = process.env.GEMINI_API_KEY || clientApiKey;
-
-      let configSophia = {};
-      try {
-        const sophiaDoc = await db.doc("Config/Sophia").get();
-        if (sophiaDoc.exists) {
-          configSophia = sophiaDoc.data() || {};
-          if (!apiKey && configSophia.apiKey) {
-            apiKey = configSophia.apiKey;
-          }
-        }
-      } catch (e) {
-        console.warn("Erreur lecture Config/Sophia:", e);
-      }
-
-      let directrices = configSophia.po_prompt || configSophia.prompt || "";
-      try {
-        const dirDoc = await db.doc(`IA_Directrices/${currentNivel}_PO`).get();
-        if (dirDoc.exists) {
-          const dirData = dirDoc.data();
-          if (dirData.prompt || dirData.description) {
-            directrices += "\n" + (dirData.prompt || dirData.description);
-          }
-        }
-      } catch (e) {
-        // Optionnel
-      }
-
-      if (!apiKey) {
-        return res.status(500).json({ error: "Clé API Gemini non configurée sur el servidor ni recibida del cliente." });
-      }
-
-      const promptText = `Tu es un jury officiel certifié du DELF pour le niveau ${currentNivel}. Évalue cet enregistrement oral de l'élève selon la grille d'évaluation officielle du DELF (Production Orale).
-${directrices ? "Consignes spécifiques et grille d'évaluation à appliquer :\n" + directrices : ""}
-Tu DOIS impérativement répondre au format JSON strict avec la structure exacte suivante :
+Réponds EXCLUSIVEMENT par un objet JSON valide, sans balises markdown :
 {
-  "transcription": "Texte exact transcrit de l'audio de l'élève en français",
-  "score_global": "Note globale sur 25 (ex: 18.5/25)",
-  "status": "DELF ${currentNivel} Atteint" ou "DELF ${currentNivel} Non Atteint",
-  "overall_assessment": "Appréciation globale pédagogique et bienveillante en français",
-  "suggestions": [
-    "Conseil ou piste d'amélioration 1",
-    "Conseil ou piste d'amélioration 2"
-  ],
+  "score_global": "15/25",
+  "nombre_mots": "${texto.split(/\s+/).filter(Boolean).length} mots",
   "rubriques": {
-    "tache_orale": {
-      "title": "Tâche Oral",
-      "score": "Note sur 5 (ex: 4.5/5)",
-      "comment": "Commentaire sur la réalisation de la tâche, la cohérence et le respect de la consigne",
-      "supra": "Objectif pour progresser"
-    },
-    "lexique": {
-      "title": "Lexique",
-      "score": "Note sur 5 (ex: 4/5)",
-      "comment": "Commentaire sur la richesse et l'exactitude du vocabulaire",
-      "supra": "Objectif lexique"
-    },
-    "morphosyntaxe": {
-      "title": "Morphosyntaxe",
-      "score": "Note sur 5 (ex: 3.5/5)",
-      "comment": "Commentaire sur la structure des phrases, conjugaisons et grammaire",
-      "supra": "Objectif grammaire"
-    },
-    "phonologie": {
-      "title": "Phonologie",
-      "score": "Note sur 5 ou 10 (ex: 4/5)",
-      "comment": "Commentaire sur la prononciation, l'intonation et la fluidité",
-      "supra": "Objectif phonétique"
-    }
-  }
+    "realisation_tache": { "score": 3, "remarque": "Analyse de la consigne et respect de la longueur." },
+    "coherence_cohesion": { "score": 3, "remarque": "Organisation et connecteurs logiques." },
+    "adequation_sociolinguistique": { "score": 3, "remarque": "Respect du registre de langue." },
+    "lexique": { "score": 3, "remarque": "Richesse et précision du vocabulaire." },
+    "morphosyntaxe": { "score": 3, "remarque": "Maîtrise de la grammaire et orthographe." }
+  },
+  "texto_html": "Texte corrigé avec fautes soulignées"
 }`;
 
-      const ai = new GoogleGenAI({ apiKey });
-      const response = await ai.models.generateContent({
-        model: "gemini-2.5-flash",
-        contents: [
-          {
-            role: "user",
-            parts: [
-              {
-                inlineData: {
-                  mimeType: mimeType || "audio/webm",
-                  data: audioBase64
-                }
-              },
-              {
-                text: promptText
-              }
-            ]
-          }
-        ],
-        config: {
-          responseMimeType: "application/json"
-        }
-      });
-
-      let jsonResult;
-      try {
-        jsonResult = JSON.parse(response.text);
-      } catch (e) {
-        jsonResult = {
-          transcription: "Enregistrement reçu.",
-          feedback: response.text
-        };
-      }
-
-      return res.status(200).json(jsonResult);
-    } catch (err) {
-      console.error("Erreur Backend:", err);
-      return res.status(500).json({ error: err.message || "Erreur interne" });
-    }
-  });
+    const result = await model.generateContent(prompt);
+    let rawText = result.response.text().trim().replace(/```json/gi, "").replace(/```/g, "").trim();
+    return res.status(200).json(JSON.parse(rawText));
+  } catch (error) {
+    console.error("Error backend:", error);
+    return res.status(500).json({ error: error.message || "Error interno" });
+  }
 });

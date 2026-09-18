@@ -943,26 +943,7 @@ window.evaluarPO = window.enviarAudioAIA;
 }
 </style>
 
-<script>
-window.mostrarEvaluacionSophia = function(htmlReporte) {
-    if (!htmlReporte) return;
-    let container = document.getElementById('feedback-container') || document.getElementById('reporte-evaluacion-container');
-    if (!container) {
-        container = document.createElement('div');
-        container.id = 'feedback-container';
-        container.style.marginTop = '20px';
-        let btnSubmit = document.getElementById('btn-submit-pe') || document.querySelector('.btn-submit') || document.querySelector('button[type="submit"]');
-        if (btnSubmit && btnSubmit.parentElement) {
-            btnSubmit.parentElement.appendChild(container);
-        } else {
-            let workspace = document.getElementById('dynamic-workspace-target') || document.body;
-            workspace.appendChild(container);
-        }
-    }
-    container.style.display = 'block';
-    container.innerHTML = htmlReporte;
-};
-</script>
+
 
 </head>
 <body>
@@ -2641,33 +2622,145 @@ window.renderExerciseStructure = async function() {
 
 
 
+
+
+
 <script>
-window.mostrarEvaluacionSophia = function(evalData, skill, consigne) {
-    let target = document.getElementById('feedback-container') || document.getElementById('reporte-evaluacion-container');
-    
-    if (!target) {
-        let card = document.querySelector('.exercise-card') || document.getElementById('dynamic-workspace-target') || document.body;
-        target = document.createElement('div');
+(function() {
+    window.renderGrilleOfficielleDELF = function(data, typeSkill) {
+        if (!data) return '';
+        var scoreGlobal = data.score_global || '0/25';
+        var rubriques = data.rubriques || {};
+        var nombreMots = data.nombre_mots || '';
+        
+        var parseScore = function(item) {
+            if (!item) return 0;
+            var val = (typeof item === 'object') ? item.score : item;
+            var match = String(val).match(/([0-9]+(\.[0-9]+)?)/);
+            return match ? parseFloat(match[1]) : 0;
+        };
+
+        var criterios = [
+            { name: '1. Réalisation de la tâche', max: 5, data: rubriques.realisation_tache || {} },
+            { name: '2. Cohérence et cohésion', max: 5, data: rubriques.coherence_cohesion || {} },
+            { name: '3. Adéquation sociolinguistique', max: 5, data: rubriques.adequation_sociolinguistique || {} },
+            { name: '4. Lexique (étendue et maîtrise)', max: 5, data: rubriques.lexique || {} },
+            { name: '5. Morphosyntaxe (grammaire)', max: 5, data: rubriques.morphosyntaxe || {} }
+        ];
+
+        var html = '<div style="background:#002244; color:#fff; border-radius:10px 10px 0 0; padding:20px; margin-top:20px;">' +
+            '<h2 style="margin:0; font-size:1.3rem; color:#fff;">Rapport d\'Évaluation Officiel DELF - B1</h2>' +
+            '<div style="margin-top:8px; font-size:1rem; color:#e0e0e0;">' +
+            '<strong>Note Finale :</strong> <span style="color:#f39c12; font-weight:bold; font-size:1.2rem;">' + scoreGlobal + '</span>' +
+            (nombreMots ? ' <span style="margin-left:15px; font-size:0.9rem;">(' + nombreMots + ')</span>' : '') +
+            '</div></div>' +
+            '<div style="overflow-x:auto; background:#fff; border:1px solid #002244; border-top:none; border-radius:0 0 10px 10px; margin-bottom:20px;">' +
+            '<table style="width:100%; border-collapse:collapse; font-size:0.88rem; text-align:left;">' +
+            '<thead><tr style="background:#002244; color:#fff;">' +
+            '<th style="padding:10px; width:28%;">Critères d\'évaluation <small style="color:#ffd700;">(Cliquer pour détails)</small></th>' +
+            '<th style="padding:12px; width:24%; text-align:center;">INSUFFISANT / SOUS<br><span style="color:#ffaaaa; font-size:0.85rem; font-weight:bold;">(0 ou 1 pt)</span></th>' +
+            '<th style="padding:12px; width:24%; text-align:center;">AU NIVEAU<br><span style="color:#aaffaa; font-size:0.85rem; font-weight:bold;">(3 pts)</span></th>' +
+            '<th style="padding:12px; width:24%; text-align:center;">SUPRA<br><span style="color:#ffd700; font-size:0.85rem; font-weight:bold;">(5 pts)</span></th>' +
+            '</tr></thead><tbody>';
+
+        for (var i = 0; i < criterios.length; i++) {
+            var crit = criterios[i];
+            var p = parseScore(crit.data);
+            var pct = crit.max > 0 ? (p / crit.max) : 0;
+            var isInsuffisant = pct < 0.4;
+            var isAuNiveau = pct >= 0.4 && pct < 0.8;
+            var isSupra = pct >= 0.8;
+            var rowBg = (i % 2 === 0) ? '#ffffff' : '#f8f9fa';
+            var descError = (crit.data.remarque || crit.data.error || 'Ajustements nécessaires.').replace(/'/g, '’').replace(/"/g, '”');
+            var rowId = 'crit-det-' + i;
+
+            html += '<tr style="background:' + rowBg + '; border-bottom:1px solid #e0e0e0; cursor:pointer;" onclick="let el=document.getElementById(\'' + rowId + '\'); el.style.display=(el.style.display===\'none\')?\'table-row\':\'none\';">' +
+                '<td style="padding:10px; font-weight:bold; color:#002244;">' + crit.name + '<br><span style="font-size:0.8rem; color:#0056b3;">Score: ' + p + ' / ' + crit.max + ' pts</span></td>' +
+                '<td style="padding:10px; text-align:center; background:' + (isInsuffisant ? '#ffebee' : 'transparent') + ';">' + (isInsuffisant ? '☒' : '☐') + '</td>' +
+                '<td style="padding:10px; text-align:center; background:' + (isAuNiveau ? '#e8f5e9' : 'transparent') + ';">' + (isAuNiveau ? '☒' : '☐') + '</td>' +
+                '<td style="padding:10px; text-align:center; background:' + (isSupra ? '#fff8e1' : 'transparent') + ';">' + (isSupra ? '☒' : '☐') + '</td>' +
+                '</tr>' +
+                '<tr id="' + rowId + '" style="display:none; background:#fff3cd;"><td colspan="4" style="padding:12px; color:#856404;"><strong>Détail :</strong> ' + descError + '</td></tr>';
+        }
+
+        html += '</tbody></table></div>';
+        
+        var textoCorregido = data.texto_html;
+        if (textoCorregido && typeof textoCorregido === 'string') {
+            html += '<div style="background:#fff; border:1px solid #ddd; padding:15px; border-radius:8px; margin-bottom:20px;">' +
+                '<h4 style="margin:0 0 10px 0; color:#002244;"><i class="fas fa-spell-check" style="color:#1a73e8;"></i> Corrections (En rouge)</h4>' +
+                '<div style="font-size:0.95rem; line-height:1.6;">' + textoCorregido + '</div></div>';
+        }
+        return html;
+    };
+
+    window.mostrarEvaluacionSophia = function(evalData, skill, consigne) {
+        if (!evalData) return;
+        var dataObj = evalData;
+        if (typeof evalData === 'string') {
+            try { dataObj = JSON.parse(evalData); }
+            catch(e) { dataObj = { score_global: 'N/A', texto_html: evalData }; }
+        }
+
+        var htmlGrille = window.renderGrilleOfficielleDELF(dataObj, skill || 'PE');
+        var exerciseCard = document.querySelector('.exercise-card') || document.getElementById('dynamic-workspace-target') || document.body;
+        
+        document.querySelectorAll('#feedback-container, #reporte-evaluacion-container, .old-eval-box').forEach(function(el) { el.remove(); });
+
+        var target = document.createElement('div');
         target.id = 'feedback-container';
-        target.style.cssText = 'margin-top:20px; padding:0; border-radius:8px; overflow:hidden; clear:both;';
-        card.appendChild(target);
+        target.style.cssText = 'width:100%; margin-top:20px; clear:both;';
+        target.innerHTML = htmlGrille;
+        exerciseCard.appendChild(target);
+    };
+
+    function reconectarBotonPE() {
+        var btnPE = document.getElementById('btn-submit-pe') || 
+                    Array.from(document.querySelectorAll('button')).find(b => b.textContent.includes('Soumettre la production'));
+        if (!btnPE || btnPE.dataset.nuevaGrilla === 'true') return;
+
+        var botonLimpio = btnPE.cloneNode(true);
+        botonLimpio.dataset.nuevaGrilla = 'true';
+        btnPE.parentNode.replaceChild(botonLimpio, btnPE);
+
+        botonLimpio.addEventListener('click', async function(e) {
+            e.preventDefault();
+            var textArea = document.getElementById('pe-student-response') || document.getElementById('texto-pe-input') || document.querySelector('textarea');
+            var texto = textArea ? textArea.value.trim() : '';
+
+            if (!texto) {
+                alert('Veuillez écrire votre texte avant de soumettre.');
+                return;
+            }
+
+            botonLimpio.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Évaluation par l\'IA...';
+            botonLimpio.disabled = true;
+
+            try {
+                var consigneDiv = document.querySelector('.consigne-text') || document.querySelector('.exercise-instruction');
+                var consigneTexto = consigneDiv ? consigneDiv.innerText : 'Production écrite';
+
+                var res = await fetch('https://us-central1-objectif-reussite-delf.cloudfunctions.net/procesarTextoPE', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ texto: texto, nivel: window.currentLevel || 'B1', consigne: consigneTexto })
+                });
+
+                var data = await res.json();
+                window.mostrarEvaluacionSophia(data, 'PE', consigneTexto);
+            } catch (err) {
+                console.error("Error:", err);
+                alert('Erreur lors de l\'évaluation.');
+            } finally {
+                botonLimpio.innerHTML = '<i class="fas fa-paper-plane"></i> Soumettre la production';
+                botonLimpio.disabled = false;
+            }
+        });
     }
-    
-    let contenido = evalData;
-    if (typeof evalData === 'object') {
-        contenido = evalData.texto_html || evalData.respuesta_ia || JSON.stringify(evalData, null, 2);
-    }
-    
-    target.innerHTML = `
-        <div style="background:#002244; color:#fff; padding:15px 20px;">
-            <h3 style="margin:0; font-size:1.2rem;"><i class="fas fa-robot"></i> Évaluation de Sophia</h3>
-        </div>
-        <div style="padding:20px; background:#fff; border:1px solid #002244; border-top:none; border-radius:0 0 8px 8px; line-height:1.7; font-size:1rem; color:#222;">
-            ${contenido}
-        </div>
-    `;
-    target.style.display = 'block';
-};
+
+    document.addEventListener('DOMContentLoaded', reconectarBotonPE);
+    setInterval(reconectarBotonPE, 1000);
+})();
 </script>
 
 </body>
