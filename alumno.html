@@ -3139,5 +3139,40 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 </script>
 
+
+<style>
+  /* Ocultar únicamente el contenedor estático inicial con nota 0/25 */
+  #reporte-evaluacion-container {
+    display: none !important;
+  }
+  
+  /* Asegurar que las tablas de niveles del reporte dinámico sean visibles */
+  #feedback-container table {
+    display: table !important;
+    width: 100% !important;
+  }
+  #feedback-container {
+    display: block !important;
+  }
+</style>
+
+<script>
+window.mostrarEvaluacionSophia = function(evalData) {
+    var container = document.getElementById("feedback-container");
+    if (!container) {
+        var card = document.querySelector(".exercise-card") || document.body;
+        container = document.createElement("div");
+        container.id = "feedback-container";
+        container.style.cssText = "margin-top:25px; padding:20px; background:#fff; border:1px solid #002244; border-radius:10px;";
+        card.appendChild(container);
+    }
+    
+    var contenido = (typeof evalData === "object" && evalData !== null) ? (evalData.texto_html || evalData.error) : evalData;
+    container.innerHTML = contenido;
+    container.style.display = "block";
+    container.scrollIntoView({ behavior: "smooth" });
+};
+</script>
+
 </body>
 </html>
