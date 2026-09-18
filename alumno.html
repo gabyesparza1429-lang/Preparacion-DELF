@@ -684,5 +684,70 @@ window.mostrarEvaluacionSophia = function(evalData) {
 };
 </script>
 
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    var botones = document.querySelectorAll("button");
+    var btnEnvio = null;
+    botones.forEach(function(b) {
+        if (b.innerText && (b.innerText.includes("Soumettre") || b.innerText.includes("Enviar"))) {
+            btnEnvio = b;
+        }
+    });
+    if (!btnEnvio && botones.length > 0) btnEnvio = botones[0];
+
+    if (btnEnvio) {
+        btnEnvio.onclick = async function(e) {
+            e.preventDefault();
+            
+            var areaTexto = document.querySelector("textarea") || document.getElementById("pe-student-response");
+            if (!areaTexto || !areaTexto.value.trim()) {
+                alert("Veuillez rédiger un texte avant de soumettre.");
+                return;
+            }
+
+            // Extraer el nombre/ID dinámico desde la URL (?id=constanza2026)
+            var params = new URLSearchParams(window.location.search);
+            var idParam = params.get("id") || "Étudiant(e)";
+            var nombreLimpio = idParam.replace(/[0-9]/g, "");
+            if (nombreLimpio.length > 0) {
+                nombreLimpio = nombreLimpio.charAt(0).toUpperCase() + nombreLimpio.slice(1);
+            } else {
+                nombreLimpio = "Étudiant(e)";
+            }
+
+            var container = document.getElementById("feedback-container");
+            if (!container) {
+                container = document.createElement("div");
+                container.id = "feedback-container";
+                var card = document.querySelector(".exercise-card") || document.body;
+                card.appendChild(container);
+            }
+            
+            container.style.display = "block";
+            container.innerHTML = "<div style='padding:20px; background:#fff; border:2px solid #002244; border-radius:8px;'><p><em>Sophia est en train d'évaluer la production de " + nombreLimpio + "...</em></p></div>";
+            container.scrollIntoView({ behavior: "smooth" });
+
+            try {
+                var resp = await fetch("https://us-central1-objectif-reussite-delf.cloudfunctions.net/procesarTextoPE", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        texto: areaTexto.value,
+                        consigne: "Production écrite",
+                        nivel: "B1",
+                        nombreAlumno: nombreLimpio
+                    })
+                });
+                var data = await resp.json();
+                container.innerHTML = data.texto_html || data.error || "Erreur de réponse.";
+            } catch (err) {
+                container.innerHTML = "<p style='color:red;'>Erreur de connexion avec le serveur.</p>";
+            }
+        };
+    }
+});
+</script>
+
 </body>
 </html>
