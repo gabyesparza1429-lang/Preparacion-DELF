@@ -3079,5 +3079,65 @@ window.renderExerciseStructure = async function() {
 })();
 </script>
 
+
+<style>
+  /* Ocultar tablas estáticas que causan fallas de maquetado */
+  table, 
+  #reporte-evaluacion-container { 
+    display: none !important; 
+  }
+</style>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    // Buscar y ocultar los bloques de la grilla vieja sin borrar etiquetas HTML
+    var elementos = document.querySelectorAll("div");
+    elementos.forEach(function(el) {
+        if (el.innerText && (el.innerText.includes("Rapport d'Évaluation Officiel") || el.innerText.includes("Détail des corrections"))) {
+            el.style.display = "none";
+        }
+    });
+});
+
+window.mostrarEvaluacionSophia = function(evalData) {
+    var container = document.getElementById("feedback-container");
+    if (!container) {
+        var card = document.querySelector(".exercise-card") || document.body;
+        container = document.createElement("div");
+        container.id = "feedback-container";
+        container.style.cssText = "margin-top:25px; padding:25px; background:#ffffff; border:2px solid #002244; border-radius:10px; font-size:1rem; line-height:1.7; color:#222; box-shadow:0 4px 12px rgba(0,0,0,0.1);";
+        card.appendChild(container);
+    }
+    
+    var contenido = (typeof evalData === "object" && evalData !== null) ? (evalData.texto_html || evalData.error) : evalData;
+    container.innerHTML = contenido;
+    container.style.display = "block";
+    container.scrollIntoView({ behavior: "smooth" });
+};
+</script>
+
+
+<style>
+  /* Garantizar que el reporte dinámico de la IA sea visible */
+  #feedback-container {
+    display: block !important;
+  }
+</style>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    // Buscar y ocultar la plantilla fija estática con nota 0/25
+    var divs = document.querySelectorAll("div");
+    divs.forEach(function(d) {
+        if (d.innerText && d.innerText.includes("Rapport d'Évaluation Officiel DELF") && d.innerText.includes("0/25")) {
+            d.style.display = "none";
+        }
+        if (d.innerText && d.innerText.includes("Détail des corrections") && d.innerText.includes("Ajustements nécessaires")) {
+            d.style.display = "none";
+        }
+    });
+});
+</script>
+
 </body>
 </html>
