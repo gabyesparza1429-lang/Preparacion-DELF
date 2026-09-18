@@ -619,5 +619,35 @@ window.mostrarEvaluacionSophia = function(evalData) {
 };
 </script>
 
+
+<script>
+window.mostrarEvaluacionSophia = function(evalData, skill, consigne) {
+    let target = document.getElementById('feedback-container') || document.getElementById('reporte-evaluacion-container');
+    
+    if (!target) {
+        let card = document.querySelector('.exercise-card') || document.getElementById('dynamic-workspace-target') || document.body;
+        target = document.createElement('div');
+        target.id = 'feedback-container';
+        target.style.cssText = 'margin-top:20px; padding:0; border-radius:8px; overflow:hidden; clear:both;';
+        card.appendChild(target);
+    }
+    
+    let contenido = evalData;
+    if (typeof evalData === 'object') {
+        contenido = evalData.texto_html || evalData.respuesta_ia || JSON.stringify(evalData, null, 2);
+    }
+    
+    target.innerHTML = `
+        <div style="background:#002244; color:#fff; padding:15px 20px;">
+            <h3 style="margin:0; font-size:1.2rem;"><i class="fas fa-robot"></i> Évaluation de Sophia</h3>
+        </div>
+        <div style="padding:20px; background:#fff; border:1px solid #002244; border-top:none; border-radius:0 0 8px 8px; line-height:1.7; font-size:1rem; color:#222;">
+            ${contenido}
+        </div>
+    `;
+    target.style.display = 'block';
+};
+</script>
+
 </body>
 </html>
