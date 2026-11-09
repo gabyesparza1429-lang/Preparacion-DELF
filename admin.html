@@ -2,320 +2,523 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Master Admin | Objectif Réussite</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Master Admin - Centro de Mando NeuroRéussit</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        :root { --oxford: #002147; --gold: #C5A059; --bg: #f4f7f9; --green: #28a745; --red: #dc3545; --blue: #007bff; }
-        body { font-family: 'Montserrat', sans-serif; margin: 0; display: flex; height: 100vh; background: var(--bg); overflow: hidden; }
-        .sidebar { width: 260px; background: var(--oxford); color: white; padding: 20px; display: flex; flex-direction: column; flex-shrink: 0; }
-        .sidebar h2 { font-size: 0.9rem; border-bottom: 1px solid var(--gold); padding-bottom: 15px; margin-bottom: 25px; text-align: center; text-transform: uppercase; }
-        .nav-btn { background: transparent; border: none; color: white; padding: 15px; text-align: left; cursor: pointer; border-radius: 8px; margin-bottom: 5px; font-size: 0.85rem; width: 100%; display: flex; align-items: center; transition: 0.3s; }
-        .nav-btn i { margin-right: 12px; width: 20px; text-align: center; color: var(--gold); }
-        .nav-btn.active, .nav-btn:hover { background: rgba(197, 160, 89, 0.2); color: var(--gold); font-weight: 700; }
-        .main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
-        .top-bar { background: white; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #ddd; }
-        .content { flex: 1; padding: 30px; overflow-y: auto; display: none; }
-        .content.active { display: block; }
-        .card { background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); margin-bottom: 25px; }
-        .btn-gold { background: var(--gold); color: var(--oxford); border: none; padding: 12px; width: 100%; border-radius: 6px; font-weight: bold; cursor: pointer; margin-top: 10px; text-transform: uppercase; }
-        textarea, input, select { padding: 12px; border-radius: 6px; border: 1px solid #ccc; width: 100%; box-sizing: border-box; margin-top: 8px; font-family: 'Montserrat'; }
-        .user-row { display: flex; justify-content: space-between; align-items: center; padding: 15px; border-bottom: 1px solid #eee; background: white; border-radius: 8px; margin-bottom: 10px; }
-        .user-row a { color: var(--oxford); font-weight: 700; text-decoration: none; display: flex; align-items: center; gap: 10px; }
-        .btn-del { background: var(--red); color: white; border: none; padding: 10px; border-radius: 5px; cursor: pointer; }
-        .ia-upload-box { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 15px; }
-        .ia-dropzone { border: 2px dashed var(--gold); padding: 20px; border-radius: 8px; background: #fafbfc; text-align: center; }
-        .ia-status-msg { font-size: 0.8rem; font-weight: bold; margin-top: 8px; display: block; }
-        .token-badge { background: #fff3e0; color: #e65100; font-size: 0.72rem; padding: 2px 6px; border-radius: 4px; font-weight: bold; border: 1px solid #ffe0b2; margin-top: 3px; display: inline-block; }
+        :root { --oxford: #002147; --purple: #6339a6; --dark-purple: #4a2372; --gold: #C5A059; --bg: #f4f1ea; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Montserrat', sans-serif; }
+        body { background-color: var(--bg); color: #333; display: flex; min-height: 100vh; }
+        
+        .sidebar { width: 260px; background: var(--oxford); color: white; padding: 20px; flex-shrink: 0; }
+        .sidebar h2 { font-size: 1.1rem; margin-bottom: 30px; text-align: center; color: var(--gold); font-weight: 700; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 15px; }
+        .nav-item { padding: 12px 15px; margin-bottom: 8px; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 0.9rem; display: flex; align-items: center; gap: 10px; color: #ccc; transition: 0.3s; }
+        .nav-item:hover, .nav-item.active { background: rgba(255,255,255,0.15); color: white; }
+        
+        .main-content { flex-grow: 1; padding: 30px; overflow-y: auto; }
+        .header-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; background: white; padding: 15px 25px; border-radius: 12px; border: 1px solid #d6c7ec; }
+        .header-bar h1 { color: var(--dark-purple); font-size: 1.5rem; }
+
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+
+        .cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-bottom: 30px; }
+        .card-box { background: white; border-radius: 12px; padding: 25px; border: 1px solid #d6c7ec; box-shadow: 0 4px 10px rgba(0,0,0,0.03); }
+        .card-box h3 { color: var(--dark-purple); font-size: 1.1rem; margin-bottom: 15px; display: flex; align-items: center; gap: 8px; }
+        
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; font-weight: bold; font-size: 0.85rem; color: #555; margin-bottom: 5px; }
+        .form-control { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; font-size: 0.9rem; }
+        
+        .btn-gold { width: 100%; background: var(--gold); color: white; border: none; padding: 12px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 0.9rem; transition: 0.3s; }
+        .btn-gold:hover { background: #b08d49; }
+        .btn-purple { width: 100%; background: var(--purple); color: white; border: none; padding: 12px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 0.9rem; transition: 0.3s; }
+
+        .dir-nav { display: flex; gap: 10px; margin-bottom: 15px; border-bottom: 1px solid #d6c7ec; padding-bottom: 10px; }
+        .dir-tab { padding: 8px 16px; border-radius: 6px; background: #eee; cursor: pointer; font-weight: bold; font-size: 0.85rem; border: none; }
+        .dir-tab.active { background: var(--oxford); color: white; }
+
+        .item-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 15px; margin-top: 15px; }
+        .item-card { background: #f9f7fc; border: 1px solid #d6c7ec; border-radius: 8px; padding: 15px; position: relative; }
+        .item-card h4 { color: var(--purple); font-size: 1rem; margin-bottom: 5px; }
+        .item-card p { font-size: 0.85rem; color: #555; margin-bottom: 3px; }
+        .code-badge { background: var(--dark-purple); color: white; padding: 3px 8px; border-radius: 4px; font-weight: bold; font-size: 0.8rem; display: inline-block; margin-top: 5px; }
+        .btn-delete { position: absolute; top: 12px; right: 12px; background: #dc3545; color: white; border: none; padding: 6px 10px; border-radius: 4px; font-size: 0.85rem; cursor: pointer; transition: 0.2s; }
+        .btn-delete:hover { background: #bd2130; }
+
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th, td { padding: 10px; text-align: left; border-bottom: 1px solid #eee; font-size: 0.85rem; }
+        th { background: #f4f1ea; color: var(--dark-purple); font-weight: 700; }
     </style>
 </head>
 <body>
 
-    <!-- ========================================== -->
-    <!-- MENÚ LATERAL: BOTONES DE PROYECTOS         -->
-    <!-- ========================================== -->
-    <nav class="sidebar">
-        <h2>Centro de Mando</h2>
-        <button class="nav-btn active" onclick="tab('delf', this)"><i class="fas fa-certificate"></i> Réussite DELF</button>
-        <button class="nav-btn" onclick="tab('usuarios', this)"><i class="fas fa-users"></i> Gestión de Alumnos</button>
-        <button class="nav-btn" onclick="tab('clarity', this)"><i class="fas fa-brain"></i> NeuroClarity</button>
-        <button class="nav-btn" onclick="tab('resico', this)"><i class="fas fa-calculator"></i> RESICO</button>
-        <button class="nav-btn" onclick="tab('ondemand', this)"><i class="fas fa-code"></i> App & Web On Demand</button>
-    </nav>
-
-    <div class="main">
-        <div class="top-bar">
-            <h1 id="tab-title" style="margin:0; font-size: 1.1rem; color: var(--oxford);">Réussite DELF</h1>
-            <div style="display: flex; gap: 10px; align-items: center;">
-                <select id="preview_level" style="width: 100px; margin-top: 0; padding: 5px;">
-                    <option value="A1">A1</option><option value="A2">A2</option>
-                    <option value="B1">B1</option><option value="B2">B2</option><option value="C1">C1</option>
-                </select>
-                <button class="nav-btn" style="color:var(--green); font-weight:700; width: auto;" onclick="window.previewAlumno()"><i class="fas fa-eye"></i> VISTA PREVIA</button>
-            </div>
-        </div>
-
-        <!-- ========================================== -->
-        <!-- VISTA DE CONTENIDO: RÉUSSITE DELF          -->
-        <!-- ========================================== -->
-        <div id="tab-delf" class="content active">
-            <div class="card">
-                <h3 style="color: var(--oxford); margin-top:0;"><i class="fas fa-robot" style="color:var(--gold);"></i> Entrenamiento para Sophia IA</h3>
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
-                    <div>
-                        <label style="font-size:0.8rem; font-weight:700; color:var(--oxford);">Nivel IA:</label>
-                        <select id="nivel_ia_config" style="margin-top:5px;">
-                            <option value="A1">Nivel A1</option><option value="A2">Nivel A2</option>
-                            <option value="B1">Nivel B1</option><option value="B2">Nivel B2</option><option value="C1">Nivel C1</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label style="font-size:0.8rem; font-weight:700; color:var(--oxford);">Habilidad:</label>
-                        <select id="habilidad_ia_config" style="margin-top:5px;">
-                            <option value="PO">Production Orale (PO)</option>
-                            <option value="PE">Production Écrite (PE)</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="ia-upload-box">
-                    <div class="ia-dropzone">
-                        <h4 style="margin:0 0 10px 0; font-size:0.9rem;"><i class="fas fa-file-alt"></i> 1. Référentiel</h4>
-                        <input type="file" id="file_referentiel" accept=".pdf,.json,.txt">
-                        <span id="status_referentiel" class="ia-status-msg" style="color:#888;">Esperando archivo...</span>
-                    </div>
-                    <div class="ia-dropzone">
-                        <h4 style="margin:0 0 10px 0; font-size:0.9rem;"><i class="fas fa-gavel"></i> 2. Grille d'évaluation</h4>
-                        <input type="file" id="file_grille" accept=".pdf,.json,.txt">
-                        <span id="status_grille" class="ia-status-msg" style="color:#888;">Esperando archivo...</span>
-                    </div>
-                </div>
-                <button class="btn-gold" onclick="window.subirConfiguracionIA()">🚀 Vincular Directrices</button>
-            </div>
-
-            <div class="card">
-                <h3><i class="fas fa-cloud-upload-alt"></i> Cargar Banco de Ejercicios (JSON)</h3>
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap:15px; margin-bottom:15px;">
-                    <div>
-                        <select id="json_target_level">
-                            <option value="A1">Nivel A1</option><option value="A2">Nivel A2</option>
-                            <option value="B1">Nivel B1</option><option value="B2">Nivel B2</option><option value="C1">Nivel C1</option>
-                        </select>
-                    </div>
-                    <div>
-                        <input type="file" id="archivoJson" accept=".json">
-                    </div>
-                </div>
-                <button class="btn-gold" onclick="window.subirJSONaFirebase()">🚀 Publicar Ejercicios</button>
-                <p id="mensajeEstado" style="font-weight: bold; margin-top: 15px; text-align:center;"></p>
-            </div>
-        </div>
-
-        <!-- ========================================== -->
-        <!-- VISTA DE CONTENIDO: GESTIÓN DE ALUMNOS    -->
-        <!-- ========================================== -->
-        <div id="tab-usuarios" class="content">
-            <div class="card">
-                <h3>Nuevo Alumno</h3>
-                <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:10px;">
-                    <input type="text" id="user_name" placeholder="Nombre Completo">
-                    <input type="text" id="user_id" placeholder="ID de Acceso (ej: constanza2026)">
-                    <input type="text" id="user_class" placeholder="Clase / Grupo">
-                    <input type="date" id="user_cert_date">
-                    <select id="user_level">
-                        <option value="A1">Nivel A1</option><option value="A2">Nivel A2</option>
-                        <option value="B1" selected>Nivel B1</option><option value="B2">Nivel B2</option><option value="C1">Nivel C1</option>
-                    </select>
-                    <input type="number" id="user_tokens" placeholder="Créditos Sophia IA Iniciales" value="20">
-                </div>
-                <button class="btn-gold" onclick="window.registrarAlumno()">Guardar Alumno</button>
-            </div>
-            <div id="lista_alumnos" style="margin-top:20px;"></div>
-        </div>
-
-        <!-- ========================================== -->
-        <!-- VISTA DE CONTENIDO: NEUROCLARITY          -->
-        <!-- ========================================== -->
-        <div id="tab-clarity" class="content">
-            <div class="card">
-                <h3>NeuroClarity</h3>
-                <p style="color:#666; font-size:0.9rem;">Módulo reservado para desarrollo del proyecto de Neurodesarrollo.</p>
-            </div>
-        </div>
-
-        <!-- ========================================== -->
-        <!-- VISTA DE CONTENIDO: RESICO                -->
-        <!-- ========================================== -->
-        <div id="tab-resico" class="content">
-            <div class="card">
-                <h3>RESICO / SAT</h3>
-                <p style="color:#666; font-size:0.9rem;">Módulo reservado para la herramienta de cálculo fiscal SAT.</p>
-            </div>
-        </div>
-
-        <!-- ========================================== -->
-        <!-- VISTA DE CONTENIDO: APP & WEB ON DEMAND    -->
-        <!-- ========================================== -->
-        <div id="tab-ondemand" class="content">
-            <div class="card">
-                <h3>App & Web On Demand</h3>
-                <p style="color:#666; font-size:0.9rem;">Módulo reservado para el seguimiento técnico y gestión de plataformas (Python, Firebase, API de Gemini).</p>
-            </div>
-        </div>
+    <div class="sidebar">
+        <h2>CENTRO DE MANDO</h2>
+        <div class="nav-item" id="nav-delf" onclick="showTab('delf')"><i class="fas fa-certificate"></i> Réussite DELF</div>
+        <div class="nav-item" id="nav-alumnos" onclick="showTab('alumnos')"><i class="fas fa-users"></i> Gestión de Alumnos</div>
+        <div class="nav-item active" id="nav-clarity" onclick="showTab('clarity')"><i class="fas fa-brain"></i> NeuroClarity</div>
+        <div class="nav-item" id="nav-resico" onclick="showTab('resico')"><i class="fas fa-calculator"></i> RESICO</div>
+        <div class="nav-item" id="nav-ondemand" onclick="showTab('ondemand')"><i class="fas fa-code"></i> App & Web On Demand</div>
     </div>
 
-    <!-- ========================================== -->
-    <!-- LOGICA JAVASCRIPT Y CONEXIÓN FIREBASE      -->
-    <!-- ========================================== -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
-        import { getFirestore, doc, setDoc, updateDoc, onSnapshot, collection, deleteDoc } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js";
-        import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-storage.js";
+    <div class="main-content">
+        
+        <!-- SECCIÓN DELF -->
+        <div id="tab-delf" class="tab-content">
+            <div class="header-bar"><h1>Réussite DELF</h1></div>
+            <div class="cards-grid">
+                <div class="card-box">
+                    <h3><i class="fas fa-robot"></i> Entrenamiento para Sophia IA</h3>
+                    <div class="form-group"><label>Nivel IA:</label><select class="form-control" id="delf_ia_nivel"><option value="A1">Nivel A1</option><option value="A2">Nivel A2</option><option value="B1">Nivel B1</option><option value="B2">Nivel B2</option><option value="C1">Nivel C1</option></select></div>
+                    <div class="form-group"><label>Habilidad:</label><select class="form-control" id="delf_ia_habilidad"><option value="PO">Production Orale (PO)</option><option value="PE">Production Écrite (PE)</option></select></div>
+                    <div class="form-group"><label>1. Référentiel:</label><input type="file" id="delf_ia_ref" class="form-control"></div>
+                    <div class="form-group"><label>2. Grille d'évaluation:</label><input type="file" id="delf_ia_grille" class="form-control"></div>
+                    <button class="btn-purple" onclick="vincularDirectricesDELF()"><i class="fas fa-link"></i> Vincular Directrices</button>
+                    <p id="delf_ia_status" style="margin-top:10px; font-weight:bold; font-size:0.85rem;"></p>
+                </div>
+                <div class="card-box">
+                    <h3><i class="fas fa-file-upload"></i> Cargar Banco de Ejercicios (JSON)</h3>
+                    <div class="form-group"><label>Nivel:</label><select class="form-control" id="delf_json_nivel"><option value="A1">Nivel A1</option><option value="A2">Nivel A2</option><option value="B1">Nivel B1</option><option value="B2">Nivel B2</option><option value="C1">Nivel C1</option></select></div>
+                    <div class="form-group"><label>Archivo JSON:</label><input type="file" id="delf_json_file" class="form-control" accept=".json"></div>
+                    <button class="btn-purple" onclick="publicarEjerciciosDELF()"><i class="fas fa-rocket"></i> Publicar Ejercicios</button>
+                    <p id="delf_json_msg" style="margin-top:10px; font-weight:bold; font-size:0.85rem;"></p>
+                </div>
+            </div>
+        </div>
 
-        const firebaseConfig = { 
-            apiKey: "AIzaSyCgog8tKspHy01ZHE8Dthl9O4W6lw1a_Ec", 
+        <!-- SECCIÓN GESTIÓN DE ALUMNOS DELF -->
+        <div id="tab-alumnos" class="tab-content">
+            <div class="header-bar"><h1>Gestión de Alumnos (DELF)</h1></div>
+            <div class="cards-grid">
+                <div class="card-box">
+                    <h3><i class="fas fa-user-plus"></i> Dar de Alta Alumno</h3>
+                    <div class="form-group"><label>ID del Alumno (URL): *</label><input type="text" id="alumno_id" class="form-control" placeholder="ej. constanza2026"></div>
+                    <div class="form-group"><label>Nombre Completo: *</label><input type="text" id="alumno_nombre" class="form-control" placeholder="ej. Constanza Esparza"></div>
+                    <div class="form-group"><label>Nivel DELF:</label>
+                        <select id="alumno_nivel" class="form-control">
+                            <option value="A1">Nivel A1</option>
+                            <option value="A2">Nivel A2</option>
+                            <option value="B1" selected>Nivel B1</option>
+                            <option value="B2">Nivel B2</option>
+                            <option value="C1">Nivel C1</option>
+                        </select>
+                    </div>
+                    <div class="form-group"><label>Contraseña:</label><input type="text" id="alumno_pass" class="form-control" placeholder="ej. delf2026"></div>
+                    <div class="form-group"><label>Créditos IA (Tokens):</label><input type="number" id="alumno_tokens" class="form-control" value="20"></div>
+                    <button class="btn-purple" onclick="registrarAlumnoDELF()"><i class="fas fa-save"></i> Guardar Alumno</button>
+                    <p id="alumno_status_msg" style="margin-top:10px; font-weight:bold; font-size:0.85rem;"></p>
+                </div>
+
+                <div class="card-box" style="grid-column: span 2;">
+                    <h3><i class="fas fa-users"></i> Monitor de Alumnos DELF</h3>
+                    <button onclick="cargarListaAlumnosDELF()" style="margin-bottom:15px; padding:8px 15px; background:#e0e0e0; border:none; border-radius:4px; cursor:pointer; font-weight:bold;">
+                        <i class="fas fa-sync"></i> Actualizar Lista
+                    </button>
+                    <div style="overflow-x:auto;">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>ID Alumno</th>
+                                    <th>Nombre</th>
+                                    <th>Nivel</th>
+                                    <th>Créditos IA</th>
+                                    <th>Progreso</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tabla_alumnos_body">
+                                <tr><td colspan="6" style="text-align:center;">Cargando alumnos desde Firestore...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECCIÓN NEUROCLARITY -->
+        <div id="tab-clarity" class="tab-content active">
+            <div class="header-bar">
+                <h1>NeuroClarity - Panel de Administración</h1>
+            </div>
+
+            <div class="cards-grid">
+                <div class="card-box">
+                    <h3><i class="fas fa-school" style="color:var(--gold);"></i> 1. Alta Centro Escolar</h3>
+                    <div class="form-group"><label>Nombre de la Escuela *</label><input type="text" id="escNombre" class="form-control" placeholder="Ej: Colegio Anglo Español"></div>
+                    <div class="form-group"><label>Correo Institucional *</label><input type="email" id="escCorreo" class="form-control" placeholder="contacto@escuela.edu.mx"></div>
+                    <div class="form-group"><label>Teléfono / WhatsApp *</label><input type="text" id="escTel" class="form-control" placeholder="5512345678"></div>
+                    <button class="btn-gold" onclick="registrarEscuela()">GENERAR REGISTRO Y CÓDIGO</button>
+                </div>
+
+                <div class="card-box">
+                    <h3><i class="fas fa-user-tie" style="color:var(--gold);"></i> 2. Alta de Profesor</h3>
+                    <div class="form-group"><label>Nombre Completo *</label><input type="text" id="profNombre" class="form-control" placeholder="Ej: Prof. Carlos Mendoza"></div>
+                    <div class="form-group"><label>Correo del Profesor *</label><input type="email" id="profCorreo" class="form-control" placeholder="profesor@ejemplo.com"></div>
+                    <div class="form-group"><label>Teléfono / WhatsApp *</label><input type="text" id="profTel" class="form-control" placeholder="5512345678"></div>
+                    <button class="btn-gold" onclick="registrarProfesor()">GENERAR REGISTRO Y CÓDIGO</button>
+                </div>
+
+                <div class="card-box">
+                    <h3><i class="fas fa-users" style="color:var(--gold);"></i> 3. Alta Padre de Familia</h3>
+                    <div class="form-group"><label>Nombre Completo Tutor *</label><input type="text" id="tutorNombre" class="form-control" placeholder="Ej: María Elena Gómez"></div>
+                    <div class="form-group"><label>Correo del Tutor *</label><input type="email" id="tutorCorreo" class="form-control" placeholder="tutor@ejemplo.com"></div>
+                    <div class="form-group"><label>Teléfono / WhatsApp *</label><input type="text" id="tutorTel" class="form-control" placeholder="5512345678"></div>
+                    <div class="form-group"><label>Código Escuela/Profesor (Opcional)</label><input type="text" id="tutorCodigoVinculado" class="form-control" placeholder="Ej: CLS-4A8B o ESC-1234"></div>
+                    <button class="btn-gold" onclick="registrarTutor()">GENERAR REGISTRO Y CÓDIGO</button>
+                </div>
+            </div>
+
+            <div class="card-box" style="margin-top: 25px;">
+                <h3 style="margin-bottom:15px;"><i class="fas fa-layer-group"></i> Directorio General de NeuroClarity</h3>
+                
+                <div class="dir-nav">
+                    <button class="dir-tab" id="dtab-escuelas" onclick="switchDirTab('escuelas')">Escuelas</button>
+                    <button class="dir-tab active" id="dtab-profesores" onclick="switchDirTab('profesores')">Profesores</button>
+                    <button class="dir-tab" id="dtab-padres" onclick="switchDirTab('padres')">Padres / Tutores</button>
+                </div>
+
+                <div id="dirContent" class="item-grid">
+                    <p style="color:#777; font-size:0.9rem;">Cargando datos...</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="tab-resico" class="tab-content"><div class="header-bar"><h1>RESICO / SAT</h1></div><div class="card-box"><p style="color:#555;">Módulo reservado para la herramienta de cálculo fiscal SAT.</p></div></div>
+        <div id="tab-ondemand" class="tab-content"><div class="header-bar"><h1>App & Web On Demand</h1></div><div class="card-box"><p style="color:#555;">Módulo reservado para el seguimiento técnico y gestión de plataformas.</p></div></div>
+
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-storage-compat.js"></script>
+
+    <script>
+        const configPrimary = { 
+            apiKey: "AIzaSyD4xh8Ggj0CQIlL37Rt958u2gKqTSGCOpE", 
+            authDomain: "neuroreussit-29a3e.firebaseapp.com", 
+            projectId: "neuroreussit-29a3e", 
+            storageBucket: "neuroreussit-29a3e.firebasestorage.app", 
+            messagingSenderId: "166406726537", 
+            appId: "1:166406726537:web:687ba6d819747eb29c1313" 
+        };
+
+        const configDelf = { 
+            apiKey: "AIzaSyD4xh8Ggj0CQIlL37Rt958u2gKqTSGCOpE", 
             authDomain: "objectif-reussite-delf.firebaseapp.com", 
             projectId: "objectif-reussite-delf", 
             storageBucket: "objectif-reussite-delf.firebasestorage.app", 
             messagingSenderId: "942279633770", 
-            appId: "1:942279633770:web:687ba6d819747eb29c1313" 
-        };
-        const app = initializeApp(firebaseConfig); 
-        const db = getFirestore(app);
-        const storage = getStorage(app);
-
-        // FUNCIONES DE VISTA PREVIA Y CARGAS DEL DELF
-        window.previewAlumno = () => {
-            const lvl = document.getElementById('preview_level').value;
-            window.open("alumno.html?id=admin_preview&level=" + lvl, '_blank');
+            appId: "1:942279633770:web:e90614774e16f5aa9c1313" 
         };
 
-        window.subirConfiguracionIA = async function() {
-            const nivel = document.getElementById('nivel_ia_config').value;
-            const habilidad = document.getElementById('habilidad_ia_config').value;
-            const fileRef = document.getElementById('file_referentiel').files[0];
-            const fileGrille = document.getElementById('file_grille').files[0];
-            const statusRef = document.getElementById('status_referentiel');
-            const statusGrille = document.getElementById('status_grille');
-            
+        const appPrimary = firebase.initializeApp(configPrimary, "primary");
+        const appDelf = firebase.initializeApp(configDelf, "delf");
+
+        const dbPrimary = appPrimary.firestore();
+        const dbDelf = appDelf.firestore();
+        const storageDelf = appDelf.storage();
+
+        function showTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+            const targetTab = document.getElementById('tab-' + tabName);
+            const targetNav = document.getElementById('nav-' + tabName);
+            if (targetTab) targetTab.classList.add('active');
+            if (targetNav) targetNav.classList.add('active');
+            if (tabName === 'alumnos') cargarListaAlumnosDELF();
+        }
+
+        // --- FUNCIONES GESTIÓN DE ALUMNOS DELF ---
+        async function registrarAlumnoDELF() {
+            const id = document.getElementById('alumno_id').value.trim().toLowerCase();
+            const nombre = document.getElementById('alumno_nombre').value.trim();
+            const nivel = document.getElementById('alumno_nivel').value;
+            const pass = document.getElementById('alumno_pass').value.trim();
+            const tokens = parseInt(document.getElementById('alumno_tokens').value) || 20;
+            const msg = document.getElementById('alumno_status_msg');
+
+            if (!id || !nombre) {
+                alert("Por favor completa el ID y el Nombre del alumno.");
+                return;
+            }
+
+            msg.style.color = "#333";
+            msg.innerText = "Guardando alumno en Firestore...";
+
             try {
-                if(fileRef) {
-                    statusRef.innerText = "⏳";
-                    const storageRef = ref(storage, `ia_config/${nivel}/${habilidad}/ref_${fileRef.name}`);
-                    await uploadBytes(storageRef, fileRef);
-                    const url = await getDownloadURL(storageRef);
-                    await setDoc(doc(db, "IA_Directrices", `${nivel}_${habilidad}`), { url_referentiel: url }, { merge: true });
-                    statusRef.innerText = "✅";
-                }
-                if(fileGrille) {
-                    statusGrille.innerText = "⏳";
-                    const storageRef = ref(storage, `ia_config/${nivel}/${habilidad}/gri_${fileGrille.name}`);
-                    await uploadBytes(storageRef, fileGrille);
-                    const url = await getDownloadURL(storageRef);
-                    await setDoc(doc(db, "IA_Directrices", `${nivel}_${habilidad}`), { url_grille: url }, { merge: true });
-                    statusGrille.innerText = "✅";
-                }
-                alert("Directrices vinculadas.");
-            } catch (e) { alert("Error en Storage."); }
-        };
-
-        window.subirJSONaFirebase = async function() {
-            const input = document.getElementById('archivoJson');
-            const mensaje = document.getElementById('mensajeEstado');
-            const nivelDestino = document.getElementById('json_target_level').value;
-            if (!input.files[0]) return alert("Selecciona un archivo JSON.");
-            const reader = new FileReader();
-            reader.onload = async function(e) {
-                try {
-                    mensaje.innerText = "Subiendo... ⏳";
-                    await setDoc(doc(db, "BibliotecaEjercicios", nivelDestino), { Valor: JSON.stringify(JSON.parse(e.target.result)) }, { merge: true });
-                    mensaje.innerText = "¡Éxito total! 🎉";
-                } catch (error) { mensaje.innerText = "Error Firestore."; }
-            };
-            reader.readAsText(input.files[0]);
-        };
-
-        // REGISTRO DE ALUMNOS (INCLUYENDO TOKENS)
-        window.registrarAlumno = async function() {
-            try {
-                const name = document.getElementById('user_name').value.trim();
-                const rawId = document.getElementById('user_id').value.trim();
-                const clase = document.getElementById('user_class').value.trim();
-                const fecha_cert = document.getElementById('user_cert_date').value;
-                const nivel = document.getElementById('user_level').value;
-                const tkn = parseInt(document.getElementById('user_tokens').value) || 0;
-
-                if (!name || !rawId) return alert("Nombre e ID obligatorios.");
-                const id = rawId.toLowerCase().replace(/\s+/g, '_');
-
-                await setDoc(doc(db, "Usuarios", id), { 
-                    nombre: name, 
+                await dbDelf.collection("Usuarios").doc(id).set({
                     id: id,
-                    clase: clase || "General",
-                    nivel: nivel, 
-                    fecha_certificacion: fecha_cert || "--", 
-                    tokens: tkn,
+                    nombre: nombre,
+                    nivel: nivel,
+                    password: pass,
+                    tokens: tokens,
+                    progreso: 0,
                     fecha_alta: new Date().toISOString().split('T')[0]
                 }, { merge: true });
 
-                alert(`¡Éxito! Guardado.\nID: ${id}`);
-                document.getElementById('user_name').value = "";
-                document.getElementById('user_id').value = "";
-                document.getElementById('user_class').value = "";
-                document.getElementById('user_cert_date').value = "";
-                document.getElementById('user_tokens').value = "20";
-            } catch (error) { alert("Error de conexión."); }
-        };
+                msg.style.color = "green";
+                msg.innerText = "✅ Alumno guardado correctamente.";
+                document.getElementById('alumno_id').value = '';
+                document.getElementById('alumno_nombre').value = '';
+                document.getElementById('alumno_pass').value = '';
+                cargarListaAlumnosDELF();
+            } catch (e) {
+                msg.style.color = "red";
+                msg.innerText = "❌ Error: " + e.message;
+            }
+        }
 
-        // GESTIÓN ACTIVA DE CRÉDITOS IA DESDE EL PANEL
-        window.recargarTokensAlumno = async function(id) {
-            const nuevaCantidad = prompt("Introduce el nuevo saldo total de créditos Sophia IA para este alumno:");
-            if (nuevaCantidad === null || nuevaCantidad.trim() === "") return;
-            const numeroTokens = parseInt(nuevaCantidad);
-            if (isNaN(numeroTokens)) return alert("Por favor introduce un número válido.");
+        async function cargarListaAlumnosDELF() {
+            const tbody = document.getElementById('tabla_alumnos_body');
+            if (!tbody) return;
+            tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;">Cargando...</td></tr>';
 
             try {
-                await updateDoc(doc(db, "Usuarios", id), { tokens: numeroTokens });
-                alert("Créditos actualizados con éxito.");
-            } catch (e) { alert("Error al actualizar créditos."); }
-        };
+                const snap = await dbDelf.collection("Usuarios").get();
+                if (snap.empty) {
+                    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;">No hay alumnos registrados aún.</td></tr>';
+                    return;
+                }
+                let html = '';
+                snap.forEach(doc => {
+                    const u = doc.data();
+                    const uid = doc.id;
+                    html += `
+                        <tr>
+                            <td><b>${uid}</b></td>
+                            <td><a href="alumno.html?id=${uid}" target="_blank" style="color:var(--purple); font-weight:bold; text-decoration:none;">${u.nombre || '-'}</a></td>
+                            <td><span style="background:#e8dff5; color:var(--purple); padding:3px 8px; border-radius:4px; font-weight:bold;">${u.nivel || 'B1'}</span></td>
+                            <td><input type="number" id="tkn_${uid}" value="${u.tokens !== undefined ? u.tokens : 20}" style="width:65px; padding:4px;"></td>
+                            <td>${u.progreso || 0}%</td>
+                            <td>
+                                <button onclick="guardarTokensDELF('${uid}')" style="background:var(--purple); color:#fff; border:none; padding:5px 10px; border-radius:4px; cursor:pointer; font-weight:bold; margin-right:5px;">Guardar Tokens</button>
+                                <button onclick="eliminarAlumnoDELF('${uid}')" style="background:#dc3545; color:#fff; border:none; padding:5px 8px; border-radius:4px; cursor:pointer;"><i class="fas fa-trash"></i></button>
+                            </td>
+                        </tr>
+                    `;
+                });
+                tbody.innerHTML = html;
+            } catch(e) {
+                tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; color:red;">Error: ' + e.message + '</td></tr>';
+            }
+        }
 
-        window.eliminarUser = async (id) => { if(confirm("¿Eliminar?")) await deleteDoc(doc(db, "Usuarios", id)); };
+        async function guardarTokensDELF(uid) {
+            const val = parseInt(document.getElementById('tkn_' + uid).value) || 0;
+            try {
+                await dbDelf.collection("Usuarios").doc(uid).update({ tokens: val });
+                alert("✅ Créditos actualizados a " + val + " para el alumno " + uid);
+            } catch(e) {
+                alert("Error al actualizar tokens: " + e.message);
+            }
+        }
 
-        // SISTEMA DE CONTROL DE PESTAÑAS (TABS)
-        window.tab = (id, btn) => {
-            document.querySelectorAll('.content').forEach(c => c.classList.remove('active'));
-            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-            document.getElementById(`tab-${id}`).classList.add('active');
-            btn.classList.add('active');
-            document.getElementById('tab-title').innerText = btn.innerText;
-        };
+        async function eliminarAlumnoDELF(uid) {
+            if (confirm("¿Seguro que deseas eliminar al alumno " + uid + "?")) {
+                try {
+                    await dbDelf.collection("Usuarios").doc(uid).delete();
+                    alert("✅ Alumno eliminado.");
+                    cargarListaAlumnosDELF();
+                } catch(e) {
+                    alert("Error al eliminar: " + e.message);
+                }
+            }
+        }
 
-        // RENDER DE LA LISTA EN TIEMPO REAL CON COLUMNA DE TOKENS SOPHIA
-        onSnapshot(collection(db, "Usuarios"), (snap) => {
-            const list = document.getElementById('lista_alumnos'); if (!list) return;
-            list.innerHTML = "";
-            snap.forEach(d => {
-                const u = d.data(); const prog = u.progreso || 0; const tkn = u.tokens !== undefined ? u.tokens : 0;
-                list.innerHTML += `
-                <div class="user-row">
-                    <div style="flex:1;">
-                       <a href="alumno.html?id=${u.id}" target="_blank"><strong>${u.nombre}</strong> <small>(${u.nivel})</small></a>
-                        <div style="font-size:0.6rem; color:#888;">ID: ${u.id}</div>
-                        <div class="token-badge"><i class="fas fa-magic"></i> Sophia: ${tkn} créditos</div>
-                    </div>
-                    <div style="width:120px; margin:0 20px;">
-                        <div style="font-size:0.7rem;">Progreso: ${prog}%</div>
-                        <div style="height:6px; background:#eee; border-radius:5px; overflow:hidden;"><div style="width:${prog}%; height:100%; background:var(--green);"></div></div>
-                    </div>
-                    <div style="display:flex; gap:10px;">
-                        <button class="btn-del" style="background:var(--gold); color:var(--oxford);" onclick="window.recargarTokensAlumno('${u.id}')" title="Asignar créditos Sophia IA"><i class="fas fa-bolt"></i></button>
-                        <button class="btn-del" style="background:var(--blue);" onclick="alert('Reporte listo')"><i class="fas fa-file-export"></i></button>
-                        <button class="btn-del" onclick="window.eliminarUser('${u.id}')"><i class="fas fa-trash"></i></button>
-                    </div>
-                </div>`;
-            });
-        });
+        // --- FUNCIONES SOPHIA & JSON DELF ---
+        async function vincularDirectricesDELF() {
+            const nivel = document.getElementById('delf_ia_nivel').value;
+            const hab = document.getElementById('delf_ia_habilidad').value;
+            const refFile = document.getElementById('delf_ia_ref').files[0];
+            const grilleFile = document.getElementById('delf_ia_grille').files[0];
+            const status = document.getElementById('delf_ia_status');
+
+            if (!refFile && !grilleFile) return alert("Selecciona al menos un archivo.");
+            status.style.color = "#333";
+            status.innerText = "Subiendo archivos...";
+
+            try {
+                const payload = {};
+                if (refFile) {
+                    const rRef = storageDelf.ref(`ia_config/${nivel}/${hab}/ref_${refFile.name}`);
+                    await rRef.put(refFile);
+                    payload.url_referentiel = await rRef.getDownloadURL();
+                }
+                if (grilleFile) {
+                    const gRef = storageDelf.ref(`ia_config/${nivel}/${hab}/grille_${grilleFile.name}`);
+                    await gRef.put(grilleFile);
+                    payload.url_grille = await gRef.getDownloadURL();
+                }
+                await dbDelf.collection("IA_Directrices").doc(`${nivel}_${hab}`).set(payload, { merge: true });
+                status.style.color = "green";
+                status.innerText = "✅ Directrices vinculadas con éxito.";
+            } catch(e) {
+                status.style.color = "red";
+                status.innerText = "❌ Error: " + e.message;
+            }
+        }
+
+        async function publicarEjerciciosDELF() {
+            const nivel = document.getElementById('delf_json_nivel').value;
+            const file = document.getElementById('delf_json_file').files[0];
+            const msg = document.getElementById('delf_json_msg');
+            if (!file) return alert("Selecciona un archivo JSON.");
+
+            msg.style.color = "#333";
+            msg.innerText = "Publicando ejercicios...";
+
+            const reader = new FileReader();
+            reader.onload = async function(e) {
+                try {
+                    const jsonContent = JSON.parse(e.target.result);
+                    await dbDelf.collection("BibliotecaEjercicios").doc(nivel).set({ Valor: JSON.stringify(jsonContent) }, { merge: true });
+                    msg.style.color = "green";
+                    msg.innerText = "✅ Ejercicios publicados con éxito en el nivel " + nivel;
+                } catch(err) {
+                    msg.style.color = "red";
+                    msg.innerText = "❌ Error al subir: " + err.message;
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        // --- FUNCIONES DIRECTORIO NEUROCLARITY ---
+        let currentDirCategory = 'profesores';
+        let dirUnsubPrimary = null;
+        let dirUnsubDelf = null;
+
+        function switchDirTab(cat) {
+            currentDirCategory = cat;
+            document.querySelectorAll('.dir-tab').forEach(el => el.classList.remove('active'));
+            document.getElementById('dtab-' + cat).classList.add('active');
+            cargarDirectorioCategory();
+        }
+
+        function cargarDirectorioCategory() {
+            if (dirUnsubPrimary) dirUnsubPrimary();
+            if (dirUnsubDelf) dirUnsubDelf();
+
+            let collectionName = 'Clarity_Profesores';
+            if (currentDirCategory === 'escuelas') collectionName = 'Clarity_Escuelas';
+            if (currentDirCategory === 'padres') collectionName = 'Clarity_Padres';
+
+            const mapItems = new Map();
+
+            function renderMap() {
+                const container = document.getElementById('dirContent');
+                container.innerHTML = '';
+                if (mapItems.size === 0) {
+                    container.innerHTML = `<p style="color:#777; font-size:0.9rem;">No hay ${currentDirCategory} registrados.</p>`;
+                    return;
+                }
+                mapItems.forEach((data, id) => {
+                    const card = document.createElement('div');
+                    card.className = 'item-card';
+                    card.innerHTML = `
+                        <button class="btn-delete" onclick="eliminarRegistro('${collectionName}', '${id}')" title="Eliminar"><i class="fas fa-trash"></i></button>
+                        <h4>${data.nombre || 'Sin nombre'}</h4>
+                        <p><b>Correo:</b> ${data.correo || 'N/A'}</p>
+                        <p><b>Teléfono:</b> ${data.telefono || 'N/A'}</p>
+                        <span class="code-badge">Código: ${id.toUpperCase()}</span>
+                    `;
+                    container.appendChild(card);
+                });
+            }
+
+            dirUnsubPrimary = dbPrimary.collection(collectionName).onSnapshot(snap => {
+                snap.forEach(doc => mapItems.set(doc.id, doc.data()));
+                renderMap();
+            }, err => console.error("Error Primary:", err));
+
+            dirUnsubDelf = dbDelf.collection(collectionName).onSnapshot(snap => {
+                snap.forEach(doc => mapItems.set(doc.id, doc.data()));
+                renderMap();
+            }, err => console.error("Error Delf:", err));
+        }
+
+        cargarDirectorioCategory();
+
+        async function registrarProfesor() {
+            const nombre = document.getElementById('profNombre').value.trim();
+            const correo = document.getElementById('profCorreo').value.trim();
+            const telefono = document.getElementById('profTel').value.trim();
+            if (!nombre || !correo) return alert("Por favor completa el nombre y correo del profesor.");
+            const hex = Math.floor(1000 + Math.random() * 9000).toString(16).toUpperCase();
+            const codLower = ("CLS-" + hex).toLowerCase();
+            const payload = { id: codLower, codigo_clase: codLower, nombre: nombre, correo: correo, telefono: telefono, perfil_completo: false, fecha_creacion: new Date().toISOString() };
+            try {
+                await Promise.all([
+                    dbPrimary.collection('Clarity_Profesores').doc(codLower).set(payload),
+                    dbDelf.collection('Clarity_Profesores').doc(codLower).set(payload)
+                ]);
+                alert("✅ Profesor registrado con éxito.\nCódigo asignado: " + codLower.toUpperCase());
+                document.getElementById('profNombre').value = '';
+                document.getElementById('profCorreo').value = '';
+                document.getElementById('profTel').value = '';
+            } catch (e) { alert("Error al guardar: " + e.message); }
+        }
+
+        async function registrarEscuela() {
+            const nombre = document.getElementById('escNombre').value.trim();
+            const correo = document.getElementById('escCorreo').value.trim();
+            const telefono = document.getElementById('escTel').value.trim();
+            if (!nombre || !correo) return alert("Completa el nombre y correo de la escuela.");
+            const hex = Math.floor(1000 + Math.random() * 9000).toString(16).toUpperCase();
+            const codLower = ("ESC-" + hex).toLowerCase();
+            const payload = { id: codLower, codigo_escuela: codLower, nombre: nombre, correo: correo, telefono: telefono, fecha_creacion: new Date().toISOString() };
+            try {
+                await Promise.all([
+                    dbPrimary.collection('Clarity_Escuelas').doc(codLower).set(payload),
+                    dbDelf.collection('Clarity_Escuelas').doc(codLower).set(payload)
+                ]);
+                alert("✅ Escuela registrada con éxito.\nCódigo: " + codLower.toUpperCase());
+                document.getElementById('escNombre').value = '';
+                document.getElementById('escCorreo').value = '';
+                document.getElementById('escTel').value = '';
+            } catch (e) { alert("Error: " + e.message); }
+        }
+
+        async function registrarTutor() {
+            const nombre = document.getElementById('tutorNombre').value.trim();
+            const correo = document.getElementById('tutorCorreo').value.trim();
+            const telefono = document.getElementById('tutorTel').value.trim();
+            const codigoVinc = document.getElementById('tutorCodigoVinculado').value.trim().toLowerCase();
+            if (!nombre || !correo) return alert("Completa el nombre y correo del tutor.");
+            const hex = Math.floor(1000 + Math.random() * 9000).toString(16).toUpperCase();
+            const codLower = ("PAD-" + hex).toLowerCase();
+            const payload = { id: codLower, nombre: nombre, correo: correo, telefono: telefono, codigo_vinculado: codigoVinc || 'N/A', fecha_creacion: new Date().toISOString() };
+            try {
+                await Promise.all([
+                    dbPrimary.collection('Clarity_Padres').doc(codLower).set(payload),
+                    dbDelf.collection('Clarity_Padres').doc(codLower).set(payload)
+                ]);
+                alert("✅ Tutor registrado con éxito.\nCódigo: " + codLower.toUpperCase());
+                document.getElementById('tutorNombre').value = '';
+                document.getElementById('tutorCorreo').value = '';
+                document.getElementById('tutorTel').value = '';
+                document.getElementById('tutorCodigoVinculado').value = '';
+            } catch (e) { alert("Error: " + e.message); }
+        }
+
+        async function eliminarRegistro(col, idDoc) {
+            if (confirm("¿Seguro que deseas eliminar el registro (" + idDoc.toUpperCase() + ")?")) {
+                try {
+                    const idsToDelete = Array.from(new Set([idDoc, idDoc.toLowerCase(), idDoc.toUpperCase()]));
+                    const promises = [];
+                    idsToDelete.forEach(id => {
+                        promises.push(dbPrimary.collection(col).doc(id).delete());
+                        promises.push(dbDelf.collection(col).doc(id).delete());
+                    });
+                    await Promise.all(promises);
+                    alert("✅ Registro " + idDoc.toUpperCase() + " eliminado exitosamente.");
+                    cargarDirectorioCategory();
+                } catch (e) {
+                    alert("Error al eliminar el registro: " + e.message);
+                }
+            }
+        }
     </script>
 </body>
 </html>
