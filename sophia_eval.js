@@ -14,11 +14,33 @@
     return String(window.currentLevel || "B1").toUpperCase().replace(/[^A-Z0-9]/g, "") || "B1";
   }
 
+  window.__SOPHIA_REAL_STUDENT_NAME__ = null;
+
+  async function resolverNombreAlumnoReal() {
+    if (window.__SOPHIA_REAL_STUDENT_NAME__) return window.__SOPHIA_REAL_STUDENT_NAME__;
+    const studentId = window.urlId || new URLSearchParams(window.location.search).get("id") || "";
+    try {
+      if (studentId && studentId !== "admin_preview" && window.db && window.doc && window.getDoc) {
+        const snap = await window.getDoc(window.doc(window.db, "Usuarios", studentId));
+        if (snap.exists()) {
+          const d = snap.data();
+          const nombre = d.nombre || d.name || d.alumno || "";
+          if (nombre && String(nombre).trim()) {
+            window.__SOPHIA_REAL_STUDENT_NAME__ = String(nombre).trim();
+            return window.__SOPHIA_REAL_STUDENT_NAME__;
+          }
+        }
+      }
+    } catch (e) {}
+    return obtenerNombreAlumno();
+  }
+
   function obtenerNombreAlumno() {
-    const el = document.getElementById("student-welcome") || document.getElementById("welcome-message");
+    if (window.__SOPHIA_REAL_STUDENT_NAME__) return window.__SOPHIA_REAL_STUDENT_NAME__;
+    const el = document.getElementById("student-welcome") || document.getElementById("welcome-message") || document.querySelector(".student-name");
     if (el && el.innerText) {
-      const limpio = el.innerText.replace(/Élève\s*:/i, "").trim();
-      if (limpio) return limpio;
+      const limpio = el.innerText.replace(/Élève\s*:/i, "").replace(/Bienvenue\s*,?/i, "").trim();
+      if (limpio && limpio.length > 1) return limpio;
     }
     const idParam = new URLSearchParams(window.location.search).get("id") || window.urlId || "";
     if (idParam && idParam !== "admin_preview") {
@@ -628,7 +650,9 @@
       return;
     }
 
-    const btnPE = e.target.closest("#btn-submit-pe") || e.target.closest("#btn-evaluar-sophia");
+    const btnAny = e.target.closest("button");
+    const btnTxt = btnAny ? (btnAny.innerText || "").toLowerCase() : "";
+    const btnPE = e.target.closest("#btn-submit-pe, #btn-evaluar-sophia") || (btnAny && (btnTxt.includes("soumettre la production") || btnTxt.includes("soumettre") && !btnTxt.includes("orale")) ? btnAny : null);
     if (btnPE) {
       e.preventDefault();
       e.stopImmediatePropagation();
@@ -662,7 +686,7 @@
 
       try {
         const nivel = obtenerNivelActual();
-        const nombreAlumno = obtenerNombreAlumno();
+        const nombreAlumno = await resolverNombreAlumnoReal();
         const consigne = obtenerConsignaActual("PE");
         const palabras = contarPalabras(texto);
 
@@ -695,7 +719,7 @@
       return;
     }
 
-    const btnPO = e.target.closest("#btn-evaluar-audio-sophia") || e.target.closest("#btn-submit-po");
+    const btnPO = e.target.closest("#btn-evaluar-audio-sophia, #btn-submit-po") || (btnAny && (btnTxt.includes("production orale") || btnTxt.includes("évaluer ma production")) ? btnAny : null);
     if (btnPO) {
       e.preventDefault();
       e.stopImmediatePropagation();
@@ -736,7 +760,7 @@
         const audioBase64 = await blobABase64(audioBlob);
         const audioLocalUrl = URL.createObjectURL(audioBlob);
         const nivel = obtenerNivelActual();
-        const nombreAlumno = obtenerNombreAlumno();
+        const nombreAlumno = await resolverNombreAlumnoReal();
         const consigne = obtenerConsignaActual("PO");
 
         const resultado = await llamarFuncionNube("procesarAudioPO", {
