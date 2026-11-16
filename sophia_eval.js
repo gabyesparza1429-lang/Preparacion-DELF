@@ -274,10 +274,14 @@
   // 3. LLAMADA A CLOUD FUNCTIONS (CON RESPALDO DIRECTO)
   // =========================================================
   async function llamarFuncionNube(nombreFuncion, payload) {
+    const mapaRun = {
+      procesarTextoPE: "https://procesartextope-iq4wsljhqq-uc.a.run.app",
+      procesarAudioPO: "https://procesaraudiopo-iq4wsljhqq-uc.a.run.app"
+    };
     const urls = [
-      `/${nombreFuncion}`,
+      mapaRun[nombreFuncion],
       `https://us-central1-objectif-reussite-delf.cloudfunctions.net/${nombreFuncion}`
-    ];
+    ].filter(Boolean);
     let ultimoError = null;
     for (const url of urls) {
       try {
