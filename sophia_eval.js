@@ -94,16 +94,19 @@
   observadorDOM.observe(document.documentElement, { childList: true, subtree: true });
 
   // =========================================================
-  // 2. RENDERIZADOR OFICIAL DEL REPORTE (0, 1, 3, 5 ESTRICTO)
+  // 2. NORMALIZADOR Y RENDERIZADOR OFICIAL DEL REPORTE (0, 1, 3, 5)
   // =========================================================
   function normalizarObjetoEvaluacion(raw) {
     if (!raw) return null;
     let obj = raw;
+    let saludoPrevio = "";
+
     if (typeof obj === "string") {
       let limpio = obj.replace(/```json/gi, "").replace(/```/g, "").trim();
       const ini = limpio.indexOf("{");
       const fin = limpio.lastIndexOf("}");
       if (ini !== -1 && fin !== -1 && fin > ini) {
+        saludoPrevio = limpio.slice(0, ini).replace(/Aquí te presento mi evaluación detallada.*$/i, "").trim();
         limpio = limpio.slice(ini, fin + 1);
       }
       try {
@@ -112,6 +115,7 @@
         return { legacy_html: raw };
       }
     }
+
     if (obj && obj.respuesta_ia) {
       return normalizarObjetoEvaluacion(obj.respuesta_ia);
     }
@@ -162,7 +166,7 @@
       criterios: criteriosNorm,
       errores: erroresNorm,
       recomendaciones_supra: listaRec,
-      comentario_general: obj.comentario_general || obj.commentaire_general || ""
+      comentario_general: obj.comentario_general || obj.commentaire_general || saludoPrevio || ""
     };
   }
 
@@ -322,7 +326,7 @@
   };
 
   // =========================================================
-  // 3. LLAMADA A CLOUD FUNCTIONS (CON RESPALDO DIRECTO)
+  // 3. LLAMADA A CLOUD RUN V2
   // =========================================================
   async function llamarFuncionNube(nombreFuncion, payload) {
     const mapaRun = {
@@ -333,6 +337,7 @@
       mapaRun[nombreFuncion],
       `https://us-central1-objectif-reussite-delf.cloudfunctions.net/${nombreFuncion}`
     ].filter(Boolean);
+
     let ultimoError = null;
     for (const url of urls) {
       try {
@@ -603,7 +608,6 @@
   // 6. CAPTURA ÚNICA DE CLICS PARA EVALUAR PE Y PO
   // =========================================================
   document.addEventListener("click", async function (e) {
-    // A. Botón Grabar / Detener Audio PO
     const btnRec = e.target.closest("#btn-record-po");
     if (btnRec) {
       e.preventDefault();
@@ -612,7 +616,6 @@
       return;
     }
 
-    // B. Botón Reiniciar Audio PO
     const btnResetPO = e.target.closest("#btn-reset-po");
     if (btnResetPO) {
       e.preventDefault();
@@ -625,7 +628,6 @@
       return;
     }
 
-    // C. Botón Evaluar Production Écrite (PE)
     const btnPE = e.target.closest("#btn-submit-pe") || e.target.closest("#btn-evaluar-sophia");
     if (btnPE) {
       e.preventDefault();
@@ -693,7 +695,6 @@
       return;
     }
 
-    // D. Botón Evaluar Production Orale (PO)
     const btnPO = e.target.closest("#btn-evaluar-audio-sophia") || e.target.closest("#btn-submit-po");
     if (btnPO) {
       e.preventDefault();
