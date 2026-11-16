@@ -188,6 +188,7 @@
       criterios: criteriosNorm,
       errores: erroresNorm,
       recomendaciones_supra: listaRec,
+      recursos_linguistiques: obj.recursos_linguistiques || null,
       comentario_general: obj.comentario_general || obj.commentaire_general || saludoPrevio || ""
     };
   }
@@ -290,8 +291,30 @@
       : "";
 
     const comentarioHTML = data.comentario_general
-      ? `<div style="margin-top:16px; padding:14px 16px; background:#f8fafc; border-left:4px solid #0f172a; border-radius:6px; color:#334155; font-size:0.9rem; line-height:1.55;">
-           <strong>Commentaire du jury (Sophia) :</strong> ${data.comentario_general}
+      ? `<div style="margin-bottom:18px; padding:14px 16px; background:#f8fafc; border-left:4px solid #0f172a; border-radius:6px; color:#1e293b; font-size:0.92rem; line-height:1.6;">
+           <strong style="color:#0f172a;"><i class="fas fa-comment-dots"></i> Commentaire du jury (Sophia) :</strong> ${data.comentario_general}
+         </div>`
+      : "";
+
+    const rec = data.recursos_linguistiques || {};
+    const tieneRecursos = (Array.isArray(rec.conectores) && rec.conectores.length) ||
+                          (Array.isArray(rec.verbos) && rec.verbos.length) ||
+                          (Array.isArray(rec.adjetivos) && rec.adjetivos.length) ||
+                          (Array.isArray(rec.vocabulario) && rec.vocabulario.length);
+
+    const renderChips = (arr) => (arr || []).map((item) =>
+      `<span style="display:inline-block; background:#ffffff; border:1px solid #bfdbfe; color:#1e3a8a; padding:4px 10px; border-radius:14px; font-size:0.82rem; font-weight:600; margin:3px 4px 3px 0;">${item}</span>`
+    ).join("");
+
+    const recursosHTML = tieneRecursos
+      ? `<div style="margin-top:18px; background:#eff6ff; border:1px solid #bfdbfe; border-radius:8px; padding:16px;">
+           <h4 style="margin:0 0 12px 0; color:#1d4ed8; font-size:0.98rem; font-weight:800;">
+             <i class="fas fa-toolbox"></i> Boîte à outils linguistiques (Connecteurs, Verbes, Adjectifs & Vocabulaire)
+           </h4>
+           ${rec.conectores && rec.conectores.length ? `<div style="margin-bottom:10px;"><div style="font-size:0.82rem; font-weight:800; color:#1e40af; margin-bottom:4px;"><i class="fas fa-link"></i> Connecteurs logiques :</div><div>${renderChips(rec.conectores)}</div></div>` : ""}
+           ${rec.verbos && rec.verbos.length ? `<div style="margin-bottom:10px;"><div style="font-size:0.82rem; font-weight:800; color:#1e40af; margin-bottom:4px;"><i class="fas fa-bolt"></i> Verbes utiles :</div><div>${renderChips(rec.verbos)}</div></div>` : ""}
+           ${rec.adjetivos && rec.adjetivos.length ? `<div style="margin-bottom:10px;"><div style="font-size:0.82rem; font-weight:800; color:#1e40af; margin-bottom:4px;"><i class="fas fa-sparkles"></i> Adjectifs et nuances :</div><div>${renderChips(rec.adjetivos)}</div></div>` : ""}
+           ${rec.vocabulario && rec.vocabulario.length ? `<div><div style="font-size:0.82rem; font-weight:800; color:#1e40af; margin-bottom:4px;"><i class="fas fa-book-open"></i> Vocabulaire et expressions clés :</div><div>${renderChips(rec.vocabulario)}</div></div>` : ""}
          </div>`
       : "";
 
@@ -311,6 +334,8 @@
             ${verdictTexto.startsWith("Verdict") ? verdictTexto : "Verdict : " + verdictTexto}
           </div>
 
+          ${comentarioHTML}
+
           <table style="width:100%; border-collapse:collapse; text-align:left;">
             <thead>
               <tr style="background:#f8fafc; border-bottom:2px solid #cbd5e1;">
@@ -325,8 +350,8 @@
           </table>
 
           ${erroresHTML}
+          ${recursosHTML}
           ${supraHTML}
-          ${comentarioHTML}
         </div>
       </div>`;
   };

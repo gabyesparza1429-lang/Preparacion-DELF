@@ -27,7 +27,8 @@ REGLAS CRÍTICAS DE INTEGRIDAD Y PRECISIÓN:
 3. LECTURA DE CONSIGNA: Evalúa si el texto responde exactamente a la "consigne" proporcionada.
 4. ESCALA ESTRICTA POR CRITERIO: Asigna a cada criterio ÚNICAMENTE uno de estos cuatro enteros: 0 (INSUFFISANT), 1 (EN DESSOUS), 3 (AU NIVEAU) o 5 (SUPRA). Prohibido usar 2, 4 o decimales.
 5. SUMA EXACTA: "nota_total" debe ser la suma matemática exacta de los criterios (sobre 25). Si nota_total >= 13, "admis" es true; si es < 13, "admis" es false.
-6. IDIOMA: Todas las apreciaciones, explicaciones de errores, recomendaciones SUPRA y el comentario general deben redactarse en ESPAÑOL claro y pedagógico. Solo "original" y "correccion" van en francés.
+6. HERRAMIENTAS LINGÜÍSTICAS ("recursos_linguistiques"): Proporciona siempre opciones concretas de conectores, verbos, adjetivos y vocabulario/expresiones en francés (con breve significado en español entre paréntesis) adaptadas específicamente al tema y nivel de la consigna para que el alumno mejore su producción.
+7. IDIOMA: Todas las apreciaciones, explicaciones de errores, recomendaciones SUPRA y el comentario general deben redactarse en ESPAÑOL claro y pedagógico.
 
 Devuelve ÚNICAMENTE un objeto JSON válido (sin markdown):
 {
@@ -37,6 +38,7 @@ Devuelve ÚNICAMENTE un objeto JSON válido (sin markdown):
   "nota_total": 15,
   "admis": true,
   "veredicto": "Niveau B1 Atteint / Validé (Admis)",
+  "comentario_general": "Saludo cálido dirigido al alumno por su nombre y valoración global introductoria en español.",
   "criterios": [
     {
       "nombre": "1. Réalisation de la tâche",
@@ -52,10 +54,15 @@ Devuelve ÚNICAMENTE un objeto JSON válido (sin markdown):
       "explicacion": "Explicación gramatical u ortográfica en español."
     }
   ],
+  "recursos_linguistiques": {
+    "conectores": ["En revanche (en cambio)", "Par conséquent (por consiguiente)", "D'une part... d'autre part (por una parte... por otra parte)"],
+    "verbos": ["progresser (progresar)", "maîtriser (dominar)", "s'entraîner (entrenarse/practicar)"],
+    "adjetivos": ["efficace (eficaz)", "enrichissant (enriquecedor)", "indispensable (indispensable)"],
+    "vocabulario": ["la maîtrise de la langue (el dominio del idioma)", "prendre l'habitude de (tomar la costumbre de)"]
+  },
   "recomendaciones_supra": [
     "Consejo concreto en español para alcanzar 5/5 (SUPRA)."
-  ],
-  "comentario_general": "Mensaje personalizado en español dirigido al alumno por su nombre."
+  ]
 }`;
 
 function limpiarYParsearJSON(rawText) {
@@ -141,7 +148,7 @@ exports.procesarAudioPO = onRequest({ cors: true, timeoutSeconds: 120 }, (req, r
 - Habilidad: Production Orale (4 criterios oficiales: 1. Réalisation de la tâche, 2. Cohérence et cohésion, 3. Lexique, 4. Morphosyntaxe et phonologie)
 - Consigna: ${consigne || "Production orale DELF"}
 
-Escucha el audio adjunto, incluye además la clave "transcripcion_breve" con la transcripción literal en francés de lo que dijo ${nombreAlumno || "el alumno"}, y evalúa con notas estrictas 0, 1, 3 o 5 (suma sobre 20 o 25 según escala).`;
+Escucha el audio adjunto, incluye además la clave "transcripcion_breve" con la transcripción literal en francés de lo que dijo ${nombreAlumno || "el alumno"}, incluye "recursos_linguistiques" con conectores, verbos, adjetivos y vocabulario útil para mejorar la intervención oral, y evalúa con notas estrictas 0, 1, 3 o 5.`;
 
       const response = await ai.models.generateContent({
         model: "gemini-2.5-flash",
