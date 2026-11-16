@@ -100,8 +100,14 @@
     if (!raw) return null;
     let obj = raw;
     if (typeof obj === "string") {
+      let limpio = obj.replace(/```json/gi, "").replace(/```/g, "").trim();
+      const ini = limpio.indexOf("{");
+      const fin = limpio.lastIndexOf("}");
+      if (ini !== -1 && fin !== -1 && fin > ini) {
+        limpio = limpio.slice(ini, fin + 1);
+      }
       try {
-        obj = JSON.parse(obj.replace(/```json/gi, "").replace(/```/g, "").trim());
+        obj = JSON.parse(limpio);
       } catch (e) {
         return { legacy_html: raw };
       }
@@ -109,10 +115,55 @@
     if (obj && obj.respuesta_ia) {
       return normalizarObjetoEvaluacion(obj.respuesta_ia);
     }
-    if (!obj || typeof obj !== "object" || !Array.isArray(obj.criterios)) {
+    if (!obj || typeof obj !== "object") {
       return { legacy_html: typeof raw === "string" ? raw : JSON.stringify(raw) };
     }
-    return obj;
+
+    const listaCrit = Array.isArray(obj.criterios) ? obj.criterios : (Array.isArray(obj.criteres) ? obj.criteres : null);
+    if (!listaCrit) {
+      return { legacy_html: typeof raw === "string" ? raw : JSON.stringify(raw) };
+    }
+
+    const permitidos = [0, 1, 3, 5];
+    let suma = 0;
+    const criteriosNorm = listaCrit.map((c, idx) => {
+      let n = Number(c.nota !== undefined ? c.nota : c.note);
+      if (!permitidos.includes(n)) {
+        n = permitidos.reduce((prev, curr) => Math.abs(curr - n) < Math.abs(prev - n) ? curr : prev, 3);
+      }
+      suma += n;
+      const etiqueta = n === 0 ? "INSUFFISANT" : (n === 1 ? "EN DESSOUS" : (n === 3 ? "AU NIVEAU" : "SUPRA"));
+      return {
+        nombre: c.nombre || c.nom || `Critère ${idx + 1}`,
+        nota: n,
+        etiqueta,
+        apreciacion: c.apreciacion || c.commentaire || ""
+      };
+    });
+
+    const listaErr = Array.isArray(obj.errores) ? obj.errores : (Array.isArray(obj.erreurs) ? obj.erreurs : []);
+    const erroresNorm = listaErr.map((e) => ({
+      original: e.original || "",
+      correccion: e.correccion || e.correction || "",
+      explicacion: e.explicacion || e.explication || ""
+    }));
+
+    const listaRec = Array.isArray(obj.recomendaciones_supra)
+      ? obj.recomendaciones_supra
+      : (Array.isArray(obj.recommandations) ? obj.recommandations : (Array.isArray(obj.recomendaciones) ? obj.recomendaciones : []));
+
+    return {
+      nivel: obj.nivel || obj.niveau || obtenerNivelActual(),
+      eleve: obj.eleve || obtenerNombreAlumno(),
+      palabras: obj.palabras || obj.mots || 0,
+      nota_total: suma,
+      admis: suma >= 13,
+      veredicto: obj.veredicto || obj.verdict || "",
+      criterios: criteriosNorm,
+      errores: erroresNorm,
+      recomendaciones_supra: listaRec,
+      comentario_general: obj.comentario_general || obj.commentaire_general || ""
+    };
   }
 
   window.renderizarReporteDELF = function (rawPayload, opciones) {
