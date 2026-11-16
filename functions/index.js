@@ -7,6 +7,9 @@ if (!getApps().length) {
   initializeApp();
 }
 
+const PROJECT_ID = process.env.GCLOUD_PROJECT || "objectif-reussite-delf";
+const LOCATION = "us-central1";
+
 const GRILLES_DELF = {
   A1: "DELF A1 (25 pts): 1. Respect de la consigne, 2. Correction sociolinguistique, 3. Capacité à informer et décrire, 4. Lexique / orthographe lexicale, 5. Morphosyntaxe / orthographe grammaticale.",
   A2: "DELF A2 (25 pts): 1. Respect de la consigne, 2. Correction sociolinguistique, 3. Capacité à raconter / décrire / informer, 4. Lexique / orthographe lexicale, 5. Morphosyntaxe / orthographe grammaticale.",
@@ -65,13 +68,18 @@ function limpiarYParsearJSON(rawText) {
   return JSON.parse(clean);
 }
 
+function crearClienteVertex() {
+  return new GoogleGenAI({
+    vertexai: true,
+    project: PROJECT_ID,
+    location: LOCATION
+  });
+}
+
 exports.procesarTextoPE = onRequest({ cors: true, timeoutSeconds: 120 }, (req, res) => {
   return cors(req, res, async () => {
     if (req.method !== "POST") return res.status(405).json({ error: "Método no permitido" });
     try {
-      const apiKey = process.env.GEMINI_API_KEY || "";
-      if (!apiKey) return res.status(500).json({ error: "GEMINI_API_KEY no configurada." });
-
       const { texto, consigne, nivel, nombreAlumno } = req.body || {};
       if (!texto || !String(texto).trim()) {
         return res.status(400).json({ error: "El texto del alumno está vacío." });
@@ -81,7 +89,7 @@ exports.procesarTextoPE = onRequest({ cors: true, timeoutSeconds: 120 }, (req, r
       const grille = GRILLES_DELF[lvl] || GRILLES_DELF.B1;
       const palabras = String(texto).trim().split(/\s+/).filter(Boolean).length;
 
-      const ai = new GoogleGenAI({ apiKey });
+      const ai = crearClienteVertex();
       const promptUsuario = `DATOS DE ESTA EVALUACIÓN ÚNICA:
 - Alumno (nombreAlumno): ${nombreAlumno || "Élève"}
 - Nivel DELF: ${lvl}
@@ -120,16 +128,13 @@ exports.procesarAudioPO = onRequest({ cors: true, timeoutSeconds: 120 }, (req, r
   return cors(req, res, async () => {
     if (req.method !== "POST") return res.status(405).json({ error: "Método no permitido" });
     try {
-      const apiKey = process.env.GEMINI_API_KEY || "";
-      if (!apiKey) return res.status(500).json({ error: "GEMINI_API_KEY no configurada." });
-
       const { audioBase64, mimeType, consigne, nivel, nombreAlumno } = req.body || {};
       if (!audioBase64) return res.status(400).json({ error: "No se recibió audio." });
 
       const lvl = String(nivel || "B1").toUpperCase();
       const cleanBase64 = String(audioBase64).replace(/^data:audio\/[a-z0-9.+-]+;base64,/, "");
 
-      const ai = new GoogleGenAI({ apiKey });
+      const ai = crearClienteVertex();
       const promptOral = `DATOS DE ESTA EVALUACIÓN ORAL ÚNICA:
 - Alumno (nombreAlumno): ${nombreAlumno || "Élève"}
 - Nivel DELF: ${lvl}
