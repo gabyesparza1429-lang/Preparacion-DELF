@@ -576,9 +576,44 @@
       });
 
       const userRef = window.doc(window.db, "Usuarios", studentId);
-      await window.setDoc(userRef, {
+      let totalActsNivel = 0;
+      let completadasNivel = 0;
+      const mapaActual = Object.assign({}, window.mapaAciertosAlumno || {}, { [llaveProgreso]: true });
+
+      if (window.unidadesCache && typeof window.unidadesCache === "object") {
+        Object.keys(window.unidadesCache).forEach((uk) => {
+          const uObj = window.unidadesCache[uk] || {};
+          ["CO", "CE", "PE", "PO"].forEach((sk) => {
+            const arr = uObj[sk] || uObj[sk.toLowerCase()] || [];
+            if (Array.isArray(arr)) {
+              arr.forEach((_, i) => {
+                totalActsNivel++;
+                if (
+                  mapaActual[`${uk}_${sk}_${i}`] === true ||
+                  mapaActual[`${uk}_${sk.toLowerCase()}_${i}`] === true
+                ) {
+                  completadasNivel++;
+                }
+              });
+            }
+          });
+        });
+      }
+
+      const updatePayload = {
         mapa_aciertos: { [llaveProgreso]: true }
-      }, { merge: true });
+      };
+
+      if (totalActsNivel > 0) {
+        const pct = Math.min(100, Math.round((completadasNivel / totalActsNivel) * 100));
+        updatePayload.progreso = pct;
+        const pTxt = document.getElementById("progress-text-target");
+        const pBar = document.getElementById("progress-bar-fill");
+        if (pTxt) pTxt.innerText = `${pct}%`;
+        if (pBar) pBar.style.width = `${pct}%`;
+      }
+
+      await window.setDoc(userRef, updatePayload, { merge: true });
 
       if (typeof window.generarMenuJerarquico === "function") window.generarMenuJerarquico();
       if (typeof window.calcularTodasLasNotasHabilidades === "function") await window.calcularTodasLasNotasHabilidades();
