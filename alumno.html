@@ -3001,5 +3001,46 @@ window.renderExerciseStructure = async function() {
   })();
   </script>
 
+
+<script>
+window.grabarPO = async function() {
+    const btn = document.getElementById('btn-record-po');
+    const feedback = document.getElementById('po-audio-feedback');
+    if (!window.mediaRecorderPO || window.mediaRecorderPO.state === "inactive") {
+        try {
+            const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+            window.mediaRecorderPO = new MediaRecorder(stream);
+            window.audioChunksPO = [];
+            window.mediaRecorderPO.ondataavailable = e => window.audioChunksPO.push(e.data);
+            window.mediaRecorderPO.onstop = () => {
+                window.recordedAudioBlobPO = new Blob(window.audioChunksPO, { type: 'audio/webm' });
+                const audioUrl = URL.createObjectURL(window.recordedAudioBlobPO);
+                if (feedback) {
+                    feedback.innerHTML = `
+                        <div style="margin-top:10px; padding:10px; background:#e8f5e9; border:1px solid #c8e6c9; border-radius:8px;">
+                            <span style="color:#2e7d32; font-weight:bold; display:block; margin-bottom:8px;"><i class="fas fa-check-circle"></i> Enregistrement audio prêt</span>
+                            <audio controls src="${audioUrl}" style="width:100%; max-width:400px;"></audio>
+                        </div>`;
+                }
+            };
+            window.mediaRecorderPO.start();
+            if (btn) {
+                btn.innerHTML = '<i class="fas fa-stop"></i> Arrêter l\'enregistrement';
+                btn.style.backgroundColor = '#c0392b';
+            }
+        } catch (err) {
+            alert("No se pudo acceder al micrófono. Verifique los permisos.");
+        }
+    } else {
+        window.mediaRecorderPO.stop();
+        window.mediaRecorderPO.stream.getTracks().forEach(track => track.stop());
+        if (btn) {
+            btn.innerHTML = '<i class="fas fa-microphone"></i> Commencer l\'enregistrement';
+            btn.style.backgroundColor = '#0288d1';
+        }
+    }
+};
+</script>
+
 </body>
 </html>
