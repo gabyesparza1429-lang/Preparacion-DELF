@@ -204,7 +204,10 @@
         }
 
         .main-container {
-            flex-grow: 1;
+            flex: 1;
+            min-width: 0;
+            width: calc(100vw - 300px);
+            margin: 0;
             display: flex;
             flex-direction: column;
             height: 100vh;
@@ -2752,7 +2755,7 @@ window.renderExerciseStructure = async function() {
       <head>
         <meta charset="UTF-8">
         <title>Mon Rapport DELF - ${rep.nombre}</title>
-        <style>
+        <` + `style>
           body { font-family: 'Segoe UI', Arial, sans-serif; color: #1e293b; margin: 0; padding: 28px; background: #fff; }
           .header { background: #0f172a; color: #fff; padding: 20px 24px; border-radius: 10px; display: flex; justify-content: space-between; align-items: center; }
           .header h1 { margin: 0; font-size: 19px; }
@@ -2767,7 +2770,7 @@ window.renderExerciseStructure = async function() {
           table { width: 100%; border-collapse: collapse; margin-top: 12px; }
           th { background: #f1f5f9; font-size: 12px; text-align: left; padding: 8px; border: 1px solid #cbd5e1; }
           @media print { .no-print { display: none; } }
-        </style>
+        </` + `style>
       </head>
       <body>
         <div class="no-print" style="text-align:right; margin-bottom:14px;">
