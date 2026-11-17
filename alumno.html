@@ -217,7 +217,7 @@
             border-bottom: 4px solid var(--gold);
             box-shadow: 0 4px 10px rgba(0,0,0,0.05);
             position: relative;
-            height: 250px; 
+            height: 175px; 
             box-sizing: border-box;
             flex-shrink: 0;
         }
@@ -232,7 +232,7 @@
         .workspace-content-wrapper {
             position: relative;
             z-index: 2;
-            max-width: 900px;
+            max-width: 1180px; width: 100%;
             margin: 0 auto;
         }
 
@@ -2666,5 +2666,305 @@ window.renderExerciseStructure = async function() {
 
 </script>
 <script src="sophia_eval.js?v=20261121"></script>
+
+
+
+
+<script id="portal-reportes-tiempo-alumno">
+(function() {
+  function fmtTiempo(mins) {
+    const m = Math.max(0, parseInt(mins) || 0);
+    if (m < 60) return `${m} min`;
+    const h = Math.floor(m / 60);
+    const r = m % 60;
+    return r > 0 ? `${h}h ${r}m` : `${h}h 00m`;
+  }
+
+  function obtenerUidAlumno() {
+    return new URLSearchParams(window.location.search).get('id') || localStorage.getItem('active_student_id') || localStorage.getItem('currentStudentId');
+  }
+
+  // 1. Medición activa de tiempo conectado (cada 60s suma 1 minuto en Firestore)
+  async function iniciarContadorEstudio() {
+    const uid = obtenerUidAlumno();
+    if (!uid || !window.db || !window.doc || !window.getDoc) return;
+
+    const uRef = window.doc(window.db, "Usuarios", uid);
+    let minsActuales = 0;
+
+    try {
+      const snap = await window.getDoc(uRef);
+      if (snap.exists()) {
+        const d = snap.data() || {};
+        minsActuales = parseInt(d.minutos_estudio || d.tiempo_conectado || 0) || 0;
+        actualizarRelojSidebar(minsActuales);
+      }
+    } catch (_) {}
+
+    setInterval(async () => {
+      if (document.hidden) return;
+      minsActuales += 1;
+      actualizarRelojSidebar(minsActuales);
+      try {
+        if (window.setDoc) {
+          await window.setDoc(uRef, { minutos_estudio: minsActuales }, { merge: true });
+        }
+      } catch (_) {}
+    }, 60000);
+  }
+
+  function actualizarRelojSidebar(mins) {
+    const txt = fmtTiempo(mins);
+    // Buscar el elemento que muestra "Calcul..." o el reloj en la barra lateral
+    document.querySelectorAll("span, div, p, small").forEach(el => {
+      if (el.children.length === 0 && (el.innerText.trim() === "Calcul..." || el.dataset.relojEstudio === "1")) {
+        el.dataset.relojEstudio = "1";
+        el.innerText = txt;
+      }
+    });
+  }
+
+  // 2. Renderizar ventana con el reporte oficial del alumno
+  function mostrarVentanaReporteAlumno(rep) {
+    const win = window.open('', '_blank', 'width=900,height=760');
+    if (!win) {
+      alert("Permite las ventanas emergentes para abrir tu reporte.");
+      return;
+    }
+
+    const filas = (rep.historial && rep.historial.length)
+      ? rep.historial.map(h => `
+          <tr>
+            <td style="padding:8px; border:1px solid #cbd5e1; font-size:12px;">${h.fecha || '-'}</td>
+            <td style="padding:8px; border:1px solid #cbd5e1; font-size:12px;"><b>${h.hab || 'PE'}</b> (${h.un || ''})</td>
+            <td style="padding:8px; border:1px solid #cbd5e1; font-size:12px; text-align:center; font-weight:bold;">${h.nota || '-'}</td>
+            <td style="padding:8px; border:1px solid #cbd5e1; font-size:12px; color:#334155;">${h.comentario || 'Evaluado por Sophia'}</td>
+          </tr>
+        `).join('')
+      : `<tr><td colspan="4" style="padding:10px; text-align:center; color:#64748b;">Aún no tienes producciones evaluadas por Sophia.</td></tr>`;
+
+    const c = rep.conteo || { CO: 0, CE: 0, PE: 0, PO: 0 };
+    const t = rep.totalesPorHabilidad || { CO: 0, CE: 0, PE: 0, PO: 0 };
+
+    win.document.write(`
+      <!DOCTYPE html>
+      <html lang="es">
+      <head>
+        <meta charset="UTF-8">
+        <title>Mon Rapport DELF - ${rep.nombre}</title>
+        <style>
+          body { font-family: 'Segoe UI', Arial, sans-serif; color: #1e293b; margin: 0; padding: 28px; background: #fff; }
+          .header { background: #0f172a; color: #fff; padding: 20px 24px; border-radius: 10px; display: flex; justify-content: space-between; align-items: center; }
+          .header h1 { margin: 0; font-size: 19px; }
+          .header p { margin: 4px 0 0 0; font-size: 12px; color: #cbd5e1; }
+          .badge { background: #4f46e5; color: #fff; padding: 8px 14px; border-radius: 8px; font-weight: 800; }
+          .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 18px 0; }
+          .box { border: 1px solid #cbd5e1; border-radius: 8px; padding: 11px; background: #f8fafc; }
+          .box small { display: block; color: #64748b; font-size: 10px; text-transform: uppercase; font-weight: 700; }
+          .box strong { display: block; font-size: 15px; color: #0f172a; margin-top: 4px; }
+          .skills { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 10px; }
+          .card { border: 1px solid #cbd5e1; border-radius: 8px; padding: 12px; text-align: center; }
+          table { width: 100%; border-collapse: collapse; margin-top: 12px; }
+          th { background: #f1f5f9; font-size: 12px; text-align: left; padding: 8px; border: 1px solid #cbd5e1; }
+          @media print { .no-print { display: none; } }
+        </style>
+      </head>
+      <body>
+        <div class="no-print" style="text-align:right; margin-bottom:14px;">
+          <button onclick="window.print()" style="background:#0f172a; color:#fff; border:none; padding:9px 16px; border-radius:6px; font-weight:bold; cursor:pointer;">🖨️ Descargar PDF / Imprimir</button>
+        </div>
+        <div class="header">
+          <div>
+            <h1>Mon Rapport de Progression DELF · NeuroRéussit</h1>
+            <p>Fecha de emisión: ${rep.fecha}</p>
+          </div>
+          <div class="badge">DELF ${rep.nivel}</div>
+        </div>
+        <div class="grid">
+          <div class="box"><small>Élève</small><strong>${rep.nombre}</strong></div>
+          <div class="box"><small>Progression Globale</small><strong>${rep.pct}% (${rep.hechas}/${rep.total})</strong></div>
+          <div class="box"><small>Temps d'Étude</small><strong>${rep.tiempoTexto}</strong></div>
+          <div class="box"><small>Crédits IA</small><strong>${rep.tokens} crédits</strong></div>
+        </div>
+        <h3 style="font-size:14px; margin-top:20px;">Compétences DELF</h3>
+        <div class="skills">
+          <div class="card"><div style="font-weight:700;color:#0369a1;font-size:12px;">Compréhension Orale</div><div style="font-size:18px;font-weight:800;margin:4px 0;">${c.CO} / ${t.CO}</div></div>
+          <div class="card"><div style="font-weight:700;color:#15803d;font-size:12px;">Compréhension Écrite</div><div style="font-size:18px;font-weight:800;margin:4px 0;">${c.CE} / ${t.CE}</div></div>
+          <div class="card"><div style="font-weight:700;color:#b45309;font-size:12px;">Production Écrite</div><div style="font-size:18px;font-weight:800;margin:4px 0;">${c.PE} / ${t.PE}</div></div>
+          <div class="card"><div style="font-weight:700;color:#7e22ce;font-size:12px;">Production Orale</div><div style="font-size:18px;font-weight:800;margin:4px 0;">${c.PO} / ${t.PO}</div></div>
+        </div>
+        <h3 style="font-size:14px; margin-top:22px;">Évaluations du Jury IA (Sophia)</h3>
+        <table>
+          <thead><tr><th>Date</th><th>Compétence</th><th style="text-align:center;">Note</th><th>Commentaire</th></tr></thead>
+          <tbody>${filas}</tbody>
+        </table>
+      </body>
+      </html>
+    `);
+    win.document.close();
+  }
+
+  // 3. Generar reporte en vivo desde el propio portal del alumno
+  window.abrirMiPropioReporteDELF = async function() {
+    const uid = obtenerUidAlumno();
+    if (!uid || !window.db) return;
+
+    try {
+      const uSnap = await window.getDoc(window.doc(window.db, "Usuarios", uid));
+      if (!uSnap.exists()) return;
+      const u = uSnap.data() || {};
+      const nivel = String(u.nivel || "B1").toUpperCase();
+      const mins = parseInt(u.minutos_estudio || u.tiempo_conectado || 0) || 0;
+      const mapa = Object.assign({}, u.mapa_aciertos || {});
+      const historial = [];
+
+      const histSnap = await window.getDocs(window.collection(window.db, "Usuarios", uid, "HistorialSophia"));
+      histSnap.forEach(d => {
+        const h = d.data() || {};
+        const fecha = h.fecha || '-';
+        const hab = h.habilidad || (h.tipo === 'Production_Orale' ? 'PO' : 'PE');
+        const un = h.unidad || h.unidadId || d.id;
+        let nota = '-';
+        let comentario = '';
+        try {
+          const parsed = typeof h.respuesta_ia === 'string' ? JSON.parse(h.respuesta_ia) : (h.respuesta_ia || {});
+          if (parsed.nota_total !== undefined) nota = `${parsed.nota_total} / 25`;
+          comentario = parsed.comentario_general || parsed.veredicto || '';
+        } catch (_) {}
+        historial.push({ fecha, hab, un, nota, comentario });
+        if (/^Unite_\d+_(PE|PO|CO|CE)_\d+$/i.test(d.id)) {
+          mapa[d.id] = true;
+        }
+      });
+
+      const unidSnap = await window.getDocs(window.collection(window.db, "BibliotecaEjercicios", nivel, "Unidades"));
+      const conteo = { CO: 0, CE: 0, PE: 0, PO: 0 };
+      const tot = { CO: 0, CE: 0, PE: 0, PO: 0 };
+      let total = 0, hechas = 0;
+
+      const mapaLower = {};
+      Object.keys(mapa).forEach(k => { if (mapa[k] === true) mapaLower[k.toLowerCase()] = true; });
+
+      unidSnap.forEach(uDoc => {
+        const uk = uDoc.id;
+        const ud = uDoc.data() || {};
+        ['CO', 'CE', 'PE', 'PO'].forEach(sk => {
+          const arr = ud[sk] || ud[sk.toLowerCase()] || [];
+          if (Array.isArray(arr)) {
+            arr.forEach((_, idx) => {
+              tot[sk]++;
+              total++;
+              if (mapaLower[`${uk}_${sk}_${idx}`.toLowerCase()]) {
+                conteo[sk]++;
+                hechas++;
+              }
+            });
+          }
+        });
+      });
+
+      const pct = total > 0 ? Math.min(100, Math.round((hechas / total) * 100)) : (u.progreso || 0);
+      mostrarVentanaReporteAlumno({
+        nombre: u.nombre || uid,
+        nivel,
+        pct,
+        hechas,
+        total,
+        tiempoTexto: fmtTiempo(mins),
+        tokens: u.tokens !== undefined ? u.tokens : 20,
+        conteo,
+        totalesPorHabilidad: tot,
+        historial,
+        fecha: new Date().toLocaleDateString('es-MX', { year: 'numeric', month: 'long', day: 'numeric' })
+      });
+    } catch (e) {
+      alert("No se pudo generar el reporte: " + e.message);
+    }
+  };
+
+  // 4. Botón "Mon Rapport" en el menú lateral + avisos de mensajes/reportes enviados por la profesora
+  function inyectarBotonReporteSidebar() {
+    if (document.getElementById("btn-mon-rapport-sidebar")) return;
+    const btnParcours = Array.from(document.querySelectorAll("button, div")).find(el => el.innerText && el.innerText.trim() === "Mon Parcours");
+    if (!btnParcours || !btnParcours.parentElement) return;
+
+    const btn = document.createElement("button");
+    btn.id = "btn-mon-rapport-sidebar";
+    btn.type = "button";
+    btn.onclick = window.abrirMiPropioReporteDELF;
+    btn.style.cssText = "width:100%; margin-top:8px; padding:10px 14px; background:rgba(255,255,255,0.12); color:#ffffff; border:1px solid rgba(255,255,255,0.25); border-radius:8px; font-weight:700; font-size:0.88rem; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:8px;";
+    btn.innerHTML = `<i class="fas fa-chart-pie"></i> Mon Rapport (PDF)`;
+    btnParcours.parentElement.insertAdjacentElement("afterend", btn);
+  }
+
+  async function revisarNotificacionesProfesor() {
+    const uid = obtenerUidAlumno();
+    if (!uid || !window.db || !window.collection || !window.getDocs) return;
+
+    try {
+      const qMsg = window.query(window.collection(window.db, "Usuarios", uid, "MensajesAdmin"), window.where("leido", "==", false));
+      const snapMsg = await window.getDocs(qMsg);
+
+      const qRep = window.query(window.collection(window.db, "Usuarios", uid, "Reportes"), window.where("leido", "==", false));
+      const snapRep = await window.getDocs(qRep);
+
+      if (snapMsg.empty && snapRep.empty) return;
+
+      let banner = document.getElementById("banner-notificaciones-profesor");
+      if (!banner) {
+        banner = document.createElement("div");
+        banner.id = "banner-notificaciones-profesor";
+        banner.style.cssText = "position:fixed; bottom:20px; right:20px; z-index:9999; max-width:370px; background:#0f172a; color:#ffffff; border-left:5px solid #38bdf8; border-radius:10px; padding:16px; box-shadow:0 10px 25px rgba(0,0,0,0.28); font-family:'Montserrat', sans-serif;";
+        document.body.appendChild(banner);
+      }
+
+      const bloques = [];
+      snapMsg.forEach(d => {
+        const m = d.data() || {};
+        bloques.push(`<div style="background:rgba(255,255,255,0.08); padding:8px 10px; border-radius:6px; margin-top:8px; font-size:0.85rem;"><small style="color:#7dd3fc; display:block; font-size:0.72rem;">💬 Mensaje (${m.fecha || ''})</small>${m.texto || ''}</div>`);
+      });
+
+      let ultimoReporte = null;
+      snapRep.forEach(d => {
+        ultimoReporte = d.data();
+        bloques.push(`<div style="background:rgba(56,189,248,0.16); border:1px solid rgba(56,189,248,0.35); padding:9px 10px; border-radius:6px; margin-top:8px; font-size:0.85rem;"><strong style="color:#7dd3fc; display:block;">📊 Nuevo Reporte Académico Oficial</strong><span style="font-size:0.78rem;">Emitido el ${ultimoReporte.fecha || ''}</span><div style="margin-top:6px;"><button id="btn-abrir-rep-enviado" style="background:#38bdf8; color:#0f172a; border:none; padding:5px 10px; border-radius:5px; font-weight:800; font-size:0.76rem; cursor:pointer;">Ver Reporte PDF</button></div></div>`);
+      });
+
+      banner.innerHTML = `
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <strong style="font-size:0.92rem; color:#38bdf8;"><i class="fas fa-bell"></i> Avisos de tu Profesora</strong>
+          <button id="btn-cerrar-notif-prof" style="background:rgba(255,255,255,0.15); color:#fff; border:none; padding:4px 9px; border-radius:5px; font-weight:700; font-size:0.75rem; cursor:pointer;">Cerrar</button>
+        </div>
+        ${bloques.join('')}
+      `;
+
+      if (ultimoReporte && document.getElementById("btn-abrir-rep-enviado")) {
+        document.getElementById("btn-abrir-rep-enviado").onclick = () => mostrarVentanaReporteAlumno(ultimoReporte);
+      }
+
+      document.getElementById("btn-cerrar-notif-prof").onclick = async () => {
+        banner.remove();
+        for (const d of snapMsg.docs) {
+          if (window.updateDoc) await window.updateDoc(d.ref, { leido: true });
+        }
+        for (const d of snapRep.docs) {
+          if (window.updateDoc) await window.updateDoc(d.ref, { leido: true });
+        }
+      };
+    } catch (e) {
+      console.warn("Notificaciones:", e);
+    }
+  }
+
+  window.addEventListener("load", () => {
+    setTimeout(() => {
+      iniciarContadorEstudio();
+      inyectarBotonReporteSidebar();
+      revisarNotificacionesProfesor();
+    }, 1500);
+  });
+})();
+</script>
+
 </body>
 </html>
