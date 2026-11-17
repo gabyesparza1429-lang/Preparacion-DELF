@@ -296,11 +296,41 @@
          </div>`
       : "";
 
-    const rec = data.recursos_linguistiques || {};
-    const tieneRecursos = (Array.isArray(rec.conectores) && rec.conectores.length) ||
-                          (Array.isArray(rec.verbos) && rec.verbos.length) ||
-                          (Array.isArray(rec.adjetivos) && rec.adjetivos.length) ||
-                          (Array.isArray(rec.vocabulario) && rec.vocabulario.length);
+    const fallbackPorNivel = {
+      A1: {
+        conectores: ["D'abord (primero)", "Ensuite (después)", "Mais (pero)", "Parce que (porque)", "Enfin (finalmente)"],
+        verbos: ["aimer (gustar/amar)", "préférer (preferir)", "vouloir (querer)", "pouvoir (poder)", "devoir (deber)"],
+        adjetivos: ["intéressant (interesante)", "facile (fácil)", "difficile (difícil)", "important (importante)", "agréable (agradable)"],
+        vocabulario: ["à mon avis (en mi opinión)", "tous les jours (todos los días)", "de temps en temps (de vez en cuando)"]
+      },
+      A2: {
+        conectores: ["Premièrement (en primer lugar)", "De plus (además)", "Cependant (sin embargo)", "C'est pourquoi (por eso)", "En conclusion (en conclusión)"],
+        verbos: ["conseiller de (aconsejar)", "apprendre à (aprender a)", "s'améliorer (mejorar)", "pratiquer (practicar)", "partager (compartir)"],
+        adjetivos: ["efficace (eficaz)", "utile (útil)", "motivé(e) (motivado/a)", "régulier/régulière (regular)", "enrichissant(e) (enriquecedor/a)"],
+        vocabulario: ["faire des progrès (hacer progresos)", "prendre l'habitude de (acostumbrarse a)", "avoir l'occasion de (tener la oportunidad de)"]
+      },
+      B1: {
+        conectores: ["D'une part... d'autre part (por una parte... por otra parte)", "En revanche (en cambio)", "Par conséquent (por consiguiente)", "Grâce à (gracias a)", "En somme (en resumen)"],
+        verbos: ["maîtriser (dominar)", "approfondir (profundizar)", "surmonter (superar)", "recommander de (recomendar)", "s'entraîner à (entrenarse en)"],
+        adjetivos: ["indispensable (indispensable)", "pertinent(e) (pertinente)", "enrichissant(e) (enriquecedor/a)", "autonome (autónomo/a)", "structuré(e) (estructurado/a)"],
+        vocabulario: ["la maîtrise de la langue (el dominio del idioma)", "mettre en pratique (poner en práctica)", "à long terme (a largo plazo)", "tenir compte de (tener en cuenta)"]
+      },
+      B2: {
+        conectores: ["Néanmoins (no obstante)", "En outre (además)", "Force est de constater que (hay que constatar que)", "De surcroît (por añadidura)", "En définitive (en definitiva)"],
+        verbos: ["souligner (subrayar)", "favoriser (favorecer)", "remédier à (remediar)", "s'avérer (resultar)", "consolider (consolidar)"],
+        adjetivos: ["primordial(e) (primordial)", "judicieux/judicieuse (acertado/a)", "probant(e) (convincente)", "incontournable (imprescindible)"],
+        vocabulario: ["tirer profit de (sacar provecho de)", "à cet égard (a este respecto)", "en ce qui concerne (en lo que respecta a)"]
+      }
+    };
+    const rawRec = data.recursos_linguistiques || {};
+    const defRec = fallbackPorNivel[nivel] || fallbackPorNivel.B1;
+    const rec = {
+      conectores: (Array.isArray(rawRec.conectores) && rawRec.conectores.length) ? rawRec.conectores : defRec.conectores,
+      verbos: (Array.isArray(rawRec.verbos) && rawRec.verbos.length) ? rawRec.verbos : defRec.verbos,
+      adjetivos: (Array.isArray(rawRec.adjetivos) && rawRec.adjetivos.length) ? rawRec.adjetivos : defRec.adjetivos,
+      vocabulario: (Array.isArray(rawRec.vocabulario) && rawRec.vocabulario.length) ? rawRec.vocabulario : defRec.vocabulario
+    };
+    const tieneRecursos = true;
 
     const renderChips = (arr) => (arr || []).map((item) =>
       `<span style="display:inline-block; background:#ffffff; border:1px solid #bfdbfe; color:#1e3a8a; padding:4px 10px; border-radius:14px; font-size:0.82rem; font-weight:600; margin:3px 4px 3px 0;">${item}</span>`
