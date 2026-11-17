@@ -520,5 +520,145 @@
             }
         }
     </script>
+
+<script id="admin-progreso-desglose" type="module">
+import { getFirestore, collection, doc, getDoc, getDocs, setDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+(function() {
+  const nivelesCache = {};
+
+  async function obtenerEstructuraNivel(db, nivel) {
+    const nv = String(nivel || "B1").toUpperCase();
+    if (nivelesCache[nv]) return nivelesCache[nv];
+
+    const snap = await getDocs(collection(db, "BibliotecaEjercicios", nv, "Unidades"));
+    const estructura = { CO: [], CE: [], PE: [], PO: [] };
+
+    snap.forEach((uDoc) => {
+      const uk = uDoc.id;
+      const ud = uDoc.data() || {};
+      ["CO", "CE", "PE", "PO"].forEach((sk) => {
+        const arr = ud[sk] || ud[sk.toLowerCase()] || [];
+        if (Array.isArray(arr)) {
+          arr.forEach((_, idx) => estructura[sk].push(`${uk}_${sk}_${idx}`));
+        }
+      });
+    });
+
+    nivelesCache[nv] = estructura;
+    return estructura;
+  }
+
+  function normalizarClave(docId, hd) {
+    if (/^Unite_\d+_(PE|PO|CO|CE)_\d+$/i.test(docId)) {
+      const p = docId.split("_");
+      return `${p[0]}_${p[1]}_${p[2].toUpperCase()}_${p[3]}`;
+    }
+    const un = hd.unidad || hd.unidadId || hd.unite || hd.unit;
+    const act = hd.actividad !== undefined ? hd.actividad : (hd.ejercicioIndex !== undefined ? hd.ejercicioIndex : hd.index);
+    let sk = String(hd.habilidad || hd.skill || hd.competencia || hd.tipo || "").toUpperCase();
+    if (sk.includes("ECRIT") || sk === "PE") sk = "PE";
+    else if (sk.includes("ORAL") || sk === "PO") sk = "PO";
+    else if (sk !== "CO" && sk !== "CE") sk = "";
+    return (un && act !== undefined && sk) ? `${un}_${sk}_${act}` : null;
+  }
+
+  async function enriquecerTablaAlumnos() {
+    const db = window.db || getFirestore();
+    const tablas = document.querySelectorAll("table");
+    let tablaAlumnos = null;
+
+    tablas.forEach((t) => {
+      if (t.innerText.includes("ID Alumno") && t.innerText.includes("Progreso")) {
+        tablaAlumnos = t;
+      }
+    });
+
+    if (!tablaAlumnos) return;
+    const filas = Array.from(tablaAlumnos.querySelectorAll("tbody tr"));
+    if (!filas.length) return;
+
+    for (const tr of filas) {
+      const celdas = tr.querySelectorAll("td");
+      if (celdas.length < 5) continue;
+
+      const studentId = celdas[0].innerText.trim();
+      if (!studentId || tr.dataset.desgloseCargado === studentId) continue;
+      tr.dataset.desgloseCargado = studentId;
+
+      try {
+        const uRef = doc(db, "Usuarios", studentId);
+        const uSnap = await getDoc(uRef);
+        if (!uSnap.exists()) continue;
+
+        const uData = uSnap.data() || {};
+        const nivel = String(uData.nivel || celdas[2].innerText || "B1").trim().toUpperCase();
+        const mapa = Object.assign({}, uData.mapa_aciertos || {});
+
+        // Cruzar también entregas guardadas en HistorialSophia
+        const histSnap = await getDocs(collection(db, "Usuarios", studentId, "HistorialSophia"));
+        let nuevasClaves = false;
+        histSnap.forEach((h) => {
+          const k = normalizarClave(h.id, h.data() || {});
+          if (k && mapa[k] !== true) {
+            mapa[k] = true;
+            nuevasClaves = true;
+          }
+        });
+
+        const est = await obtenerEstructuraNivel(db, nivel);
+        const conteo = { CO: 0, CE: 0, PE: 0, PO: 0 };
+        let total = 0;
+        let hechas = 0;
+
+        const mapaLower = {};
+        Object.keys(mapa).forEach((k) => {
+          if (mapa[k] === true) mapaLower[k.toLowerCase()] = true;
+        });
+
+        ["CO", "CE", "PE", "PO"].forEach((sk) => {
+          est[sk].forEach((llave) => {
+            total++;
+            if (mapaLower[llave.toLowerCase()]) {
+              conteo[sk]++;
+              hechas++;
+            }
+          });
+        });
+
+        const pct = total > 0 ? Math.min(100, Math.round((hechas / total) * 100)) : (uData.progreso || 0);
+
+        if (nuevasClaves || uData.progreso !== pct) {
+          await setDoc(uRef, { mapa_aciertos: mapa, progreso: pct }, { merge: true });
+        }
+
+        const badge = (label, ok, tot, bg, fg) =>
+          `<span style="display:inline-block;padding:2px 6px;border-radius:6px;font-size:11px;font-weight:600;background:${ok > 0 ? bg : '#f1f5f9'};color:${ok > 0 ? fg : '#64748b'};">${label}: ${ok}/${tot}</span>`;
+
+        celdas[4].innerHTML = `
+          <div style="font-weight:700;color:#1e293b;font-size:14px;margin-bottom:4px;">${pct}% <span style="font-weight:400;font-size:11px;color:#64748b;">(${hechas}/${total})</span></div>
+          <div style="display:flex;flex-wrap:wrap;gap:4px;max-width:210px;">
+            ${badge("CO", conteo.CO, est.CO.length, "#e0f2fe", "#0369a1")}
+            ${badge("CE", conteo.CE, est.CE.length, "#dcfce7", "#15803d")}
+            ${badge("PE", conteo.PE, est.PE.length, "#fef3c7", "#b45309")}
+            ${badge("PO", conteo.PO, est.PO.length, "#f3e8ff", "#7e22ce")}
+          </div>
+        `;
+      } catch (err) {
+        console.warn("Error calculando desglose para", studentId, err);
+      }
+    }
+  }
+
+  window.addEventListener("load", () => {
+    setTimeout(enriquecerTablaAlumnos, 900);
+    const observer = new MutationObserver(() => {
+      enriquecerTablaAlumnos();
+    });
+    observer.observe(document.body, { childList: true, subtree: true });
+  });
+})();
+</script>
+
 </body>
 </html>
