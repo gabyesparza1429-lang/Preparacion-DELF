@@ -650,13 +650,15 @@ import { getFirestore, collection, doc, getDoc, getDocs, setDoc } from "https://
     }
   }
 
-  window.addEventListener("load", () => {
-    setTimeout(enriquecerTablaAlumnos, 900);
-    const observer = new MutationObserver(() => {
-      enriquecerTablaAlumnos();
-    });
-    observer.observe(document.body, { childList: true, subtree: true });
-  });
+  function iniciarMonitorDesglose() {
+    setInterval(enriquecerTablaAlumnos, 1200);
+    enriquecerTablaAlumnos();
+  }
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", iniciarMonitorDesglose);
+  } else {
+    iniciarMonitorDesglose();
+  }
 })();
 </script>
 
