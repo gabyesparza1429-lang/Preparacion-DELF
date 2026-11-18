@@ -899,12 +899,32 @@
     try {
       if (!("speechSynthesis" in window)) return;
       window.speechSynthesis.cancel();
-      const u = new SpeechSynthesisUtterance(texto);
-      u.lang = "fr-FR";
-      u.rate = 0.96;
-      const voz = window.speechSynthesis.getVoices().find((v) => v.lang && v.lang.toLowerCase().startsWith("fr"));
-      if (voz) u.voice = voz;
-      window.speechSynthesis.speak(u);
+
+      const hablar = () => {
+        const u = new SpeechSynthesisUtterance(texto);
+        u.lang = "fr-FR";
+        u.rate = 0.98;
+        u.pitch = 1.04;
+
+        const voces = window.speechSynthesis.getVoices() || [];
+        const vocesFr = voces.filter((v) => v.lang && v.lang.toLowerCase().startsWith("fr"));
+        // Priorizar voces naturales/neuronales de Google, Microsoft o Apple
+        const vozNatural =
+          vocesFr.find((v) => /natural|neural|google français|denise|vivienne|amélie|thomas|aurelie/i.test(v.name)) ||
+          vocesFr.find((v) => v.lang.toLowerCase() === "fr-fr") ||
+          vocesFr[0];
+        if (vozNatural) u.voice = vozNatural;
+        window.speechSynthesis.speak(u);
+      };
+
+      if ((window.speechSynthesis.getVoices() || []).length === 0) {
+        window.speechSynthesis.onvoiceschanged = () => {
+          window.speechSynthesis.onvoiceschanged = null;
+          hablar();
+        };
+      } else {
+        hablar();
+      }
     } catch (_) {}
   }
 
@@ -929,9 +949,19 @@
   }
 
   function obtenerConsignaSegura() {
-    if (typeof obtenerConsignaActual === "function") return obtenerConsignaActual("PO");
-    const el = document.querySelector("#exercise-instruction, .consigne-text, .instruction-box");
-    return el ? el.innerText.trim() : "Exercice de production orale DELF";
+    // 1. Leer directamente desde .exercise-card (donde alumno.html pinta el sujeto, documento y preguntas)
+    const card = document.querySelector(".exercise-card");
+    if (card) {
+      const clon = card.cloneNode(true);
+      clon.querySelectorAll("#container-po-audio-dual, #container-po-interaccion-live, #btn-reset-po, #btn-submit-po, #sophia-box").forEach((n) => n.remove());
+      const textoCard = (clon.innerText || "").replace(/Zone d'Examen Réel \(Blindé\)/gi, "").trim();
+      if (textoCard && textoCard.length > 10) return textoCard;
+    }
+    if (typeof obtenerConsignaActual === "function") {
+      const c = obtenerConsignaActual("PO");
+      if (c && c.length > 10) return c;
+    }
+    return "Exercice de production orale DELF";
   }
 
   function pintarChatInteraccionPO() {

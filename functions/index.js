@@ -211,13 +211,12 @@ exports.simularInteraccionPO = onRequest({ cors: true, timeoutSeconds: 120 }, (r
         .map((t) => (t.rol === "sophia" ? "Examinateur: " : "Candidat: ") + t.texto)
         .join("\n");
 
-      const sysRole = "Eres Sophia, examinadora oficial del DELF/DALF (nivel " + lvl + "). "
-        + "Realizas la prueba de interaccion oral con " + (nombreAlumno || "le candidat") + ". "
-        + "Consigna: " + (consigne || "Interaction orale DELF") + ". "
-        + "Reglas: 1) Metete 100% en el personaje indicado y habla SOLO en frances natural adaptado al nivel " + lvl + ". "
-        + "2) Se breve (1 a 3 frases cortas, maximo 45 palabras). "
-        + "3) Si es A1/A2 haz preguntas claras o responde dando pie a preguntar; si es B1/B2/C1 pon objeciones para que argumente y negocie. "
-        + "4) Si van 5 o mas turnos del candidato (" + turnosAlumno + " actuales), cierra la escena y pon finalizado: true. "
+      const sysRole = "Eres Sophia, examinadora oficial DELF/DALF (nivel " + lvl + "). Realizas una entrevista o interaccion oral con "
+        + (nombreAlumno || "le candidat") + ".\n"
+        + "TEMA / CONSIGNA EXACTA DEL EJERCICIO (OBLIGATORIO SEGUIR ESTE TEMA Y NO INVENTAR OTRO):\n" + (consigne || "") + "\n\n"
+        + "Reglas: 1) Basate ESTRICTAMENTE en el tema, preguntas o situacion de la consigna anterior (ej. si habla de musica, pregunta sobre sus gustos musicales; si es un juego de rol, asume el personaje indicado; si es un tema de opinion/documento, haz preguntas de debate sobre ese documento). "
+        + "2) Habla SOLO en frances natural y cercano adaptado al nivel " + lvl + " (maximo 40 palabras por turno). "
+        + "3) Si van 5 o mas turnos del candidato (" + turnos + " actuales), cierra amablemente la interaccion y pon finalizado: true. "
         + 'Devuelve SOLO JSON valido: {"respuesta_fr":"...","pista_es":"...","finalizado":false}';
 
       const promptT = histTxt
