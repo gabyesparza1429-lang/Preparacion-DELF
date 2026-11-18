@@ -282,6 +282,7 @@
       if (/conjug|verbe|verbo|imperfecto|imparfait|condicional|conditionnel|subjonctif|subjuntivo|passé|futur|présent|tiempo/.test(txt)) return "Grammaire · Conjugaison & Temps";
       if (/préposition|preposición|article|artículo|partitif|partitivo|pronom|pronombre|accord|concordancia|género|genre|femenino|masculino|plural/.test(txt)) return "Grammaire · Syntaxe & Accords";
       if (/palabra|vocabulaire|léxico|lexique|significa|expresión|expression|contexto|contexte|faux ami/.test(txt)) return "Lexique · Vocabulaire & Usage";
+      if (/pronunciaci|prononciation|fonétic|phonétique|escuch|entendu|sonido|son|nasal|articul/.test(txt)) return "Phonétique · Prononciation";
       if (/orthographe|ortografía|acento|accent|escritura/.test(txt)) return "Orthographe";
       return "Langue · Correction & Style";
     };
@@ -382,13 +383,17 @@
 
     const nivel = data.nivel || obtenerNivelActual();
     const eleve = data.eleve || obtenerNombreAlumno();
-    const transcripcionAlumno = opts.transcripcion || data.transcripcion || "";
+    const transcripcionAlumno = opts.transcripcion || data.transcripcion || data.transcripcion_breve || "";
     const tieneErroresMarcables = Array.isArray(data.errores) && data.errores.length > 0;
-    const bloqueTranscripcionHTML = ((opts.skill === "PO" || tieneErroresMarcables) && transcripcionAlumno)
+    const esOral = (opts.skill === "PO");
+    const tituloBloqueInteractivo = esOral
+      ? `<i class="fas fa-comments" style="color:#0284c7;"></i> Transcription interactive de l'échange`
+      : `<i class="fas fa-pen-fancy" style="color:#0284c7;"></i> Analyse interactive de votre production écrite`;
+    const bloqueTranscripcionHTML = transcripcionAlumno
       ? `<div style="margin-top:18px; background:#f8fafc; border:1px solid #cbd5e1; border-radius:10px; padding:16px;">
            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:12px;">
              <h4 style="margin:0; color:#0f172a; font-size:0.96rem; font-weight:800;">
-               <i class="fas fa-comments" style="color:#0284c7;"></i> Transcription interactive de l'échange
+               ${tituloBloqueInteractivo}
              </h4>
              ${tieneErroresMarcables ? `<span style="font-size:0.76rem; font-weight:700; color:#991b1b; background:#fee2e2; border:1px solid #fecaca; padding:3px 10px; border-radius:12px;"><i class="fas fa-mouse-pointer"></i> Passez la souris sur les passages soulignés en rouge</span>` : ""}
            </div>
@@ -455,7 +460,7 @@
       : "";
 
     const erroresLista = Array.isArray(data.errores) ? data.errores : [];
-    const erroresHTML = erroresLista.length > 0
+    const erroresHTML = (!bloqueTranscripcionHTML && erroresLista.length > 0)
       ? `<div style="margin-top:20px; background:#fef2f2; border:1px solid #fecaca; border-radius:8px; padding:16px;">
            <h4 style="margin:0 0 12px 0; color:#b91c1c; font-size:0.98rem; font-weight:800;">
              <i class="fas fa-times-circle"></i> Erreurs identifiées et Corrections
@@ -1014,7 +1019,7 @@
         });
 
         const intentosActualizados = await obtenerIntentosActividad(uId, eIdx, "PE");
-        const reporteHTML = window.renderizarReporteDELF(resultado, { skill: "PE", palabras });
+        const reporteHTML = window.renderizarReporteDELF(resultado, { skill: "PE", palabras, transcripcion: texto });
         const acordeonHTML = renderizarAcordeonHistorial(intentosActualizados, "PE");
         if (vText) vText.innerHTML = reporteHTML + acordeonHTML;
         actualizarEstadoBotonIntentos("PE", intentosActualizados.length);

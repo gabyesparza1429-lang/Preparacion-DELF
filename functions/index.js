@@ -211,6 +211,8 @@ exports.simularInteraccionPO = onRequest({ cors: true, timeoutSeconds: 120 }, (r
         .map((t) => (t.rol === "sophia" ? "Examinateur: " : "Candidat: ") + t.texto)
         .join("\n");
 
+      const turnos = lista.filter((t) => t.rol === "alumno").length;
+
       const sysRole = "Eres Sophia, examinadora oficial DELF/DALF (nivel " + lvl + "). Realizas una entrevista o interaccion oral con "
         + (nombreAlumno || "le candidat") + ".\n"
         + "TEMA / CONSIGNA EXACTA DEL EJERCICIO (OBLIGATORIO SEGUIR ESTE TEMA Y NO INVENTAR OTRO):\n" + (consigne || "") + "\n\n"
