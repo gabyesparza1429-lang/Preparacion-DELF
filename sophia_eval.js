@@ -458,7 +458,7 @@
           Number(data.actividad) === Number(eIdx) &&
           String(data.habilidad).toUpperCase() === String(skill).toUpperCase()
         ) {
-          const esInter = data.modalidad === "interaccion" || String(data.texto_alumno || "").startsWith("Examinateur:");
+          const esInter = data.modalidad === "interaccion" || /^Examinateur/i.test(String(data.texto_alumno || "").trim());
           if (modalidad === "interaccion" && !esInter) return;
           if (modalidad === "audio" && esInter) return;
           lista.push({ id: d.id, ...data });
@@ -1233,8 +1233,9 @@
         await guardarResultadoYMarcarHecho("PO", { texto_alumno: plano, consigne, respuesta_ia: JSON.stringify(res), modalidad: "interaccion" });
       }
       const act = typeof obtenerIntentosActividad === "function" ? await obtenerIntentosActividad(uId, eIdx, "PO", "interaccion") : [res];
+      const todosAct = typeof obtenerIntentosActividad === "function" ? await obtenerIntentosActividad(uId, eIdx, "PO") : act;
       if (vText && typeof window.renderizarReporteDELF === "function") {
-        vText.innerHTML = window.renderizarReporteDELF(res, { skill: "PO", transcripcion: plano }) + (typeof renderizarAcordeonHistorial === "function" ? renderizarAcordeonHistorial(act, "PO") : "");
+        vText.innerHTML = window.renderizarReporteDELF(res, { skill: "PO", transcripcion: plano }) + (typeof renderizarAcordeonHistorial === "function" ? renderizarAcordeonHistorial(todosAct, "PO") : "");
       }
 
       const panel = document.getElementById("po-interaccion-panel-activo");
