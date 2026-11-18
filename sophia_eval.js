@@ -202,13 +202,196 @@
       return `<div style="background:#fff; border:1px solid #cbd5e1; border-radius:10px; padding:20px; line-height:1.6; color:#1e293b;">${data.legacy_html}</div>`;
     }
 
+    if (!document.getElementById("sophia-transcripcion-styles")) {
+      const st = document.createElement("style");
+      st.id = "sophia-transcripcion-styles";
+      st.textContent = `
+        .sophia-err-mark {
+          position: relative;
+          display: inline;
+          background: #fee2e2;
+          color: #991b1b;
+          border-bottom: 2px wavy #dc2626;
+          padding: 1px 4px;
+          border-radius: 4px;
+          font-weight: 600;
+          cursor: help;
+          transition: background 0.15s ease;
+        }
+        .sophia-err-mark:hover,
+        .sophia-err-mark:focus {
+          background: #fecaca;
+          z-index: 50;
+        }
+        .sophia-err-tooltip {
+          visibility: hidden;
+          opacity: 0;
+          position: absolute;
+          bottom: calc(100% + 10px);
+          left: 50%;
+          transform: translateX(-50%) translateY(4px);
+          width: 300px;
+          max-width: 82vw;
+          background: #0f172a;
+          color: #f8fafc;
+          border: 1px solid #334155;
+          border-radius: 10px;
+          padding: 12px 14px;
+          box-shadow: 0 12px 28px rgba(15, 23, 42, 0.28);
+          font-size: 0.82rem;
+          font-weight: 400;
+          line-height: 1.45;
+          text-align: left;
+          white-space: normal;
+          pointer-events: none;
+          transition: opacity 0.18s ease, transform 0.18s ease;
+          z-index: 9999;
+        }
+        .sophia-err-tooltip::after {
+          content: "";
+          position: absolute;
+          top: 100%;
+          left: 50%;
+          margin-left: -6px;
+          border-width: 6px;
+          border-style: solid;
+          border-color: #0f172a transparent transparent transparent;
+        }
+        .sophia-err-mark:hover .sophia-err-tooltip,
+        .sophia-err-mark:focus .sophia-err-tooltip {
+          visibility: visible;
+          opacity: 1;
+          transform: translateX(-50%) translateY(0);
+        }
+      `;
+      document.head.appendChild(st);
+    }
+
+    const escHtml = (s) => String(s || "")
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+
+    const detectarNaturalezaError = (err) => {
+      if (err && (err.tipo || err.naturaleza || err.categorie)) {
+        return err.tipo || err.naturaleza || err.categorie;
+      }
+      const txt = `${err.explicacion || ""} ${err.original || ""} ${err.correccion || ""}`.toLowerCase();
+      if (/negaci|ne\s*\.\.\.\s*pas|négation/.test(txt)) return "Grammaire · Négation";
+      if (/conjug|verbe|verbo|imperfecto|imparfait|condicional|conditionnel|subjonctif|subjuntivo|passé|futur|présent|tiempo/.test(txt)) return "Grammaire · Conjugaison & Temps";
+      if (/préposition|preposición|article|artículo|partitif|partitivo|pronom|pronombre|accord|concordancia|género|genre|femenino|masculino|plural/.test(txt)) return "Grammaire · Syntaxe & Accords";
+      if (/palabra|vocabulaire|léxico|lexique|significa|expresión|expression|contexto|contexte|faux ami/.test(txt)) return "Lexique · Vocabulaire & Usage";
+      if (/orthographe|ortografía|acento|accent|escritura/.test(txt)) return "Orthographe";
+      return "Langue · Correction & Style";
+    };
+
+    const resaltarErroresEnTexto = (textoPlano, erroresArr) => {
+      if (!textoPlano) return "";
+      const errs = (Array.isArray(erroresArr) ? erroresArr : [])
+        .filter((e) => e && e.original && String(e.original).trim().length >= 2)
+        .sort((a, b) => String(b.original).length - String(a.original).length);
+
+      if (!errs.length) return escHtml(textoPlano);
+
+      const lowerTexto = textoPlano.toLowerCase();
+      const rangos = [];
+
+      errs.forEach((err) => {
+        const needle = String(err.original).trim().replace(/^["«“]|["»”]$/g, "");
+        if (!needle) return;
+        const lowerNeedle = needle.toLowerCase();
+        let pos = 0;
+        while ((pos = lowerTexto.indexOf(lowerNeedle, pos)) !== -1) {
+          const fin = pos + needle.length;
+          const solapa = rangos.some((r) => !(fin <= r.ini || pos >= r.fin));
+          if (!solapa) {
+            rangos.push({ ini: pos, fin, err });
+          }
+          pos = fin;
+        }
+      });
+
+      if (!rangos.length) return escHtml(textoPlano);
+      rangos.sort((a, b) => a.ini - b.ini);
+
+      let out = "";
+      let cursor = 0;
+      rangos.forEach((r) => {
+        if (r.ini > cursor) {
+          out += escHtml(textoPlano.slice(cursor, r.ini));
+        }
+        const fragmento = escHtml(textoPlano.slice(r.ini, r.fin));
+        const naturaleza = escHtml(detectarNaturalezaError(r.err));
+        const correccion = escHtml(r.err.correccion || "");
+        const explicacion = escHtml(r.err.explicacion || "Reformulación recomendada para el nivel DELF.");
+
+        out += `<span class="sophia-err-mark" tabindex="0">${fragmento}`
+          + `<span class="sophia-err-tooltip">`
+          + `<span style="display:inline-block; background:#1e293b; color:#38bdf8; border:1px solid #0284c7; font-size:0.7rem; font-weight:800; padding:2px 7px; border-radius:5px; margin-bottom:6px; text-transform:uppercase; letter-spacing:0.4px;">${naturaleza}</span>`
+          + `<div style="color:#86efac; font-weight:700; margin-bottom:5px;"><i class="fas fa-check-circle"></i> Correction : « ${correccion} »</div>`
+          + `<div style="color:#e2e8f0; font-size:0.79rem;"><strong style="color:#fde68a;">Suggestion :</strong> ${explicacion}</div>`
+          + `</span></span>`;
+        cursor = r.fin;
+      });
+      if (cursor < textoPlano.length) {
+        out += escHtml(textoPlano.slice(cursor));
+      }
+      return out;
+    };
+
+    const formatearDialogoTranscripcion = (rawTrans, erroresArr, nombreCand) => {
+      const lineas = String(rawTrans || "").split(/?
+/).map((l) => l.trim()).filter(Boolean);
+      const regexTurno = /^(Examinateur(?:\s*\(Sophia\))?|Sophia|Candidat|Élève|Alumno)\s*:\s*(.*)$/i;
+      const tieneTurnos = lineas.some((l) => regexTurno.test(l));
+
+      if (!tieneTurnos) {
+        return `<div style="background:#ffffff; border:1px solid #e2e8f0; border-radius:8px; padding:12px 14px; color:#1e293b; font-size:0.92rem; line-height:1.7;">${resaltarErroresEnTexto(rawTrans, erroresArr)}</div>`;
+      }
+
+      const turnos = [];
+      lineas.forEach((l) => {
+        const m = l.match(regexTurno);
+        if (m) {
+          const rolRaw = m[1].toLowerCase();
+          const esExaminador = rolRaw.startsWith("examinateur") || rolRaw.startsWith("sophia");
+          turnos.push({ esExaminador, etiqueta: m[1], texto: m[2] || "" });
+        } else if (turnos.length > 0) {
+          turnos[turnos.length - 1].texto += " " + l;
+        }
+      });
+
+      return turnos.map((t) => {
+        if (t.esExaminador) {
+          return `<div style="margin-bottom:10px; padding:10px 14px; background:#eff6ff; border-left:4px solid #0284c7; border-radius:8px;">
+            <div style="font-size:0.76rem; font-weight:800; color:#0369a1; margin-bottom:3px; display:flex; align-items:center; gap:6px;">
+              <i class="fas fa-user-tie"></i> Examinateur (Sophia)
+            </div>
+            <div style="color:#1e293b; font-size:0.89rem; line-height:1.55;">${escHtml(t.texto)}</div>
+          </div>`;
+        }
+        const contenidoAlumno = resaltarErroresEnTexto(t.texto, erroresArr);
+        return `<div style="margin-bottom:10px; padding:11px 14px; background:#ffffff; border:1px solid #cbd5e1; border-left:4px solid #0f172a; border-radius:8px;">
+          <div style="font-size:0.76rem; font-weight:800; color:#0f172a; margin-bottom:4px; display:flex; align-items:center; gap:6px;">
+            <i class="fas fa-microphone-alt" style="color:#dc2626;"></i> Candidat (${escHtml(nombreCand || "Élève")})
+          </div>
+          <div style="color:#1e293b; font-size:0.92rem; line-height:1.75;">${contenidoAlumno}</div>
+        </div>`;
+      }).join("");
+    };
+
     const transcripcionAlumno = opts.transcripcion || data.transcripcion || "";
-    const bloqueTranscripcionHTML = (opts.skill === "PO" && transcripcionAlumno)
-      ? `<div style="margin-top:18px; background:#f8fafc; border:1px solid #cbd5e1; border-radius:8px; padding:14px 16px;">
-           <h4 style="margin:0 0 8px 0; color:#0f172a; font-size:0.94rem; font-weight:800;">
-             <i class="fas fa-align-left" style="color:#0284c7;"></i> Transcription / Production orale enregistrée
-           </h4>
-           <div style="color:#334155; font-size:0.9rem; line-height:1.55; white-space:pre-line;">${transcripcionAlumno}</div>
+    const tieneErroresMarcables = Array.isArray(data.errores) && data.errores.length > 0;
+    const bloqueTranscripcionHTML = ((opts.skill === "PO" || tieneErroresMarcables) && transcripcionAlumno)
+      ? `<div style="margin-top:18px; background:#f8fafc; border:1px solid #cbd5e1; border-radius:10px; padding:16px;">
+           <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:12px;">
+             <h4 style="margin:0; color:#0f172a; font-size:0.96rem; font-weight:800;">
+               <i class="fas fa-comments" style="color:#0284c7;"></i> Transcription interactive de l'échange
+             </h4>
+             ${tieneErroresMarcables ? `<span style="font-size:0.76rem; font-weight:700; color:#991b1b; background:#fee2e2; border:1px solid #fecaca; padding:3px 10px; border-radius:12px;"><i class="fas fa-mouse-pointer"></i> Passez la souris sur les passages soulignés en rouge</span>` : ""}
+           </div>
+           ${formatearDialogoTranscripcion(transcripcionAlumno, data.errores, eleve)}
          </div>`
       : "";
       const nivel = data.nivel || obtenerNivelActual();
