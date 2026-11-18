@@ -947,6 +947,9 @@
   window.repetirVozPO = function(t) { leerVozFrancesGratis(t); };
 
   window.iniciarSimuladorInteraccionPO = async function() {
+    if (window.isRecordingAudioPO && typeof window.grabarPO === "function") {
+      try { await window.grabarPO(); } catch (_) {}
+    }
     const uId = window.currentUnitId || "Unite_1";
     const eIdx = Number(window.currentExerciseIndex || 0);
     const prev = await obtenerIntentosActividad(uId, eIdx, "PO", "interaccion");
