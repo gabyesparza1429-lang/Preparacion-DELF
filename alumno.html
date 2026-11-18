@@ -710,7 +710,7 @@ window.toggleAudioRecordingPO = async function() {
                 feedback.innerHTML = `
                     <div style="margin-top:10px; padding:10px; background:#e8f5e9; border:1px solid #c8e6c9; border-radius:8px;">
                         <span style="color:#2e7d32; font-weight:bold; display:block; margin-bottom:8px;"><i class="fas fa-check-circle"></i> Audio enregistré avec succès !</span>
-                        <audio controls src="${audioUrl}" style="width:100%; max-width:400px;"></audio>
+                        <span style="font-size:0.85rem; color:#166534;">Prêt pour l'évaluation par Sophia.</span>
                     </div>`;
             }
         };
@@ -801,7 +801,7 @@ document.addEventListener("change", function(e) {
                 feedback.innerHTML = `
                     <div style="margin-top:10px; padding:10px; background:#e8f5e9; border:1px solid #c8e6c9; border-radius:8px;">
                         <span style="color:#2e7d32; font-weight:bold; display:block; margin-bottom:8px;"><i class="fas fa-check-circle"></i> Fichier audio prêt : ${file.name}</span>
-                        <audio controls src="${audioUrl}" style="width:100%; max-width:400px;"></audio>
+                        <span style="font-size:0.85rem; color:#166534;">Prêt pour l'évaluation par Sophia.</span>
                     </div>`;
             }
         }
@@ -1822,7 +1822,7 @@ window.mostrarEvaluacionOralSophia = function(jsonRaw, audioUrl) {
             playerHTML = `
                 <div style="margin: 0 0 15px 0; padding: 12px; background: #f0f4f8; border-radius: 8px; border: 1px solid #cbd5e1; text-align: center;">
                     <p style="margin-bottom: 8px; font-weight: bold; color: var(--oxford);"><i class="fas fa-volume-up"></i> Écouter votre enregistrement :</p>
-                    <audio controls src="${audioUrl}" style="width: 100%; max-width: 450px;"></audio>
+                    <span style="font-size:0.85rem; color:#166534;">Prêt pour l'évaluation par Sophia.</span>
                 </div>`;
         }
 
@@ -3019,7 +3019,7 @@ window.grabarPO = async function() {
                     feedback.innerHTML = `
                         <div style="margin-top:10px; padding:10px; background:#e8f5e9; border:1px solid #c8e6c9; border-radius:8px;">
                             <span style="color:#2e7d32; font-weight:bold; display:block; margin-bottom:8px;"><i class="fas fa-check-circle"></i> Enregistrement audio prêt</span>
-                            <audio controls src="${audioUrl}" style="width:100%; max-width:400px;"></audio>
+                            <span style="font-size:0.85rem; color:#166534;">Prêt pour l'évaluation par Sophia.</span>
                         </div>`;
                 }
             };

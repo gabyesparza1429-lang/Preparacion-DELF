@@ -654,7 +654,7 @@
             feedback.innerHTML = `
               <div style="margin-top:10px; padding:12px; background:#f0fdf4; border:1px solid #86efac; border-radius:8px;">
                 <div style="color:#166534; font-weight:700; margin-bottom:6px;"><i class="fas fa-check-circle"></i> Enregistrement prêt pour l'évaluation :</div>
-                <audio controls src="${url}" style="width:100%; max-width:440px;"></audio>
+                <div style="font-size:0.85rem; color:#166534;">Prêt pour l'évaluation par Sophia.</div>
               </div>`;
           }
         };
@@ -700,7 +700,7 @@
           feedback.innerHTML = `
             <div style="margin-top:10px; padding:12px; background:#f0fdf4; border:1px solid #86efac; border-radius:8px;">
               <div style="color:#166534; font-weight:700; margin-bottom:6px;"><i class="fas fa-file-audio"></i> Fichier audio prêt : ${file.name}</div>
-              <audio controls src="${url}" style="width:100%; max-width:440px;"></audio>
+              <div style="font-size:0.85rem; color:#166534;">Prêt pour l'évaluation par Sophia.</div>
             </div>`;
         }
       }
