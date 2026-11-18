@@ -809,7 +809,7 @@
       return;
     }
 
-    const btnPO = e.target.closest("#btn-evaluar-audio-sophia, #btn-submit-po") || (btnAny && (btnTxt.includes("production orale") || btnTxt.includes("évaluer ma production")) ? btnAny : null);
+    const btnPO = e.target.closest("#btn-evaluar-audio-sophia, #btn-submit-po") || (btnAny && !btnAny.classList.contains("skill-tab-btn") && btnAny.id !== "skill-PO" && btnTxt.includes("évaluer ma production") ? btnAny : null);
     if (btnPO) {
       e.preventDefault();
       e.stopImmediatePropagation();
