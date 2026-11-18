@@ -409,7 +409,7 @@
     const mapaRun = {
       procesarTextoPE: "https://procesartextope-iq4wsljhqq-uc.a.run.app",
       procesarAudioPO: "https://procesaraudiopo-iq4wsljhqq-uc.a.run.app",
-        simularInteraccionPO: "https://us-central1-objectif-reussite-delf.cloudfunctions.net/simularInteraccionPO"
+        simularInteraccionPO: "https://simularinteraccionpo-iq4wsljhqq-uc.a.run.app"
     };
     const urls = [
       mapaRun[nombreFuncion],
@@ -902,11 +902,15 @@
   function esActividadDeInteraccionPO() {
     if (window.currentSkill !== "PO") return false;
     const uId = String(window.currentUnitId || "").toLowerCase();
-    const consigne = String(obtenerConsignaActual("PO") || "").toLowerCase();
+    const sidebarActivo = (document.querySelector(".unit-header.active, .active-unit, [style*='background']") || {}).innerText || "";
+    const cuerpo = (document.body.innerText || "").toLowerCase();
     const tieneTarjetas = !!document.querySelector(".delf-oral-card-item");
-    const tienePreguntas = (document.body.innerText || "").includes("Questions de l'examinateur");
-    const keys = ["interaction", "dialogue", "joue le rôle", "examinateur", "examinatrice", "convaincre", "posez des questions", "échange", "jeu de rôle", "débat", "négocier"];
-    return tieneTarjetas || tienePreguntas || uId.includes("interaction") || keys.some((k) => consigne.includes(k));
+    const keys = [
+      "exercice d'interaction", "interaction", "dialogue", "joue le rôle",
+      "examinateur", "examinatrice", "convaincre", "posez des questions",
+      "échange", "jeu de rôle", "débat", "négocier", "questions de l'examinateur"
+    ];
+    return tieneTarjetas || uId.includes("interaction") || keys.some((k) => cuerpo.includes(k) || sidebarActivo.toLowerCase().includes(k));
   }
 
   function pintarChatInteraccionPO() {
@@ -1074,36 +1078,42 @@
     const bSub = document.getElementById("btn-submit-po");
     if (!cInt || !cDual) return;
 
-    if (!esActividadDeInteraccionPO()) {
+    if (window.currentSkill !== "PO") {
       cInt.style.display = "none";
-      cDual.style.display = "block";
-      if (bRst) bRst.style.display = "inline-block";
-      if (bSub) bSub.style.display = "inline-flex";
       return;
     }
 
-    cDual.style.display = "none";
-    if (bRst) bRst.style.display = "none";
-    if (bSub) bSub.style.display = "none";
+    // Mostrar SIEMPRE los 3 modos en todas las actividades de Production Orale
+    cDual.style.display = "block";
+    if (bRst) bRst.style.display = "inline-block";
+    if (bSub) bSub.style.display = "inline-flex";
     cInt.style.display = "block";
+
+    // Si cambió de unidad o actividad, reiniciar estado del chat si estaba abierto
+    const claveAct = (window.currentUnitId || "") + "_" + (window.currentExerciseIndex || 0);
+    if (cInt.dataset.claveAct && cInt.dataset.claveAct !== claveAct) {
+      window.estadoInteraccionPO = { activa: false, historial: [], turnosAlumno: 0 };
+      delete cInt.dataset.ok;
+    }
+    cInt.dataset.claveAct = claveAct;
 
     if (!cInt.dataset.ok) {
       cInt.dataset.ok = "1";
-      cInt.innerHTML = '<div style="background:#f8fafc;border:2px solid #0284c7;border-radius:12px;padding:18px;">'
-        + '<div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:12px;">'
-        + '<div><h4 style="margin:0;color:#0f172a;"><i class="fas fa-comments" style="color:#0284c7;"></i> Simulation d\'Interaction Orale en Direct</h4>'
-        + '<span style="font-size:0.82rem;color:#475569;">Dialogue avec l\'examinatrice Sophia (Voix FR)</span></div>'
+      cInt.innerHTML = '<div style="background:#f0f9ff;border:2px dashed #0284c7;border-radius:10px;padding:16px;margin-bottom:14px;">'
+        + '<div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:10px;">'
+        + '<div><h4 style="margin:0;color:#0f172a;font-size:0.98rem;"><i class="fas fa-comments" style="color:#0284c7;"></i> Option 3 : Simulation d\'Interaction Orale en Direct</h4>'
+        + '<span style="font-size:0.82rem;color:#475569;">Dialogue interactif tour par tour avec l\'examinatrice Sophia (Voix FR)</span></div>'
         + '<span id="po-contador-turnos" style="background:#e0f2fe;color:#0369a1;padding:4px 12px;border-radius:20px;font-weight:700;font-size:0.82rem;">Échanges : 0 / 5</span></div>'
-        + '<div style="text-align:center;margin:10px 0;"><button type="button" id="btn-start-interaccion-po" onclick="window.iniciarSimuladorInteraccionPO()" style="background:#0284c7;color:#fff;border:none;padding:11px 20px;border-radius:8px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:8px;"><i class="fas fa-play-circle"></i> Démarrer l\'interaction avec Sophia</button></div>'
-        + '<div id="po-interaccion-panel-activo" style="display:none;">'
+        + '<div style="text-align:center;margin:8px 0;"><button type="button" id="btn-start-interaccion-po" onclick="window.iniciarSimuladorInteraccionPO()" style="background:#0284c7;color:#fff;border:none;padding:10px 20px;border-radius:8px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:8px;"><i class="fas fa-play-circle"></i> Démarrer l\'interaction avec Sophia</button></div>'
+        + '<div id="po-interaccion-panel-activo" style="display:none;margin-top:12px;">'
         + '<div id="po-chat-mensajes" style="background:#fff;border:1px solid #cbd5e1;border-radius:10px;padding:12px;max-height:300px;overflow-y:auto;margin-bottom:10px;"></div>'
         + '<div id="po-interaccion-pista" style="font-size:0.82rem;color:#0369a1;font-weight:600;margin-bottom:8px;"></div>'
         + '<div style="display:flex;gap:8px;flex-wrap:wrap;">'
         + '<button type="button" id="btn-mic-turno-po" onclick="window.activarVozTurnoAlumno()" style="background:#0284c7;color:#fff;border:none;padding:10px 14px;border-radius:8px;font-weight:700;cursor:pointer;"><i class="fas fa-microphone"></i> Parler</button>'
-        + '<input type="text" id="po-interaccion-input" placeholder="Parlez ou écrivez en français..." style="flex:1;min-width:200px;padding:10px;border:1px solid #cbd5e1;border-radius:8px;" onkeydown="if(event.key===\'Enter\'){event.preventDefault();window.enviarTurnoAlumnoPO();}">'
+        + '<input type="text" id="po-interaccion-input" placeholder="Parlez ou écrivez votre réplique en français..." style="flex:1;min-width:200px;padding:10px;border:1px solid #cbd5e1;border-radius:8px;" onkeydown="if(event.key===\'Enter\'){event.preventDefault();window.enviarTurnoAlumnoPO();}">'
         + '<button type="button" id="btn-enviar-turno-po" onclick="window.enviarTurnoAlumnoPO()" style="background:#0f172a;color:#fff;border:none;padding:10px 16px;border-radius:8px;font-weight:700;cursor:pointer;"><i class="fas fa-paper-plane"></i> Répondre</button>'
         + '</div><div style="margin-top:12px;padding-top:10px;border-top:1px dashed #cbd5e1;text-align:right;">'
-        + '<button type="button" id="btn-finalizar-interaccion-po" onclick="window.finalizarYEvaluarInteraccionPO()" style="background:#15803d;color:#fff;border:none;padding:10px 18px;border-radius:8px;font-weight:700;cursor:pointer;"><i class="fas fa-check-circle"></i> Terminer et évaluer</button>'
+        + '<button type="button" id="btn-finalizar-interaccion-po" onclick="window.finalizarYEvaluarInteraccionPO()" style="background:#15803d;color:#fff;border:none;padding:10px 18px;border-radius:8px;font-weight:700;cursor:pointer;"><i class="fas fa-check-circle"></i> Terminer et évaluer l\'interaction</button>'
         + '</div></div></div>';
     }
   }, 700);
