@@ -203,6 +203,14 @@
     }
 
     const transcripcionAlumno = opts.transcripcion || data.transcripcion || "";
+    const bloqueTranscripcionHTML = (opts.skill === "PO" && transcripcionAlumno)
+      ? `<div style="margin-top:18px; background:#f8fafc; border:1px solid #cbd5e1; border-radius:8px; padding:14px 16px;">
+           <h4 style="margin:0 0 8px 0; color:#0f172a; font-size:0.94rem; font-weight:800;">
+             <i class="fas fa-align-left" style="color:#0284c7;"></i> Transcription / Production orale enregistrée
+           </h4>
+           <div style="color:#334155; font-size:0.9rem; line-height:1.55; white-space:pre-line;">${transcripcionAlumno}</div>
+         </div>`
+      : "";
       const nivel = data.nivel || obtenerNivelActual();
     const eleve = data.eleve || obtenerNombreAlumno();
     const subInfo = opts.skill === "PO"
