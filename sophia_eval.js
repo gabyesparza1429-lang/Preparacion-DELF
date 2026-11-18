@@ -341,8 +341,7 @@
     };
 
     const formatearDialogoTranscripcion = (rawTrans, erroresArr, nombreCand) => {
-      const lineas = String(rawTrans || "").split(/?
-/).map((l) => l.trim()).filter(Boolean);
+      const lineas = String(rawTrans || "").split(/\r?\n/).map((l) => l.trim()).filter(Boolean);
       const regexTurno = /^(Examinateur(?:\s*\(Sophia\))?|Sophia|Candidat|Élève|Alumno)\s*:\s*(.*)$/i;
       const tieneTurnos = lineas.some((l) => regexTurno.test(l));
 
