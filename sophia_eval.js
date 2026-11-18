@@ -1041,27 +1041,93 @@
     }
   };
 
+  window.grabandoTurnoPO = false;
+  window.reconocimientoTurnoPO = null;
+
+  window.detenerVozTurnoAlumno = function() {
+    window.grabandoTurnoPO = false;
+    if (window.reconocimientoTurnoPO) {
+      try { window.reconocimientoTurnoPO.stop(); } catch (_) {}
+      window.reconocimientoTurnoPO = null;
+    }
+    const mic = document.getElementById("btn-mic-turno-po");
+    if (mic) {
+      mic.style.background = "#0284c7";
+      mic.innerHTML = '<i class="fas fa-microphone"></i> Parler';
+    }
+  };
+
   window.activarVozTurnoAlumno = function() {
+    if (window.grabandoTurnoPO) {
+      window.detenerVozTurnoAlumno();
+      return;
+    }
+
     const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
     const inp = document.getElementById("po-interaccion-input");
     const mic = document.getElementById("btn-mic-turno-po");
-    if (!SR) { alert("Usa el cuadro de texto para escribir tu réplica en francés."); if (inp) inp.focus(); return; }
+    if (!SR) {
+      alert("Usa el cuadro de texto para escribir tu réplica en francés.");
+      if (inp) inp.focus();
+      return;
+    }
+
+    window.grabandoTurnoPO = true;
+    const textoPrevio = inp && inp.value.trim() ? inp.value.trim() + " " : "";
+    let acumuladoFinal = "";
+
     const rec = new SR();
     rec.lang = "fr-FR";
+    rec.continuous = true;
     rec.interimResults = true;
-    if (mic) { mic.disabled = true; mic.style.background = "#dc2626"; mic.innerHTML = '<i class="fas fa-microphone-alt"></i> Écoute...'; }
+    window.reconocimientoTurnoPO = rec;
+
+    if (mic) {
+      mic.style.background = "#dc2626";
+      mic.innerHTML = '<i class="fas fa-stop-circle"></i> Arrêter';
+    }
+
     rec.onresult = (ev) => {
-      let txt = "";
-      for (let i = 0; i < ev.results.length; i++) txt += ev.results[i][0].transcript;
-      if (inp) inp.value = txt;
+      let interino = "";
+      for (let i = ev.resultIndex; i < ev.results.length; i++) {
+        const pieza = ev.results[i][0].transcript;
+        if (ev.results[i].isFinal) {
+          acumuladoFinal += pieza + " ";
+        } else {
+          interino += pieza;
+        }
+      }
+      if (inp) {
+        inp.value = (textoPrevio + acumuladoFinal + interino).replace(/\s+/g, " ").trimStart();
+      }
     };
-    rec.onend = rec.onerror = () => {
-      if (mic) { mic.disabled = false; mic.style.background = "#0284c7"; mic.innerHTML = '<i class="fas fa-microphone"></i> Parler'; }
+
+    rec.onerror = (ev) => {
+      if (ev.error === "not-allowed" || ev.error === "service-not-allowed") {
+        window.detenerVozTurnoAlumno();
+      }
     };
+
+    rec.onend = () => {
+      // Si el alumno aún no ha pulsado "Arrêter", reanudar escucha sin perder lo dictado
+      if (window.grabandoTurnoPO) {
+        try {
+          rec.start();
+        } catch (_) {
+          window.detenerVozTurnoAlumno();
+        }
+      } else {
+        window.detenerVozTurnoAlumno();
+      }
+    };
+
     rec.start();
   };
 
   window.enviarTurnoAlumnoPO = async function() {
+    if (window.grabandoTurnoPO) {
+      window.detenerVozTurnoAlumno();
+    }
     const inp = document.getElementById("po-interaccion-input");
     const send = document.getElementById("btn-enviar-turno-po");
     const txt = inp ? inp.value.trim() : "";
