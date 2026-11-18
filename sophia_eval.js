@@ -439,6 +439,9 @@
   // =========================================================
   // 4. HISTORIAL DE HASTA 3 INTENTOS + ACORDEÓN + PROGRESO
   // =========================================================
+  function obtenerAlumnoId() {
+    return window.urlId || new URLSearchParams(window.location.search).get("id") || "";
+  }
   async function obtenerIntentosActividad(uId, eIdx, skill, modalidad) {
     const lista = [];
     const uid = obtenerAlumnoId();
@@ -459,11 +462,7 @@
           lista.push({ id: d.id, ...data });
         }
       });
-      lista.sort((a, b) => {
-        const ta = a.fecha && a.fecha.seconds ? a.fecha.seconds : 0;
-        const tb = b.fecha && b.fecha.seconds ? b.fecha.seconds : 0;
-        return ta - tb;
-      });
+      lista.sort((a, b) => (a.timestamp || 0) - (b.timestamp || 0));
     } catch (e) {
       console.warn("Error leyendo HistorialSophia:", e);
     }
