@@ -909,67 +909,91 @@
     } catch (_) {}
   }
 
-  function esActividadDeInteraccionPO() {
-    if (window.currentSkill !== "PO") return false;
-    const uId = String(window.currentUnitId || "").toLowerCase();
-    const sidebarActivo = (document.querySelector(".unit-header.active, .active-unit, [style*='background']") || {}).innerText || "";
-    const cuerpo = (document.body.innerText || "").toLowerCase();
-    const tieneTarjetas = !!document.querySelector(".delf-oral-card-item");
-    const keys = [
-      "exercice d'interaction", "interaction", "dialogue", "joue le rôle",
-      "examinateur", "examinatrice", "convaincre", "posez des questions",
-      "échange", "jeu de rôle", "débat", "négocier", "questions de l'examinateur"
-    ];
-    return tieneTarjetas || uId.includes("interaction") || keys.some((k) => cuerpo.includes(k) || sidebarActivo.toLowerCase().includes(k));
+  async function invocarSimuladorNube(payload) {
+    if (typeof llamarFuncionNube === "function") {
+      return await llamarFuncionNube("simularInteraccionPO", payload);
+    }
+    const r = await fetch("https://simularinteraccionpo-iq4wsljhqq-uc.a.run.app", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    });
+    const data = await r.json();
+    if (!r.ok) throw new Error(data.error || "Error HTTP " + r.status);
+    return data;
+  }
+
+  function obtenerNivelSeguro() {
+    if (typeof obtenerNivelActual === "function") return obtenerNivelActual();
+    const txt = (document.body.innerText || "").match(/NIVEAU\s+(A1|A2|B1|B2|C1)/i);
+    return txt ? txt[1].toUpperCase() : "B1";
+  }
+
+  function obtenerConsignaSegura() {
+    if (typeof obtenerConsignaActual === "function") return obtenerConsignaActual("PO");
+    const el = document.querySelector("#exercise-instruction, .consigne-text, .instruction-box");
+    return el ? el.innerText.trim() : "Exercice de production orale DELF";
   }
 
   function pintarChatInteraccionPO() {
     const box = document.getElementById("po-chat-mensajes");
     if (!box) return;
-    const h = window.estadoInteraccionPO.historial;
+    const h = (window.estadoInteraccionPO && window.estadoInteraccionPO.historial) || [];
     if (!h.length) {
       box.innerHTML = '<div style="text-align:center;color:#64748b;padding:20px;">Cliquez sur « Démarrer l\'interaction » pour commencer.</div>';
       return;
     }
     box.innerHTML = h.map((m) => {
       const ia = m.rol === "sophia";
-      const safe = m.texto.replace(/'/g, "\\'");
+      const safe = String(m.texto || "").replace(/'/g, "\\'");
       return '<div style="display:flex;flex-direction:column;align-items:' + (ia ? "flex-start" : "flex-end") + ';margin-bottom:10px;">'
         + '<div style="font-size:0.75rem;font-weight:700;color:' + (ia ? "#0f172a" : "#0369a1") + ';margin-bottom:2px;">' + (ia ? "🎙️ Examinateur (Sophia)" : "🗣️ Vous") + '</div>'
         + '<div style="max-width:82%;padding:10px 14px;border-radius:12px;font-size:0.92rem;background:' + (ia ? "#f1f5f9" : "#0f172a") + ';color:' + (ia ? "#0f172a" : "#fff") + ';border:1px solid #cbd5e1;">'
         + m.texto
-        + (ia ? ' <button type="button" onclick="window.repetirVozPO(\'' + safe + '\')" style="background:none;border:none;color:#0284c7;cursor:pointer;"><i class="fas fa-volume-up"></i></button>' : '')
+        + (ia ? ' <button type="button" data-voz-po="' + safe + '" style="background:none;border:none;color:#0284c7;cursor:pointer;"><i class="fas fa-volume-up"></i></button>' : '')
         + '</div></div>';
     }).join("");
     box.scrollTop = box.scrollHeight;
   }
 
-  window.repetirVozPO = function(t) { leerVozFrancesGratis(t); };
-
   window.iniciarSimuladorInteraccionPO = async function() {
-    if (window.isRecordingAudioPO && typeof window.grabarPO === "function") {
-      try { await window.grabarPO(); } catch (_) {}
-    }
-    if (window.isRecordingAudioPO && typeof window.grabarPO === "function") {
-      try { await window.grabarPO(); } catch (_) {}
-    }
-    const uId = window.currentUnitId || "Unite_1";
-    const eIdx = Number(window.currentExerciseIndex || 0);
-    const prev = await obtenerIntentosActividad(uId, eIdx, "PO", "interaccion");
-    if (prev.length >= 3) { alert("Limite de 3 tentatives atteint (3/3)."); return; }
-
     const btn = document.getElementById("btn-start-interaccion-po");
-    if (btn) { btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Préparation...'; }
-    window.estadoInteraccionPO = { activa: true, historial: [], turnosAlumno: 0 };
+    const aviso = document.getElementById("po-interaccion-aviso");
+    if (aviso) aviso.innerHTML = "";
+    if (btn) {
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Préparation de Sophia...';
+    }
 
     try {
-      const resp = await llamarFuncionNube("simularInteraccionPO", {
+      if (window.isRecordingAudioPO && typeof window.grabarPO === "function") {
+        try { await window.grabarPO(); } catch (_) {}
+      }
+
+      const uId = window.currentUnitId || "Unite_1";
+      const eIdx = Number(window.currentExerciseIndex || 0);
+      if (typeof obtenerIntentosActividad === "function") {
+        const prev = await obtenerIntentosActividad(uId, eIdx, "PO", "interaccion");
+        if (prev.length >= 3) {
+          if (btn) { btn.disabled = true; btn.innerHTML = '<i class="fas fa-lock"></i> Limite de 3 tentatives atteint (3/3)'; }
+          alert("Limite de 3 tentatives atteint (3/3).");
+          return;
+        }
+      }
+
+      window.estadoInteraccionPO = { activa: true, historial: [], turnosAlumno: 0 };
+      const nombre = typeof resolverNombreAlumnoReal === "function" ? await resolverNombreAlumnoReal() : "Candidat";
+
+      const resp = await invocarSimuladorNube({
         accion: "turno",
-        nivel: obtenerNivelActual(),
-        consigne: obtenerConsignaActual("PO"),
+        nivel: obtenerNivelSeguro(),
+        consigne: obtenerConsignaSegura(),
         historial: [],
-        nombreAlumno: await resolverNombreAlumnoReal()
+        nombreAlumno: nombre
       });
+
+      if (!resp || !resp.respuesta_fr) throw new Error("Réponse vide du serveur.");
+
       window.estadoInteraccionPO.historial.push({ rol: "sophia", texto: resp.respuesta_fr });
       if (btn) btn.style.display = "none";
       const panel = document.getElementById("po-interaccion-panel-activo");
@@ -979,8 +1003,12 @@
       pintarChatInteraccionPO();
       leerVozFrancesGratis(resp.respuesta_fr);
     } catch (e) {
-      alert("Error: " + e.message);
-      if (btn) { btn.disabled = false; btn.innerHTML = '<i class="fas fa-play-circle"></i> Démarrer l\'interaction avec Sophia'; }
+      console.error("Error iniciarSimuladorInteraccionPO:", e);
+      if (aviso) aviso.innerHTML = '<div style="color:#b91c1c;background:#fef2f2;border:1px solid #fecaca;padding:8px 12px;border-radius:8px;margin-top:8px;font-size:0.85rem;">⚠️ ' + (e.message || e) + '</div>';
+      if (btn) {
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fas fa-play-circle"></i> Démarrer l\'interaction avec Sophia';
+      }
     }
   };
 
@@ -1020,12 +1048,13 @@
     if (send) { send.disabled = true; send.innerHTML = '<i class="fas fa-spinner fa-spin"></i>'; }
 
     try {
-      const resp = await llamarFuncionNube("simularInteraccionPO", {
+      const nombre = typeof resolverNombreAlumnoReal === "function" ? await resolverNombreAlumnoReal() : "Candidat";
+      const resp = await invocarSimuladorNube({
         accion: "turno",
-        nivel: obtenerNivelActual(),
-        consigne: obtenerConsignaActual("PO"),
+        nivel: obtenerNivelSeguro(),
+        consigne: obtenerConsignaSegura(),
         historial: window.estadoInteraccionPO.historial,
-        nombreAlumno: await resolverNombreAlumnoReal()
+        nombreAlumno: nombre
       });
       window.estadoInteraccionPO.historial.push({ rol: "sophia", texto: resp.respuesta_fr });
       pintarChatInteraccionPO();
@@ -1043,11 +1072,13 @@
 
   window.finalizarYEvaluarInteraccionPO = async function() {
     const est = window.estadoInteraccionPO;
-    if (!est.turnosAlumno) { alert("Responde al menos una vez antes de evaluar."); return; }
+    if (!est || !est.turnosAlumno) { alert("Responde al menos una vez antes de evaluar."); return; }
     const uId = window.currentUnitId || "Unite_1";
     const eIdx = Number(window.currentExerciseIndex || 0);
-    const prev = await obtenerIntentosActividad(uId, eIdx, "PO", "interaccion");
-    if (prev.length >= 3) { alert("Limite de 3 tentatives atteint (3/3)."); return; }
+    if (typeof obtenerIntentosActividad === "function") {
+      const prev = await obtenerIntentosActividad(uId, eIdx, "PO", "interaccion");
+      if (prev.length >= 3) { alert("Limite de 3 tentatives atteint (3/3)."); return; }
+    }
 
     const btnEv = document.getElementById("btn-finalizar-interaccion-po");
     if (btnEv) { btnEv.disabled = true; btnEv.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Évaluation...'; }
@@ -1057,20 +1088,23 @@
     if (vText) vText.innerHTML = '<div style="padding:20px;text-align:center;font-weight:700;"><i class="fas fa-spinner fa-spin"></i> Sophia évalue votre interaction...</div>';
 
     try {
-      const consigne = obtenerConsignaActual("PO");
-      const res = await llamarFuncionNube("simularInteraccionPO", {
+      const consigne = obtenerConsignaSegura();
+      const nombre = typeof resolverNombreAlumnoReal === "function" ? await resolverNombreAlumnoReal() : "Candidat";
+      const res = await invocarSimuladorNube({
         accion: "evaluar",
-        nivel: obtenerNivelActual(),
+        nivel: obtenerNivelSeguro(),
         consigne,
         historial: est.historial,
-        nombreAlumno: await resolverNombreAlumnoReal()
+        nombreAlumno: nombre
       });
       const plano = est.historial.map((t) => (t.rol === "sophia" ? "Examinateur: " : "Candidat: ") + t.texto).join("\n");
-      await guardarResultadoYMarcarHecho("PO", { texto_alumno: plano, consigne, respuesta_ia: JSON.stringify(res) });
-
-      const act = await obtenerIntentosActividad(uId, eIdx, "PO");
-      if (vText) vText.innerHTML = window.renderizarReporteDELF(res, { skill: "PO" }) + renderizarAcordeonHistorial(act, "PO");
-      actualizarEstadoBotonIntentos("PO", act.length);
+      if (typeof guardarResultadoYMarcarHecho === "function") {
+        await guardarResultadoYMarcarHecho("PO", { texto_alumno: plano, consigne, respuesta_ia: JSON.stringify(res), modalidad: "interaccion" });
+      }
+      const act = typeof obtenerIntentosActividad === "function" ? await obtenerIntentosActividad(uId, eIdx, "PO", "interaccion") : [res];
+      if (vText && typeof window.renderizarReporteDELF === "function") {
+        vText.innerHTML = window.renderizarReporteDELF(res, { skill: "PO" }) + (typeof renderizarAcordeonHistorial === "function" ? renderizarAcordeonHistorial(act, "PO") : "");
+      }
 
       const panel = document.getElementById("po-interaccion-panel-activo");
       const btnSt = document.getElementById("btn-start-interaccion-po");
@@ -1083,9 +1117,35 @@
     } catch (e) {
       alert("Error: " + e.message);
     } finally {
-      if (btnEv) { btnEv.disabled = false; btnEv.innerHTML = '<i class="fas fa-check-circle"></i> Terminer et évaluer'; }
+      if (btnEv) { btnEv.disabled = false; btnEv.innerHTML = '<i class="fas fa-check-circle"></i> Terminer et évaluer l\'interaction'; }
     }
   };
+
+  // Delegación global en fase de captura para garantizar respuesta inmediata al clic
+  if (!window.__delegacionInteraccionPOInstalada) {
+    window.__delegacionInteraccionPOInstalada = true;
+    document.addEventListener("click", function(ev) {
+      const target = ev.target;
+      if (!target) return;
+      if (target.closest("#btn-start-interaccion-po")) {
+        ev.preventDefault();
+        ev.stopPropagation();
+        window.iniciarSimuladorInteraccionPO();
+      } else if (target.closest("#btn-mic-turno-po")) {
+        ev.preventDefault();
+        window.activarVozTurnoAlumno();
+      } else if (target.closest("#btn-enviar-turno-po")) {
+        ev.preventDefault();
+        window.enviarTurnoAlumnoPO();
+      } else if (target.closest("#btn-finalizar-interaccion-po")) {
+        ev.preventDefault();
+        window.finalizarYEvaluarInteraccionPO();
+      } else if (target.closest("[data-voz-po]")) {
+        const b = target.closest("[data-voz-po]");
+        leerVozFrancesGratis(b.getAttribute("data-voz-po"));
+      }
+    }, true);
+  }
 
   setInterval(() => {
     const cInt = document.getElementById("container-po-interaccion-live");
@@ -1099,13 +1159,11 @@
       return;
     }
 
-    // Mostrar SIEMPRE los 3 modos en todas las actividades de Production Orale
     cDual.style.display = "block";
     if (bRst) bRst.style.display = "inline-block";
     if (bSub) bSub.style.display = "inline-flex";
     cInt.style.display = "block";
 
-    // Si cambió de unidad o actividad, reiniciar estado del chat si estaba abierto
     const claveAct = (window.currentUnitId || "") + "_" + (window.currentExerciseIndex || 0);
     if (cInt.dataset.claveAct && cInt.dataset.claveAct !== claveAct) {
       window.estadoInteraccionPO = { activa: false, historial: [], turnosAlumno: 0 };
@@ -1120,48 +1178,18 @@
         + '<div><h4 style="margin:0;color:#0f172a;font-size:0.98rem;"><i class="fas fa-comments" style="color:#0284c7;"></i> Option 3 : Simulation d\'Interaction Orale en Direct</h4>'
         + '<span style="font-size:0.82rem;color:#475569;">Dialogue interactif tour par tour avec l\'examinatrice Sophia (Voix FR)</span></div>'
         + '<span id="po-contador-turnos" style="background:#e0f2fe;color:#0369a1;padding:4px 12px;border-radius:20px;font-weight:700;font-size:0.82rem;">Échanges : 0 / 5</span></div>'
-        + '<div style="text-align:center;margin:8px 0;"><button type="button" id="btn-start-interaccion-po" onclick="window.iniciarSimuladorInteraccionPO()" style="background:#0284c7;color:#fff;border:none;padding:10px 20px;border-radius:8px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:8px;"><i class="fas fa-play-circle"></i> Démarrer l\'interaction avec Sophia</button></div>'
+        + '<div style="text-align:center;margin:8px 0;"><button type="button" id="btn-start-interaccion-po" style="background:#0284c7;color:#fff;border:none;padding:10px 20px;border-radius:8px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:8px;"><i class="fas fa-play-circle"></i> Démarrer l\'interaction avec Sophia</button><div id="po-interaccion-aviso"></div></div>'
         + '<div id="po-interaccion-panel-activo" style="display:none;margin-top:12px;">'
         + '<div id="po-chat-mensajes" style="background:#fff;border:1px solid #cbd5e1;border-radius:10px;padding:12px;max-height:300px;overflow-y:auto;margin-bottom:10px;"></div>'
         + '<div id="po-interaccion-pista" style="font-size:0.82rem;color:#0369a1;font-weight:600;margin-bottom:8px;"></div>'
         + '<div style="display:flex;gap:8px;flex-wrap:wrap;">'
-        + '<button type="button" id="btn-mic-turno-po" onclick="window.activarVozTurnoAlumno()" style="background:#0284c7;color:#fff;border:none;padding:10px 14px;border-radius:8px;font-weight:700;cursor:pointer;"><i class="fas fa-microphone"></i> Parler</button>'
+        + '<button type="button" id="btn-mic-turno-po" style="background:#0284c7;color:#fff;border:none;padding:10px 14px;border-radius:8px;font-weight:700;cursor:pointer;"><i class="fas fa-microphone"></i> Parler</button>'
         + '<input type="text" id="po-interaccion-input" placeholder="Parlez ou écrivez votre réplique en français..." style="flex:1;min-width:200px;padding:10px;border:1px solid #cbd5e1;border-radius:8px;" onkeydown="if(event.key===\'Enter\'){event.preventDefault();window.enviarTurnoAlumnoPO();}">'
-        + '<button type="button" id="btn-enviar-turno-po" onclick="window.enviarTurnoAlumnoPO()" style="background:#0f172a;color:#fff;border:none;padding:10px 16px;border-radius:8px;font-weight:700;cursor:pointer;"><i class="fas fa-paper-plane"></i> Répondre</button>'
+        + '<button type="button" id="btn-enviar-turno-po" style="background:#0f172a;color:#fff;border:none;padding:10px 16px;border-radius:8px;font-weight:700;cursor:pointer;"><i class="fas fa-paper-plane"></i> Répondre</button>'
         + '</div><div style="margin-top:12px;padding-top:10px;border-top:1px dashed #cbd5e1;text-align:right;">'
-        + '<button type="button" id="btn-finalizar-interaccion-po" onclick="window.finalizarYEvaluarInteraccionPO()" style="background:#15803d;color:#fff;border:none;padding:10px 18px;border-radius:8px;font-weight:700;cursor:pointer;"><i class="fas fa-check-circle"></i> Terminer et évaluer l\'interaction</button>'
+        + '<button type="button" id="btn-finalizar-interaccion-po" style="background:#15803d;color:#fff;border:none;padding:10px 18px;border-radius:8px;font-weight:700;cursor:pointer;"><i class="fas fa-check-circle"></i> Terminer et évaluer l\'interaction</button>'
         + '</div></div></div>';
     }
   }, 700);
-
-
-
-  let ultimaClaveSyncPO = "";
-  setInterval(async () => {
-    if (window.currentSkill !== "PO" || !window.currentUnitId) return;
-    const clave = window.currentUnitId + "_" + Number(window.currentExerciseIndex || 0);
-    if (clave === ultimaClaveSyncPO) return;
-    ultimaClaveSyncPO = clave;
-
-    const uId = window.currentUnitId;
-    const eIdx = Number(window.currentExerciseIndex || 0);
-
-    // 1. Estado intentos Audio/Grabación (Opciones 1 y 2)
-    const intAudio = await obtenerIntentosActividad(uId, eIdx, "PO", "audio");
-    actualizarEstadoBotonIntentos("PO", intAudio.length);
-
-    // 2. Estado intentos Interacción en directo (Opción 3)
-    const intInter = await obtenerIntentosActividad(uId, eIdx, "PO", "interaccion");
-    const btnSt = document.getElementById("btn-start-interaccion-po");
-    if (btnSt) {
-      btnSt.style.display = "inline-flex";
-      btnSt.disabled = intInter.length >= 3;
-      btnSt.style.opacity = intInter.length >= 3 ? "0.6" : "1";
-      btnSt.style.cursor = intInter.length >= 3 ? "not-allowed" : "pointer";
-      btnSt.innerHTML = intInter.length >= 3
-        ? '<i class="fas fa-lock"></i> Limite de 3 tentatives atteint (3/3)'
-        : '<i class="fas fa-play-circle"></i> Démarrer l\'interaction avec Sophia (' + intInter.length + '/3)';
-    }
-  }, 500);
 
 })();
