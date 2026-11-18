@@ -1274,7 +1274,7 @@ window.mostrarEvaluacionSophia = function(htmlReporte) {
         };
 
         window.setSkillFilter = (skill) => {
-            currentSkill = skill; window.currentSkill = skill; currentUnitId = null; currentExerciseIndex = 0;
+            currentSkill = skill; window.currentSkill = skill; currentUnitId = null; window.currentUnitId = null; currentExerciseIndex = 0; window.currentExerciseIndex = 0;
             document.querySelectorAll('.skill-tab-btn').forEach(btn => btn.classList.remove('active'));
             const activeBtn = document.getElementById(`skill-${skill}`); if (activeBtn) activeBtn.classList.add('active');
             
@@ -1549,8 +1549,8 @@ window.mostrarEvaluacionSophia = function(htmlReporte) {
 
         window.toggleUnitMenu = (uId) => { openUnitsState[uId] = !openUnitsState[uId]; generarMenuJerarquico(); };
         window.cargarActividadDirecta = (uId, eIdx) => { 
-            currentUnitId = uId; 
-            currentExerciseIndex = eIdx; 
+            currentUnitId = uId; window.currentUnitId = uId;
+             currentExerciseIndex = eIdx; window.currentExerciseIndex = eIdx; 
             openUnitsState[uId] = true; 
             generarMenuJerarquico(); 
             window.renderExerciseStructure(); 
@@ -2419,7 +2419,7 @@ window.renderExerciseStructure = async function() {
         window.avanzarSiguienteEjercicio = function() {
             let ejercicios = unidadesCache[currentUnitId][currentSkill] || unidadesCache[currentUnitId][currentSkill.toLowerCase()] || [];
             if (currentExerciseIndex + 1 < ejercicios.length) {
-                currentExerciseIndex++;
+                currentExerciseIndex++; window.currentExerciseIndex = currentExerciseIndex;
                 window.renderExerciseStructure();
                 generarMenuJerarquico();
             } else {
@@ -2669,7 +2669,7 @@ window.renderExerciseStructure = async function() {
     // --- FIN MOTOR PE DELF ---
 
 </script>
-<script src="sophia_eval.js?v=1795006879027"></script>
+<script src="sophia_eval.js?v=1795007487324"></script>
 
 
 

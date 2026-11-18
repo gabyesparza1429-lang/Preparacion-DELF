@@ -439,24 +439,34 @@
   // =========================================================
   // 4. HISTORIAL DE HASTA 3 INTENTOS + ACORDEÓN + PROGRESO
   // =========================================================
-  async function obtenerIntentosActividad(uId, eIdx, skill) {
-    const studentId = window.urlId || new URLSearchParams(window.location.search).get("id");
-    if (!studentId || studentId === "admin_preview" || !window.db || !window.collection || !window.getDocs) {
-      return [];
-    }
-    const colRef = window.collection(window.db, "Usuarios", studentId, "HistorialSophia");
-    const snap = await window.getDocs(colRef);
+  async function obtenerIntentosActividad(uId, eIdx, skill, modalidad) {
     const lista = [];
-    snap.forEach((docSnap) => {
-      const d = docSnap.data();
-      const docUnidad = d.unidad !== undefined ? d.unidad : d.unidadId;
-      const docAct = d.actividad !== undefined ? Number(d.actividad) : Number(d.ejercicioIndex);
-      const docSkill = d.habilidad || (d.tipo === "Production_Orale" ? "PO" : "PE");
-      if (String(docUnidad) === String(uId) && Number(docAct) === Number(eIdx) && String(docSkill) === String(skill)) {
-        lista.push({ id: docSnap.id, ...d });
-      }
-    });
-    lista.sort((a, b) => (a.timestamp || 0) - (b.timestamp || 0));
+    const uid = obtenerAlumnoId();
+    if (!uid || !window.db || !window.collection) return lista;
+    try {
+      const ref = window.collection(window.db, "Usuarios", uid, "HistorialSophia");
+      const snap = await window.getDocs(ref);
+      snap.forEach((d) => {
+        const data = d.data() || {};
+        if (
+          String(data.unidad) === String(uId) &&
+          Number(data.actividad) === Number(eIdx) &&
+          String(data.habilidad).toUpperCase() === String(skill).toUpperCase()
+        ) {
+          const esInter = data.modalidad === "interaccion" || String(data.texto_alumno || "").startsWith("Examinateur:");
+          if (modalidad === "interaccion" && !esInter) return;
+          if (modalidad === "audio" && esInter) return;
+          lista.push({ id: d.id, ...data });
+        }
+      });
+      lista.sort((a, b) => {
+        const ta = a.fecha && a.fecha.seconds ? a.fecha.seconds : 0;
+        const tb = b.fecha && b.fecha.seconds ? b.fecha.seconds : 0;
+        return ta - tb;
+      });
+    } catch (e) {
+      console.warn("Error leyendo HistorialSophia:", e);
+    }
     return lista;
   }
 
@@ -829,7 +839,7 @@
 
       const uId = window.currentUnitId || "Unite_1";
       const eIdx = Number(window.currentExerciseIndex || 0);
-      const intentosPrevios = await obtenerIntentosActividad(uId, eIdx, "PO");
+      const intentosPrevios = await obtenerIntentosActividad(uId, eIdx, "PO", "audio");
       if (intentosPrevios.length >= 3) {
         actualizarEstadoBotonIntentos("PO", intentosPrevios.length);
         alert("Vous avez atteint la limite de 3 tentatives pour cette activité.");
@@ -868,7 +878,7 @@
           respuesta_ia: JSON.stringify(resultado)
         });
 
-        const intentosActualizados = await obtenerIntentosActividad(uId, eIdx, "PO");
+        const intentosActualizados = await obtenerIntentosActividad(uId, eIdx, "PO", "audio");
         const reporteHTML = window.renderizarReporteDELF(resultado, { skill: "PO", audioUrl: audioLocalUrl });
         const acordeonHTML = renderizarAcordeonHistorial(intentosActualizados, "PO");
         if (vText) vText.innerHTML = reporteHTML + acordeonHTML;
@@ -939,7 +949,7 @@
   window.iniciarSimuladorInteraccionPO = async function() {
     const uId = window.currentUnitId || "Unite_1";
     const eIdx = Number(window.currentExerciseIndex || 0);
-    const prev = await obtenerIntentosActividad(uId, eIdx, "PO");
+    const prev = await obtenerIntentosActividad(uId, eIdx, "PO", "interaccion");
     if (prev.length >= 3) { alert("Limite de 3 tentatives atteint (3/3)."); return; }
 
     const btn = document.getElementById("btn-start-interaccion-po");
@@ -1030,7 +1040,7 @@
     if (!est.turnosAlumno) { alert("Responde al menos una vez antes de evaluar."); return; }
     const uId = window.currentUnitId || "Unite_1";
     const eIdx = Number(window.currentExerciseIndex || 0);
-    const prev = await obtenerIntentosActividad(uId, eIdx, "PO");
+    const prev = await obtenerIntentosActividad(uId, eIdx, "PO", "interaccion");
     if (prev.length >= 3) { alert("Limite de 3 tentatives atteint (3/3)."); return; }
 
     const btnEv = document.getElementById("btn-finalizar-interaccion-po");
@@ -1117,5 +1127,35 @@
         + '</div></div></div>';
     }
   }, 700);
+
+
+
+  let ultimaClaveSyncPO = "";
+  setInterval(async () => {
+    if (window.currentSkill !== "PO" || !window.currentUnitId) return;
+    const clave = window.currentUnitId + "_" + Number(window.currentExerciseIndex || 0);
+    if (clave === ultimaClaveSyncPO) return;
+    ultimaClaveSyncPO = clave;
+
+    const uId = window.currentUnitId;
+    const eIdx = Number(window.currentExerciseIndex || 0);
+
+    // 1. Estado intentos Audio/Grabación (Opciones 1 y 2)
+    const intAudio = await obtenerIntentosActividad(uId, eIdx, "PO", "audio");
+    actualizarEstadoBotonIntentos("PO", intAudio.length);
+
+    // 2. Estado intentos Interacción en directo (Opción 3)
+    const intInter = await obtenerIntentosActividad(uId, eIdx, "PO", "interaccion");
+    const btnSt = document.getElementById("btn-start-interaccion-po");
+    if (btnSt) {
+      btnSt.style.display = "inline-flex";
+      btnSt.disabled = intInter.length >= 3;
+      btnSt.style.opacity = intInter.length >= 3 ? "0.6" : "1";
+      btnSt.style.cursor = intInter.length >= 3 ? "not-allowed" : "pointer";
+      btnSt.innerHTML = intInter.length >= 3
+        ? '<i class="fas fa-lock"></i> Limite de 3 tentatives atteint (3/3)'
+        : '<i class="fas fa-play-circle"></i> Démarrer l\'interaction avec Sophia (' + intInter.length + '/3)';
+    }
+  }, 500);
 
 })();
