@@ -2669,7 +2669,7 @@ window.renderExerciseStructure = async function() {
     // --- FIN MOTOR PE DELF ---
 
 </script>
-<script src="sophia_eval.js?v=1795031920883"></script>
+<script src="sophia_eval.js?v=1795033295479"></script>
 
 
 
@@ -2934,69 +2934,80 @@ window.renderExerciseStructure = async function() {
     }
 
     async function revisarNotificacionesProfesor() {
-      const uid = obtenerUidAlumno();
-      if (!uid || !window.db || !window.collection || !window.getDocs) return;
+        const uid = obtenerUidAlumno();
+        if (!uid || !window.db || !window.collection || !window.getDocs) return;
+        const cacheKey = "notif_leidas_" + uid;
+        let leidasLocal = [];
+        try { leidasLocal = JSON.parse(localStorage.getItem(cacheKey) || "[]"); } catch (_) {}
 
-      try {
-        const qMsg = window.query(window.collection(window.db, "Usuarios", uid, "MensajesAdmin"), window.where("leido", "==", false));
-        const snapMsg = await window.getDocs(qMsg);
+        try {
+          const snapMsg = await window.getDocs(window.collection(window.db, "Usuarios", uid, "MensajesAdmin"));
+          const snapRep = await window.getDocs(window.collection(window.db, "Usuarios", uid, "Reportes"));
 
-        const qRep = window.query(window.collection(window.db, "Usuarios", uid, "Reportes"), window.where("leido", "==", false));
-        const snapRep = await window.getDocs(qRep);
+          const docsNoLeidosMsg = [];
+          const docsNoLeidosRep = [];
+          snapMsg.forEach((d) => {
+            const data = d.data() || {};
+            if (data.leido !== true && !leidasLocal.includes(d.id)) docsNoLeidosMsg.push(d);
+          });
+          snapRep.forEach((d) => {
+            const data = d.data() || {};
+            if (data.leido !== true && !leidasLocal.includes(d.id)) docsNoLeidosRep.push(d);
+          });
 
-        if (snapMsg.empty && snapRep.empty) return;
-
-        let banner = document.getElementById("banner-notificaciones-profesor");
-        if (!banner) {
-          banner = document.createElement("div");
-          banner.id = "banner-notificaciones-profesor";
-          banner.style.cssText = "position:fixed; bottom:20px; right:20px; z-index:9999; max-width:370px; background:#0f172a; color:#ffffff; border-left:5px solid #38bdf8; border-radius:10px; padding:16px; box-shadow:0 10px 25px rgba(0,0,0,0.28); font-family:'Montserrat', sans-serif;";
-          document.body.appendChild(banner);
-        }
-
-        const bloques = [];
-        snapMsg.forEach(d => {
-          const m = d.data() || {};
-          bloques.push(`<div style="background:rgba(255,255,255,0.08); padding:8px 10px; border-radius:6px; margin-top:8px; font-size:0.85rem;"><small style="color:#7dd3fc; display:block; font-size:0.72rem;">💬 Mensaje (${m.fecha || ''})</small>${m.texto || ''}</div>`);
-        });
-
-        let ultimoReporte = null;
-        snapRep.forEach(d => {
-          ultimoReporte = d.data();
-          bloques.push(`<div style="background:rgba(56,189,248,0.16); border:1px solid rgba(56,189,248,0.35); padding:9px 10px; border-radius:6px; margin-top:8px; font-size:0.85rem;"><strong style="color:#7dd3fc; display:block;">📊 Nuevo Reporte Académico Oficial</strong><span style="font-size:0.78rem;">Emitido el ${ultimoReporte.fecha || ''}</span><div style="margin-top:6px;"><button id="btn-abrir-rep-enviado" style="background:#38bdf8; color:#0f172a; border:none; padding:5px 10px; border-radius:5px; font-weight:800; font-size:0.76rem; cursor:pointer;">Ver Reporte PDF</button></div></div>`);
-        });
-
-        banner.innerHTML = `
-          <div style="display:flex; justify-content:space-between; align-items:center;">
-            <strong style="font-size:0.92rem; color:#38bdf8;"><i class="fas fa-bell"></i> Avisos de tu Profesora</strong>
-            <button id="btn-cerrar-notif-prof" style="background:rgba(255,255,255,0.15); color:#fff; border:none; padding:4px 9px; border-radius:5px; font-weight:700; font-size:0.75rem; cursor:pointer;">Cerrar</button>
-          </div>
-          ${bloques.join('')}
-        `;
-
-        if (ultimoReporte && document.getElementById("btn-abrir-rep-enviado")) {
-          document.getElementById("btn-abrir-rep-enviado").onclick = () => mostrarVentanaReporteAlumno(ultimoReporte);
-        }
-
-        document.getElementById("btn-cerrar-notif-prof").onclick = async () => {
-          banner.remove();
-          for (const d of snapMsg.docs) {
-            if (window.updateDoc) await window.updateDoc(d.ref, { leido: true });
+          const total = docsNoLeidosMsg.length + docsNoLeidosRep.length;
+          let banner = document.getElementById("banner-notificaciones-profesor");
+          if (total === 0) {
+            if (banner) banner.remove();
+            return;
           }
-          for (const d of snapRep.docs) {
-            if (window.updateDoc) await window.updateDoc(d.ref, { leido: true });
+
+          if (!banner) {
+            banner = document.createElement("div");
+            banner.id = "banner-notificaciones-profesor";
+            banner.style.cssText = "background:linear-gradient(135deg,#0f172a,#1e3a8a); color:#fff; padding:12px 16px; border-radius:10px; margin:12px 0 16px 0; border-left:4px solid #38bdf8; box-shadow:0 4px 12px rgba(15,23,42,0.12);";
+            const cont = document.querySelector(".main-content") || document.body;
+            cont.insertBefore(banner, cont.firstChild);
           }
-        };
-      } catch (e) {
-        console.warn("Notificaciones:", e);
+
+          const bloques = [];
+          let ultimoReporte = null;
+          docsNoLeidosMsg.forEach((d) => {
+            const m = d.data() || {};
+            bloques.push('<div style="background:rgba(255,255,255,0.08); padding:8px 10px; border-radius:6px; margin-top:8px; font-size:0.85rem;"><small style="color:#7dd3fc; display:block; font-size:0.72rem;">💬 Mensaje (' + (m.fecha || "") + ')</small>' + (m.texto || "") + '</div>');
+          });
+          docsNoLeidosRep.forEach((d) => {
+            const r = d.data() || {};
+            ultimoReporte = r;
+            bloques.push('<div style="background:rgba(255,255,255,0.08); padding:8px 10px; border-radius:6px; margin-top:8px; font-size:0.85rem; display:flex; justify-content:space-between; align-items:center; gap:8px;"><span>📊 Nuevo reporte de evaluación disponible</span><button id="btn-abrir-rep-enviado" style="background:#38bdf8; color:#0f172a; border:none; padding:4px 10px; border-radius:5px; font-weight:700; font-size:0.75rem; cursor:pointer;">Ver reporte</button></div>');
+          });
+
+          banner.innerHTML = '<div style="display:flex; justify-content:space-between; align-items:center; gap:10px;">'
+            + '<strong style="font-size:0.92rem; color:#38bdf8;"><i class="fas fa-bell"></i> Avisos de tu Profesora</strong>'
+            + '<button id="btn-cerrar-notif-prof" style="background:#38bdf8; color:#0f172a; border:none; padding:5px 11px; border-radius:6px; font-weight:700; font-size:0.76rem; cursor:pointer;"><i class="fas fa-check"></i> Marcar como leído</button>'
+            + '</div>' + bloques.join("");
+
+          const btnRep = document.getElementById("btn-abrir-rep-enviado");
+          if (btnRep && ultimoReporte) btnRep.onclick = () => mostrarVentanaReporteAlumno(ultimoReporte);
+
+          document.getElementById("btn-cerrar-notif-prof").onclick = async () => {
+            banner.remove();
+            const nuevosIds = [...leidasLocal];
+            for (const d of docsNoLeidosMsg) {
+              if (!nuevosIds.includes(d.id)) nuevosIds.push(d.id);
+              try { if (window.updateDoc) await window.updateDoc(d.ref, { leido: true }); } catch (_) {}
+            }
+            for (const d of docsNoLeidosRep) {
+              if (!nuevosIds.includes(d.id)) nuevosIds.push(d.id);
+              try { if (window.updateDoc) await window.updateDoc(d.ref, { leido: true }); } catch (_) {}
+            }
+            try { localStorage.setItem(cacheKey, JSON.stringify(nuevosIds)); } catch (_) {}
+          };
+        } catch (err) {
+          console.warn("Error notificaciones profesor:", err);
+        }
       }
-    }
-
-    window.addEventListener("load", () => {
-      setTimeout(() => {
-        iniciarContadorEstudio();
-        inyectarBotonReporteSidebar();
-        revisarNotificacionesProfesor();
+      revisarNotificacionesProfesor();
       }, 800);
     });
   })();

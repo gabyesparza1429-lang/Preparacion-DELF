@@ -202,7 +202,8 @@
       return `<div style="background:#fff; border:1px solid #cbd5e1; border-radius:10px; padding:20px; line-height:1.6; color:#1e293b;">${data.legacy_html}</div>`;
     }
 
-    const nivel = data.nivel || obtenerNivelActual();
+    const transcripcionAlumno = opts.transcripcion || data.transcripcion || "";
+      const nivel = data.nivel || obtenerNivelActual();
     const eleve = data.eleve || obtenerNombreAlumno();
     const subInfo = opts.skill === "PO"
       ? "Production Orale"
@@ -379,6 +380,7 @@
             </tbody>
           </table>
 
+          ${bloqueTranscripcionHTML}
           ${erroresHTML}
           ${recursosHTML}
           ${supraHTML}
@@ -964,22 +966,32 @@
     return "Exercice de production orale DELF";
   }
 
+  window.textoTurnoActualPO = "";
+
   function pintarChatInteraccionPO() {
     const box = document.getElementById("po-chat-mensajes");
     if (!box) return;
     const h = (window.estadoInteraccionPO && window.estadoInteraccionPO.historial) || [];
     if (!h.length) {
-      box.innerHTML = '<div style="text-align:center;color:#64748b;padding:20px;">Cliquez sur « Démarrer l\'interaction » pour commencer.</div>';
+      box.innerHTML = '<div style="text-align:center;color:#64748b;padding:18px;">Cliquez sur « Démarrer l\'interaction » pour écouter Sophia.</div>';
       return;
     }
+    let numRespAlumno = 0;
     box.innerHTML = h.map((m) => {
       const ia = m.rol === "sophia";
+      if (!ia) {
+        numRespAlumno += 1;
+        return '<div style="display:flex;flex-direction:column;align-items:flex-end;margin-bottom:10px;">'
+          + '<div style="font-size:0.75rem;font-weight:700;color:#0369a1;margin-bottom:2px;">🗣️ Vous (Candidat)</div>'
+          + '<div style="max-width:82%;padding:9px 14px;border-radius:12px;font-size:0.88rem;background:#0f172a;color:#e0f2fe;border:1px solid #0f172a;">'
+          + '<i class="fas fa-check-circle" style="color:#38bdf8;"></i> Réponse orale #' + numRespAlumno + ' envoyée à Sophia'
+          + '</div></div>';
+      }
       const safe = String(m.texto || "").replace(/'/g, "\\'");
-      return '<div style="display:flex;flex-direction:column;align-items:' + (ia ? "flex-start" : "flex-end") + ';margin-bottom:10px;">'
-        + '<div style="font-size:0.75rem;font-weight:700;color:' + (ia ? "#0f172a" : "#0369a1") + ';margin-bottom:2px;">' + (ia ? "🎙️ Examinateur (Sophia)" : "🗣️ Vous") + '</div>'
-        + '<div style="max-width:82%;padding:10px 14px;border-radius:12px;font-size:0.92rem;background:' + (ia ? "#f1f5f9" : "#0f172a") + ';color:' + (ia ? "#0f172a" : "#fff") + ';border:1px solid #cbd5e1;">'
-        + m.texto
-        + (ia ? ' <button type="button" data-voz-po="' + safe + '" style="background:none;border:none;color:#0284c7;cursor:pointer;"><i class="fas fa-volume-up"></i></button>' : '')
+      return '<div style="display:flex;flex-direction:column;align-items:flex-start;margin-bottom:10px;">'
+        + '<div style="font-size:0.75rem;font-weight:700;color:#0f172a;margin-bottom:2px;">🎙️ Examinateur (Sophia)</div>'
+        + '<div style="max-width:82%;padding:10px 14px;border-radius:12px;font-size:0.92rem;background:#f1f5f9;color:#0f172a;border:1px solid #cbd5e1;">'
+        + '<button type="button" data-voz-po="' + safe + '" style="background:#0284c7;color:#fff;border:none;padding:5px 11px;border-radius:6px;font-size:0.82rem;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:6px;"><i class="fas fa-volume-up"></i> Réécouter la question de Sophia</button>'
         + '</div></div>';
     }).join("");
     box.scrollTop = box.scrollHeight;
@@ -1011,6 +1023,7 @@
       }
 
       window.estadoInteraccionPO = { activa: true, historial: [], turnosAlumno: 0 };
+      window.textoTurnoActualPO = "";
       const nombre = typeof resolverNombreAlumnoReal === "function" ? await resolverNombreAlumnoReal() : "Candidat";
 
       const resp = await invocarSimuladorNube({
@@ -1044,6 +1057,27 @@
   window.grabandoTurnoPO = false;
   window.reconocimientoTurnoPO = null;
 
+  function actualizarEstadoVisualMicrofono(estado, detalle) {
+    const ind = document.getElementById("po-indicador-voz-limpio");
+    if (!ind) return;
+    if (estado === "escuchando") {
+      ind.style.background = "#fef2f2";
+      ind.style.borderColor = "#fca5a5";
+      ind.style.color = "#b91c1c";
+      ind.innerHTML = '<i class="fas fa-microphone-alt fa-beat"></i> <strong>Écoute en cours...</strong> Parlez librement en français (sans transcription à l\'écran). Cliquez sur <em>Arrêter</em> quand vous avez fini.';
+    } else if (estado === "listo") {
+      ind.style.background = "#f0fdf4";
+      ind.style.borderColor = "#86efac";
+      ind.style.color = "#166534";
+      ind.innerHTML = '<i class="fas fa-check-circle"></i> <strong>Réponse vocale enregistrée</strong> (' + (detalle || 0) + ' mots captés). Cliquez sur <em>Répondre</em> pour l\'envoyer à Sophia.';
+    } else {
+      ind.style.background = "#f8fafc";
+      ind.style.borderColor = "#cbd5e1";
+      ind.style.color = "#475569";
+      ind.innerHTML = '<i class="fas fa-headphones"></i> Écoutez Sophia puis cliquez sur <strong>Parler</strong> pour répondre à l\'oral.';
+    }
+  }
+
   window.detenerVozTurnoAlumno = function() {
     window.grabandoTurnoPO = false;
     if (window.reconocimientoTurnoPO) {
@@ -1055,6 +1089,12 @@
       mic.style.background = "#0284c7";
       mic.innerHTML = '<i class="fas fa-microphone"></i> Parler';
     }
+    const palabras = (window.textoTurnoActualPO || "").trim().split(/\s+/).filter(Boolean).length;
+    if (palabras > 0) {
+      actualizarEstadoVisualMicrofono("listo", palabras);
+    } else {
+      actualizarEstadoVisualMicrofono("reposo", 0);
+    }
   };
 
   window.activarVozTurnoAlumno = function() {
@@ -1064,16 +1104,14 @@
     }
 
     const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-    const inp = document.getElementById("po-interaccion-input");
     const mic = document.getElementById("btn-mic-turno-po");
     if (!SR) {
-      alert("Usa el cuadro de texto para escribir tu réplica en francés.");
-      if (inp) inp.focus();
+      alert("Tu navegador no soporta reconocimiento de voz. Usa Chrome o Edge.");
       return;
     }
 
     window.grabandoTurnoPO = true;
-    const textoPrevio = inp && inp.value.trim() ? inp.value.trim() + " " : "";
+    const textoPrevio = window.textoTurnoActualPO && window.textoTurnoActualPO.trim() ? window.textoTurnoActualPO.trim() + " " : "";
     let acumuladoFinal = "";
 
     const rec = new SR();
@@ -1086,6 +1124,7 @@
       mic.style.background = "#dc2626";
       mic.innerHTML = '<i class="fas fa-stop-circle"></i> Arrêter';
     }
+    actualizarEstadoVisualMicrofono("escuchando", 0);
 
     rec.onresult = (ev) => {
       let interino = "";
@@ -1097,9 +1136,7 @@
           interino += pieza;
         }
       }
-      if (inp) {
-        inp.value = (textoPrevio + acumuladoFinal + interino).replace(/\s+/g, " ").trimStart();
-      }
+      window.textoTurnoActualPO = (textoPrevio + acumuladoFinal + interino).replace(/\s+/g, " ").trimStart();
     };
 
     rec.onerror = (ev) => {
@@ -1109,13 +1146,8 @@
     };
 
     rec.onend = () => {
-      // Si el alumno aún no ha pulsado "Arrêter", reanudar escucha sin perder lo dictado
       if (window.grabandoTurnoPO) {
-        try {
-          rec.start();
-        } catch (_) {
-          window.detenerVozTurnoAlumno();
-        }
+        try { rec.start(); } catch (_) { window.detenerVozTurnoAlumno(); }
       } else {
         window.detenerVozTurnoAlumno();
       }
@@ -1128,19 +1160,22 @@
     if (window.grabandoTurnoPO) {
       window.detenerVozTurnoAlumno();
     }
-    const inp = document.getElementById("po-interaccion-input");
-    const send = document.getElementById("btn-enviar-turno-po");
-    const txt = inp ? inp.value.trim() : "";
-    if (!txt) { alert("Habla o escribe tu respuesta en francés primero."); return; }
+    const txt = (window.textoTurnoActualPO || "").trim();
+    if (!txt) {
+      alert("Pulsa « Parler », responde en francés y luego pulsa « Répondre ».");
+      return;
+    }
 
     window.estadoInteraccionPO.historial.push({ rol: "alumno", texto: txt });
     window.estadoInteraccionPO.turnosAlumno += 1;
-    if (inp) inp.value = "";
+    window.textoTurnoActualPO = "";
+    actualizarEstadoVisualMicrofono("reposo", 0);
     pintarChatInteraccionPO();
 
     const cnt = document.getElementById("po-contador-turnos");
     if (cnt) cnt.innerText = "Échanges : " + window.estadoInteraccionPO.turnosAlumno + " / 5";
-    if (send) { send.disabled = true; send.innerHTML = '<i class="fas fa-spinner fa-spin"></i>'; }
+    const send = document.getElementById("btn-enviar-turno-po");
+    if (send) { send.disabled = true; send.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sophia réfléchit...'; }
 
     try {
       const nombre = typeof resolverNombreAlumnoReal === "function" ? await resolverNombreAlumnoReal() : "Candidat";
@@ -1156,7 +1191,7 @@
       leerVozFrancesGratis(resp.respuesta_fr);
       const pista = document.getElementById("po-interaccion-pista");
       if (pista) pista.innerText = resp.finalizado || window.estadoInteraccionPO.turnosAlumno >= 5
-        ? "✅ Interacción lista. Pulsa « Terminer et évaluer » para tu nota DELF."
+        ? "✅ Interacción completada. Pulsa « Terminer et évaluer » para ver la transcripción corregida y tu nota DELF."
         : (resp.pista_es ? "💡 Guía: " + resp.pista_es : "");
     } catch (e) {
       alert("Error: " + e.message);
@@ -1166,6 +1201,7 @@
   };
 
   window.finalizarYEvaluarInteraccionPO = async function() {
+    if (window.grabandoTurnoPO) window.detenerVozTurnoAlumno();
     const est = window.estadoInteraccionPO;
     if (!est || !est.turnosAlumno) { alert("Responde al menos una vez antes de evaluar."); return; }
     const uId = window.currentUnitId || "Unite_1";
@@ -1180,7 +1216,7 @@
     const sBox = document.getElementById("sophia-box");
     const vText = document.getElementById("sophia-verdict-text");
     if (sBox) sBox.style.display = "block";
-    if (vText) vText.innerHTML = '<div style="padding:20px;text-align:center;font-weight:700;"><i class="fas fa-spinner fa-spin"></i> Sophia évalue votre interaction...</div>';
+    if (vText) vText.innerHTML = '<div style="padding:20px;text-align:center;font-weight:700;"><i class="fas fa-spinner fa-spin"></i> Sophia évalue votre interaction et prépare la transcription corrigée...</div>';
 
     try {
       const consigne = obtenerConsignaSegura();
@@ -1192,13 +1228,13 @@
         historial: est.historial,
         nombreAlumno: nombre
       });
-      const plano = est.historial.map((t) => (t.rol === "sophia" ? "Examinateur: " : "Candidat: ") + t.texto).join("\n");
+      const plano = est.historial.map((t) => (t.rol === "sophia" ? "Examinateur (Sophia): " : (nombre || "Candidat") + ": ") + t.texto).join("\n");
       if (typeof guardarResultadoYMarcarHecho === "function") {
         await guardarResultadoYMarcarHecho("PO", { texto_alumno: plano, consigne, respuesta_ia: JSON.stringify(res), modalidad: "interaccion" });
       }
       const act = typeof obtenerIntentosActividad === "function" ? await obtenerIntentosActividad(uId, eIdx, "PO", "interaccion") : [res];
       if (vText && typeof window.renderizarReporteDELF === "function") {
-        vText.innerHTML = window.renderizarReporteDELF(res, { skill: "PO" }) + (typeof renderizarAcordeonHistorial === "function" ? renderizarAcordeonHistorial(act, "PO") : "");
+        vText.innerHTML = window.renderizarReporteDELF(res, { skill: "PO", transcripcion: plano }) + (typeof renderizarAcordeonHistorial === "function" ? renderizarAcordeonHistorial(act, "PO") : "");
       }
 
       const panel = document.getElementById("po-interaccion-panel-activo");
@@ -1216,7 +1252,6 @@
     }
   };
 
-  // Delegación global en fase de captura para garantizar respuesta inmediata al clic
   if (!window.__delegacionInteraccionPOInstalada) {
     window.__delegacionInteraccionPOInstalada = true;
     document.addEventListener("click", function(ev) {
@@ -1277,10 +1312,10 @@
         + '<div id="po-interaccion-panel-activo" style="display:none;margin-top:12px;">'
         + '<div id="po-chat-mensajes" style="background:#fff;border:1px solid #cbd5e1;border-radius:10px;padding:12px;max-height:300px;overflow-y:auto;margin-bottom:10px;"></div>'
         + '<div id="po-interaccion-pista" style="font-size:0.82rem;color:#0369a1;font-weight:600;margin-bottom:8px;"></div>'
-        + '<div style="display:flex;gap:8px;flex-wrap:wrap;">'
-        + '<button type="button" id="btn-mic-turno-po" style="background:#0284c7;color:#fff;border:none;padding:10px 14px;border-radius:8px;font-weight:700;cursor:pointer;"><i class="fas fa-microphone"></i> Parler</button>'
-        + '<input type="text" id="po-interaccion-input" placeholder="Parlez ou écrivez votre réplique en français..." style="flex:1;min-width:200px;padding:10px;border:1px solid #cbd5e1;border-radius:8px;" onkeydown="if(event.key===\'Enter\'){event.preventDefault();window.enviarTurnoAlumnoPO();}">'
-        + '<button type="button" id="btn-enviar-turno-po" style="background:#0f172a;color:#fff;border:none;padding:10px 16px;border-radius:8px;font-weight:700;cursor:pointer;"><i class="fas fa-paper-plane"></i> Répondre</button>'
+        + '<div id="po-indicador-voz-limpio" style="background:#f8fafc;border:1px solid #cbd5e1;color:#475569;padding:10px 14px;border-radius:8px;font-size:0.86rem;margin-bottom:10px;"><i class="fas fa-headphones"></i> Écoutez Sophia puis cliquez sur <strong>Parler</strong> pour répondre à l\'oral.</div>'
+        + '<div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;">'
+        + '<button type="button" id="btn-mic-turno-po" style="background:#0284c7;color:#fff;border:none;padding:11px 20px;border-radius:8px;font-weight:700;cursor:pointer;font-size:0.92rem;"><i class="fas fa-microphone"></i> Parler</button>'
+        + '<button type="button" id="btn-enviar-turno-po" style="background:#0f172a;color:#fff;border:none;padding:11px 20px;border-radius:8px;font-weight:700;cursor:pointer;font-size:0.92rem;"><i class="fas fa-paper-plane"></i> Répondre</button>'
         + '</div><div style="margin-top:12px;padding-top:10px;border-top:1px dashed #cbd5e1;text-align:right;">'
         + '<button type="button" id="btn-finalizar-interaccion-po" style="background:#15803d;color:#fff;border:none;padding:10px 18px;border-radius:8px;font-weight:700;cursor:pointer;"><i class="fas fa-check-circle"></i> Terminer et évaluer l\'interaction</button>'
         + '</div></div></div>';
