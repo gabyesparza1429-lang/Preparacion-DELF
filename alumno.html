@@ -2669,7 +2669,7 @@ window.renderExerciseStructure = async function() {
     // --- FIN MOTOR PE DELF ---
 
 </script>
-<script src="sophia_eval.js?v=1795033728167"></script>
+<script src="sophia_eval.js?v=1795033870406"></script>
 
 
 
@@ -2759,10 +2759,16 @@ window.renderExerciseStructure = async function() {
     }
 
     function actualizarRelojSidebar(mins) {
-      const txt = fmtTiempo(mins);
-      const target = document.getElementById("countdown-text-target");
-      if (target) target.innerText = txt;
-    }
+        const txt = fmtTiempo(mins);
+        const target = document.getElementById("countdown-text-target")
+          || Array.from(document.querySelectorAll("span, div, p")).find((el) =>
+            el.children.length === 0 && /Calcul.../i.test(el.textContent || "")
+          );
+        if (target) {
+          target.id = "countdown-text-target";
+          target.innerText = txt;
+        }
+      }
 
     function mostrarVentanaReporteAlumno(rep) {
       const prev = document.getElementById("modal-reporte-delf-overlay");
@@ -2918,20 +2924,22 @@ window.renderExerciseStructure = async function() {
     };
 
     function inyectarBotonReporteSidebar() {
-      if (document.getElementById("btn-mon-rapport-sidebar")) return;
-      const sidebar = document.querySelector(".sidebar");
-      const btnCarnet = document.getElementById("tab-carnet");
-      if (!sidebar || !btnCarnet) return;
+        if (document.getElementById("btn-mon-rapport-sidebar")) return;
+        const btnCarnet = document.getElementById("tab-carnet")
+          || Array.from(document.querySelectorAll("button, a, div")).find((el) =>
+            el.children.length <= 2 && /Carnet de compétences/i.test(el.textContent || "")
+          );
+        if (!btnCarnet) return;
 
-      const btn = document.createElement("button");
-      btn.id = "btn-mon-rapport-sidebar";
-      btn.type = "button";
-      btn.className = "nav-tab-btn";
-      btn.style.marginTop = "10px";
-      btn.onclick = window.abrirMiPropioReporteDELF;
-      btn.innerHTML = `<i class="fas fa-chart-pie"></i> Mon Rapport (PDF)`;
-      btnCarnet.insertAdjacentElement("afterend", btn);
-    }
+        const btn = document.createElement("button");
+        btn.id = "btn-mon-rapport-sidebar";
+        btn.type = "button";
+        btn.className = btnCarnet.className || "nav-tab-btn";
+        btn.style.cssText = (btnCarnet.getAttribute("style") || "") + "; margin-top: 10px; width: 100%; cursor: pointer;";
+        btn.onclick = window.abrirMiPropioReporteDELF;
+        btn.innerHTML = '<i class="fas fa-chart-pie"></i> Mon Rapport (PDF)';
+        btnCarnet.insertAdjacentElement("afterend", btn);
+      }
 
     async function revisarNotificacionesProfesor() {
         const uid = obtenerUidAlumno();
