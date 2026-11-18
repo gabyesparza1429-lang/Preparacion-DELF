@@ -442,8 +442,12 @@
   // 4. HISTORIAL DE HASTA 3 INTENTOS + ACORDEÓN + PROGRESO
   // =========================================================
   function obtenerAlumnoId() {
-    return window.urlId || new URLSearchParams(window.location.search).get("id") || "";
-  }
+      return window.urlId
+        || new URLSearchParams(window.location.search).get("id")
+        || localStorage.getItem("active_student_id")
+        || localStorage.getItem("currentStudentId")
+        || "";
+    }
   async function obtenerIntentosActividad(uId, eIdx, skill, modalidad) {
     const lista = [];
     const uid = obtenerAlumnoId();
@@ -506,7 +510,7 @@
       const obj = normalizarObjetoEvaluacion(item.respuesta_ia);
       const score = obj && typeof obj.nota_total === "number" ? `${obj.nota_total} / 25` : "Évalué";
       const fecha = item.fecha || "";
-      const detalleHTML = window.renderizarReporteDELF(item.respuesta_ia, { skill, audioUrl: item.audio_url || "" });
+      const detalleHTML = window.renderizarReporteDELF(item.respuesta_ia, { skill, audioUrl: item.audio_url || "", transcripcion: item.texto_alumno || "" });
       const textoPrevio = item.texto_alumno
         ? `<div style="background:#f8fafc; padding:10px 12px; border-radius:6px; border:1px solid #e2e8f0; margin-bottom:10px; font-size:0.88rem; color:#334155;">
              <strong>Texte soumis :</strong><br>${item.texto_alumno.replace(/\n/g, "<br>")}
@@ -530,39 +534,51 @@
   }
 
   window.recuperarEvaluacionGuardada = async function (uId, eIdx, skill) {
-    const unit = uId || window.currentUnitId;
-    const idx = eIdx !== undefined ? eIdx : window.currentExerciseIndex;
-    const sk = skill || window.currentSkill || "PE";
-    if (!unit) return;
+      const unit = uId || window.currentUnitId;
+      const idx = eIdx !== undefined ? eIdx : window.currentExerciseIndex;
+      const sk = skill || window.currentSkill || "PE";
+      if (!unit) return;
 
-    try {
-      const intentos = await obtenerIntentosActividad(unit, idx, sk);
-      actualizarEstadoBotonIntentos(sk, intentos.length);
-
-      if (intentos.length > 0) {
-        const ultimo = intentos[intentos.length - 1];
-        const ta = document.getElementById("pe-student-response") || document.getElementById("textarea-pe");
-        if (sk === "PE" && ta && ultimo.texto_alumno) {
-          ta.value = ultimo.texto_alumno;
-          actualizarContadorPalabras(ta);
-        }
-
-        const sBox = document.getElementById("sophia-box");
-        const vText = document.getElementById("sophia-verdict-text");
-        if (sBox) sBox.style.display = "block";
-        if (vText) {
-          const reportePrincipal = window.renderizarReporteDELF(ultimo.respuesta_ia, {
-            skill: sk,
-            audioUrl: ultimo.audio_url || ""
-          });
-          const acordeon = renderizarAcordeonHistorial(intentos, sk);
-          vText.innerHTML = reportePrincipal + acordeon;
-        }
+      let uid = obtenerAlumnoId();
+      if (!uid || !window.db) {
+        setTimeout(() => window.recuperarEvaluacionGuardada(unit, idx, sk), 500);
+        return;
       }
-    } catch (err) {
-      console.error("Error cargando historial:", err);
-    }
-  };
+
+      try {
+        const intentos = await obtenerIntentosActividad(unit, idx, sk);
+        if (sk === "PO") {
+          const intAudio = await obtenerIntentosActividad(unit, idx, "PO", "audio");
+          actualizarEstadoBotonIntentos("PO", intAudio.length);
+        } else {
+          actualizarEstadoBotonIntentos(sk, intentos.length);
+        }
+
+        if (intentos.length > 0) {
+          const ultimo = intentos[intentos.length - 1];
+          const ta = document.getElementById("pe-student-response") || document.getElementById("textarea-pe");
+          if (sk === "PE" && ta && ultimo.texto_alumno) {
+            ta.value = ultimo.texto_alumno;
+            actualizarContadorPalabras(ta);
+          }
+
+          const sBox = document.getElementById("sophia-box");
+          const vText = document.getElementById("sophia-verdict-text");
+          if (sBox) sBox.style.display = "block";
+          if (vText) {
+            const reportePrincipal = window.renderizarReporteDELF(ultimo.respuesta_ia, {
+              skill: sk,
+              audioUrl: ultimo.audio_url || "",
+              transcripcion: ultimo.texto_alumno || ""
+            });
+            const acordeon = renderizarAcordeonHistorial(intentos, sk);
+            vText.innerHTML = reportePrincipal + acordeon;
+          }
+        }
+      } catch (e) {
+        console.warn("Error recuperando evaluación guardada:", e);
+      }
+    };
 
   async function guardarResultadoYMarcarHecho(skill, datosExtra) {
     const studentId = window.urlId || new URLSearchParams(window.location.search).get("id");
