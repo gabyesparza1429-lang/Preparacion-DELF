@@ -408,7 +408,8 @@
   async function llamarFuncionNube(nombreFuncion, payload) {
     const mapaRun = {
       procesarTextoPE: "https://procesartextope-iq4wsljhqq-uc.a.run.app",
-      procesarAudioPO: "https://procesaraudiopo-iq4wsljhqq-uc.a.run.app"
+      procesarAudioPO: "https://procesaraudiopo-iq4wsljhqq-uc.a.run.app",
+        simularInteraccionPO: "https://us-central1-objectif-reussite-delf.cloudfunctions.net/simularInteraccionPO"
     };
     const urls = [
       mapaRun[nombreFuncion],
@@ -881,4 +882,230 @@
       }
     }
   }, true);
+
+
+  window.estadoInteraccionPO = { activa: false, historial: [], turnosAlumno: 0 };
+
+  function leerVozFrancesGratis(texto) {
+    try {
+      if (!("speechSynthesis" in window)) return;
+      window.speechSynthesis.cancel();
+      const u = new SpeechSynthesisUtterance(texto);
+      u.lang = "fr-FR";
+      u.rate = 0.96;
+      const voz = window.speechSynthesis.getVoices().find((v) => v.lang && v.lang.toLowerCase().startsWith("fr"));
+      if (voz) u.voice = voz;
+      window.speechSynthesis.speak(u);
+    } catch (_) {}
+  }
+
+  function esActividadDeInteraccionPO() {
+    if (window.currentSkill !== "PO") return false;
+    const uId = String(window.currentUnitId || "").toLowerCase();
+    const consigne = String(obtenerConsignaActual("PO") || "").toLowerCase();
+    const tieneTarjetas = !!document.querySelector(".delf-oral-card-item");
+    const tienePreguntas = (document.body.innerText || "").includes("Questions de l'examinateur");
+    const keys = ["interaction", "dialogue", "joue le rôle", "examinateur", "examinatrice", "convaincre", "posez des questions", "échange", "jeu de rôle", "débat", "négocier"];
+    return tieneTarjetas || tienePreguntas || uId.includes("interaction") || keys.some((k) => consigne.includes(k));
+  }
+
+  function pintarChatInteraccionPO() {
+    const box = document.getElementById("po-chat-mensajes");
+    if (!box) return;
+    const h = window.estadoInteraccionPO.historial;
+    if (!h.length) {
+      box.innerHTML = '<div style="text-align:center;color:#64748b;padding:20px;">Cliquez sur « Démarrer l\'interaction » pour commencer.</div>';
+      return;
+    }
+    box.innerHTML = h.map((m) => {
+      const ia = m.rol === "sophia";
+      const safe = m.texto.replace(/'/g, "\\'");
+      return '<div style="display:flex;flex-direction:column;align-items:' + (ia ? "flex-start" : "flex-end") + ';margin-bottom:10px;">'
+        + '<div style="font-size:0.75rem;font-weight:700;color:' + (ia ? "#0f172a" : "#0369a1") + ';margin-bottom:2px;">' + (ia ? "🎙️ Examinateur (Sophia)" : "🗣️ Vous") + '</div>'
+        + '<div style="max-width:82%;padding:10px 14px;border-radius:12px;font-size:0.92rem;background:' + (ia ? "#f1f5f9" : "#0f172a") + ';color:' + (ia ? "#0f172a" : "#fff") + ';border:1px solid #cbd5e1;">'
+        + m.texto
+        + (ia ? ' <button type="button" onclick="window.repetirVozPO(\'' + safe + '\')" style="background:none;border:none;color:#0284c7;cursor:pointer;"><i class="fas fa-volume-up"></i></button>' : '')
+        + '</div></div>';
+    }).join("");
+    box.scrollTop = box.scrollHeight;
+  }
+
+  window.repetirVozPO = function(t) { leerVozFrancesGratis(t); };
+
+  window.iniciarSimuladorInteraccionPO = async function() {
+    const uId = window.currentUnitId || "Unite_1";
+    const eIdx = Number(window.currentExerciseIndex || 0);
+    const prev = await obtenerIntentosActividad(uId, eIdx, "PO");
+    if (prev.length >= 3) { alert("Limite de 3 tentatives atteint (3/3)."); return; }
+
+    const btn = document.getElementById("btn-start-interaccion-po");
+    if (btn) { btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Préparation...'; }
+    window.estadoInteraccionPO = { activa: true, historial: [], turnosAlumno: 0 };
+
+    try {
+      const resp = await llamarFuncionNube("simularInteraccionPO", {
+        accion: "turno",
+        nivel: obtenerNivelActual(),
+        consigne: obtenerConsignaActual("PO"),
+        historial: [],
+        nombreAlumno: await resolverNombreAlumnoReal()
+      });
+      window.estadoInteraccionPO.historial.push({ rol: "sophia", texto: resp.respuesta_fr });
+      if (btn) btn.style.display = "none";
+      const panel = document.getElementById("po-interaccion-panel-activo");
+      if (panel) panel.style.display = "block";
+      const pista = document.getElementById("po-interaccion-pista");
+      if (pista) pista.innerText = resp.pista_es ? "💡 Guía: " + resp.pista_es : "";
+      pintarChatInteraccionPO();
+      leerVozFrancesGratis(resp.respuesta_fr);
+    } catch (e) {
+      alert("Error: " + e.message);
+      if (btn) { btn.disabled = false; btn.innerHTML = '<i class="fas fa-play-circle"></i> Démarrer l\'interaction avec Sophia'; }
+    }
+  };
+
+  window.activarVozTurnoAlumno = function() {
+    const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+    const inp = document.getElementById("po-interaccion-input");
+    const mic = document.getElementById("btn-mic-turno-po");
+    if (!SR) { alert("Usa el cuadro de texto para escribir tu réplica en francés."); if (inp) inp.focus(); return; }
+    const rec = new SR();
+    rec.lang = "fr-FR";
+    rec.interimResults = true;
+    if (mic) { mic.disabled = true; mic.style.background = "#dc2626"; mic.innerHTML = '<i class="fas fa-microphone-alt"></i> Écoute...'; }
+    rec.onresult = (ev) => {
+      let txt = "";
+      for (let i = 0; i < ev.results.length; i++) txt += ev.results[i][0].transcript;
+      if (inp) inp.value = txt;
+    };
+    rec.onend = rec.onerror = () => {
+      if (mic) { mic.disabled = false; mic.style.background = "#0284c7"; mic.innerHTML = '<i class="fas fa-microphone"></i> Parler'; }
+    };
+    rec.start();
+  };
+
+  window.enviarTurnoAlumnoPO = async function() {
+    const inp = document.getElementById("po-interaccion-input");
+    const send = document.getElementById("btn-enviar-turno-po");
+    const txt = inp ? inp.value.trim() : "";
+    if (!txt) { alert("Habla o escribe tu respuesta en francés primero."); return; }
+
+    window.estadoInteraccionPO.historial.push({ rol: "alumno", texto: txt });
+    window.estadoInteraccionPO.turnosAlumno += 1;
+    if (inp) inp.value = "";
+    pintarChatInteraccionPO();
+
+    const cnt = document.getElementById("po-contador-turnos");
+    if (cnt) cnt.innerText = "Échanges : " + window.estadoInteraccionPO.turnosAlumno + " / 5";
+    if (send) { send.disabled = true; send.innerHTML = '<i class="fas fa-spinner fa-spin"></i>'; }
+
+    try {
+      const resp = await llamarFuncionNube("simularInteraccionPO", {
+        accion: "turno",
+        nivel: obtenerNivelActual(),
+        consigne: obtenerConsignaActual("PO"),
+        historial: window.estadoInteraccionPO.historial,
+        nombreAlumno: await resolverNombreAlumnoReal()
+      });
+      window.estadoInteraccionPO.historial.push({ rol: "sophia", texto: resp.respuesta_fr });
+      pintarChatInteraccionPO();
+      leerVozFrancesGratis(resp.respuesta_fr);
+      const pista = document.getElementById("po-interaccion-pista");
+      if (pista) pista.innerText = resp.finalizado || window.estadoInteraccionPO.turnosAlumno >= 5
+        ? "✅ Interacción lista. Pulsa « Terminer et évaluer » para tu nota DELF."
+        : (resp.pista_es ? "💡 Guía: " + resp.pista_es : "");
+    } catch (e) {
+      alert("Error: " + e.message);
+    } finally {
+      if (send) { send.disabled = false; send.innerHTML = '<i class="fas fa-paper-plane"></i> Répondre'; }
+    }
+  };
+
+  window.finalizarYEvaluarInteraccionPO = async function() {
+    const est = window.estadoInteraccionPO;
+    if (!est.turnosAlumno) { alert("Responde al menos una vez antes de evaluar."); return; }
+    const uId = window.currentUnitId || "Unite_1";
+    const eIdx = Number(window.currentExerciseIndex || 0);
+    const prev = await obtenerIntentosActividad(uId, eIdx, "PO");
+    if (prev.length >= 3) { alert("Limite de 3 tentatives atteint (3/3)."); return; }
+
+    const btnEv = document.getElementById("btn-finalizar-interaccion-po");
+    if (btnEv) { btnEv.disabled = true; btnEv.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Évaluation...'; }
+    const sBox = document.getElementById("sophia-box");
+    const vText = document.getElementById("sophia-verdict-text");
+    if (sBox) sBox.style.display = "block";
+    if (vText) vText.innerHTML = '<div style="padding:20px;text-align:center;font-weight:700;"><i class="fas fa-spinner fa-spin"></i> Sophia évalue votre interaction...</div>';
+
+    try {
+      const consigne = obtenerConsignaActual("PO");
+      const res = await llamarFuncionNube("simularInteraccionPO", {
+        accion: "evaluar",
+        nivel: obtenerNivelActual(),
+        consigne,
+        historial: est.historial,
+        nombreAlumno: await resolverNombreAlumnoReal()
+      });
+      const plano = est.historial.map((t) => (t.rol === "sophia" ? "Examinateur: " : "Candidat: ") + t.texto).join("\n");
+      await guardarResultadoYMarcarHecho("PO", { texto_alumno: plano, consigne, respuesta_ia: JSON.stringify(res) });
+
+      const act = await obtenerIntentosActividad(uId, eIdx, "PO");
+      if (vText) vText.innerHTML = window.renderizarReporteDELF(res, { skill: "PO" }) + renderizarAcordeonHistorial(act, "PO");
+      actualizarEstadoBotonIntentos("PO", act.length);
+
+      const panel = document.getElementById("po-interaccion-panel-activo");
+      const btnSt = document.getElementById("btn-start-interaccion-po");
+      if (panel) panel.style.display = "none";
+      if (btnSt) {
+        btnSt.style.display = "inline-flex";
+        btnSt.disabled = act.length >= 3;
+        btnSt.innerHTML = act.length >= 3 ? '<i class="fas fa-lock"></i> Limite de 3 tentatives atteint (3/3)' : '<i class="fas fa-redo"></i> Nouvelle interaction (' + act.length + '/3)';
+      }
+    } catch (e) {
+      alert("Error: " + e.message);
+    } finally {
+      if (btnEv) { btnEv.disabled = false; btnEv.innerHTML = '<i class="fas fa-check-circle"></i> Terminer et évaluer'; }
+    }
+  };
+
+  setInterval(() => {
+    const cInt = document.getElementById("container-po-interaccion-live");
+    const cDual = document.getElementById("container-po-audio-dual");
+    const bRst = document.getElementById("btn-reset-po");
+    const bSub = document.getElementById("btn-submit-po");
+    if (!cInt || !cDual) return;
+
+    if (!esActividadDeInteraccionPO()) {
+      cInt.style.display = "none";
+      cDual.style.display = "block";
+      if (bRst) bRst.style.display = "inline-block";
+      if (bSub) bSub.style.display = "inline-flex";
+      return;
+    }
+
+    cDual.style.display = "none";
+    if (bRst) bRst.style.display = "none";
+    if (bSub) bSub.style.display = "none";
+    cInt.style.display = "block";
+
+    if (!cInt.dataset.ok) {
+      cInt.dataset.ok = "1";
+      cInt.innerHTML = '<div style="background:#f8fafc;border:2px solid #0284c7;border-radius:12px;padding:18px;">'
+        + '<div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:12px;">'
+        + '<div><h4 style="margin:0;color:#0f172a;"><i class="fas fa-comments" style="color:#0284c7;"></i> Simulation d\'Interaction Orale en Direct</h4>'
+        + '<span style="font-size:0.82rem;color:#475569;">Dialogue avec l\'examinatrice Sophia (Voix FR)</span></div>'
+        + '<span id="po-contador-turnos" style="background:#e0f2fe;color:#0369a1;padding:4px 12px;border-radius:20px;font-weight:700;font-size:0.82rem;">Échanges : 0 / 5</span></div>'
+        + '<div style="text-align:center;margin:10px 0;"><button type="button" id="btn-start-interaccion-po" onclick="window.iniciarSimuladorInteraccionPO()" style="background:#0284c7;color:#fff;border:none;padding:11px 20px;border-radius:8px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:8px;"><i class="fas fa-play-circle"></i> Démarrer l\'interaction avec Sophia</button></div>'
+        + '<div id="po-interaccion-panel-activo" style="display:none;">'
+        + '<div id="po-chat-mensajes" style="background:#fff;border:1px solid #cbd5e1;border-radius:10px;padding:12px;max-height:300px;overflow-y:auto;margin-bottom:10px;"></div>'
+        + '<div id="po-interaccion-pista" style="font-size:0.82rem;color:#0369a1;font-weight:600;margin-bottom:8px;"></div>'
+        + '<div style="display:flex;gap:8px;flex-wrap:wrap;">'
+        + '<button type="button" id="btn-mic-turno-po" onclick="window.activarVozTurnoAlumno()" style="background:#0284c7;color:#fff;border:none;padding:10px 14px;border-radius:8px;font-weight:700;cursor:pointer;"><i class="fas fa-microphone"></i> Parler</button>'
+        + '<input type="text" id="po-interaccion-input" placeholder="Parlez ou écrivez en français..." style="flex:1;min-width:200px;padding:10px;border:1px solid #cbd5e1;border-radius:8px;" onkeydown="if(event.key===\'Enter\'){event.preventDefault();window.enviarTurnoAlumnoPO();}">'
+        + '<button type="button" id="btn-enviar-turno-po" onclick="window.enviarTurnoAlumnoPO()" style="background:#0f172a;color:#fff;border:none;padding:10px 16px;border-radius:8px;font-weight:700;cursor:pointer;"><i class="fas fa-paper-plane"></i> Répondre</button>'
+        + '</div><div style="margin-top:12px;padding-top:10px;border-top:1px dashed #cbd5e1;text-align:right;">'
+        + '<button type="button" id="btn-finalizar-interaccion-po" onclick="window.finalizarYEvaluarInteraccionPO()" style="background:#15803d;color:#fff;border:none;padding:10px 18px;border-radius:8px;font-weight:700;cursor:pointer;"><i class="fas fa-check-circle"></i> Terminer et évaluer</button>'
+        + '</div></div></div>';
+    }
+  }, 700);
+
 })();

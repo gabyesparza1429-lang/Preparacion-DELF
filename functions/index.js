@@ -173,3 +173,66 @@ Escucha el audio adjunto, incluye además la clave "transcripcion_breve" con la 
     }
   });
 });
+
+exports.simularInteraccionPO = onRequest({ cors: true, timeoutSeconds: 120 }, (req, res) => {
+  return cors(req, res, async () => {
+    if (req.method !== "POST") return res.status(405).json({ error: "Metodo no permitido" });
+    try {
+      const { accion, nivel, consigne, historial, nombreAlumno } = req.body || {};
+      const lvl = String(nivel || "B1").toUpperCase();
+      const grille = GRILLES_DELF[lvl] || GRILLES_DELF.B1;
+      const ai = crearClienteVertex();
+      const lista = Array.isArray(historial) ? historial : [];
+
+      if (accion === "evaluar") {
+        const dialogo = lista
+          .map((t) => (t.rol === "sophia" ? "Examinateur (Sophia): " : (nombreAlumno || "Candidat") + ": ") + t.texto)
+          .join("\n");
+
+        const promptEval = "EVALUACION DE INTERACCION ORAL DELF\n"
+          + "- Alumno: " + (nombreAlumno || "Eleve") + "\n"
+          + "- Nivel: " + lvl + "\n"
+          + "- Grilla: " + grille + "\n"
+          + "- Consigna: " + (consigne || "Interaction orale DELF") + "\n\n"
+          + "DIALOGO COMPLETO:\n" + dialogo;
+
+        const rEval = await ai.models.generateContent({
+          model: "gemini-2.5-flash",
+          contents: [{ text: promptEval }],
+          config: { systemInstruction: SYSTEM_PROMPT_DELF, responseMimeType: "application/json", temperature: 0.1 }
+        });
+        const data = limpiarYParsearJSON(rEval.text);
+        data.eleve = nombreAlumno || data.eleve || "Eleve";
+        return res.status(200).json(data);
+      }
+
+      const turnosAlumno = lista.filter((t) => t.rol === "alumno").length;
+      const histTxt = lista
+        .map((t) => (t.rol === "sophia" ? "Examinateur: " : "Candidat: ") + t.texto)
+        .join("\n");
+
+      const sysRole = "Eres Sophia, examinadora oficial del DELF/DALF (nivel " + lvl + "). "
+        + "Realizas la prueba de interaccion oral con " + (nombreAlumno || "le candidat") + ". "
+        + "Consigna: " + (consigne || "Interaction orale DELF") + ". "
+        + "Reglas: 1) Metete 100% en el personaje indicado y habla SOLO en frances natural adaptado al nivel " + lvl + ". "
+        + "2) Se breve (1 a 3 frases cortas, maximo 45 palabras). "
+        + "3) Si es A1/A2 haz preguntas claras o responde dando pie a preguntar; si es B1/B2/C1 pon objeciones para que argumente y negocie. "
+        + "4) Si van 5 o mas turnos del candidato (" + turnosAlumno + " actuales), cierra la escena y pon finalizado: true. "
+        + 'Devuelve SOLO JSON valido: {"respuesta_fr":"...","pista_es":"...","finalizado":false}';
+
+      const promptT = histTxt
+        ? "Historial:\n" + histTxt + "\n\nGenera la siguiente replica del examinador en frances."
+        : "Inicia la escena saludando y abriendo la situacion en frances.";
+
+      const rTurno = await ai.models.generateContent({
+        model: "gemini-2.5-flash",
+        contents: [{ text: promptT }],
+        config: { systemInstruction: sysRole, responseMimeType: "application/json", temperature: 0.4 }
+      });
+      return res.status(200).json(limpiarYParsearJSON(rTurno.text));
+    } catch (err) {
+      console.error("Error simularInteraccionPO:", err);
+      return res.status(500).json({ error: err.message });
+    }
+  });
+});
