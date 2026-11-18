@@ -380,6 +380,8 @@
       }).join("");
     };
 
+    const nivel = data.nivel || obtenerNivelActual();
+    const eleve = data.eleve || obtenerNombreAlumno();
     const transcripcionAlumno = opts.transcripcion || data.transcripcion || "";
     const tieneErroresMarcables = Array.isArray(data.errores) && data.errores.length > 0;
     const bloqueTranscripcionHTML = ((opts.skill === "PO" || tieneErroresMarcables) && transcripcionAlumno)
@@ -393,8 +395,7 @@
            ${formatearDialogoTranscripcion(transcripcionAlumno, data.errores, eleve)}
          </div>`
       : "";
-      const nivel = data.nivel || obtenerNivelActual();
-    const eleve = data.eleve || obtenerNombreAlumno();
+
     const subInfo = opts.skill === "PO"
       ? "Production Orale"
       : `${data.palabras || opts.palabras || 0} mots`;
